@@ -26,7 +26,7 @@ export default class Login extends Component {
 
 
 	async handleSubmission()  {
-        //debugger
+        debugger
         await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch)
 
         

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import "../App.css"
-import MapComponent from '../view/mapComponent';
+import MapComponent from '../componentListNPM/mapTech/mapComponent';
 
 
 export default class Card extends Component {

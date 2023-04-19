@@ -1,6 +1,6 @@
 import Factory from "./factory";
 import OppsFactory from "./operationsFactory";
-import Opps from "./compontsList";
+import Opps from "./componentsList";
 import Updater from "./updater";
 
 export default class ComponentListInterface{

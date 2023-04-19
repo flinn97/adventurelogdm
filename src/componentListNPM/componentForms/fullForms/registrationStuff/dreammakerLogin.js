@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import authService from '../../../services/auth';
+import authService from '../../../../services/auth';
 
 export default class Login extends Component {
     constructor(props){
@@ -26,7 +26,7 @@ export default class Login extends Component {
 
 
 	async handleSubmission()  {
-        //debugger
+        debugger
         await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch)
 
         
@@ -66,7 +66,7 @@ export default class Login extends Component {
                          alignItems: "center",
                          alignSelf: "center",
                         marginTop:styles?.margins?.marginSmallH, width:"100%"}}>
-                        <div style={{fontFamily: styles?.fonts?.fontTitle, fontSize: styles?.fonts?.fontHeader5,}}>Login</div>                     
+                        <div style={{fontFamily: styles?.fonts?.fontTitle, fontSize: styles?.fonts?.fontHeader5,}}>DreamMaker Login</div>                     
                      <div style={{marginTop:"2vh",}} >
                     
                             <label htmlFor="lastName"><div style={{fontFamily: styles?.fonts?.fontNormal, marginRight: styles?.margins?.marginSmallW, fontSize: styles?.fonts?.fontHeader1,}}>Email</div></label>

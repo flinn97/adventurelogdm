@@ -4,12 +4,12 @@
 class DefaultForms {
     getFormsThemeDesktop(){
         let style={
-              inputStyle:{width:"120px", height: "40px", fontSize:"25px", color:"purple", border:"1px solid purple" },
-              wrapperStyle:{marginLeft:"20px", width:"120px"},
+              inputStyle:{width:"120px", height: "25px", marginTop:"10px", fontSize:"14px", color:"black", border:"1px solid purple", borderRadius:"3px" },
+              wrapperStyle:{width:"120px"},
               labelStyle:{},
               textBoxLabelStyle:{},
-              textBoxWrapperStyle:{width:"200px", height:"200px"},
-              textBoxStyle:{width:"200px", height:"200px", fontSize:"25px", color:"purple", border:"1px solid purple"},
+              textBoxWrapperStyle:{width:"200px", height:"100px", marginTop:"10px",},
+              textBoxStyle:{width:"200px", height:"100px", fontSize:"14px", color:"black", border:"1px solid purple", borderRadius:"3px"},
               richEditorStyle:{width:"200px", height:"400px"},
               richEditorLabelStyle:{},
               richEditorWrapperStyle:{},
@@ -30,9 +30,11 @@ class DefaultForms {
               checkWrapperStyle:{},
               checkLabelStyle:{},
               tickStyle:{},
-              formsWrapperStyle:{},
+              formsWrapperStyle:{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", marginTop:"10px"},
               buttonTextStyle:{},
-              runbuttonWrapperStyle:{}
+              runbuttonWrapperStyle:{ cursor:"pointer", marginTop:"5px"},
+              delbuttonWrapperStyle:{},
+              clearbuttonWrapperStyle:{}
 
             }
             

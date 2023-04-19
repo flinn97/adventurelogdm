@@ -17,12 +17,12 @@ export default class FormWithUpdateAndRun extends Component {
      * For rich editor to update html instead of plain text.
      * @param {*} change 
      */
-    handleHTMLChange(change){
+    handleHTMLChange(obj, change){
         
         this.setState({ [this.props.name]: change });
   }
 
-	handleChange = async (event) => {
+	handleChange = async (obj, event) => {
         debugger
         if(!event.target){
             this.setState({ [this.props.name]: event });
@@ -87,7 +87,7 @@ export default class FormWithUpdateAndRun extends Component {
             handleHTMLChange={this.handleHTMLChange}
                         
                         />
-                        <UpdateAndRunButton app={app} obj={this.props.obj} updateObj={{...this.state}} wrapperStyle={this.props.runButtonStyle} text={this.props.text}
+                        <UpdateAndRunButton app={app} obj={this.props.obj} theme={this.props.theme} updateObj={{...this.state}} wrapperStyle={this.props.runButtonStyle} text={this.props.text}
                         buttonTextStyle={this.props.buttonTextStyle}/>
                  </div>
              )

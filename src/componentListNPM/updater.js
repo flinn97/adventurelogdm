@@ -10,4 +10,7 @@ export default class Updater{
     setJson(json){
         this.componentUpdate=json;
     }
+    setSelectedRegister(register, list){
+        this.componentUpdate[register] = [...list];
+    }
 }

@@ -9,6 +9,7 @@ import InputToTextBoxComponent from './singleForms/inputToTextBoxComponent.js';
 import InputToRichTextComponent from './singleForms/inputToRichEditor.js';
 import CheckBox from './singleForms/checkComponent.js';
 import FormWithUpdateAndRun from './buttons/formWithUpdateAndRun.js';
+import SelectComponent from './singleForms/selectComponent.js';
 /**
  * Parent form component has every option that is a single form or a button
  * 
@@ -36,8 +37,20 @@ class ParentFormComponent extends Component {
           
           for(const key in this.state.obj){
               this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:change});
+              if(this.props.cleanPrepareRun){
+                debugger
+                this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
+            }
+            if(this.props.prepareRun){
+                this.state.obj[key].getOperationsFactory().prepareRun({update:this.state.obj});
+            }
               this.setState();
+
           }
+          
+          if(this.props.sendUpdate &&this.props.app!==undefined){
+            this.props.app.dispatch({formUpdate:this.props.type})
+        }
           // this.setState({obj:this.state.obj});
     }
 
@@ -81,6 +94,12 @@ class ParentFormComponent extends Component {
             start:true
            })
     }
+    }
+    componentDidUpdate(props, state){
+        if(this.props.obj!==props.obj){
+            this.componentDidMount();
+        }
+        
     }
 
     /**
@@ -133,11 +152,22 @@ class ParentFormComponent extends Component {
      * @param {*} event 
      */
     handleChange = async (event) => {
-        // //debugger
+        debugger
         const { name, value } = event.target
         for(const key in this.state.obj){
             this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:value});
+            if(this.props.cleanPrepareRun){
+                this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
+            }
+            if(this.props.prepareRun){
+                this.state.obj[key].getOperationsFactory().prepareRun({update:this.state.obj});
+            }
+            if(this.props.sendUpdate &&this.props.app){
+                this.props.app.dispatch({formUpdate:this.props.type})
+            }
         }
+       
+       
         // this.setState({obj:this.state.obj});
 
     }
@@ -148,13 +178,48 @@ class ParentFormComponent extends Component {
     objDispatch(value){
         for(const key in this.state.obj){
             this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:value});
+            if(this.props.cleanPrepareRun){
+                debugger
+                this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
+            }
+            if(this.props.prepareRun){
+                this.state.obj[key].getOperationsFactory().prepareRun({update:this.state.obj});
+            }
+           
             //for dev purposes
             this.setState();
         }
+        if(this.props.sendUpdate &&this.props.app!==undefined){
+            this.props.app.dispatch({formUpdate:this.props.type})
+        }
+    }
+
+     /**
+     * @param {} value 
+     */
+     handleChangeWithoutEvent(obj){
+       
+        for(const key in this.state.obj){
+            this.state.obj[key].setJson({...this.state.obj[key].getJson(), [obj.name]:obj.value});
+            if(this.props.cleanPrepareRun){
+                this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
+            }
+            if(this.props.prepareRun){
+                this.state.obj[key].getOperationsFactory().prepareRun({update:this.state.obj});
+            }
+            
+        }
+        if(this.props.sendUpdate &&this.props.app!==undefined){
+            this.props.app.dispatch({formUpdate:this.props.type})
+        }
+        
     }
     
     render() {
-        let types ={
+        let types;
+        console.log(this.state.obj)
+        if(this.state.start){
+         types={
             text: <InputFormComponent 
             rows={this.props.rows}
             cols={this.props.cols}
@@ -172,7 +237,7 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
-            handleChange={this.props.func? this.props.func:this.handleChange} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             min={this.props.min}
@@ -202,7 +267,8 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             tickClass={this.props.tickClass}
-            handleChange={this.props.func? this.props.func:this.objDispatch} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.objDispatch} 
+
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             
@@ -221,7 +287,7 @@ class ParentFormComponent extends Component {
             onClick={this.props.onClickFunc}
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
-            handleChange={this.props.func? this.props.func:this.objDispatch} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.objDispatch} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             updateOnClickOutside= {this.props.updateOnClickOutside}
@@ -240,7 +306,7 @@ class ParentFormComponent extends Component {
             onClick={this.props.onClickFunc}
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
-            handleChange={this.props.func? this.props.func:this.objDispatch} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.objDispatch} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             updateOnClickOutside= {this.props.updateOnClickOutside}
@@ -260,7 +326,7 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             checked={this.props.checked}
-            handleChange={this.props.func? this.props.func:this.objDispatch} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.objDispatch} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             updateOnClickOutside= {this.props.updateOnClickOutside}
@@ -285,7 +351,8 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
-            handleChange={this.props.func? this.props.func:this.handleChange} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
+
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             min={this.props.min}
@@ -318,7 +385,7 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
-            handleChange={this.props.func? this.props.func:this.handleChange} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             min={this.props.min}
@@ -350,7 +417,7 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
-            handleChange={this.props.func? this.props.func:this.handleChange} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             min={this.props.min}
@@ -369,7 +436,8 @@ class ParentFormComponent extends Component {
             theme={this.props.theme}
             objDispatch={this.objDispatch}
             updateOnClickOutside= {this.props.updateOnClickOutside}
-            handleHTMLChange={this.props.func?this.props.func: this.handleHTMLChange}
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleHTMLChange} 
+
             cols={this.props.cols}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
@@ -384,7 +452,6 @@ class ParentFormComponent extends Component {
             wrapperStyle={this.props.wrapperStyle}
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
-            handleChange={this.props.func? this.props.func:this.handleChange} 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
             min={this.props.min}
@@ -397,8 +464,36 @@ class ParentFormComponent extends Component {
             input={this.props.required? "required": this.props.disabled? "disabled": "normal"}
             requiredMessage={this.props.requiredMessage}
             />,
+            select: <SelectComponent 
+            name={this.props.name}
+        defaultValue={this.props.defaultValue}
+        emitClickedOutside={this.props.emitClickedOutside}
+        id={this.props.id}
+        theme={this.props.theme}
+        objDispatch={this.objDispatch}
+        inputStyle={this.props.inputStyle}
+            app={this.props.app}
+            updateOnClickOutside= {this.props.updateOnClickOutside}
+            label={this.props.label}
+            prepareOnClick={this.props.prepareOnClick}
+            labelStyle={this.props.labelStyle}
+            labelClass={this.props.labelClass}
+            class={this.props.class}
+            onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
+            wrapperClass={this.props.wrapperClass}
+            wrapperStyle={this.props.wrapperStyle}
+            size={this.props.size}
+            selectOptions={this.props.selectOptions}
+            textOptions= {this.props.textOptions}
+            handleChangeWithoutEvent={!this.props.update? this.props.handleChangeWithoutEvent? this.props.handleChangeWithoutEvent: this.handleChangeWithoutEvent: ()=>{console.log("")}}
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
+            //  value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
+            requiredMessage={this.props.requiredMessage}
+            input={this.props.required? "required": this.props.disabled? "disabled": this.props.inputType?this.props.inputType:"normal"}
+
+            />
            
-        }
+        }}
         return (
            <>{this.state.start&&(
             <>{this.props.type? types[this.props.type]:types.text} </>

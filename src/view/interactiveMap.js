@@ -4,7 +4,7 @@ import CardPractice from './CardPrac';
 import map from '../interactiveMap.png';
 import InteractiveMapItem from './interactiveMapItem';
 import Upload from './upload';
-import MapComponent from './mapComponent';
+import MapComponent from '../componentListNPM/mapTech/mapComponent';
 
 export default class InteractiveMap extends Component {
   constructor(props) {

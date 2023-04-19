@@ -2,7 +2,7 @@ import { Component } from 'react';
 import "../App.css"
 import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
-import MapComponent from './mapComponent';
+import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import InteractiveMap from './interactiveMap';
 

@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
-import FormsThemeFactory from '../formThemes/formThemeFactory';
-import InputFormComponent from './singleForms/inputComponent.js'
-import RichTextComponent from './singleForms/RichTextComponent.js';
-import TextBoxComponent from './singleForms/TextBoxComponent.js';
-import SwitchComponent from './singleForms/switchComponent.js';
-import RangeComponent from './singleForms/rangeComponent.js';
-import RadioComponent from './singleForms/radioComponent.js';
-import InputToTextBoxComponent from './singleForms/inputToTextBoxComponent.js';
-import InputToRichTextComponent from './singleForms/inputToRichEditor.js';
-import CheckBox from './singleForms/checkComponent.js';
-class MassSingleForm extends Component {
+// import FormsThemeFactory from '../componentListNPM/componentForms/formThemes/formThemeFactory';
+// import InputFormComponent from '../componentListNPM/componentForms/singleForms/inputComponent.js'
+// import RichTextComponent from '../componentListNPM/componentForms/singleForms/RichTextComponent.js';
+// import TextBoxComponent from '../componentListNPM/componentForms/singleForms/TextBoxComponent.js';
+// import SwitchComponent from '../componentListNPM/componentForms/singleForms/switchComponent.js';
+// import RangeComponent from '../componentListNPM/componentForms/singleForms/rangeComponent.js';
+// import RadioComponent from '../componentListNPM/componentForms/singleForms/radioComponent.js';
+// import InputToTextBoxComponent from '../componentListNPM/componentForms/singleForms/inputToTextBoxComponent.js';
+// import InputToRichTextComponent from '../componentListNPM/componentForms/singleForms/inputToRichEditor.js';
+// import CheckBox from '../componentListNPM/componentForms/singleForms/checkComponent.js';
+// import UpdateAndRunButton from '../componentListNPM/componentForms/buttons/updateAndRunButton';
+// import SelectComponent from '../componentListNPM/componentForms/singleForms/selectComponent';
+class ParentFormComponent extends Component {
     constructor(props) {
         super(props);
         this.handleChange=this.handleChange.bind(this);
-        this.prepareOnClick=this.prepareOnClick.bind(this);
         this.handleHTMLChange=this.handleHTMLChange.bind(this);
         this.objDispatch=this.objDispatch.bind(this);
         this.wrapperRef = React.createRef();
         this.setWrapperRef = this.setWrapperRef;
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.handleChangeWithoutEvent=this.handleChangeWithoutEvent.bind(this)
         this.state = {
            
         };
@@ -31,6 +33,7 @@ class MassSingleForm extends Component {
     handleHTMLChange(change){
         
         this.setState({ [this.props.name]: change });
+        this.props.formUpdate({[this.props.name]: change})
   }
 
 
@@ -55,7 +58,7 @@ class MassSingleForm extends Component {
         let { name, value } = e.target;
         
         this.setState({ [name]: value });
-       
+        this.props.formUpdate({[name]: value})
     }
     /**
      * update a value all at once. Same as handleHTMLChange but made to me more generic in clase the html change needs to be more complicated.
@@ -64,16 +67,19 @@ class MassSingleForm extends Component {
     objDispatch(value){
         
         this.setState({ [this.props.name]: value });
+        this.props.formUpdate({[this.props.name]: value})
     }
 
-    handleSubmit(e) {
-
+     /**
+     * @param {} value 
+     */
+     handleChangeWithoutEvent(obj){
         
-        let obj = {...this.state};
-        
-        this.props.obj.setCompState({...obj})
-       
+        this.setState({ [obj.name]: obj.value });
+        this.props.formUpdate({[obj.name]:obj.value})
     }
+
+    
 
     componentDidMount() {
         let obj =   this.props.obj? this.props.obj: this.props.app?.state?.currentComponent;
@@ -350,17 +356,87 @@ class MassSingleForm extends Component {
             html ={!this.state.obj? undefined: this.state.obj[0].getJson().html}
             input={this.props.required? "required": this.props.disabled? "disabled": "normal"}
             requiredMessage={this.props.requiredMessage}
+            />,
+            select: <SelectComponent 
+            name={this.props.name}
+        defaultValue={this.props.defaultValue}
+        emitClickedOutside={this.props.emitClickedOutside}
+        id={this.props.id}
+        theme={this.props.theme}
+        objDispatch={this.objDispatch}
+        inputStyle={this.props.inputStyle}
+            app={this.props.app}
+            updateOnClickOutside= {this.props.updateOnClickOutside}
+            label={this.props.label}
+            prepareOnClick={this.props.prepareOnClick}
+            labelStyle={this.props.labelStyle}
+            labelClass={this.props.labelClass}
+            class={this.props.class}
+            onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
+            wrapperClass={this.props.wrapperClass}
+            wrapperStyle={this.props.wrapperStyle}
+            size={this.props.size}
+            selectOptions={this.props.selectOptions}
+            textOptions= {this.props.textOptions}
+            handleChange={this.props.func? this.props.func:this.handleChange} 
+            handleChangeWithoutEvent={this.props.handleChangeWithoutEvent? this.props.handleChangeWithoutEvent: this.handleChangeWithoutEvent}
+            //  value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
+            requiredMessage={this.props.requiredMessage}
+            input={this.props.required? "required": this.props.disabled? "disabled": this.props.inputType?this.props.inputType:"normal"}
+
             />
         }
 
 
         return (
-            <div >
-            </div>
+            <>{this.state.start&&(
+                <>{this.props.type? types[this.props.type]:types.text} </>
+               )}</>
+           
         );
     }
 }
 
+class ContactForm extends Component{
+    constructor(props) {
+      super(props);
+      this.formUpdate=this.formUpdate.bind(this)
+      this.state={
+
+      }
+
+      
+    }
+
+    formUpdate(obj){
+        this.setState({...obj})
+    }
+
+    render(){
+      let app = this.props.app;
+      let dispatch = app.dispatch;
+      let state = app.state;
+      let componentList = state.componentList;
+      let styles =state.styles;
+  
+      return(
+        <div style={{width:"100%", height:"100%", display:"flex", flexDirection:"column", alignItems:"center", position:"relative"}}>
+            <ParentFormComponent app={app}  name="name" theme="default" placeholder="name" formUpdate={this.formUpdate}/>
+      <ParentFormComponent app={app}  name="email" theme="default" placeholder="email" formUpdate={this.formUpdate}/>
+      <ParentFormComponent app={app}  name="phone" theme="default" placeholder="phone" formUpdate={this.formUpdate}/>
+      <ParentFormComponent app={app}  name="notes" type="textArea" theme="default" placeholder="notes" formUpdate={this.formUpdate}/>
+      <ParentFormComponent app={app}  name="platform" theme="default" placeholder="platform" formUpdate={this.formUpdate}/>
+      <ParentFormComponent app={app} type ="select" name="tag" defaultValue={state.currentComponent.getJson().tag}  theme="default"
+      selectOptions={componentList.getList("tag").map((obj, index)=>{return obj.getJson().name})} formUpdate={this.formUpdate}/>
+      <div style={{position:"absolute", bottom:"0", marginBottom:"10px"}}>
+      <UpdateAndRunButton app={app} obj={state.currentComponent} theme={"default"} updateObj={{...this.state}} />
+      </div>
+            </div>
+      )
+    }
+  }
+    
 
 
-export default MassSingleForm;
+
+export default ContactForm;

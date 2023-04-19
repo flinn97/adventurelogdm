@@ -1,7 +1,6 @@
 import './App.css';
 import { Component } from 'react';
 // import Home from './view/home';
-import Nav from './view/nav.js';
 // import Login from './view/login';
 // import Register from './view/register';
 import './index.css';
@@ -11,7 +10,7 @@ import Worldbuilder from './view/worldBuilder';
 import EncounterManager from './view/encounterManager';
 import AddEncounter from './view/AddEncounter';
 import Encounter from './view/encounter';
-
+import Nav from './componentListNPM/navTech/nav';
 // import DeletePopup from './view/deletePopup';
 // import KeepDel from './view/keepDelete';
 
@@ -39,7 +38,7 @@ export default class Dispatch extends Component {
 
 
      <Nav app={app}/> 
-     <div style={{paddingTop:"50px",paddingLeft:"50px", width:"100%", height:"100%"}}>
+     <div style={{paddingTop:"200px",paddingLeft:"50px", width:"100%", height:"100%"}}>
      <Routes>
       {state.switchCase?.map((obj, index)=>
         <Route path={obj.path} element={<obj.comp app={app}/>} />

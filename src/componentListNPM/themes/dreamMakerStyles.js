@@ -1,6 +1,6 @@
 import { normalizeUnits } from "moment"
 
-class DefaultStyles {
+class DreamMakerStyles {
     //********FULL SCREEN DESKTOP********/
     getstyles() {
 
@@ -1743,7 +1743,7 @@ class DefaultStyles {
     }
 
 }
-export default new DefaultStyles();
+export default new DreamMakerStyles();
 
 
 

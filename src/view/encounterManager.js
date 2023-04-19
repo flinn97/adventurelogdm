@@ -2,7 +2,7 @@ import { Component } from 'react';
 import "../App.css"
 import CardPractice from './CardPrac';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import MapComponent from './mapComponent';
+import MapComponent from '../componentListNPM/mapTech/mapComponent';
 
 export default class EncounterManager extends Component {
   constructor(props) {

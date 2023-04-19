@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import auth from '../services/auth';
-import { ref, } from "firebase/storage";
-import { storage, } from '../firbase.config.js';
+
 import VideoPlayer from './videoJS';
 
 

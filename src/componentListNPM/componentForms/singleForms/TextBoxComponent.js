@@ -26,6 +26,8 @@ class TextBoxComponent extends Component {
     }
 
     componentDidMount() {
+
+       
         document.addEventListener('mousedown', this.handleClickOutside);
     }
     componentWillUnmount() {

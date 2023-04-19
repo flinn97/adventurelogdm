@@ -1,3 +1,6 @@
+/**
+ * Create a base class the defines some basic functions and data
+ */
 export default class BaseClass {
     operationsFactory;
     json;
@@ -8,7 +11,12 @@ export default class BaseClass {
         this.getOperationsFactory=this.getOperationsFactory.bind(this)
         this.operationsFactory=oppsFactory;
     }
-
+  /**
+     * 
+     * @param obj 
+     * @param callBack 
+     * Works exactly like setState in react only I include a function for a callback if needed
+     */
     setCompState(obj, callBack){
     this.json={...this.json, ...obj};
     if(callBack){
@@ -16,12 +24,26 @@ export default class BaseClass {
     }
     }
 
+    /**
+     * 
+     * @returns operations factory for the class
+     */
     getOperationsFactory(){
         return this.operationsFactory;
     }
+
+     /**
+     * 
+     * @param json 
+     * set the data
+     */
     setJson(json){
         this.json=json;
     }
+
+     /**
+     * get the data if to preserve private json var
+     */
     getJson(){
         return this.json
     }

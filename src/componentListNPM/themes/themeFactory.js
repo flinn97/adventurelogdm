@@ -1,8 +1,7 @@
 import defaultStyles from "./defaultStyles";
-// defaultSylesPhone
 import LegatoStyles from "./legatoStyles";
 import SpawnStyles from "./spawnStyles";
-
+import dreamMakerStyles from "./dreamMakerStyles";
 
 class ThemeFactory {
     operationsFactory;
@@ -11,7 +10,7 @@ class ThemeFactory {
        legato: LegatoStyles.getStylesByScreenSize(),
        spawn: SpawnStyles.getStylesByScreenSize(),
        default: defaultStyles.getStylesByScreenSize(),
-       //phone: defaultSylesPhone
+       dreamMaker: dreamMakerStyles.getStylesByScreenSize()
 
 
     }
@@ -21,6 +20,7 @@ class ThemeFactory {
     getThemeFactory(){
         return this.factory;
     }
+
     getComponent(obj){
         //debugger
         if(Object.keys(this.factory).includes(obj.component)){

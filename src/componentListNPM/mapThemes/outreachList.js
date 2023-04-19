@@ -1,18 +1,18 @@
 
 
 
-class LegatoMap {
+class OutreachMap {
     getMapTheme(){
         let style={ 
         containerStyle: {
-            default: {display:'flex', flexDirection:"column"},
-            row: {display:'flex', flexDirection:"row"},
+            default: {display:'flex', flexDirection:"row"},
+            column: {display:'flex', flexDirection:"column"},
             wrapRow:{ display:'flex', flexDirection:"row", flexWrap:"wrap"},
             wrapColumn:{ display:'flex', flexDirection:"column", flexWrap:"wrap"},
           },
           sectionStyle:{
-            default:  {display:'flex', flexDirection:"row"},
-            column: {display:'flex', flexDirection:"column"},
+            default:  {display:'flex', flexDirection:"column"},
+            row: {display:'flex', flexDirection:"row"},
             wrapRow:{ display:'flex', flexDirection:"row", flexWrap:"wrap"},
             wrapColumn:{ display:'flex', flexDirection:"column", flexWrap:"wrap"},
             
@@ -22,7 +22,7 @@ class LegatoMap {
           },
 
           cellStyle:{
-            default: {display:"flex", justifyContent:"center", alignItems:"center", marginLeft:"5px"},
+            default: {display:"flex", justifyContent:"center", alignItems:"center", paddingRight:"5px", borderRight:"1px solid black", },
           },
 
           delstyle:{
@@ -38,7 +38,7 @@ class LegatoMap {
           },
 
           innerCellStyle:{
-            default: {display:"flex", justifyContent:"center", alignItems:"center", marginLeft:"5px"},
+            default: {display:"flex", justifyContent:"center", alignItems:"center", marginLeft:"5px",},
             
           }, 
 
@@ -52,4 +52,4 @@ class LegatoMap {
 
    
 }
-export default new LegatoMap();
+export default new OutreachMap();

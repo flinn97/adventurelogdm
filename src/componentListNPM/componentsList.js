@@ -1,4 +1,9 @@
+
 export default class Opps {
+    /**
+     * Set components 
+     * Add an easy way to access lists of components
+     */
     components=[];
     dispatch;
     backArray={};
@@ -22,6 +27,11 @@ export default class Opps {
         this.dispatch=componentListInterface.dispatch;
         
     }
+
+        /**
+     * 
+     * @returns all the components inside the tech
+     */
     getComponents(){
         return this.components
     }
@@ -50,20 +60,32 @@ export default class Opps {
         await this.dispatch({ backend:true, backendUpdate:this.backArray});
         this.backArray={}
     }
+
+
+    /**
+     * 
+     * @param arr of components to add
+     * add one to many components into the list
+     * 
+     */
     async add(arr){
         for(const key in arr){
             let comp = [...this.components];
-            let id = (Math.random(Date.now())+Date.now()+performance.now()).toString();
-            if(arr[key].getJson()._id){
-               id =  arr[key].getJson()._id;
-            }
-            await arr[key].setJson({...arr[key].getJson(), _id:id ,});
+           
             await comp.push(arr[key]);
             this.components=comp;
         }
         await this.setComponentsList();
         return arr;
     }
+
+
+    /**
+     * 
+     * @param arr of components to update
+     * update one to many components into the list
+     * 
+     */
     async update(arr){
         for(const key in arr){
             if(arr[key][0]){
@@ -73,6 +95,14 @@ export default class Opps {
         }
         return arr
     }
+
+
+    /**
+     * 
+     * @param arr of components to add
+     * delete one to many components into the list
+     * 
+     */
     async del(arr){
         let backArr=[];
         for(const key in arr){
@@ -84,6 +114,11 @@ export default class Opps {
         return backArr;
     }
 
+ /**
+     * 
+     * @param arr 
+     *  add any amount of raw data as a component into the list.
+     */
     async addComponents(arr, backend){
         this.backend=backend;
         let prep = []
@@ -144,7 +179,10 @@ export default class Opps {
     getOperationsFactory(){
         return this.operationsFactory;
     }
-
+/**
+     * if this is a new type of component that has never been added before add a new array.
+     * Otherwise add it to the current array
+     */
     setComponentsList(){
         let comps = [...this.components];
         let tempcomps={};
@@ -159,6 +197,14 @@ export default class Opps {
         }
         this.componentsList = tempcomps;
     }
+
+    /**
+     * 
+     * @param list 
+     * @param id 
+     * @param filterKey 
+     * @returns a filtered list of what was asked for with the default being the full list.
+     */
     getList(list, id, filterKey, ){
         let temp = [];
         if(this.componentsList[list]!==undefined){
@@ -170,6 +216,14 @@ export default class Opps {
         }
         return temp;
     }
+
+    /**
+     * 
+     * @param list 
+     * @param id 
+     * @param filterKey 
+     * @returns a component of what was asked for with the default being the the first component in the list.
+     */
     getComponent(list, id, filterKey, ){
         let temp = [];
         if(this.componentsList[list]!==undefined){

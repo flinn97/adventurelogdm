@@ -2,7 +2,7 @@ import { Component } from 'react';
 import "../App.css"
 import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
-import MapComponent from './mapComponent';
+import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import Upload from './upload';
 
 export default class Campaign extends Component {

@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import "../App.css"
-import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import ParentFormComponent from '../componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
-import MapThemeFactory from '../componentListNPM/themes/mapThemes/mapThemeFactory';
+import MapThemeFactory from '../mapThemes/mapThemeFactory';
 
 
 export default class MapComponent extends Component {
@@ -57,7 +57,7 @@ export default class MapComponent extends Component {
       })
       }>
          {this.props.innerlinkOptions?.cells?.includes(index)?(
-          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
       <div style={{color:c.style?.color, fontSize:c.style?.fontSize, }}>{item.getJson()[c.json?c.json:c]}</div></Link>
       ):(
       <div style={{color:c.style?.color, fontSize:c.style?.fontSize, }}>{item.getJson()[c.json?c.json:c]}</div>)}</div>
@@ -72,7 +72,7 @@ export default class MapComponent extends Component {
           })
           }>
             {this.props.innerlinkOptions?.cells?.includes(index)?(
-              <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+              <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
           <div style={{color:c.style?.color, fontSize:c.style?.fontSize, }}>{c.txt}</div></Link>
           ):(
           <div style={{color:c.style?.color, fontSize:c.style?.fontSize, }}>{c.txt}</div>)}</div>
@@ -93,7 +93,7 @@ export default class MapComponent extends Component {
             componentList.getOperationsFactory().cleanPrepareRun({del:item})}}>
               
        {this.props.linkOptions?.cells?.includes(index)?(
-       <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+       <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
         {this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}} src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}
        </Link>):(
          <>{this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}</>
@@ -110,7 +110,7 @@ export default class MapComponent extends Component {
         {cursor:"pointer", ...f.getMapThemeFactory()[this.props.editOptions?.theme].editstyle }: 
         {cursor:"pointer", ...styles.editstyle }} onClick={this.props.editOptions?.func&& this.props.editOptions.func}>
        {this.props.innerlinkOptions?.cells?.includes(index)?(
-       <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+       <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
         {this.props.editOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}
        </Link>):(
          <>{this.props.editOptions?.picURL?(<img  style={{width:"20px", height:"20px"}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}</>
@@ -125,7 +125,7 @@ export default class MapComponent extends Component {
         this.props.innerFunctions.functions[this.props.innerFunctions?.cells.indexOf(index)](item);
       })}>
         {this.props.innerlinkOptions?.cells?.includes(index)?(
-          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
     
       <img style={c.imgStyle? c.imgStyle: 
         this.props.imgStyle? this.props.imgStyle: 
@@ -147,7 +147,7 @@ export default class MapComponent extends Component {
         this.props.innerFunctions.functions[this.props.innerFunctions?.cells.indexOf(index)](item);
       })}>
        {this.props.innerlinkOptions?.cells?.includes(index)?(
-        <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+        <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
   <c.custom props={{...c.props}} app={{...c.props.app}} obj={item} style={{...c.style}}/></Link>):(<c.custom app={{...c.props.app}} props={{...c.props}} obj={item} style={{...c.style}}/>)}</div>)}
 
       {/* IS CELL AN INPUTTYPE */}
@@ -157,7 +157,7 @@ export default class MapComponent extends Component {
           this.props.innerFunctions.functions[this.props.innerFunctions?.cells.indexOf(index)](item);
         })}>
       {this.props.innerlinkOptions?.cells?.includes(index)?(
-        <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+        <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
   <ParentFormComponent type={c.inputType} obj = {item} name={c.name}
     rows={c.rows}
     theme={c.theme}
@@ -248,7 +248,7 @@ export default class MapComponent extends Component {
       })}>
           <> 
           {this.props.innerlinkOptions?.cells?.includes(index)?(
-            <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+            <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
       
           
             {this.cellMap2(item, index, c)}
@@ -310,7 +310,7 @@ export default class MapComponent extends Component {
            {this.props.linkOptions?.cells?.includes(index)?(
             <Link className="mapLink" style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={
               this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? 
-              this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}
+              this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}
               >
         <div style={{color:c.style?.color, fontSize:c.style?.fontSize}}>{item.getJson()[c]}</div></Link>):(<div style={{color:c.style?.color, fontSize:c.style?.fontSize, cursor: this.props.functions?.cells.includes(index)&&"pointer"}}>{item.getJson()[c]}</div>)}</div>
         )}
@@ -324,7 +324,7 @@ export default class MapComponent extends Component {
           })
           }>
             {this.props.innerlinkOptions?.cells?.includes(index)?(
-              <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
+              <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
           <div style={{color:c.style?.color, fontSize:c.style?.fontSize, }}>{c.txt}</div></Link>
           ):(
           <div style={{color:c.style?.color, fontSize:c.style?.fontSize, }}>{c.txt}</div>)}</div>
@@ -342,7 +342,7 @@ export default class MapComponent extends Component {
             debugger
             componentList.getOperationsFactory().cleanPrepareRun({del:item})}}>
          {this.props.linkOptions?.cells?.includes(index)?(
-         <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
+         <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
           {this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}} src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}
          </Link>):(
            <>{this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}</>
@@ -360,7 +360,7 @@ export default class MapComponent extends Component {
           {cursor:"pointer", ...styles.editstyle }}
         onClick={this.props.editOptions?.func&& this.props.editOptions.func}>
          {this.props.linkOptions?.cells?.includes(index)?(
-         <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
+         <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
           {this.props.editOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}
          </Link>):(
            <>{this.props.editOptions?.picURL?(<img  style={{width:"20px", height:"20px"}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}</>
@@ -384,7 +384,7 @@ export default class MapComponent extends Component {
         this.props.functions.functions[this.props.functions?.cells.indexOf(index)](item);
       })}>
           {this.props.linkOptions?.cells?.includes(index)?(
-            <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions?.cells?.indexOf(index)]? this.props?.linkOptions?.path[this.props.linkOptions?.cells?.indexOf(index)]: this.props.linkOptions?.path[this.props.linkOptions?.path?.length-1]+ item.getJson()?._id}>
+            <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions?.cells?.indexOf(index)]? this.props?.linkOptions?.path[this.props.linkOptions?.cells?.indexOf(index)]+ item.getJson()._id: this.props.linkOptions?.path[this.props.linkOptions?.path?.length-1]+ item.getJson()?._id}>
       
         <img style={c.imgStyle? c.imgStyle: 
         this.props.imgStyle? this.props.imgStyle: 
@@ -407,7 +407,7 @@ export default class MapComponent extends Component {
         this.props.functions.functions[this.props.functions?.cells.indexOf(index)](item);
       })}>
          {this.props.linkOptions?.cells?.includes(index)?(
-          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
+          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
     <c.custom props={{...c.props}} app={{...c.props.app}} obj={item} style={c.style? //if
         c.style://then
         this.props.innerCellStyle?//else if
@@ -444,7 +444,7 @@ export default class MapComponent extends Component {
             this.props.functions.functions[this.props.functions?.cells.indexOf(index)](item);
           })}> 
         {this.props.linkOptions?.cells?.includes(index)?(
-          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
+          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
     <ParentFormComponent type={c.inputType} obj = {item} name={c.name}
     rows={c.rows}
     theme={c.theme}

@@ -2,7 +2,22 @@ import React, { Component } from 'react';
 import "./checkbox.css"
 import FormsThemeFactory from '../formThemes/formThemeFactory';
 
-class CheckBox extends Component {
+
+/**
+ * props
+ * emitClickedOutside
+ * handleChange
+ * wrapperStyle
+ * theme
+ * id
+ * onClick
+ * labelClass
+ * labelStyle
+ * tickClass
+ * tickStyle
+ * app
+ */
+class PrepareUpdateCheckBox extends Component {
     constructor(props) {
         super(props);
         this.markcheckbox = this.markcheckbox.bind(this);
@@ -16,11 +31,12 @@ class CheckBox extends Component {
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
-    componentDidUpdate(props, state){
-        if(props!==this.props){
-            this.setState({checked:this.props.value})
+    async componentDidUpdate(){
+        if(this.props.app?.state?.unMarkCheck){
+            await this.props.app?.dispatch({unMarkCheck:false});
+            this.setState({checked:false});
         }
-
+        
     }
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
@@ -37,10 +53,21 @@ class CheckBox extends Component {
      * @param {*} day 
      * check the box send to backend.
      */
-    async markcheckbox() {
+    async  markcheckbox() {
         await this.setState({checked:!this.state.checked})
-        this.props.handleChange(this.state.checked);
-        
+        if(this.props.handleChange){
+            this.props.handleChange(this.state.checked);
+        }
+        else{
+            if(this.state.checked){
+                await this.props.app.state.opps.prepare({update:this.props.obj});
+
+            }
+            else{
+                await this.props.app.state.opps.removeFromRegister(this.props.obj)
+            }
+            this.props.app.dispatch({checkComplete:true, checkObj:this.props.obj})
+        }
     }
 
     render() {
@@ -63,4 +90,4 @@ class CheckBox extends Component {
 }
 }
 
-export default CheckBox;
+export default PrepareUpdateCheckBox;
