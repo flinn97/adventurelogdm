@@ -52,12 +52,13 @@ export default class App extends Component {
       backendUpdate:[],
       backend: false,
       myswitch: "home",
-      defaultTheme: "legato",
+      defaultTheme: "adventure",
       globalTheme: "",
       switchCase:[
         {path:"/", comp:Home, name: "Home" },
-        {path: "/campaign", comp:Campaign, name: "Campaign"},
- 
+        {path: "/campaign", comp:Campaign, name: "Campaigns"},
+        {path: "/notes", comp:Campaign, name: "Notes"},
+        {path: "/market", comp:Campaign, name: "Marketplace"},
       ]
 
     }
@@ -115,7 +116,7 @@ handleChange = (event) => {
     if(this.state.themeFactory){
       debugger
       let f = await this.state.themeFactory.getThemeFactory();
-      let style = this.state.globalTheme!==""? this.state.globalTheme: this.state.defaultTheme!==""? this.state.defaultTheme: "default"
+      let style = this.state.globalTheme!==""? this.state.globalTheme: this.state.defaultTheme!==""? this.state.defaultTheme: "adventure"
       let styles = f[style];
       
       this.setState({styles:styles, start:true});

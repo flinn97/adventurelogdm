@@ -2,6 +2,7 @@ import defaultStyles from "./defaultStyles";
 import LegatoStyles from "./legatoStyles";
 import SpawnStyles from "./spawnStyles";
 import dreamMakerStyles from "./dreamMakerStyles";
+import adventureLogStyles from "./adventureLogStyles";
 
 class ThemeFactory {
     operationsFactory;
@@ -10,8 +11,8 @@ class ThemeFactory {
        legato: LegatoStyles.getStylesByScreenSize(),
        spawn: SpawnStyles.getStylesByScreenSize(),
        default: defaultStyles.getStylesByScreenSize(),
-       dreamMaker: dreamMakerStyles.getStylesByScreenSize()
-
+       dreamMaker: dreamMakerStyles.getStylesByScreenSize(),
+       adventure: adventureLogStyles.getStylesByScreenSize(),
 
     }
     registerComponents(register){

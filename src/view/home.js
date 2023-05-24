@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import "../App.css"
 import CardPractice from './CardPrac';
+import HomeCard from './homeCard';
 
 
 export default class Home extends Component {
@@ -19,9 +20,25 @@ export default class Home extends Component {
 
 
     return (
-      <div style={{backgroundColor: "lightblue", color: 'orange' }}><h1>Home</h1>
-
+      <div style={{backgroundColor: "lightblue", color:"" }}>
+      <div>
+      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      </div>
       
+      <div>
+        {/* EVENTUALLY THIS WILL BE RECENT CAMPAIGNS or something */}
+      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      </div>
+
+      <div>
+        {/* EVENTUALLY THIS WILL BE CURRENT NOTES or something */}
+      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      </div>
+
+      <div>
+        {/* EVENTUALLY THIS WILL BE MARKETPLACE SPECIALS or something */}
+      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      </div>
 
       </div>
 

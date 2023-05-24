@@ -31,14 +31,16 @@ export default class Dispatch extends Component {
 <BrowserRouter>
     <div style={{
       width:"100%", 
-      height:"96vh",
-      }}>
+      height:"100%",
+            }}>
         
 
-
-
-     <Nav app={app}/> 
-     <div style={{paddingTop:"200px",paddingLeft:"50px", width:"100%", height:"100%"}}>
+{/* WITHIN */}
+<div style={{display:'flex', flexDirection:'row',}}>
+        <div style={{display:'flex', marginRight:"210px"}}>
+          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"/>
+          </div>
+     <div style={{ width:'100%', height:"100%"}}>
      <Routes>
       {state.switchCase?.map((obj, index)=>
         <Route path={obj.path} element={<obj.comp app={app}/>} />
@@ -50,7 +52,7 @@ export default class Dispatch extends Component {
 <Route path="/encounter/:id" element={<Encounter app={app} />}/> 
 
 </Routes>
-
+</div>
 </div>
      </div>
 
