@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import "../App.css"
-import MapComponent from '../componentListNPM/mapTech/mapComponent';
-import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-import FormWithUpdateAndRun from '../componentListNPM/componentForms/buttons/formWithUpdateAndRun';
-
+import "../../App.css"
 
 
 /**
@@ -16,7 +12,7 @@ import FormWithUpdateAndRun from '../componentListNPM/componentForms/buttons/for
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class MarketCard extends Component {
+export default class HomeCard extends Component {
   constructor(props) {
     super(props);
     
@@ -95,11 +91,9 @@ class MainContent extends Component{
     
 
     return(
-      <div>
-      You can buy adventures, encounters, and more.
-       <div style={{color:'grey'}}>Buy Stuff</div>
-      </div>
-      
+    <div>
+      There is nothing here yet
+    </div>
     )
   }
 }
@@ -116,8 +110,9 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div>
-      -Marketplace-
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
+    fontSize:'styles.appFonts.fontSubheader1'}}>
+      Home
     </div>
     )
   }
@@ -136,7 +131,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"] }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:"#59788E88"}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

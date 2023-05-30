@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import "../App.css"
-import MapComponent from '../componentListNPM/mapTech/mapComponent';
-import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-import FormWithUpdateAndRun from '../componentListNPM/componentForms/buttons/formWithUpdateAndRun';
-
-
 
 /**
  * condensed version of the cards.
@@ -95,7 +89,7 @@ class MainContent extends Component{
     
 
     return(
-      <div>
+      <div style={{}}>
       Notes Notes Notes everybody
       </div>
     )
@@ -114,7 +108,8 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
+    fontSize:'styles.appFonts.fontSubheader1'}} >
       My Notes
     </div>
     )
@@ -134,7 +129,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"] }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:"gold" }}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

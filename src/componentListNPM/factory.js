@@ -37,7 +37,10 @@ class Factory {
         if(Object.keys(this.factory).includes(obj.component)){
             let key = obj.component;
             let comp = new this.factory[key](this.operationsFactory);
-            comp.setJson({...comp.getJson(), ...obj.json, _id: obj.json?._id? obj.json?._id: Math.floor(Math.random()*100000).toString()});
+            const currentDate = new Date();
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            comp.setJson({...comp.getJson(), ...obj.json, _id: obj.json?._id? obj.json?._id: Math.floor(Math.random()*100000).toString()+month+day});
             return comp;     
         }
         

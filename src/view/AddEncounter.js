@@ -11,13 +11,16 @@ export default class AddEncounter extends Component {
     super(props);
 
     this.state = {
-
+      eid: 10,
     }
   }
 async componentDidMount(){
  
-  await this.props.app.dispatch({currentComponent: undefined})
-  await this.props.app.dispatch({operate: "addencounter", operation: "cleanJsonPrepare", object: {_id:Math.floor(Math.random() * 100000).toString()}})
+  await this.props.app.dispatch({currentComponent: undefined});
+  const currentDate = new Date();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  await this.props.app.dispatch({operate: "addencounter", operation: "cleanJsonPrepare", object: {_id: Math.floor(Math.random() * 10000).toString()+"E"+month+day}});
   this.setState({start:true})
 }
 
@@ -30,7 +33,7 @@ async componentDidMount(){
 
     return (
       <div style={{display: "flex"}}><h1></h1>{this.state.start&& app.state.currentComponent&& (<>
-      <div onClick={()=>{dispatch({popUpSwitchcase: ""})}}>X</div>
+      <div onClick={()=>{dispatch({popUpSwitchcase:""})}}>X</div>
       <Upload  update={true} skipUpdate={true} updateMap={(obj)=>{this.setState({pic: obj.getJson().picURL})}} obj={app.state.currentComponent} app={app}/>
       <img src={this.state.pic}/>
 

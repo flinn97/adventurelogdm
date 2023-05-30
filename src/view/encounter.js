@@ -1,7 +1,4 @@
 import { Component } from 'react';
-import "../App.css"
-import CardPractice from './CardPrac';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import AddParticipant from './AddParticipant';
 import Roll from './Roll';

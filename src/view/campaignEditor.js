@@ -29,11 +29,12 @@ componentDidMount(){
     let dispatch = app.dispatch
     let state = app.state;
     return (
-      <div style={{display: "flex", flexDirection: "row", width: "80vw", justifyContent: "space-between", color: "red"}}><h1>Campaign Editor</h1>
+      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between"}}>
+        <h1>{this.state.obj?.getJson().title}</h1>
       
       {state.popUpSwitchcase !== "updateCampaign" && <>
       <img src={this.state.obj?.getJson().picURL} style={{width: "100px"}}/>
-      {this.state.obj?.getJson().title}
+      
       {this.state.obj?.getJson().description}
       {this.state.obj?.getJson().session}
       <div onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>edit</div>

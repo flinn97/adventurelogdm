@@ -8,15 +8,15 @@ export default class OppsFactory {
         this.prepare=this.prepare.bind(this);
         this.prepareArray=this.prepareArray.bind(this);
         this.cleanPrepare=this.cleanPrepare.bind(this);
-        this.cleanPrepareRun=this.cleanPrepareRun.bind(this);
+        this.cleanPrepareRun=this.cleanPrepareRun.bind(this); //save to 'long-term'
         this.prepareRun=this.prepareRun.bind(this);
-        this.run=this.run.bind(this);
+        this.run=this.run.bind(this); //
         this.operationsFactoryListener=this.operationsFactoryListener.bind(this);
         this.isArray=this.isArray.bind(this);
         this.handleChange=this.handleChange.bind(this);
         this.cleanJsonPrepareRun= this.cleanJsonPrepareRun.bind(this);
         this.setRegister=this.setRegister.bind(this);
-        this.jsonPrepare=this.jsonPrepare.bind(this);
+        this.jsonPrepare=this.jsonPrepare.bind(this); //Prepare with custom obj
         this.cleanJsonPrepare=this.cleanJsonPrepare.bind(this);
         this.componentUpdate=componentListInterface.getUpdater();
         this.factory= componentListInterface.getFactory();
@@ -72,9 +72,9 @@ export default class OppsFactory {
      
   
         let reg = this.getUpdater();
-        let add = [...reg.componentUpdate.add]
-        let del = [...reg.componentUpdate.del]
-        let update = [...reg.componentUpdate.update]
+        let add = [...reg.componentUpdate.add];
+        let del = [...reg.componentUpdate.del];
+        let update = [...reg.componentUpdate.update];
         let list = add.includes(obj)?add:update.includes(obj)?update:del.includes(obj)?del:undefined;
         let key =add.includes(obj)?'add':update.includes(obj)?'update':del.includes(obj)?'del':undefined;
         if(list!==undefined){

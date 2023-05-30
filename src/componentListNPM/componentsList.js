@@ -205,6 +205,8 @@ export default class Opps {
      * @param filterKey 
      * @returns a filtered list of what was asked for with the default being the full list.
      */
+    //     type   id  filter
+    //     User, Taylor, name 
     getList(list, id, filterKey, ){
         let temp = [];
         if(this.componentsList[list]!==undefined){
@@ -224,6 +226,8 @@ export default class Opps {
      * @param filterKey 
      * @returns a component of what was asked for with the default being the the first component in the list.
      */
+    //     type   id  filter
+    //     User, ownerid 
     getComponent(list, id, filterKey, ){
         let temp = [];
         if(this.componentsList[list]!==undefined){

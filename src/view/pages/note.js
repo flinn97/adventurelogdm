@@ -1,9 +1,4 @@
 import { Component } from 'react';
-import "../App.css"
-import CardPractice from './CardPrac';
-import AddCampaign from './AddCampaign';
-import MapComponent from '../componentListNPM/mapTech/mapComponent';
-import Upload from './upload';
 import NoteCard from './noteCard';
 
 
@@ -25,7 +20,7 @@ export default class Note extends Component {
     let dispatch = app.dispatch
     let state = app.state;
     return (
-      <div style={{background:"gold"}} >     
+      <div style={{}} >     
       
       <NoteCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>

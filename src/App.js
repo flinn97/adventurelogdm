@@ -2,17 +2,16 @@ import './App.css';
 import { Component } from 'react';
 import Dispatch from './dispatch.js';
 import { forFactory } from './models/myComponents';
-import styleService from './services/styleService';
+
 import ComponentListInterface from './componentListNPM/componentListInterface';
 import auth from './services/auth';
-import CardsPrac from './view/cards';
-import PopupPrac from './view/PopupPrac';
 import ThemeFactory from './componentListNPM/themes/themeFactory';
 import InteractiveMap from './view/interactiveMap';
-import Home from './view/home';
-import Campaign from './view/campaign';
-import Note from './view/note';
-import Market from './view/market';
+import Home from './view/pages/home';
+import Campaign from './view/pages/campaign';
+import Note from './view/pages/note';
+import Market from './view/pages/market';
+import EncounterManager from './view/pages/encounterManager';
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 
 //fonts
@@ -56,6 +55,8 @@ export default class App extends Component {
       myswitch: "home",
       defaultTheme: "adventure",
       globalTheme: "",
+
+      //THIS IS THE NAV MENU
       switchCase:[
         {path:"/", comp:Home, name: "Home" },
         {path: "/campaign", comp:Campaign, name: "Campaigns"},
@@ -63,6 +64,8 @@ export default class App extends Component {
         {path: "/notes", comp:Note, name: "Notes"},
         ///Added Marketplace
         {path: "/market", comp:Market, name: "Marketplace"},
+        ///
+       
       ]
 
     }
@@ -155,10 +158,9 @@ handleChange = (event) => {
       width:"100vw", 
       height:"100vh", 
       display:"flex", 
-      
+      backgroundColor:"",
       zIndex:"100",
       
-       
       flexDirection:"column"}}>
         
       
