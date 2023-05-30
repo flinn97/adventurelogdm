@@ -11,6 +11,8 @@ import ThemeFactory from './componentListNPM/themes/themeFactory';
 import InteractiveMap from './view/interactiveMap';
 import Home from './view/home';
 import Campaign from './view/campaign';
+import Note from './view/note';
+import Market from './view/market';
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 
 //fonts
@@ -57,8 +59,10 @@ export default class App extends Component {
       switchCase:[
         {path:"/", comp:Home, name: "Home" },
         {path: "/campaign", comp:Campaign, name: "Campaigns"},
-        {path: "/notes", comp:Campaign, name: "Notes"},
-        {path: "/market", comp:Campaign, name: "Marketplace"},
+        ///Added Notes
+        {path: "/notes", comp:Note, name: "Notes"},
+        ///Added Marketplace
+        {path: "/market", comp:Market, name: "Marketplace"},
       ]
 
     }

@@ -24,7 +24,7 @@ export default class Campaign extends Component {
     let dispatch = app.dispatch
     let state = app.state;
     return (
-      <div style={{}}>     
+      <div style={{backgroundColor:"#E58A7755"}}>     
       
       <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>

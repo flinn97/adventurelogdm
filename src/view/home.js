@@ -2,6 +2,9 @@ import { Component } from 'react';
 import "../App.css"
 import CardPractice from './CardPrac';
 import HomeCard from './homeCard';
+import CampaignCard from './campaignCard';
+import NoteCard from './noteCard';
+import MarketCard from './marketCard';
 
 
 export default class Home extends Component {
@@ -20,24 +23,24 @@ export default class Home extends Component {
 
 
     return (
-      <div style={{backgroundColor: "lightblue", color:"" }}>
       <div>
+      <div style={{backgroundColor: "#59788E88"}}>
       <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>
       
-      <div>
-        {/* EVENTUALLY THIS WILL BE RECENT CAMPAIGNS or something */}
-      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      <div style={{background:"pink"}} >
+        
+      <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>
 
-      <div>
+      <div style={{background:"gold"}} >
         {/* EVENTUALLY THIS WILL BE CURRENT NOTES or something */}
-      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      <NoteCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>
 
-      <div>
-        {/* EVENTUALLY THIS WILL BE MARKETPLACE SPECIALS or something */}
-      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      <div style={{background:"#7dFF0077"}}>
+       
+      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>
 
       </div>
