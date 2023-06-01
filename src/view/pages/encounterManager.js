@@ -3,6 +3,7 @@ import "../../App.css";
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterCard from './encounterCard';
+import placeholder from '../../pics/placeholderEncounter.JPG';
 
 export default class EncounterManager extends Component {
   constructor(props) {
@@ -26,12 +27,13 @@ export default class EncounterManager extends Component {
     
 
     return (
-      <div style={{background:"#33333311"}}>
+      <div style={{display: "flex", marginTop:"3vmin", flexDirection: 'row', justifyContent:"space-evenly", 
+      width: '100%', height: '100%',  borderRadius:"2vmin",
+      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')' }}>
         <img 
-          src={this.state.obj?.getJson().picURL} 
-          style={{display:'flex', zIndex:"-1", position:"fixed",
-          width: "84.4%", height:"88px", objectPosition:"50% 50%", objectFit:"cover", 
-          opacity:"12%" }} />        
+          style={{position: 'absolute', minWidth: '100%', minHeight: '100%', 
+        maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
+        transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: 1, zIndex: '-1', borderRadius:"2vmin" }} />        
             <div style={{marginBottom:"70px"}}>Encounter Manager</div>
             <EncounterCard app={app} type="card" options={{cardType:"cardContent"}}/>
             

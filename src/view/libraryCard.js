@@ -10,7 +10,7 @@ import React, { Component } from 'react';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class NoteCard extends Component {
+export default class LibraryCard extends Component {
   constructor(props) {
     super(props);
     
@@ -89,9 +89,11 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{}}>
-      Notes Notes Notes everybody
+      <div>
+      This is where your purchased items will appear
+       <div style={{color:'red'}}>Coming Soon tho</div>
       </div>
+      
     )
   }
 }
@@ -109,8 +111,8 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:'styles.appFonts.fontSubheader1'}} >
-      My Notes
+    fontSize:'styles.appFonts.fontSubheader1'}}>
+      -Library-
     </div>
     )
   }
@@ -129,7 +131,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:"gold" }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:"#9cd9cf" }}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

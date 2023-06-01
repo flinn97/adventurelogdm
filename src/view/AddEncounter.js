@@ -5,6 +5,7 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import CardPractice from './CardPrac';
 import Upload from './upload';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import placeholder from '../pics/placeholderEncounter.JPG';
 
 export default class AddEncounter extends Component {
   constructor(props) {
@@ -30,18 +31,24 @@ async componentDidMount(){
   render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
+    let radius = "2vmin";
 
     return (
-      <div style={{display: "flex"}}><h1></h1>{this.state.start&& app.state.currentComponent&& (<>
-      <div onClick={()=>{dispatch({popUpSwitchcase:""})}}>X</div>
-      <Upload  update={true} skipUpdate={true} updateMap={(obj)=>{this.setState({pic: obj.getJson().picURL})}} obj={app.state.currentComponent} app={app}/>
-      <img src={this.state.pic}/>
+      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between", 
+      backgroundImage: 'url('+(this.state.pic||placeholder)+')', borderRadius:radius,
+      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover"}}>
+            <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between", 
+          backgroundColor:"#ffffff55"}}>
+            {this.state.start&& app.state.currentComponent&& (<>
+          <div onClick={()=>{dispatch({popUpSwitchcase:""})}}>X</div>
+          <Upload  update={true} skipUpdate={true} updateMap={(obj)=>{this.setState({pic: obj.getJson().picURL})}} obj={app.state.currentComponent} app={app}/>
+          
 
-      <ParentFormComponent app={app} name="name" label="Encounter Name"/> 
-      <ParentFormComponent app={app} name="description" label="Situation Description"/>
-      <ParentFormComponent app={app} name="audio" label="Audio Link"/> 
-      <Link to= {"/encounter/" + app.state.currentComponent.getJson()._id}>Save</Link>
-      </>)}
+          <ParentFormComponent app={app} name="name" label="Encounter Name"/> 
+          <ParentFormComponent app={app} name="description" label="Situation Description"/>
+          <ParentFormComponent app={app} name="audio" label="Audio Link"/> 
+          <Link to= {"/encounter/" + app.state.currentComponent.getJson()._id}>Save</Link>
+          </>)}</div>
       </div>
 
     )

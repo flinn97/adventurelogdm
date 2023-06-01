@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import "../../App.css"
+import CampaignCard from './campaignCard';
+import NoteCard from './noteCard';
+import LibraryCard from '../libraryCard';
 
 
 /**
@@ -91,8 +94,14 @@ class MainContent extends Component{
     
 
     return(
-    <div>
-      There is nothing here yet
+    <div style={{height:"100%"}}>
+      <div style={{width:"100%"}}>
+      <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
+
+      <NoteCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
+
+      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>   
+      </div>
     </div>
     )
   }
@@ -111,9 +120,9 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:'styles.appFonts.fontSubheader1'}}>
+    fontSize:"33px"}}>
       Home
-    </div>
+      </div>
     )
   }
 }
