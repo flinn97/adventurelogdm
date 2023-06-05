@@ -11,6 +11,7 @@ import EncounterManager from './view/pages/encounterManager';
 import AddEncounter from './view/AddEncounter';
 import Encounter from './view/encounter';
 import Nav from './componentListNPM/navTech/nav';
+import Background from './pics/back1.png'
 // import DeletePopup from './view/deletePopup';
 // import KeepDel from './view/keepDelete';
 
@@ -31,15 +32,20 @@ export default class Dispatch extends Component {
     
 <BrowserRouter>
     <div style={{
-      width:"100%", 
-      height:"100%",
-          }}>
+      minWidth:"100%",
+      overflow:"auto"
+      }}>
         {/* WITHIN */}
-<div style={{display:'flex', flexDirection:'row',}}>
-        <div style={{display:'flex', marginRight:"210px"}}>
-          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"/>
+<div style={{display:'flex', flexDirection:'row', }}>
+        <div style={{display:'flex', marginRight:"210px", }}>
+          <Nav app={app} theme="legatoDark" template="adventureLog" type="sideBarNav"/>
           </div>
-     <div style={{ width:'100%', height:"100%", padding:"4.5vmin"}}>
+     <div style={{ width:'100%', height:"100%", padding:"4.5vmin",
+      minHeight:"fit-content",
+      backgroundColor:styles.colors.color1,
+      backgroundImage: "url("+Background+")",
+      backgroundBlendMode:"overlay",
+      backgroundRepeat:"repeat"}}>
      <Routes>
       {state.switchCase?.map((obj, index)=>
                 <Route path={obj.path} element={<obj.comp app={app}/>} />

@@ -38,7 +38,8 @@ export default class Legato extends Component {
     {...style.sectionsContainer}}>
        <div style={this.props.options?.sectionOneStyle?{...this.props.options?.sectionOneStyle}:
        this.props.options?.sectionOneTheme?{...f[this.props.options?.sectionOneTheme][this.props.alignment].sectionOne}:{...style.sectionOne}}>
-        <Logo logoTheme={this.props.options?.logoTheme} logo={this.props.options?.logo} app={app} alignment={this.props.alignment} theme={this.props.theme} obj={this.props.obj} options={this.props.options}/>
+        <Logo logoTheme={this.props.options?.logoTheme} logo={this.props.options?.logo} 
+        app={app} alignment={this.props.alignment} theme={this.props.theme} obj={this.props.obj} options={this.props.options}/>
       </div>
       <div style={this.props.options?.sectionTwoStyle?{...this.props.options?.sectionTwoStyle}:
       this.props.options?.sectionTwoTheme?{...f[this.props.options?.sectionTwoTheme][this.props.alignment].sectionTwo}:

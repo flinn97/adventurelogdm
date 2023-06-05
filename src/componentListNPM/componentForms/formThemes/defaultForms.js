@@ -3,8 +3,11 @@
 
 class DefaultForms {
     getFormsThemeDesktop(){
+      let app = this.props.app;
+    let state = app.state;
+    let styles =state.styles;
         let style={
-              inputStyle:{width:"120px", height: "25px", marginTop:"10px", fontSize:"14px", color:"black", border:"1px solid purple", borderRadius:"3px" },
+              inputStyle:{padding:"4px 9px", color:styles.colors.colorBlack, borderRadius:"4px",width:"55%", background:styles.colors.colorWhite+"88", borderWidth:"0px"},
               wrapperStyle:{width:"120px"},
               labelStyle:{},
               textBoxLabelStyle:{},

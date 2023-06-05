@@ -20,14 +20,18 @@ export default class Home extends Component {
 
   render() {
     let app = this.props.app;
-
+    let state = app.state;
+    let styles =state.styles;
 
     return (
-      <div>
+      <div style={{height:"100%", marginBottom:"14vmin",}} >
       
       <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:"22px", marginTop:"3vmin"}}>Find Something New:</div>
+      <div 
+          style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
+        fontSize:"22px", marginTop:"3vmin", color:styles.colors.colorWhite}}>
+        Find Something New:
+    </div>
       <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
       </div>
 

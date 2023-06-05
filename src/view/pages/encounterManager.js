@@ -24,7 +24,10 @@ export default class EncounterManager extends Component {
 
   render() {
     let app = this.props.app;
-    
+    let dispatch = app.dispatch;
+    let state = app.state;
+    let componentList = state.componentList;
+    let styles =state.styles;
 
     return (
       <div style={{display: "flex", marginTop:"3vmin", flexDirection: 'row', justifyContent:"space-evenly", 

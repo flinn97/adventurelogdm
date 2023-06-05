@@ -112,7 +112,7 @@ class TabContent extends Component{
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
     fontSize:'styles.appFonts.fontSubheader1'}}>
-      -Library-
+      - Library -
     </div>
     )
   }
@@ -131,7 +131,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:"#9cd9cf" }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:"#9cd9cf88" }}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

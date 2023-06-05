@@ -51,7 +51,11 @@ class RunButton extends Component {
         }
     }
     render() {
-
+        let app = this.props.app;
+        let dispatch = app.dispatch;
+        let state = app.state;
+       
+        let styles =state.styles;
    
         let theme= undefined;
         if(this.props.theme){
@@ -61,7 +65,7 @@ class RunButton extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.runbuttonWrapperStyle:{width:"100px", height:"20px", background:"white", borderRadius:"7px", display:"flex", justifyContent:"center", alignItems:"center", cursor:"pointer"}} className={this.props.wrapperClass}>
+            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.runbuttonWrapperStyle:{...styles.buttons.buttonAdd, width:"50%", backgroundColor:styles.colors.color2+"99",}} className={this.props.wrapperClass}>
                 <div style={this.props.buttonTextStyle?{...this.props.buttonTextStyle}:theme!==undefined?theme.buttonTextStyle:{}} onClick={this.props.onClick?this.props.onClick: async()=>{
                    if(this.state.obj){
                     this.state.obj[0].getOperationsFactory().run();

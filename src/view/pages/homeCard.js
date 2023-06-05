@@ -120,7 +120,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:"33px"}}>
+    fontSize:"33px",  color:styles.colors.colorWhite}}>
       Home
       </div>
     )

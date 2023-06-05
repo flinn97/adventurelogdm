@@ -158,7 +158,7 @@ handleChange = (event) => {
       width:"100vw", 
       height:"100vh", 
       display:"flex", 
-      backgroundColor:"",
+      
       zIndex:"100",
       
       flexDirection:"column"}}>

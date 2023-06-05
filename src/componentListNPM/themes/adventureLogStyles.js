@@ -53,9 +53,9 @@ class AdventureLogStyles {
 
         let colorPalette =
         {
-            color1:"#4B0082",//purple
-            color2:"#FFA500",//orange
-            color3:"#FFFF00",//yellow
+            color1:"#12151A",//dark
+            color2:"#E8D259",//gold
+            color3:"#EB5F5F",//red
             color4:"#3CB371",//green
             color5:"#1E90FF",//blue
             color6:"#4B0082",//purple
@@ -63,28 +63,28 @@ class AdventureLogStyles {
 
         let appColors =
         {
-            color1: colorPalette.color1,//red
-            color2:"#4B0082aa",//
-            color3: colorPalette.color2,//orange
-            color4:"#FFA500aa",//
-            color5: colorPalette.color3,//yellow
-            color6:"#ADFF2Faa",//yellow green
-            color7: colorPalette.color4,//green
-            color8:"#008B8Baa",//green blue
-            color9: colorPalette.color5,//blue
-            color10:"#0000CDaa",//blue purple
-            color11: colorPalette.color6,//purple
-            color12:"#8B008Baa",//purple red
-            color13:"#8B4513aa",//brown
-            colorWhite:"#ffffff",
-            colorBlack:"#0d0a0b",
+            color1: colorPalette.color1,//dark
+            color2:"#1B1D24",//
+            color3: colorPalette.color2,//gold
+            color4:"#C1A71B",//gold dark
+            color5: colorPalette.color3,//red
+            color6:"#5F0C0C",//red dark
+            color7: colorPalette.color4,//
+            color8:"#008B8Baa",//
+            color9: colorPalette.color5,//
+            color10:"#0000CDaa",//
+            color11: colorPalette.color6,//
+            color12:"#8B008Baa",//
+            color13:"#8B4513aa",//
+            colorWhite:"#F4F5F8",
+            colorBlack:"#12151A",
 
 
         }
 
 
         let styles = {
-            appFonts:appFonts, appFonts:appColors, colors:colorPalette,
+            appFonts:appFonts, colors:appColors,
             //TODO: Create or check all styles
 
             smallestCardContentWithTab:
@@ -556,12 +556,14 @@ class AdventureLogStyles {
 
                 buttonAdd: {
                     cursor: "pointer",
-                    background: appColors.color1,
-                    color: appColors.colorBlack,
-                    padding: "4%",
-                    width: "5vw",
-                    height: "3vh",
+                    borderRadius:"2rem",
+                    background: "#dddddd00",
+                    border: "2px solid "+appColors.colorWhite+"44",
+                    color: appColors.color3,
+                    padding: "12px 45px",
+                    width: "fit-content", height: "fit-content",
                     display: "flex",
+                    transition: "all 0.3s",
                     justifyContent: "center",
                     alignItems: "center",
                 },

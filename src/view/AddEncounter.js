@@ -32,6 +32,9 @@ async componentDidMount(){
     let app = this.props.app;
     let dispatch = app.dispatch;
     let radius = "2vmin";
+    let state = app.state;
+    let componentList = state.componentList;
+    let styles =state.styles;
 
     return (
       <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between", 

@@ -4,6 +4,7 @@
 // import LegatoNav from "./legatoNav";
 // import LegatoNavDark from "./legatoNavDark";
 // import MinimalNav from "./minimalNav";
+import AdventureLogTheme from "./adventureLogTheme.js";
 import DefaultForms from "./defaultForms.js";
 // import minimalNav from "./minimalNav";
 
@@ -13,6 +14,7 @@ class FormsThemeFactory {
     factory ={
     
     default: DefaultForms.getFormsTheme(),
+    adventureLog: AdventureLogTheme.getFormsTheme(),
     }
 
     registerComponents(register){

@@ -86,7 +86,7 @@ class LegatoProfilePic extends Component {
           <div style={{...item.profilePicStyles?.nameWrapper}}>
             {/* <div style={{...item.profilePicStyles?.name }}>{this.props.obj?.getJson()?.firstName} {this.props.obj?.getJson()?.lastName}</div> */}
             {/* Hardcoded the bottom line to test CSS styling. The line below should be replaced with the commented line above this one */}
-            <div style={{...item.profilePicStyles?.name }}>Sam Sabin</div>
+            <div style={{...item.profilePicStyles?.name }}></div>
             <div style={{...item.profilePicStyles?.arrowWrapper}}><img src={arrowIcon} style={{...item.profilePicImage.arrow}}/></div>
           </div>
           <div  style={{...item.profilePicStyles.logout}} onClick={this.props.options?.logoutFunc?this.props.options?.logoutFunc():this.logout}>log out</div>

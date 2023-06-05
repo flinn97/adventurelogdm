@@ -93,11 +93,11 @@ class MainContent extends Component{
 
     return(
       <div>
-      <div style={{color: "black", cursor:"pointer"}} onClick={()=>{
+      <div style={{...styles.buttons.buttonAdd, width:"100%"}} onClick={()=>{
         
         //                  add > campaign          clear it > prepare not run           switchcase
         dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
-        Add Campaign</div>
+        Create New Campaign</div>
       {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
       
       <MapComponent app={app} name={"campaign"} linkOptions={{cells:[0,1,2], path:["/campaign/"]}} cells={["title", "description","session"]}/>
@@ -121,7 +121,7 @@ class TabContent extends Component{
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
     fontSize:'styles.appFonts.fontSubheader1'}}>
-      My Campaigns
+      - My Campaigns -
     </div>
     )
   }
@@ -227,7 +227,8 @@ handleClickOutside(event) {
     
     return(
       <div  className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
+      <div ref={this.wrapperRef}  className="popupCard" 
+      style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]}}>
       
       <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
@@ -245,9 +246,6 @@ handleClickOutside(event) {
   }
 }
   
-
-
-
 
 //********CARDs********/
 class Card extends Component{

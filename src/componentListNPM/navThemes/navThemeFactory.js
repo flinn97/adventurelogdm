@@ -4,6 +4,7 @@ import LegatoNavDark from "./legatoNavDark";
 import MinimalNav from "./minimalNav";
 import DefaultNav from "./defaultNav.js";
 import minimalNav from "./minimalNav";
+import AdventureLogNav from "./adventureLogNav";
 
 class NavThemeFactory {
     operationsFactory;
@@ -12,6 +13,7 @@ class NavThemeFactory {
 
         legato: LegatoNav.getNavTheme(),
         legatoDark: LegatoNavDark.getNavTheme(),
+        adventureLog: AdventureLogNav.getNavTheme(),
         flinnApps: flinnApps.getNavTheme(),
         minimal: minimalNav.getNavTheme(),
         default: DefaultNav.getNavTheme(),
@@ -28,6 +30,7 @@ class NavThemeFactory {
         this.factory = {
             legato: LegatoNav.getNavTheme(),
             legatoDark: LegatoNavDark.getNavTheme(),
+            adventureLog: AdventureLogNav.getNavTheme(),
             flinnApps: flinnApps.getNavTheme(),
             minimal: minimalNav.getNavTheme(),
             default: DefaultNav.getNavTheme(),
