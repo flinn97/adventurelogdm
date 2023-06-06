@@ -94,13 +94,12 @@ class MainContent extends Component{
     return(
       <div>
       <div style={{...styles.buttons.buttonAdd, width:"100%"}} onClick={()=>{
-        
         //                  add > campaign          clear it > prepare not run           switchcase
         dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
         Create New Campaign</div>
       {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
       
-      <MapComponent app={app} name={"campaign"} linkOptions={{cells:[0,1,2], path:["/campaign/"]}} cells={["title", "description","session"]}/>
+      <MapComponent app={app} name={"campaign"} linkOptions={{cells:[0], path:["/campaign/"],}} cells={["title", "session"]} />
      
       </div>
     )
@@ -119,8 +118,8 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:'styles.appFonts.fontSubheader1'}}>
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive", color:styles.colors.colorWhite,
+    fontSize:styles.fonts.fontSubheader2}}>
       - My Campaigns -
     </div>
     )
@@ -140,7 +139,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:"#E58A7755" }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

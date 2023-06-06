@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import CampaignCard from './campaignCard';
 
+
 export default class Campaign extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ export default class Campaign extends Component {
     let state = app.state;
     return (
       <div>           
-      <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+        <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>
 
     )

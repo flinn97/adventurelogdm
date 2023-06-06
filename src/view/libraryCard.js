@@ -111,7 +111,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:'styles.appFonts.fontSubheader1'}}>
+    fontSize:styles.fonts.fontSubheader2}}>
       - Library -
     </div>
     )

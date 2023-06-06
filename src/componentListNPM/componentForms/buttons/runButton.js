@@ -54,7 +54,7 @@ class RunButton extends Component {
         let app = this.props.app;
         let dispatch = app.dispatch;
         let state = app.state;
-       
+        
         let styles =state.styles;
    
         let theme= undefined;
@@ -65,20 +65,28 @@ class RunButton extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.runbuttonWrapperStyle:{...styles.buttons.buttonAdd, width:"50%", backgroundColor:styles.colors.color2+"99",}} className={this.props.wrapperClass}>
-                <div style={this.props.buttonTextStyle?{...this.props.buttonTextStyle}:theme!==undefined?theme.buttonTextStyle:{}} onClick={this.props.onClick?this.props.onClick: async()=>{
-                   if(this.state.obj){
-                    this.state.obj[0].getOperationsFactory().run();
+            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.runbuttonWrapperStyle:{...styles.buttons.buttonAdd, width:"50%", backgroundColor:styles.colors.color2+"99",}}
+            className={this.props.wrapperClass}>
+                <div 
+                //TAYLOR
+                    style={this.props.buttonTextStyle? {...this.props.buttonTextStyle} : theme !== undefined ? theme.buttonTextStyle : {}}
+                    onClick={async () => {
+                        if (this.state.obj) {
+                        this.state.obj[0].getOperationsFactory().run();
+                        } else {
+                        if (this.props.app) {
+                            this.props.app.state.opps.run();
+                        }
+                        }
+                        this.props.app.dispatch({updateRun:true})
 
-                   }
-                   else{
-                    if(this.props.app){
-                        this.props.app.state.opps.run();
-                    }
-                   }
-                    this.props.app.dispatch({updateRun:true})
-                }}
-                >{this.props.text? this.props.text: "text='Create'"}</div>
+                        if (this.props.callBack) {
+                        this.props.callBack();
+                        }
+                    }}
+                    >
+                    {this.props.text ? this.props.text : "text='Create'"}
+                </div>
             </div>
         );
     }

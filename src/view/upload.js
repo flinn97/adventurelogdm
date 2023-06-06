@@ -73,20 +73,23 @@ export default class Upload extends Component {
 
         return (
 
-            <div style={{ background: "#f3f3f355", color: "black", padding: "24px", borderRadius: "22px" }}>
+            <div style={{ background: styles.colors.color1+"33", color:styles.colors.colorWhite+"99", paddingTop:"24px",
+            paddingBottom:"24px", 
+            borderRadius:"22px", fontWeight:"550" }}>
 
                 <label for="file-upload" style={{
                     display: "inline-block",
                     maxWidth: "fit-content",
-                    borderRadius: ".1vmin",
-                }}> Choose an image file for your campaign:
+                    borderRadius: ".1vmin", marginRight:"1rem"
+                }}>* Choose an image file for your campaign:
 
                     <input accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
-                        style={{ cursor: "pointer" }} size="6"
+                        style={{ cursor: "pointer", marginLeft:".55rem" }} size="6"
                         type="file" name="file" onChange={this.changeHandler}>
 
                     </input>
                 </label>
+                
 
                 {/* <div onClick={}
                     

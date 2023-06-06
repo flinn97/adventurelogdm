@@ -30,25 +30,39 @@ componentDidMount(){
     let dispatch = app.dispatch
     let state = app.state;
     let radius = "3vmin";
+    let styles = state.styles;
     return (
-      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between", 
+      <div>
+      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  
       backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover" }}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-between", 
-            backgroundColor:"#ffffff55", padding:"10px", borderRadius:radius, borderStyle:"solid", width:"100%",}}>
-            
-            <div style={{fontSize:"22px"}}>{this.state.obj?.getJson().title}</div>
-          
-          {state.popUpSwitchcase !== "updateCampaign" && <>
-                
-          {this.state.obj?.getJson().description}
-          {this.state.obj?.getJson().session}
-          <div onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>edit</div>
-          </>}
+            <div style={{...styles.popupSmall, padding:"1rem", minHeight:"13rem", width:"100%"}}>
+
             {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") && <AddCampaign app = {app}/>}
-            <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id}>World Builder</Link>
-            <Link to= {"/encountermanager/" + this.state.obj?.getJson()._id}>Encounter Manager</Link>
-            </div>
+                <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite}}>{this.state.obj?.getJson().title}</div>
+                {state.popUpSwitchcase !== "updateCampaign" && <>
+                      <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%"}}>
+                      <div style={{...styles.buttons.buttonClose, borderRadius:"1rem", width:"10rem", fontSize:styles.fonts.fontSubheader1, display:"flex",justifyContent:"center"}} 
+                        onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
+                          Edit Campaign</div>
+                      </div>
+              <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div>
+              <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontBody}} >{this.state.obj?.getJson().description}</div>
+              
+              
+              </>}
+                </div>
+                
+        </div>
+                <div style={{display:"flex", direction:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
+                        
+                        <div style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
+                             <a to= {"/worldbuilder/" + this.state.obj?.getJson()._id}>World Builder</a>
+                          </div>
+                        <div style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
+                             <a to= {"/encountermanager/" + this.state.obj?.getJson()._id}>Encounter Manager</a>
+                          </div>
+                </div>
         </div>
       
     )

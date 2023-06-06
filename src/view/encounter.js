@@ -46,8 +46,12 @@ export default class Encounter extends Component {
             {this.state.obj?.getJson().audio}
             
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addParticipant") && <AddParticipant app = {app}/>}
-            <div style={{color: "red"}} onClick={()=>{dispatch({operate: "addmonster", operation: "cleanPrepare", popUpSwitchcase: "addParticipant"})}}>Add Monster</div>
-            <MapComponent app={app} name={"monster"} cells={["name", {custom: Roll, props: this.props},"ac","statBlockLink","notes"]}  />
+              <div style={{color: "red"}} 
+            onClick={()=>{dispatch({operate: "addmonster", operation: "cleanPrepare", popUpSwitchcase: "addParticipant"})}}>
+          Add Monster
+              </div>
+            <MapComponent app={app} name={"monster"} 
+            cells={["name", {custom: Roll, props: this.props},"ac","statBlockLink","notes",]} />
             Encounter Manager
             <MapComponent app={app} name={"encounterList"} cells={["name"]} />
       </div>

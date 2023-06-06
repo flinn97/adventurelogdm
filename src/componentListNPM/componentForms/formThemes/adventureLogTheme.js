@@ -1,20 +1,16 @@
-import { redirect } from "react-router-dom";
-
-
+import adventureLogStyles from "../../themes/adventureLogStyles";
 
 class AdventureLogTheme {
   getFormsThemeDesktop(){
-    let app = this.props.app;
-    let state = app.state;
-    let styles =state.styles;
+        let styles = adventureLogStyles.getStylesByScreenSize();
     let style={
-          inputStyle:{padding:"4px 9px", color:styles.colors.colorBlack, borderRadius:"4px",width:"55%", background:styles.colors.colorWhite+"88", borderWidth:"0px"},
-          wrapperStyle:{width:"120px"},
+          inputStyle:{padding:"4px 9px", color:styles.colors.colorBlack, borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px"},
+          wrapperStyle:{display:"flex",flexDirection:"column", justifyItems:"space-between"},
           labelStyle:{},
           textBoxLabelStyle:{},
           textBoxWrapperStyle:{width:"200px", height:"100px", marginTop:"10px",},
           textBoxStyle:{width:"200px", height:"100px", fontSize:"14px", color:"black", border:"1px solid purple", borderRadius:"3px"},
-          richEditorStyle:{width:"200px", height:"400px"},
+          richEditorStyle:{padding:"4px 9px", color:styles.colors.colorBlack, borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px"},
           richEditorLabelStyle:{},
           richEditorWrapperStyle:{},
           switchLabelStyle:{},

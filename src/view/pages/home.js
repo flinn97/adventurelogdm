@@ -29,7 +29,7 @@ export default class Home extends Component {
       <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
       <div 
           style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-        fontSize:"22px", marginTop:"3vmin", color:styles.colors.colorWhite}}>
+        fontSize:styles.fonts.fontHeader4, marginTop:"3vmin", color:styles.colors.colorWhite}}>
         Find Something New:
     </div>
       <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>

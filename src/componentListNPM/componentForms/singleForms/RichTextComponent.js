@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import DOMPurify from 'dompurify';
 import moment from 'moment';
 import FormsThemeFactory from '../formThemes/formThemeFactory';
+import adventureLogStyles from "../../themes/adventureLogStyles";
 
 class RichTextComponent extends Component {
     constructor(props) {
+        let styles = adventureLogStyles.getStylesByScreenSize();
         super(props);
         // this.addTag=this.addTag.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -33,7 +35,7 @@ class RichTextComponent extends Component {
                 m: 'orange',
                 l: 'yellow',
                 f: 'green',
-                e: 'red',
+                e: 'maroon',
                 d:'#FFD700'
 
             }
@@ -209,7 +211,7 @@ class RichTextComponent extends Component {
             
             dangerouslySetInnerHTML={{__html: this.state.textHtml}}
             contentEditable={true} className={this.props.class ? this.props.class : "form-control"}
-            style={this.props.inputStyle? this.props.inputStyle: theme!==undefined? theme.richEditorStyle: {height:"200px"}}
+            style={this.props.inputStyle? this.props.inputStyle: theme!==undefined? theme.richEditorStyle: {height:"fit-content"}}
             id="richText"
             onClick={this.props.onClick}></div>
            
@@ -219,7 +221,9 @@ class RichTextComponent extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle:theme!==undefined?theme.richEditorWrapperStyle:undefined} className={this.props.wrapperClass}>
+            <div ref={this.wrapperRef} 
+            style={this.props.wrapperStyle? this.props.wrapperStyle:theme!==undefined?theme.richEditorWrapperStyle:undefined} 
+            className={this.props.wrapperClass}>
                 {this.props.label && (<label style={this.props.labelStyle? this.props.labelStyle:theme!==undefined?theme.richEditorLabelStyle:undefined} className={this.props.labelClass}>{this.props.label}</label>)}
                 {inputType[this.props.input]}
                 <div className="componentErrorMessage" >{this.props.errorMessage}</div>

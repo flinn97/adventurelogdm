@@ -2,7 +2,7 @@ import './App.css';
 import { Component } from 'react';
 import Dispatch from './dispatch.js';
 import { forFactory } from './models/myComponents';
-
+import Background from './pics/back1.png'
 import ComponentListInterface from './componentListNPM/componentListInterface';
 import auth from './services/auth';
 import ThemeFactory from './componentListNPM/themes/themeFactory';
@@ -73,8 +73,8 @@ export default class App extends Component {
 
   async componentDidUpdate(props, state){
     if(this.state.backend){
-      // await this.setState({backend: false});
-      // auth.dispatch(this.state.backendUpdate, this.state.email);
+    //  await this.setState({backend: false});
+    //  auth.dispatch(this.state.backendUpdate, this.state.email);
     }
     
     if(this.state.operate!==undefined){
@@ -92,11 +92,6 @@ export default class App extends Component {
         this.setState({currentComponent: currentComponent[key][0]});
       }
     }
-
-    
-    
-    
-
   }
 
   async dispatch(obj){
@@ -158,9 +153,12 @@ handleChange = (event) => {
       width:"100vw", 
       height:"100vh", 
       display:"flex", 
-      
       zIndex:"100",
-      
+            minHeight:"fit-content",
+            backgroundColor:styles?.backgrounds?.backgroundColor,
+            backgroundImage: "url("+Background+")",
+            backgroundBlendMode:styles?.backgrounds?.backgroundBlend,
+            backgroundRepeat:"repeat",
       flexDirection:"column"}}>
         
       

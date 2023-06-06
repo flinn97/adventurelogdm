@@ -40,15 +40,17 @@ class AdventureLogStyles {
             spacingTight: "-.12vw",
 
             //size
-            fontBody: ".98rem",
-            fontSmall: ".6rem",
-            fontSubheader1: "1rem",
-            fontSubheader2: "1.2rem",
-            fontHeader1: "1.4rem",
-            fontHeader2: "1.6rem",
-            fontHeader3: "1.8rem",
-            fontHeader4: "2rem",
-            fontHeader5: "2.22rem",
+            fontSmall: ".8",
+
+            fontBody: "1rem",
+            
+            fontSubheader1: "1.2rem",
+            fontSubheader2: "1.4rem",
+            fontHeader1: "1.6rem",
+            fontHeader2: "1.8rem",
+            fontHeader3: "2rem",
+            fontHeader4: "2.3rem",
+            fontHeader5: "2.5rem",
         }
 
         let colorPalette =
@@ -78,13 +80,16 @@ class AdventureLogStyles {
             color13:"#8B4513aa",//
             colorWhite:"#F4F5F8",
             colorBlack:"#12151A",
+            }
 
-
+        let background = {
+            backgroundColor: colorPalette.color1,//dark
+            backgroundBlend: "overlay",
         }
 
 
         let styles = {
-            appFonts:appFonts, colors:appColors,
+            fonts:appFonts, colors:appColors, backgrounds:background,
             //TODO: Create or check all styles
 
             smallestCardContentWithTab:
@@ -339,7 +344,7 @@ class AdventureLogStyles {
             borderlessTab:
             {   width:"100%", 
                 height:"fit-content", 
-                
+                fontSize: appFonts.fontSubheader2,
                 borderRadius:"1.5rem 1.5rem 0px 0px",
                 padding: "1rem", marginTop:"3vmin"
             },
@@ -479,10 +484,7 @@ class AdventureLogStyles {
                 borderRadius:"1.5rem 1.5rem 0px 0px",
                 padding: "1rem"
             },
-
-           
-
-
+         
             popupLarge:
             {
                 width: "20.1234vw",
@@ -507,13 +509,14 @@ class AdventureLogStyles {
 
             popupSmall:
             {
-                width: "10",
-                height: "12.5",
-                border: appBorders.borderThick,
-                background: appColors.colorWhite,
-                borderRadius: "23px",
-                boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                userSelect: "none"
+                opacity:"100%", 
+                backgroundColor: background.backgroundColor+"88", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.colorWhite+"44",
             },
 
 
@@ -525,21 +528,19 @@ class AdventureLogStyles {
             buttons: {
                 buttonClose:
                 {
+                    display:"flex",
                     fontFamily: appFonts.appFont,
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "",
-                    color: "red",
+                    width: "fit-content",
+                    color: appColors.color5,
+                    padding: "2px 6px",
                     cursor: "pointer",
-                    fontSize: "14vh",
+                    fontSize: "1.4rem",
+                    borderRadius: "50%",
+                    verticalAlign: "center",
+                    textAlign: "center",
                     alignItems: "center",
-                    justifyContent: "flex-end",
-                    position:"absolute",
-                    right:"0",
-                    top:"0",
-                    marginRight:"10px",
-                    marginTop:"10px",
                     height: "fit-content",
+                    background: appColors.color1+"44",
                 },
 
                 buttonClear: {
@@ -557,7 +558,7 @@ class AdventureLogStyles {
                 buttonAdd: {
                     cursor: "pointer",
                     borderRadius:"2rem",
-                    background: "#dddddd00",
+                    background: appColors.color1+"66",
                     border: "2px solid "+appColors.colorWhite+"44",
                     color: appColors.color3,
                     padding: "12px 45px",
@@ -576,7 +577,10 @@ class AdventureLogStyles {
 
 
                     resize1() {
-
+                        let background = {
+                            backgroundColor: colorPalette.color1,//dark
+                            backgroundBlend: "overlay",
+                        }
 
                         let appBorders =
                         {
@@ -658,6 +662,7 @@ class AdventureLogStyles {
 
 
                         let styles = {
+                            fonts:appFonts, colors:appColors, backgrounds:background,
                             //TODO: Create or check all styles
                 //CARD CONTENT
                             smallestCardContentWithTab:
@@ -1144,7 +1149,10 @@ class AdventureLogStyles {
                         return styles;
                     }
                             resize2() {
-
+                                let background = {
+                                    backgroundColor: colorPalette.color1,//dark
+                                    backgroundBlend: "overlay",
+                                }
 
                                         let appBorders =
                                         {
@@ -1226,6 +1234,7 @@ class AdventureLogStyles {
 
 
                                         let styles = {
+                                            fonts:appFonts, colors:appColors, backgrounds:background,
                                             //TODO: Create or check all styles
 
                                             smallestCardContentWithTab:

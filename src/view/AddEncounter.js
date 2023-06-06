@@ -41,7 +41,7 @@ async componentDidMount(){
       backgroundImage: 'url('+(this.state.pic||placeholder)+')', borderRadius:radius,
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover"}}>
             <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between", 
-          backgroundColor:"#ffffff55"}}>
+          backgroundColor:styles.backgrounds.backgroundColor+"99"}}>
             {this.state.start&& app.state.currentComponent&& (<>
           <div onClick={()=>{dispatch({popUpSwitchcase:""})}}>X</div>
           <Upload  update={true} skipUpdate={true} updateMap={(obj)=>{this.setState({pic: obj.getJson().picURL})}} obj={app.state.currentComponent} app={app}/>
