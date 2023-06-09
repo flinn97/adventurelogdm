@@ -4,7 +4,7 @@ import Dispatch from './dispatch.js';
 import { forFactory } from './models/myComponents';
 import Background from './pics/back1.png'
 import ComponentListInterface from './componentListNPM/componentListInterface';
-import auth from './services/auth';
+import auth from './services/auth.js';
 import ThemeFactory from './componentListNPM/themes/themeFactory';
 import InteractiveMap from './view/interactiveMap';
 import Home from './view/pages/home';

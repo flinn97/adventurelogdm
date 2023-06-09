@@ -12,6 +12,7 @@ import AddEncounter from './view/AddEncounter';
 import Encounter from './view/encounter';
 import Nav from './componentListNPM/navTech/nav';
 import Background from './pics/back1.png'
+import Login from './view/login';
 // import DeletePopup from './view/deletePopup';
 // import KeepDel from './view/keepDelete';
 
@@ -31,6 +32,7 @@ export default class Dispatch extends Component {
   return (
     
 <BrowserRouter>
+  {state.user===undefined?(<Login app={app}/>):(
     <div style={{
       minWidth:"100%",
       overflow:"auto",
@@ -59,6 +61,7 @@ export default class Dispatch extends Component {
 </div>
 </div>
      </div>
+     )}
 
      
      </BrowserRouter>
