@@ -32,7 +32,8 @@ export default class Dispatch extends Component {
   return (
     
 <BrowserRouter>
-  {state.user===undefined?(<Login app={app}/>):(
+    {/*      === */}
+  {state.user!=undefined?(<Login app={app}/>):(
     <div style={{
       minWidth:"100%",
       overflow:"auto",
