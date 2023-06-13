@@ -47,7 +47,10 @@ export default class AddCampaign extends Component {
       <div style={{display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:radius, justifyContent:"space-evenly", 
       transition:"all 2s ease-in-out",
       width: '100%', height: 'fit-content',  backgroundImage: 'url('+(this.state.pic||placeholder)+')', zIndex:"20",
-      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",}}>
+      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",}}
+      
+      obj={app.state.currentComponent} name="back"
+      >
             
           <div style={{...styles.popupSmall}}>
               <div style={{display:"flex",justifyContent:"flex-end"}}>
@@ -88,14 +91,14 @@ export default class AddCampaign extends Component {
                   maxLength={200} rows={5}
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"fit-content",
-                  borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", }}
+                  borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", marginBottom:"2vh" }}
                   type={"richEditor"}
                   placeholder={"Briefly describe your campaign. 200 Characters Max"}
                   name="description" label="Campaign Description: " 
                   wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
                   
                   />
-              <ParentFormComponent app={app} name="session" 
+              {/* <ParentFormComponent app={app} name="session" 
                   theme={"adventureLog"} 
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"3.1rem", padding:"4px 9px", color:styles.colors.colorBlack, 
@@ -103,7 +106,8 @@ export default class AddCampaign extends Component {
                   label="Session: " 
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                   maxLength={4} 
-                  placeholder={"#"}/> 
+                  placeholder={"#"}/>  */}
+
                   {this.state.completedPic 
                     ? <div style={{display:"flex", justifyContent:"center"}}>
                         <RunButton app ={app} 

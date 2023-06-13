@@ -99,7 +99,7 @@ class MainContent extends Component{
         Create New Campaign</div>
       {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
       
-      <MapComponent app={app} name={"campaign"} linkOptions={{cells:[0], path:["/campaign/"],}} cells={["title", "session"]} />
+      <MapComponent app={app} name={"campaign"} linkOptions={{cells:[0], path:["/campaign/"],}} cells={["title","back"]} />
      
       </div>
     )

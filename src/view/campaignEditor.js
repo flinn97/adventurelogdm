@@ -46,7 +46,8 @@ componentDidMount(){
                         onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                           Edit Campaign</div>
                       </div>
-              <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div>
+                      {/* I dont think we are doing sessions */}
+              {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
               <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontBody}} >{this.state.obj?.getJson().description}</div>
               
               
@@ -56,12 +57,15 @@ componentDidMount(){
         </div>
                 <div style={{display:"flex", direction:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
-                        <div style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
-                             <a to= {"/worldbuilder/" + this.state.obj?.getJson()._id}>World Builder</a>
-                          </div>
-                        <div style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
-                             <a to= {"/encountermanager/" + this.state.obj?.getJson()._id}>Encounter Manager</a>
-                          </div>
+                        <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
+                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
+                             <div>World Map</div>
+                             </Link>
+                        
+                          <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
+                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
+                             <div>Encounters</div>
+                             </Link>
                 </div>
         </div>
       

@@ -55,10 +55,10 @@ class AdventureLogStyles {
 
         let colorPalette =
         {
-            color1:"#12151A",//dark
-            color2:"#E8D259",//gold
-            color3:"#EB5F5F",//red
-            color4:"#3CB371",//green
+            color1:"#0f141c",//dark
+            color2:"#ecd23a",//gold
+            color3:"#fd5259",//red
+            color4:"#31333c",//gray
             color5:"#1E90FF",//blue
             color6:"#4B0082",//purple
         }
@@ -66,24 +66,24 @@ class AdventureLogStyles {
         let appColors =
         {
             color1: colorPalette.color1,//dark
-            color2:"#1B1D24",//
+            color2:"#1B1D24", //dark lighter
             color3: colorPalette.color2,//gold
             color4:"#C1A71B",//gold dark
             color5: colorPalette.color3,//red
             color6:"#5F0C0C",//red dark
-            color7: colorPalette.color4,//
-            color8:"#008B8Baa",//
+            color7: colorPalette.color4,//greys
+            color8:"#919191",//graylighter
             color9: colorPalette.color5,//
             color10:"#0000CDaa",//
             color11: colorPalette.color6,//
             color12:"#8B008Baa",//
             color13:"#8B4513aa",//
             colorWhite:"#F4F5F8",
-            colorBlack:"#12151A",
+            colorBlack:colorPalette.color1,
             }
 
         let background = {
-            backgroundColor: colorPalette.color1,//dark
+            backgroundColor: colorPalette.color1+"00",//dark
             backgroundBlend: "overlay",
         }
 

@@ -150,6 +150,8 @@ handleChange = (event) => {
     let styles = this.state.styles;
   return (
     <div className= "fontNormal" style={{
+      
+      
       width:"100vw", 
       height:"100vh", 
       display:"flex", 

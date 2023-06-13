@@ -15,7 +15,7 @@ class AdventureLogTheme {
           richEditorWrapperStyle:{},
           switchLabelStyle:{},
           switchWrapperStyle:{},
-          switchStyle:{backgroundColor:"#FF0000"},
+          switchStyle:{backgroundColor:"#31333c"},
           selectWrapperStyle:{},
           selectLabelStyle:{},
           selectStyle:{},

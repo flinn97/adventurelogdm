@@ -1,7 +1,6 @@
 import React, { Component } from 'react'; 
 import "../App.css"
-import CardPractice from './CardPrac';
-import map from '../interactiveMap.png';
+
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import { async } from '@firebase/util';
 export default class InteractiveMapItem extends Component {
@@ -30,7 +29,7 @@ export default class InteractiveMapItem extends Component {
 
 
     return (
-      <div  id="mapItem" style={{width: "200px", height: "100px", border: "1px solid black", position:"absolute", zIndex: 500, top:this.props.top, left:this.props.left}}>
+      <div  id="mapItem" style={{width: "fit-content", height: "fit-content", border: "1px solid black", position:"absolute", zIndex: 500, top:this.props.top, left:this.props.left}}>
         {this.state.update?(
         <div style={{width:"200px", height:"300px", background:"teal",}}>
         <ParentFormComponent obj={this.props.obj} name="title"/>
