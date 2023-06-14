@@ -12,13 +12,14 @@ export default class AddCampaign extends Component {
     super(props);
 
     this.state = {
-
+      
     }
   }
- 
 
+  
 
   render() {
+                         
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
@@ -44,12 +45,12 @@ export default class AddCampaign extends Component {
 
     return (
       <div>
+        
       <div style={{display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:radius, justifyContent:"space-evenly", 
       transition:"all 2s ease-in-out",
       width: '100%', height: 'fit-content',  backgroundImage: 'url('+(this.state.pic||placeholder)+')', zIndex:"20",
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",}}
       
-      obj={app.state.currentComponent} name="back"
       >
             
           <div style={{...styles.popupSmall}}>
@@ -85,6 +86,8 @@ export default class AddCampaign extends Component {
                   }}
                   placeholder={campaignPlaceholder}
               />
+              
+
               {/* ///Description */}
               <ParentFormComponent app={app}
                   theme={"adventureLog"}

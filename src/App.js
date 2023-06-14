@@ -12,6 +12,9 @@ import Campaign from './view/pages/campaign';
 import Note from './view/pages/note';
 import Market from './view/pages/market';
 import EncounterManager from './view/pages/encounterManager';
+
+
+
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 
 //fonts
@@ -149,6 +152,7 @@ handleChange = (event) => {
   render(){
     let styles = this.state.styles;
   return (
+    
     <div className= "fontNormal" style={{
       
       
