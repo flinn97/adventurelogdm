@@ -79,8 +79,7 @@ class Auth {
 
     }
     async getuser(email, componentList, dispatch) {
-        // debugger
-        debugger
+        
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
@@ -98,7 +97,7 @@ class Auth {
         await componentList.addComponents(rawData, false);
         let user = componentList.getComponent("user");
         if (user) {
-            dispatch({user:user})
+            dispatch({user:user, email:email})
         }
     }
 
@@ -310,7 +309,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch) {
-        
+        debugger
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -371,7 +370,7 @@ class Auth {
         
         if (dispatch) {
             dispatch({ dispatchComplete: true, data: obj })
-
+            
         }
     }
 

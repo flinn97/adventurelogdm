@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddCampaign from '../AddCampaign';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import placeholder from '../../pics/placeholderCampaign.JPG';
+import CampaignMapItem from '../campaignMapItem';
 
 /**
  * condensed version of the cards.
@@ -97,10 +98,16 @@ class MainContent extends Component{
         //                  add > campaign          clear it > prepare not run           switchcase
         dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
         Create New Campaign</div>
+
       {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
-      
-      <MapComponent app={app} name={"campaign"} linkOptions={{cells:[0], path:["/campaign/"],}} cells={["title"]} />
-     
+
+          <div>
+            <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} 
+            theme={"selectByImage"}
+            
+            />
+          </div>
+
       </div>
     )
   }

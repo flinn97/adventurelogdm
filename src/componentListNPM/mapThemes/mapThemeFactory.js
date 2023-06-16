@@ -2,6 +2,7 @@ import DefaultMap from "./default";
 import LegatoMap from './legatoStudentList'
 import OutreachMap from "./outreachList";
 import DefaultTasksMap from "./defaultTasks";
+import selectByImage from "./selectByImage";
 class MapThemeFactory {
     operationsFactory; 
 
@@ -10,6 +11,7 @@ class MapThemeFactory {
        legatoMap: LegatoMap.getMapTheme(),
        outreachMap: OutreachMap.getMapTheme(),
        defaultTasks: DefaultTasksMap.getMapTheme(),
+       selectByImage: selectByImage.getMapTheme(),
 
     }
 

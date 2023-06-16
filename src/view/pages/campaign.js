@@ -22,7 +22,7 @@ export default class Campaign extends Component {
     let state = app.state;
     return (
       <div>           
-        <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+        <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
         
       </div>
 

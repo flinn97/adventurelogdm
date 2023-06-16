@@ -19,10 +19,13 @@ export default class CampaignEditor extends Component {
  
 componentDidMount(){
   let href = window.location.href;
-  let splitURL = href.split("/")
-  let id = splitURL[splitURL.length-1]
-  let component = this.props.app.state.componentList.getComponent("campaign", id)
-  this.setState({obj: component})
+  let splitURL = href.split("/");
+  let id = splitURL[splitURL.length-1];
+  let component = this.props.app.state.componentList.getComponent("campaign", id);
+  this.setState({obj: component});
+  //RICH TEXT READ
+  let campaignDesc = document.getElementById("campaignDesc");
+  campaignDesc.innerHTML = component.getJson().description;
 }
 
   render() {
@@ -48,11 +51,14 @@ componentDidMount(){
                       </div>
                       {/* I dont think we are doing sessions */}
               {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
-              <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontBody}} >{this.state.obj?.getJson().description}</div>
+              <div id="campaignDesc" style={{background:styles.colors.colorBlack+"88", width:"100%", height:"100%"}}>
+                </div>
               
               
               </>}
+              
                 </div>
+                {/* /Description/ */}
                 
         </div>
                 <div style={{display:"flex", direction:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>

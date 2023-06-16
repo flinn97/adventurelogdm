@@ -70,24 +70,34 @@ export default class Upload extends Component {
         let state = app.state;
         let dispatch = app.dispatch;
         let styles = state.styles;
+        let text = "text";
 
         return (
 
-            <div style={{ background: styles.colors.color1+"33", color:styles.colors.colorWhite+"99", paddingTop:"24px",
-            paddingBottom:"24px", 
-            borderRadius:"22px", fontWeight:"550" }}>
-
-                <label for="file-upload" style={{
+            <div style={{ color:styles.colors.colorWhite+"99", 
+            borderRadius:"22px", fontWeight:"550",  }}>
+                
+                <label  for="file-upload" style={{...styles.buttons.buttonAdd,
                     display: "inline-block",
-                    maxWidth: "fit-content",
-                    borderRadius: ".1vmin", marginRight:"1rem"
-                }}>* Choose an image file for your campaign:
-
+                    maxWidth: "fit-content", cursor:"pointer",
+                     marginRight:"1rem",  position: "relative"
+                }}>
+* Choose an image file for your campaign
                     <input accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
-                        style={{ cursor: "pointer", marginLeft:".55rem" }} size="6"
-                        type="file" name="file" onChange={this.changeHandler}>
-
-                    </input>
+                        style={{ 
+                            position: 'absolute', // Set position to absolute to make it fill the entire label
+                            top: 0, 
+                            left: 0, cursor:"pointer",
+                            width: '100.5%', 
+                            height: '100.5%',
+                            opacity: 0, 
+                        }} 
+                        size="6" 
+                        text={text}
+                        type="file" 
+                        name="file" 
+                        onChange={this.changeHandler}/>
+                    
                 </label>
                 
 

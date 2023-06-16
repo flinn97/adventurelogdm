@@ -105,7 +105,8 @@ class RichTextComponent extends Component {
 
         let value = e.key;
         let innerText =DOMPurify.sanitize(this.ref.current.innerHTML);
-        
+        debugger
+
 //         if(value===" " &&this.state.lastChar===" " &&this.state.backSlash){
 //             await this.setState({doubleSpace:true})
 //         }
@@ -152,7 +153,7 @@ class RichTextComponent extends Component {
         let save =DOMPurify.sanitize(this.ref.current.innerHTML);
         this.setState({theHtml:save})
         if(!this.props.updateOnClickOutside){
-            this.props.handleHTMLChange(save);
+            this.props.handleChange(save);
 
         }
     }

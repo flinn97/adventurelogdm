@@ -37,7 +37,7 @@ export default class AddCampaign extends Component {
     console.log(styles);
 
     if (this.state.pic)
-                      {textNotReady ="Loading..."}
+                      {textNotReady = state.currentComponent?.getJson().type != "campaign" && state.popUpSwitchcase != "updateCampaign"? "Loading..." : "Edit"}
                       else {
                         textNotReady ="Give your campaign an image and title!";
                         };
@@ -46,14 +46,26 @@ export default class AddCampaign extends Component {
     return (
       <div>
         
-      <div style={{display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:radius, justifyContent:"space-evenly", 
+      <div obj={app.state.currentComponent} style={{display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:radius, 
+      justifyContent:"space-evenly", 
       transition:"all 2s ease-in-out",
-      width: '100%', height: 'fit-content',  backgroundImage: 'url('+(this.state.pic||placeholder)+')', zIndex:"20",
+      width: '100%', height: 'fit-content',  
+      
+      backgroundImage: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign" ?
+      'url('+(this.state.obj?.getJson().picURL||this.state.completedPic)+')'
+      :
+      'url('+(this.state.completedPic||placeholder)+')'
+      , 
+      
+      zIndex:"20",
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",}}
       
       >
             
-          <div style={{...styles.popupSmall}}>
+          <div style={{
+            ...styles.popupSmall,
+            // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
+            }}>
               <div style={{display:"flex",justifyContent:"flex-end"}}>
               {/* ///EXIT BUTTON */}
               <div style={{...styles.buttons.buttonClose, marginBottom:".5rem"}} 
@@ -65,7 +77,8 @@ export default class AddCampaign extends Component {
             maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
             transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: .89, zIndex: '-1', borderRadius:"2vmin" }}/> */}
         
-              <div style={{ marginBottom:"20px"}}><Upload 
+              <div style={{ marginBottom:"20px"}}>
+                <Upload 
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
               obj={app.state.currentComponent} text="Set Background" style={{display:"flex",
@@ -79,7 +92,7 @@ export default class AddCampaign extends Component {
               <ParentFormComponent app={app} name="title" label="*Campaign Name: " 
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                   theme={"adventureLog"} rows={1}
-                  maxLength={110} required
+                  maxLength={110}
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
                   borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
@@ -90,7 +103,7 @@ export default class AddCampaign extends Component {
 
               {/* ///Description */}
               <ParentFormComponent app={app}
-                  theme={"adventureLog"}
+                  theme={"adventureLog"} 
                   maxLength={200} rows={5}
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"fit-content",
@@ -111,7 +124,7 @@ export default class AddCampaign extends Component {
                   maxLength={4} 
                   placeholder={"#"}/>  */}
 
-                  {this.state.completedPic 
+                  {this.state.pic
                     ? <div style={{display:"flex", justifyContent:"center"}}>
                         <RunButton app ={app} 
                           wrapperStyle={{...styles.buttons.buttonAdd, 
@@ -125,7 +138,6 @@ export default class AddCampaign extends Component {
                         />
                       </div>
                     : 
-                      
                       <div style={{display:"flex", justifyContent:"center"}}>
                       <RunButton app ={app} 
                         wrapperStyle={{...styles.buttons.buttonAdd, cursor:"wait", 

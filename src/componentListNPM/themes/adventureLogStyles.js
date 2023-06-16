@@ -510,7 +510,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                backgroundColor: background.backgroundColor+"88", 
+                background: appColors.colorBlack+"88", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -577,10 +577,7 @@ class AdventureLogStyles {
 
 
                     resize1() {
-                        let background = {
-                            backgroundColor: colorPalette.color1,//dark
-                            backgroundBlend: "overlay",
-                        }
+                        
 
                         let appBorders =
                         {
@@ -637,6 +634,11 @@ class AdventureLogStyles {
                             color4:"#3CB371",//green
                             color5:"#1E90FF",//blue
                             color6:"#4B0082",//purple
+                        }
+
+                        let background = {
+                            backgroundColor: colorPalette.color1,//dark
+                            backgroundBlend: "overlay",
                         }
 
                         let appColors =
@@ -1086,7 +1088,7 @@ class AdventureLogStyles {
                                 width: "10",
                                 height: "12.5",
                                 border: appBorders.borderThick,
-                                background: appColors.colorWhite,
+                                background: appColors.colorBlack+"88", 
                                 borderRadius: "23px",
                                 boxShadow: "2px 3px 6px" + appColors.colorBlack,
                                 userSelect: "none"
@@ -1149,10 +1151,7 @@ class AdventureLogStyles {
                         return styles;
                     }
                             resize2() {
-                                let background = {
-                                    backgroundColor: colorPalette.color1,//dark
-                                    backgroundBlend: "overlay",
-                                }
+                                
 
                                         let appBorders =
                                         {
@@ -1209,6 +1208,11 @@ class AdventureLogStyles {
                                             color4:"#3CB371",//green
                                             color5:"#1E90FF",//blue
                                             color6:"#4B0082",//purple
+                                        }
+
+                                        let background = {
+                                            backgroundColor: colorPalette.color1,//dark
+                                            backgroundBlend: "overlay",
                                         }
 
                                         let appColors =
@@ -1661,7 +1665,7 @@ class AdventureLogStyles {
                                                 width: "10",
                                                 height: "12.5",
                                                 border: appBorders.borderThick,
-                                                background: appColors.colorWhite,
+                                                background: appColors.colorBlack+"88", 
                                                 borderRadius: "23px",
                                                 boxShadow: "2px 3px 6px" + appColors.colorBlack,
                                                 userSelect: "none"
