@@ -35,7 +35,7 @@ export default class Dispatch extends Component {
     {/*      === */}
   {state.user===undefined?(<Login app={app}/>):(
     <div style={{
-      minWidth:"100%",
+      minWidth:"100%", userSelect:"none",
       overflow:"auto",
       }}>
         {/* WITHIN */}

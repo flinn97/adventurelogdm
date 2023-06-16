@@ -20,8 +20,8 @@ class AdventureLogStyles {
 
         let appFonts= {
             //typeface
-            appTitle: "'Roboto', sans-serif",
-            appFont: "'Roboto', sans-serif",
+            appTitle: "'serif'",
+            appFont: "'sans-serif'",
             appBold: "",
             appItalic: "",
             appFont2: "",

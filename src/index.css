@@ -1,5 +1,7 @@
 @import url(https://fonts.google.com/specimen/Inria+Serif?query=Inria);
 @import url(https://fonts.google.com/specimen/Roboto+Slab);
+@import url(https://fonts.google.com/specimen/DM+Serif+Display);
+@import url(https://fonts.google.com/noto/specimen/Noto+Sans+Georgian);
 
 @font-face {
   font-family: "Inria";
@@ -13,10 +15,16 @@
   font-family: "InriaLight";
   src: local("InriaLight"), 
     url("./fonts/InriaSerif-Light.ttf") format("truetype");
+
+  font-family: "serif";
+  src:url("https://fonts.google.com/specimen/DM+Serif+Display");
+
+  font-family: "sans-serif";
+  src:url("https://fonts.google.com/noto/specimen/Noto+Sans+Georgian");
 }
 
 fontNormal {
-  font-family: -apple-system, BlinkMacSystemFont, 'Inria Serif';
+  font-family: -apple-system, BlinkMacSystemFont, 'sans-serif';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 1000px;
@@ -57,6 +65,13 @@ ol, ul {
 
 .square:focus {
   outline: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'sans-serif';
 }
 
 .kbd-navigation .square:focus {

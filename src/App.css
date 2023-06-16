@@ -1,5 +1,21 @@
+@import url(https://fonts.google.com/specimen/Inria+Serif?query=Inria);
+@import url(https://fonts.google.com/specimen/Roboto+Slab);
+@import url(https://fonts.google.com/specimen/DM+Serif+Display);
+@import url(https://fonts.google.com/noto/specimen/Noto+Sans+Georgian);
+
+
 .App {
   text-align: center;
+}
+fontNormal {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inria Serif';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 1000px;
+    width: 100%;
+    position: fixed;
+    
+     overflow:hidden; 
 }
 
 @font-face {
@@ -7,6 +23,13 @@
   font-style: normal;
   font-weight: normal;
   src: local('Inria'), url('./fonts/InriaSerif-Regular.ttf') format('truetype');
+
+
+  font-family: "serif";
+  src:url("https://fonts.google.com/specimen/DM+Serif+Display");
+
+  font-family: "sans-serif";
+  src:url("https://fonts.google.com/noto/specimen/Noto+Sans+Georgian");
 }
 
   @font-face {
@@ -110,7 +133,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inria', sans-serif;
 }
 
 .background {
@@ -122,6 +145,7 @@
 }
 
 body {
+  font-family: "Georgia" , sans-serif;
   display: flex;
   width: 100%;
   height: 100%;

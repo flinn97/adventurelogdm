@@ -4,18 +4,26 @@ import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import Upload from './upload';
+
+// https://www.npmjs.com/package/react-lazyload
+
+
 import placeholder from '../pics/placeholderEncounter.JPG';
+
+
 
 export default class CampaignEditor extends Component {
   constructor(props) {
+    
     super(props);
-
     this.state = {
       obj: undefined,
       pic: undefined
+      
     }
+    
   }
+
  
 componentDidMount(){
   let href = window.location.href;
@@ -27,6 +35,7 @@ componentDidMount(){
   let campaignDesc = document.getElementById("campaignDesc");
   campaignDesc.innerHTML = component.getJson().description;
 }
+
 
   render() {
     let app = this.props.app;
@@ -51,7 +60,8 @@ componentDidMount(){
                       </div>
                       {/* I dont think we are doing sessions */}
               {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
-              <div id="campaignDesc" style={{background:styles.colors.colorBlack+"88", width:"100%", height:"100%"}}>
+              <div id= "campaignDesc"
+              style={{width:"100%", height:"100%", userSelect:"none"}}>
                 </div>
               
               

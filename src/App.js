@@ -28,6 +28,7 @@ export default class App extends Component {
         this.dispatch=this.dispatch.bind(this);
 
     this.state={
+      
       start: false,
       styles: undefined,
       loginPage: true,
@@ -153,9 +154,8 @@ handleChange = (event) => {
     let styles = this.state.styles;
   return (
     
-    <div className= "fontNormal" style={{
-      
-      
+    <div className= "*" style={{
+           
       width:"100vw", 
       height:"100vh", 
       display:"flex", 

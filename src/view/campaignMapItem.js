@@ -19,20 +19,36 @@ export default class CampaignMapItem extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-   
+    let radius = "2vmin";
     let styles = state.styles;
     let obj = this.props.obj;
     return (
-      <Link to={"/campaign/"+obj?.getJson()._id} style={{color:styles.colors.colorWhite, textDecoration:"none",}}
+      <Link to={"/campaign/"+obj?.getJson()._id} style={{ color: styles.colors.colorWhite, 
+        textDecoration: "none", userSelect:"none",
+        height: "fit-content",
+        width: "fit-content"}}
      
       >
 
-      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  width:"1000px", height:"200px", 
-      backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')', borderRadius:"3vmin",
-      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover" }}>
-            
-                <div>
-                  {obj?.getJson().title}
+      <div style={{display: "flex", flexDirection: 'column', 
+      borderRadius:radius,
+      justifyContent:"space-evenly", 
+      
+      width: '100%', 
+      backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
+      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", }}>
+                        
+                        <div style={{
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',borderRadius:radius,
+                        height: "fit-content", 
+                         width: "fit-content"}}>
+                          
+                          <div 
+                          
+                          style={{display: "flex", height:"220px", width:"78vmax", fontWeight:"bold", fontFamily:"serif",
+                          alignItems:"center", justifyContent:"center", fontSize:styles.fonts.fontHeader2,}}>
+                            {obj?.getJson().title}
+                          </div>
                 </div>
         </div>
         </Link>
