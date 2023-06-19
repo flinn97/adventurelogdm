@@ -33,7 +33,7 @@ export default class CampaignMapItem extends Component {
       <div style={{display: "flex", flexDirection: 'column', 
       borderRadius:radius,
       justifyContent:"space-evenly", 
-      
+      zIndex:"0",
       width: '100%', 
       backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", }}>
@@ -45,7 +45,9 @@ export default class CampaignMapItem extends Component {
                           
                           <div 
                           
-                          style={{display: "flex", height:"220px", width:"78vmax", fontWeight:"bold", fontFamily:"serif",
+                          style={{display: "flex", height:"220px", width:"78vmax", fontWeight:"bold", fontFamily:"serif", 
+                          textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack,
                           alignItems:"center", justifyContent:"center", fontSize:styles.fonts.fontHeader2,}}>
                             {obj?.getJson().title}
                           </div>

@@ -110,9 +110,10 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
-    fontSize:styles.fonts.fontSubheader2}}>
-      - Library -
+    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",
+    fontSize:styles.fonts.fontSubheader1}}>
+            Library
     </div>
     )
   }

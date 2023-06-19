@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import CampaignCard from './campaignCard';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import LibraryCard from '../libraryCard';
 
 
 export default class Campaign extends Component {
@@ -23,7 +24,7 @@ export default class Campaign extends Component {
     return (
       <div style={{}}>           
         <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
-        
+        <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>  
       </div>
 
     )

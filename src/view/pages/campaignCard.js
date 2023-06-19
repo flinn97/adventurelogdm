@@ -93,13 +93,10 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{display:"flex", flexDirection:"column", justifyContent:"flex-end", alignContent:"center", width:"100%", userSelect:"none",}}>
-            <div style={{ ...styles.buttons.buttonAdd, alignSelf:"flex-end",}} onClick={()=>{
-              //                  add > campaign          clear it > prepare not run           switchcase
-              dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
-              + New Campaign</div>
-
-      {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
+      <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       }}>
+            
 
           <div style={{}}>
             <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} 
@@ -125,9 +122,18 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive", color:styles.colors.colorWhite, userSelect:"none",
-    fontSize:styles.fonts.fontSubheader2}}>
-      - My Campaigns -
+    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",
+    fontSize:styles.fonts.fontSubheader1}}>
+      Current Campaigns
+      <div>
+            <div style={{ ...styles.buttons.buttonAdd, alignSelf:"flex-end", padding:"11px", marginTop:"-8px", fontWeight:"200", fontSize:styles.fonts.fontBody}} onClick={()=>{
+                  //                  add > campaign          clear it > prepare not run           switchcase
+                  dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
+                  + New Campaign</div>
+
+      {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
+      </div>
     </div>
     )
   }

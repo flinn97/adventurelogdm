@@ -41,9 +41,10 @@ export default class Dispatch extends Component {
         {/* WITHIN */}
 <div style={{display:'flex', flexDirection:'row', }}>
         <div style={{display:'flex', marginRight:"210px", }}>
-          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"/>
+          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
+          />
           </div>
-     <div style={{ width:'100%', height:"100%", padding:"4.5vmin",
+     <div style={{ width:'100%', height:"100%", padding:"4.5vmin", 
       }}>
      <Routes>
       {state.switchCase?.map((obj, index)=>

@@ -25,17 +25,21 @@ export default class Home extends Component {
    
 
     return (
-      <div style={{height:"100%", marginBottom:"14vmin",}} >
+      <div style={{height:"100%", marginBottom:"14vmin", }} >
 
-      <HomeCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
+      <HomeCard app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>
       <div 
-          style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
+          style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
+          alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px",
         fontSize:styles.fonts.fontHeader4, marginTop:"3vmin", color:styles.colors.colorWhite}}>
-        Find Something New:
+       
         
     </div>
-      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
-      </div>
+    <div >
+
+   
+      <MarketCard app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>
+      </div></div>
 
     )
   }

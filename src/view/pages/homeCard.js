@@ -95,12 +95,13 @@ class MainContent extends Component{
 
     return(
     <div style={{height:"100%"}}>
-      <div style={{width:"100%"}}>
-      <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
+      <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
+      <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
 
-      <NoteCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>
+      <NoteCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
 
-      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:undefined}}/>   
+      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
       </div>
     </div>
     )
@@ -119,9 +120,9 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"cursive",
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
-      Home
+      AVA
       </div>
     )
   }
@@ -140,7 +141,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:"#59788E88"}}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

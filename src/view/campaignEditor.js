@@ -54,7 +54,10 @@ componentDidMount(){
                 <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite}}>{this.state.obj?.getJson().title}</div>
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%"}}>
-                      <div style={{...styles.buttons.buttonClose, borderRadius:"1rem", width:"10rem", fontSize:styles.fonts.fontSubheader1, display:"flex",justifyContent:"center"}} 
+                      
+                      <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
+                      padding:"5px", backgroundColor:styles.colors.color1+"ee",
+                      display:"flex",justifyContent:"center"}} 
                         onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                           Edit Campaign</div>
                       </div>
@@ -74,12 +77,12 @@ componentDidMount(){
                 <div style={{display:"flex", direction:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
                         <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
-                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
+                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
                              <div>World Map</div>
                              </Link>
                         
                           <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
-                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color2+"88"}}>
+                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
                              <div>Encounters</div>
                              </Link>
                 </div>

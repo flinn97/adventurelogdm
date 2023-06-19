@@ -40,17 +40,17 @@ class AdventureLogStyles {
             spacingTight: "-.12vw",
 
             //size
-            fontSmall: ".8",
+            fontSmall: "calc(0.75rem + 0.35vw)",
 
-            fontBody: "1rem",
+            fontBody: "calc(1rem + 0.35vw)",
             
-            fontSubheader1: "1.2rem",
-            fontSubheader2: "1.4rem",
-            fontHeader1: "1.6rem",
-            fontHeader2: "1.8rem",
-            fontHeader3: "2rem",
-            fontHeader4: "2.3rem",
-            fontHeader5: "2.5rem",
+            fontSubheader1: "calc(1.25rem + 0.35vw)",
+            fontSubheader2: "calc(1.5rem + 0.35vw)",
+            fontHeader1: "calc(2rem + 0.35vw)",
+            fontHeader2: "calc(2.25rem + .35vw)",
+            fontHeader3: "calc(2.5rem + .35vw)",
+            fontHeader4: "calc(2.75rem + .35vw)",
+            fontHeader5: "calc(3rem + .35vw)",
         }
 
         let colorPalette =
@@ -510,13 +510,13 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"88", 
+                background: appColors.colorBlack+"99", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
                 // borderColor:appColors.color3+"22", 
                 display:"flex", flexDirection:"column",
-                border: "2px solid "+appColors.colorWhite+"44",
+                border: "2px solid "+appColors.color9+"22",
             },
 
 
@@ -615,15 +615,17 @@ class AdventureLogStyles {
                             spacingTight: "-.12vw",
 
                             //size
-                                fontBody: ".98rem",
-                                fontSmall: ".6rem",
-                                fontSubheader1: "1rem",
-                                fontSubheader2: "1.2rem",
-                                fontHeader1: "1.4rem",
-                                fontHeader2: "1.6rem",
-                                fontHeader3: "1.8rem",
-                                fontHeader4: "2rem",
-                                fontHeader5: "2.22rem",
+                            fontSmall: "calc(0.75rem + 0.35vw)",
+
+                            fontBody: "calc(1rem + 0.35vw)",
+                            
+                            fontSubheader1: "calc(1.25rem + 0.35vw)",
+                            fontSubheader2: "calc(1.5rem + 0.35vw)",
+                            fontHeader1: "calc(2rem + 0.35vw)",
+                            fontHeader2: "calc(2.25rem + .35vw)",
+                            fontHeader3: "calc(2.5rem + .35vw)",
+                            fontHeader4: "calc(2.75rem + .35vw)",
+                            fontHeader5: "calc(3rem + .35vw)",
                         }
 
                         let colorPalette =
@@ -1085,13 +1087,14 @@ class AdventureLogStyles {
 
                             popupSmall:
                             {
-                                width: "10",
-                                height: "12.5",
-                                border: appBorders.borderThick,
-                                background: appColors.colorBlack+"88", 
-                                borderRadius: "23px",
-                                boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                                userSelect: "none"
+                                opacity:"100%", 
+                                background: appColors.colorBlack+"99", 
+                                padding:"10px", 
+                                borderRadius:"2vmin", 
+                                // borderStyle:"solid", 
+                                // borderColor:appColors.color3+"22", 
+                                display:"flex", flexDirection:"column",
+                                border: "2px solid "+appColors.color9+"22",
                             },
 
                 //MARGINS
@@ -1189,15 +1192,17 @@ class AdventureLogStyles {
                                             spacingTight: "-.12vw",
 
                                             //size
-                                            fontBody: ".98rem",
-                                            fontSmall: ".6rem",
-                                            fontSubheader1: "1rem",
-                                            fontSubheader2: "1.2rem",
-                                            fontHeader1: "1.4rem",
-                                            fontHeader2: "1.6rem",
-                                            fontHeader3: "1.8rem",
-                                            fontHeader4: "2rem",
-                                            fontHeader5: "2.22rem",
+                                            fontSmall: "calc(0.75rem + 0.35vw)",
+
+                                            fontBody: "calc(1rem + 0.35vw)",
+                                            
+                                            fontSubheader1: "calc(1.25rem + 0.35vw)",
+                                            fontSubheader2: "calc(1.5rem + 0.35vw)",
+                                            fontHeader1: "calc(2rem + 0.35vw)",
+                                            fontHeader2: "calc(2.25rem + .35vw)",
+                                            fontHeader3: "calc(2.5rem + .35vw)",
+                                            fontHeader4: "calc(2.75rem + .35vw)",
+                                            fontHeader5: "calc(3rem + .35vw)",
                                         }
 
                                         let colorPalette =
@@ -1662,13 +1667,14 @@ class AdventureLogStyles {
 
                                             popupSmall:
                                             {
-                                                width: "10",
-                                                height: "12.5",
-                                                border: appBorders.borderThick,
-                                                background: appColors.colorBlack+"88", 
-                                                borderRadius: "23px",
-                                                boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                                                userSelect: "none"
+                                                opacity:"100%", 
+                                                background: appColors.colorBlack+"99", 
+                                                padding:"10px", 
+                                                borderRadius:"2vmin", 
+                                                // borderStyle:"solid", 
+                                                // borderColor:appColors.color3+"22", 
+                                                display:"flex", flexDirection:"column",
+                                                border: "2px solid "+appColors.color9+"22",
                                             },
 
 

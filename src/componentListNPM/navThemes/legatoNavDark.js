@@ -47,7 +47,7 @@ class LegatoNavDark {
   
             // Styling for Side Bar
             left: {
-              navContainer: {top: "0", left: "0", flexDirection: "column", width: "210px", height: "100vh", display:"flex", position: "fixed", backgroundColor:"#0c1520"},
+              navContainer: {top: "0", left: "0", flexDirection: "column", width: "210px", height: "100vh", display:"flex", position: "fixed", backgroundColor:"#1B1D24"},
               sectionsContainer: {display:"flex", flexDirection:"column", height:"100%", width:"100%"},
   
               logoStyle: {width:"86px", paddingTop:"56px"},
@@ -211,7 +211,7 @@ class LegatoNavDark {
           // Styling for Side Bar
           left: {
             navContainer: {top: "0", left: "0", flexDirection: "column", width: "0px", height: "100vh", display:"flex", position: "fixed", backgroundColor:"none"},
-            sectionsContainer: {display:"flex", flexDirection:"column", height:"100%", width:"100%" , paddingLeft:"70px",  backgroundColor:"#0c1520"},
+            sectionsContainer: {display:"flex", flexDirection:"column", height:"100%", width:"100%" , paddingLeft:"70px",  backgroundColor:"#1B1D24"},
 
             logoStyle: {width:"86px", paddingTop:"56px"},
             logoWrapper: {display:"flex", width:"100%", height:"100%", alignItems:"center", justifyContent:"center", paddingBottom: "20px"},
