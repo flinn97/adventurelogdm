@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import "../App.css"
-import MapComponent from '../componentListNPM/mapTech/mapComponent';
-import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-import FormWithUpdateAndRun from '../componentListNPM/componentForms/buttons/formWithUpdateAndRun';
+import "../../App.css"
+import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
+import FormWithUpdateAndRun from '../../componentListNPM/componentForms/buttons/formWithUpdateAndRun';
+import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
+
 
 
 /**
@@ -15,7 +17,7 @@ import FormWithUpdateAndRun from '../componentListNPM/componentForms/buttons/for
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class CardCondensed extends Component {
+export default class PopupDelete extends Component {
   constructor(props) {
     super(props);
     
@@ -56,8 +58,8 @@ export default class CardCondensed extends Component {
 
       card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
       cardWithTab: <CardWithTab app={{...app, state:{...app.state, styles:styles}}} options={this.props.options} type={this.props.type}/>,
-      popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type}/>,
-      popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}/>
+      popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type} delClick={this.props.delClick}/>,
+      popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}  delClick={this.props.delClick}/>
 //popupType={this.props.popupType} popupTab={this.props.popupTab}
     
     }
@@ -94,8 +96,16 @@ class MainContent extends Component{
     
 
     return(
-    <div>
+    <div style={{}}>
+      Are you sure you want to delete this?
       
+      <div >
+        Keep This
+      </div>
+      
+      
+      <DelButton text="Yes, Delete This" obj={state.currentDelObj} onChange={this.props.delClick}  />
+
     </div>
     )
   }
@@ -114,7 +124,11 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-      
+      <div style={{...styles.buttons.buttonClose}}
+      onClick={this.props.handleClose}
+      >
+        X
+      </div>
     </div>
     )
   }
@@ -149,13 +163,13 @@ handleClickOutside(event) {
     
     return(
       <div className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
-      <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>x</div>
+      <div ref={this.wrapperRef}  className="popupCard" 
+      style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
+      <div style={{...styles.buttons.buttonClose, position:"absolute", right:"1vw"}}
+      onClick={this.props.handleClose}>X</div>
           
           <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+        <MainContent app={app}  delClick={this.props.delClick} />
         </div>
           
       
@@ -197,11 +211,11 @@ handleClickOutside(event) {
       <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
       
       <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> 
-        <TabContent app={app} handleClose={this.props.handleClose} /> <div style={ ///EXIT BUTTON
+        <TabContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/> <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
                   } onClick={this.props.handleClose}>x</div></div>   
       <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} handleClose={this.props.handleClose}/>
+        <MainContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/>
         </div>
         </div>
         

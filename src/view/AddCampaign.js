@@ -10,13 +10,20 @@ import RichTextComponent from '../componentListNPM/componentForms/singleForms/Ri
 export default class AddCampaign extends Component {
   constructor(props) {
     super(props);
-
+    this.deleteCampaign = this.deleteCampaign.bind(this);
     this.state = {
       
     }
   }
 
-  
+  async deleteCampaign () {
+    let dispatch = this.props.app.dispatch;
+    dispatch({popupSwitch:"", currentDelObj:undefined});
+            //OK DONT DO THIS
+              const delay = ms => new Promise(res => setTimeout(res, ms));
+              await delay(1500);
+    window.location.href="/campaign/";
+  }
 
   render() {
                          
@@ -73,6 +80,16 @@ export default class AddCampaign extends Component {
               
               >X</div>
               </div>
+
+            {state.popUpSwitchcase === "updateCampaign" && 
+            (<div style={{color:"red"}}
+            
+            onClick={()=>{dispatch({popupSwitch:"popupDelete", currentDelObj:state.currentComponent,
+            handlePopupClose:this.deleteCampaign,
+            })}}>
+              Delete
+            </div>)}
+
           {/* <img src={this.state.pic || placeholder} style={{position: 'sticky', minWidth: '100%', minHeight: '100%', 
             maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
             transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: .89, zIndex: '-1', borderRadius:"2vmin" }}/> */}

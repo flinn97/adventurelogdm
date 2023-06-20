@@ -13,6 +13,7 @@ import Encounter from './view/encounter';
 import Nav from './componentListNPM/navTech/nav';
 import Background from './pics/back1.png'
 import Login from './view/login';
+import PopupDelete from './view/popups/popupDelete';
 // import DeletePopup from './view/deletePopup';
 // import KeepDel from './view/keepDelete';
 
@@ -38,6 +39,7 @@ export default class Dispatch extends Component {
       minWidth:"100%", userSelect:"none",
       overflow:"auto",
       }}>
+
         {/* WITHIN */}
 <div style={{display:'flex', flexDirection:'row', }}>
         <div style={{display:'flex', marginRight:"210px", }}>
@@ -46,6 +48,16 @@ export default class Dispatch extends Component {
           </div>
      <div style={{ width:'100%', height:"100%", padding:"4.5vmin", 
       }}>
+
+        {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
+        <PopupDelete 
+        
+          type="popup" options={{cardType:"popupSmallest"}} app={app}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+          delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+        />}
+     
+     
      <Routes>
       {state.switchCase?.map((obj, index)=>
                 <Route path={obj.path} element={<obj.comp app={app}/>} />

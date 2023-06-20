@@ -3,10 +3,25 @@
 @import url(https://fonts.google.com/specimen/DM+Serif+Display);
 @import url(https://fonts.google.com/noto/specimen/Noto+Sans+Georgian);
 
-
 .App {
   text-align: center;
 }
+
+hr {
+  border: none;
+    height: calc(.25rem + 0.15vw);
+    width:100%;
+    
+    margin-top: .92rem;
+    margin-bottom: .92rem;
+    background-image: url('./pics/hr.webp');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    opacity: .88;
+}
+
+
 fontNormal {
   font-family: -apple-system, BlinkMacSystemFont, 'Inria Serif';
     -webkit-font-smoothing: antialiased;

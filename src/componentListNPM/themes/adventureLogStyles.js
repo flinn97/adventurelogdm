@@ -520,6 +520,19 @@ class AdventureLogStyles {
                 border: "2px solid "+appColors.color9+"22",
             },
 
+            popupSmallest:
+            {
+                opacity:"100%", 
+                backgroundColor: appColors.colorBlack+"ff", 
+                color:appColors.colorWhite,
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+
 
             margins: {
                 margin1w: "1vw",
@@ -528,7 +541,7 @@ class AdventureLogStyles {
 
             buttons: {
                 buttonClose:
-                {
+                {   position:"absolute", right:"1vw",
                     display:"flex",
                     fontFamily: appFonts.appFont,
                     width: "fit-content",
@@ -559,8 +572,8 @@ class AdventureLogStyles {
                 buttonAdd: {
                     cursor: "pointer",
                     borderRadius:"2rem",
-                    background: appColors.color1+"66",
-                    border: "2px solid "+appColors.colorWhite+"44",
+                    background: appColors.color7+"77",
+                    border: "1px solid "+appColors.colorWhite+"44",
                     color: appColors.color3,
                     padding: "12px 45px",
                     width: "fit-content", height: "fit-content",
@@ -1100,6 +1113,18 @@ class AdventureLogStyles {
                                 border: "2px solid "+appColors.color9+"22",
                             },
 
+                            popupSmallest:
+                                {
+                                    opacity:"100%", 
+                                    background: appColors.colorBlack+"99", 
+                                    padding:"10px", 
+                                    borderRadius:"2vmin", 
+                                    // borderStyle:"solid", 
+                                    // borderColor:appColors.color3+"22", 
+                                    display:"flex", flexDirection:"column",
+                                    border: "2px solid "+appColors.color9+"22",
+                                },
+
                 //MARGINS
                             margins: {
                                 margin1w: "1vw",
@@ -1108,23 +1133,21 @@ class AdventureLogStyles {
                 //BUTTONS
                             buttons: {
                                 buttonClose:
-                                {
+                                {   position:"absolute", right:"1vw",
+                                    display:"flex",
                                     fontFamily: appFonts.appFont,
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    width: "",
-                                    color: "#ACACAC",
+                                    width: "fit-content",
+                                    color: appColors.color5,
+                                    padding: "2px 6px",
                                     cursor: "pointer",
-                                    fontSize: "14vh",
+                                    fontSize: "1.4rem",
+                                    borderRadius: "50%",
+                                    verticalAlign: "center",
+                                    textAlign: "center",
                                     alignItems: "center",
-                                    justifyContent: "flex-end",
-                                    position:"absolute",
-                                    right:"0",
-                                    top:"0",
-                                    marginRight:"10px",
-                                    marginTop:"10px",
                                     height: "fit-content",
-                                                    },
+                                    background: appColors.color1+"44",
+                                },
 
                                 buttonClear: {
                                     cursor: "pointer",
@@ -1140,13 +1163,14 @@ class AdventureLogStyles {
 
                                 buttonAdd: {
                                     cursor: "pointer",
-                                    background: appColors.color1,
-                                    color: appColors.colorBlack,
-                                    padding: "4%",
-                                    width: "5vw",
-                                    height: "3vh",
-                                    
+                                    borderRadius:"2rem",
+                                    background: appColors.color7+"77",
+                                    border: "1px solid "+appColors.colorWhite+"44",
+                                    color: appColors.color3,
+                                    padding: "12px 45px",
+                                    width: "fit-content", height: "fit-content",
                                     display: "flex",
+                                    transition: "all 0.3s",
                                     justifyContent: "center",
                                     alignItems: "center",
                                 },
@@ -1681,6 +1705,18 @@ class AdventureLogStyles {
                                                 border: "2px solid "+appColors.color9+"22",
                                             },
 
+                                            popupSmallest:
+                                                {
+                                                    opacity:"100%", 
+                                                    background: appColors.colorBlack+"99", 
+                                                    padding:"10px", 
+                                                    borderRadius:"2vmin", 
+                                                    // borderStyle:"solid", 
+                                                    // borderColor:appColors.color3+"22", 
+                                                    display:"flex", flexDirection:"column",
+                                                    border: "2px solid "+appColors.color9+"22",
+                                                },
+
 
                                             margins: {
                                                 margin1w: "1vw",
@@ -1721,12 +1757,14 @@ class AdventureLogStyles {
 
                                                 buttonAdd: {
                                                     cursor: "pointer",
-                                                    background: appColors.color1,
-                                                    color: appColors.colorBlack,
-                                                    padding: "4%",
-                                                    width: "5vw",
-                                                    height: "3vh",
+                                                    borderRadius:"2rem",
+                                                    background: appColors.color7+"77",
+                                                    border: "1px solid "+appColors.colorWhite+"44",
+                                                    color: appColors.color3,
+                                                    padding: "12px 45px",
+                                                    width: "fit-content", height: "fit-content",
                                                     display: "flex",
+                                                    transition: "all 0.3s",
                                                     justifyContent: "center",
                                                     alignItems: "center",
                                                 },

@@ -10,7 +10,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
 
 import placeholder from '../pics/placeholderEncounter.JPG';
-import backarrow from '../pics/placeholderEncounter.JPG';
+import backarrow from '../pics/backArrow.webp';
 
 
 export default class CampaignEditor extends Component {
@@ -47,9 +47,10 @@ componentDidMount(){
     return (
       <div >
         {/* BACK BUTTON */}
-        <Link to={"/campaign/"} style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", fontWeight:"bold", letterSpacing:".05rem"}}
+        <Link to={"/campaign/"} style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+        fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh"}}
         >
-          <img
+          <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
           src={backarrow}
           />
           Campaigns
