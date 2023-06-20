@@ -5,11 +5,12 @@ import AddCampaign from './AddCampaign';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
+
 // https://www.npmjs.com/package/react-lazyload
 
 
 import placeholder from '../pics/placeholderEncounter.JPG';
-
+import backarrow from '../pics/placeholderEncounter.JPG';
 
 
 export default class CampaignEditor extends Component {
@@ -44,7 +45,16 @@ componentDidMount(){
     let radius = "3vmin";
     let styles = state.styles;
     return (
-      <div>
+      <div >
+        {/* BACK BUTTON */}
+        <Link to={"/campaign/"} style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", fontWeight:"bold", letterSpacing:".05rem"}}
+        >
+          <img
+          src={backarrow}
+          />
+          Campaigns
+        </Link>
+
       <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  
       backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover" }}>
@@ -74,6 +84,9 @@ componentDidMount(){
                 {/* /Description/ */}
                 
         </div>
+
+        <hr></hr>
+        
                 <div style={{display:"flex", direction:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
                         <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 

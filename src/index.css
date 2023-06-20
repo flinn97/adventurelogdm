@@ -21,6 +21,7 @@
 
   font-family: "sans-serif";
   src:url("https://fonts.google.com/noto/specimen/Noto+Sans+Georgian");
+  
 }
 
 fontNormal {
@@ -30,7 +31,7 @@ fontNormal {
     height: 1000px;
     width: 100%;
     position: fixed;
-    
+    letter-spacing: .21rem;
      overflow:hidden; 
 }
 

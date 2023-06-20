@@ -155,7 +155,7 @@ handleChange = (event) => {
   return (
     
     <div className= "*" style={{
-           
+      letterSpacing:".05rem",
       width:"100vw", 
       height:"100vh", 
       display:"flex", 

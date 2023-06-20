@@ -24,6 +24,7 @@ export default class Campaign extends Component {
     return (
       <div style={{}}>           
         <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
+        <hr></hr>
         <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>  
       </div>
 

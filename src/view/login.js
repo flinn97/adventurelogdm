@@ -60,6 +60,7 @@ export default class Login extends Component {
                         alignItems: "center",
                         alignSelf: "center",
                         }}>
+                           
                         <div 
                         style={{display: "flex", flexDirection:"column", justifyContent:"center",
                          alignContent: "center",

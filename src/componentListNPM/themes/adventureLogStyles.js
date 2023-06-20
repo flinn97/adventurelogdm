@@ -1,4 +1,6 @@
-import { normalizeUnits } from "moment"
+import { normalizeUnits } from "moment";
+
+
 
 class AdventureLogStyles {
     //********FULL SCREEN DESKTOP********/
@@ -11,6 +13,7 @@ class AdventureLogStyles {
             borderThickest: "4px solid #1B1B1B",
             borderDouble: "double #32a999",
         }
+      
 
         let appShadows =
         {
@@ -87,7 +90,7 @@ class AdventureLogStyles {
             backgroundBlend: "overlay",
         }
 
-
+        
         let styles = {
             fonts:appFonts, colors:appColors, backgrounds:background,
             //TODO: Create or check all styles
@@ -267,14 +270,12 @@ class AdventureLogStyles {
                 // boxShadow: "2px 3px 6px" + appColors.colorBlack,
                 userSelect: "none"
             },
-            // biggestCardBorderless:
-            // {   width: "61vw",
-            //     height: "72.5vh",
-                 
-                
-            //     background: appColors.colorWhite,
-            //     userSelect: "none",
-            // },
+            biggestCardBorderless:
+            {   width: "100%",
+                height: "100%",
+                marginBottom: "2.75vh",
+                userSelect: "none",
+            },
             
 
             tallCard:
@@ -638,6 +639,8 @@ class AdventureLogStyles {
                             color6:"#4B0082",//purple
                         }
 
+                        
+
                         let background = {
                             backgroundColor: colorPalette.color1,//dark
                             backgroundBlend: "overlay",
@@ -666,7 +669,7 @@ class AdventureLogStyles {
 
 
                         let styles = {
-                            fonts:appFonts, colors:appColors, backgrounds:background,
+                            fonts:appFonts, colors:appColors, backgrounds:background, 
                             //TODO: Create or check all styles
                 //CARD CONTENT
                             smallestCardContentWithTab:
@@ -1215,6 +1218,7 @@ class AdventureLogStyles {
                                             color6:"#4B0082",//purple
                                         }
 
+                                        
                                         let background = {
                                             backgroundColor: colorPalette.color1,//dark
                                             backgroundBlend: "overlay",

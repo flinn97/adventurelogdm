@@ -25,7 +25,7 @@ export default class Home extends Component {
    
 
     return (
-      <div style={{height:"100%", marginBottom:"14vmin", }} >
+      <div style={{height:"100%", marginBottom:"14vmin", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
 
       <HomeCard app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>
       <div 
@@ -35,11 +35,8 @@ export default class Home extends Component {
        
         
     </div>
-    <div >
-
-   
-      <MarketCard app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>
-      </div></div>
+    
+      </div>
 
     )
   }

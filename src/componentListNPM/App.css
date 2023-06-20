@@ -3,6 +3,20 @@
 }
 
 
+hr {
+  border: none;
+    height: calc(.25rem + 0.15vw);
+    width:100%;
+    
+    margin-top: .92rem;
+    margin-bottom: .92rem;
+    background-image: url('../pics/hr.webp');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    opacity: .88;
+}
+
 .fontNormal {
   font-family: "sans-serif";
  }
