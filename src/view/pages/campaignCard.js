@@ -120,19 +120,24 @@ class TabContent extends Component{
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
+    let addCampaign = (state.popUpSwitchcase === "addCampaign");
+    let updateCampaign = (state.popUpSwitchcase != "addCampaign");
 
     return(
-    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",
+    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"column",
+    userSelect:"none", verticalAlign:"center", fontWeight:"600", 
     fontSize:styles.fonts.fontSubheader1}}>
       Current Campaigns
       <div>
-            <div style={{ ...styles.buttons.buttonAdd, alignSelf:"flex-end", padding:"11px", marginTop:"-8px", fontWeight:"200", fontSize:styles.fonts.fontBody}} onClick={()=>{
+        {updateCampaign &&
+            <div style={{ ...styles.buttons.buttonAdd, alignSelf:"flex-end", paddingLeft:"11px", paddingRight:"11px",  marginTop:"8px", height:"29px",
+            fontWeight:"200", fontSize:styles.fonts.fontBody, width:"16%"}} 
+            onClick={()=>{
                   //                  add > campaign          clear it > prepare not run           switchcase
                   dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
-                  + New Campaign</div>
+                  + New Campaign</div>}
 
-      {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "addCampaign") && <AddCampaign app = {app}/>}
+      {(state.currentComponent?.getJson().type === "campaign" && addCampaign) && <AddCampaign app = {app}/>}
       </div>
     </div>
     )

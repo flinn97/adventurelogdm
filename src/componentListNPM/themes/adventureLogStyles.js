@@ -523,6 +523,8 @@ class AdventureLogStyles {
             popupSmallest:
             {
                 opacity:"100%", 
+                height:"fit-content",
+                width:"fit-content",
                 backgroundColor: appColors.colorBlack+"ff", 
                 color:appColors.colorWhite,
                 padding:"10px", 

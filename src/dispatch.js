@@ -52,7 +52,7 @@ export default class Dispatch extends Component {
         {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
         <PopupDelete 
         
-          type="popup" options={{cardType:"popupSmallest"}} app={app}
+          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}

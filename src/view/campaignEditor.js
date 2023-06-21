@@ -46,7 +46,9 @@ componentDidMount(){
     let styles = state.styles;
     return (
       <div >
+
         {/* BACK BUTTON */}
+{state.popUpSwitchcase != "updateCampaign" &&
         <Link to={"/campaign/"} style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
         fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh"}}
         >
@@ -54,7 +56,7 @@ componentDidMount(){
           src={backarrow}
           />
           Campaigns
-        </Link>
+        </Link>}
 
       <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  
       backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,

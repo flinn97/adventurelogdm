@@ -96,16 +96,32 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{}}>
+      <div style={{
+        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
+        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
+    <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
       Are you sure you want to delete this?
-      
-      <div >
-        Keep This
       </div>
-      
-      
-      <DelButton text="Yes, Delete This" obj={state.currentDelObj} onChange={this.props.delClick}  />
 
+      <div style={{ display:"flex", flexDirection:"row", justifyContent:"center",
+      verticalAlign:"center", justifyContent:"space-around",
+      }}>
+
+        <div onClick={()=>{dispatch({popupSwitch:"", handlePopupClose:this.deleteCampaign,
+                })}}
+                style={{...styles.buttons.buttonAdd, padding:"9px", textAlign:"center",}}>
+          No, keep it
+        </div>
+      
+        
+        <DelButton wrapperStyle={{
+        ...styles.buttons.buttonAdd, padding:"9px", textAlign:"center", borderColor:styles.colors.color3+"55",
+        color:styles.colors.color5, fontSize:".5vh", background:styles.colors.color7+"22"}} 
+        text="Yes, delete it" obj={state.currentDelObj} 
+        onChange={this.props.delClick} />
+      
+
+      </div>
     </div>
     )
   }

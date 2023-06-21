@@ -28,7 +28,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor"];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", ];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage" ];
 
     return <div style={this.props.iSectionStyle? //if
     this.props.iSectionStyle: //then
@@ -278,7 +278,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor", "checkbox", ];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", ];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage" ];
     let html = <>
     
       {this.props.cells.map((c, index)=><div style={this.props.cellStyle? //if
@@ -583,7 +583,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor"];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", ];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage"];
     
 
     let types={

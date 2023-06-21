@@ -71,6 +71,7 @@ class RunButton extends Component {
                 //TAYLOR
                     style={this.props.buttonTextStyle? {...this.props.buttonTextStyle} : theme !== undefined ? theme.buttonTextStyle : {}}
                     onClick={async () => {
+                        
                         if (this.state.obj) {
                         this.state.obj[0].getOperationsFactory().run();
                         } else {

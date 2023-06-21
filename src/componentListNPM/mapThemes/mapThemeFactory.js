@@ -12,7 +12,7 @@ class MapThemeFactory {
        outreachMap: OutreachMap.getMapTheme(),
        defaultTasks: DefaultTasksMap.getMapTheme(),
        selectByImage: selectByImage.getMapTheme(),
-
+        
     }
 
     registerComponents(register){

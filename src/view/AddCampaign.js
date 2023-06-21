@@ -35,8 +35,10 @@ export default class AddCampaign extends Component {
     let radius = "2vmin";
     let campaignPlaceholder = "Campaign Name";
     let textSubmit = ""; let textNotReady ="";
+    let isUpdate = (state.popUpSwitchcase === "updateCampaign");
+    let isNotUpdate = (state.popUpSwitchcase != "updateCampaign")
 
-    if (state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign")
+    if (state.currentComponent?.getJson().type === "campaign" && isUpdate)
                       {textSubmit ="Edit"}
                       else {
                         textSubmit ="Create My Campaign";
@@ -44,9 +46,9 @@ export default class AddCampaign extends Component {
     console.log(styles);
 
     if (this.state.pic)
-                      {textNotReady = state.currentComponent?.getJson().type != "campaign" && state.popUpSwitchcase != "updateCampaign"? "Loading..." : "Edit"}
+                      {textNotReady = state.currentComponent?.getJson().type != "campaign" && isNotUpdate ? "Loading..." : "Edit"}
                       else {
-                        textNotReady ="Give your campaign an image and title!";
+                        textNotReady = isNotUpdate? "Give your campaign an image and title!" : "Edit"
                         };
    
 
@@ -56,9 +58,8 @@ export default class AddCampaign extends Component {
       <div obj={app.state.currentComponent} style={{display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:radius, 
       justifyContent:"space-evenly", 
       transition:"all 2s ease-in-out",
-      width: '100%', height: 'fit-content',  
-      
-      backgroundImage: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign" ?
+      width: '100%', height: '40vh',  
+      backgroundImage: state.currentComponent?.getJson().type === "campaign" && isUpdate ?
       'url('+(this.state.obj?.getJson().picURL||this.state.completedPic)+')'
       :
       'url('+(this.state.completedPic||placeholder)+')'
@@ -73,22 +74,29 @@ export default class AddCampaign extends Component {
             ...styles.popupSmall,
             // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
             }}>
-              <div style={{display:"flex",justifyContent:"flex-end"}}>
-              {/* ///EXIT BUTTON */}
-              <div style={{...styles.buttons.buttonClose, marginBottom:".5rem"}} 
-              onClick={()=>{dispatch({popUpSwitchcase: "",})}}
-              
-              >X</div>
-              </div>
 
-            {state.popUpSwitchcase === "updateCampaign" && 
-            (<div style={{color:"red"}}
-            
-            onClick={()=>{dispatch({popupSwitch:"popupDelete", currentDelObj:state.currentComponent,
-            handlePopupClose:this.deleteCampaign,
-            })}}>
-              Delete
-            </div>)}
+              <div style={{display:"flex", flexDirection:"column", height:"100%"}}>
+
+                <div style={{display:"flex",justifyContent:"flex-end",position:"absolute", right:"3.5vw"}}>
+                {/* ///EXIT BUTTON */}
+                <div style={{...styles.buttons.buttonClose, marginBottom:".5rem"}} 
+                onClick={()=>{dispatch({popUpSwitchcase: "", currentComponent: undefined})}}
+                
+                >X</div>
+                </div>
+        {/* //DELETE CAMPAIGN */}
+                    {isUpdate && 
+                    (<div style={{...styles.buttons.buttonClose, right:"3.5vw", borderRadius:"2vmin", fontSize:styles.fonts.fontSmall, 
+                    marginRight:"6%", background:"",marginTop:"4px", }}
+                    
+                    onClick={()=>{dispatch({popupSwitch:"popupDelete", currentDelObj:state.currentComponent,
+                    handlePopupClose:this.deleteCampaign,
+                    })}}>
+                      Delete This Campaign 
+                      <div style={{color:styles.colors.color3, fontSize:".85rem", marginLeft:"10px", alignSelf:"center"}}> (permanent)</div>
+                    </div>)}
+
+            </div>
 
           {/* <img src={this.state.pic || placeholder} style={{position: 'sticky', minWidth: '100%', minHeight: '100%', 
             maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
@@ -98,9 +106,9 @@ export default class AddCampaign extends Component {
                 <Upload 
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
-              obj={app.state.currentComponent} text="Set Background" style={{display:"flex",
+              obj={app.state.currentComponent} text="Set Backdrop" style={{display:"flex",
               zIndex:"1", borderRadius:".1vmin", background:"",}} 
-              update={true} skipUpdate={true} 
+              update={true} skipUpdate={true}
               updateMap={(obj)=>{this.setState({completedPic: obj.getJson().picURL})}} app={app}/>
               
               </div>
@@ -157,7 +165,7 @@ export default class AddCampaign extends Component {
                     : 
                       <div style={{display:"flex", justifyContent:"center"}}>
                       <RunButton app ={app} 
-                        wrapperStyle={{...styles.buttons.buttonAdd, cursor:"wait", 
+                        wrapperStyle={{...styles.buttons.buttonAdd, cursor: isNotUpdate ? "wait":"pointer", 
                           width:"35%", transition:"all 1s ease-out", borderRadius:"21%",
                           display:"flex", color:styles.colors.color6, background:styles.colors.colorWhite+"88", fontWeight:"600", borderColor:styles.colors.color6
                         }}
@@ -167,8 +175,14 @@ export default class AddCampaign extends Component {
                         }}
                       />
                     </div>
-                  } <div style={{color:styles.colors.color5, fontSize:styles.fonts.fontSmall, fontWeight:"200"}}>* required, you can change this later</div>
-            </div>
+                  } 
+                          {isNotUpdate
+                          &&
+                          <div style={{color:styles.colors.color5, fontSize:styles.fonts.fontSmall, fontWeight:"200"}}>
+                            * required, you can change this later
+                            </div>
+                          }
+                  </div>
 </div>
 </div>
 

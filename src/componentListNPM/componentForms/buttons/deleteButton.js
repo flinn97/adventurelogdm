@@ -43,7 +43,8 @@ class DelButton extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.delbuttonWrapperStyle:{width:"100px", height:"20px", background:"red", borderRadius:"7px", display:"flex", justifyContent:"center", alignItems:"center"}} className={this.props.wrapperClass}>
+            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? 
+            theme.delbuttonWrapperStyle:{width:"100px", height:"fit-content", background:"red", borderRadius:"7px", display:"flex", justifyContent:"center", alignItems:"center"}} className={this.props.wrapperClass}>
                 <div style={this.props.buttonTextStyle?{...this.props.buttonTextStyle}:theme!==undefined?theme.buttonTextStyle:{}}  
                 onClick={this.props.onClick?this.props.onClick: ()=>{
                     this.props.obj.getOperationsFactory().cleanPrepareRun({del:this.props.obj});

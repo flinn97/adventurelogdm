@@ -93,10 +93,12 @@ hr {
 }
 
 * {
+  font-size: calc(1rem + 0.25vw);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'sans-serif';
+  font-family: 'serif';
+  letter-spacing: .04rem;
 }
 
 .background {
