@@ -78,9 +78,10 @@ export default class Upload extends Component {
             borderRadius:"22px", fontWeight:"550",  }}>
                 
                 <label  for="file-upload" style={{...styles.buttons.buttonAdd,
-                    display: "inline-block",
+                    display: "inline-block", height:"fit-content",
                     maxWidth: "fit-content", cursor:"pointer",
-                     marginRight:"1rem",  position: "relative"
+                     marginRight:"1rem",  position: "relative",
+                     fontSize:styles.fonts.fontSmall
                 }}>
 * Choose an image file for your campaign
                     <input accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"

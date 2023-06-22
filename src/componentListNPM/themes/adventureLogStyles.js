@@ -43,6 +43,7 @@ class AdventureLogStyles {
             spacingTight: "-.12vw",
 
             //size
+            fontSmallest: "calc(0.45rem + 0.35vw)",
             fontSmall: "calc(0.75rem + 0.35vw)",
 
             fontBody: "calc(1rem + 0.35vw)",
@@ -543,8 +544,10 @@ class AdventureLogStyles {
 
             buttons: {
                 buttonClose:
-                {   position:"absolute", right:"1vw",
-                    display:"flex",
+                {   alignItems:"center", justifyContent:"center",
+                    justifyItems:"center", justifySelf:"center",
+                
+                    display:"flex", 
                     fontFamily: appFonts.appFont,
                     width: "fit-content",
                     color: appColors.color5,
@@ -554,7 +557,7 @@ class AdventureLogStyles {
                     borderRadius: "50%",
                     verticalAlign: "center",
                     textAlign: "center",
-                    alignItems: "center",
+                    
                     height: "fit-content",
                     background: appColors.color1+"44",
                 },
@@ -583,6 +586,7 @@ class AdventureLogStyles {
                     transition: "all 0.3s",
                     justifyContent: "center",
                     alignItems: "center",
+                    textDecoration:"none"
                 },
 
             }
@@ -631,6 +635,7 @@ class AdventureLogStyles {
                             spacingTight: "-.12vw",
 
                             //size
+                            fontSmallest: "calc(0.45rem + 0.35vw)",
                             fontSmall: "calc(0.75rem + 0.35vw)",
 
                             fontBody: "calc(1rem + 0.35vw)",
@@ -1221,6 +1226,7 @@ class AdventureLogStyles {
                                             spacingTight: "-.12vw",
 
                                             //size
+                                            fontSmallest: "calc(0.45rem + 0.35vw)",
                                             fontSmall: "calc(0.75rem + 0.35vw)",
 
                                             fontBody: "calc(1rem + 0.35vw)",

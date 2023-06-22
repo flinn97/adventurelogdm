@@ -9,7 +9,8 @@ import iconTest from '../pics/iconTest.svg';
 import Draggable from 'react-draggable';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import backarrow from '../pics/backArrow.webp';
+import placeholder from '../pics/placeholderEncounter.JPG';
 
 export default class Worldbuilder extends Component {
 
@@ -48,6 +49,10 @@ componentDidMount(){
   let id = splitURL[splitURL.length-1]
   let component = this.props.app.state.componentList.getComponent("campaign", id)
   this.setState({obj: component})
+  
+  //RICH TEXT READ
+  let campaignDesc = document.getElementById("campaignDesc");
+  campaignDesc.innerHTML = component.getJson().description;
 }
 
 
@@ -56,21 +61,47 @@ componentDidMount(){
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
+    let radius = "3vmin";
     let styles =state.styles;
-
+    
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
 
     return (
+      
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
-      color: "green", background:"black", height:"900px", maxWidth:"1100px", }}>
-        <h1>World Builder</h1>
+      height:"900px", maxWidth:"100%", 
+      }}>
+
+            {state.popUpSwitchcase != "worldbuilder" &&
+            <Link to={"/campaign/"+(this.state.obj?.getJson()._id)} 
+            style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+            fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", }}
+            >
+              <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
+              src={backarrow}
+              />
+              Go Back
+            </Link>}
+
+            <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  marginBottom:"2vh", 
+      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
+      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", height:"fit-content", width:"100%" }}>
+<div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%", }}>
+
+        <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite}}>World Builder: {this.state.obj?.getJson().title}</div>
       
              
                 
-      {this.state.obj?.getJson().title}
-      {this.state.obj?.getJson().description}
-      <div style={{...styles.buttons.buttonAdd}} onClick={()=>{dispatch({popUpSwitchcase: "addMap" })}}>Add Map</div>
+      
+      <div id= "campaignDesc"
+              style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
+                </div>
+<div style={{...styles.buttons.buttonAdd, }} onClick={()=>{dispatch({popUpSwitchcase: "addMap" })}}>Add Map</div>
+          </div>
+          </div>
+
+      
         {(state.popUpSwitchcase === "addMap") && <InteractiveMap app = {app}/>}
  
               {/* Button to add a new draggable item */}
@@ -88,8 +119,8 @@ componentDidMount(){
                       width: "55px", height:"55px",
                       borderRadius: "50%",
                       userSelect: "none",
-                      top: "290px", // Starting top position
-                      left: "102px", // Starting left position
+                      top: "44%", // Starting top position
+                      left: "11%", // Starting left position
                       }}>
                     </img>
                     

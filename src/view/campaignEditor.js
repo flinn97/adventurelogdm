@@ -11,6 +11,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
 import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
+import EncounterMapItem from './encounterMapItem';
 
 
 export default class CampaignEditor extends Component {
@@ -76,31 +77,41 @@ componentDidMount(){
                       </div>
                       {/* I dont think we are doing sessions */}
               {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
-              <div id= "campaignDesc"
-              style={{width:"100%", height:"100%", userSelect:"none"}}>
+              {/* /Description/ */}
+              <div id= "campaignDesc" 
+              style={{width:"100%", height:"100%", userSelect:"text"}}>
                 </div>
               
               
               </>}
               
                 </div>
-                {/* /Description/ */}
+                
                 
         </div>
 
         <hr></hr>
         
-                <div style={{display:"flex", direction:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
+                <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
                         <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
                         style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
-                             <div>World Map</div>
+                             <div>+ World Map</div>
                              </Link>
-                        
+
+                             <hr></hr>
+
                           <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
                         style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
-                             <div>Encounters</div>
+                             <div>Manage Encounters</div>
                              </Link>
+
+                             <div style={{}}>
+            <MapComponent app={app} name={"encounters"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+            theme={"selectByImage"}
+
+            />
+          </div>
                 </div>
         </div>
       
