@@ -19,11 +19,12 @@ export default class EncounterMapItem extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-    let radius = "2vmin";
+    
     let styles = state.styles;
+    
     let obj = this.props.obj;
     return (
-      <Link to={"/encounter/"+obj?.getJson()._id} style={{ color: styles.colors.colorWhite, 
+      <Link to={"/encounter/" + obj?.getJson()._id} style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
         height: "fit-content",
         width: "fit-content"}}
@@ -31,7 +32,7 @@ export default class EncounterMapItem extends Component {
       >
 
       <div style={{display: "flex", flexDirection: 'column', 
-      borderRadius:radius,
+      borderRadius:styles.popupSmall.borderRadius,
       justifyContent:"space-evenly", 
       zIndex:"0",
       width: '100%', 
@@ -39,7 +40,7 @@ export default class EncounterMapItem extends Component {
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", }}>
                         
                         <div style={{
-                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',borderRadius:radius,
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',
                         height: "fit-content", 
                          width: "fit-content"}}>
                           

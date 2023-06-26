@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterCard from './encounterCard';
 import placeholder from '../../pics/placeholderEncounter.JPG';
+import AddEncounter from '../AddEncounter';
 
 export default class EncounterManager extends Component {
   constructor(props) {
@@ -30,18 +31,31 @@ export default class EncounterManager extends Component {
     let styles =state.styles;
 
     return (
-      <div style={{display: "flex", marginTop:"3vmin", flexDirection: 'row', justifyContent:"space-evenly", 
-      width: '100%', height: '100%',  borderRadius:"2vmin",
-      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')' }}>
-        <img 
-          style={{position: 'absolute', minWidth: '100%', minHeight: '100%', 
-        maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
-        transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: 1, zIndex: '-1', borderRadius:"2vmin" }} />        
-            <div style={{marginBottom:"70px"}}>Encounter Manager</div>
-            <EncounterCard app={app} type="card" options={{cardType:"cardContent"}}/>
-            
-      </div>
+      <div>
+          <div style={{...styles.backgroundContent,
+          backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')' }}>
+              <div style={{ ...styles.popupSmall,
+                }}>
+              <div 
+                style={{display: "flex", marginTop:"3vmin", flexDirection: 'row', justifyContent:"flex-start", 
+              
+                width: 'fit-content', height: 'fit-content',  borderRadius:"2vmin",}}>
+                      <div style={{marginBottom:"70px", color:styles.colors.colorWhite, fontSize:styles.fonts.fontSubheader2,
 
+                    }}>
+                        
+                        {this.state.obj?.getJson().title} Encounters</div>
+                  </div>        
+                  
+                 
+              </div>    
+          </div>
+          <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       }}>
+          <EncounterCard app={app} type="card" options={{cardType:"cardContent"}}/> 
+          </div>
+      </div>
     )
   }
 }

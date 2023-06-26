@@ -96,6 +96,14 @@ class AdventureLogStyles {
             fonts:appFonts, colors:appColors, backgrounds:background,
             //TODO: Create or check all styles
 
+            backgroundContent:{
+                display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:"2vmin",
+      justifyContent:"space-evenly", position:"relative",
+      transition:"all 2s ease-in-out",
+      width: '100%', height: 'fit-content',  zIndex:"20",
+      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",
+            },
+
             smallestCardContentWithTab:
             {   padding: ".5rem 1rem",
                 top: "50%",
@@ -692,6 +700,15 @@ class AdventureLogStyles {
                             fonts:appFonts, colors:appColors, backgrounds:background, 
                             //TODO: Create or check all styles
                 //CARD CONTENT
+
+                backgroundContent:{
+                    display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:"2vmin",
+          justifyContent:"space-evenly", position:"relative",
+          transition:"all 2s ease-in-out",
+          width: '100%', height: 'fit-content',  zIndex:"20",
+          backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",
+                },
+
                             smallestCardContentWithTab:
                             {   padding: ".5rem 1rem",
                                 top: "50%",
@@ -1282,6 +1299,14 @@ class AdventureLogStyles {
                                             fonts:appFonts, colors:appColors, backgrounds:background,
                                             //TODO: Create or check all styles
 
+                                            backgroundContent:{
+                                                display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:"2vmin",
+                                      justifyContent:"space-evenly", position:"relative",
+                                      transition:"all 2s ease-in-out",
+                                      width: '100%', height: 'fit-content',  zIndex:"20",
+                                      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",
+                                            },
+                                            
                                             smallestCardContentWithTab:
                                             {   padding: ".5rem 1rem",
                                                 top: "50%",

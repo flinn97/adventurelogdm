@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import { Link } from 'react-router-dom';
 import "../../App.css";
+import AddEncounter from '../AddEncounter';
 
 /**
  * condensed version of the cards.
@@ -95,6 +96,16 @@ class MainContent extends Component{
     this.setState({obj: component})
   }
 
+  async deleteEncounter () {
+    let dispatch = this.props.app.dispatch;
+    dispatch({popupSwitch:"", currentDelObj:undefined});
+            //OK DONT DO THIS
+              const delay = ms => new Promise(res => setTimeout(res, ms));
+              await delay(1500);
+    window.location.href="/encountermanager/";
+  }
+
+
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -102,24 +113,38 @@ class MainContent extends Component{
     let componentList = state.componentList;
     let styles =state.styles;
     
-
+    
     return(
       
-
+      
         <div>
-          <Link 
-          to={"/addencountermanager/" + this.state.obj?.getJson()._id}>
+          {/* //TAYLOR */}
+          { state.popUpSwitchcase !="addEncounter" &&
+          <div style={{...styles.buttons.buttonAdd, marginTop:"2vh", marginBottom:"2vh"}}
+          onClick={()=>{
+            //                  add > campaign          clear it > prepare not run           switchcase
+            dispatch({operate: "addencounter", operation: "cleanPrepare", popUpSwitchcase: "addEncounter"})}}>
+          {/* // to={"/addencountermanager/" + this.state.obj?.getJson()._id} */}
+          
           + Create Encounter
-          </Link>
+          </div>
+          ||
+          <AddEncounter app={app}/>
+          }
 
-          <div>Encounters:</div>   
 
+
+          { state.popUpSwitchcase !="addEncounter" &&
+          <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       }}>
           {/* TAYLOR */}          
-          <MapComponent app={app}  linkOptions={{cells:[0], path:["/encounter/" + app.state.currentComponent.getJson()._id]}} name={"encounter"} cells={["name","description","_id"]}/>
-             
+          <MapComponent app={app}  linkOptions={{cells:[0,2], path:["/encounter/" + this.state.obj?.getJson()._id]}} name={"encounter"} cells={["name","description","_id"]}/>
+             </div>}
         </div>
       
     )
+
   }
 }
 

@@ -625,16 +625,22 @@ export default class MapComponent extends Component {
     styles.containerStyle.default//otherwise
   }>
         
-      {componentList.getList(this.props.name, this.props.filter?.search, this.props.filter?.attribute).map((item, index)=>
-       <div style={this.props.sectionStyle? //if
-       this.props.sectionStyle: //then
-     this.props.sectionTheme? //else if
-       mapThemes.includes(this.props.sectionTheme)?//if
-        f.getMapThemeFactory()[this.props.sectionTheme]?.sectionStyle?.default: //then
-        styles.sectionStyle[this.props.sectionTheme]://otherwise
-     styles.sectionStyle.default//otherwise
-    } key={index}> {this.cellMap(item, index)}</div>
-      )}
+      {componentList.getList(this.props.name).map((item) => 
+    <div 
+    //Taylor
+        style={this.props.sectionStyle
+                ? this.props.sectionStyle
+                : this.props.sectionTheme 
+                ? mapThemes.includes(this.props.sectionTheme)
+                    ? f.getMapThemeFactory()[this.props.sectionTheme]?.sectionStyle?.default 
+                    : styles.sectionStyle[this.props.sectionTheme]
+                : styles.sectionStyle.default
+        } 
+        key={item.id} // use the unique id here
+    > 
+        {this.cellMap(item, item.id)}
+    </div>
+)}
       </div>,
     }
 

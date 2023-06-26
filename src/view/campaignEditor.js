@@ -12,6 +12,8 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
+import EncounterCard from './pages/encounterCard';
+import EncounterManager from './pages/encounterManager';
 
 
 export default class CampaignEditor extends Component {
@@ -59,9 +61,8 @@ componentDidMount(){
           Campaigns
         </Link>}
 
-      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  
-      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
-      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover" }}>
+      <div style={{...styles.backgroundContent, position:"relative",
+      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', }}>
             <div style={{...styles.popupSmall, padding:"1rem", minHeight:"13rem", width:"100%"}}>
 
             {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") && <AddCampaign app = {app}/>}
@@ -70,8 +71,8 @@ componentDidMount(){
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%"}}>
                       
                       <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
-                      padding:"5px", backgroundColor:styles.colors.color1+"ee",
-                      display:"flex",justifyContent:"center"}} 
+                      padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
+                      justifyContent:"center"}} 
                         onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                           Edit Campaign</div>
                       </div>
@@ -110,8 +111,11 @@ componentDidMount(){
             <MapComponent app={app} name={"encounters"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
             theme={"selectByImage"}
 
+           
+
             />
           </div>
+        
                 </div>
         </div>
       

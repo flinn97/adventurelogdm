@@ -32,7 +32,7 @@ export default class AddCampaign extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
-    let radius = "2vmin";
+    
     let campaignPlaceholder = "Campaign Name";
     let textSubmit = ""; let textNotReady ="";
     let isUpdate = (state.popUpSwitchcase === "updateCampaign");
@@ -55,10 +55,7 @@ export default class AddCampaign extends Component {
     return (
       <div>
         
-      <div obj={app.state.currentComponent} style={{display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:radius, 
-      justifyContent:"space-evenly", 
-      transition:"all 2s ease-in-out",
-      width: '100%', height: 'fit-content',  
+      <div obj={app.state.currentComponent} style={{...styles.backgroundContent, 
       backgroundImage: state.currentComponent?.getJson().type === "campaign" && isUpdate ?
       'url('+(this.state.obj?.getJson().picURL||this.state.completedPic)+')'
       :

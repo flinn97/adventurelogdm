@@ -83,7 +83,7 @@ export default class Upload extends Component {
                      marginRight:"1rem",  position: "relative",
                      fontSize:styles.fonts.fontSmall
                 }}>
-* Choose an image file for your campaign
+* Choose a banner image
                     <input accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
                         style={{ 
                             position: 'absolute', // Set position to absolute to make it fill the entire label
