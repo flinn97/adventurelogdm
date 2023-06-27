@@ -27,12 +27,22 @@ async componentDidMount(){
     }
     return num;
 }
+
+  function getCampaignId() {
+  const path = window.location.pathname;
+  const parts = path.split('/');
+  const id = parts.pop();
+  return id;
+}
+
   await this.props.app.dispatch({currentComponent: undefined});
   const currentDate = new Date();
   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
   const day = currentDate.getDate().toString().padStart(2, '0');
   const num = randomFourDigitNumber();
-  await this.props.app.dispatch({operate: "addencounter", operation: "cleanJsonPrepare", object: {_id: "E"+num+month+day}});
+  const campId = getCampaignId();
+  await this.props.app.dispatch({operate: "addencounter", operation: "cleanJsonPrepare", 
+  object: {creationDate: "E"+num+month+day, campaignId: campId, }});
   this.setState({start:true})
 }
 
@@ -91,7 +101,7 @@ async componentDidMount(){
               <ParentFormComponent app={app} name="name" label="Encounter Name"
               wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
               theme={"adventureLog"} rows={1}
-              maxLength={110}
+              maxLength={app.state.maxLengthShort}
               labelStyle={{marginBottom:"8px"}}
               inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
@@ -127,7 +137,7 @@ async componentDidMount(){
               text={"Save"} app ={app} 
               // to= {"/encounter/" + app.state.currentComponent.getJson()._id} 
               callBack={()=>{
-                dispatch({popUpSwitchcase: "", currentComponent: undefined});
+                dispatch({popUpSwitchcase: "encounter", currentComponent: undefined});
               }}
                   
              />

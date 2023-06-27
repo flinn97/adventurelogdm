@@ -700,7 +700,6 @@ class AdventureLogStyles {
                             fonts:appFonts, colors:appColors, backgrounds:background, 
                             //TODO: Create or check all styles
                 //CARD CONTENT
-
                 backgroundContent:{
                     display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:"2vmin",
           justifyContent:"space-evenly", position:"relative",

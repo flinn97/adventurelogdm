@@ -93,7 +93,7 @@ export default class AddCampaign extends Component {
             maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
             transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: .89, zIndex: '-1', borderRadius:"2vmin" }}/> */}
         
-              <div style={{ display:"flex", marginBottom:"20px", flexDirection:"row", width:"100%", 
+              <div style={{ display:"flex", marginBottom:"20px", flexDirection:"row", width:"100%", justifyContent:"space-between", 
               verticalAlign:"center", alignItems:"center"}}>
                 <Upload 
               //ADD THIS TO ALL UPLOADS//
@@ -105,7 +105,7 @@ export default class AddCampaign extends Component {
               
                   
                     {/* ///EXIT BUTTON */}
-                    <div style={{...styles.buttons.buttonClose, marginLeft:"60.5%"}} 
+                    <div style={{...styles.buttons.buttonClose,}} 
                     onClick={()=>{dispatch({popUpSwitchcase: "", currentComponent: undefined})}}
                     
                     >X</div>
@@ -116,7 +116,7 @@ export default class AddCampaign extends Component {
               <ParentFormComponent app={app} name="title" label="*Campaign Name: " 
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                   theme={"adventureLog"} rows={1}
-                  maxLength={110}
+                  maxLength={app.state.maxLengthShort}
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
                   borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",

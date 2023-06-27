@@ -28,7 +28,9 @@ export default class App extends Component {
         this.dispatch=this.dispatch.bind(this);
 
     this.state={
-      
+      maxLengthShort: 72,
+
+
       start: false,
       styles: undefined,
       loginPage: true,

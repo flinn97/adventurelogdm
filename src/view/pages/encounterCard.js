@@ -3,6 +3,7 @@ import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import { Link } from 'react-router-dom';
 import "../../App.css";
 import AddEncounter from '../AddEncounter';
+import EncounterMapItem from '../encounterMapItem';
 
 /**
  * condensed version of the cards.
@@ -123,7 +124,7 @@ class MainContent extends Component{
           <div style={{...styles.buttons.buttonAdd, marginTop:"2vh", marginBottom:"2vh"}}
           onClick={()=>{
             //                  add > campaign          clear it > prepare not run           switchcase
-            dispatch({operate: "addencounter", operation: "cleanPrepare", popUpSwitchcase: "addEncounter"})}}>
+            dispatch({operate: "addencounter", operation: "cleanJsonPrepare", popUpSwitchcase: "addEncounter",})}}>
           {/* // to={"/addencountermanager/" + this.state.obj?.getJson()._id} */}
           
           + Create Encounter
@@ -136,11 +137,16 @@ class MainContent extends Component{
 
           { state.popUpSwitchcase !="addEncounter" &&
           <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
-       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px",
        }}>
-          {/* TAYLOR */}          
-          <MapComponent app={app}  linkOptions={{cells:[0,2], path:["/encounter/" + this.state.obj?.getJson()._id]}} name={"encounter"} cells={["name","description","_id"]}/>
+                
+          
              </div>}
+             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+            filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
+            theme={"selectByImageSmall"}
+            
+            />
         </div>
       
     )

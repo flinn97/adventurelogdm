@@ -166,7 +166,7 @@ class Encounter extends componentBase{
        
     }
     json= {
-        _idEncounter: "",
+        
         name: "",
         description: "",
         audio: "",

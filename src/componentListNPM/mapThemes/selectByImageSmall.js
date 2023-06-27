@@ -1,23 +1,34 @@
-class SelectByImage {
+
+
+class SelectByImageSmall {
+
+  
     getMapTheme(){
+       
         let style={
         containerStyle: { 
-            default: {display:'flex', flexDirection:"column", marginTop:"10px", justifyContent:"left", width:"100%", padding:"1%",  alignItems:"center", justifyContent:"center",},
-            row: {display:'flex', flexDirection:"row"},
+            default: {display:'flex', flexDirection:"row", marginTop:"38px",
+           width:"100%", padding:"1vh", position:"", alignItems:"center",
+            flexWrap:"wrap", justifyContent:"space-around",
+          },
+            row: {display:'flex', flexDirection:"row", },
             wrapRow:{ display:'flex', flexDirection:"row", flexWrap:"wrap"},
             wrapColumn:{ display:'flex', flexDirection:"column", flexWrap:"wrap"},
             small:{ display:'flex', flexDirection:"column", flexWrap:"wrap"},
           },
 
           iContainerStyle: { 
-            default: {display:'flex', flexDirection:"column"},
+            default: {display:'flex', flexDirection:"column", },
             row: {display:'flex', flexDirection:"row"},
             wrapRow:{ display:'flex', flexDirection:"row", flexWrap:"wrap"},
             wrapColumn:{ display:'flex', flexDirection:"column", flexWrap:"wrap"},
           },
 
           sectionStyle:{
-            default:  {display:'flex', flexDirection:"row", marginBottom:"3vh",alignItems:"center" },
+            default:  {display:'flex', flexDirection:"row", alignItems:"center", height:"fit-content", 
+            paddingRight:"1%", paddingLeft:"1%", 
+            marginTop:".65rem", 
+          },
             row:  {display:'flex', flexDirection:"row"},
             column: {display:'flex', flexDirection:"column"},
             wrapRow:{ display:'flex', flexDirection:"row", flexWrap:"wrap"},
@@ -34,7 +45,7 @@ class SelectByImage {
           },
 
           cellStyle:{
-            default: {display:"flex", justifyContent:"center", alignItems:"center", width:"100%",},
+            default: {display:"flex", justifyContent:"center", alignItems:"center", maxWidth:"fit-content", maxHeight:"22px"},
           },
 
           
@@ -52,12 +63,12 @@ class SelectByImage {
           },
 
           individualCell:{
-            default: {display:"flex", width:"100%", },
+            default: {display:"flex", width:"100%",},
             bold: {fontWeight:"700"},
           },
 
           innerCellStyle:{
-            default: {display:"flex", fontSize:"18px", width:window.innerWidth<600?"30vw":window.innerWidth<1000?"15vw":"9vw",},
+            default: {display:"flex", fontSize:"", width:window.innerWidth<600?"30vw":window.innerWidth<1000?"15vw":"9vw",},
             boldFont: {fontWeight:"700"},
           }, 
           iCellStyle:{
@@ -74,4 +85,4 @@ class SelectByImage {
 
    
 }
-export default new SelectByImage();
+export default new SelectByImageSmall();

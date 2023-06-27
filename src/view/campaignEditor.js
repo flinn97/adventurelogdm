@@ -12,8 +12,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
-import EncounterCard from './pages/encounterCard';
-import EncounterManager from './pages/encounterManager';
+
 
 
 export default class CampaignEditor extends Component {
@@ -66,9 +65,9 @@ componentDidMount(){
             <div style={{...styles.popupSmall, padding:"1rem", minHeight:"13rem", width:"100%"}}>
 
             {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") && <AddCampaign app = {app}/>}
-                <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite}}>{this.state.obj?.getJson().title}</div>
+                <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite, width:"80%",}}>{this.state.obj?.getJson().title}</div>
                 {state.popUpSwitchcase !== "updateCampaign" && <>
-                      <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%"}}>
+                      <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%", justifyContent:"space-between"}}>
                       
                       <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
                       padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
@@ -108,11 +107,9 @@ componentDidMount(){
                              </Link>
 
                              <div style={{}}>
-            <MapComponent app={app} name={"encounters"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
-            theme={"selectByImage"}
-
-           
-
+            <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+            filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
+            theme={"selectByImageSmall"}
             />
           </div>
         
