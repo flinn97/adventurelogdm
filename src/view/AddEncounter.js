@@ -11,14 +11,23 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 export default class AddEncounter extends Component {
   constructor(props) {
     super(props);
-
+    this.deleteCampaign = this.deleteCampaign.bind(this);
     this.state = {
       eid: 10,
     };
   }
 
+  async deleteCampaign () {
+    let dispatch = this.props.app.dispatch;
+    dispatch({popupSwitch:"", currentDelObj:undefined});
+            //OK DONT DO THIS
+              const delay = ms => new Promise(res => setTimeout(res, ms));
+              await delay(1500);
+    window.location.href="/campaign/";
+  }
+
 async componentDidMount(){
-  
+   
   function randomFourDigitNumber() {
     let num = Math.floor(Math.random() * 9000) + 1000;
     while(num < 1000 || num > 9999) {
@@ -136,7 +145,7 @@ async componentDidMount(){
               text={"Save"} app ={app} 
               // to= {"/encounter/" + app.state.currentComponent.getJson()._id} 
               callBack={()=>{
-                dispatch({popUpSwitchcase: "encounter", currentComponent: undefined});
+                dispatch({popUpSwitchcase: "", currentComponent: undefined});
               }}
                   
              />

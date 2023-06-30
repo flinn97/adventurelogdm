@@ -55,7 +55,7 @@ export default class AddCampaign extends Component {
     return (
       <div>
         
-      <div obj={app.state.currentComponent} style={{...styles.backgroundContent, 
+      <div  style={{...styles.backgroundContent, 
       backgroundImage: state.currentComponent?.getJson().type === "campaign" && isUpdate ?
       'url('+(this.state.obj?.getJson().picURL||this.state.completedPic)+')'
       :
@@ -92,7 +92,7 @@ export default class AddCampaign extends Component {
           {/* <img src={this.state.pic || placeholder} style={{position: 'sticky', minWidth: '100%', minHeight: '100%', 
             maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
             transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: .89, zIndex: '-1', borderRadius:"2vmin" }}/> */}
-        
+         
               <div style={{ display:"flex", marginBottom:"20px", flexDirection:"row", width:"100%", justifyContent:"space-between", 
               verticalAlign:"center", alignItems:"center"}}>
                 <Upload 

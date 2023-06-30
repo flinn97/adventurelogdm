@@ -6,6 +6,7 @@ import CardPractice from './CardPrac';
 import Upload from './upload';
 import placeholder from '../pics/dragon.jpg';
 import ColorThief from 'colorthief';
+import TokenImage from './tokenImage';
 
 export default class AddParticipant extends Component {
   constructor(props) {
@@ -14,17 +15,25 @@ export default class AddParticipant extends Component {
     this.state = {
       pic: undefined,
       colors: [],
+      
     };
     this.colorThief = new ColorThief();
+   
   }
-
+  getEncounterId() {
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    const id = parts.pop();
+    this.setState({ encounterId: id }); // Set the encounterId in the state
+    return id;
+  }
 
   updateColors = (pic) => {
     const img = new Image();
     img.crossOrigin = 'Anonymous';
     img.src = pic;
     img.onload = () => {
-      const palette = this.colorThief.getPalette(img, 3);
+      const palette = this.colorThief.getPalette(img, 7);
       this.setState({ colors: palette });
     };
     
@@ -49,8 +58,8 @@ export default class AddParticipant extends Component {
 const divStyle = colors.length
   ? {
       background: `linear-gradient(45deg, rgb(${colors[0].join(',')}), rgb(${colors[1].join(',')}), rgb(${colors[2].join(',')}))`,
-      ...styles.backgroundContent, 
-      transition:"none", 
+      ...styles.backgroundContent, bordierRadius:"3vw",
+     
     }
   : { 
       ...styles.backgroundContent, 
@@ -100,21 +109,20 @@ const divStyle = colors.length
 
 let creature = pickName();
 let linkExample = pickLink();
-
+const borderC = styles.colors.colorWhite;
 
     return (
      
      
         <div style={{...styles.backgroundContent,
-      // backgroundImage: 'url('+(this.state.pic||placeholder)+')', 
-      // transitionDelay:"1000ms", transitionProperty: "background, backgroundImage",
-      // transitionDuration:"10000ms"
       }}>
    <div style={divStyle}>     
  <div style={{display: "flex", width:"100%", flexDirection:"column", padding:"22px", justifyContent:"right",...styles.popupSmall,
-background:styles.colors.color1+"bb", borderWidth:"3px", 
+background:styles.colors.color1+"bb", borderWidth:"3px",
 
-borderColor:colors.length?`rgb(${colors[2].join(',')})`: styles.popupSmall.border
+borderColor:colors.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,
+transitionDelay:"0ms", transition: "all",
+transitionDuration:"9000ms"
 }}>
 
 <div style={{display: "flex", width:"100%", flexDirection:"row", justifyContent:"right"}}>
@@ -123,13 +131,8 @@ borderColor:colors.length?`rgb(${colors[2].join(',')})`: styles.popupSmall.borde
 </div>
 
 <div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
-     
 
-      <img src={this.state.pic||placeholder} 
-
-  style={{width:"100px", height:"100px", 
-  objectFit:"cover", borderRadius:"50%", marginLeft:"10px",
-  marginRight:"30px"}}/>
+    <TokenImage pic={this.state.pic} borderC={borderC} colors={colors} placeholder={placeholder} app={app}/>
 
       <Upload text={"Choose an image"} 
         update={true} obj={app.state.currentComponent} 
@@ -197,13 +200,13 @@ borderColor:colors.length?`rgb(${colors[2].join(',')})`: styles.popupSmall.borde
       inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"3.7rem", rows:"1",
       borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
       }}
-      placeholder={"ie: "+randomAC}/> 
+      placeholder={"ie: The monster is hiding in a barrel"}/> 
 </div>
          
-              <RunButton app ={app} text={"Add Creature"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
-              callBack ={()=>{dispatch({popUpSwitchcase: "monster", currentComponent: undefined,
-              object: {creationDate: "M"+num+month+day, encounterId: encId,  
-              colorId: this.color2}})}}/>
+              <RunButton app ={app} text={"Add to Encounter"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
+              callBack ={()=>{dispatch({popUpSwitchcase: "", operation:"cleanJsonPrepare",
+              object: {creationDate: "M"+num+month+day, encounterId: "encId", colorId: "colors"
+              }})}}/>
           </div>
           </div></div>
 

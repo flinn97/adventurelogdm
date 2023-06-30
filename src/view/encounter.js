@@ -6,6 +6,8 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 import speaker from '../pics/speaker.png';
 import { Link } from 'react-router-dom';
 import MonsterMapItem from './monsterMapItem';
+import TokenImage from './tokenImage';
+import AddEncounter from './AddEncounter';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -42,6 +44,7 @@ export default class Encounter extends Component {
     
     let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
+
     return (
       <div>
             <div style={{color: styles.colors.colorWhite,
@@ -53,6 +56,22 @@ export default class Encounter extends Component {
         }}>
          {this.state.obj?.getJson().name}
 
+{/* <div>
+
+            {(state.currentComponent?.getJson().type === "encounter" && state.popUpSwitchcase === "updateEncounter") && <AddEncounter app = {app}/>}
+                {state.popUpSwitchcase != "updateEncounter" && <>
+                      
+                      <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
+                      padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
+                      justifyContent:"center"}} 
+                        onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateEncounter"})}}>
+                          Edit Campaign</div>
+                     
+              </>}
+              
+</div> */}
+
+          
 
          <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite, marginTop:"2vh"}}>
 
@@ -78,7 +97,7 @@ export default class Encounter extends Component {
 <div style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}} 
             onClick={()=>{
-            dispatch({operate: "addmonster", operation: "cleanJsonPrepare", popUpSwitchcase: "addMonster",})}}>
+            dispatch({operate: "addmonster", operation: "cleanJsonPrepare", popUpSwitchcase: "addMonster", object:{colorId:""}})}}>
           Add New Creature to this Encounter
               </div>
               </div>
@@ -92,8 +111,13 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
               
               <AddParticipant app = {app}/></div>}
             
-            <MapComponent app={app} name={"monster"} cells={[{custom:MonsterMapItem, props:{app:app, obj: "monster"}},]} 
-            filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
+            <MapComponent app={app} name={"monster"} 
+            cells={[
+              
+              {custom:MonsterMapItem, props:{app:app}},
+               "delete"
+              ]} 
+            // filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
             theme={"selectByImage"}
             />
 </div>        

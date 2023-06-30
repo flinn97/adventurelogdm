@@ -5,6 +5,8 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import Encounter from './encounter';
 import ColorThief from 'colorthief';
+import Roll from './Roll';
+import TokenImage from './tokenImage';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -15,6 +17,7 @@ export default class MonsterMapItem extends Component {
       pic: undefined,
       runEncounter: undefined,
       colors: undefined,
+      encounterId: undefined,
     };}
     
 
@@ -44,48 +47,63 @@ export default class MonsterMapItem extends Component {
               let fontSizeRem = fontSizePx / 16;
               let fontSize = fontSizeRem + "rem";
 
-              console.log(obj)
-              console.log(obj?.getJson().encounterId)
+              
+              console.log(obj.getJson().encounterId)
     return (
-      <div style={{
-       
-        backgroundColor:obj?.getJson().colorId
-      }}>
+      <div style={{}}>
 
       <div
       // to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
-        height: "fit-content", 
+        height: "fit-content",
+        
         width: "fit-content"}}
       > 
 
       <div style={{display: "flex", flexDirection: 'column', 
       borderRadius:styles.popupSmall.borderRadius,
-     
+      
       justifyContent:"space-evenly", 
       zIndex:"0",
       height: 'fit-content', 
       width: 'fit-content', 
       backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
       
-      ...styles.backgroundContent}}>
+      ...styles.backgroundContent,
+      }}>
                         
                         <div style={{
-                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',
-                        height: "fit-content", borderColor: obj?.getJson().colorID|"",
-                         width: "fit-content"}}>
-                          
-                          <div 
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"center", flexDirection: 'column',
+                        height: "fit-content", borderColor: (obj?.getJson().colorId||styles.colors.color9+"22"), 
+                         width:"40vw",}}>
+
+                          {/* <TokenImage pic={obj?.getJson().picURL} borderC={obj?.getJson().borderC} colors={obj?.getJson().colors} placeholder={obj?.getJson().placeholder} app={app}/> */}
+
+                          <div
                           
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack,
-                           width:"220px",
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
+                          width:"fit-content",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
                             {obj?.getJson().name}
-                            {obj?.getJson().notes}
                           </div>
+
+                          <div 
+                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
+                          width:"fit-content",
+                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
+                            AC: {obj?.getJson().ac}
+                          </div>
+
+                          <Roll app={app} obj={this.props.obj}
+                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
+                          width:"fit-content",
+                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}/>
+                          
                 </div>
         </div>
         </div>

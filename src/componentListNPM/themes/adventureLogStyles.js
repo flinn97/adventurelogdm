@@ -583,6 +583,7 @@ class AdventureLogStyles {
                 },
 
                 buttonAdd: {
+                    boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                     cursor: "pointer",
                     borderRadius:"2rem",
                     background: appColors.color7+"77",
@@ -1185,6 +1186,7 @@ class AdventureLogStyles {
                                 },
 
                                 buttonAdd: {
+                                    boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                                     cursor: "pointer",
                                     borderRadius:"2rem",
                                     background: appColors.color7+"77",
@@ -1788,6 +1790,7 @@ class AdventureLogStyles {
                                                 },
 
                                                 buttonAdd: {
+                                                    boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                                                     cursor: "pointer",
                                                     borderRadius:"2rem",
                                                     background: appColors.color7+"77",

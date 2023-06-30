@@ -65,6 +65,7 @@ componentDidMount(){
             <div style={{...styles.popupSmall, padding:"1rem", minHeight:"13rem", width:"100%"}}>
 
             {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") && <AddCampaign app = {app}/>}
+    
                 <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite, width:"80%",}}>{this.state.obj?.getJson().title}</div>
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%", justifyContent:"space-between"}}>
@@ -75,9 +76,11 @@ componentDidMount(){
                         onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                           Edit Campaign</div>
                       </div>
+
                       {/* I dont think we are doing sessions */}
               {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
               {/* /Description/ */}
+              
               <div id= "campaignDesc" 
               style={{width:"100%", height:"100%", userSelect:"text"}}>
                 </div>
