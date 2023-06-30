@@ -27,8 +27,8 @@ export default class Encounter extends Component {
 
   
   convertToLink = (audio) => {
-    if (audio && !audio.startsWith('http://')) {
-      return 'http://' + audio;
+    if (audio && !audio.startsWith('htt')) {
+      return 'https://' + audio;
     }
     return audio;
   }
