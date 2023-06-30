@@ -3,6 +3,9 @@ import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import AddParticipant from './AddParticipant';
 import Roll from './Roll';
 import placeholder from '../pics/placeholderEncounter.JPG';
+import speaker from '../pics/speaker.png';
+import { Link } from 'react-router-dom';
+import MonsterMapItem from './monsterMapItem';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -22,38 +25,78 @@ export default class Encounter extends Component {
   this.setState({obj: component})
   }
 
+  
+  convertToLink = (audio) => {
+    if (audio && !audio.startsWith('http://')) {
+      return 'http://' + audio;
+    }
+    return audio;
+  }
+
   render() {
     let app = this.props.app;
     let state = app.state;
     let dispatch = app.dispatch;
-    let radius = "2vmin";
+    let componentList = state.componentList;
+    let styles =state.styles;
+    
+    let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
     return (
       <div>
-            <div style={{
-              marginTop:"3vmin", flexDirection: 'row', justifyContent:"space-evenly", 
-              width: '100%', height: '100%',  borderRadius:"2vmin", borderRadius:radius,
-              backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",
+            <div style={{color: styles.colors.colorWhite,
+              ...styles.backgroundContent,
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
           }}>
-          <div style={{fontSize:"22px", flexDirection: 'row', justifyContent:"space-evenly", 
-              width: '100%', height: '100%',  borderRadius:"2vmin", borderRadius:radius,
-              backgroundColor: "#ffffff55", padding:"2vmin"}}>
-          Encounter {this.state.obj?.getJson().name}</div>
-          </div>
-            
-            {this.state.obj?.getJson().description}
-            {this.state.obj?.getJson().audio}
-            
-            {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addParticipant") && <AddParticipant app = {app}/>}
-              <div style={{color: "red"}} 
-            onClick={()=>{dispatch({operate: "addmonster", operation: "cleanPrepare", popUpSwitchcase: "addParticipant"})}}>
-          Add Monster
+          <div style={{...styles.popupSmall, fontSize:styles.fonts.fontSubheader2, fontFamily:"serif",
+                        color: styles.colors.colorWhite,
+        }}>
+         {this.state.obj?.getJson().name}
+
+
+         <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite, marginTop:"2vh"}}>
+
+                  <div style={{fontSize:styles.fonts.fontSmall,}}>
+                  {this.state.obj?.getJson().description}
+                  </div>
+
+{ (this.state.obj?.getJson().audio != "") &&
+      <div style={{display:"flex", marginTop:"5px", fontSize:styles.fonts.fontSmall,
+        flexDirection:"row"}}>
+        <img src={speaker} style={{fontSize:styles.fonts.fontSmall, width:styles.fonts.fontSmall, marginRight:"12px", objectFit:"cover"}}/>
+                  <a style={{fontSize:styles.fonts.fontSmall, marginBottom:"2px"}}
+                  href={audioLink} target="_blank" rel="noopener noreferrer">
+                {this.state.obj?.getJson().audio}
+                  </a>
+      </div>}
+
+
+</div>
+
+
+<div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right"}}>
+<div style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
+paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}} 
+            onClick={()=>{
+            dispatch({operate: "addmonster", operation: "cleanJsonPrepare", popUpSwitchcase: "addMonster",})}}>
+          Add New Creature to this Encounter
               </div>
-            <MapComponent app={app} name={"monster"} 
-            cells={["name", {custom: Roll, props: this.props},"ac","statBlockLink","notes",]} />
-            Encounter Manager
-            <MapComponent app={app} name={"encounterList"} cells={["name"]} />
+              </div>
+        </div>
+        
+          </div>
+<div style={{color:styles.colors.colorWhite}}>
+            {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
+            && 
+            <div style={{padding:"22px"}}>
+              
+              <AddParticipant app = {app}/></div>}
+            
+            <MapComponent app={app} name={"monster"} cells={[{custom:MonsterMapItem, props:{app:app, obj: "monster"}},]} 
+            filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
+            theme={"selectByImage"}
+            />
+</div>        
       </div>
 
     )

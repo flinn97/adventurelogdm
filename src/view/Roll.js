@@ -14,8 +14,13 @@ export default class Roll extends Component {
 
   async handleAddition() {
     const randomNumber = Math.floor(Math.random() * 20) + 1;
-    let app = this.props.app
-    let obj = this.props.obj
+    let app = this.props.app;
+    let obj = this.props.obj;
+   
+    let state = app.state;
+    let dispatch = app.dispatch;
+    let componentList = state.componentList;
+    let styles =state.styles;
 
     let initiativeBonus = parseInt(obj.getJson().initiative)
     this.setState({initiative: randomNumber + initiativeBonus });
@@ -28,8 +33,17 @@ export default class Roll extends Component {
 
 
   render() {
+    let app = this.props.app;
+    let obj = this.props.obj;
+   
+    let state = app.state;
+    let dispatch = app.dispatch;
+    let componentList = state.componentList;
+    let styles =state.styles;
   return(
-    <div>{this.state.initiative?(<>{this.state.initiative}</>):(<div onClick={this.handleAddition}>roll</div>)}</div>
+    <div>{this.state.initiative?(<>{this.state.initiative}</>):
+    (<div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest, cursor:"pointer"}}
+      onClick={this.handleAddition}>Roll Initiative</div>)}</div>
   )
   }
 }

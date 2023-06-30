@@ -121,7 +121,7 @@ class MainContent extends Component{
         <div>
           {/* //TAYLOR */}
           { state.popUpSwitchcase !="addEncounter" &&
-          <div style={{...styles.buttons.buttonAdd, marginTop:"2vh", marginBottom:"2vh"}}
+          <div style={{...styles.buttons.buttonAdd, marginTop:"2vh", marginBottom:"2vh",}}
           onClick={()=>{
             //                  add > campaign          clear it > prepare not run           switchcase
             dispatch({operate: "addencounter", operation: "cleanJsonPrepare", popUpSwitchcase: "addEncounter",})}}>

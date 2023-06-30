@@ -27,7 +27,7 @@ class SelectByImageSmall {
           sectionStyle:{
             default:  {display:'flex', flexDirection:"row", alignItems:"center", height:"fit-content", 
             paddingRight:"1%", paddingLeft:"1%", 
-            marginTop:".65rem", 
+            marginTop:".35rem", 
           },
             row:  {display:'flex', flexDirection:"row"},
             column: {display:'flex', flexDirection:"column"},
@@ -45,7 +45,7 @@ class SelectByImageSmall {
           },
 
           cellStyle:{
-            default: {display:"flex", justifyContent:"center", alignItems:"center", maxWidth:"fit-content", maxHeight:"22px"},
+            default: {display:"flex", justifyContent:"center", alignItems:"center", maxWidth:"fit-content", maxHeight:"22px", marginTop:"32px"},
           },
 
           

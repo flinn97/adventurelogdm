@@ -4,8 +4,9 @@ import AddCampaign from './AddCampaign';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import Encounter from './encounter';
+import ColorThief from 'colorthief';
 
-export default class EncounterMapItem extends Component {
+export default class MonsterMapItem extends Component {
   constructor(props) {
     super(props);
 
@@ -13,18 +14,19 @@ export default class EncounterMapItem extends Component {
       obj: undefined,
       pic: undefined,
       runEncounter: undefined,
-    }
-  }
- 
+      colors: undefined,
+    };}
+    
 
   render() {
+    
     let app = this.props.app;
-    let dispatch = app.dispatch
+    let dispatch = app.dispatch;
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
-    
     let obj = this.props.obj;
+
 
           let name = obj?.getJson().name;
           let x = name.length;
@@ -42,33 +44,36 @@ export default class EncounterMapItem extends Component {
               let fontSizeRem = fontSizePx / 16;
               let fontSize = fontSizeRem + "rem";
 
+              console.log(obj)
+              console.log(obj?.getJson().encounterId)
     return (
-      <div>
+      <div style={{
+       
+        backgroundColor:obj?.getJson().colorId
+      }}>
 
-      <Link
-      to={"/encounter/" + obj?.getJson()._id} 
+      <div
+      // to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
-        height: "fit-content", cursor:"pointer",
+        height: "fit-content", 
         width: "fit-content"}}
-        
-        onClick={()=>{
-          this.setState({runEncounter: obj?.getJson()._id});
-          }}
       > 
 
       <div style={{display: "flex", flexDirection: 'column', 
       borderRadius:styles.popupSmall.borderRadius,
+     
       justifyContent:"space-evenly", 
       zIndex:"0",
       height: 'fit-content', 
       width: 'fit-content', 
       backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
+      
       ...styles.backgroundContent}}>
                         
                         <div style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',
-                        height: "fit-content", 
+                        height: "fit-content", borderColor: obj?.getJson().colorID|"",
                          width: "fit-content"}}>
                           
                           <div 
@@ -76,17 +81,18 @@ export default class EncounterMapItem extends Component {
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack,
-                          
+                           width:"220px",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
                             {obj?.getJson().name}
+                            {obj?.getJson().notes}
                           </div>
                 </div>
         </div>
-        </Link>
+        </div>
 
         </div>
     )
   }
-}
+  }
 
 

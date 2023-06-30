@@ -2,12 +2,11 @@ import { Component } from 'react';
 import "../App.css"
 import RunButton from '../componentListNPM/componentForms/buttons/runButton';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-import CardPractice from './CardPrac';
 import Upload from './upload';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
-import backarrow from '../pics/backArrow.webp';
-import UpdateAndRunButton from '../componentListNPM/componentForms/buttons/updateAndRunButton';
+
+
 
 export default class AddEncounter extends Component {
   constructor(props) {
@@ -15,9 +14,9 @@ export default class AddEncounter extends Component {
 
     this.state = {
       eid: 10,
-      
-    }
+    };
   }
+
 async componentDidMount(){
   
   function randomFourDigitNumber() {
@@ -106,7 +105,7 @@ async componentDidMount(){
               inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
               }}
-              placeholder={"Encounter name"}/> 
+              placeholder={"ie: Bandits of the Nanzobar"}/> 
 
 
 
@@ -118,7 +117,7 @@ async componentDidMount(){
               inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
               }}
-              placeholder={"Short encounter description"}/>
+              placeholder={"ie: The bandits are lying in the vegetation"}/>
 
 
 
@@ -131,7 +130,7 @@ async componentDidMount(){
               inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
               }}
-              placeholder={"Link to a sound file for this encounter"}/> 
+              placeholder={"ie: a link from YouTube or Spotify"}/> 
               
               <RunButton wrapperStyle={{...styles.buttons.buttonAdd,  padding:"8px", marginTop:"2vh"}}
               text={"Save"} app ={app} 

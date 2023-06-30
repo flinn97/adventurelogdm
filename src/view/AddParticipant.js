@@ -4,39 +4,210 @@ import RunButton from '../componentListNPM/componentForms/buttons/runButton';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import CardPractice from './CardPrac';
 import Upload from './upload';
+import placeholder from '../pics/dragon.jpg';
+import ColorThief from 'colorthief';
 
 export default class AddParticipant extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-
-    }
+      pic: undefined,
+      colors: [],
+    };
+    this.colorThief = new ColorThief();
   }
- 
+
+
+  updateColors = (pic) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.src = pic;
+    img.onload = () => {
+      const palette = this.colorThief.getPalette(img, 3);
+      this.setState({ colors: palette });
+    };
+    
+  };
 
 
   render() {
+
+    
+    let encId = getEncounterId();
     let app = this.props.app;
+    let state = app.state;
     let dispatch = app.dispatch;
+    let componentList = state.componentList;
+    let styles =state.styles;
+
+    let randomInit = (Math.floor(Math.random() * 9)).toString();
+    let randomAC = (Math.floor(Math.random() * 12) + 10).toString();
+
+    const { colors } = this.state;
+
+const divStyle = colors.length
+  ? {
+      background: `linear-gradient(45deg, rgb(${colors[0].join(',')}), rgb(${colors[1].join(',')}), rgb(${colors[2].join(',')}))`,
+      ...styles.backgroundContent, 
+      transition:"none", 
+    }
+  : { 
+      ...styles.backgroundContent, 
+      transition:"none",
+    };
+    const color2 = colors.length ? `rgb(${colors[2].join(',')})` : styles.colors.color2;
+
+  function randomFourDigitNumber() {
+      let num = Math.floor(Math.random() * 9000) + 1000;
+      while(num < 1000 || num > 9999) {
+          num = Math.floor(Math.random() * 9000) + 1000;
+      }
+      return num;
+  }
+  const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const num = randomFourDigitNumber();
+    
+    function getEncounterId() {
+      const path = window.location.pathname;
+      const parts = path.split('/');
+      const id = parts.pop();
+      return id;
+    }
+
+    
+
+    function pickName() {
+      // Array of names
+      let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Anxious Warrior", "Barbalang", "Violinist Devil", "Hedgehog Demon", "Sir Dante Rabbitlord", "Duke Dean", "Clifford the Floofy Giant"];
+      let randomNumber = Math.floor(Math.random() * (names.length));
+      let chosenName = names[randomNumber];
+
+      return chosenName;
+
+    }
+
+    function pickLink () {
+      
+      let links =["www.dndbeyond.com/monsters/16765-adult-blue-dragon", "www.dndbeyond.com/monsters/17093-pteranodon", "app.spawnrpg.com", "app.spawnrpg.com/statblocks",];
+      let randomNumber2 = Math.floor(Math.random() * (links.length));
+      let chosenLink = links[randomNumber2];
+
+      return chosenLink;
+    }
+
+let creature = pickName();
+let linkExample = pickLink();
+
 
     return (
-      <div style={{display: "flex"}}><h1></h1>
-      <div onClick={()=>{dispatch({popUpSwitchcase: ""})}}>X</div>
-      <Upload  update={true} skipUpdate={true} updateMap={(obj)=>{this.setState({pic: obj.getJson().picURL})}} obj={app.state.currentComponent} app={app}/>
-      <img src={this.state.pic}/>
+     
+     
+        <div style={{...styles.backgroundContent,
+      // backgroundImage: 'url('+(this.state.pic||placeholder)+')', 
+      // transitionDelay:"1000ms", transitionProperty: "background, backgroundImage",
+      // transitionDuration:"10000ms"
+      }}>
+   <div style={divStyle}>     
+ <div style={{display: "flex", width:"100%", flexDirection:"column", padding:"22px", justifyContent:"right",...styles.popupSmall,
+background:styles.colors.color1+"bb", borderWidth:"3px", 
 
-      <ParentFormComponent app={app} name="name" label="Participant Name" wrapperStyle={{margin:"5px"}}/> 
-      <ParentFormComponent app={app} name="initiative" label="Initiative Bonus" wrapperStyle={{margin:"30px"}}/>
-      <ParentFormComponent app={app} name="ac" label="Armor Class" wrapperStyle={{margin:"50px"}}/> 
-      <ParentFormComponent app={app} name="statBlockLink" label="Stat Block Link" wrapperStyle={{margin:"5px"}}/> 
-      <ParentFormComponent app={app} name="notes" label="Notes"/> 
-      <RunButton app ={app} callBack ={()=>{dispatch({popUpSwitchcase: "", currentComponent: undefined})}}/>
-      
-      </div>
+borderColor:colors.length?`rgb(${colors[2].join(',')})`: styles.popupSmall.border
+}}>
+
+<div style={{display: "flex", width:"100%", flexDirection:"row", justifyContent:"right"}}>
+      <div onClick={()=>{dispatch({popUpSwitchcase: ""})}}
+       style={{...styles.buttons.buttonClose, position:""}}>X</div>
+</div>
+
+<div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
+     
+
+      <img src={this.state.pic||placeholder} 
+
+  style={{width:"100px", height:"100px", 
+  objectFit:"cover", borderRadius:"50%", marginLeft:"10px",
+  marginRight:"30px"}}/>
+
+      <Upload text={"Choose an image"} 
+        update={true} obj={app.state.currentComponent} 
+        skipUpdate={true} 
+        changePic={(pic) => {
+          this.setState({pic:pic});
+          this.updateColors(pic);
+        }} 
+        updateMap={(obj) => {
+          const pic = obj.getJson().pic;
+          this.setState({completedPic: pic});
+          this.updateColors(pic);
+          
+        }} 
+            
+        app={app}/>
+       
+</div>
+      <ParentFormComponent app={app} name="name" label="Name"  
+              wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+              theme={"adventureLog"} rows={1}
+              maxLength={110}
+              labelStyle={{marginBottom:"8px",}}
+              inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              }}
+              placeholder={"ie: "+creature}/>
+
+<div style={{display:"flex",flexDirection:"row", width:"58.1rem", justifyContent:"space-around", marginBottom:"20px"}}>
+
+      <ParentFormComponent app={app} name="initiative" label="Initiative Bonus" wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+              theme={"adventureLog"} rows={1}
+              maxLength={2}
+              labelStyle={{marginBottom:"8px",}}
+              inputStyle={{width:"8.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              }}
+              placeholder={"ie: "+randomInit}/>
+
+      <ParentFormComponent app={app} name="ac" label="Armor Class" 
+      wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+              theme={"adventureLog"} rows={1}
+              maxLength={2}
+              labelStyle={{marginBottom:"8px",}}
+              inputStyle={{width:"8.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              }}
+              placeholder={"ie: "+randomAC}/> 
+</div>
+      <ParentFormComponent app={app} name="statBlockLink" label="Stat Block Link" 
+      wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+              theme={"adventureLog"} rows={1}
+              maxLength={200}
+              labelStyle={{marginBottom:"8px",}}
+              inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              }}
+              placeholder={"ie: "+linkExample}/> 
+<div style={{marginBottom:"2vh"}}>
+      <ParentFormComponent app={app} name="notes" label="Notes"
+      wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+      theme={"adventureLog"} rows={2}
+      maxLength={200}
+      labelStyle={{marginBottom:"8px",}}
+      inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"3.7rem", rows:"1",
+      borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+      }}
+      placeholder={"ie: "+randomAC}/> 
+</div>
+         
+              <RunButton app ={app} text={"Add Creature"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
+              callBack ={()=>{dispatch({popUpSwitchcase: "monster", currentComponent: undefined,
+              object: {creationDate: "M"+num+month+day, encounterId: encId,  
+              colorId: this.color2}})}}/>
+          </div>
+          </div></div>
 
     )
   }
 }
-
 
