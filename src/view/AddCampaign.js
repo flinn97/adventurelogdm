@@ -43,7 +43,7 @@ export default class AddCampaign extends Component {
                       else {
                         textSubmit ="Create My Campaign";
                         };
-    console.log(styles);
+    
 
     if (this.state.pic)
                       {textNotReady = state.currentComponent?.getJson().type != "campaign" && isNotUpdate ? "Loading..." : "Edit"}

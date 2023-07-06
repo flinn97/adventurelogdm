@@ -217,7 +217,7 @@ class ParentFormComponent extends Component {
     
     render() {
         let types;
-        console.log(this.state.obj)
+        
         if(this.state.start){
          types={
             text: <InputFormComponent 

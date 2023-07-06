@@ -8,7 +8,7 @@ class SelectByImageSmall {
         let style={
         containerStyle: { 
             default: {display:'flex', flexDirection:"row", marginTop:"38px",
-           width:"100%", padding:"1vh", position:"", alignItems:"center",
+           width:"100%",height:"fit-content", padding:"1vh", position:"", alignItems:"center",
             flexWrap:"wrap", justifyContent:"space-around",
           },
             row: {display:'flex', flexDirection:"row", },
@@ -45,7 +45,8 @@ class SelectByImageSmall {
           },
 
           cellStyle:{
-            default: {display:"flex", justifyContent:"center", alignItems:"center", maxWidth:"fit-content", maxHeight:"22px", marginTop:"32px"},
+            default: {display:'flex', flexDirection:"row", justifyContent:"center", alignItems:"center", 
+            maxWidth:"fit-content", height:"fit-content", marginTop:"32px"},
           },
 
           
@@ -76,7 +77,7 @@ class SelectByImageSmall {
           },
 
           imgStyle:{
-            default: {width:'5vw', height:"5vw", borderRadius:"50%",}
+            default: {width:'60px', height:"60px", borderRadius:"50%",}
           },
 
         }

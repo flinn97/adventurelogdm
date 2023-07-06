@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import MonsterMapItem from './monsterMapItem';
 import TokenImage from './tokenImage';
 import AddEncounter from './AddEncounter';
+import ToggleItem from './toggleItem';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export default class Encounter extends Component {
     let component = this.props.app.state.componentList.getComponent("encounter", id)
   this.setState({obj: component})
   }
-
+  
   
   convertToLink = (audio) => {
     if (audio && !audio.startsWith('htt')) {
@@ -35,7 +36,16 @@ export default class Encounter extends Component {
     return audio;
   }
 
+    
+  getEncounterId() {
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    const id = parts.pop();
+    return id;
+  }
+
   render() {
+
     let app = this.props.app;
     let state = app.state;
     let dispatch = app.dispatch;
@@ -79,10 +89,11 @@ export default class Encounter extends Component {
                   {this.state.obj?.getJson().description}
                   </div>
 
-{ (this.state.obj?.getJson().audio != "") &&
+{ (this.state.obj?.getJson().audio !== "") &&
       <div style={{display:"flex", marginTop:"5px", fontSize:styles.fonts.fontSmall,
         flexDirection:"row"}}>
-        <img src={speaker} style={{fontSize:styles.fonts.fontSmall, width:styles.fonts.fontSmall, marginRight:"12px", objectFit:"cover"}}/>
+        <img src={speaker}
+         style={{fontSize:styles.fonts.fontSmall, width:styles.fonts.fontSmall, marginRight:"12px", objectFit:"cover"}}/>
                   <a style={{fontSize:styles.fonts.fontSmall, marginBottom:"2px"}}
                   href={audioLink} target="_blank" rel="noopener noreferrer">
                 {this.state.obj?.getJson().audio}
@@ -97,28 +108,30 @@ export default class Encounter extends Component {
 <div style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}} 
             onClick={()=>{
-            dispatch({operate: "addmonster", operation: "cleanJsonPrepare", popUpSwitchcase: "addMonster", object:{colorId:""}})}}>
+            dispatch({operate: "addmonster", operation: "cleanJsonPrepare", 
+            popUpSwitchcase: "addMonster",  object: {encounterId: this.state.obj?.getJson()._id},
+        })
+            }}>
           Add New Creature to this Encounter
               </div>
               </div>
         </div>
-        
           </div>
+
 <div style={{color:styles.colors.colorWhite}}>
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
             && 
             <div style={{padding:"22px"}}>
               
-              <AddParticipant app = {app}/></div>}
+              <AddParticipant app={app}/></div>}
             
             <MapComponent app={app} name={"monster"} 
             cells={[
-              
-              {custom:MonsterMapItem, props:{app:app}},
-               "delete"
+              {custom:MonsterMapItem, props:{app:app}},"delete"
+              // {custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]} 
-            // filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
-            theme={"selectByImage"}
+            filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
+            theme={"selectByImageSmall"}
             />
 </div>        
       </div>

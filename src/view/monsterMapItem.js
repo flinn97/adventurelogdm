@@ -7,6 +7,7 @@ import Encounter from './encounter';
 import ColorThief from 'colorthief';
 import Roll from './Roll';
 import TokenImage from './tokenImage';
+import colorService from '../services/colorService';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class MonsterMapItem extends Component {
       colors: undefined,
       encounterId: undefined,
     };}
-    
+
 
   render() {
     
@@ -28,6 +29,7 @@ export default class MonsterMapItem extends Component {
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
+    
     let obj = this.props.obj;
 
 
@@ -48,9 +50,10 @@ export default class MonsterMapItem extends Component {
               let fontSize = fontSizeRem + "rem";
 
               
-              console.log(obj.getJson().encounterId)
+              // console.log(obj.getJson().encounterId)
     return (
       <div style={{}}>
+            {/* //app          //which pic */}
 
       <div
       // to={"/encounter/" + obj?.getJson()._id} 
@@ -68,42 +71,55 @@ export default class MonsterMapItem extends Component {
       zIndex:"0",
       height: 'fit-content', 
       width: 'fit-content', 
-      backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
+      // backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
       
       ...styles.backgroundContent,
       }}>
+       
                         
                         <div style={{
-                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"center", flexDirection: 'column',
-                        height: "fit-content", borderColor: (obj?.getJson().colorId||styles.colors.color9+"22"), 
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", 
+                        height: "fit-content", 
                          width:"40vw",}}>
-
-                          {/* <TokenImage pic={obj?.getJson().picURL} borderC={obj?.getJson().borderC} colors={obj?.getJson().colors} placeholder={obj?.getJson().placeholder} app={app}/> */}
+<div>
+<TokenImage pic={obj?.getJson().picURL} width={88} app={app}/>
+</div>
 
                           <div
                           
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"fit-content",
+                          width:"fit-content", alignSelf:"center",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
                             {obj?.getJson().name}
                           </div>
-
+                          
                           <div 
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"fit-content",
+                          width:"fit-content", alignSelf:"center",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
                             AC: {obj?.getJson().ac}
                           </div>
 
-                          <Roll app={app} obj={this.props.obj}
-                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+
+<div style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"fit-content",
-                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}/>
-                          
+                          width:"fit-content", alignSelf:"center",
+                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
+                                        <Roll app={app} obj={this.props.obj} fontsize={fontSize}
+                                        style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+                                        textShadow:"1px 1px 0 "+styles.colors.colorBlack,
+                                        width:"fit-content", alignSelf:"center",
+                                        alignItems:"center", justifyContent:"center", fontSize:fontSize,
+                                        
+                                        }}/>
+
+
+
+
+                          </div>
                 </div>
         </div>
         </div>

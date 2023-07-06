@@ -7,6 +7,7 @@ import Upload from './upload';
 import placeholder from '../pics/dragon.jpg';
 import ColorThief from 'colorthief';
 import TokenImage from './tokenImage';
+import colorService from '../services/colorService';
 
 export default class AddParticipant extends Component {
   constructor(props) {
@@ -28,22 +29,8 @@ export default class AddParticipant extends Component {
     return id;
   }
 
-  updateColors = (pic) => {
-    const img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.src = pic;
-    img.onload = () => {
-      const palette = this.colorThief.getPalette(img, 7);
-      this.setState({ colors: palette });
-    };
-    
-  };
-
-
   render() {
 
-    
-    let encId = getEncounterId();
     let app = this.props.app;
     let state = app.state;
     let dispatch = app.dispatch;
@@ -55,7 +42,7 @@ export default class AddParticipant extends Component {
 
     const { colors } = this.state;
 
-const divStyle = colors.length
+const divStyle = colors?.length
   ? {
       background: `linear-gradient(45deg, rgb(${colors[0].join(',')}), rgb(${colors[1].join(',')}), rgb(${colors[2].join(',')}))`,
       ...styles.backgroundContent, bordierRadius:"3vw",
@@ -65,7 +52,7 @@ const divStyle = colors.length
       ...styles.backgroundContent, 
       transition:"none",
     };
-    const color2 = colors.length ? `rgb(${colors[2].join(',')})` : styles.colors.color2;
+    const color2 = colors?.length ? `rgb(${colors[2].join(',')})` : styles.colors.color2;
 
   function randomFourDigitNumber() {
       let num = Math.floor(Math.random() * 9000) + 1000;
@@ -120,7 +107,7 @@ const borderC = styles.colors.colorWhite;
  <div style={{display: "flex", width:"100%", flexDirection:"column", padding:"22px", justifyContent:"right",...styles.popupSmall,
 background:styles.colors.color1+"bb", borderWidth:"3px",
 
-borderColor:colors.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,
+borderColor:colors?.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,
 transitionDelay:"0ms", transition: "all",
 transitionDuration:"9000ms"
 }}>
@@ -132,20 +119,21 @@ transitionDuration:"9000ms"
 
 <div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
 
-    <TokenImage pic={this.state.pic} borderC={borderC} colors={colors} placeholder={placeholder} app={app}/>
+    <TokenImage pic={this.state.pic} app={app} width={110}/>
 
       <Upload text={"Choose an image"} 
         update={true} obj={app.state.currentComponent} 
         skipUpdate={true} 
-        changePic={(pic) => {
+        changePic={ (pic) => {
           this.setState({pic:pic});
-          this.updateColors(pic);
+          let colors = colorService.updateColors(pic);
+          this.setState({colors: colors})
         }} 
-        updateMap={(obj) => {
+        updateMap={ (obj) => {
           const pic = obj.getJson().pic;
           this.setState({completedPic: pic});
-          this.updateColors(pic);
-          
+          let colors =  colorService.updateColors(pic);
+          this.setState({colors: colors})
         }} 
             
         app={app}/>
@@ -202,11 +190,15 @@ transitionDuration:"9000ms"
       }}
       placeholder={"ie: The monster is hiding in a barrel"}/> 
 </div>
-         
+         {/* ADD TO ENCOUNTER */}
               <RunButton app ={app} text={"Add to Encounter"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
-              callBack ={()=>{dispatch({popUpSwitchcase: "", operation:"cleanJsonPrepare",
-              object: {creationDate: "M"+num+month+day, encounterId: "encId", colorId: "colors"
-              }})}}/>
+               callBack ={()=> {
+              debugger
+              dispatch({popUpSwitchcase: "",
+              currentComponent: undefined,
+              })}
+              }/>
+              
           </div>
           </div></div>
 
