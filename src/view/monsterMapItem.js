@@ -7,7 +7,7 @@ import Roll from './Roll';
 import TokenImage from './tokenImage';
 import bookCursor from '../pics/bookmarklet.png';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-
+import ac from '../pics/ac.png';
 
 
 export default class MonsterMapItem extends Component {
@@ -18,7 +18,7 @@ export default class MonsterMapItem extends Component {
       obj: undefined,
       pic: undefined,
       runEncounter: undefined,
-      colors: [],
+      colors: props.colors || [],
       encounterId: undefined,
     };}
 
@@ -30,6 +30,13 @@ export default class MonsterMapItem extends Component {
       return statBlockLink;
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.colors !== this.props.colors) {
+      // Update state if prop changes
+      this.setState({ colors: this.props.colors });
+    }
+  }
+
   render() {
     
     let app = this.props.app;
@@ -39,7 +46,8 @@ export default class MonsterMapItem extends Component {
     let styles = state.styles;
    
     let obj = this.props.obj;
-    let colors =  obj?.getJson().colors;
+    const { colors } = this.state;
+    console.log(colors);
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
           let name = obj?.getJson().name;
           let x = name.length;
@@ -81,9 +89,7 @@ export default class MonsterMapItem extends Component {
       height: 'fit-content', 
       width: 'fit-content',
       ...styles.backgroundContent,
-      }}>
-       
-                        
+      }}>     
                         <div style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-evenly", 
                         height: "fit-content", border:"", background:"",
@@ -110,7 +116,7 @@ export default class MonsterMapItem extends Component {
 <a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={obj?.getJson().statBlockLink}>
           <img src={bookCursor}  style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px",}}
           />
-          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={obj?.getJson().colors}/>
+          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
 </a>
 
                           <div
@@ -136,8 +142,24 @@ export default class MonsterMapItem extends Component {
                               textAlign: "center",
                             }}
                           >
-                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>AC</div>
+                            <img style={{ alignSelf: "center", width: fontSize[0], }} src={ac}/>
                             <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>{obj?.getJson().ac}</div>
+                          </div>
+
+                          <div
+                            style={{
+                              display: "flex",
+                              height: "fit-content",
+                              width: "fit-content",
+                              alignSelf: "center",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "column",
+                              textAlign: "center",
+                            }}
+                          >
+                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>HP</div>
+                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>{obj?.getJson().hp}</div>
                           </div>
 
 

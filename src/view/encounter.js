@@ -110,7 +110,7 @@ export default class Encounter extends Component {
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}} 
             onClick={()=>{
             dispatch({operate: "addmonster", operation: "cleanJsonPrepare", 
-            popUpSwitchcase: "addMonster",  object: {encounterId: this.state.obj?.getJson()._id},
+            popUpSwitchcase: "addMonster",  object: {encounterId: this.state.obj?.getJson()._id, colors:[],},
         })
             }}>
           Add New Creature to this Encounter
@@ -130,7 +130,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
              app={app} name={"monster"}
             cells={[
-              {custom:MonsterMapItem, props:{app:app}}, "delete",
+              {custom:MonsterMapItem, props:{app:app, colors:[]}}, "delete",
               {custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]} 
             theme={"selectByImageSmall"}

@@ -15,12 +15,12 @@ export default class AddParticipant extends Component {
 
     this.state = {
       pic: undefined,
-      colors: this.props.colors,
-      
+      colors: [],
     };
     this.colorThief = new ColorThief();
-   
+
   }
+
   getEncounterId() {
     const path = window.location.pathname;
     const parts = path.split('/');
@@ -39,6 +39,7 @@ export default class AddParticipant extends Component {
     
     let randomInit = (Math.floor(Math.random() * 9)).toString();
     let randomAC = (Math.floor(Math.random() * 12) + 10).toString();
+    let randomHP = (Math.floor(Math.random() * 50) + Math.floor(Math.random() * 100)).toString();
 
     const { colors } = this.state;
     
@@ -53,7 +54,6 @@ const divStyle = colors?.length
       ...styles.backgroundContent, 
       transition:"none",
     };
-    const color2 = colors?.length ? `rgb(${colors[2].join(',')})` : styles.colors.color2;
 
   function randomFourDigitNumber() {
       let num = Math.floor(Math.random() * 9000) + 1000;
@@ -118,21 +118,24 @@ transitionDuration:"9000ms"
 
 <div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
 
-    <TokenImage pic={this.state.pic} app={app} width={110}/>
+    <TokenImage pic={this.state.pic} app={app} width={110} colors={this.state.colors}/>
 
       <Upload text={"Choose an image"} 
         update={true} obj={app.state.currentComponent} 
-        skipUpdate={true} 
+        skipUpdate={true}  colors={this.state.colors}
         changePic={ (pic) => {
           this.setState({pic:pic});
-          let colors = colorService.updateColors(pic);
-          this.setState({colors: colors})
+          let colors = colorService.updateColors(pic, (palette) => {
+            this.setState({colors: palette});
+        });
         }} 
         updateMap={ (obj) => {
           const pic = obj?.getJson().pic;
           this.setState({completedPic: pic});
-          let colors =  colorService.updateColors(pic);
-          this.setState({colors: colors})
+          let colors =  colorService.updateColors(pic, (palette) => {
+            this.setState({colors: palette});
+            
+        });
         }} 
         app={app}/>
        
@@ -153,7 +156,7 @@ transitionDuration:"9000ms"
               theme={"adventureLog"} rows={1}
               maxLength={2}
               labelStyle={{marginBottom:"8px",}}
-              inputStyle={{width:"8.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
               }}
               placeholder={"ie: "+randomInit}/>
@@ -163,10 +166,20 @@ transitionDuration:"9000ms"
               theme={"adventureLog"} rows={1}
               maxLength={2}
               labelStyle={{marginBottom:"8px",}}
-              inputStyle={{width:"8.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
               }}
               placeholder={"ie: "+randomAC}/> 
+
+      <ParentFormComponent app={app} name="hp" label="HP" 
+            wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+                    theme={"adventureLog"} rows={1}
+                    maxLength={5}
+                    labelStyle={{marginBottom:"8px",}}
+                    inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+                    borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+                    }}
+                    placeholder={"ie: "+randomHP}/> 
 </div>
       <ParentFormComponent app={app} name="statBlockLink" label="Stat Block Link" 
       wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
@@ -192,8 +205,7 @@ transitionDuration:"9000ms"
               <RunButton app ={app} text={"Add to Encounter"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
                callBack ={()=> {
               dispatch({
-              popUpSwitchcase: "",
-              currentComponent: undefined, 
+               popUpSwitchcase: "", currentComponent: undefined,
               })}
               }/>
               

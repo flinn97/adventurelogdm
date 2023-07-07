@@ -14,25 +14,33 @@ export default class TokenImage extends Component {
     };
   };
 
-  async componentDidUpdate(props){
-    if (props.pic !== this.props.pic){
-      await colorService.updateColors(this.props.pic,(palette)=>{this.setState({colors:palette})})
-      this.setState({pic: this.props.pic, width:this.props.width, colors: this.props.colors})
-    }};
+  async componentDidUpdate(prevProps){
+    if (prevProps.pic !== this.props.pic){
+      this.setState({  pic: this.props.pic});
+      await colorService.updateColors(this.props.pic,(palette) => {
+        this.setState({
+          colors: palette,
+          width: this.props.width
+        }, () => console.log(this.state.colors))
+      });
+    }
+  };
 
   async componentDidMount(){
-      await colorService.updateColors(this.props.pic,(palette)=>{
-            console.log("Color Error");
-          })
-          this.setState({pic: this.props.pic, width:this.props.width, colors: this.props.colors})
+    this.setState({width: this.props.width});
+    await colorService.updateColors(this.props.pic,(palette) => {
+      this.setState(prevState => ({
+        ...prevState,
+        colors: palette,       
+        width: this.props.width
+        
+      }), this.props.obj.setCompState({colors: palette, pic: this.props.pic}), () => console.log(this.state.colors))
+    });
   };
 
   
 
   render() {
-    
-    
-    
     let app = this.props.app;
     let state = app.state;
     const colors = this.state.colors;
@@ -41,7 +49,6 @@ export default class TokenImage extends Component {
     let widthMd = (this.state.width * 0.959).toString()+"px"
     let pic = this.state.pic;
     let styles = state.styles;
-    
     
 
     return (

@@ -2,6 +2,7 @@ import { Component } from 'react';
 import "../App.css"
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import TextBoxComponent from '../componentListNPM/componentForms/singleForms/TextBoxComponent';
+import d20 from '../pics/d20.png';
 
 
 export default class Roll extends Component {
@@ -90,8 +91,8 @@ render() {
   let styles =state.styles;
 
   return(
-    <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], width:"1%"}}>
-      {obj.getJson().lastInit ? (<>{obj.getJson().lastInit}
+    <div style={{color:styles.colors.colorWhite, width:"32px",}}>
+      {obj.getJson().lastInit ? (<div style={{fontSize:this.props.fontSize[0], width:"32px", position:"absolute", top:"40%", left:"11%", }}>{obj.getJson().lastInit}
       
         {/* <ParentFormComponent
     app={app} 
@@ -111,14 +112,14 @@ render() {
   }}
 /> */}
       
-      </> ) 
+      </div> ) 
 :(<div>
-      <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer"}}
+      <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer", width:"32px",}}
           onClick={
           this.handleAddition
         } 
             >
-          Roll
+          <img src={d20} style={{width:"32px"}}/>
           
       </div>
       {/* <ParentFormComponent
@@ -140,11 +141,11 @@ render() {
  </div>)
 }
 
-     {(obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "") &&
+     {/* {(obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "") &&
       <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer"}} 
       onClick={
         this.clearInitiative}
-        >Clear</div>}
+        >Clear</div>} */}
     </div>
   );
 }

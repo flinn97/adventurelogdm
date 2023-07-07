@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../App.css"
+import MapComponent from '../componentListNPM/mapTech/mapComponent';
 
 
 export default class ToggleItem extends Component {
@@ -36,14 +37,14 @@ export default class ToggleItem extends Component {
 
                     {
                     this.state.toggleClicked && 
-<div>
+<div style={{color:styles.colors.colorWhite}}>
                           
                           {
                           this.props.props.items.map((item,index)=>
                           <div>
                 <div>
                             {item ==="delete" && (
-                              <div>delete</div>
+                            <div>delete</div>
                             )}
                 </div>
 
