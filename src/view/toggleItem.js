@@ -39,7 +39,7 @@ export default class ToggleItem extends Component {
 <div>
                           
                           {
-                          this.props.items && items.map((item,index)=>
+                          this.props.props.items.map((item,index)=>
                           <div>
                 <div>
                             {item ==="delete" && (

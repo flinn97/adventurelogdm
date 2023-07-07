@@ -235,6 +235,7 @@ class ParentFormComponent extends Component {
             labelStyle={this.props.labelStyle}
             onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
             wrapperStyle={this.props.wrapperStyle}
+            
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
@@ -339,6 +340,7 @@ class ParentFormComponent extends Component {
             objDispatch={this.objDispatch}
             updateOnClickOutside= {this.props.updateOnClickOutside}
             cols={this.props.cols}
+            onInputChange={this.props.onChange} // Taylor
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
             inputStyle={this.props.inputStyle}

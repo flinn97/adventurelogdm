@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import "../App.css"
+import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import TextBoxComponent from '../componentListNPM/componentForms/singleForms/TextBoxComponent';
 
 
 export default class Roll extends Component {
@@ -7,12 +9,11 @@ export default class Roll extends Component {
     super(props);
 
     this.handleAddition = this.handleAddition.bind(this);
-    // this.clearInitiative = this.clearInitiative.bind(this);  
-    // Load the initiative roll from local storage with monster's name
-    // const storedInitiative = JSON.parse(localStorage.getItem(`initiative-${this.props.obj.name}`));
+    this.clearInitiative = this.clearInitiative.bind(this);  
+    this.setNewInit = this.setNewInit.bind(this);  
 
     this.state = {
-      // initiative: storedInitiative || null,
+      
       fontsize:undefined,
     };
   }
@@ -20,38 +21,45 @@ export default class Roll extends Component {
 
 
   // // Clear method to delete the specific initiative
-  // clearInitiative() {
-  //   const monsterName = this.props.obj.name;
-  //   localStorage.removeItem(`initiative-${monsterName}`);
-  //   this.setState({initiative: null});
-  // }
+  clearInitiative() {
+    let obj = this.props.obj;
 
+    if ((obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "")) {
+     this.setState({initiative: undefined});
+     obj.setCompState({lastInit:undefined});
+     
+    }
+  }
+
+
+  componentDidMount(){
+    let obj = this.props.obj;
+    
+    if ((obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "")) {
+      let jsonObj = obj.getJson();
+      debugger
+    this.setState({initiative: jsonObj.lastInit});
+    }
+  }
 
   async handleAddition() {
      // Generate an array of 10 random numbers
   const randomNumbers = Array.from({length: (Math.floor(Math.random() * 20) + 1)}, () => Math.floor(Math.random() * 20) + 1);
-
   // Select a random number from the array
   const randomNumber = randomNumbers[Math.floor(Math.random() * randomNumbers.length)];
 
   let app = this.props.app;
   let obj = this.props.obj;
-
-  // Assume obj has a unique id field
   const monsterId = obj?.name+obj?._id;
 
    let state = app.state;
-  let dispatch = app.dispatch;
-  let componentList = state.componentList;
-  let styles =state.styles;
 
    let initiativeBonus = parseInt(obj.getJson().initiative);
    let totalInitiative = randomNumber + initiativeBonus;
    this.setState({initiative: totalInitiative });
-
-  //  // Save the initiative roll in local storage with monster's id
-  //  localStorage.setItem(`initiative-${monsterId}`, JSON.stringify(totalInitiative));
-
+   
+   obj.setCompState({lastInit: totalInitiative.toString()});
+   console.log(obj.getJson().lastInit)
 
   let encounterList = app.state.encounterList? app.state.encounterList: [];
   encounterList.push(obj);
@@ -59,31 +67,84 @@ export default class Roll extends Component {
   await app.state.componentList.setSelectedList("encounterList", encounterList)
   await app.dispatch({encounterList: encounterList})
 
-  dispatch({operate: "setRoll", operation: "JsonPrepare", obj:"monster"})
+  state.opps.cleanPrepareRun({update:obj});
+ 
+}
+
+async setNewInit(e){
+  let obj = this.props.obj;
+  const value = e.target.value === '' ? undefined : e.target.value;
+  await obj.setCompState({lastInit: value});
+  this.setState({ initiative: value});
+  console.log(obj.getJson().lastInit)
 }
 
 
 render() {
   let app = this.props.app;
   let obj = this.props.obj;
-  let fontsize = this.props.fontsize;
+  let fontSize = this.props.fontSize;
   let state = app.state;
   let dispatch = app.dispatch;
   let componentList = state.componentList;
   let styles =state.styles;
 
   return(
-    <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontsize,}}>
-      {this.state.initiative ? (<>Init: {this.state.initiative}</> ) :
-      (<div style={{color:styles.colors.colorWhite, fontSize:this.props.fontsize, cursor:"pointer"}}
+    <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], width:"1%"}}>
+      {obj.getJson().lastInit ? (<>{obj.getJson().lastInit}
+      
+        {/* <ParentFormComponent
+    app={app} 
+    name="init"
+    wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+    theme={"adventureLog"}
+    maxLength={3} type={"text"}
+    value={obj.getJson().lastInit}
+    inputStyle={{width:"50px", padding:"1px 5px", color:styles.colors.colorWhite, minHeight:this.props.fontSize[0],
+    borderRadius:"4px",background:styles.colors.colorWhite+"11", borderWidth:"0px", fontSize:this.props.fontSize[0],
+    }}
+    placeholder={obj.getJson().lastInit}
+    handleChange={(e) => {
+      
+      console.log('Form changed');
+      this.setNewInit(e);
+  }}
+/> */}
+      
+      </> ) 
+:(<div>
+      <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer"}}
           onClick={
           this.handleAddition
         } 
             >
-          Roll Initiative
-      </div>)}
-      {/* Add the clear button */}
-      {/* <div style={{cursor:"pointer"}} onClick={this.clearInitiative}>Clear Initiative</div> */}
+          Roll
+          
+      </div>
+      {/* <ParentFormComponent
+    app={app} 
+    name="init"
+    wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+    theme={"adventureLog"}
+    maxLength={3} type={"text"}
+    value={obj.getJson().lastInit}
+    inputStyle={{width:"50px", padding:"1px 5px", color:styles.colors.colorWhite, minHeight:this.props.fontSize[0],
+    borderRadius:"4px",background:styles.colors.colorWhite+"11", borderWidth:"0px", fontSize:this.props.fontSize[0],
+    }}
+    placeholder={obj.getJson().lastInit}
+    handleChange={(e) => {
+      this.setState({ initiative: e.target.value }, () => {
+        this.setNewInit(e)})
+    }}
+/> */}
+ </div>)
+}
+
+     {(obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "") &&
+      <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer"}} 
+      onClick={
+        this.clearInitiative}
+        >Clear</div>}
     </div>
   );
 }

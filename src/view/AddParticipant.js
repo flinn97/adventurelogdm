@@ -15,7 +15,7 @@ export default class AddParticipant extends Component {
 
     this.state = {
       pic: undefined,
-      colors: [],
+      colors: this.props.colors,
       
     };
     this.colorThief = new ColorThief();
@@ -36,11 +36,12 @@ export default class AddParticipant extends Component {
     let dispatch = app.dispatch;
     let componentList = state.componentList;
     let styles =state.styles;
-
+    
     let randomInit = (Math.floor(Math.random() * 9)).toString();
     let randomAC = (Math.floor(Math.random() * 12) + 10).toString();
 
     const { colors } = this.state;
+    
 
 const divStyle = colors?.length
   ? {
@@ -72,7 +73,6 @@ const divStyle = colors?.length
       const id = parts.pop();
       return id;
     }
-
     
 
     function pickName() {
@@ -96,7 +96,6 @@ const divStyle = colors?.length
 
 let creature = pickName();
 let linkExample = pickLink();
-const borderC = styles.colors.colorWhite;
 
     return (
      
@@ -130,12 +129,11 @@ transitionDuration:"9000ms"
           this.setState({colors: colors})
         }} 
         updateMap={ (obj) => {
-          const pic = obj.getJson().pic;
+          const pic = obj?.getJson().pic;
           this.setState({completedPic: pic});
           let colors =  colorService.updateColors(pic);
           this.setState({colors: colors})
         }} 
-            
         app={app}/>
        
 </div>
@@ -193,9 +191,9 @@ transitionDuration:"9000ms"
          {/* ADD TO ENCOUNTER */}
               <RunButton app ={app} text={"Add to Encounter"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
                callBack ={()=> {
-              debugger
-              dispatch({popUpSwitchcase: "",
-              currentComponent: undefined,
+              dispatch({
+              popUpSwitchcase: "",
+              currentComponent: undefined, 
               })}
               }/>
               

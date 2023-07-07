@@ -9,6 +9,7 @@ import MonsterMapItem from './monsterMapItem';
 import TokenImage from './tokenImage';
 import AddEncounter from './AddEncounter';
 import ToggleItem from './toggleItem';
+import Draggable from 'react-draggable';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ export default class Encounter extends Component {
     let componentList = state.componentList;
     let styles =state.styles;
     
-    let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
+    let audioLink = this.convertToLink(state.obj?.getJson().audio);
 
 
     return (
@@ -125,12 +126,13 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
               
               <AddParticipant app={app}/></div>}
             
-            <MapComponent app={app} name={"monster"} 
+            <MapComponent 
+             filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
+             app={app} name={"monster"}
             cells={[
-              {custom:MonsterMapItem, props:{app:app}},"delete"
-              // {custom:ToggleItem, props:{items:["copy","delete",], app:app}}
+              {custom:MonsterMapItem, props:{app:app}}, "delete",
+              {custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]} 
-            filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
             theme={"selectByImageSmall"}
             />
 </div>        

@@ -14,16 +14,16 @@ class TextBoxComponent extends Component {
         };
     }
     handleChange(e) {
-
-        
         let { name, value } = e.target;
-        
         this.setState({ value: value });
+        
+        // Calling the onInputChange prop
+        this.props.onInputChange && this.props.onInputChange(e);
+        
         if(!this.props.updateOnClickOutside){
-            this.props.handleChange(e);
-
+          this.props.handleChange(e);
         }
-    }
+      }
 
     componentDidMount() {
 
@@ -40,9 +40,8 @@ class TextBoxComponent extends Component {
                 this.props.emitClickedOutside(this.state);
             }
             if(this.props.updateOnClickOutside){
-                debugger
+                this.props.onInputChange && this.props.onInputChange({ target: { value: this.state.value } }); // update here
                 this.props.objDispatch(this.state.value);
-
             }
         }
     }

@@ -10,21 +10,21 @@ export default class TokenImage extends Component {
     this.state = {
       pic: this.props.pic,
       width: "110px",
-      colors: [],
+      colors: this.props.colors,
     };
   };
 
   async componentDidUpdate(props){
     if (props.pic !== this.props.pic){
       await colorService.updateColors(this.props.pic,(palette)=>{this.setState({colors:palette})})
-      this.setState({pic: this.props.pic, width:this.props.width})
+      this.setState({pic: this.props.pic, width:this.props.width, colors: this.props.colors})
     }};
 
   async componentDidMount(){
       await colorService.updateColors(this.props.pic,(palette)=>{
             console.log("Color Error");
           })
-          this.setState({pic: this.props.pic, width:this.props.width})
+          this.setState({pic: this.props.pic, width:this.props.width, colors: this.props.colors})
   };
 
   

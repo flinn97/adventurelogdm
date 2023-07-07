@@ -1,13 +1,14 @@
 import { Component } from 'react';
 import "../App.css"
-import AddCampaign from './AddCampaign';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import Encounter from './encounter';
 import ColorThief from 'colorthief';
 import Roll from './Roll';
 import TokenImage from './tokenImage';
-import colorService from '../services/colorService';
+import bookCursor from '../pics/bookmarklet.png';
+import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+
+
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -17,10 +18,17 @@ export default class MonsterMapItem extends Component {
       obj: undefined,
       pic: undefined,
       runEncounter: undefined,
-      colors: undefined,
+      colors: [],
       encounterId: undefined,
     };}
 
+    convertToLink = (statBlockLink) => {
+    
+      if (statBlockLink && !statBlockLink.startsWith('http')) {
+        return 'https://' + statBlockLink;
+      }
+      return statBlockLink;
+  }
 
   render() {
     
@@ -29,10 +37,10 @@ export default class MonsterMapItem extends Component {
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
-    
+   
     let obj = this.props.obj;
-
-
+    let colors =  obj?.getJson().colors;
+    let stat = this.convertToLink(obj?.getJson().statBlockLink);
           let name = obj?.getJson().name;
           let x = name.length;
           let fontSizePx;
@@ -47,79 +55,108 @@ export default class MonsterMapItem extends Component {
                   fontSizePx = 16 + (x - 18) * ((11 - 16) / (length - 18));
               }        
               let fontSizeRem = fontSizePx / 16;
-              let fontSize = fontSizeRem + "rem";
+              let fontSizeRemSm=fontSizePx / 19;
+              let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem"]
+
 
               
               // console.log(obj.getJson().encounterId)
     return (
-      <div style={{}}>
-            {/* //app          //which pic */}
-
+     
+      <div>
+        
       <div
       // to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
         height: "fit-content",
-        
         width: "fit-content"}}
       > 
 
       <div style={{display: "flex", flexDirection: 'column', 
       borderRadius:styles.popupSmall.borderRadius,
-      
-      justifyContent:"space-evenly", 
+      border:"",
+      justifyContent:"left",  position:"absolute",
       zIndex:"0",
       height: 'fit-content', 
-      width: 'fit-content', 
-      // backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
-      
+      width: 'fit-content',
       ...styles.backgroundContent,
       }}>
        
                         
                         <div style={{
-                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", 
-                        height: "fit-content", 
-                         width:"40vw",}}>
-<div>
-<TokenImage pic={obj?.getJson().picURL} width={88} app={app}/>
-</div>
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-evenly", 
+                        height: "fit-content", border:"", background:"",
+                         width:"1000px",}}>
+
+
+<div style={{display: "flex", height:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
+                          width:"fit-content", alignSelf:"center",
+                          alignItems:"center", justifyContent:"center", fontSize:fontSize[0],}}>
+
+                                        <Roll app={app} obj={this.props.obj} fontSize={fontSize}
+                                        style={{  display: "flex",
+                                        height: "fit-content",
+                                        alignSelf: "center",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                        textAlign: "center", fontSize:fontSize[0],
+                                        
+                                        }}/></div>
+
+
+<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={obj?.getJson().statBlockLink}>
+          <img src={bookCursor}  style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px",}}
+          />
+          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={obj?.getJson().colors}/>
+</a>
 
                           <div
                           
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"fit-content", alignSelf:"center",
-                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
-                            {obj?.getJson().name}
+                          width:"485px", alignSelf:"center", 
+                          alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
+                          overflowWrap:"break-word"}}>
+                           {obj?.getJson().name}
                           </div>
                           
-                          <div 
-                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"fit-content", alignSelf:"center",
-                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
-                            AC: {obj?.getJson().ac}
+                          <div
+                            style={{
+                              display: "flex",
+                              height: "fit-content",
+                              width: "fit-content",
+                              alignSelf: "center",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "column",
+                              textAlign: "center",
+                            }}
+                          >
+                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>AC</div>
+                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>{obj?.getJson().ac}</div>
                           </div>
 
 
-<div style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+{/* <div style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
                           width:"fit-content", alignSelf:"center",
-                          alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
-                                        <Roll app={app} obj={this.props.obj} fontsize={fontSize}
-                                        style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
-                                        textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                                        width:"fit-content", alignSelf:"center",
-                                        alignItems:"center", justifyContent:"center", fontSize:fontSize,
+                          alignItems:"center", justifyContent:"center", fontSize:fontSize[0],}}>
+
+                                        <Roll app={app} obj={this.props.obj} fontSize={fontSize}
+                                        style={{  display: "flex",
+                                        height: "fit-content",
+                                        width: "fit-content",
+                                        alignSelf: "center",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                        textAlign: "center", fontSize:fontSize[0],
                                         
-                                        }}/>
-
-
-
-
-                          </div>
+                                        }}/></div> */}
                 </div>
         </div>
         </div>
