@@ -92,7 +92,9 @@ render() {
 
   return(
     <div style={{color:styles.colors.colorWhite, width:"32px",}}>
-      {obj.getJson().lastInit ? (<div style={{fontSize:this.props.fontSize[0], width:"32px", position:"absolute", top:"40%", left:"11%", }}>{obj.getJson().lastInit}
+      {obj.getJson().lastInit ? (<div style={{fontSize:this.props.fontSize[0], 
+      width:"40px", position:"absolute", textAlign:"center", borderRadius:"22%",
+      top:"40%", left:"9%", textDecoration:"1px #ffffff22 underline", background:styles.colors.colorBlack}}>{obj.getJson().lastInit}
       
         {/* <ParentFormComponent
     app={app} 

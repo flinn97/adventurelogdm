@@ -14,8 +14,6 @@ import Nav from './componentListNPM/navTech/nav';
 import Background from './pics/back1.png'
 import Login from './view/login';
 import PopupDelete from './view/popups/popupDelete';
-// import DeletePopup from './view/deletePopup';
-// import KeepDel from './view/keepDelete';
 
 
 //model

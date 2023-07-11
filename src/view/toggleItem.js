@@ -29,13 +29,12 @@ export default class ToggleItem extends Component {
     <div style={{...styles.buttons.buttonClose}}
                                       //TRUE OR FALSE
     onClick={() => {
-      console.log('Button clicked')
       this.setState({toggleClicked:!this.state.toggleClicked})}}
     >
         ...
         </div>
 
-                    {
+                    {///DELETE       EDIT     COPY        LOG
                     this.state.toggleClicked && 
 <div style={{color:styles.colors.colorWhite}}>
                           
@@ -59,6 +58,13 @@ export default class ToggleItem extends Component {
 
                             {item ==="copy" && (
                               <div>copy</div>
+                            )}
+                </div>
+
+                <div>
+
+                            {item ==="log" && (
+                              <div>log</div>
                             )}
                 </div>
 

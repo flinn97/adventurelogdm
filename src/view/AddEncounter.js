@@ -11,19 +11,21 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 export default class AddEncounter extends Component {
   constructor(props) {
     super(props);
-    this.deleteCampaign = this.deleteCampaign.bind(this);
+    this.deleteEncounter = this.deleteEncounter.bind(this);
     this.state = {
       eid: 10,
     };
   }
 
-  async deleteCampaign () {
+  
+
+  async deleteEncounter () {
     let dispatch = this.props.app.dispatch;
     dispatch({popupSwitch:"", currentDelObj:undefined});
             //OK DONT DO THIS
               const delay = ms => new Promise(res => setTimeout(res, ms));
               await delay(1500);
-    window.location.href="/campaign/";
+              debugger;
   }
 
 async componentDidMount(){
@@ -36,7 +38,7 @@ async componentDidMount(){
     return num;
 }
 
-  function getCampaignId() {
+function getCampaignId() {
   const path = window.location.pathname;
   const parts = path.split('/');
   const id = parts.pop();
@@ -58,14 +60,13 @@ async componentDidMount(){
 
 
   render() {
-
-    function getCampaignId() {
+    function getCampaignId(){
       const path = window.location.pathname;
       const parts = path.split('/');
       const id = parts.pop();
       return id;
     }
-    
+   
     let campaignId = getCampaignId();
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -73,7 +74,6 @@ async componentDidMount(){
     let componentList = state.componentList;
     let styles =state.styles;
     
-
     return (
       <div>
         {/* BACK BUTTON */}
@@ -94,8 +94,10 @@ async componentDidMount(){
             <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between", 
           backgroundColor:styles.backgrounds.backgroundColor+"99"}}>
 
-            {this.state.start && app.state.currentComponent&& (<>
+            {this.state.start && app.state.currentComponent && (<>
          <div style={{display: "flex", flexDirection: "column", width:"100%"}}>
+
+
               <Upload app={app}
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
@@ -104,7 +106,16 @@ async componentDidMount(){
               update={true} skipUpdate={true}
               updateMap={(obj)=>{this.setState({completedPic: obj.getJson().picURL})}}
               />
-              
+
+<div style={{display:"flex", flexDirection:"column", height:"fit-content"}}>
+
+    </div>
+
+              {/* ///EXIT BUTTON */}
+              <div style={{...styles.buttons.buttonClose, position:"absolute", right:"1%",}} 
+                    onClick={()=>{dispatch({popUpSwitchcase: "", currentComponent: undefined})}}
+                    
+              >X</div>
 
               <ParentFormComponent app={app} name="name" label="Encounter Name"
               wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
@@ -140,15 +151,16 @@ async componentDidMount(){
               borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
               }}
               placeholder={"ie: a link from YouTube or Spotify"}/> 
-              
+
+            
               <RunButton wrapperStyle={{...styles.buttons.buttonAdd,  padding:"8px", marginTop:"2vh"}}
               text={"Save"} app ={app} 
               // to= {"/encounter/" + app.state.currentComponent.getJson()._id} 
               callBack={()=>{
                 dispatch({popUpSwitchcase: "", currentComponent: undefined});
               }}
-                  
-             />
+              />
+
           </div>
           
           </>)}</div>

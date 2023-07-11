@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import "../../App.css"
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
-import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
-import FormWithUpdateAndRun from '../../componentListNPM/componentForms/buttons/formWithUpdateAndRun';
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 
 
@@ -107,12 +104,19 @@ class MainContent extends Component{
       verticalAlign:"center", justifyContent:"space-around",
       }}>
 
+        {state.popUpSwitchcase === "updateCampaign" &&
         <div onClick={()=>{dispatch({popupSwitch:"", handlePopupClose:this.deleteCampaign,
                 })}}
                 style={{...styles.buttons.buttonAdd, padding:"9px", textAlign:"center",}}>
           No, keep it
-        </div>
-      
+        </div>}
+
+        {state.popUpSwitchcase === "updateEnc" &&
+        <div onClick={()=>{dispatch({popupSwitch:"", handlePopupClose:this.deleteEncounter,
+                })}}
+                style={{...styles.buttons.buttonAdd, padding:"9px", textAlign:"center",}}>
+          No, keep it
+        </div>}
         
         <DelButton wrapperStyle={{
         ...styles.buttons.buttonAdd, padding:"9px", textAlign:"center", borderColor:styles.colors.color3+"55",

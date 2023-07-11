@@ -21,8 +21,8 @@ export default class CampaignEditor extends Component {
     super(props);
     this.state = {
       obj: undefined,
-      pic: undefined
-      
+      pic: undefined,
+      usage: 0,
     }
     
   }
@@ -37,6 +37,10 @@ componentDidMount(){
   //RICH TEXT READ
   let campaignDesc = document.getElementById("campaignDesc");
   campaignDesc.innerHTML = component.getJson().description;
+
+  this.setState((prevState) => ({
+    usage: prevState.usage + 1,
+  }));
 }
 
 
@@ -46,6 +50,8 @@ componentDidMount(){
     let state = app.state;
     let radius = "3vmin";
     let styles = state.styles;
+    let usage = state.usage;
+
     return (
       <div >
 
@@ -101,22 +107,42 @@ componentDidMount(){
                         style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
                              <div>+ World Map</div>
                              </Link>
-
-                             <hr></hr>
-
+                </div>
+        <hr></hr>
+        <div 
+                        style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"row", 
+                        color:styles.colors.color4}}>
+                            <div  style={{ display:"flex", width:"100%", justifyContent:"space-between",}}> Encounters
+                             
+                      <div style={{display:"flex", flexDirection:"row", width:"fit-content", 
+                      padding:".75%", justifyItems:"flex-end",
+                      }}>
+                         
                           <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
-                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
-                             <div>Manage Encounters</div>
-                             </Link>
+                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer",
+                        fontSize:styles.fonts.fontSmall, paddingTop:".2%", paddingBottom:".2%",
+                        background:styles.colors.color7+"88", marginTop:"-.5rem"}}>
+                                  Manage Encounters
+                             </Link></div>
 
+                             </div>
+        </div>
                              <div style={{}}>
             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}
             />
           </div>
-        
+
+          <hr></hr>
+          <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
+                        
+                        <div 
+                        style={{ display:"flex", cursor:"pointer", background:"", border:"", cursor:"", color:styles.colors.color4}}>
+                             Gallery
+                             </div>
                 </div>
+                
         </div>
       
     )

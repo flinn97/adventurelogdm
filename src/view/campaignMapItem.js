@@ -10,7 +10,8 @@ export default class CampaignMapItem extends Component {
 
     this.state = {
       obj: undefined,
-      pic: undefined
+      pic: undefined,
+      usage: this.props.obj?.getJson().usage,
     }
   }
  

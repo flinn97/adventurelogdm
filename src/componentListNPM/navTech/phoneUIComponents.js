@@ -48,7 +48,7 @@ handleClickOutside(event) {
     if(this.state.left===-300){
      
       for(let i = 0; i<=48; i++){
-        console.log("hi")
+        
         const delay = ms => new Promise(res => setTimeout(res, ms));
         await delay(.0005);
         let x = this.state.left + 5;
@@ -62,7 +62,7 @@ handleClickOutside(event) {
   }
   async hideMenu(){
     for(let i = 0; i<=120; i++){
-      console.log("hi")
+      
       const delay = ms => new Promise(res => setTimeout(res, ms));
       await delay(.0005);
       let x = this.state.left - 5;

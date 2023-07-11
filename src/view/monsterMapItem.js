@@ -47,7 +47,7 @@ export default class MonsterMapItem extends Component {
    
     let obj = this.props.obj;
     const { colors } = this.state;
-    console.log(colors);
+    
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
           let name = obj?.getJson().name;
           let x = name.length;
@@ -66,9 +66,7 @@ export default class MonsterMapItem extends Component {
               let fontSizeRemSm=fontSizePx / 19;
               let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem"]
 
-
-              
-              // console.log(obj.getJson().encounterId)
+        
     return (
      
       <div>

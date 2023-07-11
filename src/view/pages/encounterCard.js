@@ -142,7 +142,7 @@ class MainContent extends Component{
                 
           
              </div>}
-             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}
             />

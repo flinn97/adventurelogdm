@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import AddParticipant from './AddParticipant';
-import Roll from './Roll';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import speaker from '../pics/speaker.png';
 import { Link } from 'react-router-dom';
@@ -21,12 +20,15 @@ export default class Encounter extends Component {
   }
  
   async componentDidMount(){
+    
     await this.props.app.state.opps.run()
     let href = window.location.href;
     let splitURL = href.split("/")
     let id = splitURL[splitURL.length-1]
     let component = this.props.app.state.componentList.getComponent("encounter", id)
-  this.setState({obj: component})
+  this.setState({obj: component});
+  let dispatch = this.props.app.dispatch;
+  dispatch({popUpSwitchcase: "",});
   }
   
   
@@ -42,11 +44,11 @@ export default class Encounter extends Component {
     const path = window.location.pathname;
     const parts = path.split('/');
     const id = parts.pop();
-    return id;
+    const newId = "E"+id;
+    return newId;
   }
 
   render() {
-
     let app = this.props.app;
     let state = app.state;
     let dispatch = app.dispatch;
@@ -54,7 +56,7 @@ export default class Encounter extends Component {
     let styles =state.styles;
     
     let audioLink = this.convertToLink(state.obj?.getJson().audio);
-
+    
 
     return (
       <div>
@@ -62,27 +64,27 @@ export default class Encounter extends Component {
               ...styles.backgroundContent,
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
           }}>
+
+
+
           <div style={{...styles.popupSmall, fontSize:styles.fonts.fontSubheader2, fontFamily:"serif",
-                        color: styles.colors.colorWhite,
-        }}>
+                        color: styles.colors.colorWhite,}}>
          {this.state.obj?.getJson().name}
+         {/* <div style={{position:"absolute", marginTop:"-.8%", opacity:".1", fontSize:styles.fonts.fontSmallest}}>{this.getEncounterId()}</div> */}
 
-{/* <div>
-
-            {(state.currentComponent?.getJson().type === "encounter" && state.popUpSwitchcase === "updateEncounter") && <AddEncounter app = {app}/>}
-                {state.popUpSwitchcase != "updateEncounter" && <>
-                      
-                      <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
-                      padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
-                      justifyContent:"center"}} 
-                        onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateEncounter"})}}>
-                          Edit Campaign</div>
-                     
-              </>}
-              
-</div> */}
-
-          
+         {/* {state.popUpSwitchcase === "updateEnc" && <>
+                           <AddEncounter app={app}/>
+                          </> }
+          {state.popUpSwitchcase !== "updateEnc" && <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right", position:"absolute", top:"3%", right:"1%"}}>
+                          <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmallest, 
+                                        padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"absolute", width:"fit-content",
+                                        justifyContent:"center"}}
+                                        onClick={()=>{
+                                          dispatch({operate: "update", operation: "cleanPrepare", popUpSwitchcase: "updateEnc",});
+                                        }}
+                                        >
+                                          Edit Encounter</div>
+                              </div>}              */}
 
          <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite, marginTop:"2vh"}}>
 
@@ -106,6 +108,7 @@ export default class Encounter extends Component {
 
 
 <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right"}}>
+
 <div style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}} 
             onClick={()=>{
@@ -119,6 +122,8 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
         </div>
           </div>
 
+          
+          
 <div style={{color:styles.colors.colorWhite}}>
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
             && 
@@ -135,7 +140,9 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
               ]} 
             theme={"selectByImageSmall"}
             />
-</div>        
+</div>       
+
+
       </div>
 
     )

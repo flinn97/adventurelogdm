@@ -92,7 +92,7 @@ export default class App extends Component {
       
       let currentComponent = await this.state.componentListInterface.getOperationsFactory().operationsFactoryListener({operate: operate, object:object, operation: operation});
       
-      console.log(currentComponent);
+      
       let key = await this.state.componentListInterface.getOperationsFactory().getSplice(operate);
       if(currentComponent!==undefined){
         this.setState({currentComponent: currentComponent[key][0]});

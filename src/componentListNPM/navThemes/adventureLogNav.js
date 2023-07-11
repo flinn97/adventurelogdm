@@ -1,11 +1,5 @@
-import { redirect } from "react-router-dom";
-
-
-
 class AdventureLogNav {
-  
-
-        getNavDesktop(){
+     getNavDesktop(){
           let style={
   
             // Styling for Top Bar
