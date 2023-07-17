@@ -107,47 +107,47 @@ class RichTextComponent extends Component {
         let innerText =DOMPurify.sanitize(this.ref.current.innerHTML);
         debugger
 
-//         if(value===" " &&this.state.lastChar===" " &&this.state.backSlash){
-//             await this.setState({doubleSpace:true})
-//         }
+        if(value===" " &&this.state.lastChar===" " &&this.state.backSlash){
+            await this.setState({doubleSpace:true})
+        }
         
-//  if(this.state.doubleSpace){
+ if(this.state.doubleSpace){
     
-//     let c = 'm'
-//     let obj ={
-//         m: this.state.m,
-//         l: this.state.l,
-//         d: this.state.d,
-//         e: this.state.e,
-//         f: this.state.f,
-//     }
-//     for(const key in obj){
-//         if(obj[key]){
-//             c=key
-//             break;
-//         }
-//     }
+    let c = 'm'
+    let obj ={
+        m: this.state.m,
+        l: this.state.l,
+        d: this.state.d,
+        e: this.state.e,
+        f: this.state.f,
+    }
+    for(const key in obj){
+        if(obj[key]){
+            c=key
+            break;
+        }
+    }
     
-//            this.addTag(innerText, value,c )
-//         }
-        // if(value === "/"&& !this.state.backSlash){
-        //     this.setState({backSlash:true});
-        // }
-        // if(this.state.backSlash && value === 'm' && this.state.lastChar==="/"){
-        //     this.setState({m:true, d:false, e:false, f:false, l:false}) 
-        // }
-        // if(this.state.backSlash && value === 'd'&& this.state.lastChar==="/"){
-        //     this.setState({m:false, d:true, e:false, f:false, l:false}) 
-        // }
-        // if(this.state.backSlash && value === 'e'&& this.state.lastChar==="/"){
-        //     this.setState({m:false, d:false, e:true, f:false, l:false}) 
-        // }
-        // if(this.state.backSlash && value === 'f'&& this.state.lastChar==="/"){
-        //     this.setState({m:false, d:false, e:false, f:true, l:false}) 
-        // }
-        // if(this.state.backSlash && value === 'l'&& this.state.lastChar==="/"){
-        //     this.setState({m:false, d:false, e:false, f:false, l:true}) 
-        // }
+           this.addTag(innerText, value,c )
+        }
+        if(value === "/"&& !this.state.backSlash){
+            this.setState({backSlash:true});
+        }
+        if(this.state.backSlash && value === 'm' && this.state.lastChar==="/"){
+            this.setState({m:true, d:false, e:false, f:false, l:false}) 
+        }
+        if(this.state.backSlash && value === 'd'&& this.state.lastChar==="/"){
+            this.setState({m:false, d:true, e:false, f:false, l:false}) 
+        }
+        if(this.state.backSlash && value === 'e'&& this.state.lastChar==="/"){
+            this.setState({m:false, d:false, e:true, f:false, l:false}) 
+        }
+        if(this.state.backSlash && value === 'f'&& this.state.lastChar==="/"){
+            this.setState({m:false, d:false, e:false, f:true, l:false}) 
+        }
+        if(this.state.backSlash && value === 'l'&& this.state.lastChar==="/"){
+            this.setState({m:false, d:false, e:false, f:false, l:true}) 
+        }
         await this.setState({save:innerText, lastChar: value});
 
         let save =DOMPurify.sanitize(this.ref.current.innerHTML);

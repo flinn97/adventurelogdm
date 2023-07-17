@@ -8,7 +8,7 @@ import TokenImage from './tokenImage';
 import bookCursor from '../pics/bookmarklet.png';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import ac from '../pics/ac.png';
-
+import d20 from '../pics/d20.png';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -94,6 +94,7 @@ export default class MonsterMapItem extends Component {
                          width:"1000px",}}>
 
 
+        
 <div style={{display: "flex", height:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
                           width:"fit-content", alignSelf:"center",
@@ -140,8 +141,14 @@ export default class MonsterMapItem extends Component {
                               textAlign: "center",
                             }}
                           >
-                            <img style={{ alignSelf: "center", width: fontSize[0], }} src={ac}/>
-                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>{obj?.getJson().ac}</div>
+                            <img style={{ alignSelf: "center", width: fontSize[0], marginBottom:"2px" }} src={ac}/>
+                            <ParentFormComponent obj={this.props.obj} name="ac"
+                            prepareRun={true} maxLength={2}
+                            //placeholder={obj?.getJson().hp}
+                              inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
+                              borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
+                              }}
+        style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
                           </div>
 
                           <div
@@ -157,7 +164,14 @@ export default class MonsterMapItem extends Component {
                             }}
                           >
                             <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>HP</div>
-                            <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>{obj?.getJson().hp}</div>
+
+                            <ParentFormComponent obj={this.props.obj} name="hp"
+                          prepareRun={true} maxLength={4}
+                          //placeholder={obj?.getJson().hp}
+                             inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
+                             borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",}}
+                            style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
+                              {/* {obj?.getJson().hp}</div> */}
                           </div>
 
 

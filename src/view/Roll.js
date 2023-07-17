@@ -92,29 +92,27 @@ render() {
 
   return(
     <div style={{color:styles.colors.colorWhite, width:"32px",}}>
-      {obj.getJson().lastInit ? (<div style={{fontSize:this.props.fontSize[0], 
-      width:"40px", position:"absolute", textAlign:"center", borderRadius:"22%",
-      top:"40%", left:"9%", textDecoration:"1px #ffffff22 underline", background:styles.colors.colorBlack}}>{obj.getJson().lastInit}
+      {obj.getJson().lastInit ? (<div  style={{
+                              display: "flex",
+                              height: "fit-content",
+                              width: "fit-content",
+                              alignSelf: "center",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "column",
+                              textAlign: "center",
+                            }}>
+        
+      <img  src={d20} style={{width:"22px"}}/>
       
-        {/* <ParentFormComponent
-    app={app} 
-    name="init"
-    wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
-    theme={"adventureLog"}
-    maxLength={3} type={"text"}
-    value={obj.getJson().lastInit}
-    inputStyle={{width:"50px", padding:"1px 5px", color:styles.colors.colorWhite, minHeight:this.props.fontSize[0],
-    borderRadius:"4px",background:styles.colors.colorWhite+"11", borderWidth:"0px", fontSize:this.props.fontSize[0],
-    }}
-    placeholder={obj.getJson().lastInit}
-    handleChange={(e) => {
-      
-      console.log('Form changed');
-      this.setNewInit(e);
-  }}
-/> */}
-      
-      </div> ) 
+      <ParentFormComponent obj={this.props.obj} name="lastInit"
+      prepareRun={true} maxLength={2}
+      //placeholder={obj?.getJson().hp}
+         inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
+         borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
+         }}
+        style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
+        </div> ) 
 :(<div>
       <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer", width:"32px",}}
           onClick={

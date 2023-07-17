@@ -20,7 +20,7 @@ export default class ToggleItem extends Component {
     let state = app.state;
     let items = this.props.items;
     let styles = state.styles;
-    console.log('toggle is', this.state.toggleClicked);
+    
 
     return (
    <div>
@@ -34,7 +34,7 @@ export default class ToggleItem extends Component {
         ...
         </div>
 
-                    {///DELETE       EDIT     COPY        LOG
+                    {///DELETE       EDIT     COPY        SEND to LOG
                     this.state.toggleClicked && 
 <div style={{color:styles.colors.colorWhite}}>
                           

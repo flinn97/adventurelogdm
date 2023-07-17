@@ -613,7 +613,6 @@ export default class MapComponent extends Component {
               styles.sectionStyle[this.props.sectionTheme]://otherwise
            styles.sectionStyle.default//otherwise
       } key={index}> {this.cellMap(item, index)}</div>
-
       )}
       </div>,
 

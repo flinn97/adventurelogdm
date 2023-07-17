@@ -59,6 +59,10 @@ class InputFormComponent extends Component {
         if(this.props.theme){
             theme = FormsThemeFactory.getFormsThemeFactory()[this.props.theme]
         }
+if(this.props.name === "hp"){
+        console.log(this.state.value ,"value")
+}
+
         let inputType = {
             required: <input 
             type={this.props.type}
@@ -80,6 +84,7 @@ class InputFormComponent extends Component {
                 required
                
             />,
+
             normal: <input
                 type={this.props.type}
                 className={this.props.class ? this.props.class : "form-control"}
