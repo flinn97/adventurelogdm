@@ -47,6 +47,8 @@ export default class MonsterMapItem extends Component {
    
     let obj = this.props.obj;
     const { colors } = this.state;
+
+
     
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
           let name = obj?.getJson().name;
@@ -65,18 +67,18 @@ export default class MonsterMapItem extends Component {
               let fontSizeRem = fontSizePx / 16;
               let fontSizeRemSm=fontSizePx / 19;
               let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem"]
-
+    
         
     return (
      
-      <div>
+      <div style={{ width: "80vw"}}>
         
       <div
       // to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
         height: "fit-content",
-        width: "fit-content"}}
+       }}
       > 
 
       <div style={{display: "flex", flexDirection: 'column', 
@@ -95,7 +97,7 @@ export default class MonsterMapItem extends Component {
 
 
         
-<div style={{display: "flex", height:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+<div title="Roll Initiative" style={{display: "flex", height:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,
                           width:"fit-content", alignSelf:"center",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize[0],}}>
@@ -112,14 +114,20 @@ export default class MonsterMapItem extends Component {
                                         }}/></div>
 
 
-<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={obj?.getJson().statBlockLink}>
+{obj?.getJson().statBlockLink !== "" && obj?.getJson().statBlockLink !== undefined &&
+(<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={"Link to "+obj?.getJson().statBlockLink}>
           <img src={bookCursor}  style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px",}}
           />
           <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
-</a>
+</a>)||(
+  <div href={stat} style={{cursor: ""}}>
+  <img src={bookCursor}  style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px", opacity:0}}
+  />
+  <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
+</div>
+)}
 
-                          <div
-                          
+                          <div                  
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,

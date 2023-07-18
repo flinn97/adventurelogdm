@@ -91,7 +91,7 @@ render() {
   let styles =state.styles;
 
   return(
-    <div style={{color:styles.colors.colorWhite, width:"32px",}}>
+    <div style={{color:styles.colors.colorWhite, width:"32px", transition:"none"}}>
       {obj.getJson().lastInit ? (<div  style={{
                               display: "flex",
                               height: "fit-content",
@@ -103,16 +103,25 @@ render() {
                               textAlign: "center",
                             }}>
         
-      <img  src={d20} style={{width:"22px"}}/>
+      <img  src={d20} style={{width:"22px", position:"absolute", marginTop:"35px",marginLeft:"-1px"}} alt="Clear" title="Clear"/>
       
       <ParentFormComponent obj={this.props.obj} name="lastInit"
       prepareRun={true} maxLength={2}
       //placeholder={obj?.getJson().hp}
-         inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
+         inputStyle={{width:"2.2rem", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
          borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
          }}
-        style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
-        </div> ) 
+        style={{ alignSelf: "center", fontSize: fontSize[1], }}/>
+
+{(obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "") &&
+      <div style={{...styles.buttons.buttonClose, color:styles.colors.color5, fontSize:this.props.fontSize[0], 
+        zIndex:2,cursor:"pointer", marginTop:"-1px", background:styles.colors.colorBlack+"bb", padding:"4px",
+      }} title="Clear"
+      onClick={
+        this.clearInitiative}
+        >x</div>}
+        </div> 
+        ) 
 :(<div>
       <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer", width:"32px",}}
           onClick={
@@ -141,11 +150,7 @@ render() {
  </div>)
 }
 
-     {/* {(obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "") &&
-      <div style={{color:styles.colors.colorWhite, fontSize:this.props.fontSize[0], cursor:"pointer"}} 
-      onClick={
-        this.clearInitiative}
-        >Clear</div>} */}
+      
     </div>
   );
 }

@@ -705,7 +705,7 @@ class AdventureLogStyles {
                     display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:"2vmin",
           justifyContent:"space-evenly", position:"relative",
           transition:"all 2s ease-in-out",
-          width: '100%', height: 'fit-content',  zIndex:"20",
+          width: '60%', height: 'fit-content',  zIndex:"20",
           backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",
                 },
 
@@ -1304,7 +1304,7 @@ class AdventureLogStyles {
                                                 display: "flex", marginTop:"1vmin", flexDirection: 'column', borderRadius:"2vmin",
                                       justifyContent:"space-evenly", position:"relative",
                                       transition:"all 2s ease-in-out",
-                                      width: '100%', height: 'fit-content',  zIndex:"20",
+                                      width: '45%', height: 'fit-content',  zIndex:"20",
                                       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover",
                                             },
                                             

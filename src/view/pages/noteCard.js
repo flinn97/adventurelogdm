@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import hr from '../../pics/hr.webp'
+import Notes from '../../componentListNPM/componentForms/fullForms/notes';
+import FormWithUpdateAndRun from '../../componentListNPM/componentForms/buttons/formWithUpdateAndRun';
+import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
 
 /**
  * condensed version of the cards.
@@ -17,11 +22,19 @@ export default class NoteCard extends Component {
 
   }
 
-  /**
-   * 
-   * OPTIONS
-   */
-
+  async  componentDidUpdate(){
+    if( this.props.app.state.updateRun){
+     await this.props.app.dispatch({updateRun: false})
+     this.setState({showInput:false})
+    }
+ }
+ 
+ componentDidUpdate(){
+  let component = this.props.app.state.componentList.getComponent("note", note);
+  //RICH TEXT READ
+  let note = document.getElementById("notes");
+  note.innerHTML = component.getJson().note;
+}
 
   render() {
     let app = {...this.props.app};
@@ -75,6 +88,7 @@ export default class NoteCard extends Component {
 
 
 
+
 //********CONTENTS********/
 class MainContent extends Component{
   constructor(props) {
@@ -89,9 +103,39 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{userSelect:"text", fontSize:styles.fonts.fontSmall}}>
-      Notes Notes Notes everybody
+<div style={{ display: "flex",
+  flexDirection:"row"}}>
+      <div style={{userSelect:"text", fontSize:styles.fonts.fontSmall, width:"27.5vmin", color:styles.colors.colorWhite, 
+      height:"fit-content", marginRight:"4.5vmin", marginLeft:"-2.5vmin", }}>
+      name
+      <MapComponent app={app} name={"note"}/>
       </div>
+
+<div style={{backgroundColor:styles.colors.color4, width:"1.5px", height:"100vh",  position:"absolute", top:0, left:"57vmin"}}></div>
+
+      <div style={{userSelect:"text", fontSize:styles.fonts.fontSmall, width:"100%", height:"fit-content", color:styles.colors.colorWhite,
+      padding:"0px 5vmin", marginLeft:"3vmin"
+       }}>
+
+      <>
+      <ParentFormComponent app={app} obj={this.props.app.state.componentList.getComponent("note")}
+                  theme={"adventureLog"} 
+                  rows={5}
+                  
+                  inputStyle={{maxWidth:"100%", padding:"4px 9px", color:styles.colors.colorBlack, height:"fit-content",
+                  borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", marginBottom:"2vh", height:"100%",
+                  textWrap:"balance" }}
+                  type={"richEditor"}
+                  placeholder={"Briefly describe your campaign. 200 Characters Max"}
+                  name="note"
+                  wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
+                  handleHTMLChange={true} prepareRun={true}
+                  />
+      
+      </>
+
+      </div>
+</div>
     )
   }
 }
@@ -108,10 +152,15 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",
-    fontSize:styles.fonts.fontSubheader1}} >
-      Notes
+    <div>
+      <div onClick={()=>{
+      dispatch({operate: "addnote", operation: "cleanJsonPrepareRun", 
+      object: {text: "empty"},
+  })
+      }}
+      style={{...styles.buttons.buttonAdd, width:"5vw", fontSize:styles.fonts.fontSmall, padding:"2px",}} >
+      + Note
+      </div>
     </div>
     )
   }
@@ -130,7 +179,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:styles.colors.color3+"88" }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], }}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

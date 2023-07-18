@@ -15,13 +15,17 @@ export default class TokenImage extends Component {
   };
 
   async componentDidUpdate(prevProps){
+    let obj = this.props.obj;
+
     if (prevProps.pic !== this.props.pic){
       this.setState({  pic: this.props.pic});
+
       await colorService.updateColors(this.props.pic,(palette) => {
         this.setState({
           colors: palette,
           width: this.props.width
-        }, () => console.log(this.state.colors))
+        }, 
+        () => console.log(this.state.colors))
       });
     }
   };
@@ -45,7 +49,7 @@ export default class TokenImage extends Component {
     let state = app.state;
     const colors = this.state.colors;
     let width = this.state.width.toString();
-    let widthSm = (this.state.width * 0.909).toString()+"px"
+    let widthSm = (this.state.width * 0.908).toString()+"px"
     let widthMd = (this.state.width * 0.959).toString()+"px"
     let pic = this.state.pic;
     let styles = state.styles;

@@ -26,7 +26,7 @@ class SelectByImageSmall {
 
           sectionStyle:{
             default:  {display:'flex', flexDirection:"row", alignItems:"center", height:"fit-content", 
-            paddingRight:"1%", paddingLeft:"1%", 
+            paddingRight:"1%", 
             marginTop:".35rem", 
           },
             row:  {display:'flex', flexDirection:"row"},

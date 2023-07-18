@@ -40,11 +40,11 @@ export default class Dispatch extends Component {
 
         {/* WITHIN */}
 <div style={{display:'flex', flexDirection:'row', }}>
-        <div style={{display:'flex', marginRight:"210px", }}>
+        <div style={{display:'flex', zIndex:2000, marginRight:"210px"}}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
           />
           </div>
-     <div style={{ width:'100%', height:"100%", padding:"4.5vmin", 
+     <div style={{ width:'100%', height:"100%", padding:"2.5vmin", 
       }}>
 
         {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 

@@ -13,7 +13,7 @@ import Draggable from 'react-draggable';
 export default class Encounter extends Component {
   constructor(props) {
     super(props);
-
+    this.convertToLink = this.convertToLink.bind(this);  
     this.state = {
 
     }
@@ -33,8 +33,12 @@ export default class Encounter extends Component {
   
   
   convertToLink = (audio) => {
-    if (audio && !audio.startsWith('htt')) {
-      return 'https://' + audio;
+    if (audio) {
+      if (!audio.startsWith('http://') && !audio.startsWith('https://')) {
+        return 'https://' + audio;
+      } else {
+        return audio;
+      }
     }
     return audio;
   }
@@ -54,14 +58,13 @@ export default class Encounter extends Component {
     let dispatch = app.dispatch;
     let componentList = state.componentList;
     let styles =state.styles;
-    
-    let audioLink = this.convertToLink(state.obj?.getJson().audio);
-    
+   
+    let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
     return (
-      <div>
+      <div style={{width:"100%",}}>
             <div style={{color: styles.colors.colorWhite,
-              ...styles.backgroundContent,
+              ...styles.backgroundContent, 
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
           }}>
 
@@ -92,13 +95,16 @@ export default class Encounter extends Component {
                   {this.state.obj?.getJson().description}
                   </div>
 
-{ (this.state.obj?.getJson().audio !== "") &&
+{ this.state.obj?.getJson().audio !== "" &&
       <div style={{display:"flex", marginTop:"5px", fontSize:styles.fonts.fontSmall,
         flexDirection:"row"}}>
+          <a href={audioLink} target="_blank" rel="noopener noreferrer" 
+          style={{fontSize:styles.fonts.fontSmall, marginBottom:"2px", cursor:"pointer",  color:styles.colors.colorWhite}}
+                 title={audioLink} >
         <img src={speaker}
-         style={{fontSize:styles.fonts.fontSmall, width:styles.fonts.fontSmall, marginRight:"12px", objectFit:"cover"}}/>
-                  <a style={{fontSize:styles.fonts.fontSmall, marginBottom:"2px"}}
-                  href={audioLink} target="_blank" rel="noopener noreferrer">
+         style={{fontSize:styles.fonts.fontSmall, width:"26px", marginRight:"4px", objectFit:"cover",
+        }}/>
+                  
                 {this.state.obj?.getJson().audio}
                   </a>
       </div>}
@@ -124,7 +130,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
 
           
           
-<div style={{color:styles.colors.colorWhite}}>
+<div style={{color:styles.colors.colorWhite, width:"100%",}}>
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
             && 
             <div style={{padding:"22px"}}>
@@ -136,7 +142,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
              app={app} name={"monster"}
             cells={[
               {custom:MonsterMapItem, props:{app:app, colors:[]}}, "delete",
-              {custom:ToggleItem, props:{items:["copy","delete",], app:app}}
+              //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]} 
             theme={"selectByImageSmall"}
             />

@@ -33,6 +33,8 @@ class ColorService {
               newImg.onload = () => {
                 const palette = this.colorThief.getPalette(newImg, 7);
                 callBack(palette);
+                let obj = this.props.obj
+                obj.setCompState({colors: palette});
               };
             };
       
