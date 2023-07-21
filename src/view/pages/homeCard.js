@@ -100,8 +100,7 @@ class MainContent extends Component{
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
       <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       <hr></hr>
-      <NoteCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
-      <hr></hr>
+      
       <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
       <hr></hr>
       <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>

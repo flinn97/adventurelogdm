@@ -32,7 +32,7 @@ export default class NoteCard extends Component {
  componentDidUpdate(){
   let component = this.props.app.state.componentList.getComponent("note", note);
   //RICH TEXT READ
-  let note = document.getElementById("notes");
+  let note = document.getElementById("note");
   note.innerHTML = component.getJson().note;
 }
 
@@ -109,6 +109,13 @@ class MainContent extends Component{
       height:"fit-content", marginRight:"4.5vmin", marginLeft:"-2.5vmin", }}>
       name
       <MapComponent app={app} name={"note"}/>
+      {/* 
+      2 pages:
+      MapComponent custom item, inside do a function for each that is mapped out
+      dispatch change global stat
+      dispatch the currentNote
+      on mount
+      */}
       </div>
 
 <div style={{backgroundColor:styles.colors.color4, width:"1.5px", height:"100vh",  position:"absolute", top:0, left:"57vmin"}}></div>
@@ -122,14 +129,14 @@ class MainContent extends Component{
                   theme={"adventureLog"} 
                   rows={5}
                   
-                  inputStyle={{maxWidth:"100%", padding:"4px 9px", color:styles.colors.colorBlack, height:"fit-content",
-                  borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", marginBottom:"2vh", height:"100%",
+                  inputStyle={{maxWidth:"100%", padding:"4px 9px", color:styles.colors.colorWhite, height:"fit-content",
+                  borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", marginBottom:"2vh", height:"100%",
                   textWrap:"balance" }}
                   type={"richEditor"}
                   placeholder={"Briefly describe your campaign. 200 Characters Max"}
                   name="note"
                   wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
-                  handleHTMLChange={true} prepareRun={true}
+                  prepareRun={true}
                   />
       
       </>
