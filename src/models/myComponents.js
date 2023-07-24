@@ -184,6 +184,26 @@ class Encounter extends componentBase{
     }
 }
 
+class NewNote extends componentBase{
+    constructor(opps){
+        super(opps);
+        this.getPicSrc=this.getPicSrc.bind(this);
+       
+    }
+    json= {
+        
+        text:"",
+        title:"",
+    }
+    
+        
+    async getPicSrc(path){
+        let pic = await authService.downloadPics(path);
+        this.json.picURL=pic;
+        
+    }
+}
+
 class Monster extends componentBase{
     constructor(opps){
         super(opps);
@@ -217,7 +237,7 @@ class Monster extends componentBase{
 
 function forFactory(){
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
-    return {user:User,pin:Pin,interactiveMap:InteractiveMap,campaign:Campaign,encounter:Encounter,monster:Monster}
+    return {user:User,pin:Pin,interactiveMap:InteractiveMap,campaign:Campaign,encounter:Encounter,monster:Monster,newNote:NewNote}
 }
 
 

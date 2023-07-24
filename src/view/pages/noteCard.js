@@ -22,18 +22,17 @@ export default class NoteCard extends Component {
 
   }
 
-  async  componentDidUpdate(){
-    if( this.props.app.state.updateRun){
-     await this.props.app.dispatch({updateRun: false})
-     this.setState({showInput:false})
-    }
- }
+//   async  componentDidUpdate(){
+//     if( this.props.app.state.updateRun){
+//      await this.props.app.dispatch({updateRun: false})
+//      this.setState({showInput:false})
+//     }
+//  }
  
  componentDidUpdate(){
-  let component = this.props.app.state.componentList.getComponent("note", note);
-  //RICH TEXT READ
-  let note = document.getElementById("note");
-  note.innerHTML = component.getJson().note;
+//   let newNote = document.getElementById("newNote");
+// let component = this.props.app.state.componentList.getComponent("newNote", newNote);
+//   newNote.innerHTML = component.getJson().newNote;
 }
 
   render() {
@@ -103,39 +102,38 @@ class MainContent extends Component{
     
 
     return(
-<div style={{ display: "flex",
+<div style={{ display: "flex", width:"100%", marginTop:"2vmin",
   flexDirection:"row"}}>
-      <div style={{userSelect:"text", fontSize:styles.fonts.fontSmall, width:"27.5vmin", color:styles.colors.colorWhite, 
-      height:"fit-content", marginRight:"4.5vmin", marginLeft:"-2.5vmin", }}>
-      name
-      <MapComponent app={app} name={"note"}/>
-      {/* 
-      2 pages:
-      MapComponent custom item, inside do a function for each that is mapped out
-      dispatch change global stat
-      dispatch the currentNote
-      on mount
-      */}
-      </div>
-
-<div style={{backgroundColor:styles.colors.color4, width:"1.5px", height:"100vh",  position:"absolute", top:0, left:"57vmin"}}></div>
+      
 
       <div style={{userSelect:"text", fontSize:styles.fonts.fontSmall, width:"100%", height:"fit-content", color:styles.colors.colorWhite,
-      padding:"0px 5vmin", marginLeft:"3vmin"
+     alignContent:"center", alignItems:"center", justifyContent:"center", backgroundColor:"#adadad"+"20",
        }}>
 
       <>
-      <ParentFormComponent app={app} obj={this.props.app.state.componentList.getComponent("note")}
+      <ParentFormComponent app={app} obj={this.props.app.state.componentList.getComponent("newNote")}
+                  theme={"adventureLog"} 
+                  
+                  maxLength={85}
+                  inputStyle={{maxWidth:"65.5vw", width:"65.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
+                  borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", marginBottom:"2vh", height:"100%",
+                  textWrap:"wrap", fontSize:styles.fonts.fontSubheader2}}
+                  name="title"
+                  wrapperStyle={{ color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
+                  prepareRun={true}
+                  />
+
+      <ParentFormComponent app={app} obj={this.props.app.state.componentList.getComponent("newNote")}
                   theme={"adventureLog"} 
                   rows={5}
                   
-                  inputStyle={{maxWidth:"100%", padding:"4px 9px", color:styles.colors.colorWhite, height:"fit-content",
+                  inputStyle={{maxWidth:"65.5vw !important", width:"65.5vw", padding:"4px 9px", color:styles.colors.colorWhite, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", marginBottom:"2vh", height:"100%",
-                  textWrap:"balance" }}
+                  textWrap:"wrap", overflowX:"clip", overflowY:"auto" }}
                   type={"richEditor"}
-                  placeholder={"Briefly describe your campaign. 200 Characters Max"}
-                  name="note"
-                  wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
+                 
+                  name="text"
+                  wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"center"}}
                   prepareRun={true}
                   />
       
@@ -160,14 +158,6 @@ class TabContent extends Component{
 
     return(
     <div>
-      <div onClick={()=>{
-      dispatch({operate: "addnote", operation: "cleanJsonPrepareRun", 
-      object: {text: "empty"},
-  })
-      }}
-      style={{...styles.buttons.buttonAdd, width:"5vw", fontSize:styles.fonts.fontSmall, padding:"2px",}} >
-      + Note
-      </div>
     </div>
     )
   }
