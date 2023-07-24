@@ -51,9 +51,10 @@ export default class Note extends Component {
               <div onClick={() => {
                   const newNote = {text: "New Note",
                       title: "New Note",};
-                  dispatch({operate: "addnewNote",operation: "cleanJsonPrepare",object: newNote.text,});
+                      //Taylor
+                  dispatch({operate: "addnewNote",operation: "cleanJsonPrepare",object: newNote.text,}); //Taylor
                   this.setState({currentNote: newNote._id});
-              }}
+              }}//Taylor
                     style={{...styles.buttons.buttonAdd, width:"fit-content", fontSize:styles.fonts.fontSmall,padding:"2px", display:"flex", marginBottom:"2vmin", }} >
                     + Note
               </div></div>
