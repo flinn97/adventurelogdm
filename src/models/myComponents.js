@@ -1,6 +1,8 @@
 import BaseClass from "../componentListNPM/baseClass";
 import authService from "../services/auth.js";
 import moment from 'moment';
+
+
 class componentBase extends BaseClass{
     constructor(opps){
         super(opps);
@@ -95,8 +97,7 @@ class Pin extends componentBase{
         
         title: "",
         type: "pin",
-        
-
+    
     } 
     
     async getPicSrc(){
@@ -185,22 +186,12 @@ class Encounter extends componentBase{
 }
 
 class NewNote extends componentBase{
-    constructor(opps){
-        super(opps);
-        this.getPicSrc=this.getPicSrc.bind(this);
-       
-    }
+    currentDate = new Date();
+    formattedDate = `${this.currentDate.getMonth() + 1}/${this.currentDate.getDate()}/${this.currentDate.getFullYear().toString().slice(-2)}`;
     json= {
-        
-        text:"",
-        title:"",
-    }
-    
-        
-    async getPicSrc(path){
-        let pic = await authService.downloadPics(path);
-        this.json.picURL=pic;
-        
+        text:"New Note " + this.formattedDate,
+        title:"New Note",
+        type:"newNote",
     }
 }
 

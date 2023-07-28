@@ -466,6 +466,7 @@ class ParentFormComponent extends Component {
             input={this.props.required? "required": this.props.disabled? "disabled": "normal"}
             requiredMessage={this.props.requiredMessage}
             />,
+            
             select: <SelectComponent 
             name={this.props.name}
         defaultValue={this.props.defaultValue}

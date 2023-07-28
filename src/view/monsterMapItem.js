@@ -1,8 +1,5 @@
 import { Component } from 'react';
 import "../App.css"
-import placeholder from '../pics/placeholderEncounter.JPG';
-import Encounter from './encounter';
-import ColorThief from 'colorthief';
 import Roll from './Roll';
 import TokenImage from './tokenImage';
 import bookCursor from '../pics/bookmarklet.png';

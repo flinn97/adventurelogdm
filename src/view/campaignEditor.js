@@ -4,11 +4,7 @@ import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-
-
-// https://www.npmjs.com/package/react-lazyload
-
-
+// https://www.npmjs.com/package/react-lazyload;
 import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
@@ -76,11 +72,13 @@ componentDidMount(){
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%", justifyContent:"space-between"}}>
                       
-                      <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
-                      padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
-                      justifyContent:"center"}} 
-                        onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
-                          Edit Campaign</div>
+                        <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
+                        padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
+                        justifyContent:"center"}} 
+                          onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
+                        Edit 
+                        </div>
+                        
                       </div>
 
                       {/* I dont think we are doing sessions */}
