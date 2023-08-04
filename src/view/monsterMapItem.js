@@ -68,8 +68,7 @@ export default class MonsterMapItem extends Component {
         
     return (
      
-      <div style={{ width: "80vw"}}>
-        
+      <div style={{ width: "80vw",}}>
       <div
       // to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
@@ -112,13 +111,13 @@ export default class MonsterMapItem extends Component {
 
 
 {obj?.getJson().statBlockLink !== "" && obj?.getJson().statBlockLink !== undefined &&
-(<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={"Link to "+obj?.getJson().statBlockLink}>
-          <img src={bookCursor}  style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px",}}
+(<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={"Link to "+obj?.getJson().statBlockLink} draggable="false">
+          <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px",}}
           />
           <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
 </a>)||(
   <div href={stat} style={{cursor: ""}}>
-  <img src={bookCursor}  style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px", opacity:0}}
+  <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px", opacity:0}}
   />
   <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
 </div>
@@ -146,7 +145,7 @@ export default class MonsterMapItem extends Component {
                               textAlign: "center",
                             }}
                           >
-                            <img style={{ alignSelf: "center", width: fontSize[0], marginBottom:"2px" }} src={ac}/>
+                            <img style={{ alignSelf: "center", width: fontSize[0], marginBottom:"2px" }} src={ac} draggable="false"/>
                             <ParentFormComponent obj={this.props.obj} name="ac"
                             prepareRun={true} maxLength={2}
                             //placeholder={obj?.getJson().hp}

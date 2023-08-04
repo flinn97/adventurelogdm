@@ -3,6 +3,7 @@ import "../App.css"
 
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import { async } from '@firebase/util';
+
 export default class InteractiveMapItem extends Component {
   constructor(props) {
     super(props);

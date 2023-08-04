@@ -22,6 +22,28 @@ hr {
 }
 
 
+.handle {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease; 
+}
+
+pin:hover .handle {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hover {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease; 
+}
+
+hovering:hover .hover {
+  visibility: visible;
+  opacity: 1;
+}
+
 fontNormal {
   font-family: -apple-system, BlinkMacSystemFont, 'Inria Serif';
     -webkit-font-smoothing: antialiased;

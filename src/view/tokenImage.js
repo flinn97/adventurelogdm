@@ -61,7 +61,7 @@ export default class TokenImage extends Component {
           marginRight:"30px", 
           backgroundColor:colors?.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,}}>
             
-            <img src={background}  
+            <img src={background} draggable="false"  
                                 style={{width:width+"px", height:width+"px",  position:"absolute",
                                   objectFit:"cover", borderRadius:"50%", opacity:"61%", 
                                   display: "flex", zIndex:2,
@@ -73,7 +73,7 @@ export default class TokenImage extends Component {
                 backgroundColor:colors?.length?`rgb(${colors[2].join(',')})`: styles.popupSmall.border,}}>
         </div>
            
-        <img src={pic||placeholder} 
+        <img src={pic||placeholder} draggable="false"
             style={{width:widthSm, height:widthSm, 
             objectFit:"cover", borderRadius:"50%",
             display: "flex", zIndex:2,

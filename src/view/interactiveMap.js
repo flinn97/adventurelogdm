@@ -91,7 +91,8 @@ export default class InteractiveMap extends Component {
 
     return (
      
-      <div style={{positon:"absolute", display: "flex", flexDirection: "row", width: "80vw", justifyContent: "space-between"}}>
+      <div style={{positon:"absolute", display: "flex", flexDirection: "row", width: "80vw", justifyContent: "space-between", marginBottom:"2vh", 
+      height:"fit-content", objectFit:"scale-down" }}>
       {this.state.map &&( <>{this.state.map.getJson().picURL===""
       ?(
       <div>
@@ -106,7 +107,7 @@ export default class InteractiveMap extends Component {
         <Upload obj={this.state.map} app={app} //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
               text="Set Background" style={{display:"flex",
-              zIndex:"1", borderRadius:".1vmin", background:"",}} 
+              zIndex:"1", borderRadius:".1vmin", background:"", }} 
               update={true} skipUpdate={true} 
               updateMap={(obj)=>{this.setState({completedPic: obj.getJson().picURL})}}/>
     
@@ -118,9 +119,11 @@ export default class InteractiveMap extends Component {
       <div  style={{position: "relative", height: "100%", width:"100%"}}>
         <div  style={{position: "relative", height: "fit-content", width:"100%"}}></div>
 
-        <div style={{display:"flex", height: "fit-content", width:"fit-content"}}>
-          <img id="map" ref={this.currentMap} src={this.state.map.getJson().picURL} 
-          style={{display: "flex", flexDirection: "row", justifyContent:"space-between",borderRadius:"2vw",  objectFit:"cover" 
+        <div style={{display:"flex", height: "fit-content", width:"fit-content",  objectFit:"scale-down" }}>
+          <img id="map" ref={this.currentMap} src={this.state.map.getJson().picURL} draggable="false"
+          style={{display: "flex", flexDirection: "row", justifyContent:"space-between",borderRadius:"2vw", objectFit:"scale-down" , 
+          userSelect:"none",
+          width:"85vw",
           }}/>
 
           {componentList.getList("pin",).map((mark,index )=>

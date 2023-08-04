@@ -46,7 +46,7 @@ console.log(this.props.obj.getJson().text.length)
       <div style={{width:"100%", height:"3.5em",}} onClick={()=>{
         dispatch({currentComponent: this.props.obj}); 
         }}>
-      <div style={{width:"100%", height:"3.5em",padding:"4px 6px", backgroundColor:highlightBackground,  }}
+      <div style={{width:"100%", height:"3.5em",padding:"4px 6px", backgroundColor:highlightBackground, }}
       >
       <div> 
       <div style={{marginTop:"2px",
