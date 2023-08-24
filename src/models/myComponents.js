@@ -87,7 +87,7 @@ class User extends componentBase{
     }
 
 }
-class Pin extends componentBase{
+class Map extends componentBase{
     constructor(opps){
         super(opps);
         this.getPicSrc=this.getPicSrc.bind(this);
@@ -96,7 +96,10 @@ class Pin extends componentBase{
     json= {
         
         title: "",
-        type: "pin",
+        type: "map",
+        owner:"",
+        mapOwner:"",
+        campaignID:"",
     
     } 
     
@@ -107,6 +110,57 @@ class Pin extends componentBase{
     }
 
 }
+
+class Pin extends componentBase{
+    constructor(opps){
+        super(opps);
+        this.getPicSrc=this.getPicSrc.bind(this);
+       
+    }
+    json= {
+        
+        title: "",
+        type: "pin",
+        x:"",
+        y:"",
+        mapId:"",
+        loreId:""
+    
+    } 
+    
+    async getPicSrc(){
+        let pic = await authService.downloadPics(this.json.pics);
+        this.json.picURL=pic;
+        
+    }
+
+}
+
+class Lore extends componentBase{
+    constructor(opps){
+        super(opps);
+        this.getPicSrc=this.getPicSrc.bind(this);
+       
+    }
+    json= {
+        
+        _id:"",
+        type: "lore",
+        campaignID:"",
+        parentID:"",
+        title:"",
+        desc:"",
+    
+    } 
+    
+    async getPicSrc(){
+        let pic = await authService.downloadPics(this.json.pics);
+        this.json.picURL=pic;
+        
+    }
+
+}
+
 class InteractiveMap extends componentBase{
     constructor(opps){
         super(opps);
@@ -228,7 +282,7 @@ class Monster extends componentBase{
 
 function forFactory(){
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
-    return {user:User,pin:Pin,interactiveMap:InteractiveMap,campaign:Campaign,encounter:Encounter,monster:Monster,newNote:NewNote}
+    return {user:User,pin:Pin,interactiveMap:InteractiveMap,campaign:Campaign,encounter:Encounter,monster:Monster,newNote:NewNote,map:Map,lore:Lore}
 }
 
 
