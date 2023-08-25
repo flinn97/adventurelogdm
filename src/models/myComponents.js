@@ -146,9 +146,9 @@ class Lore extends componentBase{
         
         _id:"",
         type: "lore",
-        campaignID:"",
-        parentID:"",
-        title:"",
+        campaignId:"",
+        parentId:"",
+        name:"",
         desc:"",
     
     } 
@@ -282,7 +282,8 @@ class Monster extends componentBase{
 
 function forFactory(){
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
-    return {user:User,pin:Pin,interactiveMap:InteractiveMap,campaign:Campaign,encounter:Encounter,monster:Monster,newNote:NewNote,map:Map,lore:Lore}
+    return {user:User,pin:Pin,interactiveMap:InteractiveMap,campaign:Campaign,
+        encounter:Encounter,monster:Monster,newNote:NewNote,map:Map,lore:Lore}
 }
 
 

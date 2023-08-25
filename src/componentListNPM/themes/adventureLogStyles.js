@@ -330,14 +330,18 @@ class AdventureLogStyles {
             
             
             tallestCard:
-            {   border: appBorders.borderThin,
+            {   
                 width: "19vw",
-                height: "75vh",
-                 
+                marginRight:"-3vw",
+                marginTop:"-3vh",
                 
-                background: appColors.colorWhite,
-                borderRadius: "1.5rem",
-                boxShadow: "2px 3px 6px" + appColors.colorBlack,
+                minHeight: "100vh",
+                height:"fit-content",
+                marginLeft:"22px",
+                
+                background: "#000000"+"55",
+                
+                //border: ".1rem double " + appColors.color3,
                 userSelect: "none"
             },
             // tallestCardBorderless:

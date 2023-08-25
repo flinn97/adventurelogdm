@@ -8,6 +8,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
+import LoreListCard from './pages/loreListCard';
 
 
 
@@ -48,8 +49,8 @@ componentDidMount(){
     let styles = state.styles;
     let usage = state.usage;
 
-    return (
-      <div >
+    return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
+      <div style={{width:"66.3vw", height:"100%"}}>
 
         {/* BACK BUTTON */}
 {state.popUpSwitchcase != "updateCampaign" &&
@@ -142,7 +143,12 @@ componentDidMount(){
                 </div>
                 
         </div>
-      
+        
+                  <div style={{display:"flex", width:"fit-content"}}>
+                  <div style={{width:"1px", height:"100%", background:styles.colors.color3, marginLeft:"-1px", marginRight:"-1vw", marginLeft:"1vw"}}></div>
+                       <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
+                  </div>
+        </div>
     )
   }
 }
