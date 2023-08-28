@@ -4,6 +4,7 @@ import OutreachMap from "./outreachList";
 import DefaultTasksMap from "./defaultTasks";
 import selectByImage from "./selectByImage";
 import selectByImageSmall from "./selectByImageSmall";
+import expandingTree from "./expandingTree";
 
 class MapThemeFactory {
     operationsFactory; 
@@ -15,6 +16,7 @@ class MapThemeFactory {
        defaultTasks: DefaultTasksMap.getMapTheme(),
        selectByImage: selectByImage.getMapTheme(),
        selectByImageSmall: selectByImageSmall.getMapTheme(),
+       expandingTree: expandingTree.getMapTheme(),
     }
 
     registerComponents(register){

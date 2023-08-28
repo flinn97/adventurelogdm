@@ -104,14 +104,16 @@ getCampId(){
 
     return(
       <div style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content",
-       alignContent:"center", userSelect:"none", color:styles.colors.colorWhite, textOverflow:"ellipsis", objectFit:"contain"
+       alignContent:"center", userSelect:"none", color:styles.colors.colorWhite, 
+       
+        
        }}>
             
             
           
-          <div style={{backgroundColor:"", display:"flex", flexDirection:"row"}}>
+          <div style={{width:"fit-content", display:"flex", flexDirection:"row", marginTop:"5vh",}}>
           
-            <ListTree app={app} name={"lore"} _id={this.getCampId()} attribute={"parentId"}/>
+            <ListTree style={{}} app={app} name={"lore"} _id={this.getCampId()} attribute={"parentId"}/>
           </div>
           
 

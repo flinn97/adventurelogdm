@@ -331,15 +331,17 @@ class AdventureLogStyles {
             
             tallestCard:
             {   
-                width: "19vw",
-                marginRight:"-3vw",
+                width: "fit-content",
+                
                 marginTop:"-3vh",
                 
                 minHeight: "100vh",
                 height:"fit-content",
-                marginLeft:"22px",
-                
-                background: "#000000"+"55",
+                marginLeft:"2vh",
+                borderLeftStyle:"double",
+                borderLeftColor:appColors.color4,
+                background:appColors.color1+"44",
+               
                 
                 //border: ".1rem double " + appColors.color3,
                 userSelect: "none"
@@ -940,15 +942,20 @@ class AdventureLogStyles {
                             
                             
                             tallestCard:
-                            {   border: appBorders.borderThin,
-                                width: "19vw",
-                                height: "75vh",
-                                
-                                
-                                background: appColors.colorWhite,
-                                borderRadius: "1.5rem",
-                                boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                                userSelect: "none"
+                            {   width: "19vw",
+                            marginRight:"-3vw",
+                            marginTop:"-3vh",
+                            
+                            minHeight: "100vh",
+                            height:"fit-content",
+                            marginLeft:"22px",
+                            borderLeftStyle:"double",
+                            borderLeftColor:appColors.color4,
+                            background:appColors.color1+"44",
+                           
+                            
+                            //border: ".1rem double " + appColors.color3,
+                            userSelect: "none"
                             },
                             tallestCardBorderless:
                             {   width: "19vw",
@@ -1542,15 +1549,20 @@ class AdventureLogStyles {
                                             
                                             
                                             tallestCard:
-                                            {   border: appBorders.borderThin,
-                                                width: "32vw",
-                                                height: "75vh",
-                                                
-                                                
-                                                background: appColors.colorWhite,
-                                                borderRadius: "1.5rem",
-                                                boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                                                userSelect: "none"
+                                            {   width: "19vw",
+                                            marginRight:"-3vw",
+                                            marginTop:"-3vh",
+                                            
+                                            minHeight: "100vh",
+                                            height:"fit-content",
+                                            marginLeft:"22px",
+                                            borderLeftStyle:"double",
+                                            borderLeftColor:appColors.color4,
+                                            background:appColors.color1+"44",
+                                           
+                                            
+                                            //border: ".1rem double " + appColors.color3,
+                                            userSelect: "none"
                                             },
                                             tallestCardBorderless:
                                             {   width: "32vw",

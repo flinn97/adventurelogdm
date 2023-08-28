@@ -3,6 +3,7 @@ import "../App.css"
 import ParentFormComponent from '../componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
 import MapThemeFactory from '../mapThemes/mapThemeFactory';
+import expandingTree from '../mapThemes/expandingTree';
 
 
 export default class MapComponent extends Component {
@@ -28,7 +29,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor"];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall"];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree"];
 
     return <div style={this.props.iSectionStyle? //if
     this.props.iSectionStyle: //then
@@ -278,7 +279,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor", "checkbox", ];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall"];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree"];
     let html = <>
     
       {this.props.cells.map((c, index)=><div style={this.props.cellStyle? //if
@@ -585,7 +586,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor"];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate","selectByImageSmall" ];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate","selectByImage", "selectByImageSmall", "expandingTree" ];
     
 
     let types={

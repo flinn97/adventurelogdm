@@ -20,6 +20,7 @@ export default class CampaignEditor extends Component {
       obj: undefined,
       pic: undefined,
       usage: 0,
+      isSideBarVisible: false,
     }
     
   }
@@ -40,6 +41,9 @@ componentDidMount(){
   }));
 }
 
+toggleSidebar = () => {
+  this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
+};
 
   render() {
     let app = this.props.app;
@@ -50,7 +54,9 @@ componentDidMount(){
     let usage = state.usage;
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
-      <div style={{width:"66.3vw", height:"100%"}}>
+      {/* HOMEPAGE */}
+      <div style={{ display:"flex", flexDirection:"column",
+      width:"100%", minWidth:"fit-content", height:"100%",}}>
 
         {/* BACK BUTTON */}
 {state.popUpSwitchcase != "updateCampaign" &&
@@ -65,7 +71,7 @@ componentDidMount(){
 
       <div style={{...styles.backgroundContent, position:"relative",
       backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', }}>
-            <div style={{...styles.popupSmall, padding:"1rem", minHeight:"13rem", width:"100%"}}>
+            <div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%"}}>
 
             {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") && <AddCampaign app = {app}/>}
     
@@ -73,8 +79,8 @@ componentDidMount(){
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%", justifyContent:"space-between"}}>
                       
-                        <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, 
-                        padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"relative",
+                        <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, padding:"4px",
+                        paddingRight:"9px", paddingLeft:"9px", backgroundColor:styles.colors.color1+"ee", position:"relative",
                         justifyContent:"center"}} 
                           onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                         Edit 
@@ -87,7 +93,7 @@ componentDidMount(){
               {/* /Description/ */}
               
               <div id= "campaignDesc" 
-              style={{width:"100%", height:"100%", userSelect:"text"}}>
+              style={{width:"100%", height:"100%", userSelect:"text", marginTop:"11px"}}>
                 </div>
               
               
@@ -141,13 +147,22 @@ componentDidMount(){
                              Gallery
                              </div>
                 </div>
-                
+             
         </div>
-        
-                  <div style={{display:"flex", width:"fit-content"}}>
-                  <div style={{width:"1px", height:"100%", background:styles.colors.color3, marginLeft:"-1px", marginRight:"-1vw", marginLeft:"1vw"}}></div>
+
+        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
+          padding:"0", backgroundColor:"", border:"none", zIndex:"10000", position:"fixed", right:"2%", top:"1vh",
+          }}>
+        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
+      </div>
+
+        {this.state.isSidebarVisible && (<div>
+        {/* SIDEBAR */}    
+                  <div style={{display:"flex", width:"fit-content",}}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
+                  </div>)}
+
         </div>
     )
   }

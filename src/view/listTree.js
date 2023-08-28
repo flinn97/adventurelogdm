@@ -33,31 +33,37 @@ export default class ListTree extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-
+    
     let styles = state.styles;
-    let _id = this.props._id;
+    const _id = this.props._id;
     let name = this.props.name;
     let attribute = this.props.attribute;
 
+  
+    const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
+
     return (<div >
       
-             <div style={{flexDirection:"row", display:"flex"}} >
+             <div style={{flexDirection:"row", display:"flex",}} >
              
-             <div style={{flexDirection:"column", display:"flex",
-             alignItems:"center", justifyItems:"center", justifyContent:"space-between", width:"18.2vw"}} >
+             <div style={{flexDirection:"column", display:"flex", marginRight:"-20px",
+             alignItems:"center"}} >
 
-              
-                      <div style={{...styles.buttons.buttonAdd, marginBottom:"2vh", marginTop:"2vh"}}
+                    {!isHidden && (
+                      <div style={{...styles.buttons.buttonAdd, marginBottom:"15px", marginTop:"5px", paddingLeft:"29px",  paddingRight:"29px", 
+                      
+                      padding:"4px", borderRadius:"9px", fontSize:"18px", }}
                       onClick={()=>{
                         dispatch(
                           {operate:"addlore", operation:"cleanJsonPrepareRun",
-                          object:{ parentId:_id, type:"lore", name:_id,}}
+                          //                                      CHANGE NAME later
+                          object:{ parentId:_id, type:"lore", name:"new lore",}}
                         )
                       }}
-                      >+ Create Lore</div>
+                      >+ Create Lore</div>)}
 
-                        <MapComponent app={app}  theme={"selectByImage"} 
-                        iCellStyle={{justifyContent:"center", width:"100%",}} 
+                        <MapComponent app={app}  theme={"expandingTree"} 
+                                             
                         name={name} cells={["name", 
                         {custom:ExpandTreeArrow, props:{app:app}},
                         {custom:ListTreeInner, props:{app:app}},

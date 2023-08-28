@@ -26,10 +26,10 @@ export default class ListTreeInner extends Component {
     let styles = state.styles;
     let id = this.props.obj.getJson()._id;
 
-    return (<div >
+    return (<div style={{display:"flex",flexDirection:"column",alignItems:"center"}} >
        {state.currentExpanse?.includes(id)
        &&
-       <div style={{background:"#ffedae"+"22", marginLeft:"-17vw",paddingTop:"5vh", width:"100%"}}>
+       <div>
        <ListTree app={app} name={"lore"} attribute={"parentId"} _id={id}/>
        </div>
        }

@@ -25,25 +25,29 @@ render() {
   let styles =state.styles;
 
   return(
-    <div style={{cursor:"pointer", }}>
-      <img 
-      onClick={() => {
-        this.setState({ expanded: !this.state.expanded });
-        let r = state.currentExpanse ? state.currentExpanse : [];
-        const id = obj.getJson()._id;
-        
-        const index = r.indexOf(id);
-        if (index !== -1) {
-          r.splice(index, 1);
-        } else {
-          r.push(id);
-        }
+    <div style={{cursor:"pointer", fontSize:"16px", textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
+    alignContent:"stretch",
+    marginBottom:"11px",}}
+    onClick={() => {
+      this.setState({ expanded: !this.state.expanded });
+      let r = state.currentExpanse ? state.currentExpanse : [];
+      const id = obj.getJson()._id;
       
-        dispatch({ currentExpanse: r });
-      }}
-      src={backarrow} style={{ transition:"all .4s ease-out",
+      const index = r.indexOf(id);
+      if (index !== -1) {
+        r.splice(index, 1);
+      } else {
+        r.push(id);
+      }
+    
+      dispatch({ currentExpanse: r });
+    }}
+    > {this.state.expanded?"hide":"expand"}
+      <img 
+      
+      src={backarrow} style={{ transition:"all .4s ease-out", marginLeft:"4px", verticalAlign:"center", 
         transform:this.state.expanded?"rotate(270deg)":"rotate(180deg)", filter: "grayscale(100%) contrast(300%) brightness(200%)",
-         objectFit:"contain", width:"28px"}}></img>
+         objectFit:"contain", width:"12px"}}></img>
     </div>
     )
 }
