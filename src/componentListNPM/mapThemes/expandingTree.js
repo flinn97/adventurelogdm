@@ -25,7 +25,7 @@ class SelectByImageSmall {
           },
 
           sectionStyle:{
-            default:  {display:'flex', flexDirection:"column", alignItems:"center", height:"fit-content",  
+            default:  {display:'flex', flexDirection:"column", alignItems:"center", height:"fit-content",  marginBottom:"2px",
             border:"solid 1px #C1A71B55", alignContent:"center", justifyItems:"center",
               borderRadius:"2px", width:"100%", borderRightStyle:"",  borderLeftStyle:"",
             

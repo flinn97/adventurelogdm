@@ -169,11 +169,11 @@ class InteractiveMap extends componentBase{
     }
     json= {
         
-        _idMap: "",
-        owner: "",
+        mapOwner:"",
+        owner: "", //user
         type: "map",
         picURL: "",
-        campaignOwner: "",
+        campaignId: "", //campaign
         pics: "",
     }
     

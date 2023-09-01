@@ -42,7 +42,8 @@ render() {
     
       dispatch({ currentExpanse: r });
     }}
-    > {this.state.expanded?"hide":"expand"}
+    > 
+    {/* {this.state.expanded?"hide":"expand"} */}
       <img 
       
       src={backarrow} style={{ transition:"all .4s ease-out", marginLeft:"4px", verticalAlign:"center", 

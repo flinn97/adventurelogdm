@@ -12,6 +12,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import backarrow from '../pics/backArrow.webp';
 import placeholder from '../pics/placeholderEncounter.JPG';
+import InteractiveBulletin from './interactiveBulletin';
 
 
 export default class Worldbuilder extends Component {
@@ -33,6 +34,7 @@ export default class Worldbuilder extends Component {
   eventLogger(e, data) {
     console.log('Event: ', e);
     console.log('Data: ', data);
+    
   }
 
    addDraggableItem() {
@@ -104,42 +106,12 @@ componentDidMount(){
           </div>
 
       
-        {(state.popUpSwitchcase === "addMap") && <InteractiveMap app = {app}/>}
- 
-              {/* Button to add a new draggable item */}
-              <div style={{...styles.buttons.buttonAdd, padding:".55%"}} onClick={this.addDraggableItem}>Add Icon</div>
-        {/* Loop over the draggableItems array and create a Draggable for each */}
-        {this.state.draggableItems.map((item, index) => (
-                <Draggable key={index} 
-                //bounds="parent"
-                handle=".handle" style={{marginLeft:"22px", userSelect: "none"}}
-                onStart={this.eventLogger} 
-                onStop={this.eventLogger} 
-                grid={[1,1]}>
-
-                  <pin style={{width:"fit-content", height:"fit-content",
-                    }}>
-                   <img className="handle" draggable="false"
-                   src={movePin} 
-                   style={{width: "18px", height:"18px", cursor:"grab", objectFit:"fill", display:"unset",
-                   borderRadius: "50%", right:'-58px', bottom:"-15px", zIndex:40,
-
-                  //  position:'absolute'
-                   }}
-                   />
-                    <img src={iconTest} draggable="false" style={{
-                      background:"#00000000",  cursor:"pointer",
-                      objectFit:"fill", display:"unset",
-                      width: "55px", height:"55px",
-                      borderRadius: "50%",
-                     
-                      // position:"absolute",
-                      }}>
-                    </img>
-                  </pin>
-
-                </Draggable>
-              ))}
+        {(state.popUpSwitchcase === "addMap") && <InteractiveBulletin app = {app}/>}
+       
+       <div style={{height:900, width:900}}>
+        <InteractiveBulletin app = {app}/>
+        {/* backgroundIMAGE */}
+        </div>   
 
       </div>
       
@@ -148,3 +120,41 @@ componentDidMount(){
 }
 
 
+/**
+ * 
+ <div style={{...styles.buttons.buttonAdd, padding:".55%"}} onClick={this.addDraggableItem}>Add Icon</div>
+ 
+ {this.state.draggableItems.map((item, index) => (
+
+         <Draggable key={index} 
+         bounds="parent"
+         handle=".handle" style={{marginLeft:"22px", userSelect: "none"}}
+         
+         onStop={this.eventLogger} 
+         grid={[1,1]}>
+
+           <pin style={{width:"fit-content", height:"fit-content",
+             }}>
+            <img className="handle" draggable="false"
+            src={movePin} 
+            style={{width: "18px", height:"18px", cursor:"grab", objectFit:"fill", display:"unset",
+            borderRadius: "50%", right:'-58px', bottom:"-15px", zIndex:40,
+
+          
+            }}
+            />
+             <img src={iconTest} draggable="false" style={{
+               background:"#00000000",  cursor:"pointer",
+               objectFit:"fill", display:"unset",
+               width: "55px", height:"55px",
+               borderRadius: "50%",
+              
+               
+               }}>
+             </img>
+           </pin>
+
+         </Draggable>
+
+       ))}
+ */
