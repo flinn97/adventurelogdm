@@ -9,15 +9,17 @@ import iconTest from '../pics/iconTest.svg';
 export default class InteractiveBulletin extends Component {
   constructor(props) {
     super(props);
-     
+    this.parentRef = React.createRef();
     this.state = {
       pins:[],
       
     }
+
   }
   componentDidMount(){
     ///assign pins to current mapId
   };
+
 
   render() {
     let app = this.props.app;
@@ -26,7 +28,7 @@ export default class InteractiveBulletin extends Component {
     let componentList = state.componentList;
     let styles =state.styles;
     let headerH = 50;
-    let remainderH = 900-[headerH]-11;
+    let remainderH = 1240-[headerH]-11;
 
 
     return (
@@ -41,48 +43,69 @@ export default class InteractiveBulletin extends Component {
   borderRadius:"11px", padding:"8px" }}
   onClick={(e)=>{
     let rect = e.target.getBoundingClientRect();
-    let x = e.clientX - Math.floor(rect.left);
-    let y = e.clientY - Math.floor(rect.top);
+    let x = (e.clientX - Math.floor(rect.left)).toString();
+    let y = (e.clientY - Math.floor(rect.top)).toString();
 
-    let pins= [...this.state.pins];
+    state.opps.cleanJsonPrepareRun({addpin:
+      {type:"pin", iconImage: iconTest, loreId:"", mapId:"", x:x, y:y,}
+    });
 
-    // dispatch({operate: "addpin", operation: "cleanPrepareRun",
-    // object: {iconImage: iconTest, loreId:"", x, y}});
 
-    pins.push({x, y, loreId:"11",mapId:"",iconImage:iconTest});
-
-    this.setState({pins:pins});
 
   }}
   >
-    +pin
+    + pin
   </div>
 </div>
 
 
 
-<div style={{width:"100%", height:remainderH, position:"relative"}}>
-  {this.state.pins.map((pin,index)=>
-  <Draggable 
-  defaultPosition={{x: pin.x, y: pin.y}} grid={[1,1]}
-  bounds="parent"
+<div ref={this.parentRef} style={{width:"100%", height:remainderH, position:"relative",}}>
 
-  //onStop={(item)=>{console.log(item.target.attributes._id.value)}}
-  onDrag={(e, data) => {
-    const updatedPins = [...this.state.pins];
-    updatedPins[index].x = data.lastX;
-    updatedPins[index].y = data.lastY;
-    this.setState({ pins: updatedPins, });
+  {state.componentList.getList("pin").map((pin,index)=>
+  <Draggable 
+  defaultPosition={{x: parseInt(pin.getJson().x, 10), y: parseInt(pin.getJson().y, 10)}}
+   grid={[1,1]}
+  bounds="parent"
+  handle=".draghere"
+
+
+  onStop={(item, data)=>{
+    // let pinId = item.target.attributes.pinId?.value;
+
+    let parentRect = this.parentRef.current.getBoundingClientRect();
+    let x = Math.min(Math.max(data.x, 1), parentRect.width - 1);
+    let y = Math.min(Math.max(data.y, 1), parentRect.height - 1);
+
+    let comp = pin;
+    // state.componentList.getComponent("pin",pinId);
+
+    comp.setCompState({
+      x: x.toString(), 
+      y: y.toString()
+    });
+   
+      state.opps.cleanPrepareRun({update:comp});
   }}
 
+
   >
-      <div style={{
-        color:styles.colors.colorWhite, width:"fit-content", textOverflow:"",
-        position:"absolute", fontSize:"13px", border:"1px dotted #ffdead33", padding:"3px"
+    
+      <div 
+      style={{
+        display:"flex", flexDirection:"column", alignItems:"center",
+        position:"absolute",
     }} 
-      pinId={pin._id} >
-        
-          x{pin.x} y{pin.y}
+    
+      pinId={pin.getJson()._id} >
+        {/* pin.getJson()._id */}
+        <img onClick={()=>{dispatch({
+        popupSwitch:"popupLore",
+      })}} draggable="false" src={pin.getJson().iconImage} style={{width:"30px"}}></img>
+          <div className="draghere" style={{
+        color:styles.colors.colorWhite,textOverflow:"",
+        fontSize:"11px", border:"1px dotted #ffdead33", padding:"3px"}}
+        >x{pin.getJson().x}y{pin.getJson().y}</div>
       </div>
 
   </Draggable>

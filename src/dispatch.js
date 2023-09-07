@@ -14,6 +14,7 @@ import Nav from './componentListNPM/navTech/nav';
 import Background from './pics/back1.png'
 import Login from './view/login';
 import PopupDelete from './view/popups/popupDelete';
+import PopupLore from './view/popups/popupLore';
 
 
 //model
@@ -51,6 +52,14 @@ export default class Dispatch extends Component {
         <PopupDelete 
         
           type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+          delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+        />}
+
+        {state.popupSwitch === "popupLore" && 
+        <PopupLore
+        
+          type="popup" options={{cardType:"popupMedium"}} app={app} containerStyle={{backgroundColor:styles.colors.color1+"55"}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}

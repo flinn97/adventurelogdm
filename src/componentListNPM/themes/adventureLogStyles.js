@@ -517,7 +517,7 @@ class AdventureLogStyles {
                 width: "16",
                 height: "12.5",
                 border: appBorders.borderThick,
-                background: appColors.colorWhite,
+                background: appColors.color1,
                 borderRadius: "23px",
                 boxShadow: "2px 3px 6px" + appColors.colorBlack,
                 userSelect: "none"
@@ -1130,7 +1130,7 @@ class AdventureLogStyles {
                                 width: "16",
                                 height: "12.5",
                                 border: appBorders.borderThick,
-                                background: appColors.colorWhite,
+                                background: appColors.color1,
                                 borderRadius: "23px",
                                 boxShadow: "2px 3px 6px" + appColors.colorBlack,
                                 userSelect: "none"
@@ -1737,7 +1737,7 @@ class AdventureLogStyles {
                                                 width: "16",
                                                 height: "12.5",
                                                 border: appBorders.borderThick,
-                                                background: appColors.colorWhite,
+                                                background: appColors.color1,
                                                 borderRadius: "23px",
                                                 boxShadow: "2px 3px 6px" + appColors.colorBlack,
                                                 userSelect: "none"

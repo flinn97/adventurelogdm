@@ -108,7 +108,7 @@ componentDidMount(){
       
         {(state.popUpSwitchcase === "addMap") && <InteractiveBulletin app = {app}/>}
        
-       <div style={{height:900, width:900}}>
+       <div style={{height:1240, width:1605}}>
         <InteractiveBulletin app = {app}/>
         {/* backgroundIMAGE */}
         </div>   
