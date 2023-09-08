@@ -9,6 +9,7 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
 import LoreListCard from './pages/loreListCard';
+import Worldbuilder from './worldBuilder';
 
 
 
@@ -19,8 +20,7 @@ export default class CampaignEditor extends Component {
     this.state = {
       obj: undefined,
       pic: undefined,
-      usage: 0,
-      isSideBarVisible: false,
+     
     }
     
   }
@@ -41,17 +41,14 @@ componentDidMount(){
   }));
 }
 
-toggleSidebar = () => {
-  this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
-};
 
   render() {
     let app = this.props.app;
-    let dispatch = app.dispatch
+    let dispatch = app.dispatch;
     let state = app.state;
-    let radius = "3vmin";
+    
     let styles = state.styles;
-    let usage = state.usage;
+    
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
@@ -108,10 +105,11 @@ toggleSidebar = () => {
         
                 <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
-                        <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
+                        {/* <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
                         style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
                              <div>+ World Map</div>
-                             </Link>
+                             </Link> */}
+                             <Worldbuilder app={app} type="card"/>
                 </div>
         <hr></hr>
         <div 
@@ -150,18 +148,7 @@ toggleSidebar = () => {
              
         </div>
 
-        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
-          padding:"0", backgroundColor:"", border:"none", zIndex:"10000", position:"fixed", right:"2%", top:"1vh",
-          }}>
-        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
-      </div>
-
-        {this.state.isSidebarVisible && (<div>
-        {/* SIDEBAR */}    
-                  <div style={{display:"flex", width:"fit-content",}}>
-                       <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
-                  </div>
-                  </div>)}
+        
 
         </div>
     )

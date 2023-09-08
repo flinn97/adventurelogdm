@@ -44,6 +44,48 @@ hovering:hover .hover {
   opacity: 1;
 }
 
+/* Style for the container */
+.hover-container {
+  position: relative;
+  display: inline-block; /* Keeps the container size to the content */
+}
+
+/* Initially hide the div */
+.hover-div {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s ease; 
+  /* Add other styling as needed */
+}
+
+/* Show the div on hover */
+.hover-container:hover .hover-div {
+  display: block;
+}
+
+/* Style for the container */
+.hover-containerInt {
+  position: relative;
+  display: inline-block; /* Keeps the container size to the content */
+}
+
+/* Initially hide the div */
+.hover-divInt {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s ease; 
+  /* Add other styling as needed */
+}
+
+/* Show the div on hover */
+.hover-containerInt:hover .hover-divInt {
+  display: block;
+}
+
 fontNormal {
   font-family: -apple-system, BlinkMacSystemFont, 'Inria Serif';
     -webkit-font-smoothing: antialiased;

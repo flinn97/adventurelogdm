@@ -94,8 +94,11 @@ class MainContent extends Component{
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
+        display:"flex", width:"44vw", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
         paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%", }}>
+          {/* <div>New Lore</div>
+
+          <div>Existing Lore</div> */}
     </div>
     )
   }

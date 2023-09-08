@@ -104,7 +104,7 @@ getCampId(){
 
     return(
       <div style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content",
-       alignContent:"center", userSelect:"none", color:styles.colors.colorWhite, 
+       alignContent:"center", userSelect:"none", color:styles.colors.colorWhite,
        
         
        }}>

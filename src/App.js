@@ -94,6 +94,7 @@ export default class App extends Component {
       
       
       let key = await this.state.componentListInterface.getOperationsFactory().getSplice(operate);
+      debugger
       if(currentComponent!==undefined){
         this.setState({currentComponent: currentComponent[key][0]});
       }
@@ -122,7 +123,7 @@ handleChange = (event) => {
     // }
   
     if(this.state.themeFactory){
-      debugger
+      
       let f = await this.state.themeFactory.getThemeFactory();
       let style = this.state.globalTheme!==""? this.state.globalTheme: this.state.defaultTheme!==""? this.state.defaultTheme: "adventure"
       let styles = f[style];
@@ -136,7 +137,7 @@ handleChange = (event) => {
           componentList:list,
           opps: list.getOperationsFactory()
         })
-        debugger
+        
         
         let obj = await forFactory();
         for(const key in obj){

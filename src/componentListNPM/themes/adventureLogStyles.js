@@ -340,7 +340,7 @@ class AdventureLogStyles {
                 marginLeft:"2vh",
                 borderLeftStyle:"double",
                 borderLeftColor:appColors.color4,
-                background:appColors.color1+"44",
+                background:appColors.color1,
                
                 
                 //border: ".1rem double " + appColors.color3,
@@ -951,7 +951,7 @@ class AdventureLogStyles {
                             marginLeft:"22px",
                             borderLeftStyle:"double",
                             borderLeftColor:appColors.color4,
-                            background:appColors.color1+"44",
+                            background:appColors.color1,
                            
                             
                             //border: ".1rem double " + appColors.color3,
@@ -1558,7 +1558,7 @@ class AdventureLogStyles {
                                             marginLeft:"22px",
                                             borderLeftStyle:"double",
                                             borderLeftColor:appColors.color4,
-                                            background:appColors.color1+"44",
+                                            background:appColors.color1,
                                            
                                             
                                             //border: ".1rem double " + appColors.color3,

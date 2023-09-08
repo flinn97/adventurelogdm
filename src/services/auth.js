@@ -263,7 +263,7 @@ class Auth {
         window.location.reload();
     }
     async uploadPics(file, name, dispatch) {
-        debugger
+        
         new Compressor(file, {
             quality: imageQuality,
             success: async (result) => {
@@ -271,7 +271,7 @@ class Auth {
                 await uploadBytes(storageRef, result).then((snapshot) => {
                     if (dispatch) {
                         dispatch({ uploaded: true });
-                        debugger
+                       
                     }
                     console.log('Uploaded a file!');
                 });

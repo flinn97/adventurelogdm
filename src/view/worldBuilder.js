@@ -13,6 +13,7 @@ import ReactDOM from 'react-dom';
 import backarrow from '../pics/backArrow.webp';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import InteractiveBulletin from './interactiveBulletin';
+import LoreListCard from './pages/loreListCard';
 
 
 export default class Worldbuilder extends Component {
@@ -25,6 +26,7 @@ export default class Worldbuilder extends Component {
     this.state = {
       obj: undefined,
       draggableItems: [{}], // Initialize the draggable items array
+      isSideBarVisible: false,
     }
     this.addDraggableItem = this.addDraggableItem.bind(this);
     this.eventLogger = this.eventLogger.bind(this); // bind eventLogger method
@@ -49,8 +51,8 @@ export default class Worldbuilder extends Component {
  
 componentDidMount(){
   let href = window.location.href;
-  let splitURL = href.split("/")
-  let id = splitURL[splitURL.length-1]
+  let splitURL = href.split("/");
+  let id = splitURL[splitURL.length-1];
   let component = this.props.app.state.componentList.getComponent("campaign", id)
   this.setState({obj: component})
   
@@ -59,15 +61,15 @@ componentDidMount(){
   campaignDesc.innerHTML = component.getJson().description;
 }
 
-
+toggleSidebar = () => {
+  this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
+};
 
   render() {
     let app = this.props.app;
-    let dispatch = app.dispatch
     let state = app.state;
-    let radius = "3vmin";
     let styles =state.styles;
-    
+    let dispatch = app.dispatch;
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
 
@@ -77,7 +79,7 @@ componentDidMount(){
       height:"fit-content", maxWidth:"100%", 
       }}>
 
-            {state.popUpSwitchcase != "worldbuilder" &&
+            {/* {state.popUpSwitchcase != "worldbuilder" &&
             <Link to={"/campaign/"+(this.state.obj?.getJson()._id)} 
             style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
             fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", }}
@@ -86,9 +88,9 @@ componentDidMount(){
               src={backarrow} draggable="false"
               />
               Go Back
-            </Link>}
+            </Link>} */}
 
-            <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  marginBottom:"2vh", 
+            {/* <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  marginBottom:"2vh", 
       backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", height:"fit-content", width:"100%" }}>
 <div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%", }}>
@@ -100,18 +102,33 @@ componentDidMount(){
       
       <div id= "campaignDesc"
               style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
-                </div>
-<div style={{...styles.buttons.buttonAdd, }} onClick={()=>{dispatch({popUpSwitchcase: "addMap" })}}>Add Map</div>
-          </div>
-          </div>
+                </div> */}
+
+<div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div>
+
+          {/* </div>
+          </div> */}
 
       
         {(state.popUpSwitchcase === "addMap") && <InteractiveBulletin app = {app}/>}
        
-       <div style={{height:1240, width:1605}}>
-        <InteractiveBulletin app = {app}/>
+       <div style={{height:1310, width:1582}}>
+        <InteractiveBulletin app={app}/>
         {/* backgroundIMAGE */}
-        </div>   
+        </div>
+
+        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
+          padding:"2px", border:"none", zIndex:"10000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+          }}>
+        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
+      </div>
+
+        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
+        {/* SIDEBAR */}    
+                  <div style={{display:"flex", width:"fit-content",}}>
+                       <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
+                  </div>
+                  </div>)}
 
       </div>
       
