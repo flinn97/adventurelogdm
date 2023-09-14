@@ -139,7 +139,7 @@ toggleSidebar = () => {
           <div style={{color:'white'}}>{this.state.lore?.getJson().name}</div>
       
         {(this.state.map) && 
-       
+      //  frame
        <div style={{height:1000, width:1000}}>
         <InteractiveBulletin app={app} obj = {this.state.map}/>
         {/* backgroundIMAGE */}
