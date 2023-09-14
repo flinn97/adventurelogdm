@@ -113,7 +113,7 @@ getCampId(){
           
           <div style={{width:"fit-content", display:"flex", flexDirection:"row", marginTop:"5vh",}}>
           
-            <ListTree style={{}} app={app} name={"lore"} _id={this.getCampId()} attribute={"parentId"}/>
+            <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} attribute={"parentId"}/>
           </div>
           
 

@@ -178,7 +178,7 @@ export default class OppsFactory {
         await this.run(); 
     }
     async cleanJsonPrepareRun(obj){
-        //
+        
         await this.cleanJsonPrepare(obj);
         await this.run(); 
     }
@@ -281,6 +281,12 @@ export default class OppsFactory {
     }
     
 
+    /**
+     * 
+     * @param {*} obj 
+     * @returns listender for dispatch
+     * does not return anything on a run of any sort.
+     */
 
     async operationsFactoryListener(obj){
         // 
@@ -291,6 +297,7 @@ export default class OppsFactory {
             let object = 1;
             object =obj.object!==undefined?  obj.object: object;
             await operation({[operate]: object});
+            
             updater = this.getUpdater().getJson();
         }
         else{

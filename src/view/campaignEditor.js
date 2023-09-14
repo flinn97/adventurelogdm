@@ -10,6 +10,7 @@ import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
 import LoreListCard from './pages/loreListCard';
 import Worldbuilder from './worldBuilder';
+import LoreViewer from './loreViewer';
 
 
 
@@ -26,19 +27,32 @@ export default class CampaignEditor extends Component {
   }
 
  
-componentDidMount(){
+async componentDidMount(){
+  let app = this.props.app;
+  let dispatch = app.dispatch;
+  let state = app.state;
   let href = window.location.href;
   let splitURL = href.split("/");
   let id = splitURL[splitURL.length-1];
+  let loreId;
+  await dispatch({currentLore:undefined})
+  if(id.includes("-")){
+    let loreSplit = id.split('-');
+    id = loreSplit[0];
+    loreId = loreSplit[1];
+    let lore = state.componentList.getComponent("lore", loreId, "_id");
+    await dispatch({currentLore:lore});
+  }
   let component = this.props.app.state.componentList.getComponent("campaign", id);
-  this.setState({obj: component});
+  this.setState({obj: component,  start:true});
+  dispatch({currentCampaign: component})
   //RICH TEXT READ
-  let campaignDesc = document.getElementById("campaignDesc");
-  campaignDesc.innerHTML = component.getJson().description;
+  // let campaignDesc = document.getElementById("campaignDesc");
+  // campaignDesc.innerHTML = component.getJson().description;
 
-  this.setState((prevState) => ({
-    usage: prevState.usage + 1,
-  }));
+  // this.setState((prevState) => ({
+  //   usage: prevState.usage + 1,
+  // }));
 }
 
 
@@ -52,6 +66,7 @@ componentDidMount(){
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
+      {this.state.start&&(
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",}}>
 
@@ -102,7 +117,10 @@ componentDidMount(){
         </div>
 
         <hr></hr>
-        
+        {state.currentLore!==undefined ? (<div style={{width:"100%"}}>
+        <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
+        </div>):(
+        <>
                 <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
                         {/* <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
@@ -145,10 +163,10 @@ componentDidMount(){
                              Gallery
                              </div>
                 </div>
-             
+                </>)}
         </div>
 
-        
+)}
 
         </div>
     )

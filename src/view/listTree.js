@@ -11,6 +11,7 @@ import EncounterMapItem from './encounterMapItem';
 import LoreListCard from './pages/loreListCard';
 import ExpandTreeArrow from './expandTreeArrow';
 import ListTreeInner from './listTreeInner';
+import ListTreeLink from './listTreeLink';
 
 
 
@@ -24,6 +25,31 @@ export default class ListTree extends Component {
       usage: 0,
     }
     
+  }
+  componentDidMount(){
+    let app = this.props.app;
+    let dispatch = app.dispatch
+    let state = app.state;
+    let prevUrl = undefined;
+setInterval(async() => {
+  const currUrl = window.location.href;
+  if (currUrl !== prevUrl) {
+    if(!currUrl.includes("-")){
+      dispatch({currentLore:undefined});
+    }
+    else{
+      let list = currUrl.split("/");
+      let id = list[list.length-1].split("-")[1]
+      let lore = state.componentList.getComponent("lore", id, "_id");
+      await dispatch({currentLore:undefined})
+      dispatch({currentLore:lore});
+    }
+    // URL changed
+    prevUrl = currUrl;
+    console.log(`URL changed to : ${currUrl}`);
+    
+  }
+}, 60);
   }
 
  
@@ -64,12 +90,13 @@ export default class ListTree extends Component {
 
                         <MapComponent app={app}  theme={"expandingTree"} 
                                              
-                        name={name} cells={["name", 
+                        name={name} cells={[
+                        {custom: ListTreeLink, props:{app:app, name:"name",}},
                         {custom:ExpandTreeArrow, props:{app:app}},
                         {custom:ListTreeInner, props:{app:app}},
                         
                       ]}
-                        filter={{search: _id, attribute: attribute}} />
+                        filter={{search: _id, attribute: attribute}}  />
 
               </div>
             </div>

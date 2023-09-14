@@ -9,7 +9,7 @@ import { storage, } from '../firbase.config.js';
  * obj
  * optional prop: update
  */
-export default class Upload extends Component {
+export default class MapUploader extends Component {
     constructor(props) {
         super(props);
         this.changeHandler = this.changeHandler.bind(this);
@@ -21,14 +21,14 @@ export default class Upload extends Component {
 
         }
     }
-
-    async componentDidUpdate() {
-        if (this.state.uploaded) {
-            await this.setState({ uploaded: false });
-            debugger
-            this.handleSubmission();
+    async componentDidUpdate(){
+        if(this.state.uploaded ===true){
+          await this.setState({uploaded:false});
+          this.props.changePic(this.state.pic, this.state.path);  
         }
     }
+
+ 
 
 
     changeHandler = async (event) => {
@@ -43,9 +43,11 @@ export default class Upload extends Component {
             path: path,
             pic: URL.createObjectURL(event.target.files[0])
         });
-    this.props.changePic(this.state.pic);
         
         await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this));
+
+    
+        
     };
 
 

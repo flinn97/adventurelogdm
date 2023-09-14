@@ -15,7 +15,7 @@ import InteractiveBulletin from './interactiveBulletin';
 import LoreListCard from './pages/loreListCard';
 import MapUploader from './uploadMap.js';
 
-export default class Worldbuilder extends Component {
+export default class LoreViewer extends Component {
 
 
   
@@ -49,25 +49,24 @@ export default class Worldbuilder extends Component {
     //and stops dragging it, respectively.
  
 componentDidMount(){
-  let opps = this.props.app.state.opps
-  let href = window.location.href;
-  let splitURL = href.split("/");
-  let id = splitURL[splitURL.length-1];
+
+  let id = this.props._id;
   let component = this.props.app.state.componentList.getComponent("campaign", id);
   
-  let parentLore = this.props.app.state.componentList.getList("lore",id, "campaignId" );
+  let currentLore = this.props.app.state.currentLore;
   
-  parentLore = parentLore.length>0? parentLore.filter(obj=>{return obj.getJson().parentLore===true}): undefined;
+  let map = currentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
+  this.setState({obj: component, lore:currentLore, map: map});
   
-  let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0].getJson()._id, "loreId");
-  this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
-  
-  //RICH TEXT READ
-  let campaignDesc = document.getElementById("campaignDesc");
-  campaignDesc.innerHTML = component.getJson().description;
+
 
 
   
+}
+componentDidUpdate(props, state){
+  if(this.props.app.state.currentLore!==props.app.state.currentLore){
+    this.componentDidMount();
+  }
 }
 
 toggleSidebar = () => {
@@ -87,31 +86,7 @@ toggleSidebar = () => {
       height:"fit-content", maxWidth:"100%", 
       }}>
 
-            {/* {state.popUpSwitchcase != "worldbuilder" &&
-            <Link to={"/campaign/"+(this.state.obj?.getJson()._id)} 
-            style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
-            fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", }}
-            >
-              <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
-              src={backarrow} draggable="false"
-              />
-              Go Back
-            </Link>} */}
-
-            {/* <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  marginBottom:"2vh", 
-      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
-      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", height:"fit-content", width:"100%" }}>
-<div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%", }}>
-
-        <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite}}>World Builder: {this.state.obj?.getJson().title}</div>
-      
-             
-                
-      
-      <div id= "campaignDesc"
-              style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
-                </div> */}
-
+       
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
@@ -140,23 +115,17 @@ toggleSidebar = () => {
       
         {(this.state.map) && 
        
-       <div style={{height:1000, width:1000}}>
+       <div style={{height:1000, width:1500}}>
         <InteractiveBulletin app={app} obj = {this.state.map}/>
         {/* backgroundIMAGE */}
         </div>}
 
-        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
-          padding:"2px", border:"none", zIndex:"10000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
-          }}>
-        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
-      </div>
-
-        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
+       <div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
         {/* SIDEBAR */}    
                   <div style={{display:"flex", width:"fit-content",}}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
-                  </div>)}
+                  </div>
 
       </div>
       

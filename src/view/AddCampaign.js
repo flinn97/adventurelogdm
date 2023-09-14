@@ -158,7 +158,11 @@ export default class AddCampaign extends Component {
                             display:"flex", transition:"all 1s easeOutQuart",
                           }}
                           text={textSubmit}
-                          callBack={()=>{
+                          callBack={async (obj)=>{
+                            debugger
+                            let newLore = {desc:"add new description", name:obj[0].getJson().title, campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, parentid:  obj[0].getJson()._id }
+                            
+                            await state.opps.jsonPrepareRun({addlore:newLore});
                             dispatch({popUpSwitchcase: "", currentComponent: undefined});
                           }}
                         />

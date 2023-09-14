@@ -6,7 +6,6 @@ import Background from './pics/back1.png'
 import ComponentListInterface from './componentListNPM/componentListInterface';
 import auth from './services/auth.js';
 import ThemeFactory from './componentListNPM/themes/themeFactory';
-import InteractiveMap from './view/interactiveMap';
 import Home from './view/pages/home';
 import Campaign from './view/pages/campaign';
 import Note from './view/pages/note';
@@ -84,6 +83,7 @@ export default class App extends Component {
     }
     
     if(this.state.operate!==undefined){
+      
       let operate = this.state.operate;
       let operation= this.state.operation;
       let object= this.state.object;
@@ -94,7 +94,7 @@ export default class App extends Component {
       
       
       let key = await this.state.componentListInterface.getOperationsFactory().getSplice(operate);
-      debugger
+      
       if(currentComponent!==undefined){
         this.setState({currentComponent: currentComponent[key][0]});
       }
@@ -146,7 +146,15 @@ handleChange = (event) => {
         }
         
     }
-  
+    let user = await auth.getCurrentUser();
+    if(user){
+      user = JSON.parse(user);
+      await auth.getuser(user.email, list, this.dispatch);
+     
+      
+    
+      
+    }
     
     
     

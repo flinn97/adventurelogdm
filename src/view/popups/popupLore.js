@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "../../App.css"
-
+import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
+import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
 
 
 
@@ -90,12 +91,52 @@ class MainContent extends Component{
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
-    
+    let href = window.location.href;
+    let splitURL = href.split("/");
+    let id = splitURL[splitURL.length-1];
+    let newLink = "";
+    if(id.includes("-")){
+      let newArr = [...splitURL];
+      newArr.pop()
+      let str = newArr.join(',');
+     str = str.replace(/,/g, '/');
+     let idList = id.split('-');
+      let newId = idList[0] + "-" + state.currentComponent.getJson()._id
+      newLink=str+"/" +newId;
+      console.log(newLink)
+    }
+    else{
+      newLink = href + "-" + state.currentComponent.getJson()._id
+    }
 
     return(
       <div style={{
         display:"flex", width:"44vw", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
         paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%", }}>
+                <a style={{color:"white"}} href= {newLink} target='_blank'>open In new tab</a>
+
+Lore name
+<ParentFormComponent app={app} name="name" 
+              inputStyle={{width:"fit-content", padding:"0px", color:styles.colors.colorWhite, 
+                  borderRadius:"4px",background:styles.colors.colorWhite+"11", borderWidth:"0px",  textAlign: 'center', alignItems: 'center',
+                  justifyContent: 'center',
+                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontSmallest }}/>
+                  <RunButton app={app} text="save"
+                  runFunc={(arr)=>{
+                    debugger
+                    
+                    let lore = arr[0];
+                    if(state.currentPin){
+                      let pin = state.currentPin;
+                      pin.setCompState({loreId: lore.getJson()._id});
+                      state.opps.prepareRun({update:pin});
+                    }
+                    else{
+                      state.opps.run();
+                    }
+                   
+
+                  }}/>
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}
@@ -117,6 +158,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+      
       <div style={{...styles.buttons.buttonClose}}
       onClick={this.props.handleClose}
       >
