@@ -1,7 +1,6 @@
 import React, { Component } from 'react'; 
 import "../App.css"
 import Upload from './upload';
-import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import Draggable from 'react-draggable';
 import iconTest from '../pics/iconTest.svg';
 import movePin from '../pics/movePin.png';
@@ -34,8 +33,8 @@ export default class InteractiveBulletin extends Component {
     this.state = {
       pins:[],
       isGrabbing: false,
-      mapHeight:"500px",
-      mapWidth:"500px",
+      mapHeight:"1200px",
+      mapWidth:"1400px",
       start:false
     }}
   async componentDidMount(){
@@ -57,27 +56,39 @@ export default class InteractiveBulletin extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
-    let headerH = 50;
+    let headerH = 60;
     let remainderH = 1310-[headerH]-11;
     const images = [image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16];
     
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div style={{width:"100%", height:"100%", border:"2px solid white", cursor: this.state.isGrabbing!==true? "":"grabbing", overflow: 'auto'
+      <div style={{width:"100%", height:"100%", cursor: this.state.isGrabbing!==true? "":"grabbing", overflow: 'auto', borderRadius:"20px",
       }}>
        
 
 {/* HEADER */}
       <div style={{
-        border:"1px solid yellow", display:"flex", flexDirection:"row", justifyContent:"flex-start",
-        color:"#ffdead", cursor:"pointer", height:60, width:"100%", alignItems:"center", paddingLeft:"10px" }}>
+        // border:"1px solid yellow", 
+        display:"flex", 
+        flexDirection:"row", 
+        justifyContent:"flex-start",
+        color:"#ffdead",  
+        height:"0px", 
+        width:"100%", 
+        alignItems:"center", 
+        paddingLeft:"10px", 
+        position:"sticky", 
+        top: 30, left:10,
+        zIndex: 1000, // to ensure it stays on top
+        }}>
       {/* BUTTONS IN HEADER */}
-        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px" }}
+        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
+        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd" }}
         onClick={async (e)=>{
           let rect = e.target.getBoundingClientRect();
-          let x = (e.clientX - Math.floor(rect.left)).toString();
-          let y = (e.clientY - Math.floor(rect.top)).toString();
+          let x = (e.clientX - Math.floor(rect.left) + 80).toString();
+          let y = (e.clientY - Math.floor(rect.top) + 80).toString();
 
           await state.opps.cleanJsonPrepareRun({addpin:
             {type:"pin", iconImage: iconTest, loreId:"", mapId:this.props.obj?.getJson()._id, x:x, y:y, title:"New Lore", campaignId:this.props.obj?.getJson().campaignId}
@@ -88,7 +99,7 @@ export default class InteractiveBulletin extends Component {
         }}
         >
           + Lore Point
-          <img src={iconTest} style={{width:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px"}}></img>
+          <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
       </div>
 
@@ -137,13 +148,14 @@ export default class InteractiveBulletin extends Component {
       <div className='hover-container'
       style={{
         display:"flex", flexDirection:"column", alignItems:"center",cursor:"pointer", zIndex:300,
-        position:"absolute",}} 
+        position:"absolute", }} 
     
       pinId={pin.getJson()._id} >
         {/* pin.getJson()._id */}
 
         
-          <div onClick={()=>{
+          <div style={{borderRadius:"50%", width:"48px", height:"48px", paddingTop:"2px",
+                background:styles.colors.colorBlack+"88",}} onClick={()=>{
             if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
               let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
               dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
@@ -163,15 +175,8 @@ export default class InteractiveBulletin extends Component {
               title="Click to Open">
 
                   <img
-                draggable="false" src={pin.getJson().iconImage} style={{width:"48px"}}></img>
+                draggable="false" src={pin.getJson().iconImage} style={{width:"48px", objectFit:"contain",}}></img>
           </div>
-
-          <ParentFormComponent app={app} name="title" obj={pin}
-              inputStyle={{width:"fit-content", padding:"0px", color:styles.colors.colorWhite, 
-                  borderRadius:"4px",background:styles.colors.colorWhite+"11", borderWidth:"0px", position:"absolute",
-                  left:"-3.75vw", textAlign: 'center', alignItems: 'center',
-                  justifyContent: 'center',
-                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontSmallest }}/>
 
               <div className='hover-div'>
             <img className="draghere" draggable="false" style={{ position:"absolute", marginTop:"31px",marginLeft:"34px",width:"25px",
@@ -197,12 +202,12 @@ export default class InteractiveBulletin extends Component {
                         <div className='hover-divInt' 
                         style={{width:"155px",height:"150px", borderRadius:"3px", 
                         justifyContent:"space-between",
-                        marginLeft:"20px", padding:"2px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
+                        marginLeft:"20px", marginTop:"-122px", padding:"4px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                         
                         {images.map((imgSrc, index) => (
-                          <div style={{display:"flex", flexDirection:"row", backgroundColor:styles.colors.color1+"dd",}}>
+                          <div style={{display:"flex", flexDirection:"row", backgroundColor:styles.colors.color1+"dd", position:"sticky", zIndex:"12000" }}>
                               <img 
-                              style={{margin:"3px", width:"25px", position:"relative"}}
+                              style={{margin:"3px", width:"25px", position:"relative",}}
                               className='hover-divInt'
                               key={index}
                               src={imgSrc}
@@ -215,6 +220,17 @@ export default class InteractiveBulletin extends Component {
                               }}></img></div>
                               ))}
 
+                        </div>
+                        <div  style={{display:"flex", textAlign: 'center', alignItems: 'center', justifyContent:"center", width:"",
+                        height:"20px"}}>
+          <ParentFormComponent app={app} name="title" obj={pin} className='hover-divInt'
+              labelStyle={{width:"200px",}}
+              inputStyle={{padding:"0px",  color:styles.colors.colorWhite, position:"absolute",
+                  borderRadius:"4px", background:styles.colors.colorBlack+"88", borderWidth:"0px",
+                   textAlign: 'center', alignItems: 'center',
+                  marginTop:"30px", marginLeft:"-120px",
+                  justifyContent: 'center', width:"200px",
+                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontSmallest }}/>
                         </div>
                         </div>
                         }

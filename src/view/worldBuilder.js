@@ -140,13 +140,14 @@ toggleSidebar = () => {
       
         {(this.state.map) && 
       //  frame
-       <div style={{height:1000, width:1000}}>
+       <div style={{height:"1310px", width:"100%"
+       }}>
         <InteractiveBulletin app={app} obj = {this.state.map}/>
         {/* backgroundIMAGE */}
         </div>}
 
         <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
-          padding:"2px", border:"none", zIndex:"10000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+          padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
         {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
       </div>
