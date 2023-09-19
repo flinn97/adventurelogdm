@@ -111,24 +111,32 @@ class MainContent extends Component{
 
     return(
       <div style={{
-        display:"flex", width:"44vw", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
-        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%", }}>
-                <a style={{color:"white"}} href= {newLink} target='_blank'>open In new tab</a>
+        display:"flex", width:"57vw", flexDirection:"column", height:"fit-content",
+        paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
+                
+<div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
+<ParentFormComponent app={app} name="name"
+              placeholder={state.currentPin?.getJson().title}
+              inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
+              borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
+              border:"solid 1px "+styles.colors.colorWhite+"22",
+              textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
+<a style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest,marginTop:"11px", marginBottom:"11px", textDecorationColor:"#ffdead22"}} 
+href= {newLink} target='_blank'>Open in new tab</a>
+</div>
 
-Lore name
-<ParentFormComponent app={app} name="name" 
-              inputStyle={{width:"fit-content", padding:"0px", color:styles.colors.colorWhite, 
-                  borderRadius:"4px",background:styles.colors.colorWhite+"11", borderWidth:"0px",  textAlign: 'center', alignItems: 'center',
-                  justifyContent: 'center',
-                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontSmallest }}/>
-                  <RunButton app={app} text="save"
+  <div style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'20px', position:"sticky"}}>
+                  <RunButton app={app} text="Save"
+                  
                   runFunc={(arr)=>{
                     debugger
                     
                     let lore = arr[0];
                     if(state.currentPin){
                       let pin = state.currentPin;
-                      pin.setCompState({loreId: lore.getJson()._id});
+                      pin.setCompState({loreId: lore.getJson()._id, 
+                        title: lore.getJson().title
+                      });
                       state.opps.prepareRun({update:pin});
                     }
                     else{
@@ -136,7 +144,7 @@ Lore name
                     }
                    
 
-                  }}/>
+                  }}/></div>
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}

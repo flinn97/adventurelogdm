@@ -22,13 +22,17 @@ import image14 from '../pics/iconGarg.svg';
 import image15 from '../pics/iconSword.svg';
 import image16 from '../pics/iconTavern.svg';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-
+import backarrow from '../pics/backArrow.webp';
 
 export default class InteractiveBulletin extends Component {
   constructor(props) {
     super(props);
     this.parentRef = React.createRef();
     this.imgRef = React.createRef();
+    this.divRef = React.createRef();
+    this.startX = 0;
+    this.startY = 0;
+    this.isPanning = false;
 
     this.state = {
       pins:[],
@@ -37,7 +41,13 @@ export default class InteractiveBulletin extends Component {
       mapWidth:"1400px",
       start:false
     }}
+
   async componentDidMount(){
+    this.divRef.current.addEventListener('contextmenu', this.preventContextMenu);
+    this.divRef.current.addEventListener('mousedown', this.startPanning);
+    this.divRef.current.addEventListener('mouseup', this.stopPanning);
+    this.divRef.current.addEventListener('mousemove', this.pan);
+
     const delay = ms => new Promise(res => setTimeout(res, ms));
     await delay(1000);
     let mapHeight = this.imgRef?.current?.clientHeight;
@@ -49,6 +59,41 @@ export default class InteractiveBulletin extends Component {
     ///assign pins to current mapId
   };
 
+  componentWillUnmount() {
+    this.divRef.current.removeEventListener('contextmenu', this.preventContextMenu);
+    this.divRef.current.removeEventListener('mousedown', this.startPanning);
+    this.divRef.current.removeEventListener('mouseup', this.stopPanning);
+    this.divRef.current.removeEventListener('mousemove', this.pan);
+  }
+
+  preventContextMenu = (e) => {
+    e.preventDefault();
+  }
+
+  startPanning = (e) => {
+    if (e.button === 2) { // Right mouse button
+      this.isPanning = true;
+      this.startX = e.clientX;
+      this.startY = e.clientY;
+      this.setState({ isGrabbing: true })
+    }
+  }
+
+  stopPanning = () => {
+    this.isPanning = false;
+    this.setState({ isGrabbing: false })
+  }
+
+  pan = (e) => {
+    if (this.isPanning) {
+      const dx = e.clientX - this.startX;
+      const dy = e.clientY - this.startY;
+      this.divRef.current.scrollLeft -= dx;
+      this.divRef.current.scrollTop -= dy;
+      this.startX = e.clientX;
+      this.startY = e.clientY;
+    }
+  }
 
   render() {
     let app = this.props.app;
@@ -63,7 +108,11 @@ export default class InteractiveBulletin extends Component {
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div style={{width:"100%", height:"100%", cursor: this.state.isGrabbing!==true? "":"grabbing", overflow: 'auto', borderRadius:"20px",
+      <div 
+      ref={this.divRef} 
+      style={{width:"100%", height:"100%", 
+      cursor: this.state.isGrabbing!==true? "":"grabbing", 
+      overflow: 'auto', borderRadius:"20px",
       }}>
        
 
@@ -72,7 +121,7 @@ export default class InteractiveBulletin extends Component {
         // border:"1px solid yellow", 
         display:"flex", 
         flexDirection:"row", 
-        justifyContent:"flex-start",
+        justifyContent:"space-between",
         color:"#ffdead",  
         height:"0px", 
         width:"100%", 
@@ -101,6 +150,19 @@ export default class InteractiveBulletin extends Component {
           + Lore Point
           <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
+
+        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, 
+        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"-930px", }}>
+          
+          <img src={backarrow} style={{width:"40px", height:"40px", marginRight:"15px", marginLeft:"10px", marginTop:"1px",padding:"5px", }}></img>
+          Prev Map
+          </div>
+
+        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
+        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"30px", }}>
+          Next Map
+          <img src={backarrow} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px",padding:"5px", transform:'rotate(180deg)' }}></img>
+          </div>
       </div>
 
 

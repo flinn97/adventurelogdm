@@ -9,7 +9,6 @@ import movePin from '../pics/movePin.png';
 import Draggable from 'react-draggable';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import backarrow from '../pics/backArrow.webp';
 import placeholder from '../pics/placeholderEncounter.JPG';
 import InteractiveBulletin from './interactiveBulletin';
 import LoreListCard from './pages/loreListCard';
