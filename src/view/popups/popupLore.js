@@ -4,17 +4,6 @@ import ParentFormComponent from '../../componentListNPM/componentForms/parentFor
 import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
 
 
-
-/**
- * condensed version of the cards.
- * Works with themes.
- * props
- * theme
- * type
- * app
- * options
- * options can include cardType, cardContent, tabType, 
- */
 export default class PopupLore extends Component {
   constructor(props) {
     super(props);
@@ -95,6 +84,7 @@ class MainContent extends Component{
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length-1];
     let newLink = "";
+
     if(id.includes("-")){
       let newArr = [...splitURL];
       newArr.pop()
@@ -115,17 +105,32 @@ class MainContent extends Component{
         paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
                 
 <div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
+
 <ParentFormComponent app={app} name="name"
               placeholder={state.currentPin?.getJson().title}
               inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
               textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
-<a style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest,marginTop:"11px", marginBottom:"11px", textDecorationColor:"#ffdead22"}} 
-href= {newLink} target='_blank'>Open in new tab</a>
+
+    <a style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest,marginTop:"11px", textDecorationColor:"#ffdead22", alignSelf:"flex-end"}} 
+    href= {newLink} target='_blank'>Open in new tab</a>
+<hr></hr>
+
+<ParentFormComponent app={app} name="desc"
+             theme={"adventureLog"} 
+              rows={5}
+             
+             inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
+             borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+             border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+             type={"richEditor"}
+             wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
+             flexDirection:"column", justifyItems:"space-between"}}/>
+
 </div>
 
-  <div style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'20px', position:"sticky"}}>
+  <div style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'20px', position:"sticky", marginTop:"1vh"}}>
                   <RunButton app={app} text="Save"
                   
                   runFunc={(arr)=>{
@@ -133,9 +138,15 @@ href= {newLink} target='_blank'>Open in new tab</a>
                     
                     let lore = arr[0];
                     if(state.currentPin){
+                      
                       let pin = state.currentPin;
+                      debugger
+                      if (lore.getJson().title===""||lore.getJson().title===undefined){
+                        lore.setCompState({title:pin.getJson().title});
+                      }
+
                       pin.setCompState({loreId: lore.getJson()._id, 
-                        title: lore.getJson().title
+                        title: lore.getJson().title,
                       });
                       state.opps.prepareRun({update:pin});
                     }
@@ -144,7 +155,8 @@ href= {newLink} target='_blank'>Open in new tab</a>
                     }
                    
 
-                  }}/></div>
+                  }}/>
+                  </div>
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}

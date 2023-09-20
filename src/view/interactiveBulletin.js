@@ -151,18 +151,8 @@ export default class InteractiveBulletin extends Component {
           <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
 
-        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, 
-        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"-930px", }}>
-          
-          <img src={backarrow} style={{width:"40px", height:"40px", marginRight:"15px", marginLeft:"10px", marginTop:"1px",padding:"5px", }}></img>
-          Prev Map
-          </div>
+        
 
-        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
-        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"30px", }}>
-          Next Map
-          <img src={backarrow} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px",padding:"5px", transform:'rotate(180deg)' }}></img>
-          </div>
       </div>
 
 
@@ -217,11 +207,15 @@ export default class InteractiveBulletin extends Component {
 
         
           <div style={{borderRadius:"50%", width:"48px", height:"48px", paddingTop:"2px",
-                background:styles.colors.colorBlack+"88",}} onClick={()=>{
+                background:styles.colors.colorBlack+"88",}}
+
+                onClick={()=>{
+                  debugger
             if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
               let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
               dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
             }
+
             else{
             dispatch({
               operate:"addlore",

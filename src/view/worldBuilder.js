@@ -127,7 +127,7 @@ toggleSidebar = () => {
               
               }} 
                text="Add Map" style={{display:"flex",
-              zIndex:"1", borderRadius:".1vmin", background:"",}} 
+              zIndex:"1", borderRadius:".1vmin", background:"", cursor:"pointer"}} 
               update={true} skipUpdate={true}
                app={app}/>
 {/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}

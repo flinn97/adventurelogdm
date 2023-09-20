@@ -59,9 +59,12 @@ export default class Dispatch extends Component {
               {state.popupSwitch === "popupLore" && state.currentComponent?.getJson().type === "lore" &&
               <PopupLore
               
-                type="popup" options={{cardType:"popupMedium"}} app={app} containerStyle={{backgroundColor:styles.colors.color1+"55",}}
-                handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
-                delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+                type="popup" options={{cardType:"popupMedium"}} app={app} 
+                containerStyle={{backgroundColor:styles.colors.color1+"55",}}
+                handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined, 
+                currentComponent:undefined, currentPin:undefined})}}
+                delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
+                currentDelObj:undefined,})}}
               />}
           
      

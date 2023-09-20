@@ -14,6 +14,7 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 import InteractiveBulletin from './interactiveBulletin';
 import LoreListCard from './pages/loreListCard';
 import MapUploader from './uploadMap.js';
+import MapGallery from './mapGallery';
 
 export default class LoreViewer extends Component {
 
@@ -58,11 +59,8 @@ componentDidMount(){
   let map = currentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
   this.setState({obj: component, lore:currentLore, map: map});
   
-
-
-
-  
 }
+
 componentDidUpdate(props, state){
   if(this.props.app.state.currentLore!==props.app.state.currentLore){
     this.componentDidMount();
@@ -80,6 +78,8 @@ toggleSidebar = () => {
     let dispatch = app.dispatch;
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
+
+
     return (
       
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
@@ -111,21 +111,27 @@ toggleSidebar = () => {
           {/* </div>
           </div> */}
 
-          <div style={{color:'white'}}>{this.state.lore?.getJson().name}</div>
+          <div style={{color:styles.colors.colorWhite}}>{this.state.lore?.getJson().name}</div>
       
         {(this.state.map) && 
        
        <div style={{height:1000, width:1500}}>
-        <InteractiveBulletin app={app} obj = {this.state.map}/>
-        {/* backgroundIMAGE */}
+        <MapGallery app={app} obj={this.state.lore}/>
+        
         </div>}
 
-       <div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
+        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
+          padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+          }}>
+        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
+      </div>
+
+        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
         {/* SIDEBAR */}    
                   <div style={{display:"flex", width:"fit-content",}}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
-                  </div>
+                  </div>)}
 
       </div>
       

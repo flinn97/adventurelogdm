@@ -117,7 +117,7 @@ class MainContent extends Component{
                   maxLength={85}
                   inputStyle={{maxWidth:"65.5vw", width:"65.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%",
-                  textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}
+                  textWrap:"wrap", fontSize:styles.fonts.fontSubheader1, border:"solid 1px "+styles.colors.colorWhite+"22",}}
                   name="title"
                   wrapperStyle={{ color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
                  
@@ -129,11 +129,11 @@ class MainContent extends Component{
                   
                   inputStyle={{maxWidth:"65.5vw !important", width:"65.5vw", padding:"4px 9px", color:styles.colors.colorWhite, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", marginBottom:"2vh", height:"100%",
-                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontNormal }}
+                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontNormal,border:"solid 1px "+styles.colors.colorWhite+"22", }}
                   type={"richEditor"}
                  
                   name="text"
-                  wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"center"}}
+                  wrapperStyle={{ color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"center"}}
                   
                   />
       
