@@ -32,8 +32,8 @@ export default class Worldbuilder extends Component {
 
      // eventLogger method definition
   eventLogger(e, data) {
-    console.log('Event: ', e);
-    console.log('Data: ', data);
+    // console.log('Event: ', e);
+    // console.log('Data: ', data);
     
   }
 
@@ -145,7 +145,7 @@ toggleSidebar = () => {
         {/* backgroundIMAGE */}
         </div>}
 
-        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
+        <div className="indent-on-click" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
           padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
         {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}

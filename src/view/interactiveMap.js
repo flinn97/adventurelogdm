@@ -53,12 +53,12 @@ export default class InteractiveMap extends Component {
 }
   pin(event){
     debugger
-    console.log(event)
+    // console.log(event)
     let target = event.target
     let params = target.getBoundingClientRect()
     let x =  (event.x - params.left)
     let y =  (event.y - params.top)
-    console.log(params)
+    // console.log(params)
     if(target.id==="map"){
     let obj= {
       title: "new pin",

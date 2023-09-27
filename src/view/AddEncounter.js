@@ -41,29 +41,50 @@ async componentDidMount(){
 function getCampaignId() {
   const path = window.location.pathname;
   const parts = path.split('/');
-  const id = parts.pop();
-  return id;
+  let id = parts.pop();
+  let parentId = id;
+
+  if (id.includes('-')) {
+    const splitIds = id.split('-');
+    id = splitIds[0];
+    parentId = splitIds[1];
+  }
+
+  return { id, parentId };
 }
 
-  await this.props.app.dispatch({currentComponent: undefined});
-  const currentDate = new Date();
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-  const day = currentDate.getDate().toString().padStart(2, '0');
-  const num = randomFourDigitNumber();
-  const campId = getCampaignId();
-  await this.props.app.dispatch({operate: "addencounter", operation: "cleanJsonPrepare", 
-  object: {creationDate: "E"+num+month+day, campaignId: campId, }});
-  this.setState({start:true})
-}
+const { id: campId, parentId } = getCampaignId();
+
+await this.props.app.dispatch({currentComponent: undefined});
+const currentDate = new Date();
+const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+const day = currentDate.getDate().toString().padStart(2, '0');
+const num = randomFourDigitNumber();
+
+await this.props.app.dispatch({
+  operate: "addencounter",
+  operation: "cleanJsonPrepare",
+  object: {
+    creationDate: "E" + num + month + day,
+    campaignId: campId,
+    parentId: parentId
+  }
+});
+
+this.setState({start:true});}
 
 
 
 
   render() {
     function getCampaignId(){
+      debugger
       const path = window.location.pathname;
       const parts = path.split('/');
       const id = parts.pop();
+      if (id.includes('-')) {
+        id = id.split('-')[0];
+      }
       return id;
     }
    

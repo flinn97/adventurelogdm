@@ -34,8 +34,8 @@ export default class LoreViewer extends Component {
 
      // eventLogger method definition
   eventLogger(e, data) {
-    console.log('Event: ', e);
-    console.log('Data: ', data);
+    // console.log('Event: ', e);
+    // console.log('Data: ', data);
     
   }
 
@@ -72,10 +72,15 @@ toggleSidebar = () => {
 };
 
   render() {
+    let obj = this.props.obj;
     let app = this.props.app;
     let state = app.state;
     let styles =state.styles;
     let dispatch = app.dispatch;
+    let currentState = app.state;
+      let componentList = currentState.componentList;
+       //type , value to search,   filter key
+       let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
 
@@ -110,8 +115,8 @@ toggleSidebar = () => {
 
           {/* </div>
           </div> */}
-
-          <div style={{color:styles.colors.colorWhite}}>{this.state.lore?.getJson().name}</div>
+{this.state.lore?.getJson()._id !== this.props.app.state.componentList.getComponent("campaign", this.props._id) &&
+          <div style={{color:styles.colors.colorWhite}}>{this.state.lore?.getJson().name}</div>}
       
         {(this.state.map) && 
        

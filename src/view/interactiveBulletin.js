@@ -132,7 +132,7 @@ export default class InteractiveBulletin extends Component {
         zIndex: 1000, // to ensure it stays on top
         }}>
       {/* BUTTONS IN HEADER */}
-        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
+        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd" }}
         onClick={async (e)=>{
           let rect = e.target.getBoundingClientRect();
@@ -206,7 +206,7 @@ export default class InteractiveBulletin extends Component {
         {/* pin.getJson()._id */}
 
         
-          <div style={{borderRadius:"50%", width:"48px", height:"48px", paddingTop:"2px",
+          <div className="indent-on-click" style={{borderRadius:"50%", width:"48px", height:"48px", paddingTop:"2px",
                 background:styles.colors.colorBlack+"88",}}
 
                 onClick={()=>{
@@ -214,6 +214,7 @@ export default class InteractiveBulletin extends Component {
             if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
               let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
               dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
+                
             }
 
             else{

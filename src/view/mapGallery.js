@@ -55,7 +55,7 @@ export default class MapGallery extends Component {
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div>
+      <div style={{width:"100%", display:"flex", position:"absolute"}}>
         {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
         <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, 
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"-930px", }}>
@@ -70,9 +70,10 @@ export default class MapGallery extends Component {
           Next Map
           <img src={backarrow} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px",padding:"5px", transform:'rotate(180deg)' }}></img>
           </div>}
-
+<div style={{width:"100%", display:"flex", position:"absolute",}}>
       <InteractiveBulletin app={app} obj = {this.state.currentMap}/>
         {/* backgroundIMAGE */}
+</div>
       </div>
       ) 
   }

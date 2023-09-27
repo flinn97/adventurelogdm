@@ -229,7 +229,8 @@ class Encounter extends componentBase{
         audio: "",
         type: "encounter",
         picURL: "",
-        picURLs: {}
+        picURLs: {},
+        parentId: "",
 
     }
     

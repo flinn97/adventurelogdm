@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import "../../App.css"
 import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
 import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
+import EncounterCard from '../pages/encounterCard';
+import AddEncounter from '../AddEncounter';
+import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import EncounterMapItem from '../encounterMapItem';
 
 
 export default class PopupLore extends Component {
@@ -56,7 +60,6 @@ export default class PopupLore extends Component {
 
 
 
-
     return (
       <div >
         
@@ -73,7 +76,13 @@ export default class PopupLore extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
+    this.state = {
+      showAddEncounter: false,
+      showSaved: false,  
+    };
   }
+
+  
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -93,10 +102,10 @@ class MainContent extends Component{
      let idList = id.split('-');
       let newId = idList[0] + "-" + state.currentComponent.getJson()._id
       newLink=str+"/" +newId;
-      console.log(newLink)
+      
     }
     else{
-      newLink = href + "-" + state.currentComponent.getJson()._id
+      newLink = href + "-" + state.currentComponent.getJson()._id;
     }
 
     return(
@@ -130,21 +139,50 @@ class MainContent extends Component{
 
 </div>
 
-  <div style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'20px', position:"sticky", marginTop:"1vh"}}>
-                  <RunButton app={app} text="Save"
+<div>
+          {/* ENCOUNTER */}
+          <hr></hr>
+
+          <div style={{ marginTop:"-5vh", marginBottom:"1vh",}}>
+             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
+            filter={{search: state.currentComponent.getJson()._id, attribute: "parentId"}}
+            theme={"selectByImageSmall"}
+            /></div>
+
+          { !this.state.showAddEncounter && 
+          <div style={{display:"flex", justifyContent:"center"}}>
+            <div className="indent-on-click" style={{...styles.buttons.buttonAdd, marginTop:"1vh", alignSelf:"flex-end",}}
+              onClick={() => {
+             
+            dispatch({
+              operate: "addencounter",
+              operation: "cleanJsonPrepareRun", 
+            object:{parentId: state.currentComponent.getJson()._id, name:"New Encounter", campaignId: id}, 
+            });
+            // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
+            this.setState({ showAddEncounter: true });
+            }}>
+              + Create Encounter
+            </div></div>
+          }
+          {/* { this.state.showAddEncounter &&
+            <AddEncounter app={app} />
+          } */}
+        </div>
+
+  <div className="indent-on-click" style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'20px', position:"sticky", marginTop:"1vh"}}>
+                  <RunButton app={app} text="Save" 
                   
                   runFunc={(arr)=>{
-                    debugger
                     
                     let lore = arr[0];
                     if(state.currentPin){
                       
                       let pin = state.currentPin;
-                      debugger
+                      
                       if (lore.getJson().title===""||lore.getJson().title===undefined){
                         lore.setCompState({title:pin.getJson().title});
                       }
-
                       pin.setCompState({loreId: lore.getJson()._id, 
                         title: lore.getJson().title,
                       });
@@ -153,10 +191,15 @@ class MainContent extends Component{
                     else{
                       state.opps.run();
                     }
-                   
-
+                    this.setState({ showSaved: true });
+                    setTimeout(() => this.setState({ showSaved: false }), 2600);  // hide after 2.6 seconds
                   }}/>
+                  
                   </div>
+                  {this.state.showSaved && (
+                  <div className="saved-animation" style={{color:styles.colors.color9,
+                  alignSelf:"flex-end", position:"relative", 
+                  marginTop:"-20px", marginRight:"95px", fontSize:styles.fonts.fontSmallest}}> Saved! </div>)}
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}

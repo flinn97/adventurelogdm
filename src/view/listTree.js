@@ -46,7 +46,7 @@ setInterval(async() => {
     }
     // URL changed
     prevUrl = currUrl;
-    console.log(`URL changed to : ${currUrl}`);
+    //console.log(`URL changed to : ${currUrl}`);
     
   }
 }, 60);
