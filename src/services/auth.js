@@ -195,7 +195,7 @@ class Auth {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
+                //console.log(errorMessage)
             });
         if (user) {
             let saveUser = user
@@ -235,7 +235,7 @@ class Auth {
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage);
+            //console.log(errorMessage);
         })
         if (addToCache) {
             localStorage.setItem("user", JSON.stringify(user));
@@ -277,7 +277,7 @@ class Auth {
                 });
             },
             error: (err) => {
-                console.log(err.message);
+                //console.log(err.message);
             },
         });
     }

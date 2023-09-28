@@ -8,6 +8,7 @@ export default class BaseClass {
         this.setJson=this.setJson.bind(this);
         this.getJson=this.getJson.bind(this);
         this.setCompState=this.setCompState.bind(this);
+        this.copyComponent=this.copyComponent.bind(this);
         this.getOperationsFactory=this.getOperationsFactory.bind(this)
         this.operationsFactory=oppsFactory;
     }
@@ -45,6 +46,14 @@ export default class BaseClass {
      * get the data if to preserve private json var
      */
     getJson(){
-        return this.json
+        return this.json;
+    }
+
+    copyComponent(arr, valueList){
+        let newJson = {...this.json, _id:""};
+        for (let key in arr){
+            newJson[arr[key]] = valueList[key];
+        }
+        return newJson;
     }
 }

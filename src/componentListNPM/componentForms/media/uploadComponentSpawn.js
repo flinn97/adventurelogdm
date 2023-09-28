@@ -76,7 +76,7 @@ class UploadComponent extends Component {
                 },
                 
                 error(err) {
-                  console.log(err.message);
+                  //console.log(err.message);
                 },
               });
               this.setState({ newPics: list, paths: paths, list: oldList, showPics: true });

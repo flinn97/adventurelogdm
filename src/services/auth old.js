@@ -106,7 +106,7 @@ class Auth {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
+                //console.log(errorMessage)
             });
         if (user) {
             let saveUser = user
@@ -145,11 +145,11 @@ class Auth {
                         dispatch({ uploaded: true });
                         debugger
                     }
-                    console.log('Uploaded a file!');
+                    //console.log('Uploaded a file!');
                 });
             },
             error: (err) => {
-                console.log(err.message);
+                //console.log(err.message);
             },
         });
     }

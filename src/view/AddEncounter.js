@@ -42,18 +42,18 @@ function getCampaignId() {
   const path = window.location.pathname;
   const parts = path.split('/');
   let id = parts.pop();
-  let parentId = id;
+  let loreId = id;
 
   if (id.includes('-')) {
     const splitIds = id.split('-');
     id = splitIds[0];
-    parentId = splitIds[1];
+    loreId = splitIds[1];
   }
 
-  return { id, parentId };
+  return { id, loreId };
 }
 
-const { id: campId, parentId } = getCampaignId();
+const { id: campId, loreId } = getCampaignId();
 
 await this.props.app.dispatch({currentComponent: undefined});
 const currentDate = new Date();
@@ -67,7 +67,7 @@ await this.props.app.dispatch({
   object: {
     creationDate: "E" + num + month + day,
     campaignId: campId,
-    parentId: parentId
+    loreId: loreId
   }
 });
 

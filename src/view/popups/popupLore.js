@@ -6,20 +6,14 @@ import EncounterCard from '../pages/encounterCard';
 import AddEncounter from '../AddEncounter';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
-
+import backarrow from '../../pics/backArrow.webp';
+import placeholder from '../../pics/placeholderEncounter.JPG';
 
 export default class PopupLore extends Component {
   constructor(props) {
     super(props);
-    
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
-
 
   render() {
     let app = {...this.props.app};
@@ -39,10 +33,6 @@ export default class PopupLore extends Component {
     }
     app.state.styles=styles
     
-
-
-
-
     //********CARD ASSIGN********/
 
     let cards={
@@ -56,9 +46,6 @@ export default class PopupLore extends Component {
     }
     
     //*********CARD ASSIGN********/
-
-
-
 
     return (
       <div >
@@ -78,11 +65,15 @@ class MainContent extends Component{
     super(props);
     this.state = {
       showAddEncounter: false,
-      showSaved: false,  
+      showFindEncounter: false,
+      showSaved: false, 
+      searchTerm: "",
     };
   }
 
-  
+  handleSearchChange = (e) => {
+    this.setState({ searchTerm: e.target.value });
+  }
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -108,11 +99,38 @@ class MainContent extends Component{
       newLink = href + "-" + state.currentComponent.getJson()._id;
     }
 
+    const filteredList = componentList.getList("encounter", id, "campaignId")
+          .filter(encounter => {
+            const name = encounter?.getJson()?.name || "";
+            return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+          })
+          .sort((a, b) => {
+            const nameA = a?.getJson()?.name || "";
+            const nameB = b?.getJson()?.name || "";
+            return nameA.localeCompare(nameB);
+          })
+
     return(
       <div style={{
         display:"flex", width:"57vw", flexDirection:"column", height:"fit-content",
         paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
-                
+
+          {this.state.showFindEncounter && 
+          <div className="indent-on-click"  
+          onClick={() => {
+            this.setState({showFindEncounter: false })}}
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", padding:"1%"}}
+          
+          >
+            <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
+            src={backarrow}
+            />
+            Back
+          </div>}
+
+
+      {!this.state.showFindEncounter &&        
 <div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
 
 <ParentFormComponent app={app} name="name"
@@ -137,40 +155,126 @@ class MainContent extends Component{
              wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
              flexDirection:"column", justifyItems:"space-between"}}/>
 
-</div>
+</div>}
 
 <div>
           {/* ENCOUNTER */}
-          <hr></hr>
+          {!this.state.showFindEncounter &&   <div> <hr></hr>
 
           <div style={{ marginTop:"-5vh", marginBottom:"1vh",}}>
              <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
-            filter={{search: state.currentComponent.getJson()._id, attribute: "parentId"}}
+            filter={{search: state.currentComponent.getJson()._id, attribute: "loreId"}}
             theme={"selectByImageSmall"}
-            /></div>
+            />
+            
+            </div>
+            </div>}
 
-          { !this.state.showAddEncounter && 
-          <div style={{display:"flex", justifyContent:"center"}}>
-            <div className="indent-on-click" style={{...styles.buttons.buttonAdd, marginTop:"1vh", alignSelf:"flex-end",}}
+          
+{!this.state.showFindEncounter &&
+<div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}>
+            <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
+            fontSize:styles.fonts.fontSmall,
+            marginTop:"1vh", alignSelf:"center", padding:"1%"}}
               onClick={() => {
-             
-            dispatch({
-              operate: "addencounter",
-              operation: "cleanJsonPrepareRun", 
-            object:{parentId: state.currentComponent.getJson()._id, name:"New Encounter", campaignId: id}, 
-            });
+             state.opps.cleanJsonPrepareRun({
+              "addencounter":{loreId: state.currentComponent.getJson()._id, 
+                name:"New Encounter", campaignId: id}})
+
             // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
             this.setState({ showAddEncounter: true });
             }}>
-              + Create Encounter
-            </div></div>
-          }
+              + Create New Encounter
+            </div>
+            <div className="indent-on-click" style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
+            marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+              onClick={() => {
+                this.setState({showFindEncounter: true })
+            }}>
+              Find Encounter
+            </div>
+            </div>}
+          
           {/* { this.state.showAddEncounter &&
             <AddEncounter app={app} />
           } */}
         </div>
 
-  <div className="indent-on-click" style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'20px', position:"sticky", marginTop:"1vh"}}>
+        {!this.state.showFindEncounter &&<hr></hr>}
+
+        {this.state.showFindEncounter &&
+        <div>
+<div style={{ display:"flex", justifyContent:"flex-end",}}>
+
+        <input app={app}
+        
+        type="input" 
+        placeholder="Search..." 
+        value={this.state.searchTerm} 
+        onChange={this.handleSearchChange}
+        style={{ backgroundColor: styles.colors.color1+"ee",  
+        color: styles.colors.colorWhite,  
+        borderRadius:"11px",
+        width:"420px", 
+        padding: '8px',  
+        fontSize: '16px', }}
+      />
+
+</div>
+        <div style={{display:"flex", justifyContent:"space-around", marginTop:"3vh",}}>
+
+
+          {
+          
+          filteredList.map((encounter, index) => 
+          <div 
+
+         onClick={async () => {{
+            let enc = await encounter.copyEncounter(componentList);
+            if (enc){
+            state.currentComponent.assign(enc);}
+            this.setState({showFindEncounter: false })
+          }}}
+
+          style={{color: styles.colors.colorWhite, 
+            textDecoration: "none", userSelect:"none",
+            height: "fit-content", cursor:"pointer",
+            width: "fit-content"}}>
+            <div style={{display: "flex", flexDirection: 'column', 
+                          borderRadius:styles.popupSmall.borderRadius,
+                          justifyContent:"space-evenly", 
+                          zIndex:"0",
+                          height: 'fit-content', 
+                          width: 'fit-content', 
+                          backgroundImage: 'url('+(encounter?.getJson().picURL||placeholder)+')',
+                          ...styles.backgroundContent}}>
+                        
+                        <div style={{
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',
+                        height: "fit-content", 
+                         width: "fit-content"}}>
+                          
+                          <div 
+                          
+                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+                          textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack,
+                          
+                          alignItems:"center", justifyContent:"center", fontSize:styles.fonts.fontSmallest,}}>
+                            {encounter?.getJson().name}
+                          </div>
+                </div>
+        </div>
+          </div>
+          
+          )}
+
+        </div>
+        </div>}
+        
+
+  <div className="indent-on-click" style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'0px', 
+  position:"sticky", marginTop:"8.24vh", marginBottom:"1vh"}}>
                   <RunButton app={app} text="Save" 
                   
                   runFunc={(arr)=>{
@@ -198,8 +302,8 @@ class MainContent extends Component{
                   </div>
                   {this.state.showSaved && (
                   <div className="saved-animation" style={{color:styles.colors.color9,
-                  alignSelf:"flex-end", position:"relative", 
-                  marginTop:"-20px", marginRight:"95px", fontSize:styles.fonts.fontSmallest}}> Saved! </div>)}
+                  alignSelf:"flex-end", position:"relative",
+                  marginTop:"-152px", marginRight:"95px", fontSize:styles.fonts.fontSmallest}}> Saved! </div>)}
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}
@@ -221,7 +325,6 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-      
       <div style={{...styles.buttons.buttonClose}}
       onClick={this.props.handleClose}
       >

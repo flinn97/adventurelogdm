@@ -66,16 +66,16 @@ export default class InteractiveMap extends Component {
       top: y,
     };
     
-    console.log(x)
-    console.log(y)
+    //console.log(x)
+    //console.log(y)
     this.props.app.dispatch({operation: "jsonPrepareRun", operate: "addpin", object: obj})
     
   }
 }
   printref(event){
-    debugger
+    //debugger
     if (this.currentMap && this.currentMap.current.contains(event.target)) {
-      console.log(this.currentMap);
+      //console.log(this.currentMap);
     
 }
   }

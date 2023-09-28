@@ -26,15 +26,16 @@ export default class Worldbuilder extends Component {
       draggableItems: [{}], // Initialize the draggable items array
       isSideBarVisible: false,
     }
+    
     this.addDraggableItem = this.addDraggableItem.bind(this);
     this.eventLogger = this.eventLogger.bind(this); // bind eventLogger method
     }
 
-     // eventLogger method definition
+    // eventLogger method definition
   eventLogger(e, data) {
-    // console.log('Event: ', e);
-    // console.log('Data: ', data);
     
+    console.log('Event: ', e);
+    console.log('Data: ', data);
   }
 
    addDraggableItem() {

@@ -25,7 +25,7 @@ export default class AddParticipant extends Component {
     const path = window.location.pathname;
     const parts = path.split('/');
     const id = parts.pop();
-    this.setState({ encounterId: id }); // Set the encounterId in the state
+    this.setState({ encounterId: id, parentId: id, });
     return id;
   }
 
@@ -205,7 +205,9 @@ transitionDuration:"9000ms"
               <RunButton app ={app} text={"Add to Encounter"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
                callBack ={()=> {
               dispatch({
-               popUpSwitchcase: "", currentComponent: undefined,
+               popUpSwitchcase: "",
+               
+               currentComponent: undefined,
               })}
               }/>
               

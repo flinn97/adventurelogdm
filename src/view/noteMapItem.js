@@ -40,7 +40,7 @@ export default class NoteMapItem extends Component {
 
     let body = this.props.obj.getJson().text.substring(0, 115)+'...'
    
-console.log(this.props.obj.getJson().text.length) 
+//console.log(this.props.obj.getJson().text.length) 
 
     return (
       <div style={{width:"100%", height:"3.5em",}} onClick={()=>{

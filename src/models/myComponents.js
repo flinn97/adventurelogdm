@@ -118,7 +118,7 @@ class Lore extends componentBase{
     constructor(opps){
         super(opps);
         this.getPicSrc=this.getPicSrc.bind(this);
-       
+        this.assign = this.assign.bind(this);
     }
     json= {
         
@@ -135,6 +135,17 @@ class Lore extends componentBase{
         let pic = await authService.downloadPics(this.json.pics);
         this.json.picURL=pic;
         
+    }
+
+    async assign(comp){
+        
+
+        comp.setCompState({
+            loreId:this.json._id   
+        });
+        
+
+        this.operationsFactory.cleanJsonPrepareRun();
     }
 
 }
@@ -220,7 +231,7 @@ class Encounter extends componentBase{
     constructor(opps){
         super(opps);
         this.getPicSrc=this.getPicSrc.bind(this);
-       
+        this.copyEncounter=this.copyEncounter.bind(this);
     }
     json= {
         
@@ -230,15 +241,28 @@ class Encounter extends componentBase{
         type: "encounter",
         picURL: "",
         picURLs: {},
-        parentId: "",
+        loreId: "",
 
     }
     
         
     async getPicSrc(path){
         let pic = await authService.downloadPics(path);
-        this.json.picURL=pic;
-        
+        this.json.picURL=pic; 
+    }
+
+    async copyEncounter(componentList){
+        let newEnc = this.copyComponent(["name"],["Copy of "+ this.getJson().name]);
+        let comps = componentList.getList("monster",this.json._id,"encounterId");
+        let enc = await this.operationsFactory.cleanJsonPrepare({"addencounter":newEnc});
+        enc = enc.add[0];
+        for (let obj of comps)
+            {
+                let monsterJson = obj.copyComponent(["encounterId"],[enc.getJson()._id]); 
+                await this.operationsFactory.jsonPrepare({"addmonster":monsterJson});
+            };
+            this.operationsFactory.run();
+            return enc;
     }
 }
 
@@ -270,7 +294,7 @@ class Monster extends componentBase{
         notes: "",
         picURLs: {},
         condition: "",
-        
+        parentId: "",
 
     }
     

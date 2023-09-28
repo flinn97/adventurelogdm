@@ -81,6 +81,7 @@ export default class InteractiveBulletin extends Component {
 
   stopPanning = () => {
     this.isPanning = false;
+    console.clear();
     this.setState({ isGrabbing: false })
   }
 

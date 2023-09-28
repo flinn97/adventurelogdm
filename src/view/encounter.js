@@ -72,22 +72,33 @@ export default class Encounter extends Component {
 
           <div style={{...styles.popupSmall, fontSize:styles.fonts.fontSubheader2, fontFamily:"serif",
                         color: styles.colors.colorWhite,}}>
+
          {this.state.obj?.getJson().name}
+
          {/* <div style={{position:"absolute", marginTop:"-.8%", opacity:".1", fontSize:styles.fonts.fontSmallest}}>{this.getEncounterId()}</div> */}
 
-         {/* {state.popUpSwitchcase === "updateEnc" && <>
-                           <AddEncounter app={app}/>
+         {state.popUpSwitchcase === "updateEnc" && <>
+                           <AddEncounter app={app} 
+                           //obj={this.state.obj}
+                           />
                           </> }
-          {state.popUpSwitchcase !== "updateEnc" && <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right", position:"absolute", top:"3%", right:"1%"}}>
-                          <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmallest, 
-                                        padding:"5px", backgroundColor:styles.colors.color1+"ee", position:"absolute", width:"fit-content",
+
+          {state.popUpSwitchcase !== "updateEnc" && <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right", position:"absolute", top:"4%", right:".25%"}}>
+                          <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content",
+                           fontSize:styles.fonts.fontSmallest, padding:"5px", 
+                           backgroundColor:styles.colors.color1+"ee", 
+                                        position:"absolute", width:"fit-content",
                                         justifyContent:"center"}}
-                                        onClick={()=>{
-                                          dispatch({operate: "update", operation: "cleanPrepare", popUpSwitchcase: "updateEnc",});
+
+                                        onClick={ async ()=>{
+                                          await dispatch({operate: "update", operation: "cleanJsonPrepare", popUpSwitchcase: "updateEnc", 
+                                          //currentComponent:this.state.obj 
+                                        });
+                                        
                                         }}
                                         >
                                           Edit Encounter</div>
-                              </div>}              */}
+                              </div>}             
 
          <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite, marginTop:"2vh"}}>
 
@@ -132,7 +143,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
           
 <div style={{color:styles.colors.colorWhite, width:"100%",}}>
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
-            && 
+            &&  
             <div style={{padding:"22px"}}>
               
               <AddParticipant app={app}/></div>}

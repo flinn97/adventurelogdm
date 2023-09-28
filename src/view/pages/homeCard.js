@@ -4,7 +4,7 @@ import CampaignCard from './campaignCard';
 import NoteCard from './noteCard';
 import LibraryCard from '../libraryCard';
 import MarketCard from './marketCard';
-
+import logo from '../../pics/logo.png'
 
 /**
  * condensed version of the cards.
@@ -101,9 +101,9 @@ class MainContent extends Component{
       <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       <hr></hr>
       
-      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
+      {/* <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
       <hr></hr>
-      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
+      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/> */}
       </div>
     </div>
     )
@@ -122,10 +122,16 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
-    fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
-      AVA
+      <div>
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
+      <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
       </div>
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
+      Game Management System
+      </div>
+      <hr></hr></div>
     )
   }
 }

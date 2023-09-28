@@ -60,7 +60,7 @@ export default class Roll extends Component {
    this.setState({initiative: totalInitiative });
    
    obj.setCompState({lastInit: totalInitiative.toString()});
-   console.log(obj.getJson().lastInit)
+   //console.log(obj.getJson().lastInit)
 
   let encounterList = app.state.encounterList? app.state.encounterList: [];
   encounterList.push(obj);
@@ -77,7 +77,7 @@ async setNewInit(e){
   const value = e.target.value === '' ? undefined : e.target.value;
   await obj.setCompState({lastInit: value});
   this.setState({ initiative: value});
-  console.log(obj.getJson().lastInit)
+  //console.log(obj.getJson().lastInit)
 }
 
 
