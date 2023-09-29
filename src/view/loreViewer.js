@@ -121,7 +121,7 @@ toggleSidebar = () => {
       
         {(this.state.map) && 
        
-       <div style={{height:1000, width:1500}}>
+       <div style={{height:"1310px", width:"100%"}}>
         <MapGallery app={app} obj={this.state.lore}/>
         
         </div>}

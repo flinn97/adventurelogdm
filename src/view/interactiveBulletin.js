@@ -55,7 +55,7 @@ export default class InteractiveBulletin extends Component {
     this.setState({
       mapHeight:mapHeight,
       mapWidth:mapWidth,
-    })
+    }, () => this.forceUpdate())
     ///assign pins to current mapId
   };
 
@@ -105,15 +105,15 @@ export default class InteractiveBulletin extends Component {
     let headerH = 60;
     let remainderH = 1310-[headerH]-11;
     const images = [image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16];
-    
+    let heightY = this.state.mapHeight;
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
       <div 
       ref={this.divRef} 
-      style={{width:"100%", height:"100%", 
+      style={{width:"100%", minHeight:"100%", maxHeight:"100%",
       cursor: this.state.isGrabbing!==true? "":"grabbing", 
-      overflow: 'auto', borderRadius:"20px",
+      overflow: 'auto', borderRadius:"20px", border:"solid "+styles.colors.color7,
       }}>
        
 
@@ -134,15 +134,25 @@ export default class InteractiveBulletin extends Component {
         }}>
       {/* BUTTONS IN HEADER */}
         <div className="indent-on-click" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
-        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd" }}
+        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd",  }}
         onClick={async (e)=>{
-          let rect = e.target.getBoundingClientRect();
-          let x = (e.clientX - Math.floor(rect.left) + 80).toString();
-          let y = (e.clientY - Math.floor(rect.top) + 80).toString();
+          let scrollLeft = this.divRef.current.scrollLeft;
+            let scrollTop = this.divRef.current.scrollTop;
+            let x = (scrollLeft + 80).toString();
+            let y = (scrollTop + 80).toString();
 
-          await state.opps.cleanJsonPrepareRun({addpin:
-            {type:"pin", iconImage: iconTest, loreId:"", mapId:this.props.obj?.getJson()._id, x:x, y:y, title:"New Lore", campaignId:this.props.obj?.getJson().campaignId}
-          });
+            await state.opps.cleanJsonPrepareRun({
+              addpin: {
+                type: "pin",
+                iconImage: iconTest,
+                loreId: "",
+                mapId: this.props.obj?.getJson()._id,
+                x: x,
+                y: y,
+                title: "New Lore",
+                campaignId: this.props.obj?.getJson().campaignId,
+              },
+            });
           dispatch({});
 
 
@@ -158,8 +168,8 @@ export default class InteractiveBulletin extends Component {
 
 
 
-<div style={{ position:"relative", width:"100%", height:"100%"}}>
-  <img ref={this.imgRef} src = {this.props.obj?.getJson().picURL} style={{ position:"absolute", top:0, left:0 }}/>
+<div style={{ position:"relative", width:"100%", height:"100%",}}>
+  <img ref={this.imgRef} src = {this.props.obj?.getJson().picURL} style={{ position:"absolute", top:0, left:0,  borderRadius:"17px" }}/>
   {/* {this.state.start && */}
   <div ref={this.parentRef}  style={{position:"absolute", top:0, left:0,
    width: this.state.mapWidth, 

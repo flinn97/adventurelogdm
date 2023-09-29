@@ -114,6 +114,28 @@ class Pin extends componentBase{
 
 }
 
+class Image extends componentBase{
+    constructor(opps){
+        super(opps);
+        this.getPicSrc=this.getPicSrc.bind(this);
+       
+    }
+    json= {
+        
+        name: "",
+        type: "image",
+        campaignId:"",
+        loreId:"",
+        picURL: "",
+    } 
+    
+    async getPicSrc(){
+        let pic = await authService.downloadPics(this.json.pics);
+        this.json.picURL=pic;
+        
+    }
+}
+
 class Lore extends componentBase{
     constructor(opps){
         super(opps);
@@ -310,7 +332,9 @@ class Monster extends componentBase{
 function forFactory(){
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
     return {user:User,pin:Pin,campaign:Campaign,
-        encounter:Encounter,monster:Monster,newNote:NewNote,map:Map,lore:Lore}
+        encounter:Encounter,monster:Monster,
+        newNote:NewNote,map:Map,
+        lore:Lore,image:Image}
 }
 
 

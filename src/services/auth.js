@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, on
 import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
 
-let imageQuality = .6;
+let imageQuality = .58;
 
 class Auth {
     urlEnpoint = "GMS"

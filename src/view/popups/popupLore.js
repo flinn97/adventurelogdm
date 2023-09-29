@@ -8,6 +8,7 @@ import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
 import backarrow from '../../pics/backArrow.webp';
 import placeholder from '../../pics/placeholderEncounter.JPG';
+import Upload from '../upload';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -66,8 +67,10 @@ class MainContent extends Component{
     this.state = {
       showAddEncounter: false,
       showFindEncounter: false,
+      showFindImage: false,
       showSaved: false, 
       searchTerm: "",
+      imagesToShow: 5,
     };
   }
 
@@ -84,6 +87,7 @@ class MainContent extends Component{
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length-1];
     let newLink = "";
+    let imageList = state.componentList.getList("image", state.currentComponent.getJson()._id, "loreId");
 
     if(id.includes("-")){
       let newArr = [...splitURL];
@@ -108,17 +112,18 @@ class MainContent extends Component{
             const nameA = a?.getJson()?.name || "";
             const nameB = b?.getJson()?.name || "";
             return nameA.localeCompare(nameB);
-          })
+          });
 
     return(
       <div style={{
         display:"flex", width:"57vw", flexDirection:"column", height:"fit-content",
         paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
 
-          {this.state.showFindEncounter && 
+          {(this.state.showFindEncounter || this.state.showFindImage) && 
           <div className="indent-on-click"  
           onClick={() => {
-            this.setState({showFindEncounter: false })}}
+            this.setState({showFindEncounter: false, showFindImage: false })
+          }}
           style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
           fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", padding:"1%"}}
           
@@ -129,8 +134,9 @@ class MainContent extends Component{
             Back
           </div>}
 
+          
 
-      {!this.state.showFindEncounter &&        
+      {!this.state.showFindEncounter && !this.state.showFindImage &&        
 <div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
 
 <ParentFormComponent app={app} name="name"
@@ -139,9 +145,11 @@ class MainContent extends Component{
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
               textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
-
+   
     <a style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest,marginTop:"11px", textDecorationColor:"#ffdead22", alignSelf:"flex-end"}} 
     href= {newLink} target='_blank'>Open in new tab</a>
+    
+    
 <hr></hr>
 
 <ParentFormComponent app={app} name="desc"
@@ -159,9 +167,10 @@ class MainContent extends Component{
 
 <div>
           {/* ENCOUNTER */}
-          {!this.state.showFindEncounter &&   <div> <hr></hr>
+          {!this.state.showFindEncounter && !this.state.showFindImage &&   <div> <hr></hr>
+          <div style={{ marginTop:"-18px", color:styles.colors.colorWhite+"77", fontSize:styles.fonts.fontSmall,}}>Encounters</div>
 
-          <div style={{ marginTop:"-5vh", marginBottom:"1vh",}}>
+          <div style={{ marginTop:"-8vh", marginBottom:"1vh",}}> 
              <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
             filter={{search: state.currentComponent.getJson()._id, attribute: "loreId"}}
             theme={"selectByImageSmall"}
@@ -171,11 +180,12 @@ class MainContent extends Component{
             </div>}
 
           
-{!this.state.showFindEncounter &&
-<div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}>
+{!this.state.showFindEncounter && !this.state.showFindImage &&
+<div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
             <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
             fontSize:styles.fonts.fontSmall,
             marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+            title="Create a new encounter, you can edit it by clicking on it." 
               onClick={() => {
              state.opps.cleanJsonPrepareRun({
               "addencounter":{loreId: state.currentComponent.getJson()._id, 
@@ -188,6 +198,8 @@ class MainContent extends Component{
             </div>
             <div className="indent-on-click" style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
             marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+            title="Find an existing encounter to add to this lore.
+            This will create a COPY." 
               onClick={() => {
                 this.setState({showFindEncounter: true })
             }}>
@@ -200,7 +212,11 @@ class MainContent extends Component{
           } */}
         </div>
 
-        {!this.state.showFindEncounter &&<hr></hr>}
+        {!this.state.showFindEncounter && !this.state.showFindImage &&
+        <div>
+        <hr></hr> 
+        <div style={{ marginTop:"-18px", color:styles.colors.colorWhite+"77", fontSize:styles.fonts.fontSmall,}}>Gallery</div>
+        </div>}
 
         {this.state.showFindEncounter &&
         <div>
@@ -271,6 +287,101 @@ class MainContent extends Component{
 
         </div>
         </div>}
+
+{/* GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY */}
+
+        {!this.state.showFindImage && !this.state.showFindEncounter && 
+        <div style={{display:"flex", justifyContent:"center", flexDirection:"column", justifyItems:"center"}}>
+
+            <div className="image-grid" style={{display:"flex", justifyContent:"center", 
+                  flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap",
+                  }}>
+              {
+                imageList
+                .slice(0, this.state.imagesToShow)
+                .map((img, index) => (
+                  <div className="hover-img" key={index}>
+                    <img  draggable="false" src={img.getJson().picURL} 
+                    style={{
+                      maxWidth: "180px", minWidth:"100px", height:"fit-content",
+                       margin:"9px", cursor:"pointer", borderRadius:"10px"
+                    }}
+                    alt={`img-${index}`} />
+                  </div>
+                ))
+              }
+              {
+                imageList.length > this.state.imagesToShow &&
+                <div className="hover-img" 
+                onClick={() =>
+                  this.setState(prevState => ({ imagesToShow: prevState.imagesToShow + 5 }))} 
+                  style={{maxHeight: "150px", cursor:"pointer", textAlign:"center", padding:"8px",
+                    maxWidth: "150px", display:"flex", alignItems:"center", justifyContent:"center",
+                     fontSize: "24px", borderRadius:"20px", marginBottom:"3vh",
+                    color:styles.colors.colorWhite, border:""+styles.colors.colorWhite+"55 solid"
+                  }}>
+                    <div 
+                    style={{display:"flex", position:"relative",}}>
+                  +{imageList.length - this.state.imagesToShow} more
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', 
+                  }}>
+                    {
+                      imageList
+                      .slice(this.state.imagesToShow, this.state.imagesToShow+9)
+                      .map((img, index) => (
+                        <div>
+                        <img draggable="false" key={index} src={img.getJson().picURL} 
+                        style={{
+                          maxWidth: "20px", margin:"2px", opacity:"40%"
+                        }}
+                        alt={``} />
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+
+          <div style={{display:"flex", justifyContent:"center", flexDirection:"row", justifyItems:"center"}}>
+          <div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginTop:"8px",}}>
+
+                <Upload text="+ Upload" 
+                      changePic={ async (pic)=>{
+                        await state.opps.cleanJsonPrepareRun({
+                          "addimage":{
+                            loreId: state.currentComponent.getJson()._id, 
+                            picURL: pic,
+                            campaignId: id}});
+                            console.log(pic);
+                            
+                      }} 
+                      obj={app.state.currentComponent}
+                      update={true} skipUpdate={true}
+                      
+                        app={app} 
+                        className="indent-on-click"
+                //   onClick={() => {
+                //  state.opps.cleanJsonPrepareRun({
+                //   "addimage":{loreId: state.currentComponent.getJson()._id, 
+                //     campaignId: id}})
+                // }}
+                />
+                
+        </div>
+        <div className="indent-on-click" 
+        title="Find an existing image to add to this lore." 
+        style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
+        marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+          onClick={() => {
+            this.setState({showFindImage: true })
+        }}>
+          Find Image
+        </div></div>
+        </div>
+        }
         
 
   <div className="indent-on-click" style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'0px', 
@@ -296,14 +407,14 @@ class MainContent extends Component{
                       state.opps.run();
                     }
                     this.setState({ showSaved: true });
-                    setTimeout(() => this.setState({ showSaved: false }), 2600);  // hide after 2.6 seconds
+                    setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
                   }}/>
-                  
-                  </div>
                   {this.state.showSaved && (
                   <div className="saved-animation" style={{color:styles.colors.color9,
-                  alignSelf:"flex-end", position:"relative",
-                  marginTop:"-152px", marginRight:"95px", fontSize:styles.fonts.fontSmallest}}> Saved! </div>)}
+                  alignSelf:"flex-end", position:"absolute", marginBottom:"69px", marginLeft:"-72px",
+                  fontSize:styles.fonts.fontSmallest}}> Saved! </div>)}
+                  </div>
+                  
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}

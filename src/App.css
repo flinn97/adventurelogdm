@@ -96,6 +96,8 @@ hovering:hover .hover {
   animation: slideAndFade 1.72s ease-out forwards;
 }
 
+
+
 @keyframes slideAndFade {
   0% {
     left: 0;
@@ -117,6 +119,46 @@ hovering:hover .hover {
 .indent-on-click:active {
   box-shadow: inset 3px 3px 3px rgba(243, 242, 242, 0.65),  2px 2px 2px rgba(0, 0, 0, 0.95);
   transform: scale(0.97);
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 9px;
+  grid-auto-rows: 10px; /* initial height; will be expanded by content */
+  transition: all 0.3s ease-in-out;
+}
+
+.image-grid img {
+  width: 100%;
+  height: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-img:hover {
+  opacity: .99;
+  transform: scale(1.02);
+  filter: contrast(1);
+  border-radius: 11px;
+  
+  transition: all 0.3s ease-out;
+}
+.hover-img:active {
+  opacity: .92;
+  transform: scale(1.02);
+  filter: blur(1px);
+  filter: contrast(.89);
+  border-radius: 11px;
+  transition: all 0.3s ease-out;
+}
+.hover-img {
+  opacity: 1;
+  transition: all 0.3s ease-out;
+  filter: contrast(.89);
+}
+
+.soft-out {
+  transition: all 0.3s ease-out;
 }
 
 fontNormal {

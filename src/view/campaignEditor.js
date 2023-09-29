@@ -11,6 +11,8 @@ import EncounterMapItem from './encounterMapItem';
 import LoreListCard from './pages/loreListCard';
 import Worldbuilder from './worldBuilder';
 import LoreViewer from './loreViewer';
+import Upload from './upload';
+import GalleryViewer from './galleryViewer';
 
 
 
@@ -159,8 +161,14 @@ async componentDidMount(){
           <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
                         <div 
-                        style={{ display:"flex", cursor:"pointer", background:"", border:"", cursor:"", color:styles.colors.color4}}>
+                        style={{ display:"flex", cursor:"pointer", background:"", border:"", cursor:"", color:styles.colors.color4, flexDirection:"column"}}>
                              Gallery
+                             <div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginTop:"8px",}}>
+
+                <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                />
+                
+        </div>
                              </div>
                 </div>
                 </>)}

@@ -55,7 +55,7 @@ export default class MapGallery extends Component {
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div style={{width:"100%", display:"flex", position:"absolute"}}>
+      <div style={{width:"100%", display:"flex", position:"absolute",}}>
         {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
         <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, 
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"-930px", }}>
