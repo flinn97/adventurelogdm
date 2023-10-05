@@ -349,15 +349,22 @@ class MainContent extends Component{
           <div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginTop:"8px",}}>
 
                 <Upload text="+ Upload" 
-                      changePic={ async (pic)=>{
-                        await state.opps.cleanJsonPrepareRun({
-                          "addimage":{
-                            loreId: state.currentComponent.getJson()._id, 
-                            picURL: pic,
-                            campaignId: id}});
-                            console.log(pic);
+                //PUT THIS IN CAMPAIGN TOO
+                prepareOnChange={{
+                  name:"image", json:{
+                    loreId: state.currentComponent.getJson()._id,
+                    campaignId: id}
+                }}
+
+                      //changePic={ async (pic)=>{
+                        // await state.opps.cleanJsonPrepareRun({
+                        //   "addimage":{
+                        //     loreId: state.currentComponent.getJson()._id, 
+                        //     picURL: pic,
+                        //     campaignId: id}});
+                      //       console.log(pic);
                             
-                      }} 
+                      // }} 
                       obj={app.state.currentComponent}
                       update={true} skipUpdate={true}
                       

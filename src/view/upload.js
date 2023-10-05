@@ -15,9 +15,9 @@ export default class Upload extends Component {
         this.changeHandler = this.changeHandler.bind(this);
         this.handleSubmission = this.handleSubmission.bind(this);
 
-
         this.state = {
             uploaded: false,
+            obj: this.props.obj,
 
         }
     }
@@ -25,7 +25,7 @@ export default class Upload extends Component {
     async componentDidUpdate() {
         if (this.state.uploaded) {
             await this.setState({ uploaded: false });
-            debugger
+
             this.handleSubmission();
         }
     }
@@ -43,16 +43,26 @@ export default class Upload extends Component {
             path: path,
             pic: URL.createObjectURL(event.target.files[0])
         });
-    this.props.changePic(this.state.pic);
-        
-        await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this));
-    };
+
+        if (this.props.prepareOnChange){
+            debugger
+            await this.props.app.state.opps.cleanJsonPrepare({
+                ["add"+this.props.prepareOnChange.name]:this.props.prepareOnChange.json,
+            })
+            let obj = await this.props.app.state.opps.getUpdater("add")[0];
+            this.setState({obj:obj});
+        }
+
+        if (this.props.changePic){
+            await this.props.changePic(this.state.pic);}
+                
+            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this));
+        };
 
 
     async handleSubmission() {
         debugger
-
-        let component = this.props.obj
+        let component = this.state.obj
         await component.getPicSrc(this.state.path)
         if (!this.props.skipUpdate) {
             if (this.props.update) {
@@ -60,6 +70,11 @@ export default class Upload extends Component {
             }
             else (await this.props.app.state.componentList.getOperationsFactory().run())
         }
+
+        if (this.props.prepareOnChange){
+            await this.props.app.state.opps.run();
+        }
+
         this.props.updateMap(component)
 
     };

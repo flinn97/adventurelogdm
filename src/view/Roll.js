@@ -62,11 +62,11 @@ export default class Roll extends Component {
    obj.setCompState({lastInit: totalInitiative.toString()});
    //console.log(obj.getJson().lastInit)
 
-  let encounterList = app.state.encounterList? app.state.encounterList: [];
-  encounterList.push(obj);
+  // let encounterList = app.state.encounterList? app.state.encounterList: [];
+  // encounterList.push(obj);
   
-  await app.state.componentList.setSelectedList("encounterList", encounterList)
-  await app.dispatch({encounterList: encounterList})
+  // await app.state.componentList.setSelectedList("encounterList", encounterList)
+  // await app.dispatch({encounterList: encounterList})
 
   state.opps.cleanPrepareRun({update:obj});
  

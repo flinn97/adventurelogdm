@@ -145,14 +145,17 @@ export default class MonsterMapItem extends Component {
                               textAlign: "center",
                             }}
                           >
+                            
                             <img style={{ alignSelf: "center", width: fontSize[0], marginBottom:"2px" }} src={ac} draggable="false"/>
+
                             <ParentFormComponent obj={this.props.obj} name="ac"
                             prepareRun={true} maxLength={2}
                             //placeholder={obj?.getJson().hp}
                               inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
                               borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
                               }}
-        style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
+                           style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
+
                           </div>
 
                           <div
@@ -172,9 +175,12 @@ export default class MonsterMapItem extends Component {
                             <ParentFormComponent obj={this.props.obj} name="hp"
                           prepareRun={true} maxLength={4}
                           //placeholder={obj?.getJson().hp}
-                             inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
-                             borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",}}
+                             inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
+                             height:"1.7rem", rows:"1",
+                             borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",
+                             textAlign:"center",justifyContent:"center",}}
                             style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
+
                               {/* {obj?.getJson().hp}</div> */}
                           </div>
 

@@ -103,7 +103,10 @@ export default class AddCampaign extends Component {
               obj={app.state.currentComponent} text="Set Backdrop" style={{display:"flex",
               zIndex:"1", borderRadius:".1vmin", background:"",}} 
               update={true} skipUpdate={true}
-              updateMap={(obj)=>{this.setState({completedPic: obj.getJson().picURL, usage: obj.getJson().usage +1})}} app={app}/>
+              updateMap={(obj)=>{this.setState({
+                completedPic: obj.getJson().picURL, 
+                // usage: obj.getJson().usage +1
+                })}} app={app}/>
               
                   
                     {/* ///EXIT BUTTON */}

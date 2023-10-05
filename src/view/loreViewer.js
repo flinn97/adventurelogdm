@@ -50,7 +50,7 @@ export default class LoreViewer extends Component {
     //and will be triggered when a user starts dragging the element 
     //and stops dragging it, respectively.
  
-componentDidMount(){
+async componentDidMount(){
 
   let id = this.props._id;
   let component = this.props.app.state.componentList.getComponent("campaign", id);
@@ -81,7 +81,8 @@ toggleSidebar = () => {
     let currentState = app.state;
       let componentList = currentState.componentList;
        //type , value to search,   filter key
-       let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
+    let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
+
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
 

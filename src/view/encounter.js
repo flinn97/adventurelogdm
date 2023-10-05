@@ -91,9 +91,14 @@ export default class Encounter extends Component {
                                         justifyContent:"center"}}
 
                                         onClick={ async ()=>{
-                                          await dispatch({operate: "update", operation: "cleanJsonPrepare", popUpSwitchcase: "updateEnc", 
-                                          //currentComponent:this.state.obj 
-                                        });
+                                          console.log(this.state.obj);
+                                          await dispatch({
+                                            operate: "update", 
+                                            operation: "cleanPrepare", 
+                                            popUpSwitchcase: "updateEnc", 
+                                          object:this.state.obj 
+                                        })
+                                        ;
                                         
                                         }}
                                         >
@@ -147,6 +152,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
             <div style={{padding:"22px"}}>
               
               <AddParticipant app={app}/></div>}
+            
             
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}

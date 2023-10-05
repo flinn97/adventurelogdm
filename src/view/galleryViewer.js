@@ -82,15 +82,22 @@ export default class GalleryViewer extends Component {
             <div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginTop:"8px",}}>
 
                 <Upload text="+ Upload" 
-                      changePic={ async (pic)=>{
-                        await state.opps.cleanJsonPrepareRun({
-                          "addimage":{
-                            loreId: this.getId(), 
-                            picURL: pic,
-                            campaignId: this.getId()}});
-                            console.log(pic);
+                      // changePic={ async (pic)=>{
+                      //   await state.opps.cleanJsonPrepareRun({
+                      //     "addimage":{
+                      //       loreId: this.getId(), 
+                      //       picURL: pic,
+                      //       campaignId: this.getId()}});
+                      //       console.log(pic);
                             
-                      }} 
+                      // }} 
+
+                      prepareOnChange={{
+                        name:"image", json:{
+                          loreId: this.getId(),
+                          campaignId: this.getId()}
+                      }}
+
                       obj={app.state.currentComponent}
                       update={true} skipUpdate={true}
                       

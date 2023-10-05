@@ -61,15 +61,17 @@ const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
 const day = currentDate.getDate().toString().padStart(2, '0');
 const num = randomFourDigitNumber();
 
-await this.props.app.dispatch({
-  operate: "addencounter",
-  operation: "cleanJsonPrepare",
-  object: {
-    creationDate: "E" + num + month + day,
-    campaignId: campId,
-    loreId: loreId
-  }
-});
+
+if (this.props.app.state.popUpSwitchcase !== "updateEnc"){
+      await this.props.app.dispatch({
+        operate: "addencounter",
+        operation: "cleanJsonPrepare",
+        object: {
+          creationDate: "E" + num + month + day,
+          campaignId: campId,
+          loreId: loreId
+        }
+      });}
 
 this.setState({start:true});}
 

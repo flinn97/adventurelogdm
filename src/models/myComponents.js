@@ -129,8 +129,8 @@ class Image extends componentBase{
         picURL: "",
     } 
     
-    async getPicSrc(){
-        let pic = await authService.downloadPics(this.json.pics);
+    async getPicSrc(path){
+        let pic = await authService.downloadPics(path);
         this.json.picURL=pic;
         
     }
