@@ -9,13 +9,16 @@ import TokenImage from './tokenImage';
 import AddEncounter from './AddEncounter';
 import ToggleItem from './toggleItem';
 import Draggable from 'react-draggable';
+import sortImg from '../pics/sortInit.png';
+import back from '../pics/backArrow.webp'
 
 export default class Encounter extends Component {
   constructor(props) {
     super(props);
     this.convertToLink = this.convertToLink.bind(this);  
     this.state = {
-
+      showMonsterMap: true,
+      isRunning: false,
     }
   }
  
@@ -30,6 +33,7 @@ export default class Encounter extends Component {
   let dispatch = this.props.app.dispatch;
   dispatch({popUpSwitchcase: "",});
   }
+
   
   
   convertToLink = (audio) => {
@@ -52,12 +56,14 @@ export default class Encounter extends Component {
     return newId;
   }
 
+
   render() {
     let app = this.props.app;
     let state = app.state;
     let dispatch = app.dispatch;
     let componentList = state.componentList;
     let styles =state.styles;
+    let showMonsterMap = this.state.showMonsterMap;
    
     let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
@@ -152,8 +158,58 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
             <div style={{padding:"22px"}}>
               
               <AddParticipant app={app}/></div>}
-            
-            
+
+{/* HEADER */}
+            {showMonsterMap &&
+              <div style={{display:"flex", flexDirection:"row", width:"100%", 
+              backgroundColor:styles.colors.color7+"55", height:"40px", paddingTop:"4px", borderRadius:"12px",
+              marginTop:"20px", marginBottom:"-60px"}}>
+                <div
+                title="Sort"
+                  style={{ opacity:"87%",  cursor:"pointer", alignItems:"center", display:"flex",
+                  marginLeft:"3.5vw",
+                   fontSize:styles.fonts.fontSmallest, color:styles.colors.color3}}
+                  onClick={ async ()=>{
+                    await this.setState({showMonsterMap: false});
+                    await componentList.sortSelectedList("monster","lastInit",true)
+                    await this.setState({showMonsterMap: true});
+                    dispatch({});
+                  }
+                  }
+                >
+                  {/* sort */}
+                   <img src={sortImg} 
+                  style={{
+                    width:"25px", 
+                    }}/>  
+                </div>
+              
+              <div style={{marginLeft:"2vw", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+              textAlign:"center",verticalAlign:"center",
+              border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
+                    onClick={ async ()=>{
+                      this.setState({isRunning:!this.state.isRunning});
+                    }}>
+                    <div 
+                    
+                    style={{ 
+                    fontSize:styles.fonts.fontSmall, width:"80px",
+                      color:styles.colors.color3+"cc", }}>
+                      {this.state.isRunning?"Stop":"Run"}
+                     
+                    </div>
+                    <img 
+                      src={back} style={{width:"20px", height:"20px", 
+                      transform:this.state.isRunning?"":"rotate(180deg)"}} />
+                    </div>
+                </div>
+                }
+               
+              
+                
+                {showMonsterMap &&
+                <div style={{marginTop:"4vh"}}>
+                  
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
              app={app} name={"monster"}
@@ -162,7 +218,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]} 
             theme={"selectByImageSmall"}
-            />
+            /></div>}
 </div>       
 
 

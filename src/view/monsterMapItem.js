@@ -63,7 +63,8 @@ export default class MonsterMapItem extends Component {
               }        
               let fontSizeRem = fontSizePx / 16;
               let fontSizeRemSm=fontSizePx / 19;
-              let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem"]
+              let fontSizeRemTiny=fontSizePx / 22;
+              let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem", fontSizeRemTiny+"rem"]
     
         
     return (
@@ -114,26 +115,33 @@ export default class MonsterMapItem extends Component {
 (<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={"Link to "+obj?.getJson().statBlockLink} draggable="false">
           <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px",}}
           />
-          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
+          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.props.obj.getJson().colors}/>
 </a>)||(
   <div href={stat} style={{cursor: ""}}>
   <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px", objectFit:"scale-down", position:"absolute", margin:"-4px", opacity:0}}
   />
-  <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.state.colors}/>
+  <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.props.obj.getJson().colors}/>
 </div>
 )}
 
-                          <div                  
+                          <div        title="Name"         
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"485px", alignSelf:"center", 
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, marginLeft:"-2vw", marginRight:"-1vw",
+                          width:"390px", alignSelf:"center", 
                           alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
                           overflowWrap:"break-word"}}>
-                           {obj?.getJson().name}
+                           <ParentFormComponent obj={this.props.obj} name="name"
+                            prepareRun={true} maxLength={30}
+                            //placeholder={obj?.getJson().hp}
+                              inputStyle={{minWidth:"390px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", 
+                              fontSize:fontSize[0],
+                              borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
+                              }}
+                           style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
                           </div>
                           
-                          <div
+                          <div title="AC"
                             style={{
                               display: "flex",
                               height: "fit-content",
@@ -151,14 +159,14 @@ export default class MonsterMapItem extends Component {
                             <ParentFormComponent obj={this.props.obj} name="ac"
                             prepareRun={true} maxLength={2}
                             //placeholder={obj?.getJson().hp}
-                              inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
+                              inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", fontSize:fontSize[0],
                               borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
                               }}
                            style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
 
                           </div>
 
-                          <div
+                          <div title="Health"
                             style={{
                               display: "flex",
                               height: "fit-content",
@@ -176,7 +184,7 @@ export default class MonsterMapItem extends Component {
                           prepareRun={true} maxLength={4}
                           //placeholder={obj?.getJson().hp}
                              inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
-                             height:"1.7rem", rows:"1",
+                             height:"1.7rem", rows:"1", fontSize:fontSize[0],
                              borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",
                              textAlign:"center",justifyContent:"center",}}
                             style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
@@ -184,24 +192,48 @@ export default class MonsterMapItem extends Component {
                               {/* {obj?.getJson().hp}</div> */}
                           </div>
 
+   <div title={obj?.getJson().notes}
+                            style={{
+                              display: "flex", marginRight:"-2vw",
+                              height: "fit-content",
+                              width: "fit-content",
+                              alignSelf: "center",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "column",
+                              textAlign: "center",
+                            }}
+                          >
+                            <div  style={{ alignSelf: "flex-start", 
+                            fontSize: fontSize[0], marginLeft:"1vw", marginTop:"-5px",
+                            }}>Notes</div>
 
-{/* <div style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,
-                          width:"fit-content", alignSelf:"center",
-                          alignItems:"center", justifyContent:"center", fontSize:fontSize[0],}}>
+                            <ParentFormComponent obj={this.props.obj} name="notes"
+                          prepareRun={true} maxLength={200} 
+                          
+                          //placeholder={obj?.getJson().hp}
+                             inputStyle={{
+                             padding: "3px 3px",
+                             color: styles.colors.colorWhite,
+                             marginLeft: "1vw", 
+                             height: "1.7rem",
+                             maxHeight:"20px",
+                             fontSize: fontSize[2],
+                             borderRadius: "4px",
+                             background: "#aaaaaa00",
+                             borderWidth: "0px",
+                             textAlign: "flex-start",
+                             justifyContent: "center",
+                             whiteSpace: "normal",
+                             overflowWrap: "break-word",
+                             resize: "both"}}
+                            />
 
-                                        <Roll app={app} obj={this.props.obj} fontSize={fontSize}
-                                        style={{  display: "flex",
-                                        height: "fit-content",
-                                        width: "fit-content",
-                                        alignSelf: "center",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        flexDirection: "column",
-                                        textAlign: "center", fontSize:fontSize[0],
-                                        
-                                        }}/></div> */}
+                          </div>
+                                         
+
                 </div>
+                
         </div>
         </div>
 

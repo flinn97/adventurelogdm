@@ -9,6 +9,7 @@ import ColorThief from 'colorthief';
 import TokenImage from './tokenImage';
 import colorService from '../services/colorService';
 
+
 export default class AddParticipant extends Component {
   constructor(props) {
     super(props);
@@ -123,18 +124,17 @@ transitionDuration:"9000ms"
       <Upload text={"Choose an image"} 
         update={true} obj={app.state.currentComponent} 
         skipUpdate={true}  colors={this.state.colors}
-        changePic={ (pic) => {
-          this.setState({pic:pic});
+        changePic={ async (pic) => {
+          await this.setState({pic:pic});
           let colors = colorService.updateColors(pic, (palette) => {
             this.setState({colors: palette});
         });
         }} 
-        updateMap={ (obj) => {
+        updateMap={ async (obj) => {
           const pic = obj?.getJson().pic;
-          this.setState({completedPic: pic});
-          let colors =  colorService.updateColors(pic, (palette) => {
-            this.setState({colors: palette});
-            
+          await this.setState({completedPic: pic});
+          let colors = await colorService.updateColors(pic, (palette) => {
+          this.setState({colors: palette});
         });
         }} 
         app={app}/>
@@ -202,14 +202,18 @@ transitionDuration:"9000ms"
       placeholder={"ie: The monster is hiding in a barrel"}/> 
 </div>
          {/* ADD TO ENCOUNTER */}
-              <RunButton app ={app} text={"Add to Encounter"} wrapperStyle={{...styles.buttons.buttonAdd,width:"600px" }}
-               callBack ={()=> {
-              dispatch({
-               popUpSwitchcase: "",
-               
-               currentComponent: undefined,
-              })}
-              }/>
+         <RunButton
+              app={app} 
+              text={"Add to Encounter"} 
+              wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
+              callBack={(obj) => {
+                dispatch({
+                  popUpSwitchcase: "",
+                  currentComponent: undefined,
+                });
+              }}
+               // Pass colors as a prop
+            />
               
           </div>
           </div></div>

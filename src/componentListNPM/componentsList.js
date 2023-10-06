@@ -273,13 +273,18 @@ export default class Opps {
         this.componentsList[type] = list;
        
     }
-    sortSelectedList(type, filterKey, ){
+    sortSelectedList(type, filterKey, reverse ){
         if(!filterKey){
             return
         }
         if(this.componentsList[type]){
             let list  = [...this.componentsList[type]];
-            list = list.sort(function(a, b){return a.getJson()[filterKey] - b.getJson()[filterKey]});
+            
+            list = list.sort(function(a, b){
+                return reverse? 
+                 (b.getJson()[filterKey] - a.getJson()[filterKey])
+                 : 
+                 (a.getJson()[filterKey] - b.getJson()[filterKey]) });
             this.setSelectedList(type, list);
         }
       

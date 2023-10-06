@@ -15,7 +15,7 @@ export default class TokenImage extends Component {
   };
 
   async componentDidUpdate(prevProps){
-    let obj = this.props.obj;
+    let obj = this.props.app.state.currentComponent;
 
     if (prevProps.pic !== this.props.pic){
       this.setState({  pic: this.props.pic});
@@ -28,6 +28,7 @@ export default class TokenImage extends Component {
         () => console.log(this.state.colors))
       });
     }
+    obj.setCompState({colors:this.state.colors});
   };
 
   async componentDidMount(){

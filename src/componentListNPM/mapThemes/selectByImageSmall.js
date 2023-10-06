@@ -7,8 +7,8 @@ class SelectByImageSmall {
        
         let style={
         containerStyle: { 
-            default: {display:'flex', flexDirection:"row", marginTop:"38px",
-           width:"100%",height:"fit-content", padding:"1vh", position:"", alignItems:"center",
+            default: {display:'flex', flexDirection:"row", marginTop:"08px",
+           width:"100%",height:"fit-content",  position:"", alignItems:"center",
             flexWrap:"wrap", justifyContent:"space-around",
           },
             row: {display:'flex', flexDirection:"row", },
@@ -27,7 +27,7 @@ class SelectByImageSmall {
           sectionStyle:{
             default:  {display:'flex', flexDirection:"row", alignItems:"center", height:"fit-content", 
             paddingRight:"1%", 
-            marginTop:".35rem", 
+            marginTop:".15rem", 
           },
             row:  {display:'flex', flexDirection:"row"},
             column: {display:'flex', flexDirection:"column"},
