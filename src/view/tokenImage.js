@@ -28,7 +28,7 @@ export default class TokenImage extends Component {
         () => console.log(this.state.colors))
       });
     }
-    obj.setCompState({colors:this.state.colors});
+   await obj.setCompState({colors:this.state.colors});
   };
 
   async componentDidMount(){
@@ -58,7 +58,7 @@ export default class TokenImage extends Component {
 
     return (
       <div style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px", boxShadow:"6px 10px 16px -3px"+styles.colors.colorBlack+"55",
-          borderRadius:"50%", marginLeft:"10px", display:"flex", alignItems:"center", justifyContent:"center",
+          borderRadius:"50%", marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center",
           marginRight:"30px", 
           backgroundColor:colors?.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,}}>
             

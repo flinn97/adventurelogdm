@@ -100,7 +100,8 @@ render() {
                               alignItems: "center",
                               justifyContent: "center",
                               flexDirection: "column",
-                              textAlign: "center",
+                              textAlign: "center", borderRadius:"15px",
+                              background: styles.colors.color1+"aa",
                             }}>
         
       <img  src={d20} style={{width:"22px", position:"absolute", marginTop:"35px",marginLeft:"-1px"}} alt="Clear" title="Clear"/>
@@ -109,7 +110,7 @@ render() {
       prepareRun={true} maxLength={2}
       //placeholder={obj?.getJson().hp}
          inputStyle={{width:"2.2rem", color:styles.colors.colorWhite, height:"1.7rem", rows:"1",
-         borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
+         borderRadius:"4px",background:"#00000000", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
          }}
         style={{ alignSelf: "center", fontSize: fontSize[1], }}/>
 

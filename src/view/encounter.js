@@ -10,7 +10,9 @@ import AddEncounter from './AddEncounter';
 import ToggleItem from './toggleItem';
 import Draggable from 'react-draggable';
 import sortImg from '../pics/sortInit.png';
+import pause from '../pics/pauseInit.png';
 import back from '../pics/backArrow.webp'
+import forward from '../pics/forward.png'
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -19,7 +21,9 @@ export default class Encounter extends Component {
     this.state = {
       showMonsterMap: true,
       isRunning: false,
+      currentTurn: 99999,
     }
+    this.currentIndex = -1;
   }
  
   async componentDidMount(){
@@ -56,6 +60,46 @@ export default class Encounter extends Component {
     return newId;
   }
 
+  componentWillUnmount(){
+    let dispatch = this.props.app.dispatch;
+    this.setState({ currentTurn: 9999 });
+    dispatch({ currentTurn: 9999 })
+    this.currentIndex = -1; 
+  }
+
+  getNextHighestInitiative = (participantList, dispatch) => {
+    const sortedList = participantList.sort((a, b) => {
+      return parseInt(b.getJson().lastInit, 10) - parseInt(a.getJson().lastInit, 10);
+    });
+   
+    if (this.props.app.state.currentTurn === 9999) {
+      const highestLastInit = parseInt(sortedList[0].getJson().lastInit, 10);
+      this.setState({ currentTurn: highestLastInit });
+      dispatch({ currentTurn: highestLastInit });
+      this.currentIndex = 0; // Set to the first index
+      console.log("Highest Last Init set to:", highestLastInit);
+      return;
+    }
+  
+    this.currentIndex = (this.currentIndex + 1) % sortedList.length;
+    const nextHighestLastInit = parseInt(sortedList[this.currentIndex].getJson().lastInit, 10);
+    
+    
+    this.setState({ currentTurn: nextHighestLastInit });
+    dispatch({ currentTurn: nextHighestLastInit });    
+  };
+
+  stopAndSetLowestInitiative = (participantList, dispatch) => {
+    // const sortedList = participantList.sort((a, b) => {
+    //   return parseInt(a.getJson().lastInit, 10) - parseInt(b.getJson().lastInit, 10);
+    // });
+    
+    // const lowestLastInit = parseInt(sortedList[participantList.length-1].getJson().lastInit, 10);
+    this.setState({ currentTurn: 9999 });
+    dispatch({ currentTurn: 9999 });
+    this.currentIndex = -1; // Set to the first index
+  };
+
 
   render() {
     let app = this.props.app;
@@ -64,11 +108,18 @@ export default class Encounter extends Component {
     let componentList = state.componentList;
     let styles =state.styles;
     let showMonsterMap = this.state.showMonsterMap;
+
+    
    
     let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
+    const playPause = this.state.isRunning?pause:back;
+    const participantList = state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId");
+
+
+
     return (
-      <div style={{width:"100%",}}>
+      <div style={{width:"100%", height:"100%", marginBottom:"33vh"}}>
             <div style={{color: styles.colors.colorWhite,
               ...styles.backgroundContent, 
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
@@ -137,16 +188,31 @@ export default class Encounter extends Component {
 
 <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right"}}>
 
+{!this.state.isRunning &&
 <div style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
-paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}} 
+paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!this.state.isRunning?"pointer":"wait"}} 
+            // onClick={()=>{
+            //   if (!this.state.isRunning){
+            // dispatch({})}
+            // }}
+            >
+          Add All Players
+              </div>}
+
+
+<div style={{...styles.buttons.buttonAdd, animation: "gradient-animation 10s ease-in-out infinite",
+background:!this.state.isRunning?styles.colors.color2:"linear-gradient(0deg, "+styles.colors.color6+", "+styles.colors.color1+"88)",
+paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!this.state.isRunning?"pointer":"wait"}} 
             onClick={()=>{
+              if (!this.state.isRunning){
             dispatch({operate: "addmonster", operation: "cleanJsonPrepare", 
             popUpSwitchcase: "addMonster",  object: {encounterId: this.state.obj?.getJson()._id, colors:[],},
-        })
+        })}
             }}>
-          Add New Creature to this Encounter
+          {!this.state.isRunning?"Add New Creature to this Encounter":"Encounter is Running..."}
               </div>
               </div>
+
         </div>
           </div>
 
@@ -160,14 +226,15 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
               <AddParticipant app={app}/></div>}
 
 {/* HEADER */}
-            {showMonsterMap &&
-              <div style={{display:"flex", flexDirection:"row", width:"100%", 
-              backgroundColor:styles.colors.color7+"55", height:"40px", paddingTop:"4px", borderRadius:"12px",
+            {showMonsterMap && 
+              <div  style={{display:"flex", flexDirection:"row", width:"100%", 
+              backgroundColor:styles.colors.color7+"55", height:"60px", paddingTop:"4px", borderRadius:"12px",
               marginTop:"20px", marginBottom:"-60px"}}>
-                <div
+                {/* {!this.state.isRunning && */}
+                <div 
                 title="Sort"
                   style={{ opacity:"87%",  cursor:"pointer", alignItems:"center", display:"flex",
-                  marginLeft:"3.5vw",
+                  marginLeft:"59px",
                    fontSize:styles.fonts.fontSmallest, color:styles.colors.color3}}
                   onClick={ async ()=>{
                     await this.setState({showMonsterMap: false});
@@ -183,12 +250,24 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
                     width:"25px", 
                     }}/>  
                 </div>
-              
-              <div style={{marginLeft:"2vw", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
-              textAlign:"center",verticalAlign:"center",
+                {/* } */}
+
+              {/* RUN BUTTON */}
+              <div className="indent-on-click" style={{marginLeft:"15px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center",
               border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
                     onClick={ async ()=>{
+                      if (!this.state.isRunning){
+                        this.getNextHighestInitiative(participantList, dispatch)
+                      }else{  
+                        this.stopAndSetLowestInitiative(participantList, dispatch);
+                          }
+
                       this.setState({isRunning:!this.state.isRunning});
+                      await this.setState({showMonsterMap: false});
+                      await componentList.sortSelectedList("monster","lastInit",true);
+                      await this.setState({showMonsterMap: true});
+                      
                     }}>
                     <div 
                     
@@ -199,24 +278,49 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall,}}
                      
                     </div>
                     <img 
-                      src={back} style={{width:"20px", height:"20px", 
+                      src={playPause} style={{width:"20px", height:"20px", 
                       transform:this.state.isRunning?"":"rotate(180deg)"}} />
                     </div>
+{/* NEXT     TURN */}
+                    {this.state.isRunning &&
+                    <div className="indent-on-click" style={{marginLeft:"55px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center",
+              border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
+                    onClick={ async ()=>{
+                      if (this.state.isRunning){
+                        await this.getNextHighestInitiative(participantList, dispatch);
+                            }
+                    }}>
+                    <div
+                    style={{fontSize:styles.fonts.fontSmallest, width:"fit-content",
+                      color:styles.colors.colorWhite, }}>
+                      
+                     
+                    </div> 
+                    <div style={{fontSize:styles.fonts.fontSmall, width:"fit-content",
+                      color:styles.colors.colorWhite, }}>Next Turn</div>
+                    <img 
+                      src={forward} style={{width:"30px", height:"30px", marginLeft:"14px", 
+                      }} /> 
+                    </div>}
+
+
                 </div>
                 }
                
               
                 
                 {showMonsterMap &&
-                <div style={{marginTop:"4vh"}}>
+                <div style={{marginTop:"4vh", width:"100%",}}>
                   
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
              app={app} name={"monster"}
             cells={[
-              {custom:MonsterMapItem, props:{app:app, colors:[]}}, "delete",
+              {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},"delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
-              ]} 
+              ]}
+              
             theme={"selectByImageSmall"}
             /></div>}
 </div>       

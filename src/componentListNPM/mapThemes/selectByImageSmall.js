@@ -52,7 +52,7 @@ class SelectByImageSmall {
           
 
           delstyle:{
-            default: {color: "red", display:"flex", justifyContent:"center", alignItems:"center", marginLeft:"5px", },
+            default: {color: "red", display:"flex", justifyContent:"center", alignItems:"center", marginLeft:"5px", fontSize:"10px"},
           },
 
           linkStyle:{

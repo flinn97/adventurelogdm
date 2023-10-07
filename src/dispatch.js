@@ -45,7 +45,7 @@ export default class Dispatch extends Component {
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
           />
           </div>
-     <div style={{ width:'100%', height:"100%", padding:"2.5vmin", 
+     <div style={{ width:'100%', minHeight:"100%", padding:"2.5vmin",
       }}>
 
         {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
