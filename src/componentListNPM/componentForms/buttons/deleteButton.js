@@ -51,6 +51,7 @@ class DelButton extends Component {
                     if(this.props.onChange){
                         this.props.onChange();
                     }
+                    // this.props.app.dispatch({});
                 }}
                 >
                     {this.props.text? this.props.text: "delete"}</div>

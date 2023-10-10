@@ -294,12 +294,34 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                   fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"2c"}}> 
                   Add more to this encounter to run it. </div>
                  } 
-
+{/* NEXT     TURN */}
+{this.state.isRunning &&
+                    <div className="indent-on-click" style={{marginLeft:"45px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center", width:"fit-content",
+              border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
+                    onClick={ async ()=>{
+                      if (this.state.isRunning){
+                        
+                        await this.getNextHighestInitiative(participantList, dispatch);
+                           }
+                    }}>
+                    <div
+                    style={{fontSize:styles.fonts.fontSmallest, width:"fit-content",
+                      color:styles.colors.colorWhite, }}>
+                      
+                     
+                    </div> 
+                    <div style={{fontSize:styles.fonts.fontSmall, width:"fit-content",
+                      color:styles.colors.colorWhite, }}>Next Turn</div>
+                    <img 
+                      src={forward} style={{width:"30px", height:"30px", marginLeft:"14px", 
+                      }} /> 
+                    </div>}
               {/* RUN BUTTON */}
               {twoParty >= 2 && (
-              <div className="indent-on-click" style={{marginLeft:this.state.isRunning?"":"40px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
-              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center", position:this.state.isRunning?"absolute":"relative",
-              right:this.state.isRunning?"80px":"",
+              <div className="indent-on-click" style={{marginLeft:this.state.isRunning?"1200px":"40px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center", position:"relative",
+              
               border:this.state.isRunning?"1px solid "+styles.colors.color5:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
                     onClick={ async ()=>{
                       if (!this.state.isRunning){
@@ -327,29 +349,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                       src={playPause} style={{width:"20px", height:"20px", 
                       transform:this.state.isRunning?"":"rotate(180deg)"}} />
                     </div>)}
-{/* NEXT     TURN */}
-                    {this.state.isRunning &&
-                    <div className="indent-on-click" style={{marginLeft:"45px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
-              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center",
-              border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
-                    onClick={ async ()=>{
-                      if (this.state.isRunning){
-                        
-                        await this.getNextHighestInitiative(participantList, dispatch);
-                           }
-                    }}>
-                    <div
-                    style={{fontSize:styles.fonts.fontSmallest, width:"fit-content",
-                      color:styles.colors.colorWhite, }}>
-                      
-                     
-                    </div> 
-                    <div style={{fontSize:styles.fonts.fontSmall, width:"fit-content",
-                      color:styles.colors.colorWhite, }}>Next Turn</div>
-                    <img 
-                      src={forward} style={{width:"30px", height:"30px", marginLeft:"14px", 
-                      }} /> 
-                    </div>}
+
 
 
                 </div>
