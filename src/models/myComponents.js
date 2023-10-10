@@ -315,9 +315,9 @@ class Monster extends componentBase{
         type: "monster",
         notes: "",
         picURLs: {},
-        condition: "",
+        conditions: [""],
         parentId: "",
-
+        otherRounds:0,
     }
     
         

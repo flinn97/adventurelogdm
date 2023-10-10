@@ -5,22 +5,22 @@ import TokenImage from './tokenImage';
 import bookCursor from '../pics/bookmarklet.png';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import ac from '../pics/ac.png';
-import d20 from '../pics/d20.png';
+// import d20 from '../pics/d20.png';
 import conditionGear from '../pics/conditionGear.png';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
     super(props);
-
+    this.roundUpdated = false;
     this.state = {
       obj: undefined,
       pic: undefined,
       runEncounter: undefined,
-      //colors: props.colors || [],
       encounterId: undefined,
-      // turnNumber: props.turnNumber,
-      roundCount: 0,
-    };}
+      showConditions: true
+      
+    };
+    }
 
     convertToLink = (statBlockLink) => {
     
@@ -30,18 +30,94 @@ export default class MonsterMapItem extends Component {
       return statBlockLink;
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps, prevState) {
     if (prevProps.colors !== this.props.colors) {
       // Update state if prop changes
       this.setState({ colors: this.props.colors });
-    }
-  }
+    };
 
+    const currentTurn = this.props.app.state.currentTurn;
+    const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
+
+    if (this.props.obj && this.props.obj.getJson().conditions && this.props.obj.getJson().conditions[0] === "") {
+      let jsonObj =  await this.props.obj.getJson();
+      jsonObj.otherRounds = 0;
+      this.props.obj.setJson(jsonObj);
+    }
+
+    if (currentTurn === 99999) {
+      // Reset all round counters to 0
+      let jsonObj =  await this.props.obj.getJson();
+      if (jsonObj.conditions) {
+        jsonObj.conditions.forEach((condition) => {
+          const roundKey = `${condition}Rounds`;
+          jsonObj[roundKey] = 0;
+        });
+      }
+      jsonObj.otherRounds = 0;
+      this.props.obj.setJson(jsonObj);
+      this.roundUpdated = false;
+    } else if (currentTurn === lastInitAsNumber && !this.roundUpdated) {
+      // Increment round counters
+      let jsonObj =  await this.props.obj.getJson();
+      if (jsonObj.conditions) {
+        jsonObj.conditions.forEach((condition) => {
+          const roundKey = `${condition}Rounds`;
+          if (jsonObj[roundKey] !== undefined) {
+            jsonObj[roundKey] += 1;
+          } else {
+            jsonObj[roundKey] = 1; // Initialize if not present
+          }
+        });
+        if (jsonObj.otherRounds !== undefined) {
+          jsonObj.otherRounds += 1;
+        } else {
+          jsonObj.otherRounds = 1; // Initialize if not present
+        }
+        this.props.obj.setJson(jsonObj);
+      }
+      this.roundUpdated = true;
+    } else if (currentTurn !== lastInitAsNumber) {
+      this.roundUpdated = false; // Reset flag
+    }
+  };
+
+  handleClickWord = (word) => {
+    this.setState({ showConditions: false });
+    
+    let jsonObj = this.props.obj.getJson();
+    let conditions = jsonObj.conditions || [];
+    const index = conditions.indexOf(word);
+    
+    if (index === -1) {
+      // Word not in array, insert it at position 1 or later
+      conditions.splice(1, 0, word);
+      jsonObj[`${word}Rounds`] = 0;
+    } else {
+      // Word already in array, remove it
+      conditions.splice(index, 1);
+      delete jsonObj[`${word}Rounds`];
+    }
+    
+     // Filter out "<ParentFormComponent />"
+     conditions = conditions.filter(item => String(item) !== String(<ParentFormComponent />));
+     
+     const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
+     if (this.props.app.state.currentTurn === lastInitAsNumber) {
+      jsonObj[`${word}Rounds`] = 0;
+     }
+      // Update the JSON object
+      jsonObj.conditions = conditions;
+      this.props.obj.setJson(jsonObj);
+
+      this.setState({ showConditions: true });
+  };
+  
 
   render() {
     
     let app = this.props.app;
-    let dispatch = app.dispatch;
+    // let dispatch = app.dispatch;
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
@@ -71,7 +147,7 @@ export default class MonsterMapItem extends Component {
               let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem", fontSizeRemTiny+"rem"]
     
               const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
-              const roundCount = this.state.roundCount;
+              // const roundCount = this.state.roundCount;
 
 
               let animateGradient  =   state.currentTurn === lastInitAsNumber ?"linear-gradient(90deg, "+styles.colors.color2+"00, "+styles.colors.color7+"22, "+styles.colors.color2+"00)":""
@@ -79,7 +155,8 @@ export default class MonsterMapItem extends Component {
               const otherWord =( 
               
               <ParentFormComponent 
-              obj={this.props.obj} name="condition" prepareRun={true} maxLength={22} placeholder={"Add you own"}
+              obj={this.props.obj} isPropArray={true} name="conditions" prepareRun={true} maxLength={22} placeholder={"Add your own"}
+              
                inputStyle={{
                 width:"250px",
                 color: styles.colors.colorWhite,
@@ -115,27 +192,31 @@ export default class MonsterMapItem extends Component {
                 "Dead",
               ];
 
+              const activeConList = [...this.props.obj.getJson().conditions];
+              const maxCon = this.props.obj.getJson().conditions[0]===""?13:12;
+
+
     return (
      
-      <div style={{overflow:"visible",}}>
+      <div style={{minWidth: "100%", overflow:"visible", alignSelf:"flex-start", justifySelf:"flex-start", position: "relative", left:0}}>
       <div className={state.currentTurn === lastInitAsNumber ? "gradient-animation" : ""}
       style={{
         minWidth: "100%", borderRadius:"22px", 
-        height:"fit-content", marginRight:"20px",
+        height:"fit-content",
       }}>
         
       <div
       // to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
-        height: "fit-content", overflow:"visible",
+        height: "fit-content", overflow:"visible", 
        }}
       > 
 
       <div style={{display: "flex", flexDirection: 'column', 
       borderRadius:styles.popupSmall.borderRadius,
       border:"", verticalAlign:"center",
-      justifyContent:"left",  position:"absolute",
+      justifyContent:"center",  position:"absolute",
       zIndex:"0",
       height: 'fit-content', 
       width: 'fit-content',
@@ -165,7 +246,15 @@ export default class MonsterMapItem extends Component {
                                         flexDirection: "column",
                                         textAlign: "center", fontSize:fontSize[0],
                                         
-                                        }}/></div>
+                                        }}/>
+                          {/* {state.currentTurn === 9999 &&
+                                        <div
+                                        style={{alignItems:"center", display:"flex", position:"absolute", marginBottom:"-88px",
+                                        marginLeft:"", alignSelf:"center", alignContent:"center", textAlign:"center", 
+                                         fontSize:styles.fonts.fontSmallest, color:styles.colors.colorWhite+"1c"}}
+                                        >Initiative</div>} */}
+
+                                        </div>
 
 
 {obj?.getJson().statBlockLink !== "" && obj?.getJson().statBlockLink !== undefined &&
@@ -185,16 +274,16 @@ export default class MonsterMapItem extends Component {
                           <div        title="Name"         
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, 
-                          width:"390px", alignSelf:"center",  marginLeft:"-11px",
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,  marginRight:".5vw",
+                          width:"300px", alignSelf:"center",  marginLeft:"-11px",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
                          }}>
                            <ParentFormComponent obj={this.props.obj} name="name"
                             prepareRun={true} maxLength={30}
                             //placeholder={obj?.getJson().hp}
-                              inputStyle={{minWidth:"390px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", 
-                              fontSize:fontSize[0],
-                              borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
+                              inputStyle={{minWidth:"300px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", 
+                              fontSize:fontSize[0], 
+                              borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
                               }}
                            style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
                           </div>
@@ -207,7 +296,7 @@ export default class MonsterMapItem extends Component {
                               alignSelf: "center",
                               alignItems: "center",
                               justifyContent: "center",
-                              flexDirection: "column",
+                              flexDirection: "column", marginBottom:"20px",
                               textAlign: "center",
                             }}
                           >
@@ -218,7 +307,7 @@ export default class MonsterMapItem extends Component {
                             prepareRun={true} maxLength={2}
                             //placeholder={obj?.getJson().hp}
                               inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", fontSize:fontSize[0],
-                              borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
+                              borderRadius:"4px", background: styles.colors.color2+"00", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
                               }}
                            style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
 
@@ -232,7 +321,7 @@ export default class MonsterMapItem extends Component {
                               alignSelf: "center",
                               alignItems: "center",
                               justifyContent: "center",
-                              flexDirection: "column",
+                              flexDirection: "column", marginBottom:"20px",
                               textAlign: "center",
                             }}
                           >
@@ -243,7 +332,7 @@ export default class MonsterMapItem extends Component {
                           //placeholder={obj?.getJson().hp}
                              inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
                              height:"1.7rem", rows:"1", fontSize:fontSize[0],
-                             borderRadius:"4px",background:"#aaaaaa00", borderWidth:"0px", alignItems:"center",
+                             borderRadius:"4px", background: styles.colors.color2+"00", borderWidth:"0px", alignItems:"center",
                              textAlign:"center",justifyContent:"center",}}
                             style={{ alignSelf: "center", fontSize: fontSize[0], }}/>
 
@@ -256,7 +345,7 @@ export default class MonsterMapItem extends Component {
                               height: "fit-content",
                               width: "fit-content",
                               alignSelf: "center",
-                              alignItems: "center",
+                              alignItems: "center", marginBottom:"20px",
                               justifyContent: "center",
                               flexDirection: "column",
                               textAlign: "center",
@@ -264,7 +353,7 @@ export default class MonsterMapItem extends Component {
                             }}
                           >
                             <div  style={{ alignSelf: "flex-start", 
-                            fontSize: fontSize[0], marginLeft:"1vw", marginTop:"-6px",
+                            fontSize: fontSize[0], marginLeft:".5vw", marginTop:"-6px",
                             }}>Notes</div>
 
                             <ParentFormComponent obj={this.props.obj} name="notes"
@@ -274,25 +363,25 @@ export default class MonsterMapItem extends Component {
                              inputStyle={{
                              padding: "3px 3px",
                              color: styles.colors.colorWhite,
-                             marginLeft: "1vw", 
+                             marginLeft: "8px", 
                              height: "1.7rem",
-                             maxHeight:"20px",
+                             maxHeight:"25px",
                              fontSize: fontSize[2],
                              borderRadius: "4px",
-                             background: "#aaaaaa00",
+                             background: styles.colors.color2+"5c",
                              borderWidth: "0px",
                              textAlign: "flex-start",
                              justifyContent: "center",
                              whiteSpace: "normal",
-                            
+                              minWidth:"260px",
                              resize: "both"}}
                             />
 
                           </div>
 
 
-                          <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest, 
-                      width:"500px", marginLeft:".2vw"}}>
+                          <div style={{display:"flex",color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest, flexDirection:"row",
+                      width:"600px", marginLeft:"-9px"}}>
 
 {/* CONDITION */}
         <div className="hover-container"
@@ -300,34 +389,85 @@ export default class MonsterMapItem extends Component {
         > 
         <div style={{...styles.buttons.buttonAdd, padding:"2px 8px",}}>
           <img src={conditionGear}
-          style={{width:"35px", }}/>
+          style={{width:"32px", }}/>
         </div>
           <div className="hover-div" style={{display: 'flex', flexWrap: 'wrap', position:"absolute", maxWidth:"fit-content"}}>
+
+            {this.state.showConditions===true &&
             <div 
-            style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", left:"-20vw", top:"-.99vh", borderRadius:"22px",
+            style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", top:"-.99vh", borderRadius:"22px", marginLeft:"-26vw",
             position:"absolute", background:styles.colors.color1, padding:"4px 8px", justifyContent:"space-evenly" }}>
               {conList.map((word, index) => (
-                <div className="hover-bubble" key={index} style={{
+                
+                <div 
+                onClick={() => 
+                  this.handleClickWord(word)}
+                
+                className="hover-bubble" key={index} style={{
                   display: 'flex', maxHeight:"30px", 
                   padding: '6px', width:"fit-content",
-                  marginLeft: (word=="Dead"?"1vw":"2px"), 
-                  marginTop:"3px",
+                  marginLeft: (word==="Dead"?"1vw":"2px"), 
+                  marginTop:"2px",cursor:"pointer",
                   borderRadius: '12px', 
                   fontSize:styles.fonts.fontSmallest,
                   color:styles.colors.colorWhite,
-                  fontWeight: (word=="Dead"?"600":"300"),
-                  backgroundColor: (word=="Dead"?styles.colors.color6+"e4":styles.colors.color2),
+                  textAlign:"center", verticalAlign:"center",
+                  border: (this.props.obj.getJson().conditions.includes(word)  ? '1px solid '+styles.colors.color3 : 'none'),
+
+                  fontWeight: (word==="Dead"?"600":"300"),
+                  backgroundColor: (word==="Dead"?styles.colors.color6+"e4":styles.colors.color2),
                   boxShadow: '0 1px 1px '+styles.colors.colorBlack,
-                  alignSelfSelf: (word=="Dead"?"flex-end":"")
+                  alignSelfSelf: (word==="Dead"?"flex-end":"")
                 }}>
                   {word}
                 </div>
               ))}
-            </div>
+            </div>}
+
+           
+
           </div>
+
+
+
+
         </div>
-                                  
-                          </div>
+                        {/* {{ACTIVE CONDITIONS}} */}
+                        {this.props.obj.getJson().conditions.length >= 1 &&
+                        <div style={{display: 'flex', flexWrap: 'wrap',  width:"fit-content", opacity:"79%", 
+                        alignContent:"flex-start", marginLeft:"3px",
+                        color:styles.colors.colorWhite, flexDirection:"column", width:"100%",
+                        maxHeight:"112px",
+                        padding:"0px 4px",}}>
+                        {activeConList.slice(0, maxCon).map((word, index) => (
+                          <div style={{display: 'flex', flexDirection:"row", justifyContent:"flex-start", alignSelf:"flex-start", maxWidth:"240px",}}>
+                            {word && word!=="" &&
+                            <div  key={index}
+                            style={{
+                              fontSize:fontSize[1], textAlign:"flex-start",
+                              width:"fit-content", padding:word==="Dead"?"2px 8px":"2px", 
+                              alignSelf:"flex-end", alignSelf:"flex-end",
+                              color:word==="Dead"?styles.colors.color5:styles.colors.colorWhite,
+                              fontWeight: word==="Dead"?600:200,
+                              borderRadius:"11px",
+                              border:  word==="Dead"?"1px solid "+styles.colors.color6:"",
+                              
+                               }}>
+                              {word}
+                            </div>}
+
+                              <div style={{
+                              fontSize:fontSize[2], alignSelf:"center",
+                              
+                            width:"fit-content", marginRight:"32px", marginLeft:"8px", opacity:word==="Dead"?"0%":"70%",
+                              }}>
+                              {word && word !== "" && word !== this.props.obj.getJson().conditions[0] ? "(" + this.props.obj.getJson()[`${word}Rounds`] + ")" : ""}
+                                  {word && word !== "" && word === this.props.obj.getJson().conditions[0] ? "(" + this.props.obj.getJson().otherRounds + ")" : ""}
+                              </div>
+
+                            </div>))}
+                          </div>   }      
+        </div>
                                          
 
                 </div>

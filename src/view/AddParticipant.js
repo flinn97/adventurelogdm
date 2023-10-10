@@ -206,8 +206,8 @@ transitionDuration:"9000ms"
               app={app} 
               text={"Add to Encounter"} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
-              callBack={(obj) => {
-                dispatch({
+              callBack={ async (obj) => {
+                await dispatch({
                   popUpSwitchcase: "",
                   currentComponent: undefined,
                 });

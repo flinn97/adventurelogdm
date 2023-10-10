@@ -60,15 +60,16 @@ export default class Encounter extends Component {
     return newId;
   }
 
-  componentWillUnmount(){
-    let dispatch = this.props.app.dispatch;
-    this.setState({ currentTurn: 9999 });
-    dispatch({ currentTurn: 9999 })
-    this.currentIndex = -1; 
-  }
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.state.currentTurn !== prevState.currentTurn) {
+      await this.setState({showMonsterMap: false});
+      await this.setState({showMonsterMap: true})
+    }
+  }  
+  
 
   getNextHighestInitiative = (participantList, dispatch) => {
-    const sortedList = participantList.sort((a, b) => {
+    const sortedList = [...participantList].sort((a, b) => {
       return parseInt(b.getJson().lastInit, 10) - parseInt(a.getJson().lastInit, 10);
     });
    
@@ -77,7 +78,7 @@ export default class Encounter extends Component {
       this.setState({ currentTurn: highestLastInit });
       dispatch({ currentTurn: highestLastInit });
       this.currentIndex = 0; // Set to the first index
-      console.log("Highest Last Init set to:", highestLastInit);
+      // console.log("Highest Last Init set to:", highestLastInit);
       return;
     }
   
@@ -90,15 +91,49 @@ export default class Encounter extends Component {
   };
 
   stopAndSetLowestInitiative = (participantList, dispatch) => {
-    // const sortedList = participantList.sort((a, b) => {
-    //   return parseInt(a.getJson().lastInit, 10) - parseInt(b.getJson().lastInit, 10);
-    // });
-    
-    // const lowestLastInit = parseInt(sortedList[participantList.length-1].getJson().lastInit, 10);
     this.setState({ currentTurn: 9999 });
     dispatch({ currentTurn: 9999 });
     this.currentIndex = -1; // Set to the first index
+    
+    participantList.forEach(participant => {
+      let jsonObj = participant.getJson();
+      jsonObj.conditions = [""]
+      // Set [name]Rounds keys to 0
+      Object.keys(jsonObj).forEach(key => {
+        if (key.endsWith('Rounds')) {
+          jsonObj[key] = 0;
+        }
+      });
+  
+      // Set otherRounds to 0
+      jsonObj.otherRounds = 0;
+      participant.setJson(jsonObj);
+    });
   };
+
+  componentWillUnmount(){
+    let dispatch = this.props.app.dispatch;
+    this.setState({ currentTurn: 9999 });
+    dispatch({ currentTurn: 9999 })
+    this.currentIndex = -1; 
+
+    let participantList = this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId");
+
+    participantList.forEach(participant => {
+      let jsonObj = participant.getJson();
+      jsonObj.conditions = [""]
+      // Set [name]Rounds keys to 0
+      Object.keys(jsonObj).forEach(key => {
+        if (key.endsWith('Rounds')) {
+          jsonObj[key] = 0;
+        }
+      });
+  
+      // Set otherRounds to 0
+      jsonObj.otherRounds = 0;
+      participant.setJson(jsonObj);
+    });
+    };
 
 
   render() {
@@ -114,14 +149,14 @@ export default class Encounter extends Component {
     let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
     const playPause = this.state.isRunning?pause:back;
-    const participantList = state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId");
-
+    const participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
+    const twoParty = participantList.length;
 
 
     return (
-      <div style={{width:"100%", height:"100%", marginBottom:"33vh"}}>
+      <div style={{width:"100%", height:"100%", marginBottom:"45vh"}}>
             <div style={{color: styles.colors.colorWhite,
-              ...styles.backgroundContent, 
+              ...styles.backgroundContent,
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
           }}>
 
@@ -218,7 +253,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
 
           
           
-<div style={{color:styles.colors.colorWhite, width:"100%",}}>
+<div style={{color:styles.colors.colorWhite, width:"100%", height:"100%", }}>
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
             &&  
             <div style={{padding:"22px"}}>
@@ -229,12 +264,14 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
             {showMonsterMap && 
               <div  style={{display:"flex", flexDirection:"row", width:"100%", 
               backgroundColor:styles.colors.color7+"55", height:"60px", paddingTop:"4px", borderRadius:"12px",
-              marginTop:"20px", marginBottom:"-60px"}}>
-                {/* {!this.state.isRunning && */}
+              marginTop:"20px",}}>
+
+                
+                {twoParty >= 2 && (
                 <div 
                 title="Sort"
                   style={{ opacity:"87%",  cursor:"pointer", alignItems:"center", display:"flex",
-                  marginLeft:"59px",
+                  marginLeft:"19px",
                    fontSize:styles.fonts.fontSmallest, color:styles.colors.color3}}
                   onClick={ async ()=>{
                     await this.setState({showMonsterMap: false});
@@ -250,15 +287,24 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                     width:"25px", 
                     }}/>  
                 </div>
-                {/* } */}
+                 )
+                 ||
+                 <div style={{ alignItems:"center", display:"flex",
+                 marginLeft:"19px", alignSelf:"center", alignContent:"center", textAlign:"center", 
+                  fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"2c"}}> 
+                  Add more to this encounter to run it. </div>
+                 } 
 
               {/* RUN BUTTON */}
-              <div className="indent-on-click" style={{marginLeft:"15px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
-              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center",
-              border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
+              {twoParty >= 2 && (
+              <div className="indent-on-click" style={{marginLeft:this.state.isRunning?"":"40px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+              textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center", position:this.state.isRunning?"absolute":"relative",
+              right:this.state.isRunning?"80px":"",
+              border:this.state.isRunning?"1px solid "+styles.colors.color5:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
                     onClick={ async ()=>{
                       if (!this.state.isRunning){
                         this.getNextHighestInitiative(participantList, dispatch)
+ 
                       }else{  
                         this.stopAndSetLowestInitiative(participantList, dispatch);
                           }
@@ -280,16 +326,17 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                     <img 
                       src={playPause} style={{width:"20px", height:"20px", 
                       transform:this.state.isRunning?"":"rotate(180deg)"}} />
-                    </div>
+                    </div>)}
 {/* NEXT     TURN */}
                     {this.state.isRunning &&
-                    <div className="indent-on-click" style={{marginLeft:"55px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
+                    <div className="indent-on-click" style={{marginLeft:"45px", cursor:"pointer", display:"flex", justifyContent:"space-evenly", 
               textAlign:"center",verticalAlign:"center", height:"fit-content", alignSelf:"center",
               border:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
                     onClick={ async ()=>{
                       if (this.state.isRunning){
+                        
                         await this.getNextHighestInitiative(participantList, dispatch);
-                            }
+                           }
                     }}>
                     <div
                     style={{fontSize:styles.fonts.fontSmallest, width:"fit-content",
@@ -311,16 +358,17 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
               
                 
                 {showMonsterMap &&
-                <div style={{marginTop:"4vh", width:"100%",}}>
+                <div style={{marginTop:"28px", width:"100%", marginBottom:"24vh", }}>
                   
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
              app={app} name={"monster"}
             cells={[
-              {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},"delete",
+              {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
+              "delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]}
-              
+            
             theme={"selectByImageSmall"}
             /></div>}
 </div>       

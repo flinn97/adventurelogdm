@@ -152,25 +152,56 @@ class ParentFormComponent extends Component {
      * @param {*} event 
      */
     handleChange = async (event) => {
-        debugger
-        const { name, value } = event.target
-        for(const key in this.state.obj){
-            this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:value});
-            if(this.props.cleanPrepareRun){
-                this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
+        debugger;
+        const { name, value } = event.target;
+        
+        if (this.props.isPropArray) {
+            //OVERWRITE [0] ALWAYS
+          for (const key in this.state.obj) {
+            let currentVal = this.state.obj[key].getJson()[this.props.name] || [];
+            if (!Array.isArray(currentVal)) {
+              currentVal = [currentVal];
             }
-            if(this.props.prepareRun){
-                this.state.obj[key].getOperationsFactory().prepareRun({update:this.state.obj});
+            if (!Array.isArray(currentVal[0])) {
+                currentVal[0] = [currentVal[0]];
             }
-            if(this.props.sendUpdate &&this.props.app){
-                this.props.app.dispatch({formUpdate:this.props.type})
+            currentVal[0]= value;
+      
+            this.state.obj[key].setJson({
+              ...this.state.obj[key].getJson(),
+              [this.props.name]: currentVal,
+            });
+      
+            if (this.props.cleanPrepareRun) {
+              this.state.obj[key].getOperationsFactory().cleanPrepareRun({ update: this.state.obj });
             }
+            if (this.props.prepareRun) {
+              this.state.obj[key].getOperationsFactory().prepareRun({ update: this.state.obj });
+            }
+            if (this.props.sendUpdate && this.props.app) {
+              this.props.app.dispatch({ formUpdate: this.props.type });
+            }
+          }
+        } else {
+          for (const key in this.state.obj) {
+            this.state.obj[key].setJson({
+              ...this.state.obj[key].getJson(),
+              [this.props.name]: value,
+            });
+      
+            if (this.props.cleanPrepareRun) {
+              this.state.obj[key].getOperationsFactory().cleanPrepareRun({ update: this.state.obj });
+            }
+            if (this.props.prepareRun) {
+              this.state.obj[key].getOperationsFactory().prepareRun({ update: this.state.obj });
+            }
+            if (this.props.sendUpdate && this.props.app) {
+              this.props.app.dispatch({ formUpdate: this.props.type });
+            }
+          }
         }
-       
-       
-        // this.setState({obj:this.state.obj});
+      };
 
-    }
     /**
      * update a value all at once. Same as handleHTMLChange but made to me more generic in clase the html change needs to be more complicated.
      * @param {} value 
@@ -240,7 +271,19 @@ class ParentFormComponent extends Component {
             placeholder={this.props.placeholder} 
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
             name={this.props.name} 
-             value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
+            //TAYLOR
+            value={
+                !this.state.obj ? "" :
+                (this.props.isPropArray && 
+                 this.state.obj[0] && 
+                 this.state.obj[0].getJson() && 
+                 this.state.obj[0].getJson()[this.props.name] ?
+                 this.state.obj[0].getJson()[this.props.name][0] :
+                 this.state.obj[0] && 
+                 this.state.obj[0].getJson() ? 
+                 this.state.obj[0].getJson()[this.props.name] : 
+                 "")
+              }
             min={this.props.min}
             max={this.props.max}
             autoComplete={this.props.autoComplete}
