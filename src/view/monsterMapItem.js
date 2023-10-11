@@ -49,7 +49,7 @@ export default class MonsterMapItem extends Component {
       // Reset all round counters to 0
       let jsonObj =  await this.props.obj.getJson();
       if (jsonObj.conditions) {
-        jsonObj.conditions.forEach((condition) => {
+        jsonObj.conditions.slice(1).forEach((condition) => {
           const roundKey = `${condition}Rounds`;
           jsonObj[roundKey] = 0;
         });
@@ -61,7 +61,7 @@ export default class MonsterMapItem extends Component {
       // Increment round counters
       let jsonObj =  await this.props.obj.getJson();
       if (jsonObj.conditions) {
-        jsonObj.conditions.forEach((condition) => {
+        jsonObj.conditions.slice(1).forEach((condition) => {
           const roundKey = `${condition}Rounds`;
           if (jsonObj[roundKey] !== undefined) {
             jsonObj[roundKey] += 1;
@@ -101,7 +101,7 @@ export default class MonsterMapItem extends Component {
     
      // Filter out "<ParentFormComponent />"
      conditions = conditions.filter(item => String(item) !== String(<ParentFormComponent />));
-     
+
      const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
      if (this.props.app.state.currentTurn === lastInitAsNumber) {
       jsonObj[`${word}Rounds`] = 0;
@@ -111,6 +111,7 @@ export default class MonsterMapItem extends Component {
       this.props.obj.setJson(jsonObj);
 
       this.setState({ showConditions: true });
+      this.props.app.dispatch({});
   };
   
 
@@ -385,7 +386,7 @@ export default class MonsterMapItem extends Component {
 
 {/* CONDITION */}
         <div className="hover-container"
-          style={{ width:"fit-content",}}
+          style={{ width:"fit-content", height:"fit-content"}}
         > 
         <div style={{...styles.buttons.buttonAdd, padding:"2px 8px",}}>
           <img src={conditionGear}
@@ -401,7 +402,11 @@ export default class MonsterMapItem extends Component {
                 
                 <div 
                 onClick={() => 
-                  this.handleClickWord(word)}
+                 
+                  this.handleClickWord(word)
+                  
+                  }
+                  
                 
                 className="hover-bubble" key={index} style={{
                   display: 'flex', maxHeight:"30px", 
