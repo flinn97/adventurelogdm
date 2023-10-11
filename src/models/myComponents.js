@@ -305,7 +305,6 @@ class Monster extends componentBase{
        
     }
     json= {
-        
         name: "",
         initiative: "",
         ac: "",
@@ -315,9 +314,24 @@ class Monster extends componentBase{
         type: "monster",
         notes: "",
         picURLs: {},
-        conditions: [""],
+        color: {primary: "#000000", color_0: "#FFFFFF", color_1:"teal"},
+        primaryColor: "#000000",
+        color0: "blue",
+        color1: "red",
+        conditions: {},
         parentId: "",
         otherRounds:0,
+    }
+
+    setColor(input){
+        let keys = Object.keys(this.json.color); // ["selectedInput_1", "selectedInput_2", "selectedInput_3"]
+        let newKey = "color_" + keys.length; //selectedInput_4
+        this.json.color[newKey] = input;
+    }
+    getColorList(){
+        let con = this.json.color;
+        let list = Object.values(con); // ["sick", "slowed", "encumbered"]
+        return list;
     }
     
         

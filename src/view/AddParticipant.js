@@ -127,14 +127,14 @@ transitionDuration:"9000ms"
         changePic={ async (pic) => {
           await this.setState({pic:pic});
           let colors = colorService.updateColors(pic, (palette) => {
-            this.setState({colors: palette});
+            // this.setState({colors: palette});
         });
         }} 
         updateMap={ async (obj) => {
           const pic = obj?.getJson().pic;
           await this.setState({completedPic: pic});
           let colors = await colorService.updateColors(pic, (palette) => {
-          this.setState({colors: palette});
+          // this.setState({colors: palette});
         });
         }} 
         app={app}/>
@@ -172,7 +172,7 @@ transitionDuration:"9000ms"
               placeholder={"ie: "+randomAC}/> 
 
       <ParentFormComponent app={app} name="hp" label="HP" 
-            wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+            wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex", flexDirection:"column"}}
                     theme={"adventureLog"} rows={1}
                     maxLength={5}
                     labelStyle={{marginBottom:"8px",}}
@@ -207,6 +207,14 @@ transitionDuration:"9000ms"
               text={"Add to Encounter"} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
               callBack={ async (obj) => {
+                //conditionService.js
+                // let conditionss = conditionService.getConditions();
+                // for(let condition of conditions)
+                // {
+                //   condition.setCompState({monsterId: obj.getJson()._id});
+                //   state.opps.jsonPrepare({addcondition: condition});
+                // }
+                // state.opps.run();
                 await dispatch({
                   popUpSwitchcase: "",
                   currentComponent: undefined,

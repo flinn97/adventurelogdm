@@ -43,9 +43,14 @@ class ParentFormComponent extends Component {
             }
             if(this.props.prepareRun){
                 this.state.obj[key].getOperationsFactory().prepareRun({update:this.state.obj});
+
             }
               this.setState();
 
+          }
+
+          if (this.props.callbackFunc){
+            this.props.callbackFunc(this.state.obj)
           }
           
           if(this.props.sendUpdate &&this.props.app!==undefined){

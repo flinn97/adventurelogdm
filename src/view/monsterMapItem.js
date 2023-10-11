@@ -192,7 +192,7 @@ export default class MonsterMapItem extends Component {
 
                 "Dead",
               ];
-
+              // const activeConList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterID")
               const activeConList = [...this.props.obj.getJson().conditions];
               const maxCon = this.props.obj.getJson().conditions[0]===""?13:12;
 

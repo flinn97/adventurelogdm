@@ -15,11 +15,14 @@ export default class NoteMapItem extends Component {
     
   }
 
-  componentDidMount(){
-    // let component = this.props.app.state.componentList.getComponent("newNote");
-    // let bodyText = document.getElementById("bodyText");
-    // bodyText.innerHTML = component.getJson().text;
-   
+  componentDidUpdate(props){
+
+    if (this.props.obj.getJson().text && this.props.obj.getJson().text.length < 300) {
+          let body = this.props.obj.getJson().text.substring(0, 115)+'...'
+          let bodyText = document.getElementById("textBody");
+          bodyText.innerHTML = body;
+    }
+
   }
 
  
@@ -37,8 +40,8 @@ export default class NoteMapItem extends Component {
           }else{
             highlightBackground = ""
           }
-
-    let body = this.props.obj.getJson().text.substring(0, 115)+'...'
+    
+    
    
 //console.log(this.props.obj.getJson().text.length) 
 
@@ -59,14 +62,14 @@ export default class NoteMapItem extends Component {
       {this.props.obj.getJson().title}
         </div>
 
-              <div
+              <div id={"textBody"}
               style={{ marginBottom: "2px", 
               fontSize: styles.fonts.fontSmallest, 
               color: styles.colors.colorWhite, lineHeight:"1em", maxHeight:"3.5em",
               width: "17vw", wordWrap:"break-word",
               overflow:"hidden"
                 }}>
-          {body}
+          
                 </div>
                
         </div>

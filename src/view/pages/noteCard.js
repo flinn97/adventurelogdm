@@ -113,7 +113,7 @@ class MainContent extends Component{
       <>
       <ParentFormComponent app={app} obj={state.currentComponent}
                   theme={"adventureLog"} 
-                  
+                  prepareRun={true}
                   maxLength={85}
                   inputStyle={{maxWidth:"65.5vw", width:"65.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%",
@@ -126,7 +126,17 @@ class MainContent extends Component{
       <ParentFormComponent app={app} obj={state.currentComponent}
                   theme={"adventureLog"} 
                   rows={5}
-                  
+                  callbackFunc={ (comp) => {
+                    comp=comp[0];
+                    debugger
+                    
+                    let body = comp.getJson().text.substring(0, 115)+'...'
+                    let bodyText = document.getElementById("textBody");
+                    if (bodyText) {
+                    bodyText.innerHTML = body;
+                  };
+                  }}
+                  prepareRun={true}
                   inputStyle={{maxWidth:"65.5vw !important", width:"65.5vw", padding:"4px 9px", color:styles.colors.colorWhite, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", marginBottom:"2vh", height:"100%",
                   textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontNormal,border:"solid 1px "+styles.colors.colorWhite+"22", }}

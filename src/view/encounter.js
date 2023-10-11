@@ -364,7 +364,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
              app={app} name={"monster"}
             cells={[
-              {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
+              // {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
               "delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]}

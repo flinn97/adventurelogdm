@@ -22,7 +22,7 @@ export default class TokenImage extends Component {
 
       await colorService.updateColors(this.props.pic,(palette) => {
         this.setState({
-          colors: palette,
+          // colors: palette,
           width: this.props.width
         }, 
         () => console.log(this.state.colors))
@@ -36,10 +36,12 @@ export default class TokenImage extends Component {
     await colorService.updateColors(this.props.pic,(palette) => {
       this.setState(prevState => ({
         ...prevState,
-        colors: palette,       
+        // colors: palette,       
         width: this.props.width
         
-      }), this.props.obj.setCompState({colors: palette, pic: this.props.pic}), () => console.log(this.state.colors))
+      }), this.props.obj.setCompState({
+        // colors: palette,
+         pic: this.props.pic}), () => console.log(this.state.colors))
     });
   };
 
