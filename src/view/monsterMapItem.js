@@ -31,62 +31,30 @@ export default class MonsterMapItem extends Component {
       return statBlockLink;
   }
 
-  async componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.obj.getJson(), this.props.obj.getJson())) {
-      this.setState({ colors: this.props.obj.getJson().colors });
-    };
-
-    // let encounter = this.props.obj.getJson().encounterId;
-    //           let componentList = this.props.app.state.componentList;
-    //           let targetComponent = await componentList.find(component => component.getJson()._id === encounter);
-    //           let currentTurn;
-    //           if (targetComponent) {
-    //             currentTurn = targetComponent.state.currentTurn;
-    //           }
-    const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
-
-    // if (this.props.obj && this.props.obj.getJson().conditions && this.props.obj.getJson().conditions[0] === "") {
-    //   let jsonObj =  await this.props.obj.getJson();
-    //   jsonObj.otherRounds = 0;
-    //   this.props.obj.setJson(jsonObj);
-    };
-
-  //   if (currentTurn === 99999) {
-  //     // Reset all round counters to 0
-  //     let jsonObj =  await this.props.obj.getJson();
-  //     if (jsonObj.conditions) {
-  //       jsonObj.conditions.slice(1).forEach((condition) => {
-  //         const roundKey = `${condition}Rounds`;
-  //         jsonObj[roundKey] = 0;
-  //       });
-  //     }
-  //     jsonObj.otherRounds = 0;
-  //     this.props.obj.setJson(jsonObj);
-  //     this.roundUpdated = false;
-  //   } else if (currentTurn === lastInitAsNumber && !this.roundUpdated) {
-  //     // Increment round counters
-  //     let jsonObj =  await this.props.obj.getJson();
-  //     if (jsonObj.conditions) {
-  //       jsonObj.conditions.slice(1).forEach((condition) => {
-  //         const roundKey = `${condition}Rounds`;
-  //         if (jsonObj[roundKey] !== undefined) {
-  //           jsonObj[roundKey] += 1;
-  //         } else {
-  //           jsonObj[roundKey] = 1; // Initialize if not present
-  //         }
-  //       });
-  //       if (jsonObj.otherRounds !== undefined) {
-  //         jsonObj.otherRounds += 1;
-  //       } else {
-  //         jsonObj.otherRounds = 1; // Initialize if not present
-  //       }
-  //       this.props.obj.setJson(jsonObj);
-  //     }
-  //     this.roundUpdated = true;
-  //   } else if (currentTurn !== lastInitAsNumber) {
-  //     this.roundUpdated = false; // Reset flag
+  // async componentDidUpdate(prevProps, prevState) {
+  //   const currentTurn = parseFloat(this.props.obj.getJson()?.currentTurn);
+  //   const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
+  
+  //   if (currentTurn === lastInitAsNumber) {
+  //     // Fetch all the conditions related to this monster
+  //     const conditionList = this.props.app.state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId");
+  
+  //     // Filter only the active conditions
+  //     const activeConList = Array.isArray(conditionList) 
+  //                           ? conditionList.filter(cond => cond.getJson().isActive === true) 
+  //                           : [];
+  
+  //     // Iterate through each active condition and update `roundsActive`
+  //     activeConList.forEach(cond => {
+  //       let conditionJson = cond.getJson();
+  //       conditionJson.roundsActive = (conditionJson.roundsActive || 0) + 1;
+  //       cond.setCompState(conditionJson);
+  //     });
+  
+  //     // Optional: Trigger a re-render or dispatch an action to update the global state
+  //     this.props.app.dispatch({});
   //   }
-  // };
+  // }
 
   handleClickWord = (word) => {
     // Hide conditions temporarily

@@ -33,9 +33,12 @@ export default class Encounter extends Component {
     let splitURL = href.split("/")
     let id = splitURL[splitURL.length-1]
     let component = this.props.app.state.componentList.getComponent("encounter", id)
-    this.setState({obj: component});
+    this.setState({obj: component, currentTurn: component.getJson().currentTurn, isRunning:component.getJson().isRunning});
     let dispatch = this.props.app.dispatch;
+    this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
+    
     dispatch({popUpSwitchcase: "",});
+
   }
 
   
@@ -60,13 +63,6 @@ export default class Encounter extends Component {
     return newId;
   }
 
-  async componentDidUpdate(prevProps, prevState) {
-    if (this.state.currentTurn !== prevState.currentTurn) {
-      // await this.setState({showMonsterMap: false});
-      // await this.setState({showMonsterMap: true})
-    }
-  }  
-  
 
   getNextHighestInitiative = (participantList, dispatch) => {
     let obj = this.state.obj;
@@ -74,6 +70,9 @@ export default class Encounter extends Component {
 
     if (obj?.getJson().currentTurn === undefined) {
       obj.setCompState({ currentTurn: this.state.currentTurn });
+      dispatch({
+        operate:"update", operation:"cleanPrepareRun", object: obj
+      })
     }
   
     const sortedList = [...participantList].sort((a, b) => {
@@ -84,11 +83,22 @@ export default class Encounter extends Component {
     if (obj?.getJson().currentTurn === "99999") {
       highestLastInit = parseInt(sortedList[0].getJson().lastInit, 10);
       obj.setCompState({ currentTurn: highestLastInit });
-      dispatch({ currentTurn: highestLastInit });
+      dispatch({
+        operate:"update", operation:"cleanPrepareRun", object: obj
+      })
+      this.setState({ currentTurn: highestLastInit});
+      
 // Set currentTurn for each participant
         participantList.forEach(participant => {
           participant.setCompState({ currentTurn: highestLastInit });
+          dispatch({
+            operate:"update", operation:"cleanPrepareRun", object: participant
+          })
         });
+      obj.setCompState({ currentIndex: "0" });
+      dispatch({
+        operate:"update", operation:"cleanPrepareRun", object: obj
+      })
       this.currentIndex = 0; // Set to the first index
       return;
     }
@@ -98,25 +108,55 @@ export default class Encounter extends Component {
     const nextHighestLastInit = parseInt(sortedList[this.currentIndex].getJson().lastInit, 10);
   
     obj.setCompState({ currentTurn: nextHighestLastInit });
-    dispatch({ currentTurn: nextHighestLastInit });
+    this.setState({ currentTurn: nextHighestLastInit});
+    dispatch({currentTurn: nextHighestLastInit,
+      operate:"update", operation:"cleanPrepareRun", object: obj
+    })
+    let p = undefined;
+
+
 
     participantList.forEach(participant => {
       participant.setCompState({ currentTurn: nextHighestLastInit });
+      if (participant.getJson().lastInit = nextHighestLastInit)
+      {
+        p = participant;
+      }
     });
+
+    let conditionList = this.props.app.state.componentList("condition", p.getJson()._id, "monsterId");
+    conditionList.forEach(condition => 
+      { 
+        let number = condition.getJson().roundsActive ++
+        condition.setCompState({roundsActive:number})
+        dispatch({
+          operate:"update", operation:"cleanPrepareRun", object: condition
+        })
+      }
+      )
   };
 
   stopInitiative = (participantList, dispatch) => {
     let obj = this.state.obj;
     let high = "99999";
     obj.setCompState({ currentTurn: high });
+    dispatch({
+      operate:"update", operation:"cleanPrepareRun", object: obj
+    })
     this.setState({ currentTurn: high});
     // dispatch({ currentTurn: 9999 });
     this.currentIndex = -1; // Set to the first index
+    // this.setCompState({currentIndex : -1})
+    // this.setState({ currentIndex : -1});
 
     participantList.forEach(participant => {
       participant.setCompState({ currentTurn: high });
+      dispatch({
+        operate:"update", operation:"cleanPrepareRun", object: participant
+      })
     });
-    
+
+    this.props.app.state.opps.run();
   };
 
 
@@ -310,14 +350,15 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
               border:obj?.getJson().isRunning?"1px solid "+styles.colors.color5:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
                     onClick={ async ()=>{
                       if (!obj?.getJson().isRunning){
-                        this.getNextHighestInitiative(participantList, dispatch)
+                        this.getNextHighestInitiative(participantList, dispatch);
                         
                       }else{  
                         this.stopInitiative(participantList, dispatch);
                           }
 
-                      // this.setState({isRunning:!isRunning});
+                      this.setState({isRunning:!obj?.getJson().isRunning});
                       obj.setCompState({ isRunning: !obj?.getJson().isRunning })
+
                       await this.setState({showMonsterMap: false});
                       await componentList.sortSelectedList("monster","lastInit",true);
                       await this.setState({showMonsterMap: true});
