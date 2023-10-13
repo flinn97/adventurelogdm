@@ -8,6 +8,8 @@ import placeholder from '../pics/dragon.jpg';
 import ColorThief from 'colorthief';
 import TokenImage from './tokenImage';
 import colorService from '../services/colorService';
+import ConditionService from '../services/conditionService';
+import idService from '../componentListNPM/idService';
 
 
 export default class AddParticipant extends Component {
@@ -46,15 +48,19 @@ export default class AddParticipant extends Component {
     
 
 const divStyle = colors?.length
-  ? {
-      background: `linear-gradient(45deg, rgb(${colors[0].join(',')}), rgb(${colors[1].join(',')}), rgb(${colors[2].join(',')}))`,
-      ...styles.backgroundContent, bordierRadius:"3vw",
-     
-    }
-  : { 
-      ...styles.backgroundContent, 
-      transition:"none",
-    };
+                        ? {
+                          background: `linear-gradient(45deg, ${colors[0]},  ${colors[1]}, ${colors[2]})`,
+                          // transition: "background ease-out 4s",
+                          ...styles.backgroundContent,
+                          transitionDelay:"0ms", transition: "all",
+                            transitionDuration:"9000ms"
+                        }
+                        : { 
+                          ...styles.backgroundContent,
+                          // transition: "background ease-out 4s",
+                          transitionDelay:"0ms", transition: "all",
+                            transitionDuration:"9000ms"
+                        };
 
   function randomFourDigitNumber() {
       let num = Math.floor(Math.random() * 9000) + 1000;
@@ -78,7 +84,7 @@ const divStyle = colors?.length
 
     function pickName() {
       // Array of names
-      let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Anxious Warrior", "Barbalang", "Violinist Devil", "Hedgehog Demon", "Sir Dante Rabbitlord", "Duke Dean", "Clifford the Floofy Giant"];
+      let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Undead Druid", "Anxious Warrior", "Barbalang", "Violinist Devil", "Hedgehog Demon", "Sir Dante Rabbitlord", "Duke Dean", "Clifford the Floofy Giant"];
       let randomNumber = Math.floor(Math.random() * (names.length));
       let chosenName = names[randomNumber];
 
@@ -95,8 +101,24 @@ const divStyle = colors?.length
       return chosenLink;
     }
 
+    function pickNote () {
+      
+      let notes =[
+        "This monster is hiding in a barrel.",
+         "You can put little reminders for the monster here, you can edit them later.",
+          "You can put little reminders for the monster here, you can edit them later.",
+           "Don't roll initiative. Doesn't arrive until round 4.",];
+      let randomNumber2 = Math.floor(Math.random() * (notes.length));
+      let chosenNote = notes[randomNumber2];
+
+      return chosenNote;
+    }
+
 let creature = pickName();
 let linkExample = pickLink();
+let noteExample = pickNote();
+
+const getColors = app.state.currentComponent.getColorList();
 
     return (
      
@@ -107,7 +129,7 @@ let linkExample = pickLink();
  <div style={{display: "flex", width:"100%", flexDirection:"column", padding:"22px", justifyContent:"right",...styles.popupSmall,
 background:styles.colors.color1+"bb", borderWidth:"3px",
 
-borderColor:colors?.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,
+borderColor:this.state.colors?.length?colors[1]: styles.popupSmall.border,
 transitionDelay:"0ms", transition: "all",
 transitionDuration:"9000ms"
 }}>
@@ -119,25 +141,45 @@ transitionDuration:"9000ms"
 
 <div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
 
-    <TokenImage pic={this.state.pic} app={app} width={110} colors={this.state.colors}/>
+    <TokenImage pic={this.state.pic} app={app} width={110} colors={colors}/>
 
-      <Upload text={"Choose an image"} 
-        update={true} obj={app.state.currentComponent} 
-        skipUpdate={true}  colors={this.state.colors}
-        changePic={ async (pic) => {
-          await this.setState({pic:pic});
-          let colors = colorService.updateColors(pic, (palette) => {
-            // this.setState({colors: palette});
-        });
-        }} 
-        updateMap={ async (obj) => {
-          const pic = obj?.getJson().pic;
-          await this.setState({completedPic: pic});
-          let colors = await colorService.updateColors(pic, (palette) => {
-          // this.setState({colors: palette});
-        });
-        }} 
-        app={app}/>
+              <Upload
+            text={"Choose an image"}
+            update={true}
+            obj={app.state.currentComponent}
+            skipUpdate={true}
+            colors={this.state.colors}
+            changePic={async (pic) => {
+              await this.setState({ pic: pic });
+              
+              let colors = colorService.updateColors(pic, (palette) => {
+                this.setState({ colors: palette }, () => {
+                                  
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    this.setState({colors: list})
+                    console.log(this.state.colors)
+
+                });
+              });
+            }}
+            
+            updateMap={async (obj) => {
+              const pic = obj?.getJson().pic;
+              await this.setState({ completedPic: pic });
+              await colorService.updateColors(pic, palette => {
+                this.setState({ colors: palette }, () => {
+
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    this.setState({colors: list})
+                    console.log(this.state.colors)
+
+                });
+              });
+            }}
+            app={app}
+          />
        
 </div>
       <ParentFormComponent app={app} name="name" label="Name"  
@@ -146,7 +188,7 @@ transitionDuration:"9000ms"
               maxLength={110}
               labelStyle={{marginBottom:"8px",}}
               inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
               }}
               placeholder={"ie: "+creature}/>
 
@@ -157,7 +199,7 @@ transitionDuration:"9000ms"
               maxLength={2}
               labelStyle={{marginBottom:"8px",}}
               inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
               }}
               placeholder={"ie: "+randomInit}/>
 
@@ -167,7 +209,7 @@ transitionDuration:"9000ms"
               maxLength={2}
               labelStyle={{marginBottom:"8px",}}
               inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
               }}
               placeholder={"ie: "+randomAC}/> 
 
@@ -177,7 +219,7 @@ transitionDuration:"9000ms"
                     maxLength={5}
                     labelStyle={{marginBottom:"8px",}}
                     inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-                    borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+                    borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
                     }}
                     placeholder={"ie: "+randomHP}/> 
 </div>
@@ -187,7 +229,7 @@ transitionDuration:"9000ms"
               maxLength={200}
               labelStyle={{marginBottom:"8px",}}
               inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-              borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
               }}
               placeholder={"ie: "+linkExample}/> 
 <div style={{marginBottom:"2vh"}}>
@@ -197,24 +239,29 @@ transitionDuration:"9000ms"
       maxLength={200}
       labelStyle={{marginBottom:"8px",}}
       inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"3.7rem", rows:"1",
-      borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
+      borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
       }}
-      placeholder={"ie: The monster is hiding in a barrel"}/> 
+      placeholder={"ie: "+noteExample}/> 
 </div>
          {/* ADD TO ENCOUNTER */}
          <RunButton
               app={app} 
               text={"Add to Encounter"} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
-              callBack={ async (obj) => {
-                //conditionService.js
-                // let conditionss = conditionService.getConditions();
-                // for(let condition of conditions)
-                // {
-                //   condition.setCompState({monsterId: obj.getJson()._id});
-                //   state.opps.jsonPrepare({addcondition: condition});
-                // }
-                // state.opps.run();
+              callBack={ async (arr) => {
+                
+                let conditions = ConditionService.getConditions();
+                let id = await arr[0].getJson()?._id;
+
+                for(let condition of conditions)
+                {
+                  condition.monsterId = id;
+                  condition.roundsActive = "0";
+                  condition._id = arr[0].getJson()?._id+idService.createId()
+                  await state.opps.jsonPrepare({addcondition: condition});
+                }
+                
+                await state.opps.run();
                 await dispatch({
                   popUpSwitchcase: "",
                   currentComponent: undefined,

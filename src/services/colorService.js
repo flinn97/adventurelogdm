@@ -1,5 +1,12 @@
 import ColorThief from 'colorthief';
 
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(x => {
+    const hex = x.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }).join('');
+}
+
 class ColorService {
     constructor() {
       this.colorThief = new ColorThief()
@@ -11,7 +18,7 @@ class ColorService {
             
             const img = new Image();
             img.src = pic;
-            debugger
+            
             img.crossOrigin = 'Anonymous';
             img.onload = () => {
               // Create a new canvas element and get its 2d context
@@ -32,19 +39,21 @@ class ColorService {
       
               newImg.onload = () => {
                 const palette = this.colorThief.getPalette(newImg, 7);
-                callBack(palette);
-                let obj =  this.props?.obj
-                // obj.setCompState({colors: palette});
-               
+                const hexPalette = palette.map(color => rgbToHex(color[0], color[1], color[2]));
+                
+                const colorObject = {};
+                hexPalette.forEach((color, index) => {
+                  colorObject[`color_${index}`] = color;
+                });
+                
+                //console.log(colorObject);
+                callBack(colorObject);
               };
             };
-      
-            img.src = pic;
-      
           } catch (error) {
-            // console.log(error)
+            console.error(error);
           }
         };
-      }
+      };
   
   export default new ColorService();

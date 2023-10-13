@@ -7,6 +7,7 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import ac from '../pics/ac.png';
 // import d20 from '../pics/d20.png';
 import conditionGear from '../pics/conditionGear.png';
+import _ from 'lodash';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -31,87 +32,92 @@ export default class MonsterMapItem extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevProps.colors !== this.props.colors) {
-      // Update state if prop changes
-      this.setState({ colors: this.props.colors });
+    if (!_.isEqual(prevProps.obj.getJson(), this.props.obj.getJson())) {
+      this.setState({ colors: this.props.obj.getJson().colors });
     };
 
-    const currentTurn = this.props.app.state.currentTurn;
+    // let encounter = this.props.obj.getJson().encounterId;
+    //           let componentList = this.props.app.state.componentList;
+    //           let targetComponent = await componentList.find(component => component.getJson()._id === encounter);
+    //           let currentTurn;
+    //           if (targetComponent) {
+    //             currentTurn = targetComponent.state.currentTurn;
+    //           }
     const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
 
-    if (this.props.obj && this.props.obj.getJson().conditions && this.props.obj.getJson().conditions[0] === "") {
-      let jsonObj =  await this.props.obj.getJson();
-      jsonObj.otherRounds = 0;
-      this.props.obj.setJson(jsonObj);
-    }
+    // if (this.props.obj && this.props.obj.getJson().conditions && this.props.obj.getJson().conditions[0] === "") {
+    //   let jsonObj =  await this.props.obj.getJson();
+    //   jsonObj.otherRounds = 0;
+    //   this.props.obj.setJson(jsonObj);
+    };
 
-    if (currentTurn === 99999) {
-      // Reset all round counters to 0
-      let jsonObj =  await this.props.obj.getJson();
-      if (jsonObj.conditions) {
-        jsonObj.conditions.slice(1).forEach((condition) => {
-          const roundKey = `${condition}Rounds`;
-          jsonObj[roundKey] = 0;
-        });
-      }
-      jsonObj.otherRounds = 0;
-      this.props.obj.setJson(jsonObj);
-      this.roundUpdated = false;
-    } else if (currentTurn === lastInitAsNumber && !this.roundUpdated) {
-      // Increment round counters
-      let jsonObj =  await this.props.obj.getJson();
-      if (jsonObj.conditions) {
-        jsonObj.conditions.slice(1).forEach((condition) => {
-          const roundKey = `${condition}Rounds`;
-          if (jsonObj[roundKey] !== undefined) {
-            jsonObj[roundKey] += 1;
-          } else {
-            jsonObj[roundKey] = 1; // Initialize if not present
-          }
-        });
-        if (jsonObj.otherRounds !== undefined) {
-          jsonObj.otherRounds += 1;
-        } else {
-          jsonObj.otherRounds = 1; // Initialize if not present
-        }
-        this.props.obj.setJson(jsonObj);
-      }
-      this.roundUpdated = true;
-    } else if (currentTurn !== lastInitAsNumber) {
-      this.roundUpdated = false; // Reset flag
-    }
-  };
+  //   if (currentTurn === 99999) {
+  //     // Reset all round counters to 0
+  //     let jsonObj =  await this.props.obj.getJson();
+  //     if (jsonObj.conditions) {
+  //       jsonObj.conditions.slice(1).forEach((condition) => {
+  //         const roundKey = `${condition}Rounds`;
+  //         jsonObj[roundKey] = 0;
+  //       });
+  //     }
+  //     jsonObj.otherRounds = 0;
+  //     this.props.obj.setJson(jsonObj);
+  //     this.roundUpdated = false;
+  //   } else if (currentTurn === lastInitAsNumber && !this.roundUpdated) {
+  //     // Increment round counters
+  //     let jsonObj =  await this.props.obj.getJson();
+  //     if (jsonObj.conditions) {
+  //       jsonObj.conditions.slice(1).forEach((condition) => {
+  //         const roundKey = `${condition}Rounds`;
+  //         if (jsonObj[roundKey] !== undefined) {
+  //           jsonObj[roundKey] += 1;
+  //         } else {
+  //           jsonObj[roundKey] = 1; // Initialize if not present
+  //         }
+  //       });
+  //       if (jsonObj.otherRounds !== undefined) {
+  //         jsonObj.otherRounds += 1;
+  //       } else {
+  //         jsonObj.otherRounds = 1; // Initialize if not present
+  //       }
+  //       this.props.obj.setJson(jsonObj);
+  //     }
+  //     this.roundUpdated = true;
+  //   } else if (currentTurn !== lastInitAsNumber) {
+  //     this.roundUpdated = false; // Reset flag
+  //   }
+  // };
 
   handleClickWord = (word) => {
+    // Hide conditions temporarily
     this.setState({ showConditions: false });
-    
-    let jsonObj = this.props.obj.getJson();
-    let conditions = jsonObj.conditions || [];
-    const index = conditions.indexOf(word);
-    
-    if (index === -1) {
-      // Word not in array, insert it at position 1 or later
-      conditions.splice(1, 0, word);
-      jsonObj[`${word}Rounds`] = 0;
-    } else {
-      // Word already in array, remove it
-      conditions.splice(index, 1);
-      delete jsonObj[`${word}Rounds`];
+    // Get the full list of conditions related to this monster
+    const conditionList = this.props.app.state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId");
+    // Ensure it's an array before filtering
+    const activeConList = Array.isArray(conditionList) 
+                      ? conditionList.filter(cond => cond.getJson().isActive === true) 
+                      : [];
+    // Find the condition object that matches the clicked word
+    const targetCondition = conditionList.find(cond => cond.getJson().name === word);
+    // Toggle its isActive state if found
+    if (targetCondition) {
+      let conditionJson = targetCondition.getJson();
+      conditionJson.isActive = !conditionJson.isActive;
+      targetCondition.setCompState(conditionJson);
     }
-    
-     // Filter out "<ParentFormComponent />"
-     conditions = conditions.filter(item => String(item) !== String(<ParentFormComponent />));
 
-     const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
-     if (this.props.app.state.currentTurn === lastInitAsNumber) {
-      jsonObj[`${word}Rounds`] = 0;
-     }
-      // Update the JSON object
-      jsonObj.conditions = conditions;
-      this.props.obj.setJson(jsonObj);
-
-      this.setState({ showConditions: true });
-      this.props.app.dispatch({});
+    if (targetCondition.getJson().isActive == true)
+    {
+      let conditionJson = targetCondition.getJson();
+      conditionJson.roundsActive = "0";
+      targetCondition.setCompState(conditionJson);
+    }
+  
+    // Show conditions again and trigger a re-render
+    this.setState({ showConditions: true });
+    this.props.app.dispatch({
+      // operate:"update", operation:"jsonPrepareRun", object:targetCondition
+    });
   };
   
 
@@ -124,9 +130,10 @@ export default class MonsterMapItem extends Component {
     let styles = state.styles;
    
     let obj = this.props.obj;
-    const { colors } = this.state;
-   
-
+    let allColors = obj.getJson().colors;
+    let colors = Object.values(allColors); // ["#000000", "#ffffff", "#44fead"]
+       
+    
     
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
           let name = obj?.getJson().name;
@@ -149,14 +156,21 @@ export default class MonsterMapItem extends Component {
     
               const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
               // const roundCount = this.state.roundCount;
+          
+              const currentTurn = this.props.obj.getJson()?.currentTurn;
 
-
-              let animateGradient  =   state.currentTurn === lastInitAsNumber ?"linear-gradient(90deg, "+styles.colors.color2+"00, "+styles.colors.color7+"22, "+styles.colors.color2+"00)":""
+              let borderGradient = currentTurn === lastInitAsNumber ?
+              `solid 1px ${colors[5]}66` : "";
               
               const otherWord =( 
               
               <ParentFormComponent 
-              obj={this.props.obj} isPropArray={true} name="conditions" prepareRun={true} maxLength={22} placeholder={"Add your own"}
+              obj={this.props.obj} 
+              isPropArray={true} name="conditions" 
+              // prepareRun={true} 
+              
+              maxLength={22} 
+              placeholder={"Add your own"}
               
                inputStyle={{
                 width:"250px",
@@ -165,44 +179,31 @@ export default class MonsterMapItem extends Component {
                 borderRadius: "4px", paddingBottom:"3px",paddingTop:"3px", paddingLeft:"4px",
                 background: styles.colors.colorWhite+"0e",
                 borderWidth: "1px",
+                
                 textAlign: "flex-start",
                 justifyContent: "center",}}
                 wrapperStyle={{justifyContent: "center", marginTop:"-8px"}}
               app={app}/>);
               
-              const conList = [
-                "Blinded", "Burning",
-                "Concentration",
-                "Charmed",
-                "Deafened",
-                "Exhaustion",
-                "Frightened",
-                "Grappled",
-                "Incapacitated",
-                "Invisible",
-                "Paralyzed",
-                "Petrified",
-                "Poisoned",
-                "Prone",
-                "Restrained",
-                "Stunned",
-                "Unconscious",
-                
-                otherWord,
+              const conList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId");
 
-                "Dead",
-              ];
-              // const activeConList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterID")
-              const activeConList = [...this.props.obj.getJson().conditions];
-              const maxCon = this.props.obj.getJson().conditions[0]===""?13:12;
+              const conListNames = conList.map(item => item.getJson().name);
+            
+              const activeConList = Array.isArray(conList) 
+                      ? conList.filter(cond => cond.getJson().isActive === true) 
+                      : [];
+
+              const maxCon = conList.length===""?13:12;
 
 
     return (
      
-      <div style={{minWidth: "100%", overflow:"visible", alignSelf:"flex-start", justifySelf:"flex-start", position: "relative", left:0}}>
-      <div className={state.currentTurn === lastInitAsNumber ? "gradient-animation" : ""}
+      <div style={{minWidth: "100%", overflow:"visible",
+      position: "relative", borderRadius:"22px",
+      alignSelf:"flex-start", justifySelf:"flex-start", }}>
+      <div className={currentTurn === lastInitAsNumber ? "gradient-animation" : ""}
       style={{
-        minWidth: "100%", borderRadius:"22px", 
+        minWidth: "100%", borderRadius:"22px",
         height:"fit-content",
       }}>
         
@@ -224,11 +225,11 @@ export default class MonsterMapItem extends Component {
       ...styles.backgroundContent,
       }}>     
                         <div 
-                        // className={state.currentTurn === lastInitAsNumber ? "gradient-animation" : ""} 
+                        
                         style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-evenly", 
                         height: "fit-content", border:"", marginTop:"-8px",
-                        background:state.currentTurn === lastInitAsNumber ?  "linear-gradient(90deg, "+styles.colors.color2+"55, #45526e27, #282c3400)": "",
+                        background: currentTurn === lastInitAsNumber ?  "linear-gradient(90deg, "+styles.colors.color2+"55, #45526e27, #282c3400)": "",
                          width:"fit-content",}}>
 
 
@@ -248,12 +249,7 @@ export default class MonsterMapItem extends Component {
                                         textAlign: "center", fontSize:fontSize[0],
                                         
                                         }}/>
-                          {/* {state.currentTurn === 9999 &&
-                                        <div
-                                        style={{alignItems:"center", display:"flex", position:"absolute", marginBottom:"-88px",
-                                        marginLeft:"", alignSelf:"center", alignContent:"center", textAlign:"center", 
-                                         fontSize:styles.fonts.fontSmallest, color:styles.colors.colorWhite+"1c"}}
-                                        >Initiative</div>} */}
+                          
 
                                         </div>
 
@@ -261,22 +257,22 @@ export default class MonsterMapItem extends Component {
 {obj?.getJson().statBlockLink !== "" && obj?.getJson().statBlockLink !== undefined &&
 (<a target="_blank" rel="noopener noreferrer" href={stat} style={{cursor: "pointer"}} title={"Link to "+obj?.getJson().statBlockLink} draggable="false">
           <img src={bookCursor} draggable="false" 
-          style={{width:"22px", height:"22px", objectFit:"scale-down", marginLeft:"25px",position:"absolute", zIndex:"22"}}
+          style={{width:"22px", height:"22px", objectFit:"scale-down", marginLeft:"25px",position:"absolute", zIndex:"22",}}
           />
-          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.props.obj.getJson().colors}/>
+          <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={colors}/>
 </a>)||(
   <div href={stat} style={{cursor: ""}}>
   <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px",  objectFit:"scale-down", position:"absolute", opacity:0}}
   />
-  <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={this.props.obj.getJson().colors}/>
+  <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={colors}/>
 </div>
 )}
 
                           <div        title="Name"         
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,  marginRight:".5vw",
-                          width:"300px", alignSelf:"center",  marginLeft:"-11px",
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,  marginRight:".5vw", border: borderGradient,
+                          width:"300px", alignSelf:"center",  marginLeft:"-11px", borderRadius:"11px",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
                          }}>
                            <ParentFormComponent obj={this.props.obj} name="name"
@@ -366,7 +362,7 @@ export default class MonsterMapItem extends Component {
                              color: styles.colors.colorWhite,
                              marginLeft: "8px", 
                              height: "1.7rem",
-                             maxHeight:"25px",
+                             maxHeight:"25px", 
                              fontSize: fontSize[2],
                              borderRadius: "4px",
                              background: styles.colors.color2+"5c",
@@ -375,7 +371,8 @@ export default class MonsterMapItem extends Component {
                              justifyContent: "center",
                              whiteSpace: "normal",
                               minWidth:"260px",
-                             resize: "both"}}
+                             resize: "both",
+                             }}
                             />
 
                           </div>
@@ -398,7 +395,7 @@ export default class MonsterMapItem extends Component {
             <div 
             style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", top:"-.99vh", borderRadius:"22px", marginLeft:"-26vw",
             position:"absolute", background:styles.colors.color1, padding:"4px 8px", justifyContent:"space-evenly" }}>
-              {conList.map((word, index) => (
+              {conListNames.map((word, index) => (
                 
                 <div 
                 onClick={() => 
@@ -417,7 +414,7 @@ export default class MonsterMapItem extends Component {
                   fontSize:styles.fonts.fontSmallest,
                   color:styles.colors.colorWhite,
                   textAlign:"center", verticalAlign:"center",
-                  border: (this.props.obj.getJson().conditions.includes(word)  ? '1px solid '+styles.colors.color3 : 'none'),
+                  border: (activeConList.map(item => item.getJson().name).includes(word) ? '1px solid ' + styles.colors.color3 : 'none'),
 
                   fontWeight: (word==="Dead"?"600":"300"),
                   backgroundColor: (word==="Dead"?styles.colors.color6+"e4":styles.colors.color2),
@@ -438,7 +435,7 @@ export default class MonsterMapItem extends Component {
 
         </div>
                         {/* {{ACTIVE CONDITIONS}} */}
-                        {this.props.obj.getJson().conditions.length >= 1 &&
+                        {activeConList &&
                         <div style={{display: 'flex', flexWrap: 'wrap',  width:"fit-content", opacity:"79%", 
                         alignContent:"flex-start", marginLeft:"3px",
                         color:styles.colors.colorWhite, flexDirection:"column", width:"100%",
@@ -446,28 +443,27 @@ export default class MonsterMapItem extends Component {
                         padding:"0px 4px",}}>
                         {activeConList.slice(0, maxCon).map((word, index) => (
                           <div style={{display: 'flex', flexDirection:"row", justifyContent:"flex-start", alignSelf:"flex-start", maxWidth:"240px",}}>
-                            {word && word!=="" &&
+                            {word.getJson().name && word.getJson().name!=="" &&
                             <div  key={index}
                             style={{
                               fontSize:fontSize[1], textAlign:"flex-start",
-                              width:"fit-content", padding:word==="Dead"?"2px 8px":"2px", 
+                              width:"fit-content", padding:word.getJson().name==="Dead"?"2px 8px":"2px", 
                               alignSelf:"flex-end", alignSelf:"flex-end",
-                              color:word==="Dead"?styles.colors.color5:styles.colors.colorWhite,
-                              fontWeight: word==="Dead"?600:200,
+                              color:word.getJson().name==="Dead"?styles.colors.color5:styles.colors.colorWhite,
+                              fontWeight: word.getJson().name==="Dead"?600:200,
                               borderRadius:"11px",
-                              border:  word==="Dead"?"1px solid "+styles.colors.color6:"",
+                              border:  word.getJson().name==="Dead"?"1px solid "+styles.colors.color6:"",
                               
                                }}>
-                              {word}
+                              {word.getJson().name}
                             </div>}
-
+                              
                               <div style={{
                               fontSize:fontSize[2], alignSelf:"center",
                               
-                            width:"fit-content", marginRight:"32px", marginLeft:"8px", opacity:word==="Dead"?"0%":"70%",
+                            width:"fit-content", marginRight:"32px", marginLeft:"8px", opacity:word.getJson().name==="Dead"?"0%":"70%",
                               }}>
-                              {word && word !== "" && word !== this.props.obj.getJson().conditions[0] ? "(" + this.props.obj.getJson()[`${word}Rounds`] + ")" : ""}
-                                  {word && word !== "" && word === this.props.obj.getJson().conditions[0] ? "(" + this.props.obj.getJson().otherRounds + ")" : ""}
+                              {"("+word.getJson().roundsActive+")"}
                               </div>
 
                             </div>))}

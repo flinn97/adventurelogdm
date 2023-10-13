@@ -261,6 +261,7 @@ class Encounter extends componentBase{
         description: "",
         audio: "",
         type: "encounter",
+        currentTurn: "99999",
         picURL: "",
         picURLs: {},
         loreId: "",
@@ -298,6 +299,17 @@ class NewNote extends componentBase{
     }
 }
 
+class Condition extends componentBase{
+    json= {
+        _id:"",
+        monsterId:"",
+        name:"",
+        description:"",
+        icon:"",
+        type:"condition"
+    }
+}
+
 class Monster extends componentBase{
     constructor(opps){
         super(opps);
@@ -314,10 +326,10 @@ class Monster extends componentBase{
         type: "monster",
         notes: "",
         picURLs: {},
-        color: {primary: "#000000", color_0: "#FFFFFF", color_1:"teal"},
-        primaryColor: "#000000",
-        color0: "blue",
-        color1: "red",
+        color: {},
+        // primaryColor: "#000000",
+        // color0: "blue",
+        // color1: "red",
         conditions: {},
         parentId: "",
         otherRounds:0,
@@ -328,9 +340,10 @@ class Monster extends componentBase{
         let newKey = "color_" + keys.length; //selectedInput_4
         this.json.color[newKey] = input;
     }
+
     getColorList(){
         let con = this.json.color;
-        let list = Object.values(con); // ["sick", "slowed", "encumbered"]
+        let list = Object.values(con); // ["#000000", "#ffffff", "#44fead"]
         return list;
     }
     
@@ -347,7 +360,8 @@ function forFactory(){
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
     return {user:User,pin:Pin,campaign:Campaign,
         encounter:Encounter,monster:Monster,
-        newNote:NewNote,map:Map,
+        newNote:NewNote,map:Map, 
+        condition:Condition,
         lore:Lore,image:Image}
 }
 

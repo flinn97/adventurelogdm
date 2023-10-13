@@ -20,49 +20,51 @@ export default class TokenImage extends Component {
     if (prevProps.pic !== this.props.pic){
       this.setState({  pic: this.props.pic});
 
-      await colorService.updateColors(this.props.pic,(palette) => {
+      await colorService.updateColors(this.props.pic, (paletteObject) => {
         this.setState({
-          // colors: palette,
+          colors: paletteObject,
           width: this.props.width
         }, 
         () => console.log(this.state.colors))
       });
     }
-   await obj.setCompState({colors:this.state.colors});
+   await obj?.setCompState({colors:this.state.colors});
   };
 
-  async componentDidMount(){
-    this.setState({width: this.props.width});
-    await colorService.updateColors(this.props.pic,(palette) => {
-      this.setState(prevState => ({
-        ...prevState,
-        // colors: palette,       
+  async componentDidMount() {
+    this.setState({ width: this.props.width });
+  
+    await colorService.updateColors(this.props.pic, (paletteObject) => {
+      this.setState({
+        colors: paletteObject,
         width: this.props.width
-        
-      }), this.props.obj.setCompState({
-        // colors: palette,
-         pic: this.props.pic}), () => console.log(this.state.colors))
+      }, async () => {
+        // console.log(this.state.colors);
+        await this.props.obj.setCompState({ 
+          colors: this.props.colors, 
+          pic: this.props.pic 
+        });
+      });
     });
-  };
+  }
 
   
 
   render() {
     let app = this.props.app;
     let state = app.state;
-    const colors = this.state.colors;
+    const colors = this.props.colors;
     let width = this.state.width.toString();
     let widthSm = (this.state.width * 0.908).toString()+"px"
     let widthMd = (this.state.width * 0.959).toString()+"px"
     let pic = this.state.pic;
     let styles = state.styles;
-    
 
     return (
       <div style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px", boxShadow:"6px 10px 16px -3px"+styles.colors.colorBlack+"55",
           borderRadius:"50%", marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center",
           marginRight:"30px", 
-          backgroundColor:colors?.length?`rgb(${colors[1].join(',')})`: styles.popupSmall.border,}}>
+          backgroundColor: colors[1] || styles.popupSmall.border, }}>
             
             <img src={background} draggable="false"  
                                 style={{width:width+"px", height:width+"px",  position:"absolute",
@@ -73,7 +75,7 @@ export default class TokenImage extends Component {
                                   
                                  <div style={{width:widthSm, height:widthSm, position:"absolute", mixBlendMode:"multiply",borderRadius:"50%",
                 opacity:".75", opacity:"36%", 
-                backgroundColor:colors?.length?`rgb(${colors[2].join(',')})`: styles.popupSmall.border,}}>
+                backgroundColor: colors[2] || styles.popupSmall.border,}}>
         </div>
            
         <img src={pic||placeholder} draggable="false"
@@ -83,7 +85,7 @@ export default class TokenImage extends Component {
             }}/>
          <div style={{width:widthSm, height:widthSm, position:"absolute", borderRadius:"50%",
                 opacity:".15", 
-                backgroundColor:colors?.length?`rgb(${colors[3].join(',')})`: styles.popupSmall.border,}}>
+                backgroundColor: colors[3] || styles.popupSmall.border,}}>
         </div>
         <div style={{width:widthMd, height:widthMd, position:"absolute", mixBlendMode:"overlay",
         borderRadius:"50%", zIndex:3,opacity:"50%",
