@@ -306,7 +306,8 @@ class Condition extends componentBase{
         name:"",
         description:"",
         icon:"",
-        type:"condition"
+        type:"condition",
+        roundsActive:"1",
     }
 }
 
