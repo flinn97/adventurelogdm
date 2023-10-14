@@ -4,7 +4,7 @@ class ConditionService {
     }
  
     defaultConditions = [
-      {
+      { order:"1",
         _id: "",
         monsterId: "",
         name: "Blinded",
@@ -13,6 +13,7 @@ class ConditionService {
       },
 
       {
+        order:"2",
         _id: "",
         monsterId: "",
         name: "Burning",
@@ -21,6 +22,7 @@ class ConditionService {
       },
 
       {
+        order:"3",
         _id: "",
         monsterId: "",
         name: "Concentration",
@@ -29,6 +31,7 @@ class ConditionService {
       },
 
       {
+        order:"4",
         _id: "",
         monsterId: "",
         name: "Charmed",
@@ -37,6 +40,7 @@ class ConditionService {
       },
 
       {
+        order:"5",
         _id: "",
         monsterId: "",
         name: "Deafened",
@@ -44,6 +48,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"6",
         _id: "",
         monsterId: "",
         name: "Exhaustion",
@@ -51,6 +56,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"7",
         _id: "",
         monsterId: "",
         name: "Frightened",
@@ -58,6 +64,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"8",
         _id: "",
         monsterId: "",
         name: "Grappled",
@@ -65,6 +72,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"9",
         _id: "",
         monsterId: "",
         name: "Incapacitated",
@@ -72,6 +80,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"10",
         _id: "",
         monsterId: "",
         name: "Invisible",
@@ -79,6 +88,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"11",
         _id: "",
         monsterId: "",
         name: "Paralyzed",
@@ -86,6 +96,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"12",
         _id: "",
         monsterId: "",
         name: "Petrified",
@@ -93,6 +104,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"13",
         _id: "",
         monsterId: "",
         name: "Poisoned",
@@ -100,6 +112,7 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"14",
         _id: "",
         monsterId: "",
         name: "Prone",
@@ -107,13 +120,14 @@ class ConditionService {
         icon: "",
       },
       {
+        order:"15",
         _id: "",
         monsterId: "",
         name: "Restrained",
         description: "",
         icon: "",
       },
-      {
+      {order:"16",
         _id: "",
         monsterId: "",
         name: "Stunned",
@@ -121,7 +135,7 @@ class ConditionService {
         icon: "",
       },
 
-      {
+      {order:"17",
         _id: "",
         monsterId: "",
         name: "Unconcious",
@@ -129,7 +143,7 @@ class ConditionService {
         icon: "",
       },
 
-      {
+      {order:"999",
         _id: "",
         monsterId: "",
         name: "Dead",

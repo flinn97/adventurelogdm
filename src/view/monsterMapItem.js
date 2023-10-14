@@ -31,32 +31,7 @@ export default class MonsterMapItem extends Component {
       return statBlockLink;
   }
 
-  // async componentDidUpdate(prevProps, prevState) {
-  //   const currentTurn = parseFloat(this.props.obj.getJson()?.currentTurn);
-  //   const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
-  
-  //   if (currentTurn === lastInitAsNumber) {
-  //     // Fetch all the conditions related to this monster
-  //     const conditionList = this.props.app.state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId");
-  
-  //     // Filter only the active conditions
-  //     const activeConList = Array.isArray(conditionList) 
-  //                           ? conditionList.filter(cond => cond.getJson().isActive === true) 
-  //                           : [];
-  
-  //     // Iterate through each active condition and update `roundsActive`
-  //     activeConList.forEach(cond => {
-  //       let conditionJson = cond.getJson();
-  //       conditionJson.roundsActive = (conditionJson.roundsActive || 0) + 1;
-  //       cond.setCompState(conditionJson);
-  //     });
-  
-  //     // Optional: Trigger a re-render or dispatch an action to update the global state
-  //     this.props.app.dispatch({});
-  //   }
-  // }
-
-  handleClickWord = (word) => {
+  handleClickWord = (word, iValue) => {
     // Hide conditions temporarily
     this.setState({ showConditions: false });
     // Get the full list of conditions related to this monster
@@ -67,25 +42,39 @@ export default class MonsterMapItem extends Component {
                       : [];
     // Find the condition object that matches the clicked word
     const targetCondition = conditionList.find(cond => cond.getJson().name === word);
+    const targetActiveCondition = activeConList.find(cond => cond.getJson().name === word);
     // Toggle its isActive state if found
     if (targetCondition) {
       let conditionJson = targetCondition.getJson();
       conditionJson.isActive = !conditionJson.isActive;
-      targetCondition.setCompState(conditionJson);
-    }
+      targetCondition.setCompState(conditionJson.isActive);
+      this.props.app.dispatch({
+        operate:"update", operation:"cleanPrepareRun", object: targetCondition
+  })}
+    
 
-    if (targetCondition.getJson().isActive == true)
-    {
-      let conditionJson = targetCondition.getJson();
-      conditionJson.roundsActive = "0";
-      targetCondition.setCompState(conditionJson);
-    }
+    if (targetActiveCondition){
+      let conditionJson = targetActiveCondition.getJson();
+      conditionJson.roundsActive =  "0"
+      // let currentR = parseInt(conditionJson.roundsActive, 10);
+      // let newR = currentR + parseInt(iValue)
+      // conditionJson.roundsActive =  iValue.toString();
+      
+      ///TAYLOR 
+      // WHY DOES THIS NOT SET A NEW CONDITION ON AN ACTIVE MONSTER to 1???
+      
+      
+      targetCondition.setCompState(conditionJson.roundsActive);
+      this.props.app.dispatch({
+        operate:"update", operation:"cleanPrepareRun", object: targetActiveCondition
+  })}
+    
   
     // Show conditions again and trigger a re-render
     this.setState({ showConditions: true });
-    this.props.app.dispatch({
-      // operate:"update", operation:"jsonPrepareRun", object:targetCondition
-    });
+    // this.props.app.dispatch({
+    //   // operate:"update", operation:"jsonPrepareRun", object:targetCondition
+    // });
   };
   
 
@@ -153,23 +142,34 @@ export default class MonsterMapItem extends Component {
                 wrapperStyle={{justifyContent: "center", marginTop:"-8px"}}
               app={app}/>);
               
-              const conList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId");
-
-              const conListNames = conList.map(item => item.getJson().name);
-            
-              const activeConList = Array.isArray(conList) 
-                      ? conList.filter(cond => cond.getJson().isActive === true) 
-                      : [];
+                //DEAD LAST 
+                            //hahaha
+                            const createSortConditions = (reverse = false) => (a, b) => {
+                              const orderA = parseInt(a.getJson().order, 10);
+                              const orderB = parseInt(b.getJson().order, 10);
+                              return reverse ? orderB - orderA : orderA - orderB;
+                            };
+                            
+                            // Using the factory function
+                            const sortConditions = createSortConditions();
+                            const sortConditionsOpp = createSortConditions(true);
+                            
+                            // Your original code
+                            const conList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId").sort(sortConditions);
+                            const conListNames = conList.map(item => item.getJson().name);
+                            const activeConList = Array.isArray(conList) 
+                              ? conList.filter(cond => cond.getJson().isActive === true).sort(sortConditionsOpp)
+                              : [];
 
               const maxCon = conList.length===""?13:12;
-
+                const iValue = (currentTurn == lastInitAsNumber?"1":"0")
 
     return (
      
       <div style={{minWidth: "100%", overflow:"visible",
       position: "relative", borderRadius:"22px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
-      <div className={currentTurn === lastInitAsNumber ? "gradient-animation" : ""}
+      <div className={currentTurn == lastInitAsNumber ? "gradient-animation" : ""}
       style={{
         minWidth: "100%", borderRadius:"22px",
         height:"fit-content",
@@ -230,7 +230,7 @@ export default class MonsterMapItem extends Component {
           <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={colors}/>
 </a>)||(
   <div href={stat} style={{cursor: ""}}>
-  <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px",  objectFit:"scale-down", position:"absolute", opacity:0}}
+  <img src={bookCursor} draggable="false" style={{width:"22px", height:"22px",  objectFit:"scale-down", position:"absolute", opacity:"0%"}}
   />
   <TokenImage pic={obj?.getJson().picURL} width={88} app={app} colors={colors}/>
 </div>
@@ -361,14 +361,14 @@ export default class MonsterMapItem extends Component {
 
             {this.state.showConditions===true &&
             <div 
-            style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", top:"-.99vh", borderRadius:"22px", marginLeft:"-26vw",
+            style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", top:"-.99vh", borderRadius:"22px", marginLeft:"-26vw", border:"1px solid "+styles.colors.color8+"33",
             position:"absolute", background:styles.colors.color1, padding:"4px 8px", justifyContent:"space-evenly" }}>
               {conListNames.map((word, index) => (
                 
                 <div 
                 onClick={() => 
                  
-                  this.handleClickWord(word)
+                  this.handleClickWord(word, iValue)
                   
                   }
                   
@@ -409,7 +409,9 @@ export default class MonsterMapItem extends Component {
                         color:styles.colors.colorWhite, flexDirection:"column", width:"100%",
                         maxHeight:"112px",
                         padding:"0px 4px",}}>
-                        {activeConList.slice(0, maxCon).map((word, index) => (
+                        {activeConList.slice(0, maxCon).map((word, index) => {
+                                  
+                                  return (
                           <div style={{display: 'flex', flexDirection:"row", justifyContent:"flex-start", alignSelf:"flex-start", maxWidth:"240px",}}>
                             {word.getJson().name && word.getJson().name!=="" &&
                             <div  key={index}
@@ -425,16 +427,19 @@ export default class MonsterMapItem extends Component {
                                }}>
                               {word.getJson().name}
                             </div>}
-                              
+                            
                               <div style={{
                               fontSize:fontSize[2], alignSelf:"center",
                               
-                            width:"fit-content", marginRight:"32px", marginLeft:"8px", opacity:word.getJson().name==="Dead"?"0%":"70%",
+                            width:"fit-content", marginRight:"32px", marginLeft:"4px", opacity:word.getJson().name==="Dead"?"0%":"70%",
                               }}>
-                              {"("+word.getJson().roundsActive+")"}
+                               {"("+word.getJson().roundsActive+")"}
+                          
+                            
                               </div>
-
-                            </div>))}
+                              
+                            </div>)
+  })}
                           </div>   }      
         </div>
                                          
