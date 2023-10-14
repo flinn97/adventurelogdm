@@ -105,7 +105,7 @@ class RichTextComponent extends Component {
 
         let value = e.key;
         let innerText =DOMPurify.sanitize(this.ref.current.innerHTML);
-        debugger
+        
 
         if(value===" " &&this.state.lastChar===" " &&this.state.backSlash){
             await this.setState({doubleSpace:true})

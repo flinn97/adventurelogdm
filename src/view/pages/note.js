@@ -21,8 +21,17 @@ export default class Note extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-    if (state.componentList.componentsList?.newNote.length <= 0) {
-      await dispatch({operate: "addnewNote", operation: "cleanPrepareRun", object:1})
+    let list = state.componentList.getList("newNote")
+    if (list.length=== 0) {
+      
+      await state.opps.cleanPrepare({addnewNote:1});
+      let note = state.opps.getUpdater("add")[0];
+      state.opps.run();
+      await dispatch({currentComponent:note});
+
+    }
+    else{
+      dispatch({currentComponent:list[0]});
     }
   }
 
@@ -45,8 +54,12 @@ export default class Note extends Component {
         <div style={{width:"100%",height:"fit-content",  display:"flex",flexDirection:"column", padding:"2px",}} >     
       
       <div>
-              <div onClick={() => {                      
-                  dispatch({operate: "addnewNote", operation: "cleanPrepareRun",}); 
+              <div onClick={async () => {   
+                await dispatch({currentComponent: undefined})                   
+                   await state.opps.cleanPrepare({addnewNote:1});
+                   let note = state.opps.getUpdater("add")[0];
+                   state.opps.run();
+                   await dispatch({currentComponent:note});
                   
               }}
                     style={{...styles.buttons.buttonAdd, width:"fit-content", fontSize:styles.fonts.fontSmall,padding:"2px", 
@@ -58,7 +71,7 @@ export default class Note extends Component {
       height:"fit-content",  marginTop:"2vmin", maxHeight:"100%"}}>
       
       <MapComponent app={app} name="newNote" 
-      cells={[{custom:NoteMapItem, props:{app:app}},]} 
+      cells={[{custom:NoteMapItem, props:{app:app}},"delete"]} 
       cellStyle={{justifyContent:"center", width:"100%",}}/>
     
       </div>

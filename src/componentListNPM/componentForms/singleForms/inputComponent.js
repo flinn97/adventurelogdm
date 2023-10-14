@@ -48,7 +48,7 @@ class InputFormComponent extends Component {
                 this.props.emitClickedOutside(this.state);
             }
             if(this.props.updateOnClickOutside){
-                debugger
+                
                 this.props.objDispatch(this.state.value);
 
             }

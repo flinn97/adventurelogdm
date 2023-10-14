@@ -13,7 +13,7 @@ class Auth {
         return localStorage.getItem("user");
     }
     getJsonDatabase(componentList) {
-        debugger
+        
         let arr = [weapons];
         let arrnames = ["weapon"];
         let data = []
@@ -71,7 +71,7 @@ class Auth {
                     let data = querySnapshot.docs[key].data()
                     rawData1.push(data);
                 }
-                debugger
+                
                 await componentList.addComponents(rawData1, false);
                 if (emails[key] === emails[emails.length - 1]) {
                     await localStorage.setItem("email", JSON.stringify(email));
@@ -95,7 +95,7 @@ class Auth {
         // if (email !== "taylor@flinnapps.com") {
         //     return
         // }
-        // debugger
+        // 
         let user;
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -135,7 +135,7 @@ class Auth {
     }
 
     async uploadPics(file, name, dispatch) {
-        debugger
+        
         new Compressor(file, {
             quality: imageQuality,
             success: async (result) => {
@@ -143,7 +143,7 @@ class Auth {
                 await uploadBytes(storageRef, result).then((snapshot) => {
                     if (dispatch) {
                         dispatch({ uploaded: true });
-                        debugger
+                        
                     }
                     //console.log('Uploaded a file!');
                 });
@@ -163,7 +163,7 @@ class Auth {
         return src;
     }
     deletePics(newName) {
-        //debugger
+        //
         const delRef = ref(storage, newName);
         // Delete the file
         deleteObject(delRef).then(() => {
@@ -181,7 +181,7 @@ class Auth {
          */
     async dispatch(obj, email) {
 
-        //debugger
+        //
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {

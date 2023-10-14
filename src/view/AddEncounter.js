@@ -25,7 +25,7 @@ export default class AddEncounter extends Component {
             //OK DONT DO THIS
               const delay = ms => new Promise(res => setTimeout(res, ms));
               await delay(1500);
-              debugger;
+              ;
   }
 
 async componentDidMount(){
@@ -80,7 +80,7 @@ this.setState({start:true});}
 
   render() {
     function getCampaignId(){
-      debugger
+      
       const path = window.location.pathname;
       const parts = path.split('/');
       const id = parts.pop();

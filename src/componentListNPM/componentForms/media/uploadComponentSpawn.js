@@ -60,7 +60,7 @@ class UploadComponent extends Component {
                 // The compression process is asynchronous,
                 // which means you have to access the `result` in the `success` hook function.
                 success(result) {
-                    debugger;
+                    ;
                     var compressedFile = new Blob([result], {type: file.type, lastModified: Date.now()});
                     let timestamp = Date.now() - 803333333;
                     let timestamper = Date.now();
@@ -97,7 +97,7 @@ class UploadComponent extends Component {
             return
         }
 
-        debugger
+        
         await this.setState({loading:true});
         let list = [...this.state.newPics];
         for(const key in list){
@@ -106,7 +106,7 @@ class UploadComponent extends Component {
         }
        
 
-        debugger
+        
         component.setJson({...component.getJson(), owner:this.props.app.state.user.getJson()._id})
         await component.getPicSrc([...this.state.paths]);
 
@@ -143,7 +143,7 @@ class UploadComponent extends Component {
     }
 
     componentDidMount() {
-        debugger
+        
         let name=Object.keys(this.props.app.state.currentComponent?.getJson().picURLs).length!==0? "picURLs": "picURL";
         let obj = this.props.app.state?.currentComponent;
         let uploads = obj.getJson()[name];
@@ -250,7 +250,7 @@ class UploadComponent extends Component {
                                                 </div>  
 
                     <ViewMedia removeMedia={(obj)=>{
-                        debugger
+                        
                         let list = [...this.state.list];
                         let paths =[...this.state.paths];
                         let newPics = [...this.state.newPics];

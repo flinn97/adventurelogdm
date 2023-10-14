@@ -36,7 +36,7 @@ export default class InteractiveMap extends Component {
   }
 
   async componentDidMount(){
-    debugger
+    
     let map = await this.props.app.state.opps.cleanPrepare({addinteractiveMap: 1})
     map = map.add[0]
     let el = document.getElementById("map");
@@ -52,7 +52,7 @@ export default class InteractiveMap extends Component {
 
 }
   pin(event){
-    debugger
+    
     // console.log(event)
     let target = event.target
     let params = target.getBoundingClientRect()
@@ -73,7 +73,7 @@ export default class InteractiveMap extends Component {
   }
 }
   printref(event){
-    //debugger
+    //
     if (this.currentMap && this.currentMap.current.contains(event.target)) {
       //console.log(this.currentMap);
     

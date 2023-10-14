@@ -35,8 +35,8 @@ export default class LoreViewer extends Component {
      //eventLogger method definition
   eventLogger(e, data) {
     
-    console.log('Event: ', e);
-    console.log('Data: ', data);
+    // console.log('Event: ', e);
+    // console.log('Data: ', data);
     
   }
 
@@ -81,7 +81,7 @@ toggleSidebar = () => {
     let currentState = app.state;
       let componentList = currentState.componentList;
        //type , value to search,   filter key
-    let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
+    // let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
 
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
@@ -98,7 +98,7 @@ toggleSidebar = () => {
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
                 
-
+                
                 let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: this.state.obj.getJson()._id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];

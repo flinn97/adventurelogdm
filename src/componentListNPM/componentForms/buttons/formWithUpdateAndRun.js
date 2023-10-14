@@ -23,7 +23,7 @@ export default class FormWithUpdateAndRun extends Component {
   }
 
 	handleChange = async (obj, event) => {
-        debugger
+        
         if(!event.target){
             this.setState({ [this.props.name]: event });
         }

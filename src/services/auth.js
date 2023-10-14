@@ -292,7 +292,7 @@ class Auth {
     }
 
     deletePics(newName) {
-        //debugger
+        //
         const delRef = ref(storage, newName);
         // Delete the file
         deleteObject(delRef).then(() => {
@@ -309,7 +309,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch) {
-        debugger
+        
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {

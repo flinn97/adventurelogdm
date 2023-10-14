@@ -221,7 +221,7 @@ export default class InteractiveBulletin extends Component {
                 background:styles.colors.colorBlack+"88",}}
 
                 onClick={()=>{
-                  debugger
+                  
             if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
               let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
               dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})

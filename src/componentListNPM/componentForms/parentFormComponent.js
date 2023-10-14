@@ -33,12 +33,12 @@ class ParentFormComponent extends Component {
      * @param {*} change 
      */
     handleHTMLChange(change){
-          //debugger
+          //
           
           for(const key in this.state.obj){
               this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:change});
               if(this.props.cleanPrepareRun){
-                debugger
+                
                 this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
             }
             if(this.props.prepareRun){
@@ -81,7 +81,7 @@ class ParentFormComponent extends Component {
      * if there is an object either in the current component or the obj change the obj into and array of objs if it isn't already and set state.
      */
     componentDidMount(){
-        //debugger
+        //
         if(!this.props.prepareOnClick){
 
         
@@ -157,7 +157,6 @@ class ParentFormComponent extends Component {
      * @param {*} event 
      */
     handleChange = async (event) => {
-        debugger;
         const { name, value } = event.target;
         
         if (this.props.isPropArray) {
@@ -215,7 +214,6 @@ class ParentFormComponent extends Component {
         for(const key in this.state.obj){
             this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:value});
             if(this.props.cleanPrepareRun){
-                debugger
                 this.state.obj[key].getOperationsFactory().cleanPrepareRun({update:this.state.obj});
             }
             if(this.props.prepareRun){

@@ -45,7 +45,7 @@ export default class Upload extends Component {
         });
 
         if (this.props.prepareOnChange){
-            debugger
+            
             await this.props.app.state.opps.cleanJsonPrepare({
                 ["add"+this.props.prepareOnChange.name]:this.props.prepareOnChange.json,
             })
@@ -61,7 +61,7 @@ export default class Upload extends Component {
 
 
     async handleSubmission() {
-        debugger
+        
         let component = this.state.obj
         await component.getPicSrc(this.state.path)
         if (!this.props.skipUpdate) {

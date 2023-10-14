@@ -15,6 +15,7 @@ import Background from './pics/back1.png'
 import Login from './view/login';
 import PopupDelete from './view/popups/popupDelete';
 import PopupLore from './view/popups/popupLore';
+import ViewPic from './view/popups/viewPic';
 
 
 //model
@@ -54,6 +55,14 @@ export default class Dispatch extends Component {
           type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+        />}
+
+{state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
+        <ViewPic 
+        
+          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+        
         />}
 
               {state.popupSwitch === "popupLore" 

@@ -42,13 +42,13 @@ export default class Opps {
             update: this.update,
             del: this.del
         }
-        ////debugger
+        ////
         for(const key in obj){
             if(key!=="lastChange" ){
                 
            
             if(obj[key].length!==0){
-                //debugger
+                //
                 let backarr = {...this.backArray}
                 let backadd = await operate[key](obj[key])
                 backarr[key]=backadd;
@@ -56,7 +56,7 @@ export default class Opps {
             }
         }
         }
-        ////debugger
+        ////
         await this.dispatch({ backend:true, backendUpdate:this.backArray});
         this.backArray={}
     }

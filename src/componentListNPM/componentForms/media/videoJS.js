@@ -6,7 +6,7 @@ export default class VideoPlayer extends React.Component {
 
   // Instantiate a Video.js player when the component mounts
   componentDidMount() {
-    debugger
+    
     let el = document.getElementById("videoJSComponent");
     if(el){
       let id = this.createUUID(5)

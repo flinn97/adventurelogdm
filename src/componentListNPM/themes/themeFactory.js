@@ -23,7 +23,7 @@ class ThemeFactory {
     }
 
     getComponent(obj){
-        //debugger
+        //
         if(Object.keys(this.factory).includes(obj.component)){
             let key = Object.keys(this.factory).includes(obj.component)? obj.component:"legato";
             let comp = new this.factory[key](this.operationsFactory);

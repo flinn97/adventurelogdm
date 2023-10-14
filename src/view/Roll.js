@@ -38,7 +38,7 @@ export default class Roll extends Component {
     
     if ((obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "")) {
       let jsonObj = obj.getJson();
-      // debugger
+      // 
     this.setState({initiative: jsonObj.lastInit});
     }
   }

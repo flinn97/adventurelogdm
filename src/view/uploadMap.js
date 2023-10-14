@@ -52,7 +52,7 @@ export default class MapUploader extends Component {
 
 
     async handleSubmission() {
-        debugger
+        
 
         let component = this.props.obj
         await component.getPicSrc(this.state.path)

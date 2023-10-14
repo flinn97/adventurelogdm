@@ -15,12 +15,26 @@ export default class NoteMapItem extends Component {
     
   }
 
+  renderNotes(){
+    debugger
+    let body = this.props.obj.getJson().text.substring(0, 100)+'...'
+    let index = parseInt(body.indexOf("<br>"))
+      body = index!==-1? body.substring(0, index): body; 
+    
+    
+    let bodyText = document.getElementById(this.props.obj.getJson()._id+"textBody");
+    bodyText.innerHTML = body;
+  }
+  componentDidMount(){
+    this.renderNotes();
+  }
+
   componentDidUpdate(props){
 
     if (this.props.obj.getJson().text && this.props.obj.getJson().text.length < 300) {
-          let body = this.props.obj.getJson().text.substring(0, 115)+'...'
-          let bodyText = document.getElementById("textBody");
-          bodyText.innerHTML = body;
+      this.renderNotes();
+
+         
     }
 
   }
@@ -46,7 +60,8 @@ export default class NoteMapItem extends Component {
 //console.log(this.props.obj.getJson().text.length) 
 
     return (
-      <div style={{width:"100%", height:"3.5em",}} onClick={()=>{
+      <div style={{width:"100%", height:"3.5em",}} onClick={async ()=>{
+        await dispatch({currentComponent: undefined});
         dispatch({currentComponent: this.props.obj}); 
         }}>
       <div style={{width:"100%", height:"3.5em",padding:"4px 6px", backgroundColor:highlightBackground, }}
@@ -62,7 +77,7 @@ export default class NoteMapItem extends Component {
       {this.props.obj.getJson().title}
         </div>
 
-              <div id={"textBody"}
+              <div id={this.props.obj.getJson()._id+"textBody"}
               style={{ marginBottom: "2px", 
               fontSize: styles.fonts.fontSmallest, 
               color: styles.colors.colorWhite, lineHeight:"1em", maxHeight:"3.5em",

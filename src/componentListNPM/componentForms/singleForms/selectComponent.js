@@ -22,7 +22,7 @@ class SelectComponent extends Component {
     }
 
     componentDidMount() {
-        debugger
+        
         if(this.props.defaultValue){
             let name = this.props.name;
             let value = this.props.defaultValue;
