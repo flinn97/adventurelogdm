@@ -168,9 +168,12 @@ export default class InteractiveBulletin extends Component {
 
 
 
-<div style={{ position:"relative", width:"100%", height:"100%",}}>
-  <img ref={this.imgRef} src = {this.props.obj?.getJson().picURL} style={{ position:"absolute", top:0, left:0,  borderRadius:"17px" }}/>
+      <div style={{ position:"relative", width:"100%", height:"100%",}}>
+      <img ref={this.imgRef} 
+   src = {this.props.obj?.getJson().picURL} 
+  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", }}/>
   {/* {this.state.start && */}
+  
   <div ref={this.parentRef}  style={{position:"absolute", top:0, left:0,
    width: this.state.mapWidth, 
    height:this.state.mapHeight 
@@ -232,7 +235,7 @@ export default class InteractiveBulletin extends Component {
             dispatch({
               operate:"addlore",
               operation:"cleanJsonPrepare",
-              object:{campaignId: this.props.obj.getJson().campaignId, parentId: this.props.obj?.getJson().loreId},
+              object:{campaignId: this.props.obj?.getJson().campaignId, parentId: this.props.obj?.getJson().loreId},
               currentPin: pin,
               popupSwitch: "popupLore"
 
@@ -311,6 +314,7 @@ export default class InteractiveBulletin extends Component {
   </Draggable>
   )}
   </div> 
+  
   {/* } */}
   </div>
 
