@@ -170,7 +170,7 @@ class MainContent extends Component{
           {!this.state.showFindEncounter && !this.state.showFindImage &&   <div> <hr></hr>
           <div style={{ marginTop:"-18px", color:styles.colors.colorWhite+"77", fontSize:styles.fonts.fontSmall,}}>Encounters</div>
 
-          <div style={{ marginTop:"-8vh", marginBottom:"1vh",}}> 
+          <div style={{ marginTop:"2vh", marginBottom:"1vh",}}> 
              <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
             filter={{search: state.currentComponent.getJson()._id, attribute: "loreId"}}
             theme={"selectByImageSmall"}
@@ -220,7 +220,7 @@ class MainContent extends Component{
 
         {this.state.showFindEncounter &&
         <div>
-<div style={{ display:"flex", justifyContent:"flex-end",}}>
+<div style={{ display:"flex", justifyContent:"flex-end", }}>
 
         <input app={app}
         
@@ -259,7 +259,7 @@ class MainContent extends Component{
             <div style={{display: "flex", flexDirection: 'column', 
                           borderRadius:styles.popupSmall.borderRadius,
                           justifyContent:"space-evenly", 
-                          zIndex:"0",
+                          zIndex:"0", 
                           height: 'fit-content', 
                           width: 'fit-content', 
                           backgroundImage: 'url('+(encounter?.getJson().picURL||placeholder)+')',
@@ -301,7 +301,13 @@ class MainContent extends Component{
                 .slice(0, this.state.imagesToShow)
                 .map((img, index) => (
                   <div className="hover-img" key={index}>
-                    <img  draggable="false" src={img.getJson().picURL} 
+                    
+                    <img 
+                    onClick={()=>{
+                          debugger
+                          dispatch({currentPic:img, popupSwitch:"viewPic"})
+                        }}
+                     draggable="false" src={img.getJson().picURL} 
                     style={{
                       maxWidth: "180px", minWidth:"100px", height:"fit-content",
                        margin:"9px", cursor:"pointer", borderRadius:"10px"

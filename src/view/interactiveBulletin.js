@@ -39,7 +39,8 @@ export default class InteractiveBulletin extends Component {
       isGrabbing: false,
       mapHeight:"1200px",
       mapWidth:"1400px",
-      start:false
+      start:false,
+      isLoading: true,
     }}
 
   async componentDidMount(){
@@ -57,6 +58,8 @@ export default class InteractiveBulletin extends Component {
       mapWidth:mapWidth,
     }, () => this.forceUpdate())
     ///assign pins to current mapId
+
+    this.setState({isLoading: false});
   };
 
   componentWillUnmount() {
@@ -105,8 +108,8 @@ export default class InteractiveBulletin extends Component {
     let headerH = 60;
     let remainderH = 1310-[headerH]-11;
     const images = [image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16];
-    let heightY = this.state.mapHeight;
-
+    const heightY = this.state.mapHeight;
+    // if (this.state.isLoading) {
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
       <div 
@@ -166,12 +169,15 @@ export default class InteractiveBulletin extends Component {
 
       </div>
 
-
-
+      
       <div style={{ position:"relative", width:"100%", height:"100%",}}>
+
+        {this.state.mapWidth && (this.state.mapWidth !== "") &&
       <img ref={this.imgRef} 
-   src = {this.props.obj?.getJson().picURL} 
-  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", }}/>
+   src={this.props.obj?.getJson().picURL} 
+  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", width:this.state.mapWidth, height:this.state.mapHeight }}/>}
+  
+  
   {/* {this.state.start && */}
   
   <div ref={this.parentRef}  style={{position:"absolute", top:0, left:0,
@@ -320,6 +326,11 @@ export default class InteractiveBulletin extends Component {
 
       </div>
       ) 
+    // }else{
+    //   return (
+    //     <div>Loading...</div>
+    //   )
+    // }
   }
 }
 
