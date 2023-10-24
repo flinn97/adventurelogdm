@@ -7,7 +7,6 @@ import movePin from '../pics/movePin.png';
 import editPin from '../pics/editPin.png';
 import image1 from '../pics/iconTest.svg';
 import image2 from '../pics/iconCapitol.svg';
-import image3 from '../pics/iconCastle.svg';
 import image4 from '../pics/iconCave.svg';
 import image5 from '../pics/iconDiablo.svg';
 import image6 from '../pics/iconIsland.svg';
@@ -62,21 +61,19 @@ export default class InteractiveBulletin extends Component {
     this.setState({isLoading: false});
   };
 
-  async componentDidUpdate (){
-    this.setState({isLoading: true});
-
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    await delay(1000);
-    let mapHeight = this.imgRef?.current?.clientHeight;
-    let mapWidth = this.imgRef.current?.clientWidth;
-    this.setState({
-      mapHeight:mapHeight,
-      mapWidth:mapWidth,
-    }, () => this.forceUpdate())
-    ///assign pins to current mapId
-
-    this.setState({isLoading: false});
-
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.imgRef?.current !== prevProps.imgRef?.current) {
+      
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      await delay(1000);
+      let mapHeight = this.imgRef?.current?.clientHeight;
+      let mapWidth = this.imgRef?.current?.clientWidth;
+      this.setState({
+        mapHeight: mapHeight,
+        mapWidth: mapWidth,
+      }, () => this.forceUpdate());
+      
+    }
   }
 
   componentWillUnmount() {
@@ -101,7 +98,7 @@ export default class InteractiveBulletin extends Component {
 
   stopPanning = () => {
     this.isPanning = false;
-    console.clear();
+    // console.clear();
     this.setState({ isGrabbing: false })
   }
 
@@ -124,7 +121,11 @@ export default class InteractiveBulletin extends Component {
     let styles =state.styles;
     let headerH = 60;
     let remainderH = 1310-[headerH]-11;
-    const images = [image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16];
+
+    const images = [image1,image2,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16,
+            "#F4F5F8",
+            "#ecd23abb","#0f141cf3", "#1E90FFbb", "#5F0C0Cae" ];
+
     const heightY = this.state.mapHeight;
     // if (this.state.isLoading) {
     return (
@@ -150,9 +151,11 @@ export default class InteractiveBulletin extends Component {
         paddingLeft:"10px", 
         position:"sticky", 
         top: 30, left:10,
-        zIndex: 1000, // to ensure it stays on top
+        zIndex: 99, // to ensure it stays on top
         }}>
+
       {/* BUTTONS IN HEADER */}
+
         <div className="indent-on-click" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd",  }}
         onClick={async (e)=>{
@@ -202,6 +205,7 @@ export default class InteractiveBulletin extends Component {
    height:this.state.mapHeight 
    }}>
     
+    {/* PINS PINS PINS */}
   {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").map((pin,index)=>
   <Draggable 
   defaultPosition={{x: parseInt(pin.getJson().x, 10), y: parseInt(pin.getJson().y, 10)}}
@@ -234,74 +238,102 @@ export default class InteractiveBulletin extends Component {
 
   >
     
-      <div className='hover-container'
+      <div className='hover-container' 
+      
       style={{
-        display:"flex", flexDirection:"column", alignItems:"center",cursor:"pointer", zIndex:300,
-        position:"absolute", }} 
+        display:"flex", flexDirection:"column", alignItems:"center",cursor:"pointer", 
+        // backgroundColor:pin.getJson().colorOverlay,
+        position:"absolute",
+        
+        borderRadius:"50%",
+        
+      }} 
     
       pinId={pin.getJson()._id} >
         {/* pin.getJson()._id */}
 
         
-          <div className="indent-on-click" style={{borderRadius:"50%", width:"48px", height:"48px", paddingTop:"2px",
+          <div className="indent-on-click" style={{borderRadius:"50%", width:"44px", height:"44px", paddingTop:"2px", zIndex:100, 
+           
                 background:styles.colors.colorBlack+"88",}}
 
                 onClick={()=>{
-                  
-            if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
-              let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
-              dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
-                
-            }
+                  if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
+                    let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
+                    dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
+                  }
+      
+                  else{
+                    const newId = this.props.obj?.getJson().loreId || this.props.obj?.getJson().campaignId;
+                  dispatch({
+                    operate:"addlore",
+                    operation:"cleanJsonPrepare",
+                    object:{campaignId: this.props.obj?.getJson().campaignId, 
 
-            else{
-            dispatch({
-              operate:"addlore",
-              operation:"cleanJsonPrepare",
-              object:{campaignId: this.props.obj?.getJson().campaignId, parentId: this.props.obj?.getJson().loreId},
-              currentPin: pin,
-              popupSwitch: "popupLore"
-
-            })
-          }
-           }}
+                      parentId: newId},
+                    currentPin: pin,
+                    popupSwitch: "popupLore"
+      
+                  })
+                }
+                 }}
 
               title="Click to Open">
+         
 
                   <img
-                draggable="false" src={pin.getJson().iconImage} style={{width:"48px", objectFit:"contain",}}></img>
+                draggable="false" src={pin.getJson().iconImage} 
+
+                style={{width:"44px", height:"44px", objectFit:"contain", justifySelf:"center", 
+                alignSelf:"center", verticalAlign:"center", 
+                borderRadius:"50%",
+
+                backgroundColor:pin.getJson().colorOverlay, 
+                filter:pin.getJson().colorFilter,
+                }}></img>
+ 
           </div>
 
-              <div className='hover-div'>
-            <img className="draghere" draggable="false" style={{ position:"absolute", marginTop:"31px",marginLeft:"34px",width:"25px",
-            objectFit:"fill",
+          
+              <div 
+              className='hover-div'style={{zIndex:101, width:"20px", height:"fit-content", position:"absolute", marginLeft:"35px", marginTop:"-8px" }}>
 
+            <img className="draghere" draggable="false" style={{ position:"absolute", marginTop:"35px",marginLeft:"0px",width:"25px",
+            objectFit:"fill",
+            
             cursor: this.state.isGrabbing!==true? "grab":"grabbing", overflow:"visible"
 
           }} src={movePin} title="Move"
             ></img>
             
             {this.state.isGrabbing!==true &&
-          <div className="hover-containerInt" style={{ position:"absolute", marginTop:"10px",marginLeft:"34px",width:"22px",
+            <>
+          <div className="hover-containerInt" style={{position:"absolute", marginTop:"10px",marginLeft:"0px",width:"fit-content", 
           objectFit:"fill", cursor: "pointer", overflow:"visible",}}
           >
                       <img  draggable="false" 
-                      style={{ position:"absolute", width:"22px", marginTop:"-3px",
-                        objectFit:"fill",
+                      style={{ width:"22px", marginTop:"-3px",
+                        objectFit:"fill", 
                         cursor: "pointer", overflow:"visible",
                         
                       }} 
                       src={editPin} title="Change"                        />
-                                                 
-                        <div className='hover-divInt' 
-                        style={{width:"155px",height:"150px", borderRadius:"3px", 
-                        justifyContent:"space-between",
-                        marginLeft:"20px", marginTop:"-122px", padding:"4px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
+
+   {/* LIST OF IMAGE OPTION       */}
+                        <div className='hover-divInt'
+                        style={{width:"160px",height:"150px",
+                        justifyContent:"space-between", borderRadius:"11px",
+                        marginLeft:"20px", marginTop:"-122px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                         
                         {images.map((imgSrc, index) => (
-                          <div style={{display:"flex", flexDirection:"row", backgroundColor:styles.colors.color1+"dd", position:"sticky", zIndex:"12000" }}>
+                          <div style={{display:"flex", flexDirection:"row", backgroundColor:styles.colors.color1+"7d", position:"sticky", zIndex:"50",  }}>
+
+                {(typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&
                               <img 
-                              style={{margin:"3px", width:"25px", position:"relative",}}
+                              style={{margin:"2px", height: '28px',  width:"28px", position:"relative", 
+                              backgroundColor:pin.getJson().colorOverlay, 
+                              filter:pin.getJson().colorFilter,
+                              borderRadius:"50%"}}
                               className='hover-divInt'
                               key={index}
                               src={imgSrc}
@@ -311,22 +343,73 @@ export default class InteractiveBulletin extends Component {
                                     iconImage: imgSrc
                                 });
                                   state.opps.cleanPrepareRun({update:comp});
-                              }}></img></div>
+                              }}></img>}
+
+                {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&
+                              <div
+                              style={{margin:"2px",  height: '28px', width:"28px", position:"relative", backgroundColor: imgSrc, borderRadius:"50%",}}
+                              className='hover-divInt'
+                              key={index}
+                              onClick={(item, data)=>{                                
+                                let comp = pin;
+                                let colorNew = imgSrc;
+                                let filterNew = ""
+
+                                if (imgSrc == "#5F0C0C88"){
+                                  colorNew = "#5F0C0C22";
+                                  
+                                }
+
+                                if (imgSrc == "#F4F5F8"){
+                                  colorNew = "#00000055";
+                                  filterNew = "invert(98%)"
+                                }
+
+                                comp.setCompState({
+                                    colorOverlay: colorNew,
+                                    colorFilter: filterNew
+                                });
+                                  state.opps.cleanPrepareRun({update:comp});
+                              }}></div>}
+
+                          </div>
                               ))}
 
                         </div>
-                        <div  style={{display:"flex", textAlign: 'center', alignItems: 'center', justifyContent:"center", width:"",
-                        height:"20px"}}>
-          <ParentFormComponent app={app} name="title" obj={pin} className='hover-divInt'
-              labelStyle={{width:"200px",}}
-              inputStyle={{padding:"0px",  color:styles.colors.colorWhite, position:"absolute",
-                  borderRadius:"4px", background:styles.colors.colorBlack+"88", borderWidth:"0px",
-                   textAlign: 'center', alignItems: 'center',
-                  marginTop:"30px", marginLeft:"-120px",
-                  justifyContent: 'center', width:"200px",
-                  textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontSmallest }}/>
+
+                       
+                        
                         </div>
-                        </div>
+                         <div style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "flex-end",
+                          marginTop: "44px",
+                          marginLeft: "-110px",
+                          width: "200px",
+                          zIndex: "20",
+                          
+                          height: "32px",
+                        }}>
+                          <ParentFormComponent
+                            app={app}
+                            name="title"
+                            prepareRun={true}
+                            obj={pin}
+                            inputStyle={{
+                              padding: "0px", padding:"2px",
+                              color: styles.colors.colorWhite,
+                              borderRadius: "4px",
+                              background: styles.colors.colorBlack + "88",
+                              borderWidth: "0px",
+                              textAlign: 'center',
+                              width: "200px",
+                              overflowX: "clip",
+                              overflowY: "auto",
+                              fontSize: styles.fonts.fontSmallest
+                            }}
+                          />
+                        </div></>
                         }
                          
               </div>

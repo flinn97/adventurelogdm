@@ -79,9 +79,16 @@ toggleSidebar = () => {
     let state = app.state;
     let styles =state.styles;
     let dispatch = app.dispatch;
+    let href = window.location.href;
+  let splitURL = href.split("/");
+  let id = splitURL[splitURL.length-1];
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
-
+    
+    let compList = state.componentList.getList("map",  id, "campaignId");
+    
+    let compListLength = compList.length;
+    console.log(compListLength)
 
     return (
       
@@ -113,7 +120,8 @@ toggleSidebar = () => {
       <div id= "campaignDesc"
               style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
                 </div> */}
-
+{
+(compListLength == 0) &&
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
@@ -132,7 +140,7 @@ toggleSidebar = () => {
                text="Add Map" style={{display:"flex",marginBottom:"20px",
               zIndex:"1", borderRadius:".1vmin", background:"", cursor:"pointer"}} 
               update={true} skipUpdate={true}
-               app={app}/>
+               app={app}/>}
             
 {/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}
 

@@ -96,8 +96,17 @@ async componentDidMount(){
                 <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite, width:"80%",}}>{this.state.obj?.getJson().title}</div>
     }
     {state.currentLore!==undefined && <div style={{display:"flex",flexDirection:"column"}}>
-                <div style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"55", width:"100%",}}>Campaign: {this.state.obj?.getJson().title}</div>
-                <div style={{fontSize:styles.fonts.fontSubheader1, color:styles.colors.colorWhite, width:"100%",}}>{state.currentLore.getJson().title}</div>
+                <div style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"55", width:"fit-content", alignSelf:"flex-end"}}>Campaign: {this.state.obj?.getJson().title}</div>
+                <ParentFormComponent app={app} name="title" obj={state.currentLore}
+             theme={"adventureLog"} 
+              rows={5}
+             prepareRun={true}
+             inputStyle={{width:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
+             borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+             border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSubheader1}}
+             
+             wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-22px",
+             flexDirection:"column", justifyItems:"space-between"}}/>
                 </div>
     }
 
@@ -177,9 +186,10 @@ async componentDidMount(){
                              Gallery
                              <div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginTop:"8px",}}>
 
+                             
                 <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                 />
-                
+                             
         </div>
                              </div>
                 </div>

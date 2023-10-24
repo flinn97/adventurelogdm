@@ -140,6 +140,7 @@ class MainContent extends Component{
 <div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
 
 <ParentFormComponent app={app} name="name"
+  prepareRun={true}
               placeholder={state.currentPin?.getJson().title}
               inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
@@ -155,7 +156,7 @@ class MainContent extends Component{
 <ParentFormComponent app={app} name="desc"
              theme={"adventureLog"} 
               rows={5}
-             
+              prepareRun={true}
              inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
              borderRadius:"4px",background:styles.colors.colorWhite+"00", 
              border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
@@ -384,7 +385,8 @@ class MainContent extends Component{
                 />
                 
         </div>
-        <div className="indent-on-click" 
+
+        {/* <div className="indent-on-click" 
         title="Find an existing image to add to this lore." 
         style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
         marginTop:"1vh", alignSelf:"center", padding:"1%"}}
@@ -392,7 +394,9 @@ class MainContent extends Component{
             this.setState({showFindImage: true })
         }}>
           Find Image
-        </div></div>
+        </div> */}
+        
+        </div>
         </div>
         }
         
@@ -422,10 +426,12 @@ class MainContent extends Component{
                     this.setState({ showSaved: true });
                     setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
                   }}/>
+
                   {this.state.showSaved && (
                   <div className="saved-animation" style={{color:styles.colors.color9,
                   alignSelf:"flex-end", position:"absolute", marginBottom:"69px", marginLeft:"-72px",
                   fontSize:styles.fonts.fontSmallest}}> Saved! </div>)}
+
                   </div>
                   
           {/* <div>New Lore</div>

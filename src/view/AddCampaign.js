@@ -41,7 +41,7 @@ export default class AddCampaign extends Component {
     let isNotUpdate = (state.popUpSwitchcase != "updateCampaign")
 
     if (state.currentComponent?.getJson().type === "campaign" && isUpdate)
-                      {textSubmit ="Edit"}
+                      {textSubmit ="Save"}
                       else {
                         textSubmit ="Create My Campaign";
                         };
@@ -133,6 +133,7 @@ export default class AddCampaign extends Component {
               {/* ///Description */}
               <ParentFormComponent app={app}
                   theme={"adventureLog"} 
+                  
                   maxLength={200} rows={5}
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"fit-content",

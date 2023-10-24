@@ -24,7 +24,9 @@ export default class GalleryViewer extends Component {
     let dispatch = app.dispatch;
     let componentList = state.componentList;
     let styles =state.styles;
-    let imageList = state.componentList.getList("image", this.getId(), "campaignId");
+    
+    let imageList = state.currentLore==undefined? state.componentList.getList("image", this.getId(), "campaignId"):
+    state.componentList.getList("image", state.currentLore.getJson()._id, "loreId");
 
     return (
       <div style={{width:"100%", minHeight:"200px",}}>
