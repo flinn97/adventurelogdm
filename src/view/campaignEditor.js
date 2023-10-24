@@ -13,6 +13,7 @@ import Worldbuilder from './worldBuilder';
 import LoreViewer from './loreViewer';
 import Upload from './upload';
 import GalleryViewer from './galleryViewer';
+import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 
 
 
@@ -73,8 +74,10 @@ async componentDidMount(){
       width:"100%", minWidth:"fit-content", height:"100%",}}>
 
         {/* BACK BUTTON */}
-{state.popUpSwitchcase != "updateCampaign" &&
-        <Link to={"/campaign/"} style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+{(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
+        <Link 
+        to={"/campaign/"} 
+        style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
         fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh"}}
         >
           <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
@@ -88,17 +91,26 @@ async componentDidMount(){
             <div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%"}}>
 
             {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") && <AddCampaign app = {app}/>}
-    
+
+    {state.currentLore==undefined &&
                 <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite, width:"80%",}}>{this.state.obj?.getJson().title}</div>
+    }
+    {state.currentLore!==undefined && <div style={{display:"flex",flexDirection:"column"}}>
+                <div style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"55", width:"100%",}}>Campaign: {this.state.obj?.getJson().title}</div>
+                <div style={{fontSize:styles.fonts.fontSubheader1, color:styles.colors.colorWhite, width:"100%",}}>{state.currentLore.getJson().title}</div>
+                </div>
+    }
+
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%", justifyContent:"space-between"}}>
-                      
+
+                      {state.currentLore==undefined &&
                         <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, padding:"4px",
                         paddingRight:"9px", paddingLeft:"9px", backgroundColor:styles.colors.color1+"ee", position:"relative",
                         justifyContent:"center"}} 
                           onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                         Edit 
-                        </div>
+                        </div>}
                         
                       </div>
 
@@ -119,7 +131,7 @@ async componentDidMount(){
         </div>
 
         <hr></hr>
-        {state.currentLore!==undefined ? (<div style={{width:"100%"}}>
+        {state.currentLore!==undefined ? (<div style={{width:"100%", height:"100%"}}>
         <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
         </div>):(
         <>

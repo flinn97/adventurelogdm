@@ -82,18 +82,22 @@ toggleSidebar = () => {
       let componentList = currentState.componentList;
        //type , value to search,   filter key
     // let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
+    
 
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
 
 
     return (
-      
+      <div>
+
+          
+
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
       height:"fit-content", maxWidth:"100%", 
       }}>
 
-       
+       <div>
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
@@ -109,7 +113,7 @@ toggleSidebar = () => {
 
               
               }} 
-               text="Add Map" style={{display:"flex",
+               text="Add Map" style={{display:"flex", marginBottom:"20px",
               zIndex:"1", borderRadius:".1vmin", background:"",}} 
               update={true} skipUpdate={true}
                app={app}/>
@@ -118,7 +122,10 @@ toggleSidebar = () => {
           {/* </div>
           </div> */}
 {this.state.lore?.getJson()._id !== this.props.app.state.componentList.getComponent("campaign", this.props._id) &&
-          <div style={{color:styles.colors.colorWhite}}>{this.state.lore?.getJson().name}</div>}
+
+          <div style={{color:styles.colors.colorWhite}}>
+            {/* {this.state.lore?.getJson().name} */}
+            </div>}
       
         {(this.state.map) && 
        
@@ -126,6 +133,12 @@ toggleSidebar = () => {
         <MapGallery app={app} obj={this.state.lore}/>
         
         </div>}
+
+          
+
+
+
+        </div>
 
         <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
           padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
@@ -139,6 +152,15 @@ toggleSidebar = () => {
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
                   </div>)}
+
+          
+
+      </div>
+
+      <div style={{color:styles.colors.colorWhite}}>
+        PARENT COMPONENT
+      {/* {this.state.lore?.getJson().desc} */}
+        </div>
 
       </div>
       

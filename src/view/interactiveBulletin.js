@@ -62,6 +62,23 @@ export default class InteractiveBulletin extends Component {
     this.setState({isLoading: false});
   };
 
+  async componentDidUpdate (){
+    this.setState({isLoading: true});
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    await delay(1000);
+    let mapHeight = this.imgRef?.current?.clientHeight;
+    let mapWidth = this.imgRef.current?.clientWidth;
+    this.setState({
+      mapHeight:mapHeight,
+      mapWidth:mapWidth,
+    }, () => this.forceUpdate())
+    ///assign pins to current mapId
+
+    this.setState({isLoading: false});
+
+  }
+
   componentWillUnmount() {
     this.divRef.current.removeEventListener('contextmenu', this.preventContextMenu);
     this.divRef.current.removeEventListener('mousedown', this.startPanning);

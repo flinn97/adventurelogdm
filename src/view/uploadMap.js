@@ -76,7 +76,7 @@ export default class MapUploader extends Component {
 
         return (
 
-            <div style={{ color:styles.colors.colorWhite+"99", 
+            <div style={{ color:styles.colors.colorWhite+"99", marginBottom:"20px",
             borderRadius:"22px", fontWeight:"550",  }}>
                 
                 <label  for="file-upload" style={{...styles.buttons.buttonAdd,

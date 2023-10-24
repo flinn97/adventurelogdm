@@ -43,6 +43,21 @@ export default class MapGallery extends Component {
       
     }
 
+    handleNextMap = () => {
+      let currentIndex = this.state.mapList.indexOf(this.state.currentMap);
+      let nextIndex = currentIndex + 1;
+      if (nextIndex < this.state.mapList.length) {
+        this.setState({ currentMap: this.state.mapList[nextIndex] } , () => this.forceUpdate());
+      }
+    };
+
+    handlePrevMap = () => {
+      let currentIndex = this.state.mapList.indexOf(this.state.currentMap);
+      let prevIndex = currentIndex - 1;
+      if (prevIndex >= 0) {
+        this.setState({ currentMap: this.state.mapList[prevIndex] } , () => this.forceUpdate());
+      }
+    };
   
   render() {
     let app = this.props.app;
@@ -55,27 +70,32 @@ export default class MapGallery extends Component {
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div style={{width:"100%", display:"flex", 
+      <div style={{width:"100%", display:"flex", height:"100%",
       position:"absolute",
       }}>
 
         {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
-        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, 
-        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"-930px", }}>
+        <div 
+        onClick={this.handlePrevMap}
+        style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, cursor:"pointer",
+        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd",
+        position:"absolute", zIndex:"200", top: "-72px", right:"220px" }}>
           
           <img src={backarrow} style={{width:"40px", height:"40px", marginRight:"15px", marginLeft:"10px", marginTop:"1px",padding:"5px", }}></img>
           Prev Map
           </div>}
 
           {this.state.mapList?.indexOf(this.state.currentMap)!==(this.state?.mapList.length-1) &&
-        <div style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
-        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", marginRight:"30px", }}>
+        <div 
+        onClick={this.handleNextMap}
+        style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, cursor:"pointer",
+        backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", position:"absolute", zIndex:"200", top: "-72px", right:"20px" }}>
           Next Map
           <img src={backarrow} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px",padding:"5px", 
           transform:'rotate(180deg)' }}></img>
           </div>}
 
-<div style={{width:"100%", display:"flex", position:"absolute",}}>
+<div style={{width:"100%", display:"flex", position:"absolute", height:"100%"}}>
 
   {this.state.currentMap &&
    

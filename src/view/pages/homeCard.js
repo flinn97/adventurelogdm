@@ -129,7 +129,7 @@ class TabContent extends Component{
       </div>
     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
     fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
-      Game Management System
+      Game Master Suite
       </div>
       <hr></hr></div>
     )

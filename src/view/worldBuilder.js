@@ -81,10 +81,12 @@ toggleSidebar = () => {
     let dispatch = app.dispatch;
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
+
+
     return (
       
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
-      height:"fit-content", maxWidth:"100%", 
+      height:"fit-content", maxWidth:"100%",  justifyContent:"space-between"
       }}>
 
             {/* {state.popUpSwitchcase != "worldbuilder" &&
@@ -127,20 +129,21 @@ toggleSidebar = () => {
 
               
               }} 
-               text="Add Map" style={{display:"flex",
+               text="Add Map" style={{display:"flex",marginBottom:"20px",
               zIndex:"1", borderRadius:".1vmin", background:"", cursor:"pointer"}} 
               update={true} skipUpdate={true}
                app={app}/>
+            
 {/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}
 
           {/* </div>
           </div> */}
 
-          <div style={{color:'white'}}>{this.state.lore?.getJson().name}</div>
+          {/* <div style={{color:'white'}}>{this.state.lore?.getJson().name}</div> */}
       
         {(this.state.map) && 
       //  frame
-       <div style={{height:"1310px", width:"100%"
+       <div style={{height:"1310px", width:"100%", 
        }}>
         <InteractiveBulletin app={app} obj = {this.state.map}/>
         {/* backgroundIMAGE */}
