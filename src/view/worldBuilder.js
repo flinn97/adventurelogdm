@@ -59,7 +59,7 @@ componentDidMount(){
   
   parentLore = parentLore.length>0? parentLore.filter(obj=>{return obj.getJson().parentLore===true}): undefined;
   
-  let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0].getJson()._id, "loreId");
+  let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0]?.getJson()._id, "loreId");
   this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
   
   //RICH TEXT READ

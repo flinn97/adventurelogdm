@@ -236,8 +236,8 @@ class MainContent extends Component{
         padding: '8px',  
         fontSize: '16px', }}
       />
-
 </div>
+
         <div style={{display:"flex", justifyContent:"space-around", marginTop:"3vh",}}>
 
 

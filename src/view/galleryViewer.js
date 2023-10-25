@@ -11,11 +11,13 @@ export default class GalleryViewer extends Component {
   }
  
     
-  getId() {
+  getId(val) {
     const path = window.location.pathname;
-    const parts = path.split('/');
-    const id = parts.pop();
-    return id;
+  const parts = path.split('/');
+  const idSegment = parts.pop();
+  const idParts = idSegment.split('-');
+  
+  return idParts[val]
   }
 
   render() {
@@ -25,7 +27,7 @@ export default class GalleryViewer extends Component {
     let componentList = state.componentList;
     let styles =state.styles;
     
-    let imageList = state.currentLore==undefined? state.componentList.getList("image", this.getId(), "campaignId"):
+    let imageList = state.currentLore==undefined? state.componentList.getList("image", this.getId(0), "campaignId"):
     state.componentList.getList("image", state.currentLore.getJson()._id, "loreId");
 
     return (
@@ -99,8 +101,8 @@ export default class GalleryViewer extends Component {
 
                       prepareOnChange={{
                         name:"image", json:{
-                          loreId: this.getId(),
-                          campaignId: this.getId()}
+                          loreId: this.getId(1) ? this.getId(1):this.getId(0),
+                          campaignId: this.getId(0)}
                       }}
 
                       obj={app.state.currentComponent}

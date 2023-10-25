@@ -127,6 +127,7 @@ export default class InteractiveBulletin extends Component {
             "#ecd23abb","#0f141cf3", "#1E90FFbb", "#5F0C0Cae" ];
 
     const heightY = this.state.mapHeight;
+
     // if (this.state.isLoading) {
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
@@ -172,7 +173,7 @@ export default class InteractiveBulletin extends Component {
                 mapId: this.props.obj?.getJson()._id,
                 x: x,
                 y: y,
-                title: "New Lore",
+                name: "New Lore",
                 campaignId: this.props.obj?.getJson().campaignId,
               },
             });
@@ -193,9 +194,10 @@ export default class InteractiveBulletin extends Component {
       <div style={{ position:"relative", width:"100%", height:"100%",}}>
 
         {this.state.mapWidth && (this.state.mapWidth !== "") &&
+
       <img ref={this.imgRef} 
    src={this.props.obj?.getJson().picURL} 
-  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", width:this.state.mapWidth, height:this.state.mapHeight }}/>}
+  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", }}/>}
   
   
   {/* {this.state.start && */}
@@ -264,12 +266,13 @@ export default class InteractiveBulletin extends Component {
                   }
       
                   else{
-                    const newId = this.props.obj?.getJson().loreId || this.props.obj?.getJson().campaignId;
+                   
+                    const newId = state.currentLore ? state.currentLore.getJson()._id: this.props.obj?.getJson().campaignId;
                   dispatch({
                     operate:"addlore",
                     operation:"cleanJsonPrepare",
-                    object:{campaignId: this.props.obj?.getJson().campaignId, 
-
+                    object:{
+                      campaignId: this.props.obj?.getJson().campaignId, 
                       parentId: newId},
                     currentPin: pin,
                     popupSwitch: "popupLore"
@@ -393,7 +396,7 @@ export default class InteractiveBulletin extends Component {
                         }}>
                           <ParentFormComponent
                             app={app}
-                            name="title"
+                            name="name"
                             prepareRun={true}
                             obj={pin}
                             inputStyle={{

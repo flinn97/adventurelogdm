@@ -40,6 +40,7 @@ export default class ListTreeLink extends Component {
      let idList = id.split('-');
      newLink= idList[0];
     }
+    
     return (<Link target='_blank' to={"../campaign/"+newLink}>{obj.getJson()[name]}</Link>
         
     )

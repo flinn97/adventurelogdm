@@ -64,6 +64,14 @@ setInterval(async() => {
     const _id = this.props._id;
     let name = this.props.name;
     let attribute = this.props.attribute;
+    console.log(this.props._id)
+    let path = window.location.pathname;
+    let parts = path.split('/');
+    let idSegment = parts.pop();
+    let idParts = idSegment.split('-');
+    
+    let campId =  idParts[0]
+
 
   
     const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
@@ -83,10 +91,12 @@ setInterval(async() => {
                         dispatch(
                           {operate:"addlore", operation:"cleanJsonPrepareRun",
                           //                                      CHANGE NAME later
-                          object:{ parentId:_id, type:"lore", name:"new lore",}}
+                          object:{ parentId:_id, type:"lore", name:"new lore", campaignId:campId}}
                         )
                       }}
                       >+ Create Lore</div>)}
+
+{/* //ADD IMAGE HERE// */}
 
                         <MapComponent app={app}  theme={"expandingTree"} 
                                              

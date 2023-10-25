@@ -14,6 +14,7 @@ import LoreViewer from './loreViewer';
 import Upload from './upload';
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import LoreSearch from './loreSearch';
 
 
 
@@ -97,7 +98,7 @@ async componentDidMount(){
     }
     {state.currentLore!==undefined && <div style={{display:"flex",flexDirection:"column"}}>
                 <div style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"55", width:"fit-content", alignSelf:"flex-end"}}>Campaign: {this.state.obj?.getJson().title}</div>
-                <ParentFormComponent app={app} name="title" obj={state.currentLore}
+                <ParentFormComponent app={app} name="name" obj={state.currentLore}
              theme={"adventureLog"} 
               rows={5}
              prepareRun={true}
@@ -188,11 +189,14 @@ async componentDidMount(){
 
                              
                 <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                />
-                             
-        </div>
-                             </div>
+                />                 
+                            </div>
+                      </div>
                 </div>
+<hr></hr>
+                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                />
+
                 </>)}
         </div>
 

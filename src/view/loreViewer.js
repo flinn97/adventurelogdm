@@ -17,6 +17,7 @@ import MapUploader from './uploadMap.js';
 import MapGallery from './mapGallery';
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import LoreSearch from './loreSearch';
 
 export default class LoreViewer extends Component {
 
@@ -83,6 +84,8 @@ toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
 };
 
+
+
   render() {
     let obj = this.props.obj;
     let app = this.props.app;
@@ -110,6 +113,8 @@ toggleSidebar = () => {
       return nameA.localeCompare(nameB);
     });
 
+
+
     return (
       <div>
           <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}> Description:
@@ -130,6 +135,7 @@ toggleSidebar = () => {
       }}>
 
        <div>
+       <hr></hr>
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
@@ -192,7 +198,7 @@ toggleSidebar = () => {
       {/* ENCOUNTER ENCOUNTER ENCOUNTER */}
       <hr></hr>
       
-        <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().title} Encounters</div>
+        <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
             <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
                         <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
@@ -311,51 +317,21 @@ toggleSidebar = () => {
        
        {/* GALLERY GALLERY GALLERY */}
           <hr></hr>
-                  <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().title} Gallery</div>
+                  <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Gallery</div>
                   <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                      />    
-                </div>
+                      />   
+
+<hr></hr>
+                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                                />
+                                    
+                            
+
+            </div>
+
+          
       
     )
   }
 }
 
-
-/**
- * 
- <div style={{...styles.buttons.buttonAdd, padding:".55%"}} onClick={this.addDraggableItem}>Add Icon</div>
- 
- {this.state.draggableItems.map((item, index) => (
-
-         <Draggable key={index} 
-         bounds="parent"
-         handle=".handle" style={{marginLeft:"22px", userSelect: "none"}}
-         
-         onStop={this.eventLogger} 
-         grid={[1,1]}>
-
-           <pin style={{width:"fit-content", height:"fit-content",
-             }}>
-            <img className="handle" draggable="false"
-            src={movePin} 
-            style={{width: "18px", height:"18px", cursor:"grab", objectFit:"fill", display:"unset",
-            borderRadius: "50%", right:'-58px', bottom:"-15px", zIndex:40,
-
-          
-            }}
-            />
-             <img src={iconTest} draggable="false" style={{
-               background:"#00000000",  cursor:"pointer",
-               objectFit:"fill", display:"unset",
-               width: "55px", height:"55px",
-               borderRadius: "50%",
-              
-               
-               }}>
-             </img>
-           </pin>
-
-         </Draggable>
-
-       ))}
- */
