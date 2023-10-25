@@ -89,6 +89,7 @@ class MainContent extends Component{
     let newLink = "";
     let imageList = state.componentList.getList("image", state.currentComponent.getJson()._id, "loreId");
 
+
     if(id.includes("-")){
       let newArr = [...splitURL];
       newArr.pop()
@@ -116,7 +117,8 @@ class MainContent extends Component{
 
     return(
       <div style={{
-        display:"flex", width:"57vw", flexDirection:"column", height:"fit-content",
+        display:"flex", width:"57vw", flexDirection:"column", height:"fit-content", 
+        
         paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
 
           {(this.state.showFindEncounter || this.state.showFindImage) && 
@@ -133,15 +135,16 @@ class MainContent extends Component{
             />
             Back
           </div>}
+{/* IMAGE TOKEN */}
+<div style={{backgroundImage: `url(.${state.currentPin?.getJson().picURL})`, width:"44px", height:"44px", position:"absolute", top:11, left:11}}></div>
 
-          
-
+{/* OTHER STUFF */}
       {!this.state.showFindEncounter && !this.state.showFindImage &&        
 <div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
 
 <ParentFormComponent app={app} name="name"
-  prepareRun={true}
-              placeholder={state.currentPin?.getJson().title}
+  // prepareRun={true}
+              placeholder={state.currentPin?.getJson().name}
               inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
@@ -156,7 +159,7 @@ class MainContent extends Component{
 <ParentFormComponent app={app} name="desc"
              theme={"adventureLog"} 
               rows={5}
-              prepareRun={true}
+              // prepareRun={true}
              inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
              borderRadius:"4px",background:styles.colors.colorWhite+"00", 
              border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}

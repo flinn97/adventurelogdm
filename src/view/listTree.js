@@ -64,7 +64,7 @@ setInterval(async() => {
     const _id = this.props._id;
     let name = this.props.name;
     let attribute = this.props.attribute;
-    console.log(this.props._id)
+    
     let path = window.location.pathname;
     let parts = path.split('/');
     let idSegment = parts.pop();
