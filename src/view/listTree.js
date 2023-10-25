@@ -91,7 +91,7 @@ setInterval(async() => {
                         dispatch(
                           {operate:"addlore", operation:"cleanJsonPrepareRun",
                           //                                      CHANGE NAME later
-                          object:{ parentId:_id, type:"lore", name:"new lore", campaignId:campId}}
+                          object:{ parentId:_id, type:"lore", name:"New Lore", campaignId:campId}}
                         )
                       }}
                       >+ Create Lore</div>)}

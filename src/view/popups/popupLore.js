@@ -412,11 +412,11 @@ class MainContent extends Component{
                       
                       let pin = state.currentPin;
                       
-                      if (lore.getJson().title===""||lore.getJson().title===undefined){
+                      if (lore.getJson().name===""||lore.getJson().name===undefined){
                         lore.setCompState({title:pin.getJson().title});
                       }
                       pin.setCompState({loreId: lore.getJson()._id, 
-                        title: lore.getJson().title,
+                        title: lore.getJson().name,
                       });
                       state.opps.prepareRun({update:pin});
                     }
