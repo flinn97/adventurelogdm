@@ -21,7 +21,7 @@ export default class ListTreeLink extends Component {
 
     let styles = state.styles;
     let obj = this.props.obj;
-    let name = this.props.props.name
+    let name = this.props.props.name;
     let href = window.location.href;
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length-1];
@@ -41,8 +41,12 @@ export default class ListTreeLink extends Component {
      newLink= idList[0];
     }
     
-    return (<Link target='_blank' to={"../campaign/"+newLink}>{obj.getJson()[name]}</Link>
-        
+    return ( <div>
+      {name !=="" && name !==undefined &&
+      
+    <Link target='_blank' to={"../campaign/"+newLink}>{obj.getJson()[name]}</Link>
+    }
+    </div>
     )
   }
 }

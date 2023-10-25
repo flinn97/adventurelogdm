@@ -62,7 +62,7 @@ setInterval(async() => {
     
     let styles = state.styles;
     const _id = this.props._id;
-    let name = this.props.name;
+    let name =  this.props.name;
     let attribute = this.props.attribute;
     
     let path = window.location.pathname;
@@ -70,9 +70,19 @@ setInterval(async() => {
     let idSegment = parts.pop();
     let idParts = idSegment.split('-');
     
-    let campId =  idParts[0]
+    let campId =  idParts[0];
+    
 
-
+    let cells=  
+  
+    [
+      {custom: ListTreeLink, props:{app:app, 
+        name:"name",
+      }},
+      {custom:ExpandTreeArrow, props:{app:app}},
+      {custom:ListTreeInner, props:{app:app}},
+      
+    ]
   
     const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
 
@@ -100,12 +110,10 @@ setInterval(async() => {
 
                         <MapComponent app={app}  theme={"expandingTree"} 
                                              
-                        name={name} cells={[
-                        {custom: ListTreeLink, props:{app:app, name:"name",}},
-                        {custom:ExpandTreeArrow, props:{app:app}},
-                        {custom:ListTreeInner, props:{app:app}},
+                        name={name} 
                         
-                      ]}
+                        cells={cells}
+
                         filter={{search: _id, attribute: attribute}}  />
 
               </div>

@@ -19,12 +19,16 @@ export default class ExpandTreeArrow extends Component {
 render() {
   let app = this.props.app;
   let obj = this.props.obj;
+  let name = obj.getJson().name;
+  
   let fontSize = this.props.fontSize;
   let state = app.state;
   let dispatch = app.dispatch;
   let styles =state.styles;
 
   return(
+    <div>
+      {name &&
     <div style={{cursor:"pointer", fontSize:"16px", textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
     alignContent:"stretch",
     marginBottom:"11px",}}
@@ -50,6 +54,8 @@ render() {
         transform:this.state.expanded?"rotate(270deg)":"rotate(180deg)", filter: "grayscale(100%) contrast(300%) brightness(200%)",
          objectFit:"contain", width:"12px"}}></img>
     </div>
+     }
+      </div>
     )
 }
 }
