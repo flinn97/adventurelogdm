@@ -153,6 +153,9 @@ async componentDidMount(){
                              </Link> */}
                              <Worldbuilder app={app} type="card"/>
                 </div>
+                
+                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                />
         <hr></hr>
         <div 
                         style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"row", 
@@ -193,9 +196,7 @@ async componentDidMount(){
                             </div>
                       </div>
                 </div>
-<hr></hr>
-                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                />
+
 
                 </>)}
         </div>

@@ -117,7 +117,7 @@ toggleSidebar = () => {
 
     return (
       <div>
-          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}> Description:
+          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}> Lore Text:
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
@@ -135,7 +135,7 @@ toggleSidebar = () => {
       }}>
 
        <div>
-       <hr></hr>
+      
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
@@ -173,7 +173,8 @@ toggleSidebar = () => {
         </div>}
 
           
-
+        
+                
 
 
         </div>
@@ -194,6 +195,9 @@ toggleSidebar = () => {
           
 
       </div>
+
+      <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                                />
 
       {/* ENCOUNTER ENCOUNTER ENCOUNTER */}
       <hr></hr>
@@ -321,9 +325,7 @@ toggleSidebar = () => {
                   <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                       />   
 
-<hr></hr>
-                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                                />
+
                                     
                             
 
