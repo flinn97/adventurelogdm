@@ -117,7 +117,8 @@ toggleSidebar = () => {
 
     return (
       <div>
-          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}> Lore Text:
+        
+          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore Text:
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
