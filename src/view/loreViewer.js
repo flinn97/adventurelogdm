@@ -124,7 +124,7 @@ toggleSidebar = () => {
       return nameA.localeCompare(nameB);
     });
 
-    let allColors = lore.getJson().colors;
+    let allColors = lore.getJson().colors?lore.getJson().colors:[styles.colors.color7];
     let colorList = Object.values(allColors);
     const randomColor = this.getUniqueRandomColor(colorList);
     
@@ -165,14 +165,17 @@ toggleSidebar = () => {
                   this.setState({ colors: palette }, async () => {
                     let con = this.state.colors;
                     let list = Object.values(con);
-                    this.setState({colors: list});
+                    await this.setState({colors: list});
                     
                     // Update lore colors
-                    let allColors = this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
+                    let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
                     let newAllColors = allColors.concat(list);
-                    await this.state.lore.setCompState({ colors: newAllColors });
+                    await lore.setCompState({ colors: newAllColors });
+                    dispatch({
+                      operate:"update", operation:"cleanPrepareRun", object: lore
+                    })
                     
-                    console.log(this.state.colors);
+                   
                   });
                 });
 
