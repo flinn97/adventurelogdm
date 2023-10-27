@@ -118,8 +118,8 @@ export default class LoreSearch extends Component {
                                 
                                           
                                 <div style={{ alignContent:"flex-start", alignItems:"center", alignSelf:"center",
-                                              justifyContent:"space-between", borderRadius:"11px", 
-                                              width:"78%", minHeight:"200px",maxHeight:"fit-content",
+                                              justifyContent:"space-evenly", borderRadius:"11px", 
+                                              width:"92%", minHeight:"200px",maxHeight:"fit-content",
                                               marginTop:"38px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                                                 {
                                                   loreList

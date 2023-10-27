@@ -90,7 +90,7 @@ setInterval(async() => {
       
              <div style={{flexDirection:"row", display:"flex",}} >
              
-             <div style={{flexDirection:"column", display:"flex", marginRight:"-20px",
+             <div  style={{flexDirection:"column", display:"flex", marginRight:"-20px",
              alignItems:"center"}} >
 
                     {!isHidden && (

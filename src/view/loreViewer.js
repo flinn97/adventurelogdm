@@ -181,15 +181,16 @@ toggleSidebar = () => {
 
         </div>
 
-        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
+        <div className="hover-img" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
+        fontSize:styles.fonts.fontSmall, 
           padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
-        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
+        {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
       </div>
 
         {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
         {/* SIDEBAR */}    
-                  <div style={{display:"flex", width:"fit-content",}}>
+                  <div   style={{display:"flex", width:"fit-content",}}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
                   </div>)}

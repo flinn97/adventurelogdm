@@ -29,7 +29,7 @@ render() {
   return(
     <div>
       {name &&
-    <div style={{cursor:"pointer", fontSize:"16px", textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
+    <div  className="hover-img" style={{cursor:"pointer", fontSize:"16px", textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
     alignContent:"stretch",
     marginBottom:"11px",}}
     onClick={() => {

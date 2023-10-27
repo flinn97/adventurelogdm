@@ -29,7 +29,7 @@ export default class ListTreeInner extends Component {
     return (<div style={{display:"flex",flexDirection:"column",alignItems:"center"}} >
        {state.currentExpanse?.includes(id)
        &&
-       <div>
+       <div >
        <ListTree app={app} name={"lore"} attribute={"parentId"} _id={id}/>
        </div>
        }
