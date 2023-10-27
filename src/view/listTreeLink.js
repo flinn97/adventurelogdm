@@ -58,24 +58,29 @@ export default class ListTreeLink extends Component {
     let objName = obj.getJson()[name].length > maxLengthName ? obj.getJson()[name].substring(0, maxLengthName) + "..." : obj.getJson()[name];
     
     return ( <div 
-      title={"Open "+objName+" in a new tab."}
+     
       className='hover-container' style={{cursor:"pointer",  
     position: "", marginBottom:"4px",
     overflow: "", height:"fit-content",
     display: "flex"}}>
       {name !=="" && name !==undefined &&
-      <div onClick={() => window.open("../campaign/" + newLink, "_blank")} 
+      <div  onClick={() => window.open("../campaign/" + newLink, "_blank")} 
       style={{display:"flex", flexDirection:"column", alignItems:"center",
         justifyContent:"center", alignContent:"center"}}>
-    <div 
+    <div title={"Open "+objName+" in a new tab."}
     style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:styles.fonts.fontSmall, }}
     >
       
       {objName}
 
     </div>
+    <div 
+    className='hover-div' title={"Open "+objName+" in a new tab."}
+     style={{ zIndex:"88",
+      backgroundColor:styles.colors.color8+"22", height:"44px", width:"120%", filter: "blur(32px)",
+      position:"absolute", top:"0", right:"0"}}></div>
 
-<div style={{flexDirection:"row", display:"flex", width:"fit-content",
+<div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105",
                             alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center",
                             justifyItems:"flex-end"}}>
                               {/* ICONS */}
@@ -97,11 +102,7 @@ export default class ListTreeLink extends Component {
                                         }
                             </div>
 
-    <div 
-    className='hover-div'
-     style={{
-      backgroundColor:styles.colors.color8+"22", height:"44px", width:"120%", filter: "blur(32px)",
-      position:"absolute", top:"0", right:"0"}}></div>
+    
 
     </div>
 

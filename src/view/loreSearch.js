@@ -62,8 +62,6 @@ export default class LoreSearch extends Component {
     let idParts = idSegment.split('-');
     let campId = idParts[0]
 
-    console.log(campId)
-
     let loreList = componentList.getList("lore", id, listTerm)
     .filter(loreItem => {
       const name = loreItem?.getJson()?.name || "";

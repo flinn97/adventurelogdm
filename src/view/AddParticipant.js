@@ -161,6 +161,7 @@ transitionDuration:"9000ms"
                     console.log(this.state.colors)
 
                 });
+                
               });
             }}
             

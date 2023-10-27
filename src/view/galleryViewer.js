@@ -41,7 +41,7 @@ export default class GalleryViewer extends Component {
                 .map((img, index) => (
                   <div className="hover-img" key={index}>
                     <img onClick={()=>{
-                          debugger
+                          
                           dispatch({currentPic:img, popupSwitch:"viewPic"})
                         }}  draggable="false" src={img.getJson().picURL} 
                     style={{

@@ -135,7 +135,7 @@ export default class InteractiveBulletin extends Component {
       ref={this.divRef} 
       style={{width:"100%", minHeight:"100%", maxHeight:"100%",
       cursor: this.state.isGrabbing!==true? "":"grabbing", 
-      overflow: 'auto', borderRadius:"20px", border:"solid "+styles.colors.color7,
+      overflow: 'auto', borderRadius:"20px", border:this.props.color?"solid "+this.props.color+"55":"solid "+styles.colors.color7,
       }}>
        
 

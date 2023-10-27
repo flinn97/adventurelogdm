@@ -1,17 +1,13 @@
 import { Component } from 'react';
 import "../App.css"
-import CardPractice from './CardPrac';
-import AddCampaign from './AddCampaign';
+
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import iconTest from '../pics/iconTest.svg';
-import movePin from '../pics/movePin.png';
-import Draggable from 'react-draggable';
+
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import backarrow from '../pics/backArrow.webp';
 import placeholder from '../pics/placeholderEncounter.JPG';
-import InteractiveBulletin from './interactiveBulletin';
+
 import LoreListCard from './pages/loreListCard';
 import MapUploader from './uploadMap.js';
 import MapGallery from './mapGallery';
@@ -19,6 +15,7 @@ import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
 import EncounterMapItem from './encounterMapItem';
+import colorService from '../services/colorService';
 
 export default class LoreViewer extends Component {
 
@@ -85,6 +82,19 @@ toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
 };
 
+  getUniqueRandomColor(colorList) {
+  // Remove duplicates
+  const uniqueColors = [...new Set(colorList)];
+  
+  // Get the length of the unique color list
+  const length = uniqueColors.length;
+  
+  // Generate a random index
+  const randomIndex = Math.floor(Math.random() * length);
+  
+  // Return a random unique color
+  return uniqueColors[randomIndex];
+}
 
 
   render() {
@@ -114,7 +124,10 @@ toggleSidebar = () => {
       return nameA.localeCompare(nameB);
     });
 
-
+    let allColors = lore.getJson().colors;
+    let colorList = Object.values(allColors);
+    const randomColor = this.getUniqueRandomColor(colorList);
+    
 
     return (
       <div>
@@ -140,19 +153,34 @@ toggleSidebar = () => {
       
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
-              changePic={async (pic, path)=>{
-                
-                
+              changePic={async (pic, path) => {
+                // Your existing logic
                 let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];
                 await map.getPicSrc(path);
-                
-                state.opps.run();
-                this.setState({map:map})
 
-              
-              }} 
+                // Your color updating logic
+                let colors = colorService.updateColors(pic, (palette) => {
+                  this.setState({ colors: palette }, async () => {
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    this.setState({colors: list});
+                    
+                    // Update lore colors
+                    let allColors = this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
+                    let newAllColors = allColors.concat(list);
+                    await this.state.lore.setCompState({ colors: newAllColors });
+                    
+                    console.log(this.state.colors);
+                  });
+                });
+
+                state.opps.run();
+                this.setState({map:map});
+
+              }}
+
                text="Add Map" style={{display:"flex", marginBottom:"20px",
               zIndex:"1", borderRadius:".1vmin", background:"",}} 
               update={true} skipUpdate={true}
@@ -170,7 +198,7 @@ toggleSidebar = () => {
         {(this.state.map) && 
        
        <div style={{height:"1310px", width:"100%"}}>
-        <MapGallery app={app} obj={this.state.lore}/>
+        <MapGallery app={app} obj={this.state.lore} color={randomColor}/>
         
         </div>}
 

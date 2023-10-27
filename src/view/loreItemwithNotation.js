@@ -31,20 +31,22 @@ export default class LoreItemWithNotation extends Component {
     let encounterList = componentList.getList("encounter", obj.getJson()._id, "loreId");
     let imageList = componentList.getList("image", obj.getJson()._id, "loreId");
 
-    
+    let allColors = obj.getJson().colors?obj.getJson().colors:["#000000"];
+    let colorList = Object.values(allColors);
+    const choiceColor =  obj.getJson().colors?colorList[2]:"#000000";
+    const choiceColor2 =  obj.getJson().colors?colorList[3]:"#ffffff";
 
     let desc = obj.getJson().desc;
-    let wordCount = this.getWordCount(desc);
-    
-    
+    let wordCount =  this.getWordCount(desc);
+    let wordCountIs = this.getWordCount(desc) > 4?"Word Count: "+wordCount:"";
     
 
     return (
       <div className='hover-container'
       style={{
          display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column",
-        backgroundColor:"#00000055", padding:"3px 4px", cursor:"pointer", border:"1px solid "+"#ffffff22", textAlign:"center",
-      minWidth:"440px", margin:"6px 2px", minHeight:"64px", borderRadius:"8px", height:"64px",}}>
+        backgroundColor:choiceColor+"0D", padding:"3px 4px", cursor:"pointer", border:"1px solid "+choiceColor2+"22", textAlign:"center",
+      minWidth:"440px", margin:"6px 2px", minHeight:"64px", borderRadius:"18px", height:"64px",}}>
 
                 <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontNormal, marginTop:"11px" }}>
                                                         {objName}
@@ -54,7 +56,7 @@ export default class LoreItemWithNotation extends Component {
                                             style={{color:styles.colors.colorWhite+"65",
                                             marginLeft:"6px", marginTop:"4px",
                                             fontSize:styles.fonts.fontSmallest}}>
-                                                          {"Word Count: "+wordCount}
+                                                          {wordCountIs}
                                                           </div> 
 
 <div style={{flexDirection:"row", display:"flex", width:"fit-content", position:"absolute", top:-5, right:2,

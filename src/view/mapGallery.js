@@ -97,7 +97,7 @@ export default class MapGallery extends Component {
 
   {this.state.currentMap &&
    
-      <InteractiveBulletin app={app} obj={this.state.currentMap}/>
+      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color}/>
       }
 
         {/* backgroundIMAGE */}
