@@ -1,7 +1,5 @@
 import React, { Component } from 'react'; 
 import "../App.css"
-import Upload from './upload';
-
 import backarrow from '../pics/backArrow.webp';
 import InteractiveBulletin from './interactiveBulletin';
 

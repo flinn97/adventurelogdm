@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import Upload from './upload';
+
+import LoreItemWithNotation from './loreItemwithNotation';
 
 export default class LoreSearch extends Component {
   constructor(props) {
@@ -78,7 +79,7 @@ export default class LoreSearch extends Component {
     
 
     return (
-      <div style={{width:"100%", minHeight:"200px",}}>
+      <div style={{width:"100%", minHeight:"200px", maxHeight:"fit-content"}}>
                 <div style={{marginTop:"10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>Other Connected Lore</div>
                         <div style={{display:"flex", flexDirection:"column", justifyContent:"center", justifyItems:"center", marginBottom:"70px",}}>
                                 <div style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
@@ -118,23 +119,20 @@ export default class LoreSearch extends Component {
                                           
                                 <div style={{ alignContent:"flex-start", alignItems:"center", alignSelf:"center",
                                               justifyContent:"space-between", borderRadius:"11px", 
-                                              width:"78%", height:"200px",
+                                              width:"78%", minHeight:"200px",maxHeight:"fit-content",
                                               marginTop:"38px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                                                 {
                                                   loreList
                                                   .slice(0, 12)
                                                   .map((loreItem, index) => (
                                                     loreItem.getJson().name !== "" && loreItem.getJson().name !== undefined?
-                                              <div className="hover-img" key={index} 
-                                                    onClick={() => this.navigateToLink(loreItem)}
-                                                    style={{backgroundColor:"#00000055", padding:"3px 4px", cursor:"pointer", border:"1px solid "+"#ffffff22", textAlign:"center",
-                                                    minWidth:"410px", margin:"8px 3px", maxHeight:"39px", borderRadius:"8px"}}>
+                                              <div  className="hover-img" key={this.props.index}  onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer",}}>
                                                     
-                                                    {/* <LoreItemWithNotation app={app} obj={loreItem}/> */}
-                                                      <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontNormal }}>
+                                                    <LoreItemWithNotation app={app} obj={loreItem} index={index}/>
+                                                      {/* <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontNormal }}>
                                                         {loreItem.getJson().name.substring(0, 33)}
                                                         
-                                                        </div>
+                                                        </div> */}
 
                                             </div> : null
                                                   ))

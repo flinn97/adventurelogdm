@@ -18,6 +18,7 @@ import MapGallery from './mapGallery';
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
+import EncounterMapItem from './encounterMapItem';
 
 export default class LoreViewer extends Component {
 
@@ -203,9 +204,20 @@ toggleSidebar = () => {
       {/* ENCOUNTER ENCOUNTER ENCOUNTER */}
       <hr></hr>
       
+
         <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
+        
             <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
+
+        <div style={{ marginTop:"2vh", marginBottom:"1vh",}}> 
+             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+            filter={{search: lore.getJson()._id, attribute: "loreId"}}
+            theme={"selectByImageSmall"}
+            />
+            
+            </div>
+
                         <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
                         fontSize:styles.fonts.fontSmall,
                         marginTop:"1vh", alignSelf:"center", padding:"1%"}}

@@ -412,7 +412,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                <div>{obj?.getJson()?.loreId!=="" && obj?.getJson()?.loreId!==undefined &&(
                   <div>
                
-                    <img  src = {state.componentList.getComponent("map", obj.getJson().loreId, "loreId")?.getJson()?.picURL} style={{width:"500px", height:"500px"}}/>
+                    {/* <img  src = {state.componentList.getComponent("map", obj.getJson().loreId, "loreId")?.getJson()?.picURL} style={{width:"500px", height:"500px"}}/> */}
                   </div>
                )}</div>
                 
