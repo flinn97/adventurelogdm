@@ -8,6 +8,7 @@ import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
 import backarrow from '../../pics/backArrow.webp';
 import placeholder from '../../pics/placeholderEncounter.JPG';
+import newWindow from '../../pics/newWindow.png';
 import Upload from '../upload';
 
 export default class PopupLore extends Component {
@@ -88,7 +89,7 @@ class MainContent extends Component{
     let id = splitURL[splitURL.length-1];
     let newLink = "";
     let imageList = state.componentList.getList("image", state.currentComponent.getJson()._id, "loreId");
-
+    let lore = state.currentComponent;
 
     if(id.includes("-")){
       let newArr = [...splitURL];
@@ -149,9 +150,36 @@ class MainContent extends Component{
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
               textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
-   
-    <a style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontSmallest,marginTop:"11px", textDecorationColor:"#ffdead22", alignSelf:"flex-end"}} 
-    href= {newLink} target='_blank'>Open in new tab</a>
+
+  { (lore?.getJson().name!=="" && lore?.getJson().name!==undefined) &&
+    <div  style={{ display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  cursor: "pointer", 
+                  color: styles.colors.colorWhite, 
+                  fontSize: styles.fonts.fontSmallest, 
+                  marginTop: "11px", 
+                  textDecoration: "underline 1px",
+                  textDecorationColor: "#ffdead22", 
+                  alignSelf: "flex-end" }} 
+    onClick={() => 
+      
+      (window.open(newLink, '_blank'))
+  
+  }
+    >
+      Open in new tab
+      
+      <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={newWindow} />
+
+      </div>}
+
+      { (lore?.getJson().name===""||lore?.getJson().name===undefined) &&
+    <div style={{cursor:"progress",
+      color:styles.colors.colorWhite+"88", fontSize:styles.fonts.fontSmallest,marginTop:"11px", textDecorationColor:"#ffdead22", alignSelf:"flex-end"}} 
+    >
+      You must first save this lore to open it.
+      </div>}
     
     
 <hr></hr>
@@ -184,7 +212,7 @@ class MainContent extends Component{
             </div>}
 
           
-{!this.state.showFindEncounter && !this.state.showFindImage &&
+  {!this.state.showFindEncounter && !this.state.showFindImage &&
 <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
             <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
             fontSize:styles.fonts.fontSmall,
@@ -416,10 +444,10 @@ class MainContent extends Component{
                       let pin = state.currentPin;
                       
                       if (lore.getJson().name===""||lore.getJson().name===undefined){
-                        lore.setCompState({title:pin.getJson().title});
+                        lore.setCompState({name:pin.getJson().name});
                       }
                       pin.setCompState({loreId: lore.getJson()._id, 
-                        title: lore.getJson().name,
+                        name: lore.getJson().name,
                       });
                       state.opps.prepareRun({update:pin});
                     }
