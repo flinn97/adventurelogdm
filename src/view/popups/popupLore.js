@@ -10,12 +10,15 @@ import backarrow from '../../pics/backArrow.webp';
 import placeholder from '../../pics/placeholderEncounter.JPG';
 import newWindow from '../../pics/newWindow.png';
 import Upload from '../upload';
+import LoreItemWithNotation from '../loreItemwithNotation';
 
 export default class PopupLore extends Component {
   constructor(props) {
     super(props);
 
   }
+
+  
 
   render() {
     let app = {...this.props.app};
@@ -72,12 +75,56 @@ class MainContent extends Component{
       showSaved: false, 
       searchTerm: "",
       imagesToShow: 5,
+      hasChoice: "",
     };
   }
 
   handleSearchChange = (e) => {
     this.setState({ searchTerm: e.target.value });
   }
+
+  async setConnectedLore(lore){
+    let path = window.location.pathname;
+    let parts = path.split('/');
+    let idSegment = parts.pop();
+    let idParts = idSegment.split('-');
+    let parentId = idParts.length >= 2? idParts[1]:idParts[0];
+    let state = this.props.app.state;
+    
+    let type = idParts.length >= 2?"lore":"campaign";
+    let parent = state.componentList?.getComponent(type, parentId, "_id");
+    let parentName = type === "campaign"? "title":"name";
+
+    state.opps.clearUpdater();
+    debugger
+    lore.updateObjInsideJson("parentId", {[parentId]:parent.getJson()[parentName]});
+
+    
+    if(state.currentPin)
+        {
+          let pin = state.currentPin;
+          let id = lore.getJson()._id;
+          let loreName =lore.getJson().name
+          pin.setCompState({ 
+            name: loreName,
+            loreId: id,
+          });
+          await state.opps.prepare({update:pin});
+        }
+        
+        await this.props.app.dispatch({ currentComponent: lore})
+        await state.opps.prepareRun({update: lore})
+  }
+
+  async componentDidMount(){
+    let state = this.props.app.state;
+    let loreName = await state.currentComponent.getJson().name;
+    console.log(loreName)
+    if(!loreName==""||!loreName==undefined){
+      await this.setState({hasChoice:"New"})
+    }
+  }
+
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -89,23 +136,29 @@ class MainContent extends Component{
     let id = splitURL[splitURL.length-1];
     let newLink = "";
     let imageList = state.componentList.getList("image", state.currentComponent.getJson()._id, "loreId");
+    let idList = id.split('-');
     let lore = state.currentComponent;
+
+    let placeholder = state.currentPin?.getJson().name;
 
     if(id.includes("-")){
       let newArr = [...splitURL];
       newArr.pop()
+      
       let str = newArr.join(',');
      str = str.replace(/,/g, '/');
-     let idList = id.split('-');
+     
       let newId = idList[0] + "-" + state.currentComponent.getJson()._id
       newLink=str+"/" +newId;
       
     }
     else{
       newLink = href + "-" + state.currentComponent.getJson()._id;
-    }
+    };
 
-    const filteredList = componentList.getList("encounter", id, "campaignId")
+    
+
+    const filteredList = componentList.getList("encounter", idList[0], "campaignId")
           .filter(encounter => {
             const name = encounter?.getJson()?.name || "";
             return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
@@ -116,12 +169,32 @@ class MainContent extends Component{
             return nameA.localeCompare(nameB);
           });
 
+          
+    
+   const filteredLore = componentList.getList("lore", idList[0], "campaignId")
+          .filter(item => {
+            const name = item?.getJson()?.name || "";
+            return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+          })
+          .sort((a, b) => {
+            const nameA = a?.getJson()?.name || "";
+            const nameB = b?.getJson()?.name || "";
+            return nameA.localeCompare(nameB);
+          });
+
     return(
       <div style={{
-        display:"flex", width:"57vw", flexDirection:"column", height:"fit-content", 
+        display:"flex", width:"57vw", flexDirection:"column", height:"fit-content", alignContent:"center",
         
         paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
 
+        
+
+{ this.state.hasChoice == "New" &&
+<div style={{
+        display:"flex", width:"57vw", flexDirection:"column", height:"fit-content", alignContent:"center",
+        
+        paddingTop:"40px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%",}}>
           {(this.state.showFindEncounter || this.state.showFindImage) && 
           <div className="indent-on-click"  
           onClick={() => {
@@ -145,7 +218,7 @@ class MainContent extends Component{
 
 <ParentFormComponent app={app} name="name"
   // prepareRun={true}
-              placeholder={state.currentPin?.getJson().name}
+              placeholder={placeholder}
               inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
@@ -336,7 +409,7 @@ class MainContent extends Component{
                     
                     <img 
                     onClick={()=>{
-                          debugger
+                         
                           dispatch({currentPic:img, popupSwitch:"viewPic"})
                         }}
                      draggable="false" src={img.getJson().picURL} 
@@ -432,8 +505,11 @@ class MainContent extends Component{
         }
         
 
-  <div className="indent-on-click" style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', alignSelf:"flex-end", bottom:'0px', 
-  position:"sticky", marginTop:"8.24vh", marginBottom:"1vh"}}>
+  <div className="indent-on-click" 
+        style={{ display:"flex", width:"92px", background:"red", borderRadius:'3vh', 
+        alignSelf:"flex-end", bottom:'0px', alignItems:"flex-end",
+        position:"sticky", marginTop:"8.24vh", marginBottom:"1vh",
+        }}>
                   <RunButton app={app} text="Save" 
                   
                   runFunc={(arr)=>{
@@ -465,11 +541,121 @@ class MainContent extends Component{
 
                   </div>
                   
+          </div>}
+
           {/* <div>New Lore</div>
 
           <div>Existing Lore</div> */}
+
+            {(this.state.hasChoice=="") &&
+              <div>
+                
+<div  style={{display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", marginTop:"15%", height:"100%"}}>
+                <div className='hover-btn'
+                title={"Create Lore connected to this Lore"}
+                style={{...styles.buttons.buttonAdd, margin:"8px"}}
+                onClick={()=>{
+                  this.setState({hasChoice: "New"})
+                }}
+                >
+                  Create New Lore
+                  </div>
+
+                  <div className='hover-btn'
+                  onClick={()=>{
+                    this.setState({hasChoice: "Connect"})
+                  }}
+                  title={"Find pre-made Lore to connect it to this Lore"}
+                  style={{...styles.buttons.buttonAdd, margin:"8px"}}>
+                  Connect an Existing Lore
+                  </div>
+</div> 
+
+              </div>  
+            }
+
+{(this.state.hasChoice=="Connect" ) &&
+              <div>
+             <div className="hover-btn"  
+          onClick={() => {
+            this.setState({hasChoice:""})
+          }}
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", padding:"1%"}}
+          
+          >
+            <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
+            src={backarrow}
+            />
+            Back
+          </div>
+
+                <div style={{ display:"flex", justifyContent:"flex-end", marginTop:"-40px", marginBottom:"25px", }}>
+
+                        <input app={app}
+                        
+                        type="input" 
+                        placeholder="Search..." 
+                        value={this.state.searchTerm} 
+                        onChange={this.handleSearchChange}
+                        style={{ backgroundColor: styles.colors.color1+"ee",  
+                        color: styles.colors.colorWhite,  
+                        borderRadius:"11px", 
+                        width:"420px", 
+                        padding: '8px',  
+                        fontSize: '16px', }}
+                      />
+                </div>
+
+<div  style={{display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center",
+alignItems:"center", height:"100%", width:"100%", }}>
+  
+                <div
+                
+                style={{ display:"flex", flexDirection:"row", width:"100%", 
+                 alignContent:"center", justifyContent:"center",
+                margin:"8px", height:"fit-content", flexWrap:"wrap"}}
+                
+                >
+                  {
+                filteredLore
+                .slice(0,10)
+                .map((item, index) => (
+                  <div>
+                        { (item.getJson().name !=="" && !item.getJson().name !== undefined
+                        && item.getJson()._id !== idList[1]
+                        ) 
+                        &&
+                        
+                        <div  className="hover-img" key={this.props.index}                                                
+                          onClick={() => {this.setConnectedLore(item)
+                            this.setState({hasChoice:"New"})
+                          }} 
+                          style={{cursor:"pointer",}}>
+                                                    
+                           <LoreItemWithNotation app={app} obj={item} index={index}/>
+                                                      
+                        </div>
+                       }
+                </div>
+                ))
+              }
+                  </div>
+                  
+                  <div style={{color:styles.colors.colorWhite+"66", fontSize:styles.fonts.fontSmall, fontWeight:"400", alignSelf:"center", marginTop:"28px"}}>
+                    (Once you connect new Lore to this Pin, that Lore will always remain connected to the current Lore)
+                  </div>
+                 
+</div> 
+
+              </div>  
+            }
+
     </div>
     )
+        
+
+
   }
 }
 

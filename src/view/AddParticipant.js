@@ -245,7 +245,7 @@ transitionDuration:"9000ms"
       placeholder={"ie: "+noteExample}/> 
 </div>
          {/* ADD TO ENCOUNTER */}
-         <RunButton
+         <RunButton className="hover-btn"
               app={app} 
               text={"Add to Encounter"} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}

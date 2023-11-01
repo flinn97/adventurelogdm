@@ -80,7 +80,7 @@ export default class Login extends Component {
                     borderWidth: styles?.mySpawn?.border, width: "18vw"}} type="password" id="pwd"   onChange={this.handleChange} name="password"/>
                         </div>
                         <div>
-                         <button style={{...styles?.buttons?.buttonAdd, marginTop:"2vh",color: styles?.colors?.color3, fontSize: styles?.fonts?.fontHeader2,}} class= "btn" onClick={this.handleSubmission}>Login</button>
+                         <button className="hover-btn" style={{...styles?.buttons?.buttonAdd, marginTop:"2vh",color: styles?.colors?.color3, fontSize: styles?.fonts?.fontHeader2,}} class= "btn" onClick={this.handleSubmission}>Login</button>
                     
                      </div>
                      </div>

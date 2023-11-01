@@ -157,7 +157,7 @@ export default class InteractiveBulletin extends Component {
 
       {/* BUTTONS IN HEADER */}
 
-        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
+        <div className="hover-btn" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd",  }}
         onClick={async (e)=>{
           let scrollLeft = this.divRef.current.scrollLeft;
@@ -273,7 +273,9 @@ export default class InteractiveBulletin extends Component {
                     operation:"cleanJsonPrepare",
                     object:{
                       campaignId: this.props.obj?.getJson().campaignId, 
-                      parentId: newId},
+                      parentId: 
+                      {[newId]:"Unnamed"}
+                    },
                     currentPin: pin,
                     popupSwitch: "popupLore"
       

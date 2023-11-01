@@ -64,14 +64,15 @@ export default class LoreSearch extends Component {
 
     let loreList = componentList.getList("lore", id, listTerm)
     .filter(loreItem => {
-      const name = loreItem?.getJson()?.name || "";
-      return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+      const name = loreItem?.getJson()?.name;
+      return name && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
     })
     .sort((a, b) => {
-      const nameA = a?.getJson()?.name || "";
-      const nameB = b?.getJson()?.name || "";
+      const nameA = a.getJson().name;
+      const nameB = b.getJson().name;
       return nameA.localeCompare(nameB);
     });
+
 
     let loreListTotalLength = componentList.getList("lore", id, listTerm).length
     
@@ -80,7 +81,7 @@ export default class LoreSearch extends Component {
       <div style={{width:"100%", minHeight:"200px", maxHeight:"fit-content"}}>
                 <div style={{marginTop:"10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>Other Connected Lore</div>
                         <div style={{display:"flex", flexDirection:"column", justifyContent:"center", justifyItems:"center", marginBottom:"70px",}}>
-                                <div style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
+                                <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
                                       paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
                                       borderRadius:"9px", fontSize:"21px", 
                                     }}
@@ -91,7 +92,9 @@ export default class LoreSearch extends Component {
                                         dispatch(
                                           {operate:"addlore", operation:"cleanJsonPrepareRun",
                                           //                                      CHANGE NAME later
-                                          object:{ parentId:id, type:"lore", name: newName+" New Lore", campaignId: campId}}
+                                          object:{ 
+                                            parentId:{[id]:newName+" New Lore"}, 
+                                            type:"lore", name: newName+" New Lore", campaignId: campId}}
                                         )
                                       }}
                                       >+ Create Lore</div> 
@@ -124,13 +127,11 @@ export default class LoreSearch extends Component {
                                                   .slice(0, 12)
                                                   .map((loreItem, index) => (
                                                     loreItem.getJson().name !== "" && loreItem.getJson().name !== undefined?
-                                              <div  className="hover-img" key={this.props.index}  onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer",}}>
+                                              <div  className="hover-img" key={this.props.index}  
+                                              onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer",}}>
                                                     
                                                     <LoreItemWithNotation app={app} obj={loreItem} index={index}/>
-                                                      {/* <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontNormal }}>
-                                                        {loreItem.getJson().name.substring(0, 33)}
-                                                        
-                                                        </div> */}
+                                                      
 
                                             </div> : null
                                                   ))

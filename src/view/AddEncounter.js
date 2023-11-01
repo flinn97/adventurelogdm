@@ -176,7 +176,7 @@ this.setState({start:true});}
               placeholder={"ie: a link from YouTube or Spotify"}/> 
 
             
-              <RunButton wrapperStyle={{...styles.buttons.buttonAdd,  padding:"8px", marginTop:"2vh"}}
+              <RunButton className="hover-btn" wrapperStyle={{...styles.buttons.buttonAdd,  padding:"8px", marginTop:"2vh"}}
               text={"Save"} app ={app} 
               // to= {"/encounter/" + app.state.currentComponent.getJson()._id} 
               callBack={()=>{

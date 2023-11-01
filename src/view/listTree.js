@@ -94,14 +94,14 @@ setInterval(async() => {
              alignItems:"center"}} >
 
                     {!isHidden && (
-                      <div style={{...styles.buttons.buttonAdd, marginBottom:"15px", marginTop:"5px", paddingLeft:"29px",  paddingRight:"29px", 
+                      <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginBottom:"15px", marginTop:"5px", paddingLeft:"29px",  paddingRight:"29px", 
                       
                       padding:"4px", borderRadius:"9px", fontSize:"18px", }}
                       onClick={()=>{
                         dispatch(
                           {operate:"addlore", operation:"cleanJsonPrepareRun",
                           //                                      CHANGE NAME later
-                          object:{ parentId:_id, type:"lore", name:"New Lore", campaignId:campId}}
+                          object:{ parentId:{[_id]:"New Lore"}, type:"lore", name:"New Lore", campaignId:campId}}
                         )
                       }}
                       >+ Create Lore</div>)}

@@ -23,8 +23,17 @@ export default class CampaignMapItem extends Component {
     let radius = "2vmin";
     let styles = state.styles;
     let obj = this.props.obj;
+
+    let isLore = state.componentList.getList("lore", this.props.obj.getJson().title, "name");
+    let loreItem = isLore[0];
+    const newId = loreItem?loreItem.getJson()._id:obj?.getJson()._id;
+    const newLink = 
+    // loreItem?("/campaign/"+obj?.getJson()._id+"-"+newId):
+    ("/campaign/"+obj?.getJson()._id);
+    console.log(newLink);
+
     return (
-      <Link to={"/campaign/"+obj?.getJson()._id} style={{ color: styles.colors.colorWhite, 
+      <Link to={newLink} style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
         height: "fit-content",
         width: "fit-content"}}

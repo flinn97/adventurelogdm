@@ -106,8 +106,7 @@ toggleSidebar = () => {
     let currentState = app.state;
       let componentList = currentState.componentList;
       let id = this.state.obj?.getJson()._id;
-       //type , value to search,   filter key
-    // let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
+       
     let lore = this.props.app.state.currentLore;
 
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
@@ -188,7 +187,7 @@ toggleSidebar = () => {
               zIndex:"1", borderRadius:".1vmin", background:"",}} 
               update={true} skipUpdate={true}
                app={app}/>
-{/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}
+
 
           {/* </div>
           </div> */}
@@ -212,7 +211,7 @@ toggleSidebar = () => {
 
         </div>
 
-        <div className="hover-img" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
+        <div className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
         fontSize:styles.fonts.fontSmall, 
           padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
@@ -250,7 +249,7 @@ toggleSidebar = () => {
             
             </div>
 
-                        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
+                        <div  className="indent-on-click" style={{...styles.buttons.buttonAdd, 
                         fontSize:styles.fonts.fontSmall,
                         marginTop:"1vh", alignSelf:"center", padding:"1%"}}
                         title="Create a new encounter, you can edit it by clicking on it." 

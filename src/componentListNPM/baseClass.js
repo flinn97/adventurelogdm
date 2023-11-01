@@ -56,4 +56,22 @@ export default class BaseClass {
         }
         return newJson;
     }
+
+    updateObjInsideJson(key, obj){
+        this.json[key] = {...this.json[key],...obj}
+    }
+
+    removeObjInsideJson(key, keys){
+        let ob = {};
+        for(const k in this.json[key]){
+            if (!keys.includes(k)){
+                ob[k] = this.json[key][k]
+            }
+        }
+
+        this.json[key] = ob;
+    }
+
+   
+
 }
