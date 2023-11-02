@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import Upload from './upload';
+
+import LoreItemWithNotation from './loreItemwithNotation';
 
 export default class LoreSearch extends Component {
   constructor(props) {
@@ -61,28 +62,31 @@ export default class LoreSearch extends Component {
     let idParts = idSegment.split('-');
     let campId = idParts[0]
 
-    console.log(campId)
-
     let loreList = componentList.getList("lore", id, listTerm)
-    .filter(loreItem => {
-      const name = loreItem?.getJson()?.name || "";
-      return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-    })
-    .sort((a, b) => {
-      const nameA = a?.getJson()?.name || "";
-      const nameB = b?.getJson()?.name || "";
-      return nameA.localeCompare(nameB);
-    });
+      .filter(loreItem => {
+        const name = loreItem?.getJson()?.name;
+        if (this.state.searchTerm === "") {
+          return name && name !== "";
+        }
+        return name && name !== "" && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+      })
+      .sort((a, b) => {
+        const nameA = a.getJson().name;
+        const nameB = b.getJson().name;
+        return nameA.localeCompare(nameB);
+      });
+
+      console.log(componentList.getList("lore", id, listTerm));
 
     let loreListTotalLength = componentList.getList("lore", id, listTerm).length
     
 
     return (
-      <div style={{width:"100%", minHeight:"200px",}}>
-                <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>Other Connected Lore</div>
-                        <div style={{display:"flex", flexDirection:"column", justifyContent:"center", justifyItems:"center", marginBottom:"270px",}}>
-                                <div style={{...styles.buttons.buttonAdd, marginTop:"15px", 
-                                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center", 
+      <div style={{width:"100%", minHeight:"200px", maxHeight:"fit-content"}}>
+                <div style={{marginTop:"10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>Other Connected Lore</div>
+                        <div style={{display:"flex", flexDirection:"column", justifyContent:"center", justifyItems:"center", marginBottom:"70px",}}>
+                                <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
+                                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
                                       borderRadius:"9px", fontSize:"21px", 
                                     }}
                                       onClick={()=>{
@@ -92,22 +96,24 @@ export default class LoreSearch extends Component {
                                         dispatch(
                                           {operate:"addlore", operation:"cleanJsonPrepareRun",
                                           //                                      CHANGE NAME later
-                                          object:{ parentId:id, type:"lore", name: newName+" New Lore", campaignId: campId}}
+                                          object:{ 
+                                            parentId:{[id]:newName+" New Lore"}, 
+                                            type:"lore", name: newName+" New Lore", campaignId: campId}}
                                         )
                                       }}
                                       >+ Create Lore</div> 
 
                                 {loreListTotalLength > 8 &&
-                              <div style={{ display:"flex", justifyContent:"flex-end", position:"relative", marginTop:"-42px" }}>
+                              <div style={{ display:"flex", justifyContent:"flex-end", position:"relative", marginTop:"-36px", height:"36px", width:"fit-content", alignSelf:"flex-end"}}>
                               
                                       <input app={app}
                                       
                                       type="input" 
-                                      placeholder="Search..." 
+                                      placeholder="Search Lore Connections..." 
                                       value={this.state.searchTerm} 
                                       onChange={this.handleSearchChange}
                                       style={{ backgroundColor: styles.colors.color1+"ee",  
-                                      color: styles.colors.colorWhite,  
+                                      color: styles.colors.colorWhite,
                                       borderRadius:"11px",
                                       width:"420px", 
                                       padding: '8px',  
@@ -117,26 +123,20 @@ export default class LoreSearch extends Component {
                                 
                                           
                                 <div style={{ alignContent:"flex-start", alignItems:"center", alignSelf:"center",
-                                              justifyContent:"space-between", borderRadius:"11px", 
-                                              width:"78%", height:"500px",
-                                              marginTop:"18px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
+                                              justifyContent:"space-evenly", borderRadius:"11px", 
+                                              width:"92%", minHeight:"200px",maxHeight:"fit-content",
+                                              marginTop:"38px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                                                 {
-                                                  loreList
-                                                  .slice(0, 12)
-                                                  .map((loreItem, index) => (
-                                                    loreItem.getJson().name !== "" && loreItem.getJson().name !== undefined?
-                                              <div className="hover-img" key={index} 
-                                                    onClick={() => this.navigateToLink(loreItem)}
-                                                    style={{backgroundColor:"#00000055", padding:"3px 4px", cursor:"pointer", border:"1px solid "+"#ffffff22", textAlign:"center",
-                                                    minWidth:"410px", margin:"8px 3px", maxHeight:"39px", borderRadius:"8px"}}>
-                                                    
-                                                      <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontNormal }}>
-                                                        {loreItem.getJson().name.substring(0, 33)}
+                                                      loreList
+                                                      .slice(0, 12)
+                                                      .filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
+                                                      .map((loreItem, index) => (
+                                                        <div className="hover-img" key={index} onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer"}}>
+                                                          <LoreItemWithNotation app={app} obj={loreItem} index={index}/>
                                                         </div>
-
-                                            </div> : null
-                                                  ))
+                                                      ))
                                                 }
+
                                             </div>
                                             
                                     

@@ -131,7 +131,7 @@ export default class AddCampaign extends Component {
               
 
               {/* ///Description */}
-              <ParentFormComponent app={app}
+              {/* <ParentFormComponent app={app} name="description" label="Campaign Description: " 
                   theme={"adventureLog"} 
                   
                   maxLength={200} rows={5}
@@ -140,10 +140,10 @@ export default class AddCampaign extends Component {
                   borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", marginBottom:"2vh" }}
                   type={"richEditor"}
                   placeholder={"Briefly describe your campaign. 200 Characters Max"}
-                  name="description" label="Campaign Description: " 
+                  
                   wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
                   
-                  />
+                  /> */}
               {/* <ParentFormComponent app={app} name="session" 
                   theme={"adventureLog"} 
                   labelStyle={{marginBottom:"8px"}}
@@ -155,7 +155,7 @@ export default class AddCampaign extends Component {
                   placeholder={"#"}/>  */}
 
                   {this.state.pic
-                    ? <div style={{display:"flex", justifyContent:"center"}}>
+                    ? <div style={{display:"flex", justifyContent:"center"}} className="hover-btn"> 
                         <RunButton app ={app} 
                           wrapperStyle={{...styles.buttons.buttonAdd, 
                             width:"45%",
@@ -164,7 +164,8 @@ export default class AddCampaign extends Component {
                           text={textSubmit}
                           callBack={async (obj)=>{
                             
-                            let newLore = {desc:"add new description", name:obj[0].getJson().title, campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, parentid:  obj[0].getJson()._id }
+                            let newLore = {desc:"add new description", name:obj[0].getJson().title, campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, 
+                            parentId:  {[obj[0].getJson()._id]:obj[0].getJson().title}}
                             
                             await state.opps.jsonPrepareRun({addlore:newLore});
                             dispatch({popUpSwitchcase: "", currentComponent: undefined});
@@ -172,7 +173,7 @@ export default class AddCampaign extends Component {
                         />
                       </div>
                     : 
-                      <div style={{display:"flex", justifyContent:"center"}}>
+                      <div style={{display:"flex", justifyContent:"center"}} className="hover-btn">
                       <RunButton app ={app} 
                         wrapperStyle={{...styles.buttons.buttonAdd, cursor: isNotUpdate ? "wait":"pointer", 
                           width:"35%", transition:"all 1s ease-out", borderRadius:"21%",

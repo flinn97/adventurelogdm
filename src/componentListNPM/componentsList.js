@@ -208,15 +208,29 @@ export default class Opps {
     //     type   id  filter
     //     User, Taylor, name 
     getList(list, id, filterKey, ){
+        
         let temp = [];
         if(this.componentsList[list]!==undefined){
             temp = [...this.componentsList[list]];
         }
-        if(id!==undefined ){
-            let key = filterKey!==undefined ? filterKey: "owner"
-            temp = temp.filter(data => data.getJson()[key] === id);
+
+        if(id!==undefined){
+            let key = filterKey!==undefined ? filterKey: "owner" 
+            temp = temp.filter((data) => {
+                if (typeof data.getJson()[key] === 'object'){
+                    
+                    return Object.keys(data.getJson()[key]).includes(id)
+
+                }else{
+                    
+                    return data.getJson()[key] === id;
+                }
+            }
+            );
         }
         return temp;
+
+
     }
 
     /**

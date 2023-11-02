@@ -143,15 +143,14 @@ class Lore extends componentBase{
         this.getPicSrc=this.getPicSrc.bind(this);
         this.assign = this.assign.bind(this);
     }
-    json= {
-        
+
+    json= {  
         _id:"",
         type: "lore",
         campaignId:"",
-        parentId:"",
+        parentId:{},
         name:"",
         desc:"",
-    
     } 
     
     async getPicSrc(){
@@ -161,13 +160,9 @@ class Lore extends componentBase{
     }
 
     async assign(comp){
-        
-
         comp.setCompState({
             loreId:this.json._id   
         });
-        
-
         this.operationsFactory.cleanJsonPrepareRun();
     }
 

@@ -1,23 +1,21 @@
 import { Component } from 'react';
 import "../App.css"
-import CardPractice from './CardPrac';
-import AddCampaign from './AddCampaign';
+
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import iconTest from '../pics/iconTest.svg';
-import movePin from '../pics/movePin.png';
-import Draggable from 'react-draggable';
+
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import backarrow from '../pics/backArrow.webp';
 import placeholder from '../pics/placeholderEncounter.JPG';
-import InteractiveBulletin from './interactiveBulletin';
+
 import LoreListCard from './pages/loreListCard';
 import MapUploader from './uploadMap.js';
 import MapGallery from './mapGallery';
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
+import EncounterMapItem from './encounterMapItem';
+import colorService from '../services/colorService';
 
 export default class LoreViewer extends Component {
 
@@ -84,6 +82,19 @@ toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
 };
 
+  getUniqueRandomColor(colorList) {
+  // Remove duplicates
+  const uniqueColors = [...new Set(colorList)];
+  
+  // Get the length of the unique color list
+  const length = uniqueColors.length;
+  
+  // Generate a random index
+  const randomIndex = Math.floor(Math.random() * length);
+  
+  // Return a random unique color
+  return uniqueColors[randomIndex];
+}
 
 
   render() {
@@ -95,8 +106,7 @@ toggleSidebar = () => {
     let currentState = app.state;
       let componentList = currentState.componentList;
       let id = this.state.obj?.getJson()._id;
-       //type , value to search,   filter key
-    // let mapList = componentList.getList("encounter", obj.getJson()._id, "parentId");
+       
     let lore = this.props.app.state.currentLore;
 
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
@@ -113,11 +123,15 @@ toggleSidebar = () => {
       return nameA.localeCompare(nameB);
     });
 
-
+    let allColors = lore.getJson().colors?lore.getJson().colors:[styles.colors.color7];
+    let colorList = Object.values(allColors);
+    const randomColor = this.getUniqueRandomColor(colorList);
+    
 
     return (
       <div>
-          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}> Description:
+        
+          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore Text:
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
@@ -135,27 +149,45 @@ toggleSidebar = () => {
       }}>
 
        <div>
-       <hr></hr>
+      
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
-              changePic={async (pic, path)=>{
-                
-                
+              changePic={async (pic, path) => {
+                // Your existing logic
                 let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];
                 await map.getPicSrc(path);
-                
-                state.opps.run();
-                this.setState({map:map})
 
-              
-              }} 
+                // Your color updating logic
+                let colors = colorService.updateColors(pic, (palette) => {
+                  this.setState({ colors: palette }, async () => {
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    await this.setState({colors: list});
+                    
+                    // Update lore colors
+                    let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
+                    let newAllColors = allColors.concat(list);
+                    await lore.setCompState({ colors: newAllColors });
+                    dispatch({
+                      operate:"update", operation:"cleanPrepareRun", object: lore
+                    })
+                    
+                   
+                  });
+                });
+
+                state.opps.run();
+                this.setState({map:map});
+
+              }}
+
                text="Add Map" style={{display:"flex", marginBottom:"20px",
               zIndex:"1", borderRadius:".1vmin", background:"",}} 
               update={true} skipUpdate={true}
                app={app}/>
-{/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}
+
 
           {/* </div>
           </div> */}
@@ -168,25 +200,27 @@ toggleSidebar = () => {
         {(this.state.map) && 
        
        <div style={{height:"1310px", width:"100%"}}>
-        <MapGallery app={app} obj={this.state.lore}/>
+        <MapGallery app={app} obj={this.state.lore} color={randomColor}/>
         
         </div>}
 
           
-
+        
+                
 
 
         </div>
 
-        <div onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
+        <div className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
+        fontSize:styles.fonts.fontSmall, 
           padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
-        {this.state.isSidebarVisible ? "Hide Lore >" : "Show Lore <"}
+        {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
       </div>
 
         {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
         {/* SIDEBAR */}    
-                  <div style={{display:"flex", width:"fit-content",}}>
+                  <div   style={{display:"flex", width:"fit-content",}}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
                   </div>)}
@@ -195,13 +229,27 @@ toggleSidebar = () => {
 
       </div>
 
+      <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                                />
+
       {/* ENCOUNTER ENCOUNTER ENCOUNTER */}
       <hr></hr>
       
+
         <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
+        
             <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
-                        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
+
+        <div style={{ marginTop:"2vh", marginBottom:"1vh",}}> 
+             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+            filter={{search: lore.getJson()._id, attribute: "loreId"}}
+            theme={"selectByImageSmall"}
+            />
+            
+            </div>
+
+                        <div  className="indent-on-click" style={{...styles.buttons.buttonAdd, 
                         fontSize:styles.fonts.fontSmall,
                         marginTop:"1vh", alignSelf:"center", padding:"1%"}}
                         title="Create a new encounter, you can edit it by clicking on it." 
@@ -321,9 +369,7 @@ toggleSidebar = () => {
                   <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                       />   
 
-<hr></hr>
-                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                                />
+
                                     
                             
 

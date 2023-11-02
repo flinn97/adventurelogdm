@@ -122,9 +122,11 @@ export default class InteractiveBulletin extends Component {
     let headerH = 60;
     let remainderH = 1310-[headerH]-11;
 
-    const images = [image1,image2,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16,
+    const images = [
+      image1,image2,image4,image5,image6,image7,image8,
+      image9,image10,image11,image12,image13,image14,image15,image16,
             "#F4F5F8",
-            "#ecd23abb","#0f141cf3", "#1E90FFbb", "#5F0C0Cae" ];
+            "#C1A71Bbb","#0f141cf3", "#1E90FFbb", "#5F0C0Cae" ];
 
     const heightY = this.state.mapHeight;
 
@@ -135,7 +137,7 @@ export default class InteractiveBulletin extends Component {
       ref={this.divRef} 
       style={{width:"100%", minHeight:"100%", maxHeight:"100%",
       cursor: this.state.isGrabbing!==true? "":"grabbing", 
-      overflow: 'auto', borderRadius:"20px", border:"solid "+styles.colors.color7,
+      overflow: 'auto', borderRadius:"20px", border:this.props.color?"solid "+this.props.color+"55":"solid "+styles.colors.color7,
       }}>
        
 
@@ -157,7 +159,7 @@ export default class InteractiveBulletin extends Component {
 
       {/* BUTTONS IN HEADER */}
 
-        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
+        <div className="hover-btn" style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, 
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd",  }}
         onClick={async (e)=>{
           let scrollLeft = this.divRef.current.scrollLeft;
@@ -273,7 +275,9 @@ export default class InteractiveBulletin extends Component {
                     operation:"cleanJsonPrepare",
                     object:{
                       campaignId: this.props.obj?.getJson().campaignId, 
-                      parentId: newId},
+                      parentId: 
+                      {[newId]:"Unnamed"}
+                    },
                     currentPin: pin,
                     popupSwitch: "popupLore"
       

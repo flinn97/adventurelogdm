@@ -216,7 +216,7 @@ export default class Encounter extends Component {
                           </> }
 
           {state.popUpSwitchcase !== "updateEnc" && <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right", position:"absolute", top:"4%", right:".25%"}}>
-                          <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content",
+                          <div className="hover-btn" style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content",
                            fontSize:styles.fonts.fontSmallest, padding:"5px", 
                            backgroundColor:styles.colors.color1+"ee", 
                                         position:"absolute", width:"fit-content",
@@ -264,7 +264,7 @@ export default class Encounter extends Component {
 <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"right"}}>
 
 {!obj?.getJson().isRunning &&
-<div style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
+<div className="hover-btn" style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!obj?.getJson().isRunning?"pointer":"wait"}} 
             // onClick={()=>{
             //   if (!isRunning){
@@ -275,7 +275,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
               </div>}
 
 
-<div style={{...styles.buttons.buttonAdd, animation: "gradient-animation 10s ease-in-out infinite",
+<div className="hover-btn" style={{...styles.buttons.buttonAdd, animation: "gradient-animation 10s ease-in-out infinite",
 background:!obj?.getJson().isRunning?styles.colors.color2:"linear-gradient(0deg, "+styles.colors.color6+", "+styles.colors.color1+"88)",
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!obj?.getJson().isRunning?"pointer":"wait"}} 
             onClick={()=>{
@@ -412,7 +412,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                <div>{obj?.getJson()?.loreId!=="" && obj?.getJson()?.loreId!==undefined &&(
                   <div>
                
-                    <img  src = {state.componentList.getComponent("map", obj.getJson().loreId, "loreId")?.getJson()?.picURL} style={{width:"500px", height:"500px"}}/>
+                    {/* <img  src = {state.componentList.getComponent("map", obj.getJson().loreId, "loreId")?.getJson()?.picURL} style={{width:"500px", height:"500px"}}/> */}
                   </div>
                )}</div>
                 

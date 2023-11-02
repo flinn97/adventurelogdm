@@ -76,7 +76,7 @@ async componentDidMount(){
 
         {/* BACK BUTTON */}
 {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
-        <Link 
+        <Link className="hover-btn"
         to={"/campaign/"} 
         style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
         fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh"}}
@@ -115,7 +115,7 @@ async componentDidMount(){
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"3%", justifyContent:"space-between"}}>
 
                       {state.currentLore==undefined &&
-                        <div style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, padding:"4px",
+                        <div className="hover-btn" style={{... styles.buttons.buttonAdd,  borderRadius:"1rem", width:"fit-content", fontSize:styles.fonts.fontSmall, padding:"4px",
                         paddingRight:"9px", paddingLeft:"9px", backgroundColor:styles.colors.color1+"ee", position:"relative",
                         justifyContent:"center"}} 
                           onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
@@ -141,18 +141,34 @@ async componentDidMount(){
         </div>
 
         <hr></hr>
+        {state.currentLore===undefined &&
+        <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"22px"}}> {this.state.obj.getJson().title} Text:  
+          <ParentFormComponent app={app} name="description" obj={this.state.obj}
+                      theme={"adventureLog"} 
+                        rows={5}
+                        prepareRun={true}
+                      
+                      inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
+                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+                      type={"richEditor"}
+                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
+                      flexDirection:"column", justifyItems:"space-between"}}/>
+                      </div>}
+
+
         {state.currentLore!==undefined ? (<div style={{width:"100%", height:"100%"}}>
         <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
         </div>):(
         <>
                 <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
                         
-                        {/* <Link to= {"/worldbuilder/" + this.state.obj?.getJson()._id} 
-                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer", background:styles.colors.color7+"88"}}>
-                             <div>+ World Map</div>
-                             </Link> */}
+                        
                              <Worldbuilder app={app} type="card"/>
                 </div>
+                
+                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
+                />
         <hr></hr>
         <div 
                         style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"row", 
@@ -193,9 +209,7 @@ async componentDidMount(){
                             </div>
                       </div>
                 </div>
-<hr></hr>
-                <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                />
+
 
                 </>)}
         </div>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'; 
 import "../App.css"
-import Upload from './upload';
-
 import backarrow from '../pics/backArrow.webp';
 import InteractiveBulletin from './interactiveBulletin';
 
@@ -75,7 +73,7 @@ export default class MapGallery extends Component {
       }}>
 
         {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
-        <div 
+        <div className="hover-btn"
         onClick={this.handlePrevMap}
         style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, cursor:"pointer",
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd",
@@ -86,7 +84,7 @@ export default class MapGallery extends Component {
           </div>}
 
           {this.state.mapList?.indexOf(this.state.currentMap)!==(this.state?.mapList.length-1) &&
-        <div 
+        <div className="hover-btn"
         onClick={this.handleNextMap}
         style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, cursor:"pointer",
         backgroundColor:styles.colors.colorBlack+"dd", color:styles.colors.colorWhite+"dd", position:"absolute", zIndex:"200", top: "-72px", right:"20px" }}>
@@ -99,7 +97,7 @@ export default class MapGallery extends Component {
 
   {this.state.currentMap &&
    
-      <InteractiveBulletin app={app} obj={this.state.currentMap}/>
+      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color}/>
       }
 
         {/* backgroundIMAGE */}

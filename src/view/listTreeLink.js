@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import "../App.css"
+import compassImage from '../pics/Compass_Final.png';
+import bannerImage from '../pics/Warbanner_Final.png';
+import imageImage from '../pics/Image_Final.png';
 
 
 import { Link, } from 'react-router-dom';
@@ -22,6 +25,15 @@ export default class ListTreeLink extends Component {
     let styles = state.styles;
     let obj = this.props.obj;
     let name = this.props.props.name;
+    let currentState = app.state;
+    let componentList = currentState.componentList;
+
+    
+    let mapList = componentList.getList("map", obj.getJson()._id, "loreId");
+    let encounterList = componentList.getList("encounter", obj.getJson()._id, "loreId");
+    let imageList = componentList.getList("image", obj.getJson()._id, "loreId");
+
+
     let href = window.location.href;
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length-1];
@@ -40,11 +52,61 @@ export default class ListTreeLink extends Component {
      let idList = id.split('-');
      newLink= idList[0];
     }
+
+    let maxLengthName = 22;
+
+    let objName = obj.getJson()[name].length > maxLengthName ? obj.getJson()[name].substring(0, maxLengthName) + "..." : obj.getJson()[name];
     
-    return ( <div>
+    return ( <div 
+     
+      className='hover-container' style={{cursor:"pointer",  
+    position: "", marginBottom:"4px",
+    overflow: "", height:"fit-content",
+    display: "flex"}}>
       {name !=="" && name !==undefined &&
+      <div  onClick={() => window.open("../campaign/" + newLink, "_blank")} 
+      style={{display:"flex", flexDirection:"column", alignItems:"center",
+        justifyContent:"center", alignContent:"center"}}>
+    <div title={"Open "+objName+" in a new tab."}
+    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:styles.fonts.fontSmall, }}
+    >
       
-    <Link target='_blank' to={"../campaign/"+newLink}>{obj.getJson()[name]}</Link>
+      {objName}
+
+    </div>
+    <div 
+    className='hover-div' title={"Open "+objName+" in a new tab."}
+     style={{ zIndex:"88",
+      backgroundColor:styles.colors.color8+"22", height:"44px", width:"120%", filter: "blur(32px)",
+      position:"absolute", top:"0", right:"0"}}></div>
+
+<div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105",
+                            alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center",
+                            justifyItems:"flex-end"}}>
+                              {/* ICONS */}
+                                                                                   
+
+                               {mapList.length >= 1 &&
+                                 <img src={compassImage} title={mapList.length+" Connected Maps"} 
+                                  style={{width:"20px", height:"20px",}}/>
+                                   }
+
+                                     {encounterList.length >= 1 &&
+                                     <img src={bannerImage} title={encounterList.length+" Connected Encounters"}
+                                      style={{width:"18px", height:"20px", marginLeft:"5px"}}/>
+                                      }
+
+                                       {imageList.length >= 1 &&
+                                        <img src={imageImage} title={imageList.length+" Images in Gallery"}
+                                         style={{width:"20px",  height:"20px", marginLeft:"5px"}}/>
+                                        }
+                            </div>
+
+    
+
+    </div>
+
+   
     }
     </div>
     )
