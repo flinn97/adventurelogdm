@@ -143,7 +143,7 @@ async componentDidMount(){
         <hr></hr>
         {state.currentLore===undefined &&
         <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"22px"}}> {this.state.obj.getJson().title} Text:  
-          <ParentFormComponent app={app} name="desc" obj={this.state.obj}
+          <ParentFormComponent app={app} name="description" obj={this.state.obj}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}

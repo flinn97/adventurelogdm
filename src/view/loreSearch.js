@@ -63,16 +63,20 @@ export default class LoreSearch extends Component {
     let campId = idParts[0]
 
     let loreList = componentList.getList("lore", id, listTerm)
-    .filter(loreItem => {
-      const name = loreItem?.getJson()?.name;
-      return name && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-    })
-    .sort((a, b) => {
-      const nameA = a.getJson().name;
-      const nameB = b.getJson().name;
-      return nameA.localeCompare(nameB);
-    });
+      .filter(loreItem => {
+        const name = loreItem?.getJson()?.name;
+        if (this.state.searchTerm === "") {
+          return name && name !== "";
+        }
+        return name && name !== "" && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+      })
+      .sort((a, b) => {
+        const nameA = a.getJson().name;
+        const nameB = b.getJson().name;
+        return nameA.localeCompare(nameB);
+      });
 
+      console.log(componentList.getList("lore", id, listTerm));
 
     let loreListTotalLength = componentList.getList("lore", id, listTerm).length
     
@@ -123,19 +127,16 @@ export default class LoreSearch extends Component {
                                               width:"92%", minHeight:"200px",maxHeight:"fit-content",
                                               marginTop:"38px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                                                 {
-                                                  loreList
-                                                  .slice(0, 12)
-                                                  .map((loreItem, index) => (
-                                                    loreItem.getJson().name !== "" && loreItem.getJson().name !== undefined?
-                                              <div  className="hover-img" key={this.props.index}  
-                                              onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer",}}>
-                                                    
-                                                    <LoreItemWithNotation app={app} obj={loreItem} index={index}/>
-                                                      
-
-                                            </div> : null
-                                                  ))
+                                                      loreList
+                                                      .slice(0, 12)
+                                                      .filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
+                                                      .map((loreItem, index) => (
+                                                        <div className="hover-img" key={index} onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer"}}>
+                                                          <LoreItemWithNotation app={app} obj={loreItem} index={index}/>
+                                                        </div>
+                                                      ))
                                                 }
+
                                             </div>
                                             
                                     

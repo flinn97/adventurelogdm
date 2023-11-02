@@ -131,7 +131,7 @@ export default class AddCampaign extends Component {
               
 
               {/* ///Description */}
-              <ParentFormComponent app={app}
+              {/* <ParentFormComponent app={app} name="description" label="Campaign Description: " 
                   theme={"adventureLog"} 
                   
                   maxLength={200} rows={5}
@@ -140,10 +140,10 @@ export default class AddCampaign extends Component {
                   borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", marginBottom:"2vh" }}
                   type={"richEditor"}
                   placeholder={"Briefly describe your campaign. 200 Characters Max"}
-                  name="description" label="Campaign Description: " 
+                  
                   wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
                   
-                  />
+                  /> */}
               {/* <ParentFormComponent app={app} name="session" 
                   theme={"adventureLog"} 
                   labelStyle={{marginBottom:"8px"}}

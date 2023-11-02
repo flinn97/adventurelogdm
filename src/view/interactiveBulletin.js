@@ -122,9 +122,11 @@ export default class InteractiveBulletin extends Component {
     let headerH = 60;
     let remainderH = 1310-[headerH]-11;
 
-    const images = [image1,image2,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16,
+    const images = [
+      image1,image2,image4,image5,image6,image7,image8,
+      image9,image10,image11,image12,image13,image14,image15,image16,
             "#F4F5F8",
-            "#ecd23abb","#0f141cf3", "#1E90FFbb", "#5F0C0Cae" ];
+            "#C1A71Bbb","#0f141cf3", "#1E90FFbb", "#5F0C0Cae" ];
 
     const heightY = this.state.mapHeight;
 

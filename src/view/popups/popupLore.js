@@ -94,11 +94,11 @@ class MainContent extends Component{
     let type = idParts.length >= 2?"lore":"campaign";
     let parent = state.componentList?.getComponent(type, parentId, "_id");
     let parentName = type === "campaign"? "title":"name";
-
-    state.opps.clearUpdater();
-    debugger
-    lore.updateObjInsideJson("parentId", {[parentId]:parent.getJson()[parentName]});
-
+    
+    await state.opps.clearUpdater();
+    
+    await lore.updateObjInsideJson("parentId", {[parentId]:parent.getJson()[parentName]});
+    
     
     if(state.currentPin)
         {
@@ -112,8 +112,9 @@ class MainContent extends Component{
           await state.opps.prepare({update:pin});
         }
         
-        await this.props.app.dispatch({ currentComponent: lore})
-        await state.opps.prepareRun({update: lore})
+        
+        await state.opps.prepareRun({update: lore});
+        await this.props.app.dispatch({ currentComponent: lore});
   }
 
   async componentDidMount(){
@@ -140,6 +141,8 @@ class MainContent extends Component{
     let lore = state.currentComponent;
 
     let placeholder = state.currentPin?.getJson().name;
+
+    
 
     if(id.includes("-")){
       let newArr = [...splitURL];
@@ -171,16 +174,17 @@ class MainContent extends Component{
 
           
     
-   const filteredLore = componentList.getList("lore", idList[0], "campaignId")
+          const filteredLore = componentList.getList("lore", idList[0], "campaignId")
           .filter(item => {
-            const name = item?.getJson()?.name || "";
-            return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+            const name = item?.getJson()?.name;
+            return name && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
           })
           .sort((a, b) => {
-            const nameA = a?.getJson()?.name || "";
-            const nameB = b?.getJson()?.name || "";
+            const nameA = a?.getJson()?.name;
+            const nameB = b?.getJson()?.name;
             return nameA.localeCompare(nameB);
           });
+        
 
     return(
       <div style={{
@@ -562,8 +566,8 @@ class MainContent extends Component{
                   </div>
 
                   <div className='hover-btn'
-                  onClick={()=>{
-                    this.setState({hasChoice: "Connect"})
+                  onClick={async ()=>{
+                    this.setState({hasChoice: "Connect"});
                   }}
                   title={"Find pre-made Lore to connect it to this Lore"}
                   style={{...styles.buttons.buttonAdd, margin:"8px"}}>
@@ -619,17 +623,20 @@ alignItems:"center", height:"100%", width:"100%", }}>
                 >
                   {
                 filteredLore
-                .slice(0,10)
+                .slice(0,8)
                 .map((item, index) => (
                   <div>
-                        { (item.getJson().name !=="" && !item.getJson().name !== undefined
-                        && item.getJson()._id !== idList[1]
-                        ) 
-                        &&
+                        {  (item.getJson().name !== "" && item.getJson().name !== undefined && item.getJson()._id !== idList[1]) &&
+
                         
-                        <div  className="hover-img" key={this.props.index}                                                
+                        <div  className="hover-img" key={index}                                                
                           onClick={() => {this.setConnectedLore(item)
-                            this.setState({hasChoice:"New"})
+                            this.setState({hasChoice:"New"});
+                             state.opps.prepareRun({update: item});
+                          
+                             this.props.app.dispatch({ currentComponent: lore, popupSwitch:""});
+                          
+                          
                           }} 
                           style={{cursor:"pointer",}}>
                                                     

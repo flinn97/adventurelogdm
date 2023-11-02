@@ -88,7 +88,7 @@ toggleSidebar = () => {
     let compList = state.componentList.getList("map",  id, "campaignId");
     
     let compListLength = compList.length;
-    console.log(compListLength)
+    
 
     return (
       
