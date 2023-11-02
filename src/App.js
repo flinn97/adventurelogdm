@@ -115,7 +115,7 @@ handleChange = (event) => {
 
   async componentDidMount(){
     // if(this.state.navFactory){
-    //   let f = this.state.navFactory.getNavThemeFactory();
+    //   let f = this.statedasdfnavFactory.getNavThemeFactory();
     //   let styles = f["defaultSideNav"];
       
     //   this.setState({navStyles:styles, linkStyleDefault: styles.link});
