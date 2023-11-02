@@ -16,6 +16,7 @@ class SendtoChatService {
       if (this.typeMap[type]) {
 
         const div = this.typeMap[type](obj, campID, callBack);
+        
 
       } else {
         console.error("Can't log "+obj.getJson().type, type);
@@ -27,7 +28,7 @@ class SendtoChatService {
           return(
           <div 
           onClick={()=>{            
-            dispatch({currentPic:img, popupSwitch:"viewPic"})
+            dispatch({currentPic:obj, popupSwitch:"viewPic"})
           }}  
           >
             <img draggable="false" src={obj.getJson().picURL} style={{width:"200px"}}/>
