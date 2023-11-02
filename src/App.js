@@ -76,6 +76,11 @@ export default class App extends Component {
     }
   }
 
+  /**
+   * component did update
+   * @param {*} props 
+   * @param {*} state 
+   */
   async componentDidUpdate(props, state){
     if(this.state.backend){
      await this.setState({backend: false});
