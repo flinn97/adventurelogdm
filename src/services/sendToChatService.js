@@ -7,6 +7,7 @@ class SendtoChatService {
         'encounter': this.logInitiative,
         'newNote': this.logNote,
         'lore': this.logLoreDescription,
+        'message': this.logMessage,
       };
     }
 
@@ -52,6 +53,18 @@ class SendtoChatService {
                 return(
                   <div>
                     {obj.getJson().desc}
+                  </div>
+                  )
+                };
+
+       logMessage = (obj, campID, callBack) => {
+                  return(
+                  <div 
+                  onClick={()=>{            
+                    dispatch({currentPic:img, popupSwitch:"viewPic"})
+                  }}  
+                  >
+                    <img draggable="false" src={obj.getJson().picURL} style={{width:"200px"}}/>
                   </div>
                   )
                 };

@@ -41,7 +41,7 @@ export default class AddCampaign extends Component {
     let isNotUpdate = (state.popUpSwitchcase != "updateCampaign")
 
     if (state.currentComponent?.getJson().type === "campaign" && isUpdate)
-                      {textSubmit ="Save"}
+                      { textSubmit ="Save";}
                       else {
                         textSubmit ="Create My Campaign";
                         };
@@ -75,18 +75,23 @@ export default class AddCampaign extends Component {
             // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
             }}>
 
-              <div style={{display:"flex", flexDirection:"column", height:"fit-content"}}>
+              <div style={{display:"flex", flexDirection:"column", height:"fit-content",  }}>
 
         {/* //DELETE CAMPAIGN */}
                     {isUpdate && 
-                    (<div style={{...styles.buttons.buttonClose, right:"3.5vw", borderRadius:"2vmin", fontSize:styles.fonts.fontSmall, 
-                    marginRight:"6%", background:"",marginTop:"4px", position:"absolute",}}
+                    (<div className='hover-btn'
+                      style={{...styles.buttons.buttonClose, right:"3.5vw", borderRadius:"2vmin", fontSize:styles.fonts.fontSmall,
+                    padding:"4px 10px",  pointer:"cursor", height:"fit-content", zIndex:"200",
+                    marginRight:"6%", background:styles.colors.colorBlack+"5b",marginTop:"4px", position:"absolute", 
+                    // backgroundColor:"white",
+                  }}
                     
-                    onClick={()=>{dispatch({popupSwitch:"popupDelete", currentDelObj:state.currentComponent,
+                    onClick={()=>{
+                      dispatch({popupSwitch:"popupDelete", currentDelObj:state.currentComponent,
                     handlePopupClose:this.deleteCampaign,
                     })}}>
                       Delete This Campaign 
-                      <div style={{color:styles.colors.color3, fontSize:".85rem", marginLeft:"10px", alignSelf:"center"}}> (permanent)</div>
+                      <div style={{color:styles.colors.color3, fontSize:".85rem", marginLeft:"10px", alignSelf:"center", }}> (permanent)</div>
                     </div>)}
 
             </div>
@@ -95,7 +100,7 @@ export default class AddCampaign extends Component {
             maxWidth: 'none', maxHeight: 'none', top: '50%', left: '50%', 
             transform: 'translate(-50%, -50%)', objectFit: 'cover', opacity: .89, zIndex: '-1', borderRadius:"2vmin" }}/> */}
          
-              <div style={{ display:"flex", marginBottom:"20px", flexDirection:"row", width:"100%", justifyContent:"space-between", 
+              <div className='hover-btn' style={{ display:"flex", marginBottom:"20px", flexDirection:"row", width:"100%", justifyContent:"space-between", 
               verticalAlign:"center", alignItems:"center"}}>
                 <Upload 
               //ADD THIS TO ALL UPLOADS//
@@ -173,7 +178,7 @@ export default class AddCampaign extends Component {
                         />
                       </div>
                     : 
-                      <div style={{display:"flex", justifyContent:"center"}} className="hover-btn">
+                      <div className='hover-btn' style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
                       <RunButton app ={app} 
                         wrapperStyle={{...styles.buttons.buttonAdd, cursor: isNotUpdate ? "wait":"pointer", 
                           width:"35%", transition:"all 1s ease-out", borderRadius:"21%",

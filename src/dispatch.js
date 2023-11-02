@@ -16,6 +16,7 @@ import Login from './view/login';
 import PopupDelete from './view/popups/popupDelete';
 import PopupLore from './view/popups/popupLore';
 import ViewPic from './view/popups/viewPic';
+import AdventureLogPage from './view/pages/adventureLogPage';
 
 
 //model
@@ -88,6 +89,8 @@ export default class Dispatch extends Component {
         <Route path="/encountermanager/:id" element={<EncounterManager app={app}/>}/>
         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
         <Route path="/encounter/:id" element={<Encounter app={app} />}/>
+
+        <Route path="/log/:id" element={<AdventureLogPage app={app} />}/> 
 
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}

@@ -76,7 +76,7 @@ export default class LoreSearch extends Component {
         return nameA.localeCompare(nameB);
       });
 
-      console.log(componentList.getList("lore", id, listTerm));
+    
 
     let loreListTotalLength = componentList.getList("lore", id, listTerm).length
     
