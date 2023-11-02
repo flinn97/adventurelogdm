@@ -76,6 +76,11 @@ export default class App extends Component {
     }
   }
 
+  /**
+   * component did update
+   * @param {*} props 
+   * @param {*} state 
+   */
   async componentDidUpdate(props, state){
     if(this.state.backend){
      await this.setState({backend: false});
@@ -115,7 +120,7 @@ handleChange = (event) => {
 
   async componentDidMount(){
     // if(this.state.navFactory){
-    //   let f = this.state.navFactory.getNavThemeFactory();
+    //   let f = this.statedasdfnavFactory.getNavThemeFactory();
     //   let styles = f["defaultSideNav"];
       
     //   this.setState({navStyles:styles, linkStyleDefault: styles.link});
