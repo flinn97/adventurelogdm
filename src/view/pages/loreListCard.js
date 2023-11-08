@@ -103,15 +103,14 @@ getCampId(){
     
 
     return(
-      <div style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content",
-       alignContent:"center", userSelect:"none", color:styles.colors.colorWhite,
-       
-        
+      <div className='scroller'
+      style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content", maxHeight:"fit-content", marginTop:"0px",
+       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, 
        }}>
             
             
           
-          <div style={{width:"fit-content", display:"flex", flexDirection:"row", marginTop:"5vh",}}>
+          <div style={{width:"fit-content", display:"flex", flexDirection:"row", marginTop:"5vh", height:"100%",}}>
           
             <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} attribute={"parentId"}/>
           </div>

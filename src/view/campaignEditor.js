@@ -74,8 +74,6 @@ async componentDidMount(){
     const advLogLink = this.state.obj?.getJson()._id;
     const newLink = ("/log/"+advLogLink);
 
-    console.log(newLink);
-
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
       {this.state.start&&(

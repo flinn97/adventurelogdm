@@ -20,7 +20,7 @@ export default class ListTreeInner extends Component {
 
   render() {
     let app = this.props.app;
-    let dispatch = app.dispatch
+  let dispatch = app.dispatch;
     let state = app.state;
 
     let styles = state.styles;
@@ -29,7 +29,7 @@ export default class ListTreeInner extends Component {
     return (<div style={{display:"flex",flexDirection:"column",alignItems:"center"}} >
        {state.currentExpanse?.includes(id)
        &&
-       <div >
+       <div style={{backgroundColor:styles.colors.color2+"7b", width:"99.8%",}}>
        <ListTree app={app} name={"lore"} attribute={"parentId"} _id={id}/>
        </div>
        }
