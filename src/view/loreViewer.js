@@ -144,7 +144,7 @@ toggleSidebar = () => {
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
                       flexDirection:"column", justifyItems:"space-between"}}/></div>
 
-      <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
+      <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'auto', padding: '0',
       height:"fit-content", maxWidth:"100%", marginTop:"20px",
       }}>
 
@@ -218,9 +218,9 @@ toggleSidebar = () => {
         {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
       </div>
 
-        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
+        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh",  }}>
         {/* SIDEBAR */}    
-                  <div   style={{display:"flex", width:"fit-content",}}>
+                  <div   style={{display:"flex", width:"fit-content", height:"100%", }}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
                   </div>
                   </div>)}

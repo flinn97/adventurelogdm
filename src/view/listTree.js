@@ -88,13 +88,14 @@ setInterval(async() => {
 
     return (<div >
       
-             <div style={{flexDirection:"row", display:"flex",}} >
+             <div style={{flexDirection:"row", display:"flex", }} >
              
              <div  style={{flexDirection:"column", display:"flex", marginRight:"-20px",
              alignItems:"center"}} >
 
                     {!isHidden && (
-                      <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginBottom:"15px", marginTop:"5px", paddingLeft:"29px",  paddingRight:"29px", 
+                      <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginBottom:"15px", 
+                      marginTop:"5px", paddingLeft:"13px",  paddingRight:"13px", 
                       
                       padding:"4px", borderRadius:"9px", fontSize:"18px", }}
                       onClick={()=>{
@@ -104,10 +105,10 @@ setInterval(async() => {
                           object:{ parentId:{[_id]:"New Lore"}, type:"lore", name:"New Lore", campaignId:campId}}
                         )
                       }}
-                      >+ Create Lore</div>)}
+                      >+ New Top Level Lore</div>)}
 
 {/* //ADD IMAGE HERE// */}
-
+                      <div className='scroller'  style={{flexDirection:"column", display:"flex", overflowY:"scroll", maxHeight:"88.9vh", alignItems:"left"}}>
                         <MapComponent app={app}  theme={"expandingTree"} 
                                              
                         name={name} 
@@ -115,7 +116,7 @@ setInterval(async() => {
                         cells={cells}
 
                         filter={{search: _id, attribute: attribute}}  />
-
+                      </div>
               </div>
             </div>
             

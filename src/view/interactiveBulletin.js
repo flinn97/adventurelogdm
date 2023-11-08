@@ -168,7 +168,7 @@ export default class InteractiveBulletin extends Component {
             let y = (scrollTop + 80).toString();
 
             await state.opps.cleanJsonPrepareRun({
-              addpin: {
+              "addpin": {
                 type: "pin",
                 iconImage: iconTest,
                 loreId: "",

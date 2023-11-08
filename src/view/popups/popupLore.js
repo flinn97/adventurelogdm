@@ -11,6 +11,7 @@ import placeholder from '../../pics/placeholderEncounter.JPG';
 import newWindow from '../../pics/newWindow.png';
 import Upload from '../upload';
 import LoreItemWithNotation from '../loreItemwithNotation';
+import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -120,7 +121,7 @@ class MainContent extends Component{
   async componentDidMount(){
     let state = this.props.app.state;
     let loreName = await state.currentComponent.getJson().name;
-    console.log(loreName)
+
     if(!loreName==""||!loreName==undefined){
       await this.setState({hasChoice:"New"})
     }
@@ -261,17 +262,22 @@ class MainContent extends Component{
     
 <hr></hr>
 
-<ParentFormComponent app={app} name="desc"
-             theme={"adventureLog"} 
-              rows={5}
-              // prepareRun={true}
-             inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
-             borderRadius:"4px",background:styles.colors.colorWhite+"00", 
-             border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-             type={"richEditor"}
-             wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
-             flexDirection:"column", justifyItems:"space-between"}}/>
-
+        <div style={{marginTop:"-12px", display: "flex", flexDirection: "column",}}>   
+{/* ///LOG BUTTON */}
+          <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end"}}>
+        <PostLogButton app={app} obj={lore} altText={"description"}/>
+          </div>
+            <ParentFormComponent app={app} name="desc"
+                        theme={"adventureLog"} 
+                          rows={5}
+                          // prepareRun={true}
+                        inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
+                        borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+                        border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+                        type={"richEditor"}
+                        wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
+                        flexDirection:"column", justifyItems:"space-between"}}/>
+      </div>
 </div>}
 
 <div>

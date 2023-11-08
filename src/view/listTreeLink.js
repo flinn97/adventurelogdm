@@ -61,13 +61,13 @@ export default class ListTreeLink extends Component {
      
       className='hover-container' style={{cursor:"pointer",  
     position: "", marginBottom:"4px",
-    overflow: "", height:"fit-content",
+    height:"fit-content",
     display: "flex"}}>
       {name !=="" && name !==undefined &&
       <div  onClick={() => window.open("../campaign/" + newLink, "_blank")} 
       style={{display:"flex", flexDirection:"column", alignItems:"center",
         justifyContent:"center", alignContent:"center"}}>
-    <div title={"Open "+objName+" in a new tab."}
+    <div title={"Open "+objName+" in a new tab."} className='hover-img'
     style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:styles.fonts.fontSmall, }}
     >
       
@@ -77,8 +77,9 @@ export default class ListTreeLink extends Component {
     <div 
     className='hover-div' title={"Open "+objName+" in a new tab."}
      style={{ zIndex:"88",
-      backgroundColor:styles.colors.color8+"22", height:"44px", width:"120%", filter: "blur(32px)",
-      position:"absolute", top:"0", right:"0"}}></div>
+      backgroundColor:styles.colors.color3+"22", height:"10px", width:"100%", 
+      filter: "blur(10px)",
+      position:"absolute", top:"0", right:"50%"}}></div>
 
 <div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105",
                             alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center",

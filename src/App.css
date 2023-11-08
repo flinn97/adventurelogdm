@@ -95,6 +95,7 @@ hovering:hover .hover {
   padding: 5px;
   border-radius: 3px;
   opacity: 0;
+  
   animation: slideAndFade 1.72s ease-out forwards;
 }
 
@@ -439,8 +440,10 @@ body {
   border: 1px solid #999;
   flex-direction: column;
 }
+
 .scroller {
-    
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer 10+ */
   height: 100%;
   overflow-y: scroll; /* Add the ability to scroll */
 }

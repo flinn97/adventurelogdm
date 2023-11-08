@@ -332,7 +332,7 @@ class AdventureLogStyles {
             tallestCard:
             {   
                 width: "fit-content",
-                
+                overflow:"auto",
                 marginTop:"-3vh",
                 
                 minHeight: "100vh",
