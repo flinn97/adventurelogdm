@@ -22,10 +22,12 @@ class PostLogButton extends Component {
         let titleMessage = "Send "+altText+" to the Adventure Log. Everyone in your campaign will be able to see this.";
         
         let obj = this.props?.obj;
-        
         let type = obj.getJson()?.type;
         
         let isVisible = (type==="lore" && obj.getJson().desc)||(type==="image")?"true":"false";
+
+        
+
         return (
             <div 
             style={{display: "flex", flexDirection: "row", justifySelf: "flex-end", width: "fit-content"}}>
@@ -42,12 +44,12 @@ class PostLogButton extends Component {
                                 onClick={() => {
                                     
                                     if (isVisible==="true"){
-                                        sendToChatService.dispatchLog(obj, dispatch)
+                                        sendToChatService.dispatchLog(obj, app)
                                     }else{console.log("Nothing to Send")}
 
                                     if (this.state.showSaved === false)
                                     {
-                                        console.log((this.state.showSaved))
+                                       
                                         this.setState({showSaved:true});
                                         setTimeout(() => this.setState({ showSaved: false }), 2000);
                                     }

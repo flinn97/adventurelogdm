@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
 import auth from '../../services/auth';
+import PostMapItem from '../postMapItem';
 
 
 export default class AdventureLogPage extends Component {
@@ -47,9 +48,16 @@ export default class AdventureLogPage extends Component {
     
     let logItems = compList.getList("post", currentCampId, "campaignId");
 
-    let cleanedItems = logItems
+    let sortedLogItems = logItems.sort((a, b) => {
+      let dateA = new Date(a.getJson().date);
+      let dateB = new Date(b.getJson().date);
+      return dateB - dateA; // Sorts in D-scending order of date
+    });
+
+    let cleanedItems = sortedLogItems
     .slice(0, this.state.imagesToShow);
     
+
     
     return (
 
@@ -57,19 +65,25 @@ export default class AdventureLogPage extends Component {
       <div style={{width:"100%", display:"flex",flexDirection:"column", alignItems:"center", alignSelf:"center", justifySelf:"center"}}>
 
       {/* ADVENTURE LOG */}
-          <div style={{width: "840px", height: "890px", border: "8px solid " + styles.colors.color6 + "55", 
+          <div style={{
+            display:"flex", flexDirection:"column", width:"fit-content",
+           justifyContent:"flex-end",
+          width: "840px", height: "890px", border: "8px solid " + styles.colors.color6 + "55", 
           backgroundColor: styles.colors.color8 + "55",
           borderRadius: "20px", padding: "20px"}}>
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
             */}
             
-                <div>
+                <div style={{
+                   padding:"3px 6px", width:"100%",
+                    }}>
                   {cleanedItems.length > 0 && cleanedItems.map((item, index) => (
-                    <div key={index} style={{color:styles.colors.colorWhite+"a9"}}>
-                      {item.getJson().campaignId}
-
-                      {/* <PostMapItem app={app} obj={item} index={index} /> */}
+                    <div key={index} style={{ 
+                    
+                    }}>
+                      
+                       <PostMapItem app={app} obj={item} index={item.getJson().date} />
 
                     </div>
                   ))}
