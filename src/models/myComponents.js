@@ -328,7 +328,17 @@ class Condition extends componentBase{
         roundsActive:"1",
     }
 }
-
+class MarketplaceItem extends componentBase{
+     constructor(opps){
+        super(opps);
+        this.getPicSrc=this.getPicSrc.bind(this);
+       
+    }
+    json= {
+        type: "marketplaceitem",
+        id: "",
+    }
+}
 class Monster extends componentBase{
     constructor(opps){
         super(opps);
@@ -382,7 +392,8 @@ function forFactory(){
     return {user:User,pin:Pin,campaign:Campaign,
         encounter:Encounter,monster:Monster,
         newNote:NewNote,map:Map, post:Post,
-        condition:Condition, 
+        marketplaceItem:MarketplaceItem,
+        condition:Condition,
         lore:Lore,image:Image}
 }
 
