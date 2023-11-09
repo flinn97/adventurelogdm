@@ -1,7 +1,9 @@
 import { Component } from 'react';
-import "../App.css"
+import "../App.css";
 import LoreLogComponent from './pages/LogComponents/loreLogComponent';
 import ImageLogComponent from './pages/LogComponents/imageLogComponent';
+
+
 
 
 
