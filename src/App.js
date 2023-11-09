@@ -12,7 +12,7 @@ import Note from './view/pages/note';
 import Market from './view/pages/market';
 import EncounterManager from './view/pages/encounterManager';
 
-
+import PlayerHome from './view/pages/playerHome.js';
 
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 //New comment

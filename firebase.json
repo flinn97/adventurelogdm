@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "avaadventurelog",
     "public": "build",
     "ignore": [
       "firebase.json",
