@@ -28,7 +28,6 @@ export default class AdventureLogPage extends Component {
     let campaigns = compList.getList("campaign", idSegment, "_id" )
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
     // let logItems = compList.getList("post", currentCampId, "campaignId")
-
     await auth.firebaseGetter(currentCampId, compList, "campaignId", )
   }
 

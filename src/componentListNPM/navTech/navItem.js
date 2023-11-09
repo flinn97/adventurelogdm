@@ -232,7 +232,7 @@ class LegatoNavItems extends Component {
     return (
       <>
         {switchCase.map((obj, index) =>
-          <Link to={obj.path} style={{textDecoration: "none"}}>
+          <Link to={obj._id? obj.path+"/"+obj._id: obj.path} style={{textDecoration: "none"}}>
           <div style={
             //active
             obj.name === this.state.active ? this.props.activeSingleLinkWrapperStyle ? { ...this.props.activeSingleLinkWrapperStyle } :
