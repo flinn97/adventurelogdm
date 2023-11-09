@@ -54,7 +54,7 @@ class User extends componentBase{
     }
     json= {
         ...this.userInfo, 
-        role:"teacher",
+        role:"GM",
         type: "user",
         signUpDate: moment().format('L'),
         paidCustomer: false,
@@ -87,6 +87,8 @@ class User extends componentBase{
     }
 
 }
+
+
 
 
 class Pin extends componentBase{
@@ -350,6 +352,8 @@ class Monster extends componentBase{
         conditions: {},
         parentId: "",
         otherRounds:0,
+        role:"monster",
+
     }
 
     setColor(input){
@@ -378,7 +382,7 @@ function forFactory(){
     return {user:User,pin:Pin,campaign:Campaign,
         encounter:Encounter,monster:Monster,
         newNote:NewNote,map:Map, post:Post,
-        condition:Condition,
+        condition:Condition, 
         lore:Lore,image:Image}
 }
 

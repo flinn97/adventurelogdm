@@ -17,6 +17,8 @@ import PopupDelete from './view/popups/popupDelete';
 import PopupLore from './view/popups/popupLore';
 import ViewPic from './view/popups/viewPic';
 import AdventureLogPage from './view/pages/adventureLogPage';
+import ConnectToCampaign from './view/popups/connectToCampaign';
+import AdventureLog from './view/pages/adventureLog';
 
 
 //model
@@ -66,6 +68,14 @@ export default class Dispatch extends Component {
         
         />}
 
+{state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
+        <ConnectToCampaign 
+        
+          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+        
+        />}
+
               {state.popupSwitch === "popupLore" 
               && (state.currentComponent?.getJson().type === "lore") 
               &&
@@ -79,7 +89,21 @@ export default class Dispatch extends Component {
                 currentDelObj:undefined,})}}
               />}
           
-     
+     {state.user.getJson().role!=="GM"?(
+        <Routes>
+        {state.switchCase?.map((obj, index)=>
+        <>{obj._id!==undefined?(
+          <Route path={obj.path+"/:id"} element={<obj.comp app={app}/>} />
+        ):(
+                  <Route path={obj.path} element={<obj.comp app={app}/>} />
+                  
+                  )}</>
+                )}
+                
+                <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} />}/> 
+  
+  </Routes>
+     ):(
      <Routes>
       {state.switchCase?.map((obj, index)=>
                 <Route path={obj.path} element={<obj.comp app={app}/>} />
@@ -95,7 +119,7 @@ export default class Dispatch extends Component {
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
 
-</Routes>
+</Routes>)}
 </div>
 </div>
      </div>

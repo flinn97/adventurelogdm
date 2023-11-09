@@ -4,6 +4,7 @@ import { db, storage, auth } from '../firbase.config.js';
 import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail, updateEmail, deleteUser } from "firebase/auth";
 import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
+import PlayerHome from "../view/pages/playerHome.js";
 
 let imageQuality = .58;
 
@@ -79,7 +80,7 @@ class Auth {
 
     }
     async getuser(email, componentList, dispatch) {
-        
+        debugger
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
@@ -97,7 +98,15 @@ class Auth {
         await componentList.addComponents(rawData, false);
         let user = componentList.getComponent("user");
         if (user) {
-            dispatch({user:user, email:email})
+            
+            dispatch({user:user, email:email, })
+            if(user.getJson().role!=="GM"){
+                dispatch({ switchCase:[
+                    {path:"/", comp:PlayerHome, name: "Home" },
+                  
+                   
+                  ]})
+            }
         }
     }
 
