@@ -38,7 +38,7 @@ export default class Dispatch extends Component {
 <BrowserRouter>
     {/*      === */}
   {state.user===undefined?(<Login app={app}/>):(
-    <div style={{
+    <div className='scroller2' style={{
       minWidth:"100%", userSelect:"none",
       overflow:"auto",
       }}>

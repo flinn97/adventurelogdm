@@ -442,30 +442,54 @@ body {
 }
 
 .scroller {
-  scrollbar-width: none; /* For Firefox */
+  scrollbar-width: thin; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer 10+ */
-  height: 100%;
   overflow-y: scroll; /* Add the ability to scroll */
 }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scroller::-webkit-scrollbar {
-      display: none;
-      width: 0 !important;
-  }
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.scroller {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: 3px; /* Firefox */
-  overflow: -moz-scrollbars-none;
-}
+/* Style the scrollbar for Chrome, Safari and Opera */
 .scroller::-webkit-scrollbar {
-  width: 3px;
-    
-  
+  width: 12px; /* Width of the scrollbar */
 }
 
+.scroller::-webkit-scrollbar-track {
+  background: transparent; /* Make the track transparent */
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.5); /* Color and transparency of the thumb */
+  border-radius: 6px; /* Roundness of the scrollbar thumb */
+}
+
+/* Style the scrollbar for IE, Edge, and Firefox */
+.scroller {
+  scrollbar-color: rgba(128, 128, 128, 0.5) transparent; /* Thumb and track color */
+}
+
+.scroller2 {
+  scrollbar-width: thin; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer 10+ */
+  overflow-y: scroll; /* Add the ability to scroll */
+}
+
+/* Style the scrollbar for Chrome, Safari and Opera */
+.scroller2::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.scroller2::-webkit-scrollbar-track {
+  background: transparent; /* Make the track transparent */
+}
+
+.scroller2::-webkit-scrollbar-thumb {
+  background-color:  rgba(128, 128, 128, 0.7); /* Color and transparency of the thumb */
+  border-radius: 6px; /* Roundness of the scrollbar thumb */
+}
+
+/* Style the scrollbar for IE, Edge, and Firefox */
+.scroller2 {
+  scrollbar-color: rgba(128, 128, 128, 0.7) transparent; /* Thumb and track color */
+}
 
 .gradient-animation {
   background: linear-gradient(90deg, #282c340c, #45526e27,  #677ca811, #282c340c);

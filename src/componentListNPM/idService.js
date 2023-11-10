@@ -12,7 +12,7 @@ class IdService {
         const day = currentDate.getDate().toString().padStart(2, '0');
         const year = currentDate.getFullYear().toString().slice(-2);
 
-        let num = this.randomFiveDigitNumber().toString() + month + day;
+        let num = this.randomFiveDigitNumber().toString() + month + day + year;
         return num;
     };
         

@@ -13,6 +13,7 @@ import sortImg from '../pics/sortInit.png';
 import pause from '../pics/pauseInit.png';
 import back from '../pics/backArrow.webp'
 import forward from '../pics/forward.png'
+import toolService from '../services/toolService';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -185,7 +186,7 @@ export default class Encounter extends Component {
     let styles =state.styles;
     let showMonsterMap = this.state.showMonsterMap;
     const obj = this.state.obj;
-   
+    console.log(this.state.obj?.getJson().campaignId);
     let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
     const playPause = obj?.getJson().isRunning?pause:back;
@@ -281,7 +282,8 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
             onClick={()=>{
               if (!obj?.getJson().isRunning){
             dispatch({operate: "addmonster", operation: "cleanJsonPrepare", 
-            popUpSwitchcase: "addMonster",  object: {encounterId: this.state.obj?.getJson()._id, colors:[],},
+            popUpSwitchcase: "addMonster",  object: {encounterId: this.state.obj?.getJson()._id, colors:[], 
+              campaignId: this.state.obj?.getJson().campaignId},
         })}
             }}>
           {!obj?.getJson().isRunning?"Add New Creature to this Encounter":"Encounter is Running..."}

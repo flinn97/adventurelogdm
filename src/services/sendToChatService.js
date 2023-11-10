@@ -1,3 +1,5 @@
+import toolService from "./toolService";
+
          
 
 class SendtoChatService {
@@ -5,24 +7,29 @@ class SendtoChatService {
     }
 
         dispatchLog = (obj, app, callBack) => {
-          let href = window.location.href;
-          let splitURL = href.split("/");
-          let id = splitURL[splitURL.length - 1];
-          let idList = id.split("-");
-          let campId = idList[0];
+          
+          let campId = toolService.getIdFromURL(true,);
+          console.log(campId);
 
           // Extract the JSON part of the obj
           const objJson = obj.getJson ? obj.getJson() : {};
           const { _id, type, parentId, ...rest } = objJson;
           const postType = type || "message";
+          let userRole = app.state.user.getJson().role;
+          let role
+          if (userRole === "GM"){
+            role ="GM";
+          }else{
+            role ="player"
+          }
           
           const payload = {
               ...rest,
-              campaignId: campId,
-              type: "post",
+              campaignId: campId, senderId:app.state.user.getJson()._id,
+              type: "post", sender:role,
               postType: postType,
             };
-          
+          console.log(app.state.user.getJson()._id)
           app.state.opps.cleanJsonPrepareRun({ "addpost": payload });
           app.dispatch({});
         };

@@ -2,9 +2,7 @@ import { Component } from 'react';
 import '../../../App.css';
 import ParentFormComponent from '../../../componentListNPM/componentForms/parentFormComponent';
 
-
-
-export default class LoreLogComponent extends Component {
+export default class MessageLogComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -33,24 +31,22 @@ export default class LoreLogComponent extends Component {
                   fontSize: styles.fonts.fontNormal,
                   // alignSelf: "flex-end", justifySelf:"flex-end",             
       }}>
-        <div  style={{display:"flex", cursor:"default",pointerEvents: "none", flexDirection:"column", textAlign:'justify' }}>
+        <div  style={{display:"flex", cursor:"default",pointerEvents: "none", textAlign:"center", flexDirection:"column", 
+                      wordWrap: "break-word",
+                      whiteSpace: "normal",
+                      overflowWrap: "break-word" }}>
 
-                      {this.props.isYou &&
-                        <div title="Only you can see this"
-                        style={{fontSize:styles.fonts.fontSmallest, color:styles.colors.color9+"55", 
-                        pointerEvents:"all", marginRight:"-20px", marginTop:"1px", marginRight:"4px"}}>
-                          {obj.getJson().name}
-                          </div>
-                      }
-                
-                <ParentFormComponent app={app} name="desc" obj={obj}
+                <ParentFormComponent app={app} name="message" obj={obj}
                       theme={"adventureLog"} 
                       
-                      inputStyle={{ color:styles.colors.colorWhite+"f6", height:"fit-content", 
+                      inputStyle={{ color:styles.colors.colorWhite+"f2", height:"fit-content", 
                       borderRadius:"4px", padding:"4px 4px", minWidth:"550px", maxWidth:"550px",
-                      fontSize:styles.fonts.fontSmall,pointerEvents: "none", 
-                      // letterSpacing:".15rem",
-                      userSelect:"none", cursor:"", textDecoration:"underline 1px"+styles.colors.color7, textUnderlineOffset:"4px",               
+                      fontSize:styles.fonts.fontSmall,pointerEvents: "none",
+                      userSelect:"none", cursor:"", 
+                      background:"linear-gradient(to left, transparent, "+styles.colors.colorBlack+","+styles.colors.color7+"44, "+styles.colors.colorBlack+", transparent)", borderRadius:"11px",
+                      wordWrap: "break-word",
+                      whiteSpace: "normal",
+                      overflowWrap: "break-word"
                     }}
                       type={"richEditor"}
                       />

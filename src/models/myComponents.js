@@ -107,6 +107,7 @@ class Pin extends componentBase{
         loreId:"",
         colorOverlay:"#5F0C0Cae",
         colorFilter:""
+        
     } 
     
     async getPicSrc(){
