@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import auth from '../../services/auth';
 
 /**
  * condensed version of the cards.
@@ -79,7 +81,18 @@ export default class MarketCard extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
+    this.state={
+      start: false,
+    }
   }
+  async componentDidMount(){
+    debugger
+
+    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type")
+    this.setState({start: true})
+
+  }
+
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -91,6 +104,8 @@ class MainContent extends Component{
     return(
       <div>
       You can buy adventures, encounters, and more:
+      {this.state.start &&
+      <MapComponent app ={app} name="marketplaceItem" cells={["title"]} />}
        <div style={{color:styles.colors.color3}}>Buy Stuff</div>
       </div>
       

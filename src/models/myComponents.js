@@ -335,8 +335,13 @@ class MarketplaceItem extends componentBase{
        
     }
     json= {
-        type: "marketplaceitem",
+        type: "marketplaceItem",
         id: "",
+    }
+    async getPicSrc(path){
+        let pic = await authService.downloadPics(path);
+        this.json.picURL=pic;
+        
     }
 }
 class Monster extends componentBase{
