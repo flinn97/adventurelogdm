@@ -16,6 +16,7 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import LoreSearch from './loreSearch';
 import EncounterMapItem from './encounterMapItem';
 import colorService from '../services/colorService';
+import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton.js';
 
 export default class LoreViewer extends Component {
 
@@ -130,7 +131,9 @@ toggleSidebar = () => {
 
     return (
       <div>
-        
+              <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end", marginBottom:"-34px"}}>
+            <PostLogButton app={app} obj={lore} altText={"description"}/>
+              </div>
           <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore Text:
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 

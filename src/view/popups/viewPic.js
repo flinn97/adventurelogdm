@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import "../../App.css"
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
+import toolService from '../../services/toolService';
+import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
 
 
 
@@ -90,14 +92,29 @@ class MainContent extends Component{
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
-    
+    let mW = "200px";
+
+    let isLog = toolService.checkURLforString("/log/");
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
-        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
-    <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
-    <img src={state.currentPic?.getJson().picURL} style={{width:"500px", height:"500px"}}/>
+        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between",
+        minHeight:"fit-content", maxHeight:"865px", minWidth:"1555px", maxWidth:"1555px",
+        
+        paddingTop:"31px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
+
+          {!isLog &&
+          <div style={{display: "flex", marginBottom:"11px",flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end"}}>
+        <PostLogButton app={app} obj={state.currentPic} altText={"description"}/>
+          </div>}
+
+    <div className='scroller2' style={{  maxHeight:"100%", maxWidth:"100%",
+      display:"flex", flexDirection:"row", textAlign:"center", padding:"4px", justifyContent:"center" }}> 
+    <img src={state.currentPic?.getJson().picURL} 
+            style={{minWidth:mW, minWeight:mW, objectFit:"fill",
+            width:"fit-content", height:"fit-content",
+            
+            }}/>
      </div>
     </div>
     )

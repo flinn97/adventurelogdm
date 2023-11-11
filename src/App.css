@@ -491,6 +491,11 @@ body {
   scrollbar-color: rgba(128, 128, 128, 0.7) transparent; /* Thumb and track color */
 }
 
+input {
+  cursor: pointer;
+}
+
+
 .gradient-animation {
   background: linear-gradient(90deg, #282c340c, #45526e27,  #677ca811, #282c340c);
   background-size: 200% 200%;

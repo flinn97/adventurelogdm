@@ -71,8 +71,9 @@ export default class PostMapItem extends Component {
       <div style={{ display: "flex",
                   flexDirection: "row", width:w,
                   maxWidth:w, 
-                  borderBottom: sender==="GM"?"solid 1px "+styles.colors.color3+"66":"solid 1px "+styles.colors.colorWhite+"55", 
-                  borderTop: sender==="GM"?"solid 1px "+styles.colors.color3+"66":"solid 1px "+styles.colors.color8+"22", 
+                  borderBottom: sender==="GM"?"solid 3px "+styles.colors.color3+"66":"solid 1px "+styles.colors.colorWhite+"55", 
+                  borderTop: sender==="GM"?"solid 1px "+styles.colors.color3+"66":"solid 1px "+styles.colors.color8+"22",
+                    
                   borderRadius:"11px", padding:"1px 5px",
                   fontSize: styles.fonts.fontNormal,
                   

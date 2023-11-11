@@ -477,25 +477,13 @@ class MainContent extends Component{
                     campaignId: id}
                 }}
 
-                      //changePic={ async (pic)=>{
-                        // await state.opps.cleanJsonPrepareRun({
-                        //   "addimage":{
-                        //     loreId: state.currentComponent.getJson()._id, 
-                        //     picURL: pic,
-                        //     campaignId: id}});
-                      //       console.log(pic);
-                            
-                      // }} 
+                     
                       obj={app.state.currentComponent}
                       update={true} skipUpdate={true}
                       
                         app={app} 
                         className="indent-on-click"
-                //   onClick={() => {
-                //  state.opps.cleanJsonPrepareRun({
-                //   "addimage":{loreId: state.currentComponent.getJson()._id, 
-                //     campaignId: id}})
-                // }}
+                
                 />
                 
         </div>

@@ -49,7 +49,7 @@ export default class Dispatch extends Component {
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
           />
           </div>
-     <div style={{ width:'100%', minHeight:"100%", padding:"2.5vmin",
+     <div style={{ width:'100%', minHeight:"100px", padding:"28px",
       }}>
 
         {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
@@ -63,7 +63,8 @@ export default class Dispatch extends Component {
 {state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
         <ViewPic 
         
-          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          type="popup" options={{cardType:"popupLarge"}} app={app} containerStyle={{
+            background:styles.colors.color2+"88",}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
         
         />}
