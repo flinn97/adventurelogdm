@@ -4,6 +4,7 @@ import LoreLogComponent from './pages/LogComponents/loreLogComponent';
 import ImageLogComponent from './pages/LogComponents/imageLogComponent';
 import MessageLogComponent from './pages/LogComponents/messageLogComponent';
 import RollLogComponent from './pages/LogComponents/rollLogComponent';
+import InitiativeLogComponent from './pages/LogComponents/initLogComponent';
 
 
 
@@ -21,6 +22,7 @@ export default class PostMapItem extends Component {
       'lore': LoreLogComponent,
       'message': MessageLogComponent,
       'diceroll': RollLogComponent,
+      'encounter': InitiativeLogComponent,
       // ... add other mappings ...
     };
   }

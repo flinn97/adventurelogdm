@@ -23,7 +23,7 @@ export default class ConnectToCampaignButton extends Component {
       <div onClick={()=>{
         dispatch({popupSwitch:"connectPlayer", object:obj, operation:"cleanPrepare", operate:"update"})
       }}>
-        connect To Adventure
+        Connect To An Adventure
       </div>
 
     )

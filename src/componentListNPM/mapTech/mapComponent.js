@@ -29,7 +29,8 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor"];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree"];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "logInitiative",
+    "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree"];
 
     return <div style={this.props.iSectionStyle? //if
     this.props.iSectionStyle: //then

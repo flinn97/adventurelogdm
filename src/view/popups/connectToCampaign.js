@@ -99,16 +99,16 @@ class MainContent extends Component{
         display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
         paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
     <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
-    Enter Campaign Code
+    
     <ParentFormComponent app={app} name="campaignId"
-             
+              placeholder={"Enter Campaign Code"}
               inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
               textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
               
      </div>
-     <RunButton app = {app} text="connect" callBack={(obj)=>{dispatch({popupSwitch:"", currentComponent:undefined})}}/>
+     <RunButton app={app} text="Enroll" callBack={(obj)=>{dispatch({popupSwitch:"", currentComponent:undefined})}}/>
     </div>
     )
   }

@@ -105,7 +105,8 @@ class MainContent extends Component{
         let obj = {name:"dragon", type:"monster", role:"player"};
         state.opps.cleanJsonPrepareRun({addmonster:obj});
       }}>+ Create New Character</div>
-      <MapComponent app={app} name={"monster"} cells={["name", "role", "campaignId", {custom:ConnectToCampaignSwitch, props:{app:app}}, "delete"]}/>
+      <MapComponent app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
+      cells={["name", "role", "campaignId", {custom:ConnectToCampaignSwitch, props:{app:app}}, "delete"]}/>
       </div>
     </div>
     )

@@ -22,11 +22,11 @@ export default class AdventureLog extends Component {
     let id = ToolService.getIdFromURL(false);
     if(ToolService.checkURLforString("connecttoadventure")){
       var stateObj = { adventure: id };
-      window.history.pushState(stateObj, "Adventure Log", "/adventurelog/"+id);
+      window.history.pushState(stateObj, "Adventure Log", "/log/"+id);
     }
     dispatch({switchCase:[
       {path:"/", comp:PlayerHome, name: "Home"},
-      {path: "/adventurelog", comp:AdventureLog, name: "Adventure Log", _id:id },
+      {path: "/log", comp:AdventureLog, name: "Adventure Log", _id:id },
       ///Added Notes
       {path: "/notes", comp:Note, name: "Notes", _id:id },
       ///Added Marketplace
@@ -52,7 +52,7 @@ export default class AdventureLog extends Component {
    
 
     return (
-      <div style={{height:"100%", marginBottom:"14vmin", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
+      <div style={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
       {this.state.gotCampaign&&(<AdventureLogPage app= {app} />)} 
       <div 
           style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",

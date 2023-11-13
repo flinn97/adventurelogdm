@@ -18,10 +18,13 @@ export default class ConnectToCampaignLink extends Component {
     let dispatch= app.dispatch;
     let obj = this.props.obj
 
+    let styles =state.styles;
 
     return (
-      <Link to={"/connecttoadventure/" + obj.getJson().campaignId}>
-        link
+      <Link
+      style={{...styles.buttons.buttonClear, width:"300px"}}
+      to={"/connecttoadventure/" + obj.getJson().campaignId}>
+        Adventure Log
       </Link>
 
     )
