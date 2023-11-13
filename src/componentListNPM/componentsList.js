@@ -287,6 +287,7 @@ export default class Opps {
         this.componentsList[type] = list;
        
     }
+    
     sortSelectedList(type, filterKey, reverse ){
         if(!filterKey){
             return

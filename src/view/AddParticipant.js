@@ -268,7 +268,7 @@ transitionDuration:"9000ms"
                   currentComponent: undefined,
                 });
               }}
-               // Pass colors as a prop
+               
             />
               
           </div>

@@ -30,7 +30,7 @@ class PostLogButton extends Component {
 
         return (
             <div 
-            style={{display: "flex", flexDirection: "row", justifySelf: "flex-end", width: "fit-content"}}>
+            style={{display: "flex", flexDirection: "row", justifySelf: "flex-end", width: "fit-content", }}>
                  {this.state.showSaved && (
                   <div className="saved-animation" style={{color:styles.colors.color9,
                   position:"sticky",

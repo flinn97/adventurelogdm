@@ -103,8 +103,13 @@ class RichTextComponent extends Component {
 
     async handleChange(e) {
 
+            if (!this.ref.current){
+                return
+            }
+
         let value = e.key;
-        let innerText =DOMPurify.sanitize(this.ref.current.innerHTML);
+        let innerText = DOMPurify.sanitize(this.ref.current.innerHTML);
+        
         
 
         if(value===" " &&this.state.lastChar===" " &&this.state.backSlash){
@@ -169,6 +174,7 @@ class RichTextComponent extends Component {
 }
 
     async componentDidMount() {
+        //TAYLOR ERRORS i think this fix?
         
         let html;
         if(this.props.html!==undefined){
@@ -184,6 +190,7 @@ class RichTextComponent extends Component {
         document.addEventListener('keyup', this.handleChange);
         document.addEventListener('mousedown', this.handleClickOutside);
     }
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }

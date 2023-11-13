@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import auth from '../services/auth';
 import { ref, } from "firebase/storage";
 import { storage, } from '../firbase.config.js';
+import "../App.css";
 
 /**
  * upload component allows for uploads of pictures
@@ -87,19 +88,27 @@ export default class Upload extends Component {
         let styles = state.styles;
         let text = "text";
 
+        const divI = 
+                        <div style={{display:"flex", flexDirection:"row", }}>
+                        +<img src={this.props?.img} style={{width:"35px", }} />
+                        </div>;
+
+        let pText = this.props.text==="imageOnly"?divI:this.props.text;
+
         return (
 
             <div style={{ color:styles.colors.colorWhite+"99", 
-            borderRadius:"22px", fontWeight:"550",  }}>
-                
+            borderRadius:"22px", fontWeight:"550", width:"fit-content"  }}>
+
+                {this.props.text!=="imageOnly" &&
                 <label  for="file-upload" style={{...styles.buttons.buttonAdd,
                     display: "inline-block", height:"fit-content",
                     maxWidth: "fit-content", cursor:"pointer",
                      marginRight:"1rem",  position: "relative",
                      fontSize:styles.fonts.fontSmall
                 }}>
-{this.props.text ? this.props.text : "* Choose a banner image"}
-                    <input accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
+{(pText) ? pText : "* Choose a banner image"}
+                    <input id="file-upload" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
                         style={{ 
                             position: 'absolute', // Set position to absolute to make it fill the entire label
                             top: 0, 
@@ -114,7 +123,32 @@ export default class Upload extends Component {
                         name="file" 
                         onChange={this.changeHandler}/>
                     
-                </label>
+                </label>}
+
+                {this.props.text==="imageOnly" &&
+                <label  for="file-upload" style={{
+                    display: "inline-block", height:"35px",
+                    maxWidth: "fit-content", cursor:"pointer",
+                     position: "relative",
+                     fontSize:styles.fonts.fontSmall
+                }}>
+{(pText) ? pText : "* Choose a banner image"}
+                    <input id="file-upload" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
+                        style={{ 
+                            position: 'absolute', // Set position to absolute to make it fill the entire label
+                            top: 0, 
+                            left: 0, cursor:"pointer",
+                            width: '100%', 
+                            height: '100%',
+                            opacity: 0, 
+                        }} 
+                        size="6" 
+                        text={text}
+                        type="file" 
+                        name="file" 
+                        onChange={this.changeHandler}/>
+                    
+                </label>}
                 
 
                 {/* <div onClick={}

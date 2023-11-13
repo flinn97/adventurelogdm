@@ -5,6 +5,7 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import Upload from './upload';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
+import toolService from '../services/toolService';
 
 
 
@@ -39,16 +40,9 @@ async componentDidMount(){
 }
 
 function getCampaignId() {
-  const path = window.location.pathname;
-  const parts = path.split('/');
-  let id = parts.pop();
-  let loreId = id;
-
-  if (id.includes('-')) {
-    const splitIds = id.split('-');
-    id = splitIds[0];
-    loreId = splitIds[1];
-  }
+  
+  let loreId = toolService.getIdFromURL(true, 1);
+  let id = toolService.getIdFromURL(true);
 
   return { id, loreId };
 }

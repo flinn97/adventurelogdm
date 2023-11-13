@@ -6,7 +6,7 @@ export default class GalleryViewer extends Component {
     super(props);
     this.getId = this.getId.bind(this);  
     this.state = {
-      imagesToShow: 7,
+      imagesToShow: 16,
     }
   }
  

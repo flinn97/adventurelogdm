@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import "../App.css"
 import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
@@ -23,6 +23,9 @@ export default class CampaignEditor extends Component {
   constructor(props) {
     
     super(props);
+    this.encRef = React.createRef();
+    this.loreRef = React.createRef();
+    this.galRef = React.createRef();
     this.state = {
       obj: undefined,
       pic: undefined,
@@ -48,6 +51,7 @@ async componentDidMount(){
     let lore = state.componentList.getComponent("lore", loreId, "_id");
     await dispatch({currentLore:lore});
   }
+
   let component = this.props.app.state.componentList.getComponent("campaign", id);
   this.setState({obj: component,  start:true});
   dispatch({currentCampaign: component})
@@ -60,6 +64,11 @@ async componentDidMount(){
   // }));
 }
 
+scrollTo = (ref, behavior) => {
+  if (ref.current) {
+    ref.current.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
+  }
+}
 
   render() {
     let app = this.props.app;
@@ -212,6 +221,35 @@ async componentDidMount(){
                 
         </div>
 
+
+
+        <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
+
+                <div onClick={() => this.scrollTo(this.loreRef, "smooth")} 
+                style={{...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
+                  cursor:"pointer", padding:"4px", borderRadius:"12px",
+                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
+                    Lore
+                  </div>
+
+                  <div onClick={() => this.scrollTo(this.encRef, "smooth")} 
+                style={{ ...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
+                  cursor:"pointer", padding:"4px",borderRadius:"12px",
+                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
+                    Encounters
+                  </div>
+
+                  <div onClick={() => this.scrollTo(this.galRef, "smooth")} 
+                  style={{...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
+                  cursor:"pointer", padding:"4px",borderRadius:"12px",
+                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
+                    Gallery
+                  </div>
+
+                  </div>
+
+
+
         <hr></hr>
         {state.currentLore===undefined &&
         <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"22px"}}> {this.state.obj.getJson().title} Text:  
@@ -228,7 +266,7 @@ async componentDidMount(){
                       flexDirection:"column", justifyItems:"space-between"}}/>
                       </div>}
 
-
+                   
         {state.currentLore!==undefined ? (<div style={{width:"100%", height:"100%"}}>
         <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
         </div>):(
@@ -238,7 +276,7 @@ async componentDidMount(){
                         
                              <Worldbuilder app={app} type="card"/>
                 </div>
-                
+                <div ref={this.loreRef}/> 
                 <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                 />
         <hr></hr>
@@ -260,6 +298,7 @@ async componentDidMount(){
 
                              </div>
         </div>
+        <div ref={this.encRef}/>
                              <div style={{}}>
             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
@@ -269,7 +308,7 @@ async componentDidMount(){
 
           <hr></hr>
           <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
-                        
+          <div ref={this.galRef}/> 
                         <div 
                         style={{ display:"flex", cursor:"pointer", background:"", border:"", cursor:"", color:styles.colors.color4, flexDirection:"column"}}>
                              Gallery
