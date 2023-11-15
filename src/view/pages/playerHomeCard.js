@@ -7,29 +7,14 @@ import MarketCard from './marketCard';
 import logo from '../../pics/logo.png'
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import ConnectToCampaignButton from '../connectToCampaignbutton';
-import ConnectToCampaignSwitch from '../connectToCampaignSwitch';
-/**
- * condensed version of the cards.
- * Works with themes.
- * props
- * theme
- * type
- * app
- * options
- * options can include cardType, cardContent, tabType, 
- */
+import PlayerCharacterMapItem from '../playerMapItem';
+
 export default class PlayerHomeCard extends Component {
   constructor(props) {
     super(props);
     
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
-
 
   render() {
     let app = {...this.props.app};
@@ -87,6 +72,9 @@ export default class PlayerHomeCard extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
+    this.state = {
+     
+      }
   }
   render(){
     let app = this.props.app;
@@ -97,17 +85,39 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"100%"}}>
-      <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif",
+    <div style={{height:"810px", }}>
+
+      
+      <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif", 
+      
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
-      <div style = {{marginTop:"200px", pointer:"cursor"}} onClick={()=>{
-        debugger
-        let obj = {name:"dragon", type:"monster", role:"player"};
-        state.opps.cleanJsonPrepareRun({addmonster:obj});
-      }}>+ Create New Character</div>
+
+            
+                    
+                  <div title=' You can connect them to an adventure later'
+                  style = {{...styles.buttons.buttonAdd, marginTop:"22px", pointer:"cursor"}} onClick={()=>{
+                    debugger
+                   
+                    let obj = {name:"", type:"monster", role:"player"};
+
+                    // state.opps.cleanJsonPrepareRun({addmonster:obj});
+                    dispatch({popupSwitch:"addCharacter", operate:"addmonster", 
+                    operation:"cleanJsonPrepare", object:obj, 
+                  })
+
+                  }}>+ Create New Character</div>
+                
+  <div style={{color:styles.colors.colorWhite+"99", marginTop:"45px"}}> 
+  Your Characters:
       <MapComponent app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
-      cells={["name", "role", "campaignId", {custom:ConnectToCampaignSwitch, props:{app:app}}, "delete"]}/>
+      cells={[{custom:PlayerCharacterMapItem, props:{app:app}}, "delete"]}
+      theme={"selectByImageSmall"}
+      
+      />
       </div>
+      </div>
+      
+
     </div>
     )
   }

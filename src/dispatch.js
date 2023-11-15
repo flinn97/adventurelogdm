@@ -19,6 +19,8 @@ import ViewPic from './view/popups/viewPic';
 import AdventureLogPage from './view/pages/adventureLogPage';
 import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
+import AddParticipant from './view/AddParticipant';
+import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 
 
 //model
@@ -42,15 +44,18 @@ export default class Dispatch extends Component {
       minWidth:"100%", userSelect:"none",
       overflow:"auto",
       }}>
-
-        {/* WITHIN */}
-<div style={{display:'flex', flexDirection:'row', }}>
-        <div style={{display:'flex', zIndex:2000, marginRight:"210px"}}>
+<div style={{display:'flex', zIndex:2000, marginRight:"210px"}}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
           />
           </div>
-     <div style={{ width:'100%', minHeight:"100px", padding:"28px",
+        {/* WITHIN */}
+<div style={{display:'flex', flexDirection:'row', marginLeft:"210px" }}>
+        
+     <div style={{ width:'100%', minHeight:"100px", padding:"28px", display: "flex",
+justifyContent: "center",
+alignItems: "center",
       }}>
+        
 
         {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
         <PopupDelete 
@@ -72,10 +77,20 @@ export default class Dispatch extends Component {
 {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
         <ConnectToCampaign 
         
-          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
         
         />}
+
+{state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type==="monster" &&
+
+          <AddPlayerCharacter
+        
+        type="popup" options={{cardType:"popupCreate"}} app={app}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+        
+        />
+        }
 
               {state.popupSwitch === "popupLore" 
               && (state.currentComponent?.getJson().type === "lore") 

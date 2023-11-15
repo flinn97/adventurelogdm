@@ -27,17 +27,10 @@ componentDidMount(){
    
 
     return (
-      <div style={{height:"100%", marginBottom:"14vmin", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
+      <div style={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
 
       <PlayerHomeHomeCard app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>
-      <div 
-          style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
-          alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px",
-        fontSize:styles.fonts.fontHeader4, marginTop:"3vmin", color:styles.colors.colorWhite}}>
-       
-        
-    </div>
-    
+      
       </div>
 
     )

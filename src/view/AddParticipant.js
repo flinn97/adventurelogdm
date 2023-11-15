@@ -10,6 +10,7 @@ import TokenImage from './tokenImage';
 import colorService from '../services/colorService';
 import ConditionService from '../services/conditionService';
 import idService from '../componentListNPM/idService';
+import randomTextService from '../services/randomTextService';
 
 
 export default class AddParticipant extends Component {
@@ -82,16 +83,6 @@ const divStyle = colors?.length
     }
     
 
-    function pickName() {
-      // Array of names
-      let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Undead Druid", "Anxious Warrior", "Barbalang", "Violinist Devil", "Hedgehog Demon", "Sir Dante Rabbitlord", "Duke Dean", "Clifford the Floofy Giant"];
-      let randomNumber = Math.floor(Math.random() * (names.length));
-      let chosenName = names[randomNumber];
-
-      return chosenName;
-
-    }
-
     function pickLink () {
       
       let links =["www.dndbeyond.com/monsters/16765-adult-blue-dragon", "www.dndbeyond.com/monsters/17093-pteranodon", "app.spawnrpg.com", "app.spawnrpg.com/statblocks",];
@@ -114,7 +105,7 @@ const divStyle = colors?.length
       return chosenNote;
     }
 
-let creature = pickName();
+let creature = randomTextService.pickName();
 let linkExample = pickLink();
 let noteExample = pickNote();
 
