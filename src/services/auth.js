@@ -326,6 +326,14 @@ class Auth {
                 const delay = ms => new Promise(res => setTimeout(res, ms));
                 await delay(1000);
                 let component = key !== "del" ? { ...operate[i].getJson() } : operate[i];
+
+                for (const key in component){
+                    debugger
+                    if (component[key]===undefined){
+                        component[key]="";
+                    }
+                }
+
                 // let localData = await localStorage.getItem("rawData");
                 // if (localData) {
                 //     localData = JSON.parse(localData);
@@ -369,16 +377,14 @@ class Auth {
                         await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                         break;
                 }
-                // if(localData){
-                //     localData = JSON.stringify(localData);
+                
 
-                // }
-                // localStorage.setItem("rawData", localData)
 
             }
         }
         
         if (dispatch) {
+            
             dispatch({ dispatchComplete: true, data: obj })
             
         }

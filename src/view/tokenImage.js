@@ -64,7 +64,8 @@ export default class TokenImage extends Component {
       <div style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px", boxShadow:"6px 10px 16px -3px"+styles.colors.colorBlack+"55",
           borderRadius:"50%", marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center",
           marginRight:"30px", 
-          backgroundColor: colors[1] || styles.popupSmall.border, }}>
+          backgroundColor: colors[1] || styles.popupSmall.border, 
+          }}>
             
             <img src={background} draggable="false"  
                                 style={{width:width+"px", height:width+"px",  position:"absolute",
@@ -73,7 +74,9 @@ export default class TokenImage extends Component {
                                   mixBlendMode:"overlay"
                                   }}/>
                                   
-                                 <div style={{width:widthSm, height:widthSm, position:"absolute", mixBlendMode:"multiply",borderRadius:"50%",
+                                 <div style={{width:widthSm, height:widthSm, position:"absolute", 
+                                 mixBlendMode:"multiply",
+                                 borderRadius:"50%",
                 opacity:".75", opacity:"36%", 
                 backgroundColor: colors[2] || styles.popupSmall.border,}}>
         </div>

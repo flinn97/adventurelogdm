@@ -36,8 +36,8 @@ export default class EncounterManager extends Component {
 
 
     return (
-      <div>
-          <div style={{...styles.backgroundContent,
+      <div style={{width:"100%",}}>
+          <div style={{...styles.backgroundContent, width:"100%",
           backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')' }}>
               <div style={{ ...styles.popupSmall,
                 }}>

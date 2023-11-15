@@ -91,7 +91,7 @@ export default class PlayerCharacterMapItem extends Component {
     let allColors = obj.getJson().colors;
     let colors = obj.getJson().colors?Object.values(allColors):[styles.colors.color1, styles.colors.color2, styles.colors.color8];
        
-    
+    const width = 108;
     
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
           let name = obj?.getJson().name;
@@ -167,8 +167,8 @@ export default class PlayerCharacterMapItem extends Component {
 
     return (
      
-      <div style={{width: "100%", overflowX:"visible",
-      position: "relative", borderRadius:"22px",
+      <div style={{width: "100%", overflowX:"visible", marginTop:"1vh",
+      position: "relative", borderRadius:"22px", minWidth:"1300px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
       <div className='scroller2'
       style={{
@@ -202,27 +202,27 @@ export default class PlayerCharacterMapItem extends Component {
                          }}>
 
         {stat &&
-        (<div style={{justifyContent:"center", display:"flex", flexDirection:"column",alignContent:"center", alignItems:"center", }}>
+        (<div  title={stat} style={{justifyContent:"center", display:"flex", marginLeft:"11px", flexDirection:"column",alignContent:"center", alignItems:"center", }}>
         <a href={stat} target='_blank'>
-          <img src={bookCursor} style={{width:"50px", opacity:""}}/>
+          <img className='hover-img' src={bookCursor} style={{width:"50px", opacity:""}}/>
           
         </a><ParentFormComponent obj={this.props.obj} name="statBlockLink"
         prepareRun={true} maxLength={30}
 
-          inputStyle={{width:"150px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
+          inputStyle={{width:"151px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
           color:styles.colors.colorBlack, height:"1.7rem", rows:"1",  fontSize: fontSize[2], cursor:"text",
           borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
           }}
           
         /></div>)||
-        ( <div style={{justifyContent:"center", display:"flex", flexDirection:"column",alignContent:"center", alignItems:"center", }}>
-        <div >
+        ( <div title={stat} style={{justifyContent:"center", display:"flex",  marginLeft:"11px",flexDirection:"column",alignContent:"center", alignItems:"center", }}>
+        <div  className='hover-btn'>
           <img src={bookCursor} style={{width:"50px", opacity:"0%"}}/>
           
         </div><ParentFormComponent obj={this.props.obj} name="statBlockLink"
         prepareRun={true} maxLength={30}
           placeholder={"Link to Sheet"}
-          inputStyle={{width:"150px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
+          inputStyle={{width:"151px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
           color:styles.colors.colorBlack, height:"1.7rem", rows:"1",  fontSize: fontSize[2],
           borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",
           }}
@@ -231,12 +231,50 @@ export default class PlayerCharacterMapItem extends Component {
         }
 
 
-  <div>
-  <TokenImage pic={obj?.getJson().picURL} width={108} app={app} colors={colors}/>
+  <div className='hover-container' style={{marginLeft:"-11px"}}>
+    {obj?.getJson().isToken===true &&
+              (<TokenImage pic={obj?.getJson().picURL} width={width-8} app={app} colors={colors}/>)
+              ||
+              
+              (<div>
+                <img src={obj?.getJson().picURL} style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px",
+              marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center", objectFit:"contain",
+              marginRight:"30px", }}/>
+              
+              
+              <img src={obj?.getJson().picURL} style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px",
+              marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center", position:"absolute", top:5, objectFit:"contain",
+              mixBlendMode:"multiply", opacity:"44%", zIndex:"-10",
+              filter:"contrast(5%) brightness(0%) blur(2px)",
+              marginRight:"30px", }}/>
+              </div> )
+    }
+                            <div className='hover-div' style={{ position: "absolute", 
+                            display: "flex", 
+                            flexDirection: "row",
+                            justifyContent: "center", 
+                            alignItems: "center", 
+                            padding: "8px", 
+                            borderRadius: "11px",
+                            width: "190px", 
+                            background: styles.colors.colorBlack, 
+                            left: 0, 
+                            top: -5 
+                            }}>
+                              <div style={{fontSize:styles.fonts.fontSmallest,  color:styles.colors.colorWhite, width:"fit-content"}}>Show Token Border?</div>
+                                <ParentFormComponent obj={this.props.obj} name="isToken"
+                                  prepareRun={true} wrapperStyle={{ width:"fit-content", height:"fit-content",alignContent:"center", justifyContent:"center", alignContent:"center", alignItems:"center", alignText:"center",}}
+                                    type={"checkbox"} 
+                                    inputStyle={{padding:"2px 4px",color:styles.colors.colorWhite,
+                                    color:styles.colors.colorBlack,  fontSize: fontSize[0],
+                                    }}
+                                    
+                                  /></div> 
 </div>
 
 
-                          <div        title="Name"         
+
+                          <div    className='hover-btn'     title="Name"         
                           style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"88 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack,  marginRight:".5vw", border: borderGradient,
@@ -255,7 +293,7 @@ export default class PlayerCharacterMapItem extends Component {
                            />
                           </div>
 
-                          <div title="Initiative Bonus"
+                          <div title="Initiative Bonus" className='hover-btn'
                             style={{
                               display: "flex",
                               background:styles.colors.colorBlack,
@@ -279,7 +317,7 @@ export default class PlayerCharacterMapItem extends Component {
 
                           </div>
                           
-                          <div title="AC"
+                          <div title="AC" className='hover-btn'
                             style={{
                               display: "flex",
                               background:styles.colors.colorBlack,
@@ -305,7 +343,7 @@ export default class PlayerCharacterMapItem extends Component {
 
                           </div>
 
-                          <div title="Max HP"
+                          <div title="Max HP" className='hover-btn'
                             style={{
                               display: "flex",
                               background:styles.colors.colorBlack,
@@ -319,7 +357,7 @@ export default class PlayerCharacterMapItem extends Component {
                           >
                             <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Max HP</div>
 
-                            <ParentFormComponent obj={this.props.obj} name="hp"
+                            <ParentFormComponent obj={this.props.obj} name="hp" 
                           prepareRun={true} maxLength={4}
                              inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
                              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal, cursor:"text",
@@ -370,8 +408,8 @@ export default class PlayerCharacterMapItem extends Component {
   })}
                           </div>   }       */}
         </div>
-        <div style={{width:"100%", display:"flex", flexDirection:"row", marginBottom:"11px", paddingRight:"11px",
-       justifyContent:"flex-end"}}>
+        <div style={{width:"100%", display:"flex", flexDirection:"row", marginBottom:"11px",
+       justifyContent:"flex-start"}}>
         <ConnectToCampaignSwitch app={app} {...this.props} />
         </div>                       
 

@@ -203,7 +203,7 @@ export default class Encounter extends Component {
 // Taylor
 
     return (
-      <div style={{width:"100%", height:"100%", marginBottom:"45vh"}}>
+      <div style={{width:"100%", height:"100%", }}>
             <div style={{color: styles.colors.colorWhite,
               ...styles.backgroundContent,
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',

@@ -21,12 +21,17 @@ export default class ConnectToCampaignButton extends Component {
 
 
     return (
-      <div 
-      style={{...styles.buttons.buttonAdd,padding:"2px 3px",fontSize:styles.fonts.fontSmall}}
+      <div className='hover-btn'
+      style={{ ...styles.buttons.buttonAdd, padding:"4px 8px",  width:"200px",
+      
+      fontSize:styles.fonts.fontSmall, textAlign:"center",
+      
+      borderRadius:"11px", border:"2px solid "+styles.colors.color3}}
       onClick={()=>{
         dispatch({popupSwitch:"connectPlayer", object:obj, operation:"cleanPrepare", operate:"update"})
       }}>
-        {"Add "+obj.getJson().name+" to an Adventure"}
+        {/* {"Connect "+obj.getJson().name} */}
+        Connect
       </div>
 
     )

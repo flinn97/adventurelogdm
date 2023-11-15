@@ -8,6 +8,7 @@ import logo from '../../pics/logo.png'
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import ConnectToCampaignButton from '../connectToCampaignbutton';
 import PlayerCharacterMapItem from '../playerMapItem';
+import ConnectToCampaignSwitch from '../connectToCampaignSwitch';
 
 export default class PlayerHomeCard extends Component {
   constructor(props) {
@@ -85,7 +86,7 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"810px", }}>
+    <div style={{height:"810px", width:"fit-content" }}>
 
       
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif", 
@@ -98,7 +99,7 @@ class MainContent extends Component{
                   style = {{...styles.buttons.buttonAdd, marginTop:"22px", pointer:"cursor"}} onClick={()=>{
                     debugger
                    
-                    let obj = {name:"", type:"monster", role:"player"};
+                    let obj = {name:"", type:"monster", role:"player", isToken:true};
 
                     // state.opps.cleanJsonPrepareRun({addmonster:obj});
                     dispatch({popupSwitch:"addCharacter", operate:"addmonster", 
@@ -107,7 +108,7 @@ class MainContent extends Component{
 
                   }}>+ Create New Character</div>
                 
-  <div style={{color:styles.colors.colorWhite+"99", marginTop:"45px"}}> 
+  <div className='scroller2'  style={{color:styles.colors.colorWhite+"99", marginTop:"45px", overflowX:"scroll"}}> 
   Your Characters:
       <MapComponent app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
       cells={[{custom:PlayerCharacterMapItem, props:{app:app}}, "delete"]}

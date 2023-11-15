@@ -40,7 +40,7 @@ export default class Dispatch extends Component {
 <BrowserRouter>
     {/*      === */}
   {state.user===undefined?(<Login app={app}/>):(
-    <div className='scroller2' style={{
+    <div className='scroller2' style={{ width:"100%",
       minWidth:"100%", userSelect:"none",
       overflow:"auto",
       }}>
@@ -49,7 +49,7 @@ export default class Dispatch extends Component {
           />
           </div>
         {/* WITHIN */}
-<div style={{display:'flex', flexDirection:'row', marginLeft:"210px" }}>
+<div style={{display:'flex', flexDirection:'row',  width:"100%", paddingLeft:"210px", }}>
         
      <div style={{ width:'100%', minHeight:"100px", padding:"28px", display: "flex",
 justifyContent: "center",
