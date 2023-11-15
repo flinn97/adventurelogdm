@@ -18,15 +18,15 @@ class PostLogButton extends Component {
         let styles =state.styles;
        
 
-        let altText = this.props.altText? "this lore's "+this.props.altText:"";
-        let titleMessage = "Send "+altText+" to the Adventure Log. Everyone in your campaign will be able to see this.";
+        
         
         let obj = this.props?.obj;
-        let type = obj.getJson()?.type;
-        
-        let isVisible = (type==="lore" && obj.getJson().desc)||(type==="image")?"true":"false";
+        let type = obj?obj.getJson()?.type:"message";
 
+        let altText = this.props.altText? "this "+type+"'s "+this.props.altText:"";
+        let titleMessage = "Send "+altText+" to the Adventure Log. Everyone in your campaign will be able to see this.";
         
+        let isVisible = (type==="lore" && obj.getJson().desc)||(type==="image")||(type==="encounter")?"true":"false";
 
         return (
             <div 
@@ -44,7 +44,12 @@ class PostLogButton extends Component {
                                 onClick={() => {
                                     
                                     if (isVisible==="true"){
-                                        sendToChatService.dispatchLog(obj, app)
+
+                                        type!=="encounter"?sendToChatService.dispatchLog(obj, app)
+                                        :
+                                        //ENCOUNTER MUST HAVE CAMPAIGN ID
+                                        sendToChatService.dispatchLog(obj, app, this.props?.campaignId)
+
                                     }else{console.log("Nothing to Send")}
 
                                     if (this.state.showSaved === false)
@@ -53,12 +58,13 @@ class PostLogButton extends Component {
                                         this.setState({showSaved:true});
                                         setTimeout(() => this.setState({ showSaved: false }), 2000);
                                     }
+                                    
                                 }}
             >
                 <div style={{...styles.buttons.buttonClear, transition:"all",
                     cursor:isVisible==="true"?"pointer":"auto",
-
-                color:styles.colors.colorWhite, padding:"2px", fontSize:styles.fonts.fontSmall, borderRadius:"11px"
+                                width:"fit-content",
+                color:styles.colors.colorWhite, padding:"2px 6px", fontSize:styles.fonts.fontSmall, borderRadius:"11px"
             }}
                     
                 >{this.props.text? this.props.text: "Log"}</div>

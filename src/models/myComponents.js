@@ -369,6 +369,7 @@ class Monster extends componentBase{
         parentId: "",
         otherRounds:0,
         role:"monster",
+        campaignId:"",
 
     }
 

@@ -46,11 +46,8 @@ export default class AdventureLogPage extends Component {
     this.setState({ textI: "" })
   }
   
-  
-
-  
-  handleMessageChange = (e) => {
-    this.setState({ textI: e.target.value });
+  handleMessageChange = async (e) => {
+    await this.setState({ textI: e.target.value });
   }
 
   timeOutMessage() {
@@ -107,6 +104,7 @@ export default class AdventureLogPage extends Component {
       if (this.state.textI !== "") {
         this.sendText();
         await this.scrollToBottom();
+       
       }
     }
   };
@@ -152,8 +150,13 @@ export default class AdventureLogPage extends Component {
       return dateB - dateA; // Sorts in D-scending order of date
     });
 
+    let sLL = sortedLogItems.length;
+    let newAmount = sortedLogItems.length - 100;
+    
+
     let cleanedItems = sortedLogItems
-    .slice(0, this.state.imagesToShow);
+    .slice(newAmount, sLL);
+
     
     return (
       <div style={{
@@ -181,35 +184,16 @@ export default class AdventureLogPage extends Component {
                     }}>
                   {cleanedItems.length > 0 && cleanedItems.map((item, index) => (
                     
-                    <div key={index} style={{ 
+                    <div key={index} title={item.getJson().sender ==="GM"?"The GM sent this":""} style={{ 
                       marginBottom:"24px", opacity: getOpacity(index, cleanedItems.length),
                     }}>
-
-                      {(item.getJson().sender && item.getJson().sender ==="GM") &&
-                      <div style={{opacity:"88%",marginLeft:"173px",  }}>
-                            <div title="The GM sent this"
-                            style={{width:"fit-content", display:"flex",
-                              color:styles.colors.color3+"99", fontSize:styles.fonts.fontSmallest, 
-                              marginBottom:"-9px",
-                            }}>
-                              
-                            </div>
-                             <div title="The GM sent this"
-                             style={{width:"fit-content", display:"flex",
-                               color:styles.colors.color3+"99", fontSize:styles.fonts.fontSmallest, 
-                                      marginBottom:"-9px",
-                             }}>
-                              
-                               
-                             </div></div>
-                          }
-
+                     
                        <PostMapItem app={app} obj={item} index={item.getJson().date} colors={this.state.colors} />
-
-                                                    
-                        <div ref={this.messagesEndRef} style={{height:"2px", width:"2px"}}></div>
+                           
+                        
                     </div>
                   ))}
+                  <div ref={this.messagesEndRef} style={{height:"2px", width:"2px"}}></div>
                 </div>
 
              {/* PUT THIS IN A seperate .js ^^^^^^^^^^
@@ -225,7 +209,7 @@ export default class AdventureLogPage extends Component {
         zIndex:"-255", filter:"blur(55px)", mixBlendMode:"multiply", opacity:"44%",
                     width:"915px", height:"944px", marginTop:"-904px",}}></div>
 
-          {state.user.getJson().role ==="GM" && 
+          {userRole ==="GM" && 
           (
 
           <div 
@@ -266,10 +250,11 @@ export default class AdventureLogPage extends Component {
                             }}
                             prepareOnChange={
                               {
-                              name:"post", json:{ type:"post", sender:state.user.getJson().role,
+                              name:"post", json:{ type:"post", sender:userRole,
                               senderId:state.user.getJson()._id, postType: "image", colors:this.state?.colors,
                                 campaignId: toolService.getIdFromURL(true),}
                             }
+                            
                           }
 
                             obj={app.state.currentComponent}
@@ -306,6 +291,7 @@ export default class AdventureLogPage extends Component {
                                   {
                             this.sendText()}
                             this.scrollToBottom("smooth");
+                          
                           }}
 
               // handleKeyPress ={ (e) => {

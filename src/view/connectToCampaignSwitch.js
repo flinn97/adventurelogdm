@@ -23,7 +23,11 @@ export default class ConnectToCampaignSwitch extends Component {
     return (
       <div>
         
-        {obj.getJson().campaignId!=="" && obj.getJson().campaignId!==undefined?(<ConnectToCampaignLink app={app} obj = {obj}/>):(<ConnectToCampaignButton app={app} obj={obj}/>)}
+        {obj.getJson().campaignId!=="" && 
+        obj.getJson().campaignId!==undefined?
+        (<ConnectToCampaignLink app={app} obj = {obj}/>)
+        :
+        (<ConnectToCampaignButton app={app} obj={obj}/>)}
       </div>
 
     )

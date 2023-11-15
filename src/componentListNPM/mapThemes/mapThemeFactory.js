@@ -5,6 +5,7 @@ import DefaultTasksMap from "./defaultTasks";
 import selectByImage from "./selectByImage";
 import selectByImageSmall from "./selectByImageSmall";
 import expandingTree from "./expandingTree";
+import logInitiative from "./logInitiative";
 
 class MapThemeFactory {
     operationsFactory; 
@@ -17,6 +18,7 @@ class MapThemeFactory {
        selectByImage: selectByImage.getMapTheme(),
        selectByImageSmall: selectByImageSmall.getMapTheme(),
        expandingTree: expandingTree.getMapTheme(),
+       logInitiative: logInitiative.getMapTheme(),
     }
 
     registerComponents(register){

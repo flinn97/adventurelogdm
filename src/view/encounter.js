@@ -14,6 +14,7 @@ import pause from '../pics/pauseInit.png';
 import back from '../pics/backArrow.webp'
 import forward from '../pics/forward.png'
 import toolService from '../services/toolService';
+import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -185,7 +186,7 @@ export default class Encounter extends Component {
     let componentList = state.componentList;
     let styles =state.styles;
     let showMonsterMap = this.state.showMonsterMap;
-    const obj = this.state.obj;
+    let obj = this.state.obj;
     console.log(this.state.obj?.getJson().campaignId);
     let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
 
@@ -193,6 +194,13 @@ export default class Encounter extends Component {
     const participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
     const twoParty = participantList.length;
 
+    
+//THIS WHOLE THING NEEDS TO BE REWORKED.
+//DELETING or ADDING creatures screws EVERYTHING UP
+//  I SWEAR THIS WAS WORKING LAST TIME WE TESTED THIS
+// I AM EXHAUSTED FROM ALL THE BUGS
+////// FIRSTLY, NOTHING seems to be saving. If you refresh or do ANYTHING it seems to break, WHY WHY WHY WHYYY
+// Taylor
 
     return (
       <div style={{width:"100%", height:"100%", marginBottom:"45vh"}}>
@@ -327,7 +335,9 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                    <img src={sortImg} 
                   style={{
                     width:"25px", 
-                    }}/>  
+                    }}/>
+
+               
                 </div>
                  )
                  ||
@@ -393,6 +403,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                             });
                           });
                         }}>
+                         
                     <div 
                     
                     style={{ 
@@ -401,11 +412,14 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                       {obj?.getJson().isRunning?"Stop":"Run"}
                      
                     </div>
+                    
                     <img 
                       src={playPause} style={{width:"20px", height:"20px", 
                       transform:obj?.getJson().isRunning?"":"rotate(180deg)"}} />
+                       
                     </div>)}
 
+                    
 
 
                 </div>
@@ -415,12 +429,25 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                   <div>
                
                     {/* <img  src = {state.componentList.getComponent("map", obj.getJson().loreId, "loreId")?.getJson()?.picURL} style={{width:"500px", height:"500px"}}/> */}
+                    
                   </div>
+
+
                )}</div>
+
                 
+
                 {showMonsterMap &&
                 <div style={{marginTop:"28px", width:"100%", marginBottom:"24vh", }}>
-                  
+
+                  {(twoParty >= 2) &&
+                  <div style={{display: "flex",flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end", width:"220px"}}>
+                      <PostLogButton app={app} obj={obj} altText={"initiative"} text={"Log Initiative"}
+                              //ENCOUNTER MUST HAVE CAMPAIGN ID 
+                              campaignId={this.state.obj?.getJson().campaignId}
+                      />
+                    </div>         }
+                          
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
              app={app} name={"monster"}

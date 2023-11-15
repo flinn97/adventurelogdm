@@ -3,6 +3,12 @@ import "../../App.css"
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
 import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
+import randomTextService from '../../services/randomTextService';
+import TokenImage from '../tokenImage';
+import Upload from '../upload';
+import colorService from '../../services/colorService';
+import idService from '../../componentListNPM/idService';
+import conditionService from '../../services/conditionService';
 
 
 
@@ -16,7 +22,7 @@ import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class ConnectToCampaign extends Component {
+export default class AddPlayerCharacter extends Component {
   constructor(props) {
     super(props);
     
@@ -85,6 +91,9 @@ export default class ConnectToCampaign extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
+    this.state = {
+     colors:[]
+    }
   }
   render(){
     let app = this.props.app;
@@ -92,23 +101,144 @@ class MainContent extends Component{
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
+    let obj = state.currentComponent;
     
+    let { colors } = this.state;
+    let placeholderName = randomTextService.pickCharacterName();
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
-        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
-    <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
-    
-    <ParentFormComponent app={app} name="campaignId"
-              placeholder={"Enter Campaign Code"}
-              inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
-              borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
-              border:"solid 1px "+styles.colors.colorWhite+"22",
-              textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
+        display:"flex", width:"100%", flexDirection:"column", justifyContent:"center",
+        minHeight:"fit-content", maxHeight:"825px", minWidth:"855px", maxWidth:"100%",
+        alignContent:"center", alignItems:"center", height:"100%",
+        paddingTop:"31px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, color:styles.colors.color3}}>
+New Character:
+
+
+           {/* FORMS */}
+           <div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
+
+    <TokenImage pic={this.state.pic} app={app} width={110} colors={colors}/>
+
+              <Upload
+            text={"Choose an image"}
+            update={true}
+            obj={app.state.currentComponent}
+            skipUpdate={true}
+            colors={this.state.colors}
+            changePic={async (pic) => {
+              await this.setState({ pic: pic });
+              
+              let colors = colorService.updateColors(pic, (palette) => {
+                this.setState({ colors: palette }, () => {
+                                  
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    this.setState({colors: list})
+                    console.log(this.state.colors)
+
+                });
+                
+              });
+            }}
+            
+            updateMap={async (obj) => {
+              const pic = obj?.getJson().pic;
+              await this.setState({ completedPic: pic });
+              await colorService.updateColors(pic, palette => {
+                this.setState({ colors: palette }, () => {
+
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    this.setState({colors: list})
+                    console.log(this.state.colors)
+
+                });
+              });
+            }}
+            app={app}
+          />
+       
+</div>
+    <div style={{width:"100%", justifyContent:'center', alignContent:"center",justifyItems:"center", marginTop:"25px", marginBottom:"25px"}}> 
+
+   
+  
+    <ParentFormComponent app={app} name="name" obj={obj}
+              placeholder={"ie: "+placeholderName}
+              label={"Name Your Character"}
+              labelStyle={{color:styles.colors.color9,}}
+              inputStyle={{ width:"100%", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
+              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>
+
+              <div style={{display:"flex",flexDirection:"row", width:"100%", 
+              justifyContent:"space-around", marginTop:"25px", marginBottom:"25px", }}>
+
+                  <ParentFormComponent app={app}  obj={obj}
+                  name="initiative" label="Initiative Bonus" wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+                          theme={"adventureLog"} rows={1}
+                          maxLength={2}
+                          labelStyle={{color:styles.colors.color9, marginBottom:"8px",}}
+                          inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+                          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: styles.fonts.fontNormal,
+                          }}
+                          placeholder={"ie: 3"}
+                          />
+
+                  <ParentFormComponent app={app} name="ac" label="Armor Class" obj={obj}
+                  wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+                          theme={"adventureLog"} rows={1}
+                          maxLength={2}
+                          labelStyle={{color:styles.colors.color9, marginBottom:"8px",}}
+                          inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+                          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: styles.fonts.fontNormal,
+                          }}
+                          placeholder={"ie: 13"}
+                          />
+
+                  <ParentFormComponent app={app} name="hp" label="Max HP" obj={obj}
+                        wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex", flexDirection:"column"}}
+                                theme={"adventureLog"} rows={1}
+                                maxLength={5}
+                                labelStyle={{color:styles.colors.color9, marginBottom:"8px",}}
+                                inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+                                borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: styles.fonts.fontNormal,
+                                }}
+                                placeholder={"ie: 44"}
+                                /> 
+              </div>
+
+              <ParentFormComponent app={app} name="statBlockLink" obj={obj}
+              placeholder={"optional"}
+              label={"Link to Character Sheet"}
+              labelStyle={{color:styles.colors.color9,}}
+              inputStyle={{ width:"100%", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
+              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>
               
      </div>
-     <RunButton app={app} text="Enroll" callBack={(obj)=>{dispatch({popupSwitch:"", currentComponent:undefined})}}/>
+      <div style={{ display:"flex", flexDirection: "column", width:"100%", alignItems:"center", marginTop:"7%", alignSelf:"flex-end"}}>
+          <RunButton className="hover-btn" app={app} text="Create" 
+          callBack={ async (arr) => {
+                      
+            let conditions = conditionService.getConditions();
+            let id = await arr[0].getJson()?._id;
+
+            for(let condition of conditions)
+            {
+              condition.monsterId = id;
+              condition.roundsActive = "0";
+              condition._id = arr[0].getJson()?._id+idService.createId()
+              await state.opps.jsonPrepare({addcondition: condition});
+            }
+            
+            await state.opps.run();
+            await dispatch({
+              popUpSwitchcase: "",
+              currentComponent: undefined,
+            });
+          }}/></div>
     </div>
     )
   }

@@ -6,14 +6,14 @@ class SendtoChatService {
     constructor() {
     }
 
-        dispatchLog = (obj, app, callBack) => {
+        dispatchLog = (obj, app, campaignId, callBack) => {
           
-          let campId = toolService.getIdFromURL(true,);
+          let campId = campaignId?campaignId:toolService.getIdFromURL(true,);
           console.log(campId);
 
           // Extract the JSON part of the obj
           const objJson = obj.getJson ? obj.getJson() : {};
-          const { _id, type, parentId, ...rest } = objJson;
+          const { currentIndex,currentTurn,isRunning, _id, type, parentId, ...rest } = objJson;
           const postType = type || "message";
           let userRole = app.state.user.getJson().role;
           let role
@@ -27,7 +27,7 @@ class SendtoChatService {
               ...rest,
               campaignId: campId, senderId:app.state.user.getJson()._id,
               type: "post", sender:role,
-              postType: postType,
+              postType: postType, itemId: obj.getJson()._id,
             };
           console.log(app.state.user.getJson()._id)
           app.state.opps.cleanJsonPrepareRun({ "addpost": payload });
