@@ -43,6 +43,7 @@ function getCampaignId() {
   
   let loreId = toolService.getIdFromURL(true, 1);
   let id = toolService.getIdFromURL(true);
+  
 
   return { id, loreId };
 }
@@ -63,7 +64,7 @@ if (this.props.app.state.popUpSwitchcase !== "updateEnc"){
         object: {
           creationDate: "E" + num + month + day,
           campaignId: campId,
-          loreId: loreId
+          loreId: loreId,
         }
       });}
 

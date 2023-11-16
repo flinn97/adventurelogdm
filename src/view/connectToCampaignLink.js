@@ -20,16 +20,17 @@ export default class ConnectToCampaignLink extends Component {
 
     let styles =state.styles;
 
-    return (
-      <Link
-      style={{...styles.buttons.buttonClear, width:"300px", padding:"5px 10px", 
-      textDecoration:"underline 1px "+styles.colors.color9+"55",
+    return (<div>
+      <Link className='hover-btn'
+      style={{ ...styles.buttons.buttonAdd, padding:"5px 10px",  width:"200px",
+      
+      fontSize:styles.fonts.fontNormal, textAlign:"center",
       color:styles.colors.color9+"d9",
       borderRadius:"11px", border:"2px solid "+styles.colors.color3}}
       to={"/connecttoadventure/" + obj.getJson().campaignId}>
         Play
       </Link>
-
+      </div>
     )
   }
 }
