@@ -42,7 +42,7 @@ export default class Dispatch extends Component {
   {state.user===undefined?(<Login app={app}/>):(
     <div className='scroller2' style={{ width:"100%",
       minWidth:"100%", userSelect:"none",
-      overflow:"auto",
+      overflow:"auto", display:"flex", flexDirection:"column",
       }}>
 <div style={{display:'flex', zIndex:2000, marginRight:"210px"}}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
@@ -53,7 +53,7 @@ export default class Dispatch extends Component {
         
      <div style={{ width:'100%', minHeight:"100px", padding:"28px", display: "flex",
 justifyContent: "center",
-alignItems: "center",
+
       }}>
         
 
@@ -65,32 +65,31 @@ alignItems: "center",
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
 
-{state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
-        <ViewPic 
-        
-          type="popup" options={{cardType:"popupLarge"}} app={app} containerStyle={{
-            background:styles.colors.color2+"88",}}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-        
-        />}
+    {state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
+            <ViewPic 
+            
+              type="popup" options={{cardType:"popupLarge"}} app={app} 
+              handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+            
+            />}
 
-{state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
-        <ConnectToCampaign 
-        
-          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-        
-        />}
+          {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
+                  <ConnectToCampaign 
+                  
+                    type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
+                    handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+                  
+                  />}
 
-{state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type==="monster" &&
+          {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type==="monster" &&
 
-          <AddPlayerCharacter
-        
-        type="popup" options={{cardType:"popupCreate"}} app={app}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-        
-        />
-        }
+                    <AddPlayerCharacter
+                  
+                  type="popup" options={{cardType:"popupCreate"}} app={app}
+                    handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+                  
+                  />
+                  }
 
               {state.popupSwitch === "popupLore" 
               && (state.currentComponent?.getJson().type === "lore") 

@@ -9,7 +9,6 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 import addPC from '../pics/addPlayer.png';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
-import LoreListCard from './pages/loreListCard';
 import Worldbuilder from './worldBuilder';
 import LoreViewer from './loreViewer';
 import Upload from './upload';
@@ -87,24 +86,38 @@ scrollTo = (ref, behavior) => {
       {/* HOMEPAGE */}
       {this.state.start&&(
       <div style={{ display:"flex", flexDirection:"column",
-      width:"100%", minWidth:"fit-content", height:"100%",}}>
+      width:"100%", minWidth:"fit-content", height:"100%",  }}>
 
         {/* BACK BUTTON */}
       {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
-          <Link className="hover-btn"
+          (<Link className="hover-btn"
           to={"/campaign/"} 
-          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa", padding:"8px 8px",
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa", padding:"8px 8px", 
           fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", }}
           >
             <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
             src={backarrow}
             />
             Campaigns
-          </Link>}
+          </Link>)
+          ||
+          (<a className="hover-btn"
+          href={window.location.href.split("-")[0]} 
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", 
+         
+          background:styles.colors.color7+"aa", padding:"8px 8px",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", fontSize:".9rem" }}
+          >
+            <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
+            src={backarrow}
+            />
+            {this.state.obj?.getJson().title}
+          </a>)
+          }
 
             
 
-      <div style={{...styles.backgroundContent, position:"relative", 
+      <div style={{...styles.backgroundContent, position:"relative", minWidth:"83vw",
           backgroundImage:
           'url('+(this.state.obj?.getJson().picURL||placeholder)+')'
       }}>
@@ -129,7 +142,15 @@ scrollTo = (ref, behavior) => {
             </Link>
 
     {state.currentLore!==undefined && <div style={{display:"flex",flexDirection:"column"}}>
-                <div style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"55", width:"fit-content", alignSelf:"flex-end"}}>Campaign: {this.state.obj?.getJson().title}</div>
+
+    <a href={window.location.href.split("-")[0]} className='hover-btn-highlight' title={"Go Back to "+this.state.obj?.getJson().title} 
+    style={{width:"fit-content", alignSelf:"flex-end", cursor:"pointer", color:styles.colors.color3, textDecoration:"underline 1px", textUnderlineOffset:"2px", padding: "5px 6px" }}>
+                <div className='hover-container'
+                style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"99", textDecoration:"underline 1px", textUnderlineOffset:"4px" }}>
+                  Campaign: {this.state.obj?.getJson().title}
+                  <div className='hover-div' style={{marginLeft:"-22px", position:"absolute", }}>{"<"}</div>
+                  </div>
+          </a>       
                  <ParentFormComponent app={app} name="name" obj={state.currentLore}
              theme={"adventureLog"} 
               rows={5}
@@ -138,7 +159,7 @@ scrollTo = (ref, behavior) => {
              borderRadius:"4px",background:styles.colors.colorWhite+"00", 
              border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSubheader1}}
              
-             wrapperStyle={{margin:"1px", color:styles.colors.colorWhite, display:"flex", marginBottom:"1px",
+             wrapperStyle={{margin:"1px", color:styles.colors.colorWhite, display:"flex", marginBottom:"1px", 
              flexDirection:"column", justifyItems:"space-between", }}/>
                 </div>
     }
@@ -147,8 +168,9 @@ scrollTo = (ref, behavior) => {
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"24px", justifyContent:"space-between"}}>
 
                       {state.currentLore==undefined &&
-                        <div className="hover-btn" style={{... styles.buttons.buttonAdd,  borderRadius:"12px", width:"fit-content", fontSize:styles.fonts.fontSmall, padding:"4px 9px",
-                        backgroundColor:styles.colors.color1+"ee", position:"relative",
+                        <div className="hover-btn" style={{... styles.buttons.buttonAdd,  borderRadius:"12px", width:"fit-content", 
+                        fontSize:styles.fonts.fontSmall, padding:"4px 9px", 
+                        backgroundColor:styles.colors.color1+"ee", position:"relative", height:"fit-content",
                         justifyContent:"center"}} 
                           onClick={()=>{dispatch({operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign"})}}>
                         Edit 
@@ -159,9 +181,9 @@ scrollTo = (ref, behavior) => {
                       {/* I dont think we are doing sessions */}
               {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
               {/* /Description/ */}
-              <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end"}}>
+              <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", minWidth:"100%", }}>
                           <div id= "campaignDesc" 
-                      style={{width:"1px", height:"1px", userSelect:"none", opacity:"0%"}}>
+                      style={{width:"1px", height:"1px", userSelect:"none", opacity:"0%", }}>
                           </div>
                           {state.currentLore==undefined &&
                           <div>
@@ -182,8 +204,9 @@ scrollTo = (ref, behavior) => {
                               >
                                 {(pCount === 0 || pCount >= 2) ? `${pCount} active characters in this campaign` : `${pCount} active character in this campaign`}
                         </div>
-                        <div style={{
-                                      display: "flex", marginTop:"10px",
+                        <div style={{ minWidth:"100%",
+                                      display: "flex", marginTop:"10px", height:"fit-content", 
+                                      borderRadius: "12px", 
                                       flexDirection: "row",
                                       alignItems: "center", // This should be alignItems instead of alignContent
                                       justifyContent: "flex-end", // Add this if you want to align the items to the end of the container
@@ -193,7 +216,6 @@ scrollTo = (ref, behavior) => {
                                               style={{ 
                                                 ...styles.buttons.buttonAdd, 
                                                 fontSize: styles.fonts.fontSmall, 
-                                                borderRadius: "12px", 
                                                 padding: "4px 8px", 
                                                 paddingTop:"7px",
                                                 display: "flex", 
@@ -222,7 +244,7 @@ scrollTo = (ref, behavior) => {
         </div>
 
 
-
+        {(state.currentLore==undefined &&
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
                 <div onClick={() => this.scrollTo(this.loreRef, "smooth")} 
@@ -246,13 +268,15 @@ scrollTo = (ref, behavior) => {
                     Gallery
                   </div>
 
-                  </div>
+                  </div>)}
 
 
 
-        <hr></hr>
+                 
         {state.currentLore===undefined &&
-        <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"22px"}}> {this.state.obj.getJson().title} Text:  
+        <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginTop:"22px", marginBottom:"22px"}}>
+           {/* {this.state.obj.getJson().title}  */}
+           Lore:  
           <ParentFormComponent app={app} name="description" obj={this.state.obj}
                       theme={"adventureLog"} 
                         rows={5}
@@ -267,7 +291,7 @@ scrollTo = (ref, behavior) => {
                       </div>}
 
                    
-        {state.currentLore!==undefined ? (<div style={{width:"100%", height:"100%"}}>
+        {state.currentLore!==undefined ? (<div style={{minWidth:"100%", height:"100%"}}>
         <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
         </div>):(
         <>
@@ -280,26 +304,28 @@ scrollTo = (ref, behavior) => {
                 <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                 />
         <hr></hr>
+
         <div 
-                        style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"row", 
+                        style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"column", 
                         color:styles.colors.color4}}>
-                            <div  style={{ display:"flex", width:"100%", justifyContent:"space-between",}}> Encounters
+                            <div  style={{ display:"flex", width:"100%", justifyContent:"flex-start",}}> Encounters
                              
-                      <div style={{display:"flex", flexDirection:"row", width:"fit-content", 
-                      padding:".75%", justifyItems:"flex-end",
+                             </div>
+
+                             <div style={{display:"flex", flexDirection:"row",justifyItems:"center", width:"fit-content", marginTop:"11px"
                       }}>
                          
                           <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
-                        style={{...styles.buttons.buttonAdd, display:"flex", cursor:"pointer",
-                        fontSize:styles.fonts.fontSmall, paddingTop:".2%", paddingBottom:".2%",
-                        background:styles.colors.color7+"88", marginTop:"-.5rem"}}>
+                        className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"5px", backgroundColor:styles.colors.colorBlack+"99",
+                        paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
+                        borderRadius:"9px", fontSize:"21px", 
+                      }}>
                                   Manage Encounters
                              </Link></div>
-
-                             </div>
         </div>
+
         <div ref={this.encRef}/>
-                             <div style={{}}>
+                             <div style={{marginBottom:"18px"}}>
             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}

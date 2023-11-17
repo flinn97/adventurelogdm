@@ -31,6 +31,10 @@ export default class LoreItemWithNotation extends Component {
     let encounterList = componentList.getList("encounter", obj.getJson()._id, "loreId");
     let imageList = componentList.getList("image", obj.getJson()._id, "loreId");
 
+    let listTerm = state.currentLore?"parentId":"campaignId";        
+
+    let allList = mapList.length+encounterList.length+imageList.length;
+
     let allColors = obj.getJson().colors?obj.getJson().colors:["#000000"];
     let colorList = Object.values(allColors);
     const choiceColor =  obj.getJson().colors?colorList[2]:"#000000";
@@ -40,17 +44,30 @@ export default class LoreItemWithNotation extends Component {
     let wordCount =  this.getWordCount(desc);
     let wordCountIs = this.getWordCount(desc) > 4?"Word Count: "+wordCount:"";
     
+    let isEmpty = allList===0;
+    let isNewEmpty = objName.includes(this.props.newLoreName) && isEmpty;
 
     return (
       <div className='hover-container'
       style={{
-         display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column",
+         display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", color:"#ffdead",
         backgroundColor:choiceColor+"0D", padding:"3px 4px", cursor:"pointer", border:"1px solid "+choiceColor2+"22", textAlign:"center",
       minWidth:"440px", margin:"6px 2px", minHeight:"64px", borderRadius:"18px", height:"64px",}}>
 
-                <div style={{color:styles.colors.colorWhite, fontSize:styles.fonts.fontNormal, marginTop:"11px" }}>
+      {isNewEmpty&&
+                                            <div style={{width:"100%", height:"100%", position:"absolute",
+                                            border:"2px solid"+styles.colors.color5+"33",    
+                                            animation:isNewEmpty?'flash-off 1s 3':"", 
+                                            borderRadius:"18px"}}></div>}
+
+                
+                <div style={{
+                  color:styles.colors.colorWhite, 
+                  
+                fontSize:styles.fonts.fontNormal, marginTop:"18px", width:"100%", height:"100%" }}>
                                                         {objName}
                 </div>
+               
 
                                             <div  className='hover-div' 
                                             style={{color:styles.colors.colorWhite+"65",
@@ -82,7 +99,7 @@ justifyItems:"flex-end"}}>
                                                         style={{width:"26px",  height:"25px", marginLeft:"5px"}}/>
                                                           }
 </div>
-      </div>
+</div>
 
     )
   }

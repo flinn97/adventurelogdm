@@ -86,18 +86,18 @@ setInterval(async() => {
   
     const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
 
-    return (<div >
+    return (<div style={{}}>
       
              <div style={{flexDirection:"row", display:"flex", }} >
              
-             <div  style={{flexDirection:"column", display:"flex", marginRight:"-20px",
+             <div  style={{flexDirection:"column", display:"flex",
              alignItems:"center"}} >
 
                     {!isHidden && (
                       <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginBottom:"15px", 
                       marginTop:"5px", paddingLeft:"13px",  paddingRight:"13px", 
                       
-                      padding:"4px", borderRadius:"9px", fontSize:"18px", }}
+                      padding:"4px", borderRadius:"9px", fontSize:styles.fonts.fontSmallest }}
                       onClick={()=>{
                         dispatch(
                           {operate:"addlore", operation:"cleanJsonPrepareRun",
@@ -108,7 +108,8 @@ setInterval(async() => {
                       >+ New Top Level Lore</div>)}
 
 {/* //ADD IMAGE HERE// */}
-                      <div className='scroller'  style={{flexDirection:"column", display:"flex", overflowY:"scroll", maxHeight:"88.9vh", alignItems:"left"}}>
+                      <div className='scroller'  style={{flexDirection:"column", display:"flex", overflowY:"scroll", maxHeight:"88.9vh", alignItems:"left",                     
+                    }}>
                         <MapComponent app={app}  theme={"expandingTree"} 
                                              
                         name={name} 

@@ -26,7 +26,7 @@ export default class ListTreeInner extends Component {
     let styles = state.styles;
     let id = this.props.obj.getJson()._id;
 
-    return (<div style={{display:"flex",flexDirection:"column",alignItems:"center"}} >
+    return (<div style={{display:"flex",flexDirection:"column",alignItems:"center", paddingLeft:"9px",}} >
        {state.currentExpanse?.includes(id)
        &&
        <div style={{backgroundColor:styles.colors.color2+"7b", width:"99.8%",}}>

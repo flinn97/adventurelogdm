@@ -1,6 +1,8 @@
 import { Component } from 'react';
 
 import LoreItemWithNotation from './loreItemwithNotation';
+import toolService from '../services/toolService';
+import idService from '../componentListNPM/idService';
 
 export default class LoreSearch extends Component {
   constructor(props) {
@@ -38,8 +40,8 @@ export default class LoreSearch extends Component {
       newLink = id + "-" + obj.getJson()._id;
     }
   
-  
-    window.open("../campaign/" + newLink, '_blank');
+
+    toolService.navigateToLink("../campaign/" + newLink, true)
   }
 
 
@@ -79,27 +81,34 @@ export default class LoreSearch extends Component {
     
 
     let loreListTotalLength = componentList.getList("lore", id, listTerm).length
+   
     
+    let newLoreName = "New Lore";
 
     return (
       <div style={{width:"100%", minHeight:"200px", maxHeight:"fit-content"}}>
-                <div style={{marginTop:"10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>Other Connected Lore</div>
+                <div style={{marginTop:"10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>Connected Lore</div>
                         <div style={{display:"flex", flexDirection:"column", justifyContent:"center", justifyItems:"center", marginBottom:"70px",}}>
-                                <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
+                                <div 
+                                title={"New Lore, opens in a new Tab"}
+                                className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
                                       paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
                                       borderRadius:"9px", fontSize:"21px", 
                                     }}
-                                      onClick={()=>{
+                                      onClick={ async ()=>{
 
                                         const newName = this.props.app.state.currentLore?this.props.app.state.currentLore.getJson().name:"";
-                                        // const newId = state.currentLore ? state.currentLore.getJson()._id: this.props.obj?.getJson().campaignId;
-                                        dispatch(
+                                        let idS = idService.createId();
+                                        console.log(idS);
+                                        await dispatch(
                                           {operate:"addlore", operation:"cleanJsonPrepareRun",
                                           //                                      CHANGE NAME later
                                           object:{ 
-                                            parentId:{[id]:newName+" New Lore"}, 
-                                            type:"lore", name: newName+" New Lore", campaignId: campId}}
-                                        )
+                                            parentId:{[id]:newName+" "+newLoreName}, _id:idS,
+                                            type:"lore", name: newName+" "+newLoreName, campaignId: campId},
+                                            } 
+                                        );
+                                       
                                       }}
                                       >+ Create Lore</div> 
 
@@ -132,7 +141,7 @@ export default class LoreSearch extends Component {
                                                       .filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
                                                       .map((loreItem, index) => (
                                                         <div className="hover-img" key={index} onClick={() => this.navigateToLink(loreItem)} style={{cursor:"pointer"}}>
-                                                          <LoreItemWithNotation app={app} obj={loreItem} index={index}/>
+                                                          <LoreItemWithNotation app={app} obj={loreItem} index={index} newLoreName={newLoreName}/>
                                                         </div>
                                                       ))
                                                 }

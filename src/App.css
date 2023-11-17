@@ -58,7 +58,7 @@ hovering:hover .hover {
   top: 0;
   left: 0;
   z-index: 2;
-  transition: 0.3s ease; 
+  transition:all 0.5 ease-in-out; 
   /* Add other styling as needed */
 }
 
@@ -79,7 +79,7 @@ hovering:hover .hover {
   position: absolute;
   top: 0;
   left: 0;
-  transition: 0.3s ease; 
+  transition:all 0.3s ease; 
   /* Add other styling as needed */
 }
 
@@ -176,6 +176,29 @@ hovering:hover .hover {
   transition: all 0.5s ease-in-out;
 }
 .hover-btn {
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+  /* filter: contrast(.89); */
+}
+
+.hover-btn-highlight:hover {
+  opacity: 1;
+  scale: 1.04;
+  
+  background-color: rgba(245, 245, 245, 0.068);
+  filter: contrast(1.2) hue-rotate(-49deg);
+  border-radius: 11px;
+  
+  transition: all 0.5s ease-in-out;
+}
+.hover-btn-highlight:active {
+  opacity: .82;
+  
+  filter: contrast(1);
+  border-radius: 11px;
+  transition: all 0.5s ease-in-out;
+}
+.hover-btn-highlight {
   opacity: 1;
   transition: all 0.5s ease-in-out;
   /* filter: contrast(.89); */
@@ -304,6 +327,8 @@ fontNormal {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+
 
 .App-header {
   background-color: #282c34;
@@ -467,23 +492,32 @@ body {
 }
 
 .scroller2 {
-  scrollbar-width: thin; /* For Firefox */
+  scrollbar-width:thin;
+  
+  /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer 10+ */
   overflow-y: scroll; /* Add the ability to scroll */
+  
 }
 
 /* Style the scrollbar for Chrome, Safari and Opera */
 .scroller2::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 9px; /* Width of the scrollbar */
+  height: 9px;
 }
 
 .scroller2::-webkit-scrollbar-track {
   background: transparent; /* Make the track transparent */
+  
 }
 
 .scroller2::-webkit-scrollbar-thumb {
   background-color:  rgba(128, 128, 128, 0.7); /* Color and transparency of the thumb */
   border-radius: 6px; /* Roundness of the scrollbar thumb */
+}
+
+.scroller2::-webkit-scrollbar-corner {
+  background-color: transparent; /* Make the corner transparent */
 }
 
 /* Style the scrollbar for IE, Edge, and Firefox */
@@ -542,4 +576,9 @@ input {
   100% {
     transform: translateX(-100%);
   }
+}
+
+@keyframes flash-off {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }

@@ -502,18 +502,17 @@ class AdventureLogStyles {
             },
          
             popupLarge:
-            {   position: "absolute",
-                width: "fit-content",
-                height: "fit-content",
-                border: appBorders.borderThick,
-                background: appColors.color1,
-                borderRadius: "23px", left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                marginRight:"325px",
-                boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                userSelect: "none"
-            },
+                            {
+                                width: "fit-content",
+                                height:"fit-content", 
+                                maxHeight:"80vh", maxWidth:"70vw",
+                               alignSelf:"center",
+                                border: appBorders.borderThick,
+                                background: appColors.color1,
+                                borderRadius: "23px",
+                                boxShadow: "2px 3px 6px" + appColors.colorBlack,
+                                userSelect: "none"
+                            },
 
             popupCreate:
                                     {     width: "70%",
@@ -1131,7 +1130,9 @@ class AdventureLogStyles {
                             popupLarge:
                             {
                                 width: "fit-content",
-                                height: "68vh",
+                                height:"fit-content",
+                                maxHeight:"80vh", maxWidth:"80vw",
+                               alignSelf:"center",
                                 border: appBorders.borderThick,
                                 background: appColors.color1,
                                 borderRadius: "23px",
@@ -1755,17 +1756,18 @@ class AdventureLogStyles {
                                             justifySelf: "center"
                                         },
 
-                                            popupLarge:
-                                            {
-                                                width: "fit-content",
-                                                        height: "68vh",
-                                                        border: appBorders.borderThick,
-                                                        background: appColors.color1,
-                                                        borderRadius: "23px",
-                                                        boxShadow: "2px 3px 6px" + appColors.colorBlack,
-                                                        userSelect: "none"
-                                            },
-
+                                        popupLarge:
+                                        {
+                                            width: "fit-content",
+                                            height:"fit-content",
+                                            maxHeight:"80vh", maxWidth:"80vw",
+                                           alignSelf:"center",
+                                            border: appBorders.borderThick,
+                                            background: appColors.color1,
+                                            borderRadius: "23px",
+                                            boxShadow: "2px 3px 6px" + appColors.colorBlack,
+                                            userSelect: "none"
+                                        },
                                             popupMedium:
             {
                 width: "fit-content",
