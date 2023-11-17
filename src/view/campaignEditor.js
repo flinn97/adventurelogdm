@@ -16,6 +16,7 @@ import Upload from './upload';
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
+import treeService from '../services/treeService';
 
 
 
@@ -101,7 +102,9 @@ scrollTo = (ref, behavior) => {
             />
             Campaigns
           </Link>}
-
+        <div style={{color:"white"}} onClick={()=>{
+          debugger
+          treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}> hi</div>
             
 
       <div style={{...styles.backgroundContent, position:"relative", 
