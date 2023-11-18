@@ -203,7 +203,6 @@ class AdventureLogStyles {
             //     userSelect: "none",
             // },
 
-
             smallCard:
             {   border: appBorders.borderThin,
                 width: "29.5vw",
@@ -516,7 +515,7 @@ class AdventureLogStyles {
 
             popupCreate:
                                     {     width: "70%",
-                                    height: "70%",
+                                    height: "75%",
                                     border: "3px solid #ffffff55",
                                     background: appColors.colorBlack,
                                     borderRadius: "23px",
@@ -1142,7 +1141,7 @@ class AdventureLogStyles {
 
                             popupCreate:
                                     {     width: "70%",
-                                    height: "70%",
+                                    height: "75%",
                                     border: "3px solid #ffffff55",
                                     background: appColors.colorBlack,
                                     borderRadius: "23px",
@@ -1746,7 +1745,7 @@ class AdventureLogStyles {
 
                                             popupCreate:
                                             {     width: "70%",
-                                            height: "70%",
+                                            height: "75%",
                                             border: "3px solid #ffffff55",
                                             background: appColors.colorBlack,
                                             borderRadius: "23px",
@@ -1755,7 +1754,6 @@ class AdventureLogStyles {
                                             alignSelf: "center",
                                             justifySelf: "center"
                                         },
-
                                         popupLarge:
                                         {
                                             width: "fit-content",

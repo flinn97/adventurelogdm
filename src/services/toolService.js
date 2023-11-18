@@ -4,6 +4,16 @@ class ToolService {
     constructor() {
     }
 
+    rerenderTimeout(dispatch, timeMs) {
+      let t = timeMs?timeMs:0;
+      setTimeout(() => {
+          dispatch({
+              rerender: "true",
+          });
+           
+      }, t);
+  }
+
         checkURLforString(s){
             let href = window.location.href;
             return href.includes(s);

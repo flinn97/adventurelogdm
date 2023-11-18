@@ -37,10 +37,11 @@ export default class AdventureLogPage extends Component {
     let styles =state.styles;
     let compList = state.componentList;
     let idSegment = toolService.getIdFromURL(true);
-    let campaigns = compList.getList("campaign", idSegment, "_id" )
+    let campaigns = compList.getList("campaign", idSegment, "_id" );
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
-    // let logItems = compList.getList("post", currentCampId, "campaignId")
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", )
+    
+    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post" )
+   
 
     this.scrollToBottom();
     this.setState({ textI: "" })
@@ -160,10 +161,11 @@ export default class AdventureLogPage extends Component {
     
     return (
       <div style={{
-        width:"100%", height:"100%", display:"flex",flexDirection:"column", alignItems:"center", alignSelf:"center", justifySelf:"center",}}>
+        width:"100%", height:"100%", display:"flex",flexDirection:"column", marginTop:"30px", paddingBottom:"40px",
+         alignItems:"center", alignSelf:"center", justifySelf:"center",}}>
         
        
-        <div style={{width:"fit-content", height:"100%",color:styles.colors.color3+"e9", 
+        <div style={{width:"100%", height:"100%",color:styles.colors.color3+"e9",
         fontWeight:"600", fontSize:styles.fonts.fontSubheader1, marginBottom:"11px"}}>
           {campaigns[0].getJson().title} Log
         </div>
@@ -171,7 +173,7 @@ export default class AdventureLogPage extends Component {
       {/* ADVENTURE LOG */}
           <div  style={{
             display:"flex", flexDirection:"column", width:"fit-content",
-           justifyContent:"flex-end",
+           justifyContent:"flex-end", height:"100%",
           width: "840px", minHeight: "860px", maxHeight: "860px", border: "8px solid " + styles.colors.color6 + "55", 
           backgroundColor: styles.colors.color7 + "44",
           borderRadius: "20px", padding: "2px"}}>
@@ -207,7 +209,7 @@ export default class AdventureLogPage extends Component {
 
         <div style={{background:styles.colors.color1, position:"absolute", 
         zIndex:"-255", filter:"blur(55px)", mixBlendMode:"multiply", opacity:"44%",
-                    width:"915px", height:"944px", marginTop:"-904px",}}></div>
+                    width:"915px", height:"100%", top:"0",}}></div>
 
           {userRole ==="GM" && 
           (

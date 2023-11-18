@@ -86,7 +86,7 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"810px", width:"fit-content" }}>
+    <div style={{height:"100%", width:"fit-content" }}>
 
       
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif", 

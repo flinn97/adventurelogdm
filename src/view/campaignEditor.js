@@ -197,7 +197,7 @@ scrollTo = (ref, behavior) => {
                                   fontSize: styles.fonts.fontSmallest, 
                                   marginBottom: "8px",
                                   width: "fit-content", 
-                                  height: "100%", 
+                                  height: "25px", 
                                   userSelect: "text", 
                                   marginTop: "1px" // Changed "01px" to "1px" to keep it standard
                                 }}

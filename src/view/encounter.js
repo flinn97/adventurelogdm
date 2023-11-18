@@ -16,6 +16,8 @@ import forward from '../pics/forward.png'
 import toolService from '../services/toolService';
 import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton';
 import backarrow from '../pics/backArrow.webp';
+import auth from '../services/auth';
+import trash from '../pics/delSkull.png';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -38,8 +40,11 @@ export default class Encounter extends Component {
     let splitURL = href.split("/")
     let id = splitURL[splitURL.length-1]
     let component = this.props.app.state.componentList.getComponent("encounter", id);
-    console.log(component);
     this.setState({obj: component, currentTurn: component.getJson().currentTurn, currentIndex: component.getJson().currentIndex });
+    toolService.rerenderTimeout(this.props.app.dispatch, 100);
+    // let Eid = toolService.getIdFromURL(false);
+    // auth.firebaseGetter("Eid", this.props.app.state.componentList, "campaignId", "monster" );
+    // console.log(this.props.app.state.componentList);
     
     let dispatch = this.props.app.dispatch;
     this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
@@ -451,8 +456,14 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                           
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
-             app={app} name={"monster"}
-            cells={!obj?.getJson().isRunning?[
+             app={app} name={"monster"} 
+             delOptions={{picURL:trash, text:"Delete", warningMessage:"Delete this character (this is permanent)",
+             textStyle:{ fontSize:styles.fonts.fontSmallest,}, 
+              style:{width:"35px", height:"35px", borderRadius:"2px", padding:"4px 2px",
+               display:"flex", flexDirection:"row",
+              alignItems:"center", borderRadius:"8px", 
+              justifyContent:"center" },}}
+             cells={!obj?.getJson().isRunning?[
               {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
                "delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}

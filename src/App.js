@@ -170,15 +170,15 @@ handleChange = (event) => {
     let styles = this.state.styles;
   return (
     
-    <div className= "*" style={{
+    <div  className= "*" style={{overflow:"hidden",
       letterSpacing:".05rem",
-      width:"100vw", 
-      height:"100vh", 
+      width:"100%", 
+      height:"100%", 
       display:"flex", 
       zIndex:"100",
-            minHeight:"fit-content",
+            minHeight:"100%",
             backgroundColor:styles?.backgrounds?.backgroundColor,
-            backgroundImage: "url("+Background+")",
+            backgroundImage: "url("+Background+")", 
             backgroundBlendMode:styles?.backgrounds?.backgroundBlend,
             backgroundRepeat:"repeat",
       flexDirection:"column"}}>
