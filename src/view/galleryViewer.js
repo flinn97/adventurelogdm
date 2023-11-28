@@ -6,7 +6,7 @@ export default class GalleryViewer extends Component {
     super(props);
     this.getId = this.getId.bind(this);  
     this.state = {
-      imagesToShow: 16,
+      imagesToShow: 14,
     }
   }
  
@@ -30,8 +30,43 @@ export default class GalleryViewer extends Component {
     let imageList = state.currentLore==undefined? state.componentList.getList("image", this.getId(0), "campaignId"):
     state.componentList.getList("image", state.currentLore.getJson()._id, "loreId");
 
+
     return (
       <div style={{width:"100%", minHeight:"200px",}}>
+
+<div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginBottom:"18px",}}>
+
+                <Upload text="+ Upload" 
+                      // changePic={ async (pic)=>{
+                      //   await state.opps.cleanJsonPrepareRun({
+                      //     "addimage":{
+                      //       loreId: this.getId(), 
+                      //       picURL: pic,
+                      //       campaignId: this.getId()}});
+                      //       console.log(pic);
+                            
+                      // }} 
+
+                      prepareOnChange={{
+                        name:"image", json:{
+                          loreId: this.getId(1) ? this.getId(1):this.getId(0),
+                          campaignId: this.getId(0)}
+                      }}
+
+                      obj={app.state.currentComponent}
+                      update={true} skipUpdate={true}
+                      
+                        app={app} 
+                        className="indent-on-click"
+                //   onClick={() => {
+                //  state.opps.cleanJsonPrepareRun({
+                //   "addimage":{loreId: state.currentComponent.getJson()._id, 
+                //     campaignId: id}})
+                // }}
+                />
+                
+        </div>
+
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 
                   flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap",
                   }}>
@@ -86,38 +121,7 @@ export default class GalleryViewer extends Component {
               }
             </div>
 
-            <div style={{display:"flex", justifyContent:"center", justifyItems:"center", marginTop:"8px",}}>
-
-                <Upload text="+ Upload" 
-                      // changePic={ async (pic)=>{
-                      //   await state.opps.cleanJsonPrepareRun({
-                      //     "addimage":{
-                      //       loreId: this.getId(), 
-                      //       picURL: pic,
-                      //       campaignId: this.getId()}});
-                      //       console.log(pic);
-                            
-                      // }} 
-
-                      prepareOnChange={{
-                        name:"image", json:{
-                          loreId: this.getId(1) ? this.getId(1):this.getId(0),
-                          campaignId: this.getId(0)}
-                      }}
-
-                      obj={app.state.currentComponent}
-                      update={true} skipUpdate={true}
-                      
-                        app={app} 
-                        className="indent-on-click"
-                //   onClick={() => {
-                //  state.opps.cleanJsonPrepareRun({
-                //   "addimage":{loreId: state.currentComponent.getJson()._id, 
-                //     campaignId: id}})
-                // }}
-                />
-                
-        </div>
+            
       </div>
 
     )

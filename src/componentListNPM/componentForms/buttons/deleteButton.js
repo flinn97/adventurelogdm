@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormsThemeFactory from '../formThemes/formThemeFactory';
+import IdService from "../../idService";
 
 class DelButton extends Component {
     constructor(props) {
@@ -32,9 +33,10 @@ class DelButton extends Component {
         }
     }
     render() {
-
-   
-
+        let app = this.props.app;
+        let state = app.state;
+        let styles =state.styles;
+       
         let theme= undefined;
         if(this.props.theme){
             theme = FormsThemeFactory.getFormsThemeFactory()[this.props.theme]
@@ -51,7 +53,9 @@ class DelButton extends Component {
                     if(this.props.onChange){
                         this.props.onChange();
                     }
-                    // this.props.app.dispatch({});
+                    this.props.app.dispatch({});
+                    
+                    
                 }}
                 >
                  {this.props.text? this.props.text: "delete"}</div>

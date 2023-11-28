@@ -130,11 +130,11 @@ toggleSidebar = () => {
     
 
     return (
-      <div>
+      <div style={{minWidth:"100%",}}>
               <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end", marginBottom:"-34px"}}>
             <PostLogButton app={app} obj={lore} altText={"description"}/>
               </div>
-          <div style={{color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore Text:
+          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore:
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
@@ -147,13 +147,12 @@ toggleSidebar = () => {
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
                       flexDirection:"column", justifyItems:"space-between"}}/></div>
 
-      <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'auto', padding: '0',
-      height:"fit-content", maxWidth:"100%", marginTop:"20px",
+      <div className='scroller2' style={{display:"flex", flexDirection:"column", position: 'relative',
+      height:"100%", maxWidth:"100%", marginTop:"20px",
       }}>
-
-       <div>
       
-<MapUploader 
+       <div>
+       <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path) => {
                 // Your existing logic
@@ -192,6 +191,7 @@ toggleSidebar = () => {
                app={app}/>
 
 
+
           {/* </div>
           </div> */}
 {this.state.lore?.getJson()._id !== this.props.app.state.componentList.getComponent("campaign", this.props._id) &&
@@ -215,13 +215,16 @@ toggleSidebar = () => {
         </div>
 
         <div className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
-        fontSize:styles.fonts.fontSmall, 
-          padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
-          }}>
-        {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
+        fontSize:styles.fonts.fontSmall, display:"flex", flexDirection:"column",
+        padding:"4px 8px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+        }}>
+      {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
+        {!this.state.isSidebarVisible &&
+        <div style={{fontSize:".64rem", color:styles.colors.color8}}>Expand and review all Lore</div>
+        }
       </div>
 
-        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh",  }}>
+        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"9px", top:"3vh",  }}>
         {/* SIDEBAR */}    
                   <div   style={{display:"flex", width:"fit-content", height:"100%", }}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>
@@ -241,20 +244,12 @@ toggleSidebar = () => {
 
         <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
-        
-            <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
+        <div>
 
-        <div style={{ marginTop:"2vh", marginBottom:"1vh",}}> 
-             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
-            filter={{search: lore.getJson()._id, attribute: "loreId"}}
-            theme={"selectByImageSmall"}
-            />
-            
-            </div>
-
-                        <div  className="indent-on-click" style={{...styles.buttons.buttonAdd, 
-                        fontSize:styles.fonts.fontSmall,
-                        marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+<div  className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
+                                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
+                                      borderRadius:"9px", fontSize:"21px", 
+                                    }}
                         title="Create a new encounter, you can edit it by clicking on it." 
                           onClick={() => {
                         state.opps.cleanJsonPrepareRun({
@@ -268,8 +263,10 @@ toggleSidebar = () => {
                         </div>
 
 
-                        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
-                        marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+                        <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginTop:"15px", backgroundColor:styles.colors.colorBlack+"99",
+                                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
+                                      borderRadius:"9px", fontSize:"21px", 
+                                    }}
                         title="Find an existing encounter to add to this lore.
                         This will create a COPY." 
                           onClick={() => {
@@ -277,7 +274,19 @@ toggleSidebar = () => {
                         }}>
                           Find Encounter
                         </div>
-                        </div>
+
+            <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
+
+        <div style={{ marginTop:"2vh", marginBottom:"1vh",}}> 
+             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
+            filter={{search: lore.getJson()._id, attribute: "loreId"}}
+            theme={"selectByImageSmall"}
+            />
+            
+            </div>
+
+                        
+                        </div></div>
           }
 
           {(this.state.showFindEncounter || this.state.showFindImage) && 

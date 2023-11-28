@@ -133,7 +133,7 @@ export default class InteractiveBulletin extends Component {
     // if (this.state.isLoading) {
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div 
+      <div className='scroller2' 
       ref={this.divRef} 
       style={{width:"100%", minHeight:"100%", maxHeight:"100%",
       cursor: this.state.isGrabbing!==true? "":"grabbing", 

@@ -8,7 +8,7 @@ import './fonts/InriaSerif-Light.ttf';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div style={{width:"100vw", height:"100vh", display:"flex", justifyContent:"center", alignContent:"center"}}>
+  <div style={{width:"100%", height:"100%", display:"flex", justifyContent:"center", alignContent:"center"}}>
     <App />
   </div>,
 )

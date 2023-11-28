@@ -52,12 +52,12 @@ export default class AdventureLog extends Component {
    
 
     return (
-      <div style={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
-      {this.state.gotCampaign&&(<AdventureLogPage app= {app} />)} 
+      <div  style={{minHeight:"100%", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%", }} >
+      {this.state.gotCampaign&&(<AdventureLogPage app= {app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>)} 
       <div 
-          style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
-          alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px",
-        fontSize:styles.fonts.fontHeader4, marginTop:"3vmin", color:styles.colors.colorWhite}}>
+          style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-start",
+          alignContent:"center", width:"100%", userSelect:"none",
+        fontSize:styles.fonts.fontHeader4, color:styles.colors.colorWhite}}>
        
         
     </div>

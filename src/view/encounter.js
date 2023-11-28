@@ -15,12 +15,15 @@ import back from '../pics/backArrow.webp'
 import forward from '../pics/forward.png'
 import toolService from '../services/toolService';
 import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton';
+import backarrow from '../pics/backArrow.webp';
+import auth from '../services/auth';
+import trash from '../pics/delSkull.png';
 
 export default class Encounter extends Component {
   constructor(props) {
     super(props);
     this.lastClicked = Date.now();
-    this.convertToLink = this.convertToLink.bind(this);  
+   
     this.state = {
       showMonsterMap: true,
       isRunning: false,
@@ -37,8 +40,11 @@ export default class Encounter extends Component {
     let splitURL = href.split("/")
     let id = splitURL[splitURL.length-1]
     let component = this.props.app.state.componentList.getComponent("encounter", id);
-    console.log(component);
     this.setState({obj: component, currentTurn: component.getJson().currentTurn, currentIndex: component.getJson().currentIndex });
+    toolService.rerenderTimeout(this.props.app.dispatch, 100);
+    // let Eid = toolService.getIdFromURL(false);
+    // auth.firebaseGetter("Eid", this.props.app.state.componentList, "campaignId", "monster" );
+    // console.log(this.props.app.state.componentList);
     
     let dispatch = this.props.app.dispatch;
     this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
@@ -48,16 +54,6 @@ export default class Encounter extends Component {
   }
   
   
-  convertToLink = (audio) => {
-    if (audio) {
-      if (!audio.startsWith('http://') && !audio.startsWith('https://')) {
-        return 'https://' + audio;
-      } else {
-        return audio;
-      }
-    }
-    return audio;
-  }
 
     
   getEncounterId() {
@@ -187,8 +183,7 @@ export default class Encounter extends Component {
     let styles =state.styles;
     let showMonsterMap = this.state.showMonsterMap;
     let obj = this.state.obj;
-    console.log(this.state.obj?.getJson().campaignId);
-    let audioLink = this.convertToLink(this.state.obj?.getJson().audio);
+    let audioLink = toolService.convertStringToLink(this.state.obj?.getJson().audio);
 
     const playPause = obj?.getJson().isRunning?pause:back;
     const participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
@@ -204,17 +199,28 @@ export default class Encounter extends Component {
 
     return (
       <div style={{width:"100%", height:"100%", }}>
+
+{obj?.getJson().campaignId &&
+<a className="hover-btn"
+          href={/campaign/+obj?.getJson().campaignId} 
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa", padding:"8px 8px", cursor:"pointer",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", fontSize:".9rem" }}
+          >
+            <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
+            src={backarrow}
+            />
+            Back to Campaign
+          </a>}
             <div style={{color: styles.colors.colorWhite,
               ...styles.backgroundContent,
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
           }}>
 
 
-
           <div style={{...styles.popupSmall, fontSize:styles.fonts.fontSubheader2, fontFamily:"serif",
                         color: styles.colors.colorWhite,}}>
 
-         {this.state.obj?.getJson().name}
+         {obj?.getJson().name}
 
          {/* <div style={{position:"absolute", marginTop:"-.8%", opacity:".1", fontSize:styles.fonts.fontSmallest}}>{this.getEncounterId()}</div> */}
 
@@ -450,8 +456,14 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                           
             <MapComponent 
              filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
-             app={app} name={"monster"}
-            cells={!obj?.getJson().isRunning?[
+             app={app} name={"monster"} 
+             delOptions={{picURL:trash, text:"Delete", warningMessage:"Delete this character (this is permanent)",
+             textStyle:{ fontSize:styles.fonts.fontSmallest,}, 
+              style:{width:"35px", height:"35px", borderRadius:"2px", padding:"4px 2px",
+               display:"flex", flexDirection:"row",
+              alignItems:"center", borderRadius:"8px", 
+              justifyContent:"center" },}}
+             cells={!obj?.getJson().isRunning?[
               {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
                "delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}

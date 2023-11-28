@@ -86,7 +86,7 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"810px", width:"fit-content" }}>
+    <div style={{height:"100%", width:"fit-content" }}>
 
       
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif", 
@@ -138,7 +138,7 @@ class TabContent extends Component{
 
     return(
       <div>
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
     fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
       <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
       </div>
@@ -148,7 +148,8 @@ class TabContent extends Component{
 
       
       </div>
-      <hr></hr></div>
+      <hr></hr> */}
+      </div>
     )
   }
 }

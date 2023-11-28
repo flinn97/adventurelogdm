@@ -92,23 +92,35 @@ class MainContent extends Component{
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
+
+    let obj = this.props.obj;
+    let id = obj?.getJson()?.campaignId;
     
+
+    let colorWarn = (id && id.length>6)?styles.colors.color3:styles.colors.color3;
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
-        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
-    <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
-    
+        display:"flex", width:"100%", flexDirection:"column", justifyContent:"center", height:"fit-content", 
+        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
+    <div style={{ display:"flex", flexDirection:"column", textAlign:"center", paddingBottom:"42px", alignContent:"center", justifyContent:"center" }}> 
     <ParentFormComponent app={app} name="campaignId"
-              placeholder={"Enter Campaign Code"}
-              inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
-              borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
+              placeholder={"Enter Campaign Code"}  maxLength={11} 
+              inputStyle={{maxWidth:"55.5vw", width:"400px", padding:"4px 9px", color:colorWarn, height:"fit-content",
+              borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", cursor:"text",
               border:"solid 1px "+styles.colors.colorWhite+"22",
-              textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
-              
+              textWrap:"wrap", fontSize:styles.fonts.fontSmall}}/>
+         <div style={{color:styles.colors.color8+"77", marginTop:"11px"}}>{"(Your GM has this)"}</div>     
      </div>
+     <div className='hover-btn'  
+     style={{width:"400px", alignSelf:"center",  justifyContent:"center", display:'flex', flexDirection:"row",}}>
      <RunButton app={app} text="Enroll" callBack={(obj)=>{dispatch({popupSwitch:"", currentComponent:undefined})}}/>
+
+     </div>
+     <div style={{width:"300px", height:"300px", background:styles.colors.colorBlack, zIndex:"-9", position:"absolute", alignSelf:"center", top:"22px", filter:"blur(33px)"}}>
+
+     </div>
+
     </div>
     )
   }
