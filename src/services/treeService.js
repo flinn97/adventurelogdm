@@ -31,7 +31,7 @@ class TreeService {
         this.index++
 
         //create an mpi for every component that is associate with campaign but is not a lore
-        this.copyAttachedItemsHelper(mpi, componentList, type);
+        // await this.copyAttachedItemsHelper(mpi, componentList, type);
        
         this.list.push(mpi);
        await this.recurseLoreTree(lore, componentList);
@@ -57,7 +57,7 @@ class TreeService {
         for(let l of loreList){
            
             //create the obj for a new market place item with ogId as l's id and parentId as parentMPitem id
-            let json = {...l.getJson(), _id:undefined, type:"marketplaceItem", ogType: l.getJson().type, campaignId: this.list[0].getJson().campaignId, ogId:l.getJson()._id, parentId:parentMPitem.getJson()._id};
+            let json = {...l.getJson(), _id:undefined, type:"marketplaceItem", ogType: l.getJson().type, campaignId: "", ogId:l.getJson()._id, parentId:parentMPitem.getJson()._id};
             await componentList.getOperationsFactory().jsonPrepare({addmarketplaceItem: json})
         //get it back from updater
         let mpi = componentList.getOperationsFactory().getUpdater("add")[this.index]
@@ -95,7 +95,7 @@ class TreeService {
         for(let mpikid of mpiList){
            
             //create the obj for a newlore item with ogId as mpikid's id and parentId as parentLoreitem id
-            let json = {...mpikid.getJson(), _id:undefined, type:mpikid.getJson().ogType, purchasedItem: true, campaignId: this.list[0].getJson().campaignId, ogId:mpikid.getJson()._id, parentId:parentLoreitem.getJson()._id};
+            let json = {...mpikid.getJson(), _id:undefined, type:mpikid.getJson().ogType, purchasedItem: true, campaignId: this.list[0].getJson()._id, ogId:mpikid.getJson()._id, parentId:parentLoreitem.getJson()._id};
             await componentList.getOperationsFactory().jsonPrepare({["add" + mpikid.getJson().ogType]: json})
         //get it back from updater
         let lore = componentList.getOperationsFactory().getUpdater("add")[this.index]
@@ -109,7 +109,7 @@ class TreeService {
         //recurse
         let kidList = componentList.getList("marketplaceItem", mpikid.getJson()._id, "parentId")
         if(kidList.length>0){
-            this.recurseLoreTree(mpikid, componentList);
+            this.recurseMPITree(mpikid, componentList);
         }
         
 
@@ -204,13 +204,12 @@ class TreeService {
         //get mpi from updater
         let obj = opps.getUpdater("add")
         obj = obj[this.index]
-        this.index++
+        this.index++;
+        this.list.push(obj);
 
         //create an mpi for every component that is associate with campaign but is not a lore
-        this.copyAttachedItemsReverseHelper(obj, componentList, type);
-       
-        this.list.push(obj);
-        this.recurseMPITree(mpi, componentList);
+    //    await this.copyAttachedItemsReverseHelper(obj, componentList, type);
+              await this.recurseMPITree(mpi, componentList);
         opps.run();
     }
   };
