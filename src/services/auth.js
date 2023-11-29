@@ -61,7 +61,7 @@ class Auth {
             IDlist.push(list[key].getJson()?._id)
         }
         let rawData = [];
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value));
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
         /// TAYLOR ORDER BY DATE?
         let comps = await getDocs(components);
         for (const key in comps.docs) {

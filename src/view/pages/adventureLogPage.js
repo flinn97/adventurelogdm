@@ -40,10 +40,12 @@ export default class AdventureLogPage extends Component {
     let campaigns = compList.getList("campaign", idSegment, "_id" );
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
     
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post" )
-   
+    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", ).then(()=>{
+      this.scrollToBottom();
 
-    this.scrollToBottom();
+    })
+    
+    debugger
     this.setState({ textI: "" })
   }
   

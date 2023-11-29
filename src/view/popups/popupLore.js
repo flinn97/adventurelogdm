@@ -562,6 +562,7 @@ class MainContent extends Component{
                   <div className='hover-btn'
                   onClick={async ()=>{
                     this.setState({hasChoice: "Connect"});
+                    state.opps.clearUpdater();
                   }}
                   title={"Find pre-made Lore to connect it to this Lore"}
                   style={{...styles.buttons.buttonAdd, margin:"8px"}}>
