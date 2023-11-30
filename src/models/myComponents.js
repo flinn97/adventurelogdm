@@ -6,6 +6,7 @@ import moment from 'moment';
 class componentBase extends BaseClass{
     constructor(opps){
         super(opps);
+        this.createMPI = this.createMPI.bind(this)
 
     }
     json;
@@ -40,7 +41,16 @@ class componentBase extends BaseClass{
         checked: {mon: false,tues: false,wed: false,thur: false,fri: false,sat: false,sun: false,},
         time:{mon: '0',tues:'0',wed: '0',thur: '0',fri: '0',sat: '0',sun: '0'},
     }
+
+    /**
+     * Have every class be able to make an mpi.
+     * @param {*} mpiLore 
+     */
+    createMPI(mpiLore){
+
+    }
     
+
     
     
 
@@ -122,6 +132,7 @@ class Image extends componentBase{
     constructor(opps){
         super(opps);
         this.getPicSrc=this.getPicSrc.bind(this);
+        
        
     }
     json= {

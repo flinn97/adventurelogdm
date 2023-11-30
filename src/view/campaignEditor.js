@@ -104,7 +104,7 @@ scrollTo = (ref, behavior) => {
           </Link>}
         <div style={{color:"white"}} onClick={()=>{
           debugger
-          treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}> hi</div>
+          treeService.convertToMarketplace(this.state.obj, state.componentList, "campaignId")}}> hi</div>
             
 
       <div style={{...styles.backgroundContent, position:"relative", 

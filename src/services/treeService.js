@@ -31,7 +31,7 @@ class TreeService {
         this.index++
 
         //create an mpi for every component that is associate with campaign but is not a lore
-        // await this.copyAttachedItemsHelper(mpi, componentList, type);
+        await this.copyAttachedItemsHelper(mpi, componentList, type);
        
         this.list.push(mpi);
        await this.recurseLoreTree(lore, componentList);
@@ -79,7 +79,7 @@ class TreeService {
 
     }
 
-     /**
+    /**
      *  Recurse the tree and prepare marketplace items.
      * @param {*} MPI 
      * @param {*} componentList 
@@ -127,7 +127,7 @@ class TreeService {
      */
     async copyAttachedItemsHelper(mpilore, componentList, attribute){
         let filterKeyArr = ["encounter","image","map","pin",];
-        let components = []
+        let components = [];
         let id = mpilore.getJson().ogId;
 
                 //create master list from all the other lists
