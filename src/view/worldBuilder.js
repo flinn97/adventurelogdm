@@ -121,7 +121,7 @@ toggleSidebar = () => {
               style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
                 </div> */}
 {
-(compListLength == 0) &&
+(compListLength === 0) &&
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{

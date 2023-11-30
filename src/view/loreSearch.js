@@ -111,7 +111,7 @@ export default class LoreSearch extends Component {
         const nameB = b.getJson().name;
         const dA = a.getJson()?.date ? a.getJson().date.toDate() : new Date(0);
         const dB = b.getJson()?.date ? b.getJson().date.toDate() : new Date(0);
-    
+    //13 Oct 2023
         if (this.state.sortTerm === "name") {
             return nameA.localeCompare(nameB);
         } else {

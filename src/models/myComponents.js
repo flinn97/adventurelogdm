@@ -1,4 +1,5 @@
 import BaseClass from "../componentListNPM/baseClass";
+import auth from "../services/auth.js";
 import authService from "../services/auth.js";
 import moment from 'moment';
 
@@ -266,6 +267,13 @@ class Campaign extends componentBase{
         this.json.picURL=pic;
         
     }
+
+    async getPlayers(compList){
+        let monsters = await auth.firebaseGetter(this.json._id, compList, "campaignId", "monster");
+            let pcs = monsters.filter(
+            (monster) => {return monster.getJson().role === "player"
+            })
+  return pcs}
 
 }
 class Encounter extends componentBase{

@@ -21,6 +21,7 @@ import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
+import ViewPlayerList from './view/popups/viewPlayerList';
 
 
 //model
@@ -99,6 +100,16 @@ justifyContent: "center",}}>
                   
                   />
                   }
+
+            {state.popupSwitch === "viewPlayers" &&
+
+            <ViewPlayerList
+
+            type="popup" options={{cardType:"popupCreate"}} app={app}
+            handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+
+            />
+            }
 
               {state.popupSwitch === "popupLore" 
               && (state.currentComponent?.getJson().type === "lore") 

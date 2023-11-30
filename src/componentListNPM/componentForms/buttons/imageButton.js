@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormsThemeFactory from '../formThemes/formThemeFactory';
 import placeholder from '../../../pics/illustrations/loreScript.png';
-
+import "../../App.css";
 
 
 class ImageButton extends Component {
@@ -64,11 +64,8 @@ class ImageButton extends Component {
             theme = FormsThemeFactory.getFormsThemeFactory()[this.props.theme]
         }
 
-
-
-
         return (
-            <div ref={this.wrapperRef} 
+            <div  ref={this.wrapperRef} 
             onClick={this.props.onClick?this.props.onClick: async ()=>{
                 if(this.props.func){
                     this.props.func(this.state);
@@ -87,7 +84,7 @@ class ImageButton extends Component {
                 
                               <div 
                                   style={this.props.blurStyle? this.props.blurStyleStyle:{
-                                      position: "absolute",top: 0,left: 0,height: "100%", opacity:".77",
+                                      position: "absolute",top: 0,left: 0,height: "100%", opacity:".5",
                                       width: "100%",backgroundColor: styles.colors.color1,filter: "blur(18px)",
                                       zIndex: 1
                                   }}></div>
@@ -97,7 +94,7 @@ class ImageButton extends Component {
                                           >
                                           {this.props.text? this.props.text: "add props.text"}
                                       </div>
-                                <img 
+                                <img className='hover-img'
                                   src={this.props.image? this.props.image: placeholder}
                                   style={this.props.imageStyle? this.props.imageStyleStyle:{
                                       position: "absolute",top: 0, left: 0,

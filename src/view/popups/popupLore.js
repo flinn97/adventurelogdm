@@ -121,9 +121,11 @@ class MainContent extends Component{
   async componentDidMount(){
     let state = this.props.app.state;
     let loreName = await state.currentComponent.getJson().name;
-
-    if(!loreName==""||!loreName===undefined){
-      await this.setState({hasChoice:"New"})
+ console.log(loreName);
+    if(loreName==""||loreName==undefined){
+      this.setState({hasChoice:""})
+    }else{
+      this.setState({hasChoice:"New"})
     }
   }
 
