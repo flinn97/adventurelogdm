@@ -43,12 +43,11 @@ export default class EncounterMapItem extends Component {
               let fontSize = fontSizeRem + "rem";
 
     return (
-      <div>
+      <div style={{}}>
 
       <Link
       to={"/encounter/" + obj?.getJson()._id} 
       style={{ color: styles.colors.colorWhite, 
-        textDecoration: "none", userSelect:"none",
         height: "fit-content", cursor:"pointer",
         width: "fit-content"}}
         
@@ -58,7 +57,7 @@ export default class EncounterMapItem extends Component {
       > 
 
       <div style={{display: "flex", flexDirection: 'column', 
-      borderRadius:styles.popupSmall.borderRadius,
+      borderRadius:styles.popupSmall.borderRadius, 
       justifyContent:"space-evenly", 
       zIndex:"0",
       height: 'fit-content', 
@@ -67,19 +66,23 @@ export default class EncounterMapItem extends Component {
       ...styles.backgroundContent}}>
                         
                         <div style={{
-                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',
-                        height: "fit-content", 
+                        ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"center", flexDirection: 'column', 
+                        
+                        height: "fit-content", minWidth:"132px",
                          width: "fit-content"}}>
                           
                           <div 
                           
-                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
+                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", width:"fit-content", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack,
-                          
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack, 
+                          textAlign:"center", justifyItems:"center", justifySelf:"center", padding:"4px 8px",
+                           alignSelf:"center", margin:"-4px",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize,}}>
                             {obj?.getJson().name}
                           </div>
+
+                          <div style={{backgroundColor:styles.colors.colorBlack+"44", width:"80px", height:"22px", filter:"blur(8px)", position:"absolute", alignSelf:"center"}}></div>
                 </div>
         </div>
         </Link>

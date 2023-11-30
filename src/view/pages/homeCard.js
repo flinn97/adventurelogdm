@@ -100,10 +100,9 @@ class MainContent extends Component{
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
       <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       <hr></hr>
-      
-      {/* <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
+      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
       <hr></hr>
-      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/> */}
+      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       </div>
     </div>
     )
@@ -123,7 +122,7 @@ class TabContent extends Component{
 
     return(
       <div>
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
     fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
       <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
       </div>
@@ -131,7 +130,8 @@ class TabContent extends Component{
     fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
       Game Master Suite
       </div>
-      <hr></hr></div>
+      <hr></hr> */}
+      </div>
     )
   }
 }

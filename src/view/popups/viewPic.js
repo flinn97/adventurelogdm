@@ -98,8 +98,7 @@ class MainContent extends Component{
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between",
-        minHeight:"fit-content", maxHeight:"865px", minWidth:"1555px", maxWidth:"1555px",
+        display:"flex", width:"100%", height:"100%", flexDirection:"column", justifyContent:"space-between",
         
         paddingTop:"31px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
 

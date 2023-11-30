@@ -8,7 +8,7 @@ class SelectByImageSmall {
         let style={
         containerStyle: { 
             default: {display:'flex', flexDirection:"column", backgroundColor:"#ffdead01",
-            width:"270px",height:"fit-content", alignItems:"center", flexDirection:"center",
+            width:"280px",height:"fit-content", alignItems:"center", flexDirection:"center",
             flexWrap:"wrap", alignContent:"center", justifyItems:"center", 
           },
             row: {display:'flex', flexDirection:"row", },
@@ -26,10 +26,11 @@ class SelectByImageSmall {
 
           sectionStyle:{
             default:  {display:'flex', flexDirection:"column", alignItems:"center", height:"fit-content",  marginBottom:"2px",
-            border:"solid 1px #C1A71B55", alignContent:"center", justifyItems:"center",
-              borderRadius:"2px", width:"100%", borderRightStyle:"",  borderLeftStyle:"",
+            border:"solid 1px #C1A71B55", alignContent:"center", justifyItems:"center", 
+              borderRadius:"2px", width:"100%", borderRightStyle:"",  borderLeftStyle:"solid 1px #C1A71B55",  borderRightStyle:"solid 1px #C1A71B55", 
+              
+            mixBlendMode:"",
             
-            mixBlendMode:""
           },
             row:  {display:'flex', flexDirection:"row"},
             column: {display:'flex', flexDirection:"column"},
@@ -73,8 +74,8 @@ class SelectByImageSmall {
           },
 //THIS IS the Title I think
           innerCellStyle:{
-            default: {display:"flex", cursor: "pointer", justifyContent:"center",alignItems:"center", marginBottom:"8px",
-            width:"fit-content", alignContent:"center", fontSize:"2px"},
+            default: {display:"flex", cursor: "pointer", justifyContent:"center",alignItems:"center", marginBottom:"2px",
+            width:"fit-content", alignContent:"center", fontSize:".5rem"},
             boldFont: {fontWeight:"500"},
           }, 
           iCellStyle:{

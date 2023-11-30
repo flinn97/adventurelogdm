@@ -59,16 +59,15 @@ export default class ListTreeLink extends Component {
     
     return ( <div 
      
-      className='hover-container' style={{cursor:"pointer",  
-    position: "", marginBottom:"4px",
+      className='hover-container' style={{cursor:"pointer", 
     height:"fit-content",
     display: "flex"}}>
       {name !=="" && name !==undefined &&
       <div  onClick={() => window.open("../campaign/" + newLink, "_blank")} 
-      style={{display:"flex", flexDirection:"column", alignItems:"center",
+      style={{display:"flex", flexDirection:"column", alignItems:"center", 
         justifyContent:"center", alignContent:"center"}}>
     <div title={"Open "+objName+" in a new tab."} className='hover-img'
-    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:styles.fonts.fontSmall, }}
+    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", }}
     >
       
       {objName}

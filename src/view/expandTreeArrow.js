@@ -36,8 +36,8 @@ render() {
   return(
     <div>
       {(name) &&
-    <div  className="hover-img" style={{
-      cursor: l!==0?"pointer":"", fontSize:"16px", textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
+    <div  className="hover-img" style={{ 
+      cursor: l!==0?"pointer":"", fontSize:styles.fonts.fontSmallest, textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
     alignContent:"stretch",
     marginBottom:l===0?"5px":"11px",}}
     onClick={() => {
@@ -60,7 +60,7 @@ render() {
     
       <img 
       
-      src={backarrow} style={{ transition:"all .4s ease-out", marginLeft:"4px", verticalAlign:"center", 
+      src={backarrow} style={{ transition:"all .4s ease-out", marginLeft:"8px", verticalAlign:"center", marginTop:"8px", 
         transform:this.state.expanded?"rotate(270deg)":"rotate(180deg)", 
         filter: "grayscale(100%) contrast(300%) brightness(200%)",
          objectFit:"contain", 

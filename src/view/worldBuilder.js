@@ -157,13 +157,20 @@ toggleSidebar = () => {
         {/* backgroundIMAGE */}
         </div>}
 
-        <div className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall, 
-          padding:"2px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+        <div 
+        title={
+          "The Lore tree lets you quickly find Lore and their connections"}
+        className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd,
+        fontSize:styles.fonts.fontSmall, display:"flex", flexDirection:"column",
+          padding:"4px 8px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
         {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
+        {!this.state.isSidebarVisible &&
+        <div style={{fontSize:".64rem", color:styles.colors.color8}}>Expand and review all Lore</div>
+        }
       </div>
 
-        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"1%", top:"3vh", }}>
+        {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"9px", top:"3vh", }}>
         {/* SIDEBAR */}    
                   <div style={{display:"flex", width:"fit-content",}}>
                        <LoreListCard app={app} type="card" options={{cardType:"tallestCard"}}/>

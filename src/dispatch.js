@@ -27,7 +27,16 @@ import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 export default class Dispatch extends Component {
   constructor(props){
     super(props);
-  
+  }
+
+  componentDidUpdate(){
+    let R = this.props.app.state.rerender;
+    if (R ==="true"){
+      this.props.app.dispatch({
+        rerender:"false",
+      })
+      
+    }
   }
 
 
@@ -35,26 +44,26 @@ export default class Dispatch extends Component {
     let app = this.props.app;
     let state = app.state;
     let styles =state.styles;
+    let RR = state.rerender;
+
   return (
     
 <BrowserRouter>
     {/*      === */}
   {state.user===undefined?(<Login app={app}/>):(
-    <div className='scroller2' style={{ width:"100%",
-      minWidth:"100%", userSelect:"none",
-      overflow:"auto",
+    <div  className='scroller2' style={{ width:"100%", overflow:"scroll",
+      minWidth:"100%", userSelect:"none", height:"100vh",
+       display:"flex", flexDirection:"column",
       }}>
-<div style={{display:'flex', zIndex:2000, marginRight:"210px"}}>
+<div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
           />
           </div>
         {/* WITHIN */}
-<div style={{display:'flex', flexDirection:'row',  width:"100%", paddingLeft:"210px", }}>
+<div  style={{display:'flex', flexDirection:'row',  width:"100%", paddingLeft:"210px", }}>
         
-     <div style={{ width:'100%', minHeight:"100px", padding:"28px", display: "flex",
-justifyContent: "center",
-alignItems: "center",
-      }}>
+     <div   style={{ width:'100%', minHeight:"fit-content", padding:"28px", display: "flex", height:"100%",
+justifyContent: "center",}}>
         
 
         {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
@@ -65,32 +74,31 @@ alignItems: "center",
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
 
-{state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
-        <ViewPic 
-        
-          type="popup" options={{cardType:"popupLarge"}} app={app} containerStyle={{
-            background:styles.colors.color2+"88",}}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-        
-        />}
+    {state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
+            <ViewPic 
+            
+              type="popup" options={{cardType:"popupLarge"}} app={app} 
+              handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+            
+            />}
 
-{state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
-        <ConnectToCampaign 
-        
-          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-        
-        />}
+          {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
+                  <ConnectToCampaign 
+                  
+                    type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
+                    handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+                  
+                  />}
 
-{state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type==="monster" &&
+          {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type==="monster" &&
 
-          <AddPlayerCharacter
-        
-        type="popup" options={{cardType:"popupCreate"}} app={app}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-        
-        />
-        }
+                    <AddPlayerCharacter
+                  
+                  type="popup" options={{cardType:"popupCreate"}} app={app}
+                    handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+                  
+                  />
+                  }
 
               {state.popupSwitch === "popupLore" 
               && (state.currentComponent?.getJson().type === "lore") 
@@ -104,8 +112,10 @@ alignItems: "center",
                 delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
                 currentDelObj:undefined,})}}
               />}
-          
+              
+       
      {state.user.getJson().role!=="GM"?(
+      
         <Routes>
         {state.switchCase?.map((obj, index)=>
         <>{obj._id!==undefined?(
@@ -116,12 +126,14 @@ alignItems: "center",
                   )}</>
                 )}
                 
-                <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} />}/> 
-  
-  </Routes>
+                <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}} />}/> 
+                
+          </Routes>
      ):(
      <Routes>
+      
       {state.switchCase?.map((obj, index)=>
+                 
                 <Route path={obj.path} element={<obj.comp app={app}/>} />
               )}
         <Route path="/campaign/:id" element={<CampaignEditor app={app} />}/> 
@@ -134,8 +146,9 @@ alignItems: "center",
 
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
-
+      
 </Routes>)}
+
 </div>
 </div>
      </div>

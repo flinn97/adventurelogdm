@@ -85,8 +85,10 @@ export default class MonsterMapItem extends Component {
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
-   
+
+    let RR =  state.rerender;
     let obj = this.props.obj;
+
     let allColors = obj.getJson().colors;
     let colors = Object.values(allColors); // ["#000000", "#ffffff", "#44fead"]
        
@@ -167,12 +169,13 @@ export default class MonsterMapItem extends Component {
     return (
      
       <div style={{minWidth: "100%", overflow:"visible",
-      position: "relative", borderRadius:"22px",
+      position: "relative", borderRadius:"22px", height:"128px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
+        {RR==="false" &&
       <div className={currentTurn == lastInitAsNumber ? "gradient-animation" : ""}
       style={{
         minWidth: "100%", borderRadius:"22px",
-        height:"fit-content",
+        height:"128px",
       }}>
         
       <div
@@ -188,7 +191,7 @@ export default class MonsterMapItem extends Component {
       border:"", verticalAlign:"center",
       justifyContent:"center",  position:"absolute",
       zIndex:"0",
-      height: 'fit-content', 
+      height: "128px", 
       width: 'fit-content',
       ...styles.backgroundContent,
       }}>     
@@ -196,7 +199,7 @@ export default class MonsterMapItem extends Component {
                         
                         style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-evenly", 
-                        height: "fit-content", border:"", marginTop:"-8px",
+                        height: "fit-content", border:"", marginTop:"-8px", height:"128px",
                         background: currentTurn === lastInitAsNumber ?  "linear-gradient(90deg, "+styles.colors.color2+"55, #45526e27, #282c3400)": "",
                          width:"fit-content",}}>
 
@@ -357,11 +360,12 @@ export default class MonsterMapItem extends Component {
           <img src={conditionGear}
           style={{width:"32px", }}/>
         </div>
-          <div className="hover-div" style={{display: 'flex', flexWrap: 'wrap', position:"absolute", maxWidth:"fit-content"}}>
+          <div className="hover-div" style={{display: 'flex', flexWrap: 'wrap',maxWidth:"fit-content",}}>
 
             {this.state.showConditions===true &&
             <div 
-            style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", top:"-.99vh", borderRadius:"22px", marginLeft:"-26vw", border:"1px solid "+styles.colors.color8+"33",
+            style={{ display: 'flex', flexWrap: 'wrap',  width:"40vw", top:"-.99vh", borderRadius:"22px", 
+            marginLeft:"-26vw", border:"1px solid "+styles.colors.color8+"33", height:"110px",
             position:"absolute", background:styles.colors.color1, padding:"4px 8px", justifyContent:"space-evenly" }}>
               {conListNames.map((word, index) => (
                 
@@ -449,7 +453,7 @@ export default class MonsterMapItem extends Component {
         </div>
         </div>
 
-        </div></div>
+        </div>}</div>
     )
   }
   }

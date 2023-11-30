@@ -87,18 +87,18 @@ export default class MapComponent extends Component {
       {(c==="delete") &&(
       <div style={
           this.props.delOptions?.style?
-            {cursor:"pointer", ...this.props.delOptions?.style }:
+            {...this.props.delOptions?.style ,cursor:"pointer", }:
           this.props.delOptions?.theme?
-          {cursor:"pointer", ...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle }: 
-          {cursor:"pointer", ...styles.delstyle }} onClick={this.props.delOptions?.func? this.props.delOptions.func: ()=>{
-            
-            componentList.getOperationsFactory().cleanPrepareRun({del:item})}}>
+          {...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle, cursor:"pointer",}: 
+          {...styles.delstyle , cursor:"pointer", }} onClick={this.props.delOptions?.func? this.props.delOptions.func: ()=>{         
+           componentList.getOperationsFactory().cleanPrepareRun({ del: item });
+            }}>
               
        {this.props.linkOptions?.cells?.includes(index)?(
        <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.innerlinkOptions?.path[this.props.innerlinkOptions.cells.indexOf(index)]? this.props.innerlinkOptions.path[this.props.innerlinkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.innerlinkOptions.path[this.props.innerlinkOptions.path.length-1]+ item.getJson()._id}>
-        {this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}} src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}
+        {this.props.delOptions?.picURL?(<img style={{...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle, width:"20px", height:"20px",}} src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}
        </Link>):(
-         <>{this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}</>
+         <>{this.props.delOptions?.picURL?(<img style={{ ...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle,width:"20px", height:"20px",}}  src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}</>
         )}
         
         </div>
@@ -335,7 +335,9 @@ export default class MapComponent extends Component {
   
         {/* IS CELL A SPECIAL WORD */}
         {(c==="delete") &&(
-        <div style={
+        <div 
+        title={this.props.delOptions?.warningMessage?this.props.delOptions?.warningMessage:"This is Permanent"}
+        style={
           this.props.delOptions?.style?
             {cursor:"pointer", ...this.props.delOptions?.style }:
           this.props.delOptions?.theme?
@@ -345,9 +347,12 @@ export default class MapComponent extends Component {
             componentList.getOperationsFactory().cleanPrepareRun({del:item})}}>
          {this.props.linkOptions?.cells?.includes(index)?(
          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
-          {this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}} src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}
+           <div style={{...this.props.delOptions?.textStyle}} >{this.props.delOptions?.text}</div>
+          {this.props.delOptions?.picURL?(<img style={{ width:"20px", height:"20px",...this.props.delOptions?.style,}} src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}
          </Link>):(
-           <>{this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}</>
+           <>
+           <div style={{...this.props.delOptions?.textStyle}}>{this.props.delOptions?.text}</div>
+           {this.props.delOptions?.picURL?(<img style={{width:"20px", height:"20px",...this.props.delOptions?.style, }}  src={this.props.delOptions.picURL}/>):(<>{this.props.delOptions?.name? this.props.delOptions.name:c}</>)}</>
           )}
           
           </div>
@@ -363,9 +368,9 @@ export default class MapComponent extends Component {
         onClick={this.props.editOptions?.func&& this.props.editOptions.func}>
          {this.props.linkOptions?.cells?.includes(index)?(
          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
-          {this.props.editOptions?.picURL?(<img style={{width:"20px", height:"20px"}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}
+          {this.props.editOptions?.picURL?(<img style={{width:"20px", height:"20px", ...this.props.editOptions?.style}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}
          </Link>):(
-           <>{this.props.editOptions?.picURL?(<img  style={{width:"20px", height:"20px"}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}</>
+           <>{this.props.editOptions?.picURL?(<img  style={{width:"20px", height:"20px", ...this.props.editOptions?.style}}  src={this.props.editOptions.picURL}/>):(<>{this.props.editOptions?.name? this.props.editOptions.name:c}</>)}</>
           )}
           
           </div>
