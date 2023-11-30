@@ -2,6 +2,7 @@ import { Component } from 'react';
 import compassImage from '../pics/Compass_Final.png';
 import bannerImage from '../pics/Warbanner_Final.png';
 import imageImage from '../pics/Image_Final.png';
+import arrowGif from '../pics/downArrowGif.gif'
 
 export default class LoreItemWithNotation extends Component {
   constructor(props) {
@@ -15,7 +16,12 @@ export default class LoreItemWithNotation extends Component {
      return str.split(/\s/).filter(Boolean).length;
   }
     
-  
+  handleDragOver = (event, lore) => {
+    event.preventDefault(); // Prevent default to allow drop
+    let targetId = lore.getJson()._id;
+    console.log("Dragging over: ", targetId);
+    this.setState({ dragOverTarget: targetId });
+  };
 
   render() {
     let obj = this.props.obj;
@@ -47,12 +53,33 @@ export default class LoreItemWithNotation extends Component {
     let isEmpty = allList===0;
     let isNewEmpty = objName.includes(this.props.newLoreName) && isEmpty;
 
+    let isGrab = this.props.isGrabbing===obj;
+    let anim = isGrab ? 'flash-off 1.5s 10':"";
+    let backColor = isGrab ?choiceColor+"1D":choiceColor+"0D";
+
+    
+
     return (
-      <div className='hover-container'
+      <div className='hover-container' onDragEnter={(e) => {
+        this.handleDragEnter(e, obj)}}
       style={{
          display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", color:"#ffdead",
-        backgroundColor:choiceColor+"0D", padding:"3px 4px", cursor:"pointer", border:"1px solid "+choiceColor2+"22", textAlign:"center",
-      minWidth:"440px", margin:"6px 2px", minHeight:"64px", borderRadius:"18px", height:"64px",}}>
+        backgroundColor:backColor,
+        padding:"3px 4px", cursor:"pointer", 
+        border:this.props.isGrabbing===obj?"1.8px solid "+styles.colors.color5+"33":"1px solid "+choiceColor2+"22", 
+        textAlign:"center",
+      minWidth:this.props.isGrabbing===obj?"250px":"440px", margin:this.props.isGrabbing===obj?"8px 99px":"8px 4px", minHeight:"64px", borderRadius:"18px", height:"64px", transition:"all 1s"}}>
+
+                                                        {( this.props.isGrabbing!=="" && this.props.isGrabbing!==obj) &&
+                                                            <div className='hover-div' 
+                                                            
+                                                            style={{opacity:".5", borderRadius:"18px", alignmentSelf:"center",
+                                                            zIndex:"-10",
+                                                              width:"448px", border:"2px dashed green", height:"72px", position:"absolute",top: -5, left: -4,}} >
+                                                              <img src={arrowGif} style={{width:"32px", height:"32px", marginTop:"-11px" }}/>
+                                                              
+                                                            </div>
+                                                         }
 
       {isNewEmpty&&
                                             <div style={{width:"100%", height:"100%", position:"absolute",
@@ -62,43 +89,65 @@ export default class LoreItemWithNotation extends Component {
 
                 
                 <div style={{
-                  color:styles.colors.colorWhite, 
-                  
-                fontSize:styles.fonts.fontNormal, marginTop:"18px", width:"100%", height:"100%" }}>
+                  color:this.props.isGrabbing===obj?styles.colors.color9:styles.colors.colorWhite,
+                fontSize:this.props.isGrabbing===obj?styles.fonts.fontSmall:styles.fonts.fontNormal, marginTop:"18px", width:"100%", height:"100%" }}>
                                                         {objName}
                 </div>
-               
 
+                                                       
+
+                          {this.props.isGrabbing===obj &&
+                          (
+                            <div style={{color:'styles.colors.color8', fontSize:".59rem"}}>Dropping into Lore</div>
+                          )}
+
+                  {this.props.isGrabbing!==obj && this.props.isGrabbing!=="" &&
+                          (
+                            <div style={{color:styles.colors.color8+'88', fontSize:".59rem",}}>Accepting Lore</div>
+                          )}
+
+                                  {this.props.isGrabbing!=="" && this.props.isGrabbing!==obj &&
                                             <div  className='hover-div' 
                                             style={{color:styles.colors.colorWhite+"65",
-                                            marginLeft:"6px", marginTop:"4px",
+                                            marginLeft:"6px", marginTop:"44px",
                                             fontSize:styles.fonts.fontSmallest}}>
                                                           {wordCountIs}
-                                                          </div> 
+                                                          </div> }
 
-<div style={{flexDirection:"row", display:"flex", width:"fit-content", position:"absolute", top:-5, right:2,
-alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center",
-justifyItems:"flex-end"}}>
-  {/* ICONS */}
-                                                       
-                                                        
                                                           
+    <div style={{flexDirection:"row", display:"flex", width:"fit-content", position:"absolute", top:-5, right:2,
+    alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center", 
+    opacity:this.props.isGrabbing!==obj?"1":"0", transition:"all 1s ease",
+    justifyItems:"flex-end"}}>
+      {/* ICONS */}
+                                                          
+                                                            
+                                                              
 
-                                                        {mapList.length >= 1 &&
-                                                        <img src={compassImage} title={mapList.length+" Connected Maps"} 
-                                                        style={{width:"26px", height:"26px",}}/>
-                                                           }
+                                                            {mapList.length >= 1 &&
+                                                            <img src={compassImage} title={mapList.length+" Connected Maps"} 
+                                                            style={{width:"26px", height:"26px",}}/>
+                                                              }
 
-                                                        {encounterList.length >= 1 &&
-                                                        <img src={bannerImage} title={encounterList.length+" Connected Encounters"}
-                                                        style={{width:"24px", height:"26px", marginLeft:"5px"}}/>
-                                                          }
+                                                            {encounterList.length >= 1 &&
+                                                            <img src={bannerImage} title={encounterList.length+" Connected Encounters"}
+                                                            style={{width:"24px", height:"26px", marginLeft:"5px"}}/>
+                                                              }
 
-                                                        {imageList.length >= 1 &&
-                                                        <img src={imageImage} title={imageList.length+" Images in Gallery"}
-                                                        style={{width:"26px",  height:"25px", marginLeft:"5px"}}/>
-                                                          }
-</div>
+                                                            {imageList.length >= 1 &&
+                                                            <img src={imageImage} title={imageList.length+" Images in Gallery"}
+                                                            style={{width:"26px",  height:"25px", marginLeft:"5px"}}/>
+                                                              }
+    </div>
+
+    {this.props.isGrabbing===obj &&
+    <div style={{ position:"absolute", animation:anim, display:"flex", flexDirection:"column", justifyContent:"center", justifyItems:"center" }}>
+    <div style={{ height:"3px", background:styles.colors.colorWhite+"55", width:"200px",  marginTop:"78px", borderRadius:"4px",alignSelf:"center" }}></div>
+    <div style={{height:"2px", background:styles.colors.colorWhite+"55", width:"100px",  marginTop:"3px", borderRadius:"4px" ,alignSelf:"center"}}></div>
+    <div style={{  height:"1px", background:styles.colors.colorWhite+"55", width:"50px",marginTop:"3px", borderRadius:"4px",alignSelf:"center" }}></div>
+    </div>
+      }
+
 </div>
 
     )

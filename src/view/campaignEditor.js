@@ -6,7 +6,7 @@ import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 // https://www.npmjs.com/package/react-lazyload;
 import placeholder from '../pics/placeholderEncounter.JPG';
-import addPC from '../pics/addPlayer.png';
+import addPC from '../pics/removePlayer.png';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
 import Worldbuilder from './worldBuilder';
@@ -16,6 +16,10 @@ import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
 
+import loreB from '../pics/illustrations/loreScript.png';
+import encounterB from '../pics/illustrations/encounterGiant.png';
+import galleryB from '../pics/illustrations/paintingHand.png';
+import ImageButton from '../componentListNPM/componentForms/buttons/imageButton';
 
 
 export default class CampaignEditor extends Component {
@@ -223,12 +227,12 @@ scrollTo = (ref, behavior) => {
                                                 justifyContent: "center" 
                                               }}
                                             >
-                                                  <img src={addPC} style={{ width: "22px", marginRight: "8px" }} alt="Add or remove"  ></img>
-                                                    Add or 
+                                                  <img src={addPC} style={{ width: "22px", marginRight: "8px" }} alt="Remove players"  ></img>
+                                                   
                                                           <div style={{ color:styles.colors.color5,
-                                                          fontSize: styles.fonts.fontSmall,marginLeft:"6px",         
+                                                          fontSize: styles.fonts.fontSmall,      
                                                           }}>
-                                                    Remove
+                                                    Remove Character
                                                           </div>
                                             </div>
                                             
@@ -247,26 +251,44 @@ scrollTo = (ref, behavior) => {
         {(state.currentLore==undefined &&
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
-                <div onClick={() => this.scrollTo(this.loreRef, "smooth")} 
-                style={{...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
-                  cursor:"pointer", padding:"4px", borderRadius:"12px",
-                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
-                    Lore
-                  </div>
+          <ImageButton onClick={() => this.scrollTo(this.loreRef, "smooth")} 
+          app={app} image={loreB} text={"Lore"} wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+          minHeight: "95px",padding:"4px",borderRadius:"12px",
+          width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+          overflow: 'hidden' }}
+          buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                            transform: 'translate(-50%, -50%)', opacity:".77",
+                                            color: styles.colors.color3,
+                                            zIndex: 2}}/>
+                                
+                                                
+                                <ImageButton onClick={() => this.scrollTo(this.encRef, "smooth")} 
+                              app={app} 
+                              image={encounterB} 
+                              text={"Encounters"} 
+                              wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+                              minHeight: "95px",padding:"4px",borderRadius:"12px",
+                              width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+                              overflow: 'hidden' }}
+                              buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                                                transform: 'translate(-50%, -50%)', opacity:".77",
+                                                                color: styles.colors.color3,
+                                                                zIndex: 2}}/>
+                                
 
-                  <div onClick={() => this.scrollTo(this.encRef, "smooth")} 
-                style={{ ...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
-                  cursor:"pointer", padding:"4px",borderRadius:"12px",
-                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
-                    Encounters
-                  </div>
-
-                  <div onClick={() => this.scrollTo(this.galRef, "smooth")} 
-                  style={{...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
-                  cursor:"pointer", padding:"4px",borderRadius:"12px",
-                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
-                    Gallery
-                  </div>
+                                        <ImageButton onClick={() => this.scrollTo(this.galRef, "smooth")} 
+                                       app={app} 
+                                      image={galleryB} 
+                                      text={"Gallery"} 
+                                      wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+                                      minHeight: "95px",padding:"4px",borderRadius:"12px",
+                                      width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+                                      overflow: 'hidden' }}
+                                      buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                                                        transform: 'translate(-50%, -50%)', opacity:".77",
+                                                                        color: styles.colors.color3,
+                                                                        zIndex: 2}}/>
+                                
 
                   </div>)}
 
