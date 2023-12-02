@@ -7,7 +7,9 @@ class componentBase extends BaseClass{
     constructor(opps){
         super(opps);
         this.createMPI = this.createMPI.bind(this)
-
+        this.addConnectedItemsMPI = this.addConnectedItemsMPI.bind(this)
+        this.createFromMPI=this.createFromMPI.bind(this);
+        this.addConnectedItemsLore= this.addConnectedItemsLore.bind(this);
     }
     json;
     startobj={
@@ -46,12 +48,63 @@ class componentBase extends BaseClass{
      * Have every class be able to make an mpi.
      * @param {*} mpiLore 
      */
-    createMPI(mpiLore){
+    async createMPI(mpiLore, campaignId, componentList, obj){
+        let json = {...this.json, _id:undefined, type:"marketplaceItem", ogType: this.json.type, campaignId:campaignId, loreId: mpiLore.getJson().ogType==="lore"?mpiLore.getJson()._id:"", ...obj};
+        await this.operationsFactory.jsonPrepare({addmarketplaceItem:json});
+        this.addConnectedItemsMPI(mpiLore, campaignId, componentList, obj)
+    }
+    /**
+     * Add connected items to the mpi list
+     */
+    addConnectedItemsMPI(mpiLore, campaignId, componentList, obj){}
+
+    /**
+     * convert mpi back to lore
+     * @param {*} lore 
+     * @param {*} campaignId 
+     * @param {*} componentList 
+     * @param {*} obj 
+     */
+    async createFromMPI(lore, campaignId, componentList, obj){
+        let json = { ...obj.getJson(), _id: undefined, type: obj.getJson().ogType, campaignId: campaignId, loreId: lore.getJson().type==="lore"?lore.getJson()._id:"", ...obj };
+            await this.operationsFactory.jsonPrepare({ ["add" + obj.getJson().ogType]: json });
+            this.addConnectedItemsLore(lore, campaignId, componentList, obj)
+    }
+
+    addConnectedItemsLore(mpiLore, campaignId, componentList, obj){
+        if(this.json.ogType === "encounter"){
+            //use the component list to get all the MPI's that are monsters that have encounter id.
+            let monsters = componentList.getList("marketplaceItem", this.json._id , "encounterId")
+            
+            //get the last component (encounter) in the opps list. 
+            let opList = componentList.getOperationsFactory().getUpdater("add")
+            let encounter = opList[opList.length - 1]
+            //for loop through each mpi and create a monster from the mpi and add the new encounter id
+            /**
+             *  let json = { ...obj.getJson(), _id: undefined, type: obj.getJson().ogType, campaignId: campaignId, loreId: lore.getJson().type==="lore"?lore.getJson()._id:"", ...obj };
+            await this.operationsFactory.jsonPrepare({ ["add" + obj.getJson().ogType]: json });
+             */
+            for(let monster of monsters){
+                let newEncounterId = encounter.getJson().encounterId
+                obj = {encounterId:newEncounterId}
+                monster.createfromMPI(mpiLore, campaignId, componentList, obj)
+            }
+
+        }
+        if(this.json.ogType === "map"){
+                        //use the component list to get all the MPI's that are monsters that have map id.
+                        let monsters = componentList.getList("marketplaceItem", this.json._id, "mapId")
+                        //get the last component (map) in the opps list. 
+                        let opList = componentList.getOperationsFactory().getUpdater("add")
+                        let map = opList[opList.length - 1]
+                        //for loop through those like the encounter. Create pins with the the map id.
+                        
+                        //get the lore that it will be attached.
+
+        }
 
     }
-    
 
-    
     
 
 }
@@ -244,6 +297,24 @@ class Map extends componentBase{
         loreId:""
     
     } 
+    /**
+     * Add connected items to the mpi list OVERIDE
+     */
+    addConnectedItemsMPI(mpiLore, campaignId, componentList, obj){
+        
+        let opList = componentList.getOperationsFactory().getUpdater("add")
+        let mapMPI = opList[opList.length-1];
+        let pins = componentList.getList("pin", this.json._id, "mapId");
+
+        for(let pin of pins){
+            
+            let mapId = mapMPI.getJson()._id;
+            let newMPILore = opList.filter(obj => obj.getJson().ogId===pin.getJson().loreId);
+            let loreId = newMPILore[0].getJson()._id;
+            let obj = {mapId:mapId, loreId: loreId};
+            pin.createMPI(mpiLore, campaignId, componentList, obj)
+        }
+    }
     
     async getPicSrc(name){
         let pic = await authService.downloadPics(name);
@@ -317,6 +388,22 @@ class Encounter extends componentBase{
             this.operationsFactory.run();
             return enc;
     }
+   
+
+    /**
+     * Add connected items to the mpi list OVERIDE
+     */
+    addConnectedItemsMPI(mpiLore, campaignId, componentList, obj){
+        let opList = componentList.getOperationsFactory().getUpdater("add")
+        let encounterMPI = opList[opList.length-1];
+        let monsters = componentList.getList("monster", this.json._id, "encounterId").filter(monster=> monster.getJson().role==="monster");
+
+        for(let monster of monsters){
+            let obj = {encounterId: encounterMPI.getJson()._id, }
+            monster.createMPI(mpiLore, campaignId, componentList, obj)
+        }
+    }
+    
 }
 
 class NewNote extends componentBase{
