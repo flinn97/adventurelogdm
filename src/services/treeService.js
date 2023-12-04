@@ -148,17 +148,9 @@ class TreeService {
     */
     async copyAttachedItemsReverseHelper(lore, componentList, attribute) {
         let id = lore.getJson().ogId;
-        let components = [...componentList.getList("marketplaceItem", id, attribute)]
+        let components = attribute==="campaignId"?[...componentList.getList("marketplaceItem", id, attribute).filter(obj=>obj.getJson().loreId==="")]:[...componentList.getList("marketplaceItem", id, attribute)]
         for (let obj of components) {
-            obj.createFromMPI();
-
-            if (!this.campaign && obj.getJson().ogType === "encounter") {
-                let monsterMPI = componentList.getList("marketplaceItem", obj.getJson()._id, "ecounterId");
-                for (let monster of monsterMPI) {
-                    let monsterjson = { ...monster.getJson(), _id: undefined, type: "monster", campaignId: this.list[0].getJson()._id, [attribute]: lore.getJson()._id };
-                    await componentList.getOperationsFactory().jsonPrepare({ addmonster: monsterjson });
-                }
-            }
+            await obj.createFromMPI(lore, this.list[0].getJson()._id, componentList, undefined);
         }
     }
 
@@ -172,6 +164,7 @@ class TreeService {
     * @param type if lore then => loreId, if campaign => campaignId
     */
     async convertMarketplaceItemToLoreTree(mpi, componentList, type) {
+        
         if (mpi.getJson().ogType === "campaign") {
             this.campaign = true
         }
@@ -186,12 +179,15 @@ class TreeService {
         obj = obj[obj.length-1];
 
         this.list.push(obj);
+        
+        await this.copyAttachedItemsReverseHelper(obj, componentList, "campaignId");
 
         //create an mpi for every component that is associate with campaign but is not a lore
         //    await this.copyAttachedItemsReverseHelper(obj, componentList, type);
         await this.recurseMPITree(mpi, componentList);
+        debugger
         for(let lore of this.list.slice(1)){
-            this.copyAttachedItemsReverseHelper(lore, componentList, "loreId");
+           await this.copyAttachedItemsReverseHelper(lore, componentList, "loreId");
         }
         opps.run();
     }
