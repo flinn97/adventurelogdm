@@ -229,6 +229,7 @@ export default class LoreSearch extends Component {
                                                           }));
                                                       }}
                                                         onStart={(event, data,) => {
+                                                          debugger
                                                           this.setState({ isGrabbing: true, grabItem: loreItem });
                                                       }}
                                                         onStop={() => this.handleStop(loreItem)}

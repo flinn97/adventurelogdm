@@ -73,8 +73,11 @@ class MainContent extends Component{
     super(props);
     this.state = {
       showSaved: false, 
+      pListLength: 0,
+      showList: true,
     }; 
   }
+  
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -86,7 +89,9 @@ class MainContent extends Component{
     
     let campName = (c!==""||c!==undefined)?"in "+c.getJson().title:"";
     let id = (c!==""||c!==undefined)?c.getJson()._id:"";
+
     
+
     return(
       <div className='scroller2'  style={{ overflowX:"scroll",
         display:"flex", width:"100%", height:"100%", flexDirection:"column", justifyContent:"space-between",
@@ -132,12 +137,12 @@ class MainContent extends Component{
 
 
 
-
+  
       <MapComponent app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
       cells={[{custom:YourPlayersMapItem, props:{app:app}},]}
       theme={"selectByImageSmall"}
-      
       />
+
       </div>
     </div>
     )

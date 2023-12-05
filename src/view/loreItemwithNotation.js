@@ -23,6 +23,8 @@ export default class LoreItemWithNotation extends Component {
     this.setState({ dragOverTarget: targetId });
   };
 
+  
+
   render() {
     let obj = this.props.obj;
     let app = this.props.app;
@@ -58,7 +60,6 @@ export default class LoreItemWithNotation extends Component {
     let backColor = isGrab ?choiceColor+"1D":choiceColor+"0D";
 
     
-
     return (
       <div className='hover-container' onDragEnter={(e) => {
         this.handleDragEnter(e, obj)}}
@@ -70,7 +71,7 @@ export default class LoreItemWithNotation extends Component {
         textAlign:"center",
       minWidth:this.props.isGrabbing===obj?"250px":"440px", margin:this.props.isGrabbing===obj?"8px 99px":"8px 4px", minHeight:"64px", borderRadius:"18px", height:"64px", transition:"all 1s"}}>
 
-                                                        {( this.props.isGrabbing!=="" && this.props.isGrabbing!==obj) &&
+                                                        {( this.props.isGrabbing!=="" && this.props.isGrabbing!==obj ) && state.popupSwitch!=="popupLore" &&
                                                             <div className='hover-div' 
                                                             
                                                             style={{opacity:".5", borderRadius:"18px", alignmentSelf:"center",
@@ -96,17 +97,21 @@ export default class LoreItemWithNotation extends Component {
 
                                                        
 
-                          {this.props.isGrabbing===obj &&
+                          {this.props.isGrabbing===obj && state.popupSwitch!=="popupLore" &&
                           (
                             <div style={{color:'styles.colors.color8', fontSize:".59rem"}}>Dropping into Lore</div>
                           )}
 
-                  {this.props.isGrabbing!==obj && this.props.isGrabbing!=="" &&
+                  {(this.props.isGrabbing!==obj && this.props.isGrabbing!=="") &&
                           (
-                            <div style={{color:styles.colors.color8+'88', fontSize:".59rem",}}>Accepting Lore</div>
+                            <div style={{color:styles.colors.color8+'88', fontSize:".59rem",}}>
+                              {state.popupSwitch==="popupLore"?"Connect to this Lore":
+                              "Accepting Lore"}
+                              
+                              </div>
                           )}
 
-                                  {this.props.isGrabbing!=="" && this.props.isGrabbing!==obj &&
+                                  {(this.props.isGrabbing!=="" && this.props.isGrabbing!==obj) &&
                                             <div  className='hover-div' 
                                             style={{color:styles.colors.colorWhite+"65",
                                             marginLeft:"6px", marginTop:"44px",

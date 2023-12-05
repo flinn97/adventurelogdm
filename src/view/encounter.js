@@ -32,6 +32,9 @@ export default class Encounter extends Component {
     }
     this.currentIndex = "-1";
   }
+
+  //TAYLOR. this component refuses to refresh correctly (for me)
+  ///
  
   async componentDidMount(){
     
@@ -40,21 +43,21 @@ export default class Encounter extends Component {
     let splitURL = href.split("/")
     let id = splitURL[splitURL.length-1]
     let component = this.props.app.state.componentList.getComponent("encounter", id);
-    this.setState({obj: component, currentTurn: component.getJson().currentTurn, currentIndex: component.getJson().currentIndex });
-    toolService.rerenderTimeout(this.props.app.dispatch, 100);
+    await this.setState({obj: component, currentTurn: component.getJson().currentTurn, isRunning:component.getJson().isRunning,
+      currentIndex: component.getJson().currentIndex,});
+     toolService.rerenderTimeout(this.props.app.dispatch, 100);
     // let Eid = toolService.getIdFromURL(false);
     // auth.firebaseGetter("Eid", this.props.app.state.componentList, "campaignId", "monster" );
     // console.log(this.props.app.state.componentList);
     
     let dispatch = this.props.app.dispatch;
-    this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
+    //this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
     
-    dispatch({popUpSwitchcase: "",});
 
+    dispatch({popUpSwitchcase: "", });
   }
   
   
-
     
   getEncounterId() {
     const path = window.location.pathname;
@@ -66,8 +69,9 @@ export default class Encounter extends Component {
 
 
   getNextHighestInitiative = async (participantList, dispatch) => {
+    ///THIS ISNT ALWAYS WORKING, sometimes it ignores input and does nothing???
     const now = Date.now();
-    if (now - this.lastClicked < 190) {  // 190 milliseconds delay plzzz
+    if (now - this.lastClicked < 90) {  // 90 milliseconds delay plzzz
       return;
     }
     this.lastClicked = now;
@@ -101,7 +105,7 @@ export default class Encounter extends Component {
             operate:"update", operation:"cleanPrepareRun", object: participant
           })
         });
-      obj.setCompState({ currentIndex: 0, isRunning:"true" });
+      obj.setCompState({ currentIndex: 0, isRunning:true });
       dispatch({
         operate:"update", operation:"cleanPrepareRun", object: obj
       })
@@ -125,7 +129,7 @@ export default class Encounter extends Component {
 
     participantList.forEach(participant => {
       participant.setCompState({ currentTurn: nextHighestLastInit });
-      if (participant.getJson().lastInit == nextHighestLastInit)
+      if (participant.getJson().lastInit === nextHighestLastInit)
       {
         p = participant;
       }
@@ -137,7 +141,7 @@ export default class Encounter extends Component {
       
       await conditionList.forEach(condition => 
           { 
-            if (condition.getJson().isActive == true){
+            if (condition.getJson().isActive === true){
                 let number = parseInt(condition.getJson().roundsActive, 10) + 1;
                 let stringN = number.toString();
                 condition.setCompState({roundsActive: stringN})
@@ -154,14 +158,14 @@ export default class Encounter extends Component {
   stopInitiative = async (participantList, dispatch) => {
     let obj = this.state.obj;
     let high = "99999";
-    obj.setCompState({ currentTurn: high, currentIndex : -1 })
+    await obj.setCompState({ currentTurn: high, currentIndex : -1, })
     
     this.currentIndex = -1; // Set to the first index
     this.setState({ currentIndex : -1});
     dispatch({
       operate:"update", operation:"cleanPrepareRun", object: obj
     })
-    await this.setState({ currentTurn: high});
+    await this.setState({ currentTurn: high,});
     
     await participantList.forEach(participant => {
       participant.setCompState({ currentTurn: high });
@@ -169,10 +173,22 @@ export default class Encounter extends Component {
         operate:"update", operation:"cleanPrepareRun", object: participant
       })
     });
-
     await dispatch({    })
   };
 
+  handleKeyDown = async (e) => {
+    let app = this.props.app;
+    let state = app.state;
+    let dispatch = app.dispatch;
+    let obj = this.state.obj;
+    const participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      if (obj?.getJson().isRunning){
+        this.getNextHighestInitiative(participantList, dispatch);
+         }
+    }
+  };
 
 
   render() {
@@ -185,18 +201,10 @@ export default class Encounter extends Component {
     let obj = this.state.obj;
     let audioLink = toolService.convertStringToLink(this.state.obj?.getJson().audio);
 
-    const playPause = obj?.getJson().isRunning?pause:back;
-    const participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
-    const twoParty = participantList.length;
-
+    const playPause = (obj?.getJson().isRunning)?pause:back;
+    let participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
+    let twoParty = participantList.length;
     
-//THIS WHOLE THING NEEDS TO BE REWORKED.
-//DELETING or ADDING creatures screws EVERYTHING UP
-//  I SWEAR THIS WAS WORKING LAST TIME WE TESTED THIS
-// I AM EXHAUSTED FROM ALL THE BUGS
-////// FIRSTLY, NOTHING seems to be saving. If you refresh or do ANYTHING it seems to break, WHY WHY WHY WHYYY
-// Taylor
-
     return (
       <div style={{width:"100%", height:"100%", }}>
 
@@ -281,10 +289,25 @@ export default class Encounter extends Component {
 {!obj?.getJson().isRunning &&
 <div className="hover-btn" style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!obj?.getJson().isRunning?"pointer":"wait"}} 
-            // onClick={()=>{
-            //   if (!isRunning){
-            // dispatch({})}
-            // }}
+            onClick={ async ()=>{
+              if (!obj?.getJson().isRunning){
+                          if (!state.currentCampaign){
+                          let campId = await obj.getJson().campaignId;
+                          
+                          await dispatch({
+                            currentCampaign: componentList.getComponent("campaign", campId, "_id")
+                          })
+                        }
+                let players = await state.currentCampaign?.getPlayers(state.componentList);
+                
+                await dispatch({
+                             campaignPlayers: players,
+                           })
+                 await this.setState({showMonsterMap: false});
+                await obj.addCampaignPlayers(state.campaignPlayers, obj.getJson()._id, state);               
+                 await this.setState({showMonsterMap: true});
+          }
+            }}
             >
           Add All Players
               </div>}
@@ -307,7 +330,6 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
         </div>
           </div>
 
-          
           
 <div style={{color:styles.colors.colorWhite, width:"100%", height:"100%", }}>
             {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster") 
@@ -364,7 +386,11 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                       if (obj?.getJson().isRunning){
                           this.getNextHighestInitiative(participantList, dispatch);
                            }
-                    }}>
+                    }}
+                    tabIndex={0} // Make the div focusable
+                    onKeyDown={(e) => this.handleKeyDown(e)}
+                    
+                    >
                     <div
                     style={{fontSize:styles.fonts.fontSmallest, width:"fit-content",
                       color:styles.colors.colorWhite, }}>
@@ -385,21 +411,23 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
               
               border:obj?.getJson().isRunning?"1px solid "+styles.colors.color5:"1px solid "+styles.colors.color7, borderRadius:"11px", padding:"5px 9px",}}
                         onClick={async () => {
-                          const newState = !obj?.getJson().isRunning; // Toggle the running state
-                          obj.setCompState({ isRunning: newState });
-                          dispatch({
-                            operate: "update",
-                            operation: "cleanPrepareRun",
-                            obj: obj
-                          });  // Update the object state
-                          this.setState({ isRunning: newState }, async () => {  // Update the component state and wait
-                            if (newState) {
+                          this.setState({showMonsterMap: false});
+                          let run = obj.getJson().isRunning;
+                          this.setState({ isRunning: !run }, async () => {  // Update the component state and wait
+                            // console.log(this.state.isRunning)
+                            
+                            if (this.state.isRunning===true) {
                               this.getNextHighestInitiative(participantList, dispatch);  // Run logic
+                              state.opps.run();
+                              obj.setCompState({ isRunning: true });
                               
                             } else {
-                              this.stopInitiative(participantList, dispatch);  // Stop logic
+                              this.stopInitiative(participantList, dispatch);
+                              obj.setCompState({ isRunning: false });
+                              state.opps.run();
+                              this.setState({ isRunning: false });
+                             
                             }
-                            await this.setState({showMonsterMap: false});
                             await componentList.sortSelectedList("monster", "lastInit", true);
                             await this.setState({showMonsterMap: true});
                             dispatch({

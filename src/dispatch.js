@@ -151,7 +151,7 @@ justifyContent: "center",}}>
         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />}/> 
         <Route path="/encountermanager/:id" element={<EncounterManager app={app}/>}/>
         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
-        <Route path="/encounter/:id" element={<Encounter app={app} />}/>
+        <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers}/>}/>
 
         <Route path="/log/:id" element={<AdventureLogPage app={app} />}/> 
 

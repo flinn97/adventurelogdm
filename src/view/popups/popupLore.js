@@ -94,7 +94,7 @@ class MainContent extends Component{
     
     let type = idParts.length >= 2?"lore":"campaign";
     let parent = state.componentList?.getComponent(type, parentId, "_id");
-    let parentName = type === "campaign"? "title":"name";
+    let parentName = (type === "campaign")? "title":"name";
     
     await state.opps.clearUpdater();
     

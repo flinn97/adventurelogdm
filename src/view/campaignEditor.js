@@ -34,7 +34,7 @@ export default class CampaignEditor extends Component {
     this.state = {
       obj: undefined,
       pic: undefined,
-     
+      showList: true,
     }
     
   }
@@ -58,14 +58,13 @@ async componentDidMount(){
   }
 
   let component = this.props.app.state.componentList.getComponent("campaign", id);
-  this.setState({obj: component,  start:true});
+  this.setState({obj: component,  start:true, showList:true});
   dispatch({currentCampaign: component})
   
   let players = await component.getPlayers(state.componentList);
   dispatch({
     campaignPlayers: players,
   })
-  console.log(state.campaignPlayers)
 }
 
 scrollTo = (ref, behavior) => {
@@ -286,16 +285,17 @@ scrollTo = (ref, behavior) => {
                                                 justifyContent: "center" 
                                               }}
                                             >
-                                                  <img src={addPC} style={{ width: "22px", marginRight: "8px", marginTop:"-5px" }} alt="Remove players"  ></img>
+                                                  <img src={addPC} style={{ width: "22px", marginRight: "8px", marginTop:"-5px" }} alt="Manage Players"  ></img>
                                                    
                                                           <div style={{ color:styles.colors.color5, textAlign:"end", verticalAlign:"flex-end",
                                                           fontSize: styles.fonts.fontSmall, fontSize: ".8rem",     
                                                           }}>
-                                                    Remove Player
+                                                    Manage Players
                                                           </div>
                                             </div>
                                             
-                                    </div></div>}
+                                    </div>
+                                    </div>}
 
               </div>
               

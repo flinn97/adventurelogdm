@@ -19,8 +19,7 @@ export default class YourPlayersMapItem extends Component {
       pic: undefined,
       runEncounter: undefined,
       encounterId: undefined,
-      showConditions: true
-      
+      showConditions: true,
     };
     }
 
@@ -82,7 +81,7 @@ export default class YourPlayersMapItem extends Component {
   render() {
     
     let app = this.props.app;
-    // let dispatch = app.dispatch;
+    let dispatch = app.dispatch;
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
@@ -306,9 +305,28 @@ export default class YourPlayersMapItem extends Component {
                           
                           
 
-                            <div title={"Remove from this campaign"}
-                            style={{...styles.buttons.buttonAdd, fontSize:fontSize[2], padding:"4px 11px", color:styles.colors.color5, background:styles.colors.color1+"e5",
-                            alignContent:"center", textAlign:"center", marginRight:"18px", marginLeft:"18px"}}>       
+                            <div 
+                            class='hover-btn'
+                            title={"Remove from this campaign"} style={{...styles.buttons.buttonAdd, fontSize:fontSize[2], padding:"4px 11px", 
+                            color:styles.colors.color5, background:styles.colors.color1+"e5", border:".5px dashed grey",
+                            alignContent:"center", textAlign:"center", marginRight:"18px", marginLeft:"18px"}}
+                             onClick={ async () => 
+                            {
+                              let component = this.props.app.state.componentList.getComponent("campaign", obj.getJson().campaignId);
+                              obj.setCompState({
+                                campaignId:"",
+                              })
+                              dispatch({
+                                operate:"update", operation:"cleanPrepareRun", object: obj, popupSwitch: "",
+                              })
+                              
+                              let players = await component.getPlayers(state.componentList);
+                              await dispatch({
+                                campaignPlayers: players, popupSwitch: "viewPlayers",
+                              })
+                            }
+                            }
+                            >       
                        Remove
         </div></div></div>
         

@@ -1,3 +1,4 @@
+import { collection } from "firebase/firestore";
 import BaseClass from "../componentListNPM/baseClass";
 import auth from "../services/auth.js";
 import authService from "../services/auth.js";
@@ -313,6 +314,36 @@ class Encounter extends componentBase{
             };
             this.operationsFactory.run();
             return enc;
+    }
+
+    async addCampaignPlayers(playerList, id, state){
+        
+        let comps = await playerList;
+
+        console.log(playerList)
+            if (await comps){
+                        for (let obj of comps)
+                            {
+                                ///TAYLOR help me get this right
+                                let monsterJson = await obj.copyComponent(["encounterId","role",],[id,"",],); 
+                                console.log(monsterJson)
+                            await this.operationsFactory.jsonPrepare({"addmonster":monsterJson});
+                            await this.operationsFactory.run();
+                            };
+            }else{
+                        for (let obj of state?.campaignPlayers)
+                                {
+                                ///TAYLOR help me get this right
+                                let monsterJson = await obj.copyComponent(["encounterId","role",],[id,"",],); 
+                                console.log(monsterJson)
+                                await this.operationsFactory.jsonPrepare({"addmonster":monsterJson});
+                                await this.operationsFactory.run();
+                                };
+
+            }
+             
+    //  return comps;
+     // do I put return comps here? do I need to return??
     }
 }
 
