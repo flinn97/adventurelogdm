@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import auth from '../../services/auth';
+import treeService from '../../services/treeService';
 
 /**
  * condensed version of the cards.
@@ -105,7 +106,9 @@ class MainContent extends Component{
       <div>
       You can buy adventures, encounters, and more:
       {this.state.start &&
-      <MapComponent app ={app} name="marketplaceItem" cells={["title"]} />}
+      <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
+        debugger
+        treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")}]}}/>}
        <div style={{color:styles.colors.color3}}>Buy Stuff</div>
       </div>
       

@@ -87,9 +87,10 @@ export default class AddCampaign extends Component {
                   }}
                     
                     onClick={()=>{
-                      dispatch({popupSwitch:"popupDelete", currentDelObj:state.currentComponent,
-                    handlePopupClose:this.deleteCampaign,
-                    })}}>
+                      state.opps.cleanPrepareRun({del:state.currentComponent}).then(()=>{
+                        this.deleteCampaign();
+                      });
+                      }}>
                       Delete This Campaign 
                       <div style={{color:styles.colors.color3, fontSize:".85rem", marginLeft:"10px", alignSelf:"center", }}> (permanent)</div>
                     </div>)}

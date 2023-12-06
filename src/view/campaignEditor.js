@@ -15,6 +15,7 @@ import Upload from './upload';
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
+import treeService from '../services/treeService';
 
 import loreB from '../pics/illustrations/loreScript.png';
 import encounterB from '../pics/illustrations/encounterGiant.png';
@@ -100,7 +101,8 @@ scrollTo = (ref, behavior) => {
       {this.state.start&&(
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
-
+<div style={{color:"red"}} onClick={()=>{
+  treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}>hi</div>
         {/* BACK BUTTON */}
       {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
           (<Link className="hover-btn"
@@ -127,6 +129,8 @@ scrollTo = (ref, behavior) => {
             {this.state.obj?.getJson().title}
           </a>)
           }
+
+
 
             
 
