@@ -1,5 +1,7 @@
 import idService from "./idService";
 
+import { serverTimestamp } from "firebase/firestore";
+
 
 /**
  * Create a factory that can add all the components
@@ -33,13 +35,12 @@ class Factory {
      * @returns a new component from the data
      * Used to create raw data into class components to be used.
      */
-    getComponent(obj){
+    async getComponent(obj){
         
         
         if(Object.keys(this.factory).includes(obj.component)){
             let key = obj.component;
             let comp = new this.factory[key](this.operationsFactory);
-            
             comp.setJson({...comp.getJson(), ...obj.json, _id: obj.json?._id? obj.json?._id: idService.createId() });
             return comp;     
         }

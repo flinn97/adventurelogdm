@@ -54,6 +54,10 @@ class Auth {
 
     }
 
+    //Value = value pair (key value) example: string such as "1231454891"
+    //ComponentList = adding to the componentList
+    //Attribute = attribute pair always a string "campaignID" or "_id"
+    //Type = OPTIONAL this RETURNS the getList, string "monster",
     async firebaseGetter(value, componentList, attribute, type) {
         let list = componentList.getComponents();
         let IDlist = [];
@@ -61,7 +65,7 @@ class Auth {
             IDlist.push(list[key].getJson()?._id)
         }
         let rawData = [];
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value));
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
         /// TAYLOR ORDER BY DATE?
         let comps = await getDocs(components);
         for (const key in comps.docs) {
@@ -334,10 +338,9 @@ class Auth {
                     }
                 }
 
-                // let localData = await localStorage.getItem("rawData");
-                // if (localData) {
-                //     localData = JSON.parse(localData);
-                // }
+                try {
+                
+                
                 switch (key) {
                     case "add":
                         if(email===undefined){
@@ -347,18 +350,11 @@ class Auth {
                         if (!component.owner) {
                             component.owner = email
                         }
-                        
-                        component.date = await serverTimestamp();
-                        // if (localData) {
-                        //     localData.push(component);
-                        // }
+                        component.date = await serverTimestamp();                        
                         await setDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                         break;
                     case "del":
-                        // if (localData) {
-                        //     localData = localData.filter(delObj => { return delObj._id !== component });
-                        // }
-
+                       
 
                             await deleteDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component));
                             break;
@@ -366,25 +362,20 @@ class Auth {
                         
                         
                         component.date = await serverTimestamp();
-                        // if (localData) {
-
-                        //     for (let updateobj of localData) {
-                        //         if (updateobj._id === component._id) {
-                        //             updateobj = {...component}
-                        //         }
-                        //     }
-                        // }
+                       
                         await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                         break;
                 }
-                
-
-
+            } catch (error) {
+                console.log(error);
+                console.log(component)    
+            }
+            
             }
         }
         
         if (dispatch) {
-            
+           
             dispatch({ dispatchComplete: true, data: obj })
             
         }
