@@ -6,7 +6,7 @@ import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 // https://www.npmjs.com/package/react-lazyload;
 import placeholder from '../pics/placeholderEncounter.JPG';
-import addPC from '../pics/addPlayer.png';
+import addPC from '../pics/removePlayer.png';
 import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
 import Worldbuilder from './worldBuilder';
@@ -17,6 +17,12 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import LoreSearch from './loreSearch';
 import treeService from '../services/treeService';
 
+import loreB from '../pics/illustrations/loreScript.png';
+import encounterB from '../pics/illustrations/encounterGiant.png';
+import galleryB from '../pics/illustrations/paintingHand.png';
+import ImageButton from '../componentListNPM/componentForms/buttons/imageButton';
+import auth from '../services/auth';
+import TokenImage from './tokenImage';
 
 
 export default class CampaignEditor extends Component {
@@ -29,7 +35,7 @@ export default class CampaignEditor extends Component {
     this.state = {
       obj: undefined,
       pic: undefined,
-     
+      showList: true,
     }
     
   }
@@ -53,15 +59,13 @@ async componentDidMount(){
   }
 
   let component = this.props.app.state.componentList.getComponent("campaign", id);
-  this.setState({obj: component,  start:true});
+  this.setState({obj: component,  start:true, showList:true});
   dispatch({currentCampaign: component})
-  //RICH TEXT READ
-  // let campaignDesc = document.getElementById("campaignDesc");
-  // campaignDesc.innerHTML = component.getJson().description;
-
-  // this.setState((prevState) => ({
-  //   usage: prevState.usage + 1,
-  // }));
+  
+  let players = await component.getPlayers(state.componentList);
+  dispatch({
+    campaignPlayers: players,
+  })
 }
 
 scrollTo = (ref, behavior) => {
@@ -70,18 +74,27 @@ scrollTo = (ref, behavior) => {
   }
 }
 
+    openPlayers(dispatch){
+      dispatch({
+        popupSwitch: "viewPlayers"
+      })
+    }
+
   render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     
     let styles = state.styles;
-    let players = state.componentList.getList("character", this.state.obj?.getJson()._id, "campaignId");
-    let pCount = players.length;
+    let players = state.campaignPlayers;
+    let pCount = players?.length;
 
     const advLogText = "Go to "+this.state.obj?.getJson().title+"'s Adventure Log";
     const advLogLink = this.state.obj?.getJson()._id;
     const newLink = ("/log/"+advLogLink);
+
+    let hWidth = pCount?(24*pCount):24;
+    let highlightWidth = hWidth.toString()+"px";
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
@@ -190,7 +203,13 @@ scrollTo = (ref, behavior) => {
                       style={{width:"1px", height:"1px", userSelect:"none", opacity:"0%", }}>
                           </div>
                           {state.currentLore==undefined &&
-                          <div>
+                          <div style={{
+                            display:"flex", flexDirection:"column", alignItems:"flex-end",
+                            justifyContent:"flex-end"}}>
+
+                                                      
+
+
                           <div 
                                 style={{ 
                                   color: styles.colors.colorWhite + "b4", 
@@ -208,35 +227,79 @@ scrollTo = (ref, behavior) => {
                               >
                                 {(pCount === 0 || pCount >= 2) ? `${pCount} active characters in this campaign` : `${pCount} active character in this campaign`}
                         </div>
-                        <div style={{ minWidth:"100%",
+
+                        
+
+                        <div onClick={ async ()=>{
+                                                this.openPlayers(dispatch)
+                                              }}
+                            style={{ minWidth:"100%", width:"800px",
                                       display: "flex", marginTop:"10px", height:"fit-content", 
                                       borderRadius: "12px", 
-                                      flexDirection: "row",
-                                      alignItems: "center", // This should be alignItems instead of alignContent
+                                      flexDirection: "row", 
+                                      alignItems: "flex-end", // This should be alignItems instead of alignContent
                                       justifyContent: "flex-end", // Add this if you want to align the items to the end of the container
                                       height: "22px"
                                     }}>
-                                            <div className='hover-btn' title={"Add or remove player characters from this campaign"}
+                                        {players?.length > 0 &&
+                                                    (<div className='hover-img' style={{display: "flex", width: highlightWidth, alignItems: "flex-end", marginBottom:"-4px", justifyContent:"flex-end", 
+                                                    marginRight:"54px", cursor:"pointer",
+                                                   padding:"3px", borderRadius:"11px"}}>
+                                                                            { players.map((p, index) => (
+                                                                                    <div key={index} 
+                                                                                        style={{   marginRight: "-8px",
+                                                                                        }}>
+                                                                                        {p?.getJson().picURL && (
+                                                                                            <div  style={{ 
+                                                                                                display: "flex", 
+                                                                                                flexDirection: "row", zIndex: (10)+index,
+                                                                                                position: "relative",
+                                                                                                filter:`blur(`+(.3 / (index + 1)).toFixed(2)+`px) saturation(`+(.73 / (index + 1))+`)`,                                                                                               
+                                                                                                width: "34px",
+                                                                                            }}>
+                                                                                                
+                                                                                                {/* Token Image */}
+                                                                                                <TokenImage 
+                                                                                                    pic={p?.getJson().picURL} 
+                                                                                                    width={38} 
+                                                                                                    app={app} 
+                                                                                                    colors={p.getJson().colors ? Object.values(p.getJson().colors)
+                                                                                                       : 
+                                                                                                       [styles.colors.color1, styles.colors.color2, styles.colors.color8]}
+                                                                                                    
+                                                                                                />
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </div>
+                                                                                ))
+                                                                            }
+                                                      </div>)}
+
+                                            <div className='hover-btn' title={"View/edit player characters from this campaign"}
+                                              onClick={ async ()=>{
+                                                this.openPlayers(dispatch)
+                                              }}
                                               style={{ 
                                                 ...styles.buttons.buttonAdd, 
-                                                fontSize: styles.fonts.fontSmall, 
-                                                padding: "4px 8px", 
+                                                
+                                                padding: "4px 8px", width:"220px",
                                                 paddingTop:"7px",
                                                 display: "flex", 
-                                                alignItems: "start", 
+                                                alignItems: "start", textAlign:"center", alignContent:"center",
                                                 justifyContent: "center" 
                                               }}
                                             >
-                                                  <img src={addPC} style={{ width: "22px", marginRight: "8px" }} alt="Add or remove"  ></img>
-                                                    Add or 
-                                                          <div style={{ color:styles.colors.color5,
-                                                          fontSize: styles.fonts.fontSmall,marginLeft:"6px",         
+                                                  <img src={addPC} style={{ width: "22px", marginRight: "8px", marginTop:"-5px" }} alt="Manage Players"  ></img>
+                                                   
+                                                          <div style={{ color:styles.colors.color5, textAlign:"end", verticalAlign:"flex-end",
+                                                          fontSize: styles.fonts.fontSmall, fontSize: ".8rem",     
                                                           }}>
-                                                    Remove
+                                                    Manage Players
                                                           </div>
                                             </div>
                                             
-                                    </div></div>}
+                                    </div>
+                                    </div>}
 
               </div>
               
@@ -251,26 +314,48 @@ scrollTo = (ref, behavior) => {
         {(state.currentLore==undefined &&
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
-                <div onClick={() => this.scrollTo(this.loreRef, "smooth")} 
-                style={{...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
-                  cursor:"pointer", padding:"4px", borderRadius:"12px",
-                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
-                    Lore
-                  </div>
-
-                  <div onClick={() => this.scrollTo(this.encRef, "smooth")} 
-                style={{ ...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
-                  cursor:"pointer", padding:"4px",borderRadius:"12px",
-                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
-                    Encounters
-                  </div>
-
-                  <div onClick={() => this.scrollTo(this.galRef, "smooth")} 
-                  style={{...styles.buttons.buttonAdd, textAlign:"center", verticalAlign:"center",
-                  cursor:"pointer", padding:"4px",borderRadius:"12px",
-                  height:"95px", width:"340px", backgroundColor:styles.colors.color2}}>
-                    Gallery
-                  </div>
+                                            <div className="hover-btn">
+          <ImageButton 
+          onClick={() => this.scrollTo(this.loreRef, "smooth")} 
+          app={app} image={loreB} text={"Lore"} wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+          minHeight: "95px",padding:"4px",borderRadius:"12px",
+          width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+          overflow: 'hidden' }}
+          buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                            transform: 'translate(-50%, -50%)', opacity:".77",
+                                            color: styles.colors.color3,
+                                            zIndex: 2}}/>
+                                            </div>
+                                
+                                            <div className="hover-btn">      
+                                <ImageButton 
+                                onClick={() => this.scrollTo(this.encRef, "smooth")} 
+                              app={app} 
+                              image={encounterB} 
+                              text={"Encounters"} 
+                              wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+                              minHeight: "95px",padding:"4px",borderRadius:"12px",
+                              width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+                              overflow: 'hidden' }}
+                              buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                                                transform: 'translate(-50%, -50%)', opacity:".77",
+                                                                color: styles.colors.color3,
+                                                                zIndex: 2}}/></div>
+                                
+                                <div className="hover-btn">
+                                        <ImageButton onClick={() => this.scrollTo(this.galRef, "smooth")} 
+                                       app={app} 
+                                      image={galleryB} 
+                                      text={"Gallery"} 
+                                      wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+                                      minHeight: "95px",padding:"4px",borderRadius:"12px",
+                                      width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+                                      overflow: 'hidden' }}
+                                      buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                                                        transform: 'translate(-50%, -50%)', opacity:".77",
+                                                                        color: styles.colors.color3,
+                                                                        zIndex: 2}}/></div>
+                                
 
                   </div>)}
 

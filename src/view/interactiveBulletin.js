@@ -388,23 +388,24 @@ export default class InteractiveBulletin extends Component {
                         
                         </div>
                          <div style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "flex-end",
-                          marginTop: "44px",
+                          display: "flex", direction:"column",
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                          marginTop: "51px",
                           marginLeft: "-110px",
-                          width: "200px",
-                          zIndex: "20",
+                          width: "200px", verticalAlign:"center",
+                          zIndex: "20",borderRadius: "4px",
+                          background:styles.colors.color1+"31",
+                          height: "fit-content",
                           
-                          height: "32px",
                         }}>
                           <ParentFormComponent
                             app={app}
                             name="name"
                             prepareRun={true}
                             obj={pin}
-                            inputStyle={{
-                              padding: "0px", padding:"2px",
+                            inputStyle={{ cursor:"text",
+                              padding:"2px",
                               color: styles.colors.colorWhite,
                               borderRadius: "4px",
                               background: styles.colors.colorBlack + "88",

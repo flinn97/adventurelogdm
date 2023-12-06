@@ -94,7 +94,7 @@ class MainContent extends Component{
     
     let type = idParts.length >= 2?"lore":"campaign";
     let parent = state.componentList?.getComponent(type, parentId, "_id");
-    let parentName = type === "campaign"? "title":"name";
+    let parentName = (type === "campaign")? "title":"name";
     
     await state.opps.clearUpdater();
     
@@ -121,9 +121,11 @@ class MainContent extends Component{
   async componentDidMount(){
     let state = this.props.app.state;
     let loreName = await state.currentComponent.getJson().name;
-
-    if(!loreName==""||!loreName==undefined){
-      await this.setState({hasChoice:"New"})
+ console.log(loreName);
+    if(loreName==""||loreName==undefined){
+      this.setState({hasChoice:""})
+    }else{
+      this.setState({hasChoice:"New"})
     }
   }
 
@@ -195,7 +197,7 @@ class MainContent extends Component{
 
         
 
-{ this.state.hasChoice == "New" &&
+{ this.state.hasChoice === "New" &&
 <div style={{
         display:"flex", width:"57vw", flexDirection:"column", height:"fit-content", alignContent:"center",
         
@@ -545,7 +547,7 @@ class MainContent extends Component{
 
           <div>Existing Lore</div> */}
 
-            {(this.state.hasChoice=="") &&
+            {(this.state.hasChoice==="") &&
               <div>
                 
 <div  style={{display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", marginTop:"15%", height:"100%"}}>
@@ -562,6 +564,7 @@ class MainContent extends Component{
                   <div className='hover-btn'
                   onClick={async ()=>{
                     this.setState({hasChoice: "Connect"});
+                    state.opps.clearUpdater();
                   }}
                   title={"Find pre-made Lore to connect it to this Lore"}
                   style={{...styles.buttons.buttonAdd, margin:"8px"}}>
@@ -572,7 +575,7 @@ class MainContent extends Component{
               </div>  
             }
 
-{(this.state.hasChoice=="Connect" ) &&
+{(this.state.hasChoice==="Connect" ) &&
               <div>
              <div className="hover-btn"  
           onClick={() => {
