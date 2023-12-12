@@ -8,7 +8,7 @@ class ToolService {
       let t = timeMs?timeMs:0;
       setTimeout(() => {
           dispatch({
-              rerender: "true",
+              rerender: true,
           });
            
       }, t);

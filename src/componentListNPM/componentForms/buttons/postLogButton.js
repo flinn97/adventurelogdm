@@ -26,11 +26,14 @@ class PostLogButton extends Component {
         let altText = this.props.altText? "this "+type+"'s "+this.props.altText:"";
         let titleMessage = "Send "+altText+" to the Adventure Log. Everyone in your campaign will be able to see this.";
         
-        let isVisible = (type==="lore" && obj.getJson().desc)||(type==="image")||(type==="encounter")?"true":"false";
+        let isVisible = (type==="lore" && this.props.val)||(type==="image")||(type==="encounter")?"true":"false";
 
+        let newType = (this.props.forceValue && this.props.val)?this.props.val:'';
+        
         return (
             <div 
-            style={{display: "flex", flexDirection: "row", justifySelf: "flex-end", width: "fit-content", }}>
+            style={{display: "flex", flexDirection: "row", justifySelf: "flex-end", cursor:this.state.showSaved?"progress":"auto",
+            width: "fit-content", marginRight:this.props.marginRight?this.props.marginRight:"0px"}}>
                  {this.state.showSaved && (
                   <div className="saved-animation" style={{color:styles.colors.color9,
                   position:"sticky",
@@ -40,12 +43,16 @@ class PostLogButton extends Component {
             <div title={isVisible==="true"?titleMessage:""} style={{
             backgroundColor:styles.colors.color9+"68", 
             opacity:isVisible==="true"?"100%":"0%",
-             borderRadius:"11px",padding:"2px", }}
+             borderRadius:"11px",padding:"2px", 
+            pointerEvents:this.state.showSaved?"none":"all",
+            }}
                                 onClick={() => {
-                                    
-                                    if (isVisible==="true"){
 
-                                        type!=="encounter"?sendToChatService.dispatchLog(obj, app)
+
+                                    if (isVisible==="true"){
+                                        console.log(newType)
+
+                                        type!=="encounter"?sendToChatService.dispatchLog(obj, app, this.props?.campaignId, newType)
                                         :
                                         //ENCOUNTER MUST HAVE CAMPAIGN ID
                                         sendToChatService.dispatchLog(obj, app, this.props?.campaignId)
@@ -64,7 +71,7 @@ class PostLogButton extends Component {
                 <div style={{...styles.buttons.buttonClear, transition:"all",
                     cursor:isVisible==="true"?"pointer":"auto",
                                 width:"fit-content",
-                color:styles.colors.colorWhite, padding:"2px 6px", fontSize:styles.fonts.fontSmall, borderRadius:"11px"
+                color:styles.colors.colorWhite, padding:"2px 12px", fontSize:styles.fonts.fontSmall, borderRadius:"11px"
             }}
                     
                 >{this.props.text? this.props.text: "Log"}</div>

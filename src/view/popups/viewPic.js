@@ -3,6 +3,7 @@ import "../../App.css"
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../../services/toolService';
 import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
+import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
 
 
 
@@ -22,11 +23,6 @@ export default class ViewPic extends Component {
     
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
 
 
   render() {
@@ -63,10 +59,6 @@ export default class ViewPic extends Component {
     
     }
     
-    //*********CARD ASSIGN********/
-
-
-
 
 
     return (
@@ -100,12 +92,26 @@ class MainContent extends Component{
       <div style={{
         display:"flex", width:"100%", height:"100%", flexDirection:"column", justifyContent:"space-between",
         
-        paddingTop:"31px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
+        paddingTop:"28px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
 
           {!isLog &&
           <div style={{display: "flex", marginBottom:"11px",flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end"}}>
         <PostLogButton app={app} obj={state.currentPic} altText={"description"}/>
           </div>}
+          {!isLog &&
+          <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", marginTop:"22px", }}>
+           <div style={{color:styles.colors.colorWhite+"d9", marginTop:"8px"}}>Source / Additional Text:</div>
+         <ParentFormComponent app={app} name="src" obj={state.currentPic}
+                      theme={"adventureLog"} 
+                        rows={5}
+                        prepareRun={true}
+                        maxLength={100}
+                      inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
+                      borderRadius:"4px",background:styles.colors.colorWhite+"00", cursor:"text",
+                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+                      
+                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", width:"71%", marginLeft:"8px",
+                      flexDirection:"column", justifyItems:"space-between"}}/></div>}
 
     <div className='scroller2' style={{  maxHeight:"100%", maxWidth:"100%",
       display:"flex", flexDirection:"row", textAlign:"center", padding:"4px", justifyContent:"center" }}> 
@@ -115,6 +121,8 @@ class MainContent extends Component{
             
             }}/>
      </div>
+
+     
     </div>
     )
   }

@@ -20,10 +20,8 @@ export default class AddCampaign extends Component {
 
   async deleteCampaign () {
     let dispatch = this.props.app.dispatch;
-    dispatch({popupSwitch:"", currentDelObj:undefined});
-            //OK DONT DO THIS
-              const delay = ms => new Promise(res => setTimeout(res, ms));
-              await delay(1500);
+    await dispatch({popupSwitch:"", currentDelObj:undefined});
+  
     window.location.href="/campaign/";
   }
 
@@ -75,13 +73,13 @@ export default class AddCampaign extends Component {
             // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
             }}>
 
-              <div style={{display:"flex", flexDirection:"column", height:"fit-content",  }}>
+              <div style={{display:"flex", flexDirection:"column", height:"fit-content", width:"fit-content"}}>
 
         {/* //DELETE CAMPAIGN */}
                     {isUpdate && 
                     (<div className='hover-btn'
                       style={{...styles.buttons.buttonClose, right:"3.5vw", borderRadius:"2vmin", fontSize:styles.fonts.fontSmall,
-                    padding:"4px 10px",  pointer:"cursor", height:"fit-content", zIndex:"200",
+                    padding:"4px 10px",  pointer:"cursor", height:"fit-content", zIndex:"200", 
                     marginRight:"6%", background:styles.colors.colorBlack+"5b",marginTop:"4px", position:"absolute", 
                     // backgroundColor:"white",
                   }}

@@ -12,6 +12,7 @@ import diceService from '../../services/diceService';
 import Upload from '../upload';
 import colorService from '../../services/colorService';
 import { multiFactor } from 'firebase/auth';
+import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 
 export default class AdventureLogPage extends Component {
   constructor(props) {
@@ -47,9 +48,11 @@ export default class AdventureLogPage extends Component {
 
     })
     state.componentList.sortSelectedListbyFirebaseDate("post");
-    this.setState({ textI: "", showItems:true })
+    this.setState({ textI: "", showItems:true });
+    app.setState({rerender:true});
   }
-  
+
+
   handleMessageChange = (e) => {
     this.setState({ textI: e.target.value });
   }
@@ -120,6 +123,7 @@ export default class AdventureLogPage extends Component {
     this.setState({ showItems:true });
     this.props.app.state.componentList.sortSelectedListbyFirebaseDate("post");
      if ( this.messagesEndRef.current) {
+      // DOESNT RENDER fast ENOUGH
        this.messagesEndRef.current.scrollIntoView({ behavior: behavior?behavior:"auto", block: 'end'  });
     }
     
@@ -191,9 +195,10 @@ export default class AdventureLogPage extends Component {
                     <div key={index} title={item.getJson().sender ==="GM"?"The GM sent this":""} style={{ 
                       marginBottom:"24px", opacity: getOpacity(index, cleanedItems.length),
                     }}>
+
                      
                        <PostMapItem app={app} obj={item} index={item.getJson().date} colors={this.state.colors} />
-                           
+                      
                         
                     </div>
                   ))}

@@ -11,7 +11,7 @@ class AdventureLogStyles {
             borderThin: "1px solid #1B1B1B",
             borderThick: "2px solid #1B1B1B",
             borderThickest: "4px solid #1B1B1B",
-            borderDouble: "double #32a999",
+            borderDouble: "double #32a999", 
         }
       
 

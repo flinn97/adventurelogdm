@@ -25,6 +25,9 @@ export default class LoreLogComponent extends Component {
   
     let w = this.props.w;
 
+    const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5"}}>
+    "</div>;
+
     return (
       <div style={{ 
                   display: "flex",
@@ -42,7 +45,7 @@ export default class LoreLogComponent extends Component {
                           {obj.getJson().name}
                           </div>
                       }
-                
+                {!obj.getJson().readAloud &&
                 <ParentFormComponent app={app} name="desc" obj={obj}
                       theme={"adventureLog"} 
                       
@@ -50,10 +53,26 @@ export default class LoreLogComponent extends Component {
                       borderRadius:"4px", padding:"4px 4px", minWidth:"550px", maxWidth:"550px",
                       fontSize:styles.fonts.fontSmall,pointerEvents: "none", 
                       // letterSpacing:".15rem",
+                      userSelect:"none", cursor:"",               
+                    }}
+                      type={"richEditor"}
+                      />}
+
+                {obj.getJson().readAloud &&
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", minWidth:"550px", maxWidth:"550px",}}>{quote}
+                <ParentFormComponent app={app} name="handoutText" obj={obj}
+                      theme={"adventureLog"} 
+                      
+                      inputStyle={{ color:styles.colors.colorWhite+"e6", height:"fit-content", 
+                      borderRadius:"4px", padding:"4px 4px",
+                      fontSize:styles.fonts.fontSmall,pointerEvents: "none", 
+                      // letterSpacing:".15rem",
                       userSelect:"none", cursor:"", textDecoration:"underline 1px"+styles.colors.color7, textUnderlineOffset:"4px",               
                     }}
                       type={"richEditor"}
                       />
+                      {quote}
+                      </div>}
         </div>
           
       </div>

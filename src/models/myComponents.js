@@ -249,6 +249,7 @@ class Lore extends componentBase{
         parentId:{},
         name:"",
         desc:"",
+        handoutText:"",
     } 
     
     async getPicSrc(){

@@ -5,6 +5,7 @@ import ImageLogComponent from './pages/LogComponents/imageLogComponent';
 import MessageLogComponent from './pages/LogComponents/messageLogComponent';
 import RollLogComponent from './pages/LogComponents/rollLogComponent';
 import InitiativeLogComponent from './pages/LogComponents/initLogComponent';
+import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 
 
 
@@ -72,7 +73,7 @@ export default class PostMapItem extends Component {
       
       <div style={{ display: "flex",
                   flexDirection: "row", width:w,
-                  maxWidth:w, 
+                  maxWidth:w, justifyContent:"center",
                   borderBottom: sender==="GM"?"solid 3px "+styles.colors.color3+"66":"solid 1px "+styles.colors.colorWhite+"55", 
                   borderTop: sender==="GM"?"solid 1px "+styles.colors.color3+"66":"solid 1px "+styles.colors.color8+"22",
                     
@@ -82,7 +83,7 @@ export default class PostMapItem extends Component {
                   background: backgroundUser,                
                   marginLeft: marginUser, 
       }}>
-                          
+          
 
                           {!isYou && <div  style={{ display:"flex",flexDirection:"row", marginTop:"1.2%", marginBottom:"1.2%", position:"sticky", left:"2"}}>
           <div style={{ display:"flex",
@@ -97,14 +98,17 @@ export default class PostMapItem extends Component {
                </div>
                </div>}
 
+               
+
 {/* COMPONENT */}
                   {LogComponent ? (<LogComponent {...this.props} isYou={isYou} w={w}/>) : null}
+                    
 
-                  {isYou && <div  style={{ display:"flex",flexDirection:"row", marginTop:"1.2%", marginBottom:"1.2%", position:"sticky", marginLeft:"13px"}}>
+                  {isYou && obj.getJson().postType!=="encounter" && <div  style={{ display:"flex",flexDirection:"row", marginTop:"1.2%", marginBottom:"1.2%", position:"sticky", marginLeft:"13px"}}>
           
              <div style={{ display:"flex",
              width:"1px", backgroundColor: oColors, marginRight:"2px",
-             }}>
+             }}> 
  
                </div>
                <div style={{ display:"flex",
@@ -112,6 +116,9 @@ export default class PostMapItem extends Component {
             }}>
              {/* {this.state.user} and  {this.state.user2} */}
             </div>
+            
+
+            
                </div>}
       </div>
 
