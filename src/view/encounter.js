@@ -424,7 +424,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                             } else {
                               this.stopInitiative(participantList, dispatch);
                               obj.setCompState({ isRunning: false });
-                              state.opps.run();
+                              state.opps.cleanPrepareRun({update: obj});
                               this.setState({ isRunning: false });
                              
                             }

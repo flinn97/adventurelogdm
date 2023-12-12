@@ -67,10 +67,9 @@ export default class Dispatch extends Component {
 justifyContent: "center",}}>
         
 
-        {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
+        {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) && 
         <PopupDelete 
-        
-          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
@@ -119,7 +118,9 @@ justifyContent: "center",}}>
                 type="popup" options={{cardType:"popupMedium"}} app={app} 
                 containerStyle={{backgroundColor:styles.colors.color1+"55",}}
                 handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined, 
-                currentComponent:undefined, currentPin:undefined})}}
+                currentComponent:undefined, currentPin:undefined});
+                state.opps.clearUpdater();
+              }}
                 delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
                 currentDelObj:undefined,})}}
               />}

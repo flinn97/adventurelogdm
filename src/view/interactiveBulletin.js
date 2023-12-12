@@ -133,16 +133,16 @@ export default class InteractiveBulletin extends Component {
     // if (this.state.isLoading) {
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
-      <div className='scroller2' 
+      <div  className='scroller2'
       ref={this.divRef} 
       style={{width:"100%", minHeight:"100%", maxHeight:"100%",
       cursor: this.state.isGrabbing!==true? "":"grabbing", 
-      overflow: 'auto', borderRadius:"20px", border:this.props.color?"solid "+this.props.color+"55":"solid "+styles.colors.color7,
+      overflow: 'auto', borderRadius:"20px",
       }}>
        
 
 {/* HEADER */}
-      <div style={{
+      <div  style={{
         // border:"1px solid yellow", 
         display:"flex", 
         flexDirection:"row", 
@@ -203,7 +203,8 @@ export default class InteractiveBulletin extends Component {
   
   
   {/* {this.state.start && */}
-  
+
+  {/* IMAGE BACKGROUND */}
   <div ref={this.parentRef}  style={{position:"absolute", top:0, left:0,
    width: this.state.mapWidth, 
    height:this.state.mapHeight 

@@ -55,7 +55,7 @@ export default class LoreSearch extends Component {
     }
   
 
-    toolService.navigateToLink("../campaign/" + newLink, true)
+    toolService.navigateToLink("../campaign/" + newLink, true);
   }
 
             handleStop = (loreItem) => {
@@ -97,6 +97,8 @@ export default class LoreSearch extends Component {
     let idSegment = parts.pop();
     let idParts = idSegment.split('-');
     let campId = idParts[0];
+
+  
 
     let loreList = componentList.getList("lore", id, listTerm)
       .filter(loreItem => {
@@ -248,7 +250,7 @@ export default class LoreSearch extends Component {
                                                         <div draggable="false"  style={{zIndex:"20",  userSelect:"none", width:"fit-content", height:"fit-content" }} 
                                                             onClick={(e) => {
                                                                 e.stopPropagation(); // Prevent event propagation
-                                                                this.navigateToLink(loreItem);
+                                                                // this.navigateToLink(loreItem);
                                                             }}                                                        
                                                     >
                                                             <LoreItemWithNotation 

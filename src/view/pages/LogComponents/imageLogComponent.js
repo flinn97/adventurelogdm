@@ -44,9 +44,9 @@ export default class ImageLogComponent extends Component {
    
 
     return (
-      <div className="hover-img" style={{ justifyContent:"center",  maxHeight:"650px",
-      display:"flex", flexDirection:"center", padding:"8px", width:"100%", cursor:"pointer",
-                  
+      <div className="hover-img" title={"The GM sent this. "+obj.getJson().src} style={{ justifyContent:"center",  maxHeight:"650px",
+      display:"flex", flexDirection:"center", padding:"12px", width:"100%", cursor:"pointer",
+                  flexDirection:"column",
       }}>
           <img
           onClick={()=>{
@@ -54,8 +54,15 @@ export default class ImageLogComponent extends Component {
                   }}  
 
            draggable="false"  alt={``}  src={src} style={{ objectFit:"cover",
-            width:"fit-content", border:"3px solid "+colorList[colorN], 
+            width:this.props.w, border:"3px solid "+colorList[colorN], maxHeight:this.props.w,
            maxWidth:"100%", borderRadius:"12px"}}/>
+
+           {obj.getJson().src &&
+           <div style={{maxWidth:"100%", height:"100%", textAlign:"right",color:styles.colors.color8,fontSize:".85rem", overflow:"clip"}}
+           title={"The GM sent this. "+obj.getJson().src}
+           >{obj.getJson().src}
+                  </div>
+           }
       </div>
       
     )

@@ -23,6 +23,8 @@ import galleryB from '../pics/illustrations/paintingHand.png';
 import ImageButton from '../componentListNPM/componentForms/buttons/imageButton';
 import auth from '../services/auth';
 import TokenImage from './tokenImage';
+import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
+import toolService from '../services/toolService';
 
 
 export default class CampaignEditor extends Component {
@@ -78,6 +80,13 @@ scrollTo = (ref, behavior) => {
       dispatch({
         popupSwitch: "viewPlayers"
       })
+    };
+
+    async deleteLore () {
+      let dispatch = this.props.app.dispatch;
+      await dispatch({popupSwitch:"", currentDelObj:undefined});
+    
+      window.location.href="/campaign/"+toolService.getIdFromURL(true,0);
     }
 
   render() {
@@ -102,13 +111,14 @@ scrollTo = (ref, behavior) => {
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
 <div style={{color:"red"}} onClick={()=>{
-  treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}>hi</div>
+  treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}></div>
         {/* BACK BUTTON */}
       {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
-          (<Link className="hover-btn"
+          (<Link className="hover-btn-highlight"
           to={"/campaign/"} 
-          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa", padding:"8px 8px", 
-          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", }}
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:"", padding:"8px 8px", 
+          color:styles.colors.color3+"e6", boxShadow:"", fontSize:".95rem",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", border:"" }}
           >
             <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
             src={backarrow}
@@ -118,10 +128,9 @@ scrollTo = (ref, behavior) => {
           ||
           (<a className="hover-btn"
           href={window.location.href.split("-")[0]} 
-          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", 
-         
-          background:styles.colors.color7+"aa", padding:"8px 8px",
-          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", fontSize:".9rem" }}
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:"", padding:"8px 8px", 
+          color:styles.colors.color3+"e6", boxShadow:"", fontSize:".95rem",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", border:""}}
           >
             <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
             src={backarrow}
@@ -129,7 +138,6 @@ scrollTo = (ref, behavior) => {
             {this.state.obj?.getJson().title}
           </a>)
           }
-
 
 
             
@@ -149,25 +157,39 @@ scrollTo = (ref, behavior) => {
                 <div style={{fontSize:styles.fonts.fontHeader2, color:styles.colors.colorWhite, width:"80%",}}>{this.state.obj?.getJson().title}</div>
     }
 
-      <Link to={newLink} className='hover-btn' title={advLogText} target="_blank"
-                style={{...styles.buttons.buttonAdd, padding:"2px 14px", borderRadius:"11px", borderColor:"black",
-                color:"#57a6f2"+'d2', backgroundColor:styles.colors.colorBlack+"b8", 
-                marginBottom:"-10px",
-                marginTop:"10px", fontWeight:"600"}}>
-                  
-                Adventure Log
-            </Link>
+      
 
     {state.currentLore!==undefined && <div style={{display:"flex",flexDirection:"column"}}>
-
-    <a href={window.location.href.split("-")[0]} className='hover-btn-highlight' title={"Go Back to "+this.state.obj?.getJson().title} 
-    style={{width:"fit-content", alignSelf:"flex-end", cursor:"pointer", color:styles.colors.color3, textDecoration:"underline 1px", textUnderlineOffset:"2px", padding: "5px 6px" }}>
-                <div className='hover-container'
-                style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"99", textDecoration:"underline 1px", textUnderlineOffset:"4px" }}>
-                  Campaign: {this.state.obj?.getJson().title}
-                  <div className='hover-div' style={{marginLeft:"-22px", position:"absolute", }}>{"<"}</div>
+    <div className='hover-btn'
+                      style={{...styles.buttons.buttonClose,  borderRadius:"2vmin", fontSize:styles.fonts.fontSmall,
+                    padding:"4px 10px",  pointer:"cursor", height:"fit-content", zIndex:"200", alignSelf:"flex-end",
+                    background:styles.colors.colorBlack+"5b",marginTop:"-4px",
+                    // backgroundColor:"white",
+                  }}
+                    
+                    onClick={ ()=>{
+                       console.log(state.currentLore)
+                     
+                       dispatch({currentDelObj: state.currentLore, popUpSwitch:"popupDelete"}).then(()=>{
+                        // this.deleteLore();
+                      });
+                     ///UM
+                     ///TAYLOR
+                     /// WHY is this not working??
+                     /// what the crap
+                       console.log(state.popUpSwitch)
+                      }}>
+                      Delete This Lore
+                     
+                    </div>
+    <div
+    style={{width:"fit-content", alignSelf:"flex-start",color:styles.colors.color3,  padding: "5px 6px" }}>
+                <div
+                style={{fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"69",}}>
+                  {this.state.obj?.getJson().title+":"}
+                  
                   </div>
-          </a>       
+          </div>       
                  <ParentFormComponent app={app} name="name" obj={state.currentLore}
              theme={"adventureLog"} 
               rows={5}
@@ -178,8 +200,17 @@ scrollTo = (ref, behavior) => {
              
              wrapperStyle={{margin:"1px", color:styles.colors.colorWhite, display:"flex", marginBottom:"1px", 
              flexDirection:"column", justifyItems:"space-between", }}/>
+
+             
                 </div>
     }
+<Link to={newLink} className='hover-btn' title={advLogText}
+    style={{...styles.buttons.buttonAdd, padding:"2px 14px", borderRadius:"11px", borderColor:"black",
+    color:"#57a6f2"+'d2', backgroundColor:styles.colors.colorBlack+"b8", 
+    marginTop:"20px", fontWeight:"600"}}>
+      
+    Adventure Log
+</Link>
 
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"24px", justifyContent:"space-between"}}>
