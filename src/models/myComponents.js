@@ -436,6 +436,17 @@ class Condition extends componentBase{
         roundsActive:"1",
     }
 }
+
+class Approval extends componentBase{
+    json={
+        campaignId: "",
+        title: "",
+        description: "",
+        promotional: "",
+        price: "",
+        type: "approval",
+    }
+}
 class MarketplaceItem extends componentBase{
      constructor(opps){
         super(opps);
@@ -508,7 +519,7 @@ function forFactory(){
         newNote:NewNote,map:Map, post:Post,
         marketplaceItem:MarketplaceItem,
         condition:Condition,
-        lore:Lore,image:Image}
+        lore:Lore,image:Image, approval:Approval}
 }
 
 

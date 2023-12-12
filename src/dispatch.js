@@ -21,6 +21,7 @@ import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
+import ApprovalPopup from './view/approvalPopup';
 
 
 //model
@@ -112,7 +113,14 @@ justifyContent: "center",}}>
                 delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
                 currentDelObj:undefined,})}}
               />}
-              
+
+            {state.popupSwitch === "popupApproval" && (state.currentComponent?.getJson()?.type === "approval" &&
+            
+            <ApprovalPopup
+            app={app} type="popup" options={{cardType: "bigCard" }} handleClose={()=>{
+              state.opps.clearUpdater()
+              app.dispatch({popupSwitch:"",currentComponent:undefined})}}
+            />)}
        
      {state.user.getJson().role!=="GM"?(
       
