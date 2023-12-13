@@ -63,7 +63,10 @@ export default class ListTreeLink extends Component {
     height:"fit-content",
     display: "flex"}}>
       {name !=="" && name !==undefined &&
-      <div  onClick={() => window.open("../campaign/" + newLink, "_blank")} 
+      <Link to={"../campaign/" + newLink} 
+      // onClick={() => 
+      //   window.open("../campaign/" + newLink, "_blank")
+      // } 
       style={{display:"flex", flexDirection:"column", alignItems:"center", 
         justifyContent:"center", alignContent:"center"}}>
     <div title={"Open "+objName+" in a new tab."} className='hover-img'
@@ -104,7 +107,7 @@ export default class ListTreeLink extends Component {
 
     
 
-    </div>
+    </Link>
 
    
     }

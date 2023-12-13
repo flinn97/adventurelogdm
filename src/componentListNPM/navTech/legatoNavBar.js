@@ -48,7 +48,7 @@ export default class Legato extends Component {
       </div>
      <div style={this.props.options?.sectionThreeStyle?{...this.props.options?.sectionThreeStyle}:
      this.props.options?.sectionThreeTheme?{...f[this.props.options?.sectionThreeTheme][this.props.alignment].sectionThree}:{...style.sectionThree}}>
-       <div style ={{color:"gray", marginBottom:window.innerHeight<1000?"200px":"50px", marginLeft:"80px", cursor:"pointer"}} onClick={auth.logout}>Logout</div>
+       <div style ={{color:"rgb(145, 155, 168)", fontSize:"14px", marginBottom:window.innerHeight<1000?"200px":"50px", marginLeft:"40px", cursor:"pointer"}} onClick={auth.logout}>Logout</div>
       </div> 
       
     </div>

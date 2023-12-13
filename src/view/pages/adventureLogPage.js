@@ -13,6 +13,7 @@ import Upload from '../upload';
 import colorService from '../../services/colorService';
 import { multiFactor } from 'firebase/auth';
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
+import { ScrollHelper } from '../adventureLogScrollHelper';
 
 export default class AdventureLogPage extends Component {
   constructor(props) {
@@ -43,10 +44,8 @@ export default class AdventureLogPage extends Component {
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
     this.setState({showItems:false })
     
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", ).then(()=>{
+    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", );
       this.scrollToBottom();
-
-    })
     state.componentList.sortSelectedListbyFirebaseDate("post");
     this.setState({ textI: "", showItems:true });
     app.setState({rerender:true});
@@ -120,6 +119,7 @@ export default class AdventureLogPage extends Component {
   };
 
    scrollToBottom = (behavior) => {
+    debugger
     this.setState({ showItems:true });
     this.props.app.state.componentList.sortSelectedListbyFirebaseDate("post");
      if ( this.messagesEndRef.current) {
@@ -169,6 +169,7 @@ export default class AdventureLogPage extends Component {
       <div style={{
         width:"100%", height:"100%", display:"flex",flexDirection:"column", marginTop:"30px", paddingBottom:"40px",
          alignItems:"center", alignSelf:"center", justifySelf:"center",}}>
+          {/* {this.state.start&&(<> */}
         
        
         <div style={{width:"100%", height:"100%",color:styles.colors.color3+"e9",
@@ -186,7 +187,7 @@ export default class AdventureLogPage extends Component {
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
             */}
-                    {this.state.showItems &&
+                    {/* {this.state.showItems && */}
                 <div className='scroller2' style={{ overflowX:"hidden",
                    padding:"3px 6px", width:"100%", overflowY:"scroll",
                     }}>
@@ -203,7 +204,8 @@ export default class AdventureLogPage extends Component {
                     </div>
                   ))}
                   <div ref={this.messagesEndRef} style={{height:"2px", width:"2px"}}></div>
-                </div>}
+                </div>
+                {/* } */}
 
              {/* PUT THIS IN A seperate .js ^^^^^^^^^^
              */}
@@ -310,7 +312,8 @@ export default class AdventureLogPage extends Component {
              </div>
 
           </div>
-        
+          {/* </>)} */}
+          <ScrollHelper scroll={this.scrollToBottom} />
       </div >
     )
   }
