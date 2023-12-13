@@ -25,6 +25,7 @@ export default class AdventureLogPage extends Component {
       sortedLogItems: [],
       invalidD:"",
       colors:[],
+      showItems:false,
     }
   }
 
@@ -39,25 +40,28 @@ export default class AdventureLogPage extends Component {
     let idSegment = toolService.getIdFromURL(true);
     let campaigns = compList.getList("campaign", idSegment, "_id" );
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
+    this.setState({showItems:false })
     
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post" )
-   
+    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", ).then(()=>{
+      this.scrollToBottom();
 
-    this.scrollToBottom();
-    this.setState({ textI: "" })
+    })
+    state.componentList.sortSelectedListbyFirebaseDate("post");
+    this.setState({ textI: "", showItems:true })
   }
   
-  handleMessageChange = async (e) => {
-    await this.setState({ textI: e.target.value });
+  handleMessageChange = (e) => {
+    this.setState({ textI: e.target.value });
   }
 
   timeOutMessage() {
     setTimeout(() => {
-      this.setState({ invalidD: "" });
+      this.setState({ invalidD: "", showItems:true });
     }, 4000);
   };
 
   async sendText(){
+    
     let userRole = this.props.app.state.user.getJson().role;
     let m = this.state.textI;
     let mType = "message";
@@ -72,9 +76,10 @@ export default class AdventureLogPage extends Component {
         d = m.replace(/\/(r|roll)\s*/, '').replace(/\s/g, '');
         newM = diceService.rollDice(m);
         m = newM.toString();
-        
+        this.setState({showItems:true })
       } catch (error) {
-        this.setState({ invalidD: "*Invalid Dice Notation", textI:""});
+        this.setState({ invalidD: "*Invalid Dice Notation", textI:"", showItems:true });
+        
         this.timeOutMessage();
         return
       };
@@ -94,7 +99,7 @@ export default class AdventureLogPage extends Component {
          this.props.app.state.opps.cleanJsonPrepareRun({ "addpost": payload });
          this.props.app.dispatch({});
           
-         this.setState({ textI: "" }, () => {
+         this.setState({ textI: "", showItems:true }, () => {
           setTimeout(() => this.scrollToBottom('smooth'), 0);
         });
   };
@@ -103,6 +108,7 @@ export default class AdventureLogPage extends Component {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Prevent the default action to avoid submitting the form
       if (this.state.textI !== "") {
+        this.setState({ showItems:false });
         this.sendText();
         await this.scrollToBottom();
        
@@ -111,9 +117,12 @@ export default class AdventureLogPage extends Component {
   };
 
    scrollToBottom = (behavior) => {
+    this.setState({ showItems:true });
+    this.props.app.state.componentList.sortSelectedListbyFirebaseDate("post");
      if ( this.messagesEndRef.current) {
        this.messagesEndRef.current.scrollIntoView({ behavior: behavior?behavior:"auto", block: 'end'  });
     }
+    
   }
 
 
@@ -143,18 +152,11 @@ export default class AdventureLogPage extends Component {
 //USE user role to determine what is passed into message
     let userRole = state.user.getJson().role;
     
-    let logItems = compList.getList("post", currentCampId, "campaignId");
-
-    let sortedLogItems = logItems.sort((a, b) => {
-      let dateA = new Date(a.getJson().date);
-      let dateB = new Date(b.getJson().date);
-      return dateB - dateA; // Sorts in D-scending order of date
-    });
+    let sortedLogItems = compList.getList("post", currentCampId, "campaignId");
 
     let sLL = sortedLogItems.length;
     let newAmount = sortedLogItems.length - 100;
     
-
     let cleanedItems = sortedLogItems
     .slice(newAmount, sLL);
 
@@ -180,7 +182,7 @@ export default class AdventureLogPage extends Component {
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
             */}
-            
+                    {this.state.showItems &&
                 <div className='scroller2' style={{ overflowX:"hidden",
                    padding:"3px 6px", width:"100%", overflowY:"scroll",
                     }}>
@@ -196,7 +198,7 @@ export default class AdventureLogPage extends Component {
                     </div>
                   ))}
                   <div ref={this.messagesEndRef} style={{height:"2px", width:"2px"}}></div>
-                </div>
+                </div>}
 
              {/* PUT THIS IN A seperate .js ^^^^^^^^^^
              */}
@@ -234,7 +236,7 @@ export default class AdventureLogPage extends Component {
                                     });
                                
                               });
-                              await state.opps.run();
+                              // await state.opps.run();
                             }}
 
                             updateMap={async (obj) => {
@@ -291,22 +293,12 @@ export default class AdventureLogPage extends Component {
              onClick={() => {
                         if (this.state.textI !=="")
                                   {
+                                    this.setState({ showItems:false });
                             this.sendText()}
                             this.scrollToBottom("smooth");
                           
                           }}
 
-              // handleKeyPress ={ (e) => {
-              //                 if (e.key === 'Enter' && !e.shiftKey) {
-              //                   e.preventDefault(); // Prevent the default action to avoid submitting the form
-              //                   if (this.state.textI !== "") {
-                                                            
-              //                     this.sendText();
-              //                   }
-              //                 }
-              //               }}              
-              
-                            
              >
 
               <img src={sendArr} style={{width:"31px", transform:"rotate(90deg)", objectFit:"scale-down", marginTop:"5px", marginLeft:"11px" }}></img>

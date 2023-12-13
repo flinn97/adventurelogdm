@@ -131,7 +131,7 @@ toggleSidebar = () => {
 
     return (
       <div style={{minWidth:"100%",}}>
-              <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end", marginBottom:"-34px"}}>
+              <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end", marginBottom:"-22px", marginTop:"22px"}}>
             <PostLogButton app={app} obj={lore} altText={"description"}/>
               </div>
           <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore:

@@ -21,8 +21,12 @@ import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
+<<<<<<< HEAD
 import ApprovalPopup from './view/approvalPopup';
 import ApprovalPage from './view/pages/apprroval';
+=======
+import ViewPlayerList from './view/popups/viewPlayerList';
+>>>>>>> 9406adc9f1fc6f3be9959feb70541a6306f753bb
 
 
 //model
@@ -102,6 +106,16 @@ justifyContent: "center",}}>
                   />
                   }
 
+            {state.popupSwitch === "viewPlayers" &&
+
+            <ViewPlayerList
+
+            type="popup" options={{cardType:"popupCreate"}} app={app}
+            handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
+
+            />
+            }
+
               {state.popupSwitch === "popupLore" 
               && (state.currentComponent?.getJson().type === "lore") 
               &&
@@ -149,7 +163,7 @@ justifyContent: "center",}}>
         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />}/> 
         <Route path="/encountermanager/:id" element={<EncounterManager app={app}/>}/>
         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
-        <Route path="/encounter/:id" element={<Encounter app={app} />}/>
+        <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers}/>}/>
 
         <Route path="/log/:id" element={<AdventureLogPage app={app} />}/> 
         <Route path="/approvalpage" element={<ApprovalPage app={app}/>}/>
