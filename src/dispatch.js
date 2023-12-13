@@ -21,12 +21,9 @@ import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
-<<<<<<< HEAD
 import ApprovalPopup from './view/approvalPopup';
 import ApprovalPage from './view/pages/apprroval';
-=======
 import ViewPlayerList from './view/popups/viewPlayerList';
->>>>>>> 9406adc9f1fc6f3be9959feb70541a6306f753bb
 
 
 //model
