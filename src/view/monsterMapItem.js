@@ -8,6 +8,7 @@ import ac from '../pics/ac.png';
 // import d20 from '../pics/d20.png';
 import conditionGear from '../pics/conditionGear.png';
 import _ from 'lodash';
+import diceService from '../services/diceService';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -30,6 +31,21 @@ export default class MonsterMapItem extends Component {
       }
       return statBlockLink;
   }
+
+      componentDidMount(){
+        let obj = this.props.obj;
+        if (obj.getJson().hp){
+          let hp  = obj.getJson().hp;
+          // Check if hp contains the letter 'd' followed by a number and only appears once
+              const diceNotationRegex = /^\d*d\d+(\+\d+)?$/;
+              if (diceNotationRegex.test(hp)) {
+                hp = "/r " + hp;
+                let newHp = diceService.rollDice(hp);
+                obj.setCompState({hp: newHp});
+                this.props.app.state.opps.run();
+              }
+
+      }}
 
   handleClickWord = (word, iValue) => {
     // Hide conditions temporarily
@@ -86,7 +102,6 @@ export default class MonsterMapItem extends Component {
     let length = app.state.maxLengthShort;
     let styles = state.styles;
 
-    let RR =  state.rerender;
     let obj = this.props.obj;
 
     let allColors = obj.getJson().colors;
@@ -168,10 +183,10 @@ export default class MonsterMapItem extends Component {
 
     return (
      
-      <div style={{minWidth: "100%", overflow:"visible",
+      <div style={{minWidth: "100%", overflow:"visible", border:"1px solid "+styles.colors.color8+"1e",
       position: "relative", borderRadius:"22px", height:"128px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
-        {RR==="false" &&
+        
       <div className={currentTurn == lastInitAsNumber ? "gradient-animation" : ""}
       style={{
         minWidth: "100%", borderRadius:"22px",
@@ -453,7 +468,7 @@ export default class MonsterMapItem extends Component {
         </div>
         </div>
 
-        </div>}</div>
+        </div></div>
     )
   }
   }

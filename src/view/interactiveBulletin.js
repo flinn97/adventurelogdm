@@ -208,7 +208,7 @@ export default class InteractiveBulletin extends Component {
 
       <img ref={this.imgRef} 
    src={this.props.obj?.getJson().picURL} 
-  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"1900px", maxHeight:"1350px" }}/>}
+  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"3700px", maxHeight:"2630px" }}/>}
   
   
   {/* {this.state.start && */}

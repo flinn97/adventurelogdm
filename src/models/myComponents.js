@@ -3,6 +3,7 @@ import BaseClass from "../componentListNPM/baseClass";
 import auth from "../services/auth.js";
 import authService from "../services/auth.js";
 import moment from 'moment';
+import toolService from "../services/toolService.js";
 
 
 class componentBase extends BaseClass{
@@ -466,6 +467,7 @@ class NewNote extends componentBase{
 }
 
 class Condition extends componentBase{
+    
     json= {
         _id:"",
         monsterId:"",
@@ -475,7 +477,9 @@ class Condition extends componentBase{
         type:"condition",
         roundsActive:"1",
     }
-}
+    }
+
+
 class MarketplaceItem extends componentBase{
      constructor(opps){
         super(opps);

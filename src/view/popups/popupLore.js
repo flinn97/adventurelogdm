@@ -283,7 +283,7 @@ class MainContent extends Component{
                         inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                         borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                         border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                        type={"richEditor"}
+                        // type={"richEditor"}
                         wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
                         flexDirection:"column", justifyItems:"space-between"}}/>
       </div>
@@ -648,9 +648,9 @@ alignItems:"center", height:"100%", width:"100%", }}>
                           
                           }} 
                           style={{cursor:"pointer",}}>
-                                                    
+                                                 
                            <LoreItemWithNotation app={app} obj={item} index={index}/>
-                                                      
+                                                     
                         </div>
                        }
                 </div>

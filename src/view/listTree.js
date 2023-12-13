@@ -71,7 +71,7 @@ setInterval(async() => {
     let idParts = idSegment.split('-');
     
     let campId =  idParts[0];
-    
+    let CC = state.currentCampaign;
 
     let cells=  
   
@@ -92,8 +92,15 @@ setInterval(async() => {
              
              <div  style={{flexDirection:"column", display:"flex",
              alignItems:"center"}} >
+              {!isHidden &&
+<Link to={/campaign/+CC.getJson()._id}
+className="hover-btn-highlight" style={{...styles.buttons.buttonAdd, marginBottom:"15px", padding:"2px", fontSize:styles.fonts.fontNormal, background:"", boxShadow:"",
+                      textDecoration:"underline 1px "+styles.colors.color8+"48", textUnderlineOffset:"3px", color:styles.colors.color8,
+                      marginTop:"5px", paddingLeft:"23px",  paddingRight:"23px", border:""}}>
 
-                    {!isHidden && (
+  {CC.getJson().title}
+</Link>}
+                    {/* {!isHidden && (
                       <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginBottom:"15px", 
                       marginTop:"5px", paddingLeft:"13px",  paddingRight:"13px", 
                       
@@ -105,10 +112,11 @@ setInterval(async() => {
                           object:{ parentId:{[_id]:"New Lore"}, type:"lore", name:"New Lore", campaignId:campId}}
                         )
                       }}
-                      >+ New Top Level Lore</div>)}
+                      >+ New Top Level Lore</div>)} */}
+
 
 {/* //ADD IMAGE HERE// */}
-                      <div className='scroller'  style={{flexDirection:"column", display:"flex", overflowY:"scroll", maxHeight:"88.9vh", alignItems:"left",                     
+                      <div className='scroller'  style={{flexDirection:"column", display:"flex", overflowY:"scroll", maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"12px",                   
                     }}>
                         <MapComponent app={app}  theme={"expandingTree"} 
                                              

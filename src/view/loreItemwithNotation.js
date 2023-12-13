@@ -74,11 +74,12 @@ export default class LoreItemWithNotation extends Component {
     }
   
 
-    let sendLink = "../campaign/"+newLink;
+    let sendLink = state.popupSwitch!=="popupLore"?"../campaign/"+newLink:"";
 
     
-    return (
-      <Link to={sendLink} className='hover-container' onDragEnter={(e) => {
+    return (<div class='hover-img'>
+      
+      <div className='hover-container' onDragEnter={(e) => {
         this.handleDragEnter(e, obj)}}
       style={{ textDecoration:"none",
          display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", color:"#ffdead",
@@ -170,8 +171,8 @@ export default class LoreItemWithNotation extends Component {
     </div>
       }
 
-</Link>
-
+</div>
+</div>
     )
   }
 }
