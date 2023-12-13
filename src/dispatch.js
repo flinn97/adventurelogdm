@@ -24,7 +24,7 @@ import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ApprovalPopup from './view/approvalPopup';
 import ApprovalPage from './view/pages/apprroval';
 import ViewPlayerList from './view/popups/viewPlayerList';
-
+import logo from "./pics/logoava.png"
 
 //model
 export default class Dispatch extends Component {
@@ -59,7 +59,9 @@ export default class Dispatch extends Component {
        display:"flex", flexDirection:"column",
       }}>
 <div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
-          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
+          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
+            {logo: logo}
+          }
           />
           </div>
         {/* WITHIN */}
@@ -69,10 +71,9 @@ export default class Dispatch extends Component {
 justifyContent: "center",}}>
         
 
-        {state.popupSwitch === "popupDelete" && state.currentDelObj != undefined && 
+        {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) && 
         <PopupDelete 
-        
-          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2+"88"}}
+          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
@@ -121,7 +122,9 @@ justifyContent: "center",}}>
                 type="popup" options={{cardType:"popupMedium"}} app={app} 
                 containerStyle={{backgroundColor:styles.colors.color1+"55",}}
                 handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined, 
-                currentComponent:undefined, currentPin:undefined})}}
+                currentComponent:undefined, currentPin:undefined});
+                state.opps.clearUpdater();
+              }}
                 delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
                 currentDelObj:undefined,})}}
               />}

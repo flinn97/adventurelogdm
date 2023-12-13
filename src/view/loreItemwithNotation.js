@@ -3,6 +3,7 @@ import compassImage from '../pics/Compass_Final.png';
 import bannerImage from '../pics/Warbanner_Final.png';
 import imageImage from '../pics/Image_Final.png';
 import arrowGif from '../pics/downArrowGif.gif'
+import { Link, } from 'react-router-dom';
 
 export default class LoreItemWithNotation extends Component {
   constructor(props) {
@@ -59,11 +60,27 @@ export default class LoreItemWithNotation extends Component {
     let anim = isGrab ? 'flash-off 1.5s 10':"";
     let backColor = isGrab ?choiceColor+"1D":choiceColor+"0D";
 
+
+    let href = window.location.href;
+    let splitURL = href.split("/");
+    let id = splitURL[splitURL.length - 1];
+    let newLink = "";
+  
+    if (id.includes("-")) {
+      let idList = id.split('-');
+      newLink = idList[0] + "-" + obj.getJson()._id;
+    } else {
+      newLink = id + "-" + obj.getJson()._id;
+    }
+  
+
+    let sendLink = "../campaign/"+newLink;
+
     
     return (
-      <div className='hover-container' onDragEnter={(e) => {
+      <Link to={sendLink} className='hover-container' onDragEnter={(e) => {
         this.handleDragEnter(e, obj)}}
-      style={{
+      style={{ textDecoration:"none",
          display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", color:"#ffdead",
         backgroundColor:backColor,
         padding:"3px 4px", cursor:"pointer", 
@@ -153,7 +170,7 @@ export default class LoreItemWithNotation extends Component {
     </div>
       }
 
-</div>
+</Link>
 
     )
   }

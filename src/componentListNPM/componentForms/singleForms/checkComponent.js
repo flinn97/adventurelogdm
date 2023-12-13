@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./checkbox.css"
 import FormsThemeFactory from '../formThemes/formThemeFactory';
+import toolService from '../../../services/toolService';
 
 class CheckBox extends Component {
     constructor(props) {
@@ -40,7 +41,6 @@ class CheckBox extends Component {
     async markcheckbox() {
         await this.setState({checked:!this.state.checked})
         this.props.handleChange(this.state.checked);
-        
     }
 
     render() {

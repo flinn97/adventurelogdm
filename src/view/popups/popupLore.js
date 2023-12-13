@@ -99,7 +99,13 @@ class MainContent extends Component{
     await state.opps.clearUpdater();
     
     await lore.updateObjInsideJson("parentId", {[parentId]:parent.getJson()[parentName]});
-    
+    let href = window.location.href;
+    let splitURL = href.split("/");
+    let id = splitURL[splitURL.length - 1];
+      
+      let otherChildren = state.componentList.getList("lore",id.includes("-")? state.currentLore.getJson()._id: state.currentCampaign?.getJson()._id ,"parentId");
+    let index = otherChildren.length;
+    lore.setCompState({index:index})
     
     if(state.currentPin)
         {
@@ -224,12 +230,13 @@ class MainContent extends Component{
 <div style={{flexDirection:"column", display:"flex", alignSelf:"center"}}>
 
 <ParentFormComponent app={app} name="name"
-  // prepareRun={true}
+  
               placeholder={placeholder}
               inputStyle={{maxWidth:"55.5vw", width:"55.5vw", padding:"4px 9px", color:styles.colors.color3, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", 
               border:"solid 1px "+styles.colors.colorWhite+"22",
               textWrap:"wrap", fontSize:styles.fonts.fontSubheader1}}/>
+              
 
   { (lore?.getJson().name!=="" && lore?.getJson().name!==undefined) &&
     <div  style={{ display: 'flex', 
@@ -272,7 +279,7 @@ class MainContent extends Component{
             <ParentFormComponent app={app} name="desc"
                         theme={"adventureLog"} 
                           rows={5}
-                          // prepareRun={true}
+                          
                         inputStyle={{maxWidth:"55.5vw", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                         borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                         border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
@@ -299,20 +306,25 @@ class MainContent extends Component{
           
   {!this.state.showFindEncounter && !this.state.showFindImage &&
 <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
-            <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
-            fontSize:styles.fonts.fontSmall,
-            marginTop:"1vh", alignSelf:"center", padding:"1%"}}
-            title="Create a new encounter, you can edit it by clicking on it." 
-              onClick={() => {
-             state.opps.cleanJsonPrepareRun({
-              "addencounter":{loreId: state.currentComponent.getJson()._id, 
-                name:"New Encounter", campaignId: id}})
 
-            // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
-            this.setState({ showAddEncounter: true });
-            }}>
-              + Create New Encounter
-            </div>
+                              {/* ///MINI EDITOR */}
+                                  {/* instead */}
+                        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
+                        fontSize:styles.fonts.fontSmall,
+                        marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+                        title="Create a new encounter, you can edit it by clicking on it." 
+                          onClick={() => {
+                        state.opps.prepareRun({
+                          "addencounter":{loreId: state.currentComponent?.getJson()._id, 
+                            name:"New Encounter", campaignId: id}})
+
+                        // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
+                        this.setState({ showAddEncounter: true });
+                        }}>
+                          + Create New Encounter
+                        </div>
+                              {/* ///MINI EDITOR */}
+
             <div className="indent-on-click" style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
             marginTop:"1vh", alignSelf:"center", padding:"1%"}}
             title="Find an existing encounter to add to this lore.
@@ -512,8 +524,8 @@ class MainContent extends Component{
         }}>
                   <RunButton app={app} text="Save" 
                   
-                  runFunc={(arr)=>{
-                    
+                  runFunc={ async (arr)=>{
+                    debugger
                     let lore = arr[0];
                     if(state.currentPin){
                       
@@ -525,7 +537,7 @@ class MainContent extends Component{
                       pin.setCompState({loreId: lore.getJson()._id, 
                         name: lore.getJson().name,
                       });
-                      state.opps.prepareRun({update:pin});
+                      await state.opps.prepareRun({update:pin});
                     }
                     else{
                       state.opps.run();

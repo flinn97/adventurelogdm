@@ -313,10 +313,12 @@ export default class YourPlayersMapItem extends Component {
                              onClick={ async () => 
                             {
                               let component = this.props.app.state.componentList.getComponent("campaign", obj.getJson().campaignId);
-                              obj.setCompState({
+
+                              await obj.setCompState({
                                 campaignId:"",
                               })
-                              dispatch({
+                              
+                              await dispatch({
                                 operate:"update", operation:"cleanPrepareRun", object: obj, popupSwitch: "",
                               })
                               
@@ -326,6 +328,7 @@ export default class YourPlayersMapItem extends Component {
                               })
                             }
                             }
+
                             >       
                        Remove
         </div></div></div>

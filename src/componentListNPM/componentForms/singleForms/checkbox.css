@@ -11,6 +11,7 @@
     --checkbox-color: gray;
     --hover-color: black;
     --tick-color: #ADCDBA;
+    --x-color: #942525e8;
 }
 /* :root {
     --checkbox-size: 12;
@@ -205,6 +206,14 @@ everything else does not need to be touched.
         z-index: 0;
 }
 
+input[type="checkbox"]:checked + label .xFix {
+    opacity: 1;
+    -webkit-transform: rotate(45deg) scale(1);
+    -ms-transform: rotate(45deg) scale(1);
+    transform: rotate(45deg) scale(1);
+    z-index: 0;
+}
+
 /* 
 to change where the checks are located with the before and after ticks change right and top for x and y access.
 to control the width of the midding of the checkbox change the borders.
@@ -258,4 +267,34 @@ everything else does not need to be touched.
         border-radius: 50%;
         z-index: 0;
     }
+
+
+    .xFix {
+        position: relative;
+        width: var(--checkbox-size2);
+        height: var(--checkbox-size2);
+        opacity: 0; rotate: 155deg;
+        transition: all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.5);
+    }
+    
+    .xFix:before, .xFix:after {
+        content: '';
+        position: absolute;
+        top: 108%;
+        left: 20%;
+        width: calc(var(--checkbox-size2) * 1.28); /* Adjust the width of the lines */
+        height: calc(var(--checkbox-size2) * 0.1); /* Adjust the height/thickness of the lines */
+        background: var(--x-color);
+        rotate: 55deg;
+        border-radius: calc(var(--checkbox-size2) * 0.05); /* Optional for rounded corners */
+    }
+    
+    .xFix:before {
+        transform: translate(-50%, -50%) rotate(45deg); /* Rotate 45 degrees */
+    }
+    
+    .xFix:after {
+        transform: translate(-50%, -50%) rotate(-45deg); /* Rotate -45 degrees */
+    }
+    
 

@@ -209,16 +209,20 @@ export default class Encounter extends Component {
       <div style={{width:"100%", height:"100%", }}>
 
 {obj?.getJson().campaignId &&
-<a className="hover-btn"
-          href={/campaign/+obj?.getJson().campaignId} 
-          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa", padding:"8px 8px", cursor:"pointer",
+<Link className="hover-btn"
+          to={/campaign/+obj?.getJson().campaignId+"-"+obj?.getJson().loreId} 
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", border:"",
+         padding:"8px 8px", cursor:"pointer", background:"",
           fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", fontSize:".9rem" }}
           >
             <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
             src={backarrow}
             />
-            Back to Campaign
-          </a>}
+            Back
+          </Link>}
+
+          {/* <RETURN TO LORE BUTTON> */}
+
             <div style={{color: styles.colors.colorWhite,
               ...styles.backgroundContent,
               backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')',
@@ -424,7 +428,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                             } else {
                               this.stopInitiative(participantList, dispatch);
                               obj.setCompState({ isRunning: false });
-                              state.opps.run();
+                              state.opps.cleanPrepareRun({update: obj});
                               this.setState({ isRunning: false });
                              
                             }

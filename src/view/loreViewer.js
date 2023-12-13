@@ -36,6 +36,7 @@ export default class LoreViewer extends Component {
       imagesToShow: 5,
     }
     this.addDraggableItem = this.addDraggableItem.bind(this);
+    this.updateSize = this.updateSize.bind(this)
     this.eventLogger = this.eventLogger.bind(this); // bind eventLogger method
     }
 
@@ -96,7 +97,12 @@ toggleSidebar = () => {
   // Return a random unique color
   return uniqueColors[randomIndex];
 }
-
+updateSize(width, height){
+  this.setState({
+    bulletinWidth:width+"px",
+    bulletinHeight:height+"px"
+  })
+}
 
   render() {
     let obj = this.props.obj;
@@ -127,14 +133,19 @@ toggleSidebar = () => {
     let allColors = lore.getJson().colors?lore.getJson().colors:[styles.colors.color7];
     let colorList = Object.values(allColors);
     const randomColor = this.getUniqueRandomColor(colorList);
-    
+
+    const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5", width:"1%"}}>
+    "</div>;
 
     return (
       <div style={{minWidth:"100%",}}>
-              <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end", marginBottom:"-22px", marginTop:"22px"}}>
-            <PostLogButton app={app} obj={lore} altText={"description"}/>
+        
+              <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
+              justifyContent:"flex-end", marginBottom:"12px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+              marginTop:"12px"}}>
+            <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
               </div>
-          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginTop:"12px", marginBottom:"32px"}}> Lore:
+          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
@@ -143,11 +154,34 @@ toggleSidebar = () => {
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      type={"richEditor"}
-                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
+                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
                       flexDirection:"column", justifyItems:"space-between"}}/></div>
 
-      <div className='scroller2' style={{display:"flex", flexDirection:"column", position: 'relative',
+
+<div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
+justifyContent:"flex-end", marginBottom:"-22px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+marginTop:"22px"}}>
+             <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true}/>
+              </div>
+              
+          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,
+          marginTop:"12px", marginBottom:"32px"}}> Handout:
+          <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", maxWidth:"100px"}}>
+         {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
+                      theme={"adventureLog"} 
+                        rows={5}
+                        prepareRun={true}
+                      
+                      inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
+                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+                      
+                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", width:"99%", marginLeft:"-2px",
+                      flexDirection:"column", justifyItems:"space-between"}}/>{quote}</div></div>
+
+                      
+
+      <div style={{display:"flex", flexDirection:"column", position: 'relative',
       height:"100%", maxWidth:"100%", marginTop:"20px",
       }}>
       
@@ -202,8 +236,8 @@ toggleSidebar = () => {
       
         {(this.state.map) && 
        
-       <div style={{height:"1310px", width:"100%"}}>
-        <MapGallery app={app} obj={this.state.lore} color={randomColor}/>
+       <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%"}}>
+        <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize = {this.updateSize}/>
         
         </div>}
 

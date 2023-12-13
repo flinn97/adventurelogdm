@@ -12,6 +12,8 @@ import diceService from '../../services/diceService';
 import Upload from '../upload';
 import colorService from '../../services/colorService';
 import { multiFactor } from 'firebase/auth';
+import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
+import { ScrollHelper } from '../adventureLogScrollHelper';
 
 export default class AdventureLogPage extends Component {
   constructor(props) {
@@ -42,14 +44,14 @@ export default class AdventureLogPage extends Component {
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
     this.setState({showItems:false })
     
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", ).then(()=>{
+    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", );
       this.scrollToBottom();
-
-    })
     state.componentList.sortSelectedListbyFirebaseDate("post");
-    this.setState({ textI: "", showItems:true })
+    this.setState({ textI: "", showItems:true });
+    app.setState({rerender:true});
   }
-  
+
+
   handleMessageChange = (e) => {
     this.setState({ textI: e.target.value });
   }
@@ -117,9 +119,11 @@ export default class AdventureLogPage extends Component {
   };
 
    scrollToBottom = (behavior) => {
+    debugger
     this.setState({ showItems:true });
     this.props.app.state.componentList.sortSelectedListbyFirebaseDate("post");
      if ( this.messagesEndRef.current) {
+      // DOESNT RENDER fast ENOUGH
        this.messagesEndRef.current.scrollIntoView({ behavior: behavior?behavior:"auto", block: 'end'  });
     }
     
@@ -165,6 +169,7 @@ export default class AdventureLogPage extends Component {
       <div style={{
         width:"100%", height:"100%", display:"flex",flexDirection:"column", marginTop:"30px", paddingBottom:"40px",
          alignItems:"center", alignSelf:"center", justifySelf:"center",}}>
+          {/* {this.state.start&&(<> */}
         
        
         <div style={{width:"100%", height:"100%",color:styles.colors.color3+"e9",
@@ -182,7 +187,7 @@ export default class AdventureLogPage extends Component {
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
             */}
-                    {this.state.showItems &&
+                    {/* {this.state.showItems && */}
                 <div className='scroller2' style={{ overflowX:"hidden",
                    padding:"3px 6px", width:"100%", overflowY:"scroll",
                     }}>
@@ -191,14 +196,16 @@ export default class AdventureLogPage extends Component {
                     <div key={index} title={item.getJson().sender ==="GM"?"The GM sent this":""} style={{ 
                       marginBottom:"24px", opacity: getOpacity(index, cleanedItems.length),
                     }}>
+
                      
                        <PostMapItem app={app} obj={item} index={item.getJson().date} colors={this.state.colors} />
-                           
+                      
                         
                     </div>
                   ))}
                   <div ref={this.messagesEndRef} style={{height:"2px", width:"2px"}}></div>
-                </div>}
+                </div>
+                {/* } */}
 
              {/* PUT THIS IN A seperate .js ^^^^^^^^^^
              */}
@@ -305,7 +312,8 @@ export default class AdventureLogPage extends Component {
              </div>
 
           </div>
-        
+          {/* </>)} */}
+          <ScrollHelper scroll={this.scrollToBottom} />
       </div >
     )
   }

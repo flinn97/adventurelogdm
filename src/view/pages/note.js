@@ -71,7 +71,7 @@ export default class Note extends Component {
       height:"fit-content",  marginTop:"2vmin", maxHeight:"100%"}}>
       
       <MapComponent app={app} name="newNote" 
-      cells={[{custom:NoteMapItem, props:{app:app}},"delete"]} 
+      cells={[{custom:NoteMapItem, props:{app:app}},"delete"]} delOptions={{name:"X", style:{color:"red", cursor:"pointer"}}} 
       cellStyle={{justifyContent:"center", width:"100%",}}/>
     
       </div>

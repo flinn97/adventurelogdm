@@ -2,30 +2,12 @@ import React, { Component } from 'react';
 import "../../App.css"
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 
-
-
-/**
- * condensed version of the cards.
- * Works with themes.
- * props
- * theme
- * type
- * app
- * options
- * options can include cardType, cardContent, tabType, 
- */
 export default class PopupDelete extends Component {
   constructor(props) {
     super(props);
     
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
-
 
   render() {
     let app = {...this.props.app};

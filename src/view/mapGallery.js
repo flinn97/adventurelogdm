@@ -6,6 +6,7 @@ import InteractiveBulletin from './interactiveBulletin';
 export default class MapGallery extends Component {
   constructor(props) {
     super(props);
+    this.updateSize=this.updateSize.bind(this);
     this.state = {
      mapList:[],
      lore: this.props.obj,
@@ -25,7 +26,13 @@ export default class MapGallery extends Component {
       this.setState({mapList:mapList, currentMap:currentMap});
     }
     }
-
+    updateSize(width, height){
+      this.setState({
+        bulletinWidth:width+"px",
+        bulletinHeight:height+"px"
+      })
+      this.props.updateSize(width,height)
+    }
     componentDidUpdate(props, state){
       let obj = this.props.obj;
       let app = this.props.app;
@@ -93,11 +100,11 @@ export default class MapGallery extends Component {
           transform:'rotate(180deg)' }}></img>
           </div>}
 
-<div style={{width:"100%", display:"flex", position:"absolute", height:"100%"}}>
+<div style={{ display:"flex", position:"absolute", height:"100%", width: "100%"}}>
 
   {this.state.currentMap &&
    
-      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color}/>
+      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color} updateSize = {this.updateSize}/>
       }
 
         {/* backgroundIMAGE */}
