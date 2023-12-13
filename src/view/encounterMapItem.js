@@ -46,7 +46,7 @@ export default class EncounterMapItem extends Component {
       <div style={{}}>
 
       <Link
-      to={"/encounter/" + obj?.getJson()._id} 
+      to={"/encounter/" + obj?.getJson()._id} target='_blank'
       style={{ color: styles.colors.colorWhite, 
         height: "fit-content", cursor:"pointer",
         width: "fit-content"}}

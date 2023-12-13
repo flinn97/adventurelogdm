@@ -133,8 +133,8 @@ scrollTo = (ref, behavior) => {
             Campaigns
           </Link>)
           ||
-          (<a className="hover-btn"
-          href={window.location.href.split("-")[0]} 
+          (<Link className="hover-btn"
+          to={"/campaign/"+toolService.getIdFromURL(true,[0])} 
           style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:"", padding:"8px 8px", 
           color:styles.colors.color3+"e6", boxShadow:"", fontSize:".95rem",
           fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", border:""}}
@@ -143,7 +143,7 @@ scrollTo = (ref, behavior) => {
             src={backarrow}
             />
             {this.state.obj?.getJson().title}
-          </a>)
+          </Link>)
           }
 
 

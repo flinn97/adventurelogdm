@@ -306,20 +306,25 @@ class MainContent extends Component{
           
   {!this.state.showFindEncounter && !this.state.showFindImage &&
 <div style={{display:"flex", justifyContent:"center", flexDirection:"column"}}> 
-            <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
-            fontSize:styles.fonts.fontSmall,
-            marginTop:"1vh", alignSelf:"center", padding:"1%"}}
-            title="Create a new encounter, you can edit it by clicking on it." 
-              onClick={() => {
-             state.opps.cleanJsonPrepareRun({
-              "addencounter":{loreId: state.currentComponent.getJson()._id, 
-                name:"New Encounter", campaignId: id}})
 
-            // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
-            this.setState({ showAddEncounter: true });
-            }}>
-              + Create New Encounter
-            </div>
+                              {/* ///MINI EDITOR */}
+                                  {/* instead */}
+                        <div className="indent-on-click" style={{...styles.buttons.buttonAdd, 
+                        fontSize:styles.fonts.fontSmall,
+                        marginTop:"1vh", alignSelf:"center", padding:"1%"}}
+                        title="Create a new encounter, you can edit it by clicking on it." 
+                          onClick={() => {
+                        state.opps.prepareRun({
+                          "addencounter":{loreId: state.currentComponent?.getJson()._id, 
+                            name:"New Encounter", campaignId: id}})
+
+                        // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
+                        this.setState({ showAddEncounter: true });
+                        }}>
+                          + Create New Encounter
+                        </div>
+                              {/* ///MINI EDITOR */}
+
             <div className="indent-on-click" style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
             marginTop:"1vh", alignSelf:"center", padding:"1%"}}
             title="Find an existing encounter to add to this lore.
