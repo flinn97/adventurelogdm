@@ -323,7 +323,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch) {
-        
+        debugger
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -332,7 +332,7 @@ class Auth {
                 let component = key !== "del" ? { ...operate[i].getJson() } : operate[i];
 
                 for (const key in component){
-                    debugger
+                    
                     if (component[key]===undefined){
                         component[key]="";
                     }

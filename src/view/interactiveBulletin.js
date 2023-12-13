@@ -56,9 +56,14 @@ export default class InteractiveBulletin extends Component {
       mapHeight:mapHeight,
       mapWidth:mapWidth,
     }, () => this.forceUpdate())
+    if(mapWidth<1500 && mapWidth>300){
+      this.props.updateSize(mapWidth, mapHeight);
+
+    }
     ///assign pins to current mapId
 
     this.setState({isLoading: false});
+
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -72,6 +77,10 @@ export default class InteractiveBulletin extends Component {
         mapHeight: mapHeight,
         mapWidth: mapWidth,
       }, () => this.forceUpdate());
+      if(mapWidth<1500 && mapWidth>300){
+        this.props.updateSize(mapWidth, mapHeight);
+  
+      }
       
     }
   }
@@ -199,7 +208,7 @@ export default class InteractiveBulletin extends Component {
 
       <img ref={this.imgRef} 
    src={this.props.obj?.getJson().picURL} 
-  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", }}/>}
+  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"1900px", maxHeight:"1350px" }}/>}
   
   
   {/* {this.state.start && */}
@@ -262,7 +271,7 @@ export default class InteractiveBulletin extends Component {
            
                 background:styles.colors.colorBlack+"88",}}
 
-                onClick={()=>{
+                onClick={async ()=>{
                   if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
                     let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
                     dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
@@ -271,16 +280,21 @@ export default class InteractiveBulletin extends Component {
                   else{
                    
                     const newId = state.currentLore ? state.currentLore.getJson()._id: this.props.obj?.getJson().campaignId;
-                  dispatch({
-                    operate:"addlore",
-                    operation:"cleanJsonPrepare",
-                    object:{
-                      campaignId: this.props.obj?.getJson().campaignId, 
+                    let href = window.location.href;
+              let splitURL = href.split("/");
+              let id = splitURL[splitURL.length - 1];
+                
+                let otherChildren = componentList.getList("lore",id.includes("-")? state.currentLore.getJson()._id: state.currentCampaign?.getJson()._id ,"parentId");
+                    await state.opps.cleanJsonPrepare({addlore: {
+                      campaignId: this.props.obj?.getJson().campaignId, index:otherChildren.length,
                       parentId: 
                       {[newId]:"Unnamed"}
-                    },
+                    }});
+                    let lore = state.opps.getUpdater("add")[0]
+                  dispatch({
                     currentPin: pin,
-                    popupSwitch: "popupLore"
+                    popupSwitch: "popupLore",
+                    currentComponent:lore
       
                   })
                 }

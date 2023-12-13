@@ -157,7 +157,7 @@ class RichTextComponent extends Component {
 
         let save =DOMPurify.sanitize(this.ref.current.innerHTML);
         this.setState({theHtml:save})
-        if(!this.props.updateOnClickOutside){
+        if(!this.props.updateOnClickOutside &&this.state.active){
             this.props.handleChange(save);
 
         }
@@ -221,7 +221,11 @@ class RichTextComponent extends Component {
             contentEditable={true} className={this.props.class ? this.props.class : "form-control"}
             style={this.props.inputStyle? this.props.inputStyle: theme!==undefined? theme.richEditorStyle: {height:"fit-content"}}
             id="richText"
-            onClick={this.props.onClick}></div>
+            onClick={()=>{
+                this.setState({active:true})
+                this.props.onClick();
+            }}
+            onBlur={()=>{this.setState({active:false})}}></div>
            
         }
 

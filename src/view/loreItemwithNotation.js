@@ -3,6 +3,7 @@ import compassImage from '../pics/Compass_Final.png';
 import bannerImage from '../pics/Warbanner_Final.png';
 import imageImage from '../pics/Image_Final.png';
 import arrowGif from '../pics/downArrowGif.gif'
+import { Link, } from 'react-router-dom';
 
 export default class LoreItemWithNotation extends Component {
   constructor(props) {
@@ -77,7 +78,7 @@ export default class LoreItemWithNotation extends Component {
 
     
     return (
-      <a href={sendLink} className='hover-container' onDragEnter={(e) => {
+      <Link to={sendLink} className='hover-container' onDragEnter={(e) => {
         this.handleDragEnter(e, obj)}}
       style={{ textDecoration:"none",
          display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", color:"#ffdead",
@@ -169,7 +170,7 @@ export default class LoreItemWithNotation extends Component {
     </div>
       }
 
-</a>
+</Link>
 
     )
   }

@@ -36,6 +36,7 @@ export default class LoreViewer extends Component {
       imagesToShow: 5,
     }
     this.addDraggableItem = this.addDraggableItem.bind(this);
+    this.updateSize = this.updateSize.bind(this)
     this.eventLogger = this.eventLogger.bind(this); // bind eventLogger method
     }
 
@@ -96,7 +97,12 @@ toggleSidebar = () => {
   // Return a random unique color
   return uniqueColors[randomIndex];
 }
-
+updateSize(width, height){
+  this.setState({
+    bulletinWidth:width+"px",
+    bulletinHeight:height+"px"
+  })
+}
 
   render() {
     let obj = this.props.obj;
@@ -230,8 +236,8 @@ marginTop:"22px"}}>
       
         {(this.state.map) && 
        
-       <div style={{height:"1310px", width:"100%"}}>
-        <MapGallery app={app} obj={this.state.lore} color={randomColor}/>
+       <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%"}}>
+        <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize = {this.updateSize}/>
         
         </div>}
 

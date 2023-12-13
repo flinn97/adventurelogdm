@@ -28,7 +28,15 @@ export default class Worldbuilder extends Component {
     }
     
     this.addDraggableItem = this.addDraggableItem.bind(this);
+    this.updateSize =this.updateSize.bind(this);
     this.eventLogger = this.eventLogger.bind(this); // bind eventLogger method
+    }
+
+    updateSize(width, height){
+      this.setState({
+        bulletinWidth:width+"px",
+        bulletinHeight:height+"px"
+      })
     }
 
     // eventLogger method definition
@@ -48,24 +56,23 @@ export default class Worldbuilder extends Component {
     //and will be triggered when a user starts dragging the element 
     //and stops dragging it, respectively.
  
-componentDidMount(){
+ componentDidMount(){
   let opps = this.props.app.state.opps
   let href = window.location.href;
   let splitURL = href.split("/");
   let id = splitURL[splitURL.length-1];
   let component = this.props.app.state.componentList.getComponent("campaign", id);
-  
+  if(component){
   let parentLore = this.props.app.state.componentList.getList("lore",id, "campaignId" );
   
   parentLore = parentLore.length>0? parentLore.filter(obj=>{return obj.getJson().parentLore===true}): undefined;
   
   let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0]?.getJson()._id, "loreId");
   this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
-  
   //RICH TEXT READ
   let campaignDesc = document.getElementById("campaignDesc");
   campaignDesc.innerHTML = component.getJson().description;
-
+}
 
   
 }
@@ -151,9 +158,9 @@ toggleSidebar = () => {
       
         {(this.state.map) && 
       //  frame
-       <div style={{height:"1310px", width:"100%", 
+       <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%", 
        }}>
-        <InteractiveBulletin app={app} obj = {this.state.map}/>
+        <InteractiveBulletin app={app} obj = {this.state.map} updateSize = {this.updateSize}/>
         {/* backgroundIMAGE */}
         </div>}
 

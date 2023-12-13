@@ -25,7 +25,7 @@ import auth from '../services/auth';
 import TokenImage from './tokenImage';
 import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
-
+import { URLcheck } from './campaignEditorURLCheck';
 
 export default class CampaignEditor extends Component {
   constructor(props) {
@@ -38,6 +38,7 @@ export default class CampaignEditor extends Component {
       obj: undefined,
       pic: undefined,
       showList: true,
+      start: false,
     }
     
   }
@@ -61,6 +62,9 @@ async componentDidMount(){
   }
 
   let component = this.props.app.state.componentList.getComponent("campaign", id);
+  if(component){
+
+  
   this.setState({obj: component,  start:true, showList:true});
   dispatch({currentCampaign: component})
   
@@ -69,6 +73,9 @@ async componentDidMount(){
     campaignPlayers: players,
   })
 }
+state.componentList.sortSelectedList("lore", "index");
+}
+
 
 scrollTo = (ref, behavior) => {
   if (ref.current) {
@@ -472,7 +479,12 @@ scrollTo = (ref, behavior) => {
         </div>
 
 )}
+      <URLcheck onChange={async()=>{
+                await this.setState({start:false});
 
+        this.componentDidMount();
+        // this.setState({start:true})
+      }}/>
         </div>
     )
   }

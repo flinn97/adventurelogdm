@@ -22,7 +22,7 @@ import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
-
+import logo from "./pics/logoava.png"
 
 //model
 export default class Dispatch extends Component {
@@ -57,7 +57,9 @@ export default class Dispatch extends Component {
        display:"flex", flexDirection:"column",
       }}>
 <div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
-          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav"
+          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
+            {logo: logo}
+          }
           />
           </div>
         {/* WITHIN */}
