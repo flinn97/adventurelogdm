@@ -99,6 +99,7 @@ class MainContent extends Component{
 
     return(
     <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",}}>
+      {state.currentCampaign.getJson().title}
       <ParentFormComponent app={app} name="title" label="Title"/>
       <ParentFormComponent app={app} name="description" label="Description"/>
       <ParentFormComponent app={app} name="promotional" label="Promotional"/>

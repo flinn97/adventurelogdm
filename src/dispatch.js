@@ -22,6 +22,7 @@ import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ApprovalPopup from './view/approvalPopup';
+import ApprovalPage from './view/pages/apprroval';
 
 
 //model
@@ -151,7 +152,7 @@ justifyContent: "center",}}>
         <Route path="/encounter/:id" element={<Encounter app={app} />}/>
 
         <Route path="/log/:id" element={<AdventureLogPage app={app} />}/> 
-
+        <Route path="/approvalpage" element={<ApprovalPage app={app}/>}/>
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
       
