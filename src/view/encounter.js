@@ -512,7 +512,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
              app={app} name={"monster"} 
              delOptions={{picURL:trash, warningMessage:"Delete this character (this is permanent)",
              textStyle:{ fontSize:styles.fonts.fontSmallest,}, 
-              style:{width:"35px", height:"35px", borderRadius:"2px", padding:"4px 2px",
+              style:{width:"35px", height:"35px", padding:"4px 2px",
                display:"flex", flexDirection:"row",
               alignItems:"center", borderRadius:"8px", 
               justifyContent:"center" },}}
