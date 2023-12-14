@@ -118,8 +118,10 @@ export default class AdventureLogPage extends Component {
     }
   };
 
-   scrollToBottom = (behavior) => {
+   scrollToBottom = async (behavior) => {
     debugger
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(500);
     this.setState({ showItems:true });
     this.props.app.state.componentList.sortSelectedListbyFirebaseDate("post");
      if ( this.messagesEndRef.current) {
