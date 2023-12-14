@@ -101,90 +101,98 @@ async updateMonster(obj, update){
     //  If currentTurn is '99999', set it to the highest initiative in the list.
     if (obj?.getJson().currentTurn === "99999") {
       highestLastInit = parseInt(sortedList[0].getJson().lastInit, 10);
-      
-      await this.updateMonster(obj, { currentTurn: highestLastInit } )
-      await this.setState({ currentTurn: highestLastInit});
-      
-// Set currentTurn for each participant
-        await participantList.forEach(async participant => {
-          await this.updateMonster(participant, { currentTurn: highestLastInit });
-        });
-      
-      await this.updateMonster(obj, {currentIndex: 0, isRunning:true } )
+    
+      await this.updateMonster(obj, { currentTurn: highestLastInit });
+      await this.setState({ currentTurn: highestLastInit });
+    
+      // Set currentTurn for each participant and find the participant with the highest initiative
+      let highestInitiativeParticipant = null;
+      for (const participant of participantList) {
+        await this.updateMonster(participant, { currentTurn: highestLastInit });
+        if (parseInt(participant.getJson().lastInit, 10) === highestLastInit) {
+          highestInitiativeParticipant = participant;
+        }
+      }
+    
+      await this.updateMonster(obj, { currentIndex: 0, isRunning: true });
       this.currentIndex = 0; // Set to the first index
+    
+      // Update conditions for the participant with the highest initiative
+      if (highestInitiativeParticipant) {
+        const conditionList = await this.props.app.state.componentList.getList("condition", highestInitiativeParticipant.getJson()._id, "monsterId");
+        for (const condition of conditionList) {
+          if (condition.getJson().isActive === true) {
+            let number = parseInt(condition.getJson().roundsActive, 10) + 1;
+            condition.setCompState({ roundsActive: number.toString() });
+            await this.props.app.dispatch({
+              operate: "update", operation: "cleanPrepareRun", object: condition
+            });
+          }
+        }
+      }
+    
       return;
     }
+    
   
     this.currentIndex = (this.currentIndex + 1) % sortedList.length;
 
-    if(this.currentIndex>=0){
-            const nextHighestLastInit = await parseInt(sortedList[this.currentIndex]?.getJson().lastInit, 10);
-            
-            await this.setState({ currentTurn: nextHighestLastInit});
-            await this.updateMonster(obj, { currentTurn: nextHighestLastInit } )
+    if (this.currentIndex >= 0) {
+        const nextHighestLastInit = parseInt(sortedList[this.currentIndex]?.getJson().lastInit, 10);
 
-            let p = undefined;
+        await this.setState({ currentTurn: nextHighestLastInit });
+        await this.updateMonster(obj, { currentTurn: nextHighestLastInit });
 
-            await participantList.forEach(async participant => {
-              await this.updateMonster(obj, { currentTurn: nextHighestLastInit });
-              if (participant.getJson().lastInit === nextHighestLastInit)
-              {
-                
+        let p = undefined;
+        for (const participant of participantList) {
+            await this.updateMonster(participant, { currentTurn: nextHighestLastInit });
+            if (parseInt(participant.getJson().lastInit, 10) === nextHighestLastInit) {
                 p = participant;
-                console.log(nextHighestLastInit)
-              }
-                  if (p){
-                              const conditionList = await [...this.props.app.state.componentList.getList("condition", p?.getJson()._id, "monsterId")];
-                                
-                                await conditionList.forEach(condition => 
-                                    { 
-                                      if (condition.getJson().isActive === true){
-                                          let number = parseInt(condition.getJson().roundsActive, 10) + 1;
-                                          let stringN = number.toString();
-                                          condition.setCompState({roundsActive: stringN, encounterId:toolService.getIdFromURL()});
-                                          dispatch({
-                                            operate:"update", operation:"cleanPrepareRun", object: condition
-                                      })};
-                                    }
-                                  );
-                                  
-                                  }
-            })          
-                await this.setState({ justUpdatedInitiative: true });
-              }
-    };
+            }
+        }
+
+        if (p) {
+            const conditionList = [...this.props.app.state.componentList.getList("condition", p?.getJson()._id, "monsterId")];
+            for (const condition of conditionList) {
+                if (condition.getJson().isActive === true) {
+                    let number = parseInt(condition.getJson().roundsActive, 10) + 1;
+                    condition.setCompState({ roundsActive: number.toString(), encounterId: toolService.getIdFromURL() });
+                    dispatch({
+                        operate: "update", operation: "cleanPrepareRun", object: condition
+                    });
+                }
+            }
+        }
+        await this.setState({ justUpdatedInitiative: true });
+    }
+};
   
 
-  stopInitiative = async (participantList, dispatch) => {
-    let obj = this.state.obj;
-    let high = "99999";
-    await obj.setCompState({ currentTurn: high, currentIndex : -1, })
-    
-    this.currentIndex = -1; // Set to the first index
-    this.setState({ currentIndex : -1});
-    dispatch({
-      operate:"update", operation:"cleanPrepareRun", object: obj
-    })
-    await this.setState({ currentTurn: high,});
+stopInitiative = async (participantList, dispatch) => {
+  let obj = this.state.obj;
+  let high = "99999";
 
-    const conditionList = await this.props.app.state.componentList.getList("condition", toolService.getIdFromURL, "encounterId");
-     conditionList.forEach(condition => 
-      { 
-            condition.setCompState({roundsActive: "0",})
-            dispatch({
-              operate:"update", operation:"prepareRun", object: condition
-        });
-      }
-    );
-    
-    await participantList.forEach(participant => {
-      participant.setCompState({ currentTurn: high });
-       dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: participant
-      })
+  // Resetting the encounter object
+  await this.updateMonster(obj, { currentTurn: high, currentIndex: -1 });
+  this.currentIndex = -1; // Set to the first index
+  await this.setState({ currentTurn: high, currentIndex: -1 });
+
+  // Resetting each participant's currentTurn
+  for (const participant of participantList) {
+    await this.updateMonster(participant, { currentTurn: high });
+  }
+
+  // Resetting conditions
+  let eid = toolService.getIdFromURL();
+  const conditionList = await this.props.app.state.componentList.getList("condition", eid, "encounterId");
+  for (const condition of conditionList) {
+    condition.setCompState({ roundsActive: "0" });
+    dispatch({
+      operate: "update", operation: "cleanPrepareRun", object: condition
     });
-    await dispatch({    })
-  };
+  }
+};
+
 
   handleKeyDown = async (e) => {
     let app = this.props.app;
