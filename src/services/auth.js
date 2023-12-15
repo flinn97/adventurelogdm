@@ -17,26 +17,26 @@ class Auth {
     async setCurrentUser(student) {
         await localStorage.setItem("user", JSON.stringify(student));
     }
-    getJsonDatabase(componentList){
-        
+    getJsonDatabase(componentList) {
+
         let arr = [weapons];
-        let arrnames=["weapon"];
+        let arrnames = ["weapon"];
         let data = []
-        for(const key in arr){
-            for(const key1 in arr[key].data){
-                for(const key2 in arr[key].data[key1]){
-                    arr[key].data[key1][key2].type= arrnames[key];
+        for (const key in arr) {
+            for (const key1 in arr[key].data) {
+                for (const key2 in arr[key].data[key1]) {
+                    arr[key].data[key1][key2].type = arrnames[key];
                     data.push(arr[key].data[key1][key2]);
                 }
             }
 
         }
-        for(const key in data);
+        for (const key in data);
         componentList.addComponents(data);
 
     }
 
-    
+
 
     async createInitialStages(componentList,) {
         let list = ["Not Started", "First Email", "Second Email", "Follow up", "Nurture", "Not Interested",]
@@ -58,23 +58,56 @@ class Auth {
     //ComponentList = adding to the componentList
     //Attribute = attribute pair always a string "campaignID" or "_id"
     //Type = OPTIONAL this RETURNS the getList, string "monster",
-    async firebaseGetter(value, componentList, attribute, type) {
+    async firebaseGetter(value, componentList, attribute, type, dispatch) {
+        
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
             IDlist.push(list[key].getJson()?._id)
         }
-        let rawData = [];
+        let rawData1 = [];
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
-        /// TAYLOR ORDER BY DATE?
-        let comps = await getDocs(components);
-        for (const key in comps.docs) {
-            let data = comps.docs[key].data()
-            if (!IDlist.includes(data._id)) {
-                rawData.push(data);
+        if(type){
+            let comps = await getDocs(components);
+            for (const key in comps.docs) {
+                let data = comps.docs[key].data()
+                if (!IDlist.includes(data._id)) {
+                    rawData1.push(data);
+                }
             }
+            await componentList.addComponents(rawData1, false);
+
         }
-        await componentList.addComponents(rawData, false);
+        else{
+            let comps1 = await onSnapshot(components, async (querySnapshot) => {
+
+
+                rawData1 = [];
+    
+    
+    
+                for (const key in querySnapshot.docs) {
+    
+                    let data = querySnapshot.docs[key].data()
+                    rawData1.push(data);
+                }
+    
+                await componentList.addComponents(rawData1, false);
+    
+                    if (dispatch) {
+    
+                    } await dispatch({ rerenderFirebase: true });
+    
+                
+    
+    
+    
+    
+            });
+        }
+        
+
+
         if (type) {
             return componentList.getList(type, value, attribute)
         }
@@ -85,7 +118,7 @@ class Auth {
 
     }
     async getuser(email, componentList, dispatch) {
-        debugger
+        //debugger
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
@@ -103,14 +136,16 @@ class Auth {
         await componentList.addComponents(rawData, false);
         let user = componentList.getComponent("user");
         if (user) {
-            
-            dispatch({user:user, email:email, })
-            if(user.getJson().role!=="GM"){
-                dispatch({ switchCase:[
-                    {path:"/", comp:PlayerHome, name: "Home" },
-                  
-                   
-                  ]})
+
+            dispatch({ user: user, email: email, })
+            if (user.getJson().role !== "GM") {
+                dispatch({
+                    switchCase: [
+                        { path: "/", comp: PlayerHome, name: "Home" },
+
+
+                    ]
+                })
             }
         }
     }
@@ -277,7 +312,7 @@ class Auth {
         window.location.reload();
     }
     async uploadPics(file, name, dispatch) {
-        
+
         new Compressor(file, {
             quality: imageQuality,
             success: async (result) => {
@@ -285,7 +320,7 @@ class Auth {
                 await uploadBytes(storageRef, result).then((snapshot) => {
                     if (dispatch) {
                         dispatch({ uploaded: true });
-                       
+
                     }
                     console.log('Uploaded a file!');
                 });
@@ -323,7 +358,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch) {
-        debugger
+        //debugger
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -331,53 +366,53 @@ class Auth {
                 await delay(1000);
                 let component = key !== "del" ? { ...operate[i].getJson() } : operate[i];
 
-                for (const key in component){
-                    
-                    if (component[key]===undefined){
-                        component[key]="";
+                for (const key in component) {
+
+                    if (component[key] === undefined) {
+                        component[key] = "";
                     }
                 }
 
                 try {
-                
-                
-                switch (key) {
-                    case "add":
-                        if(email===undefined){
-                            email = component.owner
-                        }
-                        component.collection = email;
-                        if (!component.owner) {
-                            component.owner = email
-                        }
-                        component.date = await serverTimestamp();                        
-                        await setDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
-                        break;
-                    case "del":
-                       
+
+
+                    switch (key) {
+                        case "add":
+                            if (email === undefined) {
+                                email = component.owner
+                            }
+                            component.collection = email;
+                            if (!component.owner) {
+                                component.owner = email
+                            }
+                            component.date = await serverTimestamp();
+                            await setDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
+                            break;
+                        case "del":
+
 
                             await deleteDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component));
                             break;
-                    case "update":
-                        
-                        
-                        component.date = await serverTimestamp();
-                       
-                        await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
-                        break;
+                        case "update":
+
+
+                            component.date = await serverTimestamp();
+
+                            await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
+                            break;
+                    }
+                } catch (error) {
+                    console.log(error);
+                    console.log(component)
                 }
-            } catch (error) {
-                console.log(error);
-                console.log(component)    
-            }
-            
+
             }
         }
-        
+
         if (dispatch) {
-           
+
             dispatch({ dispatchComplete: true, data: obj })
-            
+
         }
     }
 

@@ -103,30 +103,7 @@ toggleSidebar = () => {
       height:"fit-content", maxWidth:"100%",  justifyContent:"space-between"
       }}>
 
-            {/* {state.popUpSwitchcase != "worldbuilder" &&
-            <Link to={"/campaign/"+(this.state.obj?.getJson()._id)} 
-            style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
-            fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", }}
-            >
-              <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
-              src={backarrow} draggable="false"
-              />
-              Go Back
-            </Link>} */}
-
-            {/* <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  marginBottom:"2vh", 
-      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
-      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", height:"fit-content", width:"100%" }}>
-<div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%", }}>
-
-        <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite}}>World Builder: {this.state.obj?.getJson().title}</div>
-      
-             
-                
-      
-      <div id= "campaignDesc"
-              style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
-                </div> */}
+           
 {
 (compListLength === 0) &&
 <MapUploader 
@@ -229,3 +206,28 @@ toggleSidebar = () => {
 
        ))}
  */
+
+        /* {state.popUpSwitchcase != "worldbuilder" &&
+            <Link to={"/campaign/"+(this.state.obj?.getJson()._id)} 
+            style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+            fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", }}
+            >
+              <img style={{width:".9rem", opacity:"98%", marginRight:".75rem"}}
+              src={backarrow} draggable="false"
+              />
+              Go Back
+            </Link>} 
+
+             <div style={{display: "flex", flexDirection: "row", justifyContent:"space-between",  marginBottom:"2vh", 
+      backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')', borderRadius:radius,
+      backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", height:"fit-content", width:"100%" }}>
+<div style={{...styles.popupSmall, padding:"1rem", minHeight:"fit-content", width:"100%", }}>
+
+        <div style={{fontSize:styles.fonts.fontBody, color:styles.colors.colorWhite}}>World Builder: {this.state.obj?.getJson().title}</div>
+      
+             
+                
+      
+      <div id= "campaignDesc"
+              style={{width:"100%", height:"100%", userSelect:"text", marginBottom:"2vh",}}>
+                </div> */

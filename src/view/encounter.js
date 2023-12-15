@@ -71,7 +71,7 @@ export default class Encounter extends Component {
   let app = this.props.app;
     let state = app.state;
     let opps = state.opps;
-    await obj?.setCompState({...update});
+    await monster?.setCompState({...update});
       await opps.cleanPrepareRun({update:monster});
   }
 
@@ -108,7 +108,7 @@ export default class Encounter extends Component {
           await  this.updateMonster(participant, {currentTurn: highestLastInit});
           
         });
-        await  this.updateMonster(participant, {currentIndex: 0, isRunning:true });
+        await  this.updateMonster(obj, {currentIndex: 0, isRunning:true });
       this.currentIndex = 0; // Set to the first index
       return;
     }

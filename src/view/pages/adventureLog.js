@@ -46,7 +46,7 @@ export default class AdventureLog extends Component {
      
     
     
-    debugger
+    //debugger
     let player = localStorage.getItem("player");
     if(player){
       player = state.componentList.getComponent('monster', player, "_id");
@@ -63,7 +63,7 @@ export default class AdventureLog extends Component {
     }
     let campaign = state.componentList.getComponent("campaign", id, "_id");
     if(!campaign){
-      await auth.firebaseGetter(id, state.componentList,"_id")
+      await auth.firebaseGetter(id, state.componentList,"_id", false, dispatch)
       
 
     }

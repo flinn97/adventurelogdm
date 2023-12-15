@@ -44,11 +44,11 @@ export default class AdventureLogPage extends Component {
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
     this.setState({showItems:false })
     
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", "post", );
+    await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
       this.scrollToBottom();
     state.componentList.sortSelectedListbyFirebaseDate("post");
     this.setState({ textI: "", showItems:true });
-    app.setState({rerender:true});
+    app.dispatch({rerender:true});
   }
 
 
@@ -119,7 +119,7 @@ export default class AdventureLogPage extends Component {
   };
 
    scrollToBottom = async (behavior) => {
-    debugger
+    //debugger
     const delay = ms => new Promise(res => setTimeout(res, ms));
                 await delay(500);
     this.setState({ showItems:true });

@@ -67,7 +67,6 @@ export default class LoreListCard extends Component {
 
 
 
-
     return (
       <div >
         
@@ -100,7 +99,6 @@ getCampId(){
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
-    
 
     return(
       <div className='scroller'
