@@ -249,7 +249,14 @@ export default class Opps {
         }
         if(id!==undefined ){
             let key = filterKey!==undefined ? filterKey: "_id"
-            temp = temp.filter(data => data.getJson()[key] === id);
+            temp = temp.filter((data) => {if (typeof data.getJson()[key] === 'object'){
+                    
+                return Object.keys(data.getJson()[key]).includes(id)
+
+            }else{
+                
+                return data.getJson()[key] === id;}
+            });
         }
         return temp[0];
     }
@@ -311,7 +318,7 @@ export default class Opps {
             let list  = [...this.componentsList[type]];
             
             list = list.sort(function(a, b){
-                debugger
+                //debugger
                 //THIS MIGHT MAKE ORDER SWITCHING WEIRD
                 let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date.seconds: new Date(0);
                 let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date.seconds: new Date(0);

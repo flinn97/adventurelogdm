@@ -67,22 +67,30 @@ export default class Encounter extends Component {
     return newId;
   }
 
+ async updateMonster(monster, update){
+  let app = this.props.app;
+    let state = app.state;
+    let opps = state.opps;
+    await monster?.setCompState({...update});
+      await opps.cleanPrepareRun({update:monster});
+  }
+
 
   getNextHighestInitiative = async (participantList, dispatch) => {
+    let app = this.props.app;
+    let state = app.state;
+    let opps = state.opps;
     ///THIS ISNT ALWAYS WORKING, sometimes it ignores input and does nothing???
     const now = Date.now();
     if (now - this.lastClicked < 90) {  // 90 milliseconds delay plzzz
       return;
     }
     this.lastClicked = now;
-    let obj = await this.state.obj;
-    let highestLastInit;
+    let obj = this.state.obj;
+    let highestLastInit = 0;
 
     if (obj?.getJson().currentTurn === undefined) {
-      obj?.setCompState({ currentTurn: this.state.currentTurn });
-      dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: obj
-      })
+     await  this.updateMonster(obj, {currentTurn:this.state.currentTurn});
     }
   
     const sortedList = [...participantList].sort((a, b) => {
@@ -92,52 +100,42 @@ export default class Encounter extends Component {
     //  If currentTurn is '99999', set it to the highest initiative in the list.
     if (obj?.getJson().currentTurn === "99999") {
       highestLastInit = parseInt(sortedList[0].getJson().lastInit, 10);
-      obj.setCompState({ currentTurn: highestLastInit });
-      dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: obj
-      })
-      this.setState({ currentTurn: highestLastInit});
+      await  this.updateMonster(obj, {currentTurn: highestLastInit});
+      await this.setState({ currentTurn: highestLastInit});
       
 // Set currentTurn for each participant
-        participantList.forEach(participant => {
-          participant.setCompState({ currentTurn: highestLastInit });
-          dispatch({
-            operate:"update", operation:"cleanPrepareRun", object: participant
-          })
+        await participantList.forEach(async participant => {
+          await  this.updateMonster(participant, {currentTurn: highestLastInit});
+          
         });
-      obj.setCompState({ currentIndex: 0, isRunning:true });
-      dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: obj
-      })
+        await  this.updateMonster(obj, {currentIndex: 0, isRunning:true });
       this.currentIndex = 0; // Set to the first index
       return;
     }
   
     
     this.currentIndex = (this.currentIndex + 1) % sortedList.length;
+    if(this.currentIndex>=0){
+
     
     const nextHighestLastInit = await parseInt(sortedList[this.currentIndex].getJson().lastInit, 10);
     console.log("It is Initiative "+ nextHighestLastInit)
+    await  this.updateMonster(obj, {currentTurn: nextHighestLastInit  });
+    await this.setState({ currentTurn: nextHighestLastInit});
 
-    obj.setCompState({ currentTurn: nextHighestLastInit });
-    this.setState({ currentTurn: nextHighestLastInit});
-    dispatch({currentTurn: nextHighestLastInit,
-      operate:"update", operation:"cleanPrepareRun", object: obj
-    })
 
     let p = undefined;
 
-    participantList.forEach(participant => {
-      participant.setCompState({ currentTurn: nextHighestLastInit });
+    await participantList.forEach(async participant => {
+      await  this.updateMonster(obj, {currentTurn: nextHighestLastInit  });
+
       if (participant.getJson().lastInit === nextHighestLastInit)
       {
         p = participant;
-      }
-    });
-    
-    
         
-      const conditionList = await [...this.props.app.state.componentList.getList("condition", p.getJson()._id, "monsterId")];
+      }
+      if(p){
+        const conditionList = await [...this.props.app.state.componentList.getList("condition", p.getJson()._id, "monsterId")];
       
       await conditionList.forEach(condition => 
           { 
@@ -150,8 +148,16 @@ export default class Encounter extends Component {
             })};
           }
         );
+      }
+      
+    });
+    
+    
+        
+      
 
         this.setState({ justUpdatedInitiative: true });
+      }
     };
   
 
