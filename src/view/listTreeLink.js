@@ -56,7 +56,12 @@ export default class ListTreeLink extends Component {
 
     let maxLengthName = 22;
 
-    let objName = obj.getJson()[name].length > maxLengthName ? obj.getJson()[name].substring(0, maxLengthName) + "..." : obj.getJson()[name];
+    let objName = obj.getJson()[name];
+    if(obj.getJson().reference){
+      let ogComp = componentList.getComponent('lore', obj.getJson().ogId, "_id");
+      objName = ogComp.getJson()[name]
+    }
+      objName = objName.length > maxLengthName ? objName.substring(0, maxLengthName) + "..." : objName;
     
     return ( <div 
      
