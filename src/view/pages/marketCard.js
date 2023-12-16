@@ -87,9 +87,9 @@ class MainContent extends Component{
     }
   }
   async componentDidMount(){
-    debugger
+    //debugger
 
-    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type")
+    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type", false, this.props.app.dispatch)
     this.setState({start: true})
 
   }

@@ -136,6 +136,7 @@ updateSize(width, height){
 
     const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5", width:"1%"}}>
     "</div>;
+    console.log("loreview rerender")
 
     return (
       <div style={{minWidth:"100%",}}>

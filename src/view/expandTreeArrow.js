@@ -26,7 +26,7 @@ render() {
   let dispatch = app.dispatch;
   let styles =state.styles;
 
-  let id1 = obj.getJson()._id;
+  let id1 = obj.getJson().reference? obj.getJson().ogId: obj.getJson()._id;
   let index1 = state.currentExpanse?.indexOf(id1);
   
   let compList = state.componentList.getList("lore", id1, "parentId")
@@ -44,7 +44,7 @@ render() {
       this.setState({ expanded: !this.state.expanded });
       
       let r = state.currentExpanse ? state.currentExpanse : [];
-      const id = id1;
+      const id =  obj.getJson()._id;
       
       const index = r.indexOf(id);
       if (index !== -1) {

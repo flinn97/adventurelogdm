@@ -106,7 +106,7 @@ class componentBase extends BaseClass{
                             let newMapId = map.getJson()._id;
                             let loreId = lore.getJson()._id;
                             obj = {mapId:newMapId, loreId:loreId}
-                            debugger
+                            //debugger
                            await pin.createFromMPI(mpiLore, campaignId, componentList, obj)
  
                         }
@@ -247,6 +247,9 @@ class Lore extends componentBase{
         type: "lore",
         campaignId:"",
         parentId:{},
+        topLevel:false,
+        reference:false,
+        ogId:"",
         name:"",
         desc:"",
         handoutText:"",
@@ -362,7 +365,7 @@ class Campaign extends componentBase{
     }
 
     async getPlayers(compList){
-        let monsters = await auth.firebaseGetter(this.json._id, compList, "campaignId", "monster");
+        let monsters = await auth.firebaseGetter(this.json._id, compList, "campaignId", "monster", false);
             let pcs = monsters.filter(
             (monster) => {return monster.getJson().role === "player"
             })
