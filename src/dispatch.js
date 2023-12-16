@@ -25,6 +25,7 @@ import ApprovalPopup from './view/approvalPopup';
 import ApprovalPage from './view/pages/apprroval';
 import ViewPlayerList from './view/popups/viewPlayerList';
 import logo from "./pics/logoava.png"
+import PurchasePopup from './view/purchasePopup';
 
 //model
 export default class Dispatch extends Component {
@@ -136,7 +137,13 @@ justifyContent: "center",}}>
               state.opps.clearUpdater()
               app.dispatch({popupSwitch:"",currentComponent:undefined})}}
             />)}
-       
+            
+            {state.popupSwitch === "popupPurchase" && (state.currentComponent?.getJson().type ==="purchase" && 
+            <PurchasePopup 
+            app={app} type="popup" options={{cardType:"bigCard"}} handleClose={()=>{
+              state.opps.clearUpdater()
+              app.dispatch({popupSwitch:"",currentComponent:undefined})
+            }}/> )}
      {state.user.getJson().role!=="GM"?(
       
         <Routes>

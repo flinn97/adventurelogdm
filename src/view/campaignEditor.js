@@ -118,13 +118,9 @@ scrollTo = (ref, behavior) => {
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
 <div style={{color:"red"}} onClick={()=>{
-<<<<<<< HEAD
   dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
   //treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
   }}>Send to Marketplace</div>
-=======
-  treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}></div>
->>>>>>> aa85ef630fdfd572cbb84597dff365a72d48768b
         {/* BACK BUTTON */}
       {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
           (<Link className="hover-btn-highlight"

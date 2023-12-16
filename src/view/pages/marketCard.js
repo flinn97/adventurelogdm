@@ -108,7 +108,10 @@ class MainContent extends Component{
       {this.state.start &&
       <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
         debugger
-        treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")}]}}/>}
+        dispatch({popupSwitch:"purchase", operation:"cleanPrepare", operate:"addpurchase"})
+        //treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")
+        
+        }]}}/>}
        <div style={{color:styles.colors.color3}}>Buy Stuff</div>
       </div>
       
