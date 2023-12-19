@@ -46,15 +46,10 @@ export default class Encounter extends Component {
     let component = this.props.app.state.componentList.getComponent("encounter", id);
     await this.setState({obj: component, currentTurn: component.getJson().currentTurn, isRunning:component.getJson().isRunning,
       currentIndex: component.getJson().currentIndex,});
-     toolService.rerenderTimeout(this.props.app.dispatch, 100);
-    // let Eid = toolService.getIdFromURL(false);
-    // auth.firebaseGetter("Eid", this.props.app.state.componentList, "campaignId", "monster" );
-    // console.log(this.props.app.state.componentList);
+     toolService.rerenderTimeout(this.props.app.dispatch, 1);
+    
     
     let dispatch = this.props.app.dispatch;
-    //this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
-    
-
     dispatch({popUpSwitchcase: "", });
   }
   
