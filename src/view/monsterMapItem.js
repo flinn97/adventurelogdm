@@ -183,7 +183,7 @@ export default class MonsterMapItem extends Component {
 
     return (
      
-      <div style={{minWidth: "100%", overflow:"visible", border:"1px solid "+styles.colors.color8+"1e",
+      <div title={obj?.getJson().notes} style={{minWidth: "100%", overflow:"visible", border:"1px solid "+styles.colors.color8+"1e",
       position: "relative", borderRadius:"22px", height:"128px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
         
@@ -261,7 +261,7 @@ export default class MonsterMapItem extends Component {
                           width:"300px", alignSelf:"center",  marginLeft:"-11px", borderRadius:"11px",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
                          }}>
-                           <ParentFormComponent obj={this.props.obj} name="name"
+                           <ParentFormComponent obj={obj} name="name"
                             prepareRun={true} maxLength={30}
                             //placeholder={obj?.getJson().hp}
                               inputStyle={{minWidth:"300px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", 
@@ -286,7 +286,7 @@ export default class MonsterMapItem extends Component {
                             
                             <img style={{ alignSelf: "center", width: fontSize[0], marginBottom:"2px" }} src={ac} draggable="false"/>
 
-                            <ParentFormComponent obj={this.props.obj} name="ac"
+                            <ParentFormComponent obj={obj} name="ac"
                             prepareRun={true} maxLength={2}
                             //placeholder={obj?.getJson().hp}
                               inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", fontSize:fontSize[0],
@@ -296,7 +296,8 @@ export default class MonsterMapItem extends Component {
 
                           </div>
 
-                          <div title="Health"
+                          <div title="Health. Use +x or -x at the end to add or subtract from the current value. 
+                          ie: 20-1"
                             style={{
                               display: "flex",
                               height: "fit-content",
@@ -310,10 +311,11 @@ export default class MonsterMapItem extends Component {
                           >
                             <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>HP</div>
 
-                            <ParentFormComponent obj={this.props.obj} name="hp"
-                          prepareRun={true} maxLength={4}
-                          //placeholder={obj?.getJson().hp}
-                             inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
+                            <ParentFormComponent obj={obj} name="hp"
+                          prepareRun={true} maxLength={6}
+                          placeholder={obj?.getJson().maxHp?obj?.getJson().maxHp:obj?.getJson().hp}
+                          doesMath={true}
+                             inputStyle={{width:"4.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
                              height:"1.7rem", rows:"1", fontSize:fontSize[0],
                              borderRadius:"4px", background: styles.colors.color2+"00", borderWidth:"0px", alignItems:"center",
                              textAlign:"center",justifyContent:"center",}}
@@ -339,7 +341,7 @@ export default class MonsterMapItem extends Component {
                             fontSize: fontSize[0], marginLeft:".5vw", marginTop:"-6px",
                             }}>Notes</div>
 
-                            <ParentFormComponent obj={this.props.obj} name="notes"
+                            <ParentFormComponent obj={obj} name="notes"
                           prepareRun={true} maxLength={200} 
                           
                           //placeholder={obj?.getJson().hp}

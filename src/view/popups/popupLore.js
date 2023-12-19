@@ -289,6 +289,7 @@ class MainContent extends Component {
                   <div style={{ display: "flex", flexDirection: "row", alignContent: "flex-end", justifyContent: "flex-end" }}>
                     <PostLogButton app={app} obj={lore} altText={"description"} />
                   </div>
+
                   <ParentFormComponent app={app} name="desc"
                     theme={"adventureLog"}
                     rows={5}
@@ -298,11 +299,12 @@ class MainContent extends Component {
                       borderRadius: "4px", background: styles.colors.colorWhite + "00",
                       border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                     }}
-                    type={"richEditor"}
+                    type={"richEditor"} onPaste={this.handlePaste}
                     wrapperStyle={{
                       margin: "5px", color: styles.colors.colorWhite, display: "flex",
                       flexDirection: "column", justifyItems: "space-between"
                     }} />
+
                 </div>
               </div>}
 

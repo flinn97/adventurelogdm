@@ -20,7 +20,7 @@ export default class AddParticipant extends Component {
     this.state = {
       pic: undefined,
       colors: [],
-      copyCount: 0,
+      copyCount: 1,
       name:'',
     };
     this.colorThief = new ColorThief();
@@ -111,8 +111,8 @@ let noteExample = pickNote();
 
 const getColors = app.state.currentComponent.getColorList();
 
-let countPlusOne = this.state.copyCount+1;
-let RunText = countPlusOne===1?"Add to Encounter":"Add to Encounter (x"+countPlusOne.toString()+')';
+let countPlus = this.state.copyCount;
+let RunText = countPlus===1?"Add to Encounter":"Add to Encounter (x"+countPlus.toString()+')';
 
     return (
      
@@ -240,11 +240,11 @@ transitionDuration:"9000ms"
 </div>
 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly", width:"58.1rem",}}>
   <div title={"This will create # number of characters in this encounter"}>
-  Additional Copies:
+  Number to Create:
   <input style={{width:"65px", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1", marginTop:"11px",
               borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", marginLeft:"22px", marginBottom:"11px",
               }}
-    type="number" value={this.state.copyCount} min="0" max="20" step="1"  inputmode="numeric"
+    type="number" value={this.state.copyCount} min="1" max="20" step="1"  inputmode="numeric"
               onChange={(e) =>{
           this.setState({copyCount: Math.floor(e.target.value)})
               }}             
@@ -259,11 +259,14 @@ transitionDuration:"9000ms"
               text={RunText} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
               callBack={ async (arr) => {
-                let count = Math.floor(this.state.copyCount);
+                let count = Math.floor(this.state.copyCount) -1;
 
                 let conditions = ConditionService.getConditions();
                 let id = await arr[0].getJson()?._id;
                 let ogMon = arr[0];
+                let maxHp = ogMon.getJson()?.hp
+                
+                await ogMon.setCompState({maxHp:maxHp});
 
                 for(let i = 0; i < count; i++){
                   let copyJson = {...ogMon.getJson(), _id:undefined};

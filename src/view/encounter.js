@@ -26,6 +26,7 @@ export default class Encounter extends Component {
     this.lastClicked = Date.now();
    
     this.state = {
+      
       showMonsterMap: true,
       isRunning: false,
       currentTurn: "99999",
@@ -38,7 +39,10 @@ export default class Encounter extends Component {
   ///
  
   async componentDidMount(){
-    
+    let componentList = this.props.app.state.componentList;
+        this.setState({showMonsterMap: false});
+    await componentList.sortSelectedList("monster","lastInit",true);
+        this.setState({showMonsterMap: true})
     await this.props.app.state.opps.run()
     let href = window.location.href;
     let splitURL = href.split("/")
@@ -51,8 +55,8 @@ export default class Encounter extends Component {
     
     let dispatch = this.props.app.dispatch;
     dispatch({popUpSwitchcase: "", });
+    
   }
-  
   
     
   getEncounterId() {
@@ -513,6 +517,7 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
               justifyContent:"center" },}}
              cells={!obj?.getJson().isRunning?[
               {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
+              ///TAYLOR THIS NEEDS TO RERENDER THE PAGE??
                "delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]:

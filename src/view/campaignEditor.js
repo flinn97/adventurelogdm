@@ -410,7 +410,7 @@ scrollTo = (ref, behavior) => {
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      type={"richEditor"}
+                      type={"richEditor"} onPaste={this.handlePaste}
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
                       flexDirection:"column", justifyItems:"space-between"}}/>
                       </div>}
