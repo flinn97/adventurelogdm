@@ -87,9 +87,9 @@ class MainContent extends Component{
     }
   }
   async componentDidMount(){
-    debugger
+    //debugger
 
-    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type")
+    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type", false, this.props.app.dispatch)
     this.setState({start: true})
 
   }
@@ -107,7 +107,7 @@ class MainContent extends Component{
       You can buy adventures, encounters, and more:
       {this.state.start &&
       <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
-        debugger
+        //debugger
         treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")}]}}/>}
        <div style={{color:styles.colors.color3}}>Buy Stuff</div>
       </div>

@@ -19,24 +19,51 @@ export default class AdventureLog extends Component {
     let dispatch = app.dispatch;
     
     
-    let id = ToolService.getIdFromURL(false);
+    let id = ToolService.getIdFromURL(true, 0);
     if(ToolService.checkURLforString("connecttoadventure")){
+      let charId = ToolService.getIdFromURL(true, 1);
+      
+      await localStorage.setItem("player", charId);
+      await dispatch({switchCase:[
+        {path:"/", comp:PlayerHome, name: "Home"},
+        {path: "/log", comp:AdventureLog, name: "Adventure Log", _id:id },
+        ///Added Notes
+        {path: "/notes", comp:Note, name: "Notes", _id:id },
+        ///Added Marketplace
+        // {path: "/gmlore", comp:Gmlore, name: "gmlore", _id:id},
+        ///
+       
+      ]})
+
       var stateObj = { adventure: id };
       window.history.pushState(stateObj, "Adventure Log", "/log/"+id);
+
+
     }
-    dispatch({switchCase:[
-      {path:"/", comp:PlayerHome, name: "Home"},
-      {path: "/log", comp:AdventureLog, name: "Adventure Log", _id:id },
-      ///Added Notes
-      {path: "/notes", comp:Note, name: "Notes", _id:id },
-      ///Added Marketplace
-      {path: "/gmlore", comp:Gmlore, name: "gmlore", _id:id},
-      ///
+    
+
+      
      
-    ]})
+    
+    
+    //debugger
+    let player = localStorage.getItem("player");
+    if(player){
+      player = state.componentList.getComponent('monster', player, "_id");
+      dispatch({currentCharacter:player, switchCase:[
+        {path:"/", comp:PlayerHome, name: "Home"},
+        {path: "/log", comp:AdventureLog, name: "Adventure Log", _id:id },
+        ///Added Notes
+        {path: "/notes", comp:Note, name: "Notes", _id:id },
+        ///Added Marketplace
+        // {path: "/gmlore", comp:Gmlore, name: "gmlore", _id:id},
+        ///
+       
+      ]});
+    }
     let campaign = state.componentList.getComponent("campaign", id, "_id");
     if(!campaign){
-      await auth.firebaseGetter(id, state.componentList,"_id")
+      await auth.firebaseGetter(id, state.componentList,"_id", false, dispatch)
       
 
     }
@@ -53,6 +80,7 @@ export default class AdventureLog extends Component {
 
     return (
       <div  style={{minHeight:"100%", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%", }} >
+        {state.user.getJson().role!=="GM" && state.currentCharacter && <div style={{color:"white"}}>{state.currentCharacter.getJson().name}</div>}
       {this.state.gotCampaign&&(<AdventureLogPage app= {app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>)} 
       <div 
           style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-start",

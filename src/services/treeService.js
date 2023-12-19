@@ -29,7 +29,7 @@ class TreeService {
 
             //create an mpi for every component that is associate with campaign but is not a lore
             this.list.push(mpi);
-            debugger
+            //debugger
             await this.copyAttachedItemsHelper(mpi, componentList, "campaignId");
             await this.recurseLoreTree(lore, componentList,);
 
@@ -185,7 +185,7 @@ class TreeService {
         //create an mpi for every component that is associate with campaign but is not a lore
         //    await this.copyAttachedItemsReverseHelper(obj, componentList, type);
         await this.recurseMPITree(mpi, componentList);
-        debugger
+        //debugger
         for(let lore of this.list.slice(1)){
            await this.copyAttachedItemsReverseHelper(lore, componentList, "loreId");
         }

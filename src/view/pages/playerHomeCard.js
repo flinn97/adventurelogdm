@@ -97,7 +97,7 @@ class MainContent extends Component{
                     
                   <div title=' You can connect them to an adventure later'
                   style = {{...styles.buttons.buttonAdd, marginTop:"22px", pointer:"cursor"}} onClick={()=>{
-                    debugger
+                    //debugger
                    
                     let obj = {name:"", type:"monster", role:"player", isToken:true};
 

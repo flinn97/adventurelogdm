@@ -29,7 +29,7 @@ export default class ConnectToCampaignLink extends Component {
                 fontSize:styles.fonts.fontNormal, textAlign:"center",
                 color:styles.colors.color9+"d9",
                 borderRadius:"11px", border:"2px solid "+styles.colors.color3}}
-                to={"/connecttoadventure/" + obj.getJson().campaignId}>
+                to={"/connecttoadventure/" + obj.getJson().campaignId+ "-" +obj.getJson()._id}>
                   Play
                 </Link>
 

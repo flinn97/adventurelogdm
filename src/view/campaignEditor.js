@@ -115,6 +115,8 @@ scrollTo = (ref, behavior) => {
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
 
+
+
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
       {this.state.start&&(
@@ -472,6 +474,7 @@ scrollTo = (ref, behavior) => {
 
 
                 </>)}
+
         </div>
 
 )}

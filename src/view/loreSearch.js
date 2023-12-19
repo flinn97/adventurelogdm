@@ -250,7 +250,7 @@ export default class LoreSearch extends Component {
                       }));
                     }}
                     onStart={(event, data,) => {
-                      debugger
+                      //debugger
                       this.setState({ isGrabbing: true, grabItem: loreItem });
                     }}
                     onStop={() => this.handleStop(loreItem)}
@@ -276,6 +276,7 @@ export default class LoreSearch extends Component {
                       >
                         <Link  to={"/campaign/"+toolService.getIdFromURL(true,0)+"-"+loreItem.getJson()._id} style={{textDecoration:"none"}}> 
                         <LoreItemWithNotation
+                          link={true}
                           app={app}
                           obj={loreItem}
                           index={index}

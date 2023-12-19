@@ -82,8 +82,8 @@ async updateMonster(obj, update){
       return;
     }
     this.lastClicked = now;
-    let obj = await this.state.obj;
-    let highestLastInit;
+    let obj = this.state.obj;
+    let highestLastInit = 0;
 
     if (obj?.getJson().currentTurn === undefined) {
       await this.updateMonster(obj, { currentTurn: this.state.currentTurn } )

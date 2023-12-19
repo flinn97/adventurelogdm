@@ -1877,12 +1877,12 @@ class AdventureLogStyles {
                             
                  getStylesByScreenSize(){
                     let objkey = this.getstyles();
-                    if(window.innerWidth<600){
-                        objkey=this.resize2();
-                    }
-                       else if(window.innerWidth<1000){
-                           objkey = this.resize1();
-                       }
+                    // if(window.innerWidth<600){
+                    //     objkey=this.resize2();
+                    // }
+                    //    else if(window.innerWidth<1000){
+                    //        objkey = this.resize1();
+                    //    }
                      return objkey;
                     }
 

@@ -31,25 +31,25 @@ export default class ListTree extends Component {
     let dispatch = app.dispatch
     let state = app.state;
     let prevUrl = undefined;
-setInterval(async() => {
-  const currUrl = window.location.href;
-  if (currUrl !== prevUrl) {
-    if(!currUrl.includes("-")){
-      dispatch({currentLore:undefined});
-    }
-    else{
-      let list = currUrl.split("/");
-      let id = list[list.length-1].split("-")[1]
-      let lore = state.componentList.getComponent("lore", id, "_id");
-      await dispatch({currentLore:undefined})
-      dispatch({currentLore:lore});
-    }
-    // URL changed
-    prevUrl = currUrl;
-    //console.log(`URL changed to : ${currUrl}`);
+// setInterval(async() => {
+//   const currUrl = window.location.href;
+//   if (currUrl !== prevUrl) {
+//     if(!currUrl.includes("-")){
+//       dispatch({currentLore:undefined});
+//     }
+//     else{
+//       let list = currUrl.split("/");
+//       let id = list[list.length-1].split("-")[1]
+//       let lore = state.componentList.getComponent("lore", id, "_id");
+//       await dispatch({currentLore:undefined})
+//       dispatch({currentLore:lore});
+//     }
+//     // URL changed
+//     prevUrl = currUrl;
+//     //console.log(`URL changed to : ${currUrl}`);
     
-  }
-}, 60);
+//   }
+// }, 60);
   }
 
  
@@ -83,8 +83,10 @@ setInterval(async() => {
       {custom:ListTreeInner, props:{app:app}},
       
     ]
-  
+
     const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
+    // console.log(isHidden)
+
 
     return (<div style={{}}>
       

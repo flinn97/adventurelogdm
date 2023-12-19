@@ -28,24 +28,25 @@ export default class ListTreeLink extends Component {
     let currentState = app.state;
     let componentList = currentState.componentList;
 
-    
-    let mapList = componentList.getList("map", obj.getJson()._id, "loreId");
-    let encounterList = componentList.getList("encounter", obj.getJson()._id, "loreId");
-    let imageList = componentList.getList("image", obj.getJson()._id, "loreId");
+    let objId = obj.getJson().reference? obj.getJson().ogId: obj.getJson()._id;
+    let mapList = componentList.getList("map", objId, "loreId");
+    let encounterList = componentList.getList("encounter", objId, "loreId");
+    let imageList = componentList.getList("image", objId, "loreId");
 
 
     let href = window.location.href;
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length-1];
     let newLink = "";
+    
     if(id.includes("-")){
      
      let idList = id.split('-');
-     newLink = idList[0] + "-" + obj.getJson()._id
+     newLink = idList[0] + "-" + objId
     }
     
     else{
-      newLink = id + "-" + obj.getJson()._id
+      newLink = id + "-" + objId
     }
     if(obj.getJson().parentLore===true){
       
@@ -55,7 +56,12 @@ export default class ListTreeLink extends Component {
 
     let maxLengthName = 22;
 
-    let objName = obj.getJson()[name].length > maxLengthName ? obj.getJson()[name].substring(0, maxLengthName) + "..." : obj.getJson()[name];
+    let objName = obj.getJson()[name];
+    if(obj.getJson().reference){
+      let ogComp = componentList.getComponent('lore', obj.getJson().ogId, "_id");
+      objName = ogComp.getJson()[name]
+    }
+      objName = objName.length > maxLengthName ? objName.substring(0, maxLengthName) + "..." : objName;
     
     return ( <div 
      

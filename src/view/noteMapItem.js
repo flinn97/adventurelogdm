@@ -16,7 +16,7 @@ export default class NoteMapItem extends Component {
   }
 
   renderNotes(){
-    debugger
+    //debugger
     let body = this.props.obj.getJson().text.substring(0, 100)+'...'
     let index = parseInt(body.indexOf("<br>"))
       body = index!==-1? body.substring(0, index): body; 

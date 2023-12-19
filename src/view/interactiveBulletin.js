@@ -63,12 +63,15 @@ export default class InteractiveBulletin extends Component {
     ///assign pins to current mapId
 
     this.setState({isLoading: false});
+    if(this.imgRef?.current){
+      this.setState({imgRef: this.imgRef.current})
+    }
 
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (this.imgRef?.current !== prevProps.imgRef?.current) {
-      
+    if (this.imgRef?.current !== prevState.imgRef) {
+      //prevProps.imgRef?.current
       const delay = ms => new Promise(res => setTimeout(res, ms));
       await delay(1000);
       let mapHeight = this.imgRef?.current?.clientHeight;
@@ -76,11 +79,13 @@ export default class InteractiveBulletin extends Component {
       this.setState({
         mapHeight: mapHeight,
         mapWidth: mapWidth,
+        imgRef: this.imgRef.current
       }, () => this.forceUpdate());
       if(mapWidth<1500 && mapWidth>300){
         this.props.updateSize(mapWidth, mapHeight);
   
       }
+
       
     }
   }
@@ -140,6 +145,8 @@ export default class InteractiveBulletin extends Component {
     const heightY = this.state.mapHeight;
 
     // if (this.state.isLoading) {
+
+
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
       <div  className='scroller2'

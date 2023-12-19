@@ -24,6 +24,7 @@ import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
 
 import logo from "./pics/logoava2.png"
+import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 
 //model
 export default class Dispatch extends Component {
@@ -142,6 +143,8 @@ justifyContent: "center",}}>
                 )}
                 
                 <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}} />}/> 
+                <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
+
                 
           </Routes>
      ):(
@@ -157,7 +160,8 @@ justifyContent: "center",}}>
         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
         <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers}/>}/>
 
-        <Route path="/log/:id" element={<AdventureLogPage app={app} />}/> 
+        {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
+        <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
 
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
