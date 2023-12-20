@@ -2,6 +2,7 @@ import { Component } from 'react';
 import NoteCard from './noteCard';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import NoteMapItem from '../noteMapItem';
+import auth from '../../services/auth';
 
 
 export default class Note extends Component {
@@ -21,6 +22,7 @@ export default class Note extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
+    await auth.firebaseGetter("newNote", state.componentList, "type", true, false)
     let list = state.componentList.getList("newNote")
     if (list.length=== 0) {
       
