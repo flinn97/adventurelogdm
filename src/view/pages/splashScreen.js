@@ -84,7 +84,7 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{minWidth:"100vw", minHeight:"100vh", justifyContent:"center", display:"flex", flexDirection:"row", 
+      <div style={{minWidth:"100vw", minHeight:"100vh", justifyContent:"center", display:"flex", flexDirection:"row",
       alignContent:"center", justifyItems:"center"}}>
           <div style={{ width:"fit-content", height:"100vh",
           justifyItems:"center", alignContent:"center", alignItems:"center", justifyContent:"center",
@@ -99,7 +99,7 @@ class MainContent extends Component{
                 
           
               </div>
-              <img  alt="Vault Door Handle" src={vault} style={{width:"440px", zIndex:22, position:"absolute", opacity:"3%",marginTop:"-30px"}}/>
+              <img  alt="Vault Door Handle" src={vault} style={{width:"440px", zIndex:22, position:"absolute", opacity:"3%", marginTop:"-30px"}}/>
           </div>
       </div>
     )
