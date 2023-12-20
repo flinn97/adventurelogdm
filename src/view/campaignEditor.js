@@ -53,6 +53,8 @@ async componentDidMount(){
   let splitURL = href.split("/");
   let id = splitURL[splitURL.length-1];
   let loreId;
+  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore")
+
   await dispatch({currentLore:undefined})
   if(id.includes("-")){
     let loreSplit = id.split('-');
@@ -116,8 +118,6 @@ scrollTo = (ref, behavior) => {
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
 
-
-
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
       {this.state.start&&(
@@ -125,7 +125,9 @@ scrollTo = (ref, behavior) => {
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
         <div ref={this.startRef}/> 
 <div style={{color:"red"}} onClick={()=>{
-  treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}></div>
+  dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
+  //treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
+  }}>Send to Marketplace</div>
         {/* BACK BUTTON */}
       {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
           (<Link className="hover-btn-highlight"
@@ -476,7 +478,6 @@ scrollTo = (ref, behavior) => {
 
 
                 </>)}
-
         </div>
 
 )}

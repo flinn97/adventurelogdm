@@ -118,14 +118,15 @@ class Auth {
 
     }
     async getuser(email, componentList, dispatch) {
-        //debugger
+        debugger
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
             IDlist.push(list[key].getJson()._id)
         }
         let rawData = [];
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('owner', '==', email), orderBy("date"));
+        // const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('owner', '==', email), orderBy("date"));
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('_id', '==', email), orderBy("date"));
         let comps = await getDocs(components);
         for (const key in comps.docs) {
             let data = comps.docs[key].data()
@@ -133,6 +134,16 @@ class Auth {
                 rawData.push(data);
             }
         }
+
+        const components1 = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "campaign"), where('owner', '==', email), orderBy("date"));
+        let comps1 = await getDocs(components1);
+        for (const key in comps1.docs) {
+            let data = comps1.docs[key].data()
+            if (!IDlist.includes(data._id)) {
+                rawData.push(data);
+            }
+        }
+
         await componentList.addComponents(rawData, false);
         let user = componentList.getComponent("user");
         if (user) {
