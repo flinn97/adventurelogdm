@@ -158,52 +158,54 @@ class ParentFormComponent extends Component {
      */
     handleChange = async (event) => {
         const { name, value } = event.target;
-        
-        if (this.props.isPropArray) {
-            //OVERWRITE [0] ALWAYS
-          for (const key in this.state.obj) {
-            let currentVal = this.state.obj[key].getJson()[this.props.name] || [];
-            if (!Array.isArray(currentVal)) {
-              currentVal = [currentVal];
-            }
-            if (!Array.isArray(currentVal[0])) {
-                currentVal[0] = [currentVal[0]];
-            }
-            currentVal[0]= value;
-      
-            this.state.obj[key].setJson({
-              ...this.state.obj[key].getJson(),
-              [this.props.name]: currentVal,
-            });
-      
-            if (this.props.cleanPrepareRun) {
-              this.state.obj[key].getOperationsFactory().cleanPrepareRun({ update: this.state.obj });
-            }
-            if (this.props.prepareRun) {
-              this.state.obj[key].getOperationsFactory().prepareRun({ update: this.state.obj });
-            }
-            if (this.props.sendUpdate && this.props.app) {
-              this.props.app.dispatch({ formUpdate: this.props.type });
-            }
-          }
-        } else {
-          for (const key in this.state.obj) {
-            this.state.obj[key].setJson({
-              ...this.state.obj[key].getJson(),
-              [this.props.name]: value,
-            });
-      
-            if (this.props.cleanPrepareRun) {
-              this.state.obj[key].getOperationsFactory().cleanPrepareRun({ update: this.state.obj });
-            }
-            if (this.props.prepareRun) {
-              this.state.obj[key].getOperationsFactory().prepareRun({ update: this.state.obj });
-            }
-            if (this.props.sendUpdate && this.props.app) {
-              this.props.app.dispatch({ formUpdate: this.props.type });
-            }
-          }
-        }
+
+       
+                        if (this.props.isPropArray) {
+                            //OVERWRITE [0] ALWAYS
+                        for (const key in this.state.obj) {
+                        let currentVal = this.state.obj[key].getJson()[this.props.name] || [];
+                        if (!Array.isArray(currentVal)) {
+                        currentVal = [currentVal];
+                        }
+                        if (!Array.isArray(currentVal[0])) {
+                            currentVal[0] = [currentVal[0]];
+                        }
+                        currentVal[0]= value;
+                
+                        this.state.obj[key].setJson({
+                        ...this.state.obj[key].getJson(),
+                        [this.props.name]: currentVal,
+                        });
+                
+                        if (this.props.cleanPrepareRun) {
+                        this.state.obj[key].getOperationsFactory().cleanPrepareRun({ update: this.state.obj });
+                        }
+                        if (this.props.prepareRun) {
+                        this.state.obj[key].getOperationsFactory().prepareRun({ update: this.state.obj });
+                        }
+                        if (this.props.sendUpdate && this.props.app) {
+                        this.props.app.dispatch({ formUpdate: this.props.type });
+                        }
+                    }
+                    } else {
+                    for (const key in this.state.obj) {
+                        this.state.obj[key].setJson({
+                        ...this.state.obj[key].getJson(),
+                        [this.props.name]: value,
+                        });
+                
+                        if (this.props.cleanPrepareRun) {
+                        this.state.obj[key].getOperationsFactory().cleanPrepareRun({ update: this.state.obj });
+                        }
+                        if (this.props.prepareRun) {
+                        this.state.obj[key].getOperationsFactory().prepareRun({ update: this.state.obj });
+                        }
+                        if (this.props.sendUpdate && this.props.app) {
+                        this.props.app.dispatch({ formUpdate: this.props.type });
+                        }
+                    }
+                    
+    }
       };
 
     /**
@@ -255,6 +257,7 @@ class ParentFormComponent extends Component {
         if(this.state.start){
          types={
             text: <InputFormComponent 
+            doesMath={this.props.doesMath}
             rows={this.props.rows}
             cols={this.props.cols}
             objDispatch={this.objDispatch}
@@ -269,7 +272,7 @@ class ParentFormComponent extends Component {
             labelStyle={this.props.labelStyle}
             onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
             wrapperStyle={this.props.wrapperStyle}
-            
+           
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 

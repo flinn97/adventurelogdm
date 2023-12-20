@@ -18,6 +18,7 @@ import PostLogButton from '../componentListNPM/componentForms/buttons/postLogBut
 import backarrow from '../pics/backArrow.webp';
 import auth from '../services/auth';
 import trash from '../pics/delSkull.png';
+import { update } from 'lodash';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class Encounter extends Component {
     this.lastClicked = Date.now();
    
     this.state = {
+      
       showMonsterMap: true,
       isRunning: false,
       currentTurn: "99999",
@@ -37,7 +39,10 @@ export default class Encounter extends Component {
   ///
  
   async componentDidMount(){
-    
+    let componentList = this.props.app.state.componentList;
+        this.setState({showMonsterMap: false});
+    await componentList.sortSelectedList("monster","lastInit",true);
+        this.setState({showMonsterMap: true})
     await this.props.app.state.opps.run()
     let href = window.location.href;
     let splitURL = href.split("/")
@@ -45,18 +50,13 @@ export default class Encounter extends Component {
     let component = this.props.app.state.componentList.getComponent("encounter", id);
     await this.setState({obj: component, currentTurn: component.getJson().currentTurn, isRunning:component.getJson().isRunning,
       currentIndex: component.getJson().currentIndex,});
-     toolService.rerenderTimeout(this.props.app.dispatch, 100);
-    // let Eid = toolService.getIdFromURL(false);
-    // auth.firebaseGetter("Eid", this.props.app.state.componentList, "campaignId", "monster" );
-    // console.log(this.props.app.state.componentList);
+     toolService.rerenderTimeout(this.props.app.dispatch, 1);
+    
     
     let dispatch = this.props.app.dispatch;
-    //this.getNextHighestInitiative([this.props.app.state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")], dispatch);
-    
-
     dispatch({popUpSwitchcase: "", });
+    
   }
-  
   
     
   getEncounterId() {
@@ -67,22 +67,22 @@ export default class Encounter extends Component {
     return newId;
   }
 
- async updateMonster(monster, update){
+async updateMonster(obj, update){
   let app = this.props.app;
     let state = app.state;
     let opps = state.opps;
-    await monster?.setCompState({...update});
-      await opps.cleanPrepareRun({update:monster});
-  }
 
+  await obj?.setCompState({...update});
+  await opps.cleanPrepareRun({update:obj});
+}
 
   getNextHighestInitiative = async (participantList, dispatch) => {
     let app = this.props.app;
     let state = app.state;
     let opps = state.opps;
-    ///THIS ISNT ALWAYS WORKING, sometimes it ignores input and does nothing???
+    
     const now = Date.now();
-    if (now - this.lastClicked < 90) {  // 90 milliseconds delay plzzz
+    if (now - this.lastClicked < 90) {
       return;
     }
     this.lastClicked = now;
@@ -90,97 +90,108 @@ export default class Encounter extends Component {
     let highestLastInit = 0;
 
     if (obj?.getJson().currentTurn === undefined) {
-     await  this.updateMonster(obj, {currentTurn:this.state.currentTurn});
+      await this.updateMonster(obj, { currentTurn: this.state.currentTurn } )
     }
   
-    const sortedList = [...participantList].sort((a, b) => {
+    const sortedList = await [...participantList].sort((a, b) => {
       return parseInt(b.getJson().lastInit, 10) - parseInt(a.getJson().lastInit, 10);
     });
   
     //  If currentTurn is '99999', set it to the highest initiative in the list.
     if (obj?.getJson().currentTurn === "99999") {
       highestLastInit = parseInt(sortedList[0].getJson().lastInit, 10);
-      await  this.updateMonster(obj, {currentTurn: highestLastInit});
-      await this.setState({ currentTurn: highestLastInit});
-      
-// Set currentTurn for each participant
-        await participantList.forEach(async participant => {
-          await  this.updateMonster(participant, {currentTurn: highestLastInit});
-          
-        });
-        await  this.updateMonster(obj, {currentIndex: 0, isRunning:true });
+    
+      await this.updateMonster(obj, { currentTurn: highestLastInit });
+      await this.setState({ currentTurn: highestLastInit });
+    
+      // Set currentTurn for each participant and find the participant with the highest initiative
+      let highestInitiativeParticipant = null;
+      for (const participant of participantList) {
+        await this.updateMonster(participant, { currentTurn: highestLastInit });
+        if (parseInt(participant.getJson().lastInit, 10) === highestLastInit) {
+          highestInitiativeParticipant = participant;
+        }
+      }
+    
+      await this.updateMonster(obj, { currentIndex: 0, isRunning: true });
       this.currentIndex = 0; // Set to the first index
+    
+      // Update conditions for the participant with the highest initiative
+      if (highestInitiativeParticipant) {
+        const conditionList = await this.props.app.state.componentList.getList("condition", highestInitiativeParticipant.getJson()._id, "monsterId");
+        for (const condition of conditionList) {
+          if (condition.getJson().isActive === true) {
+            let number = parseInt(condition.getJson().roundsActive, 10) + 1;
+            condition.setCompState({ roundsActive: number.toString() });
+            await this.props.app.dispatch({
+              operate: "update", operation: "cleanPrepareRun", object: condition
+            });
+          }
+        }
+      }
+    
       return;
     }
-  
     
+  
     this.currentIndex = (this.currentIndex + 1) % sortedList.length;
-    if(this.currentIndex>=0){
 
-    
-    const nextHighestLastInit = await parseInt(sortedList[this.currentIndex].getJson().lastInit, 10);
-    console.log("It is Initiative "+ nextHighestLastInit)
-    await  this.updateMonster(obj, {currentTurn: nextHighestLastInit  });
-    await this.setState({ currentTurn: nextHighestLastInit});
+    if (this.currentIndex >= 0) {
+        const nextHighestLastInit = parseInt(sortedList[this.currentIndex]?.getJson().lastInit, 10);
 
+        await this.setState({ currentTurn: nextHighestLastInit });
+        await this.updateMonster(obj, { currentTurn: nextHighestLastInit });
 
-    let p = undefined;
+        let p = undefined;
+        for (const participant of participantList) {
+            await this.updateMonster(participant, { currentTurn: nextHighestLastInit });
+            if (parseInt(participant.getJson().lastInit, 10) === nextHighestLastInit) {
+                p = participant;
+            }
+        }
 
-    await participantList.forEach(async participant => {
-      await  this.updateMonster(obj, {currentTurn: nextHighestLastInit  });
-
-      if (participant.getJson().lastInit === nextHighestLastInit)
-      {
-        p = participant;
-        
-      }
-      if(p){
-        const conditionList = await [...this.props.app.state.componentList.getList("condition", p.getJson()._id, "monsterId")];
-      
-      await conditionList.forEach(condition => 
-          { 
-            if (condition.getJson().isActive === true){
-                let number = parseInt(condition.getJson().roundsActive, 10) + 1;
-                let stringN = number.toString();
-                condition.setCompState({roundsActive: stringN})
-                dispatch({
-                  operate:"update", operation:"cleanPrepareRun", object: condition
-            })};
-          }
-        );
-      }
-      
-    });
-    
-    
-        
-      
-
-        this.setState({ justUpdatedInitiative: true });
-      }
-    };
+        if (p) {
+            const conditionList = [...this.props.app.state.componentList.getList("condition", p?.getJson()._id, "monsterId")];
+            for (const condition of conditionList) {
+                if (condition.getJson().isActive === true) {
+                    let number = parseInt(condition.getJson().roundsActive, 10) + 1;
+                    condition.setCompState({ roundsActive: number.toString(), encounterId: toolService.getIdFromURL() });
+                    dispatch({
+                        operate: "update", operation: "cleanPrepareRun", object: condition
+                    });
+                }
+            }
+        }
+        await this.setState({ justUpdatedInitiative: true });
+    }
+};
   
 
-  stopInitiative = async (participantList, dispatch) => {
-    let obj = this.state.obj;
-    let high = "99999";
-    await obj.setCompState({ currentTurn: high, currentIndex : -1, })
-    
-    this.currentIndex = -1; // Set to the first index
-    this.setState({ currentIndex : -1});
+stopInitiative = async (participantList, dispatch) => {
+  let obj = this.state.obj;
+  let high = "99999";
+
+  // Resetting the encounter object
+  await this.updateMonster(obj, { currentTurn: high, currentIndex: -1 });
+  this.currentIndex = -1; // Set to the first index
+  await this.setState({ currentTurn: high, currentIndex: -1 });
+
+  // Resetting each participant's currentTurn
+  for (const participant of participantList) {
+    await this.updateMonster(participant, { currentTurn: high });
+  }
+
+  // Resetting conditions
+  let eid = toolService.getIdFromURL();
+  const conditionList = await this.props.app.state.componentList.getList("condition", eid, "encounterId");
+  for (const condition of conditionList) {
+    condition.setCompState({ roundsActive: "0" });
     dispatch({
-      operate:"update", operation:"cleanPrepareRun", object: obj
-    })
-    await this.setState({ currentTurn: high,});
-    
-    await participantList.forEach(participant => {
-      participant.setCompState({ currentTurn: high });
-       dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: participant
-      })
+      operate: "update", operation: "cleanPrepareRun", object: condition
     });
-    await dispatch({    })
-  };
+  }
+};
+
 
   handleKeyDown = async (e) => {
     let app = this.props.app;
@@ -215,10 +226,10 @@ export default class Encounter extends Component {
       <div style={{width:"100%", height:"100%", }}>
 
 {obj?.getJson().campaignId &&
-<Link className="hover-btn"
-          to={/campaign/+obj?.getJson().campaignId+"-"+obj?.getJson().loreId} 
+<Link className="hover-btn-highlight"
+          to={obj?.getJson().loreId?/campaign/+obj?.getJson().campaignId+"-"+obj?.getJson().loreId:/campaign/+obj?.getJson().campaignId} 
           style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", border:"",
-         padding:"8px 8px", cursor:"pointer", background:"",
+         padding:"8px 8px", cursor:"pointer", background:"", boxShadow:"",
           fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", fontSize:".9rem" }}
           >
             <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
@@ -300,6 +311,7 @@ export default class Encounter extends Component {
 <div className="hover-btn" style={{...styles.buttons.buttonAdd, background:styles.colors.color2,
 paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!obj?.getJson().isRunning?"pointer":"wait"}} 
             onClick={ async ()=>{
+              // this.setState({showMonsterMap: false});
               if (!obj?.getJson().isRunning){
                           if (!state.currentCampaign){
                           let campId = await obj.getJson().campaignId;
@@ -313,10 +325,12 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                 await dispatch({
                              campaignPlayers: players,
                            })
-                 await this.setState({showMonsterMap: false});
+                
                 await obj.addCampaignPlayers(state.campaignPlayers, obj.getJson()._id, state);               
-                 await this.setState({showMonsterMap: true});
+                 ;
+                 this.setState({showMonsterMap: true})
           }
+          await this.setState({showMonsterMap: true})
             }}
             >
           Add All Players
@@ -493,20 +507,21 @@ paddingTop:"3px", paddingBottom:"3px", fontSize:styles.fonts.fontSmall, cursor:!
                     </div>         }
                           
             <MapComponent 
-             filter={{search: this.state.obj?.getJson()._id, attribute: "encounterId"}}
+             filter={{search: toolService.getIdFromURL(), attribute: "encounterId"}}
              app={app} name={"monster"} 
-             delOptions={{picURL:trash, text:"Delete", warningMessage:"Delete this character (this is permanent)",
+             delOptions={{picURL:trash, warningMessage:"Delete this character (this is permanent)",
              textStyle:{ fontSize:styles.fonts.fontSmallest,}, 
-              style:{width:"35px", height:"35px", borderRadius:"2px", padding:"4px 2px",
+              style:{width:"35px", height:"35px", padding:"4px 2px",
                display:"flex", flexDirection:"row",
               alignItems:"center", borderRadius:"8px", 
               justifyContent:"center" },}}
              cells={!obj?.getJson().isRunning?[
               {custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }},
+              ///TAYLOR THIS NEEDS TO RERENDER THE PAGE??
                "delete",
               //{custom:ToggleItem, props:{items:["copy","delete",], app:app}}
               ]:
-            [{custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }}]
+            [{custom:MonsterMapItem, props:{app:app, currentTurn:this.state.currentTurn, }} ]
             }
             
             theme={"selectByImageSmall"}

@@ -9,6 +9,7 @@ import nameSort from '../pics/abSort.png';
 import dropIn from '../pics/dropIn.png';
 
 import Draggable from 'react-draggable';
+import { Link } from 'react-router-dom';
 
 
 
@@ -273,6 +274,7 @@ export default class LoreSearch extends Component {
                           // this.navigateToLink(loreItem);
                         }}
                       >
+                        <Link  to={"/campaign/"+toolService.getIdFromURL(true,0)+"-"+loreItem.getJson()._id} style={{textDecoration:"none"}}> 
                         <LoreItemWithNotation
                           link={true}
                           app={app}
@@ -282,6 +284,7 @@ export default class LoreSearch extends Component {
                           isGrabbing={this.state.grabItem}
 
                         />
+                            </Link>
 
                       </div>
 

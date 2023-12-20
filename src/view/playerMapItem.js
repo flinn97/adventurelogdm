@@ -308,8 +308,8 @@ export default class PlayerCharacterMapItem extends Component {
                             <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Initiative Bonus</div>
 
                             <ParentFormComponent obj={this.props.obj} name="initiative"
-                          prepareRun={true} maxLength={4} label={"+"}
-                          //placeholder={obj?.getJson().hp}
+                          prepareRun={true} maxLength={4} label={"+"} 
+                         
                              inputStyle={{width:"3.4rem", padding:"4px 9px",color:styles.colors.colorWhite, marginTop:"8px",
                              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
                              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",}}
@@ -334,7 +334,7 @@ export default class PlayerCharacterMapItem extends Component {
 
                             <ParentFormComponent obj={this.props.obj} name="ac"
                             prepareRun={true} maxLength={2}
-                            
+                           
                               inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
                               color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
                               borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",
@@ -358,7 +358,7 @@ export default class PlayerCharacterMapItem extends Component {
                             <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Max HP</div>
 
                             <ParentFormComponent obj={this.props.obj} name="hp" 
-                          prepareRun={true} maxLength={4}
+                          prepareRun={true} maxLength={4}  doesMath={true}
                              inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
                              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal, cursor:"text",
                              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>

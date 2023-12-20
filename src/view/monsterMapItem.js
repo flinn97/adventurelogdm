@@ -8,6 +8,7 @@ import ac from '../pics/ac.png';
 // import d20 from '../pics/d20.png';
 import conditionGear from '../pics/conditionGear.png';
 import _ from 'lodash';
+import diceService from '../services/diceService';
 
 export default class MonsterMapItem extends Component {
   constructor(props) {
@@ -30,6 +31,21 @@ export default class MonsterMapItem extends Component {
       }
       return statBlockLink;
   }
+
+      componentDidMount(){
+        let obj = this.props.obj;
+        if (obj.getJson().hp){
+          let hp  = obj.getJson().hp;
+          // Check if hp contains the letter 'd' followed by a number and only appears once
+              const diceNotationRegex = /^\d*d\d+(\+\d+)?$/;
+              if (diceNotationRegex.test(hp)) {
+                hp = "/r " + hp;
+                let newHp = diceService.rollDice(hp);
+                obj.setCompState({hp: newHp});
+                this.props.app.state.opps.run();
+              }
+
+      }}
 
   handleClickWord = (word, iValue) => {
     // Hide conditions temporarily
@@ -86,7 +102,6 @@ export default class MonsterMapItem extends Component {
     let length = app.state.maxLengthShort;
     let styles = state.styles;
 
-    let RR =  state.rerender;
     let obj = this.props.obj;
 
     let allColors = obj.getJson().colors;
@@ -168,10 +183,10 @@ export default class MonsterMapItem extends Component {
 
     return (
      
-      <div style={{minWidth: "100%", overflow:"visible",
+      <div title={obj?.getJson().notes} style={{minWidth: "100%", overflow:"visible", border:"1px solid "+styles.colors.color8+"1e",
       position: "relative", borderRadius:"22px", height:"128px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
-        {RR==="false" &&
+        
       <div className={currentTurn == lastInitAsNumber ? "gradient-animation" : ""}
       style={{
         minWidth: "100%", borderRadius:"22px",
@@ -246,7 +261,7 @@ export default class MonsterMapItem extends Component {
                           width:"300px", alignSelf:"center",  marginLeft:"-11px", borderRadius:"11px",
                           alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
                          }}>
-                           <ParentFormComponent obj={this.props.obj} name="name"
+                           <ParentFormComponent obj={obj} name="name"
                             prepareRun={true} maxLength={30}
                             //placeholder={obj?.getJson().hp}
                               inputStyle={{minWidth:"300px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", 
@@ -271,7 +286,7 @@ export default class MonsterMapItem extends Component {
                             
                             <img style={{ alignSelf: "center", width: fontSize[0], marginBottom:"2px" }} src={ac} draggable="false"/>
 
-                            <ParentFormComponent obj={this.props.obj} name="ac"
+                            <ParentFormComponent obj={obj} name="ac"
                             prepareRun={true} maxLength={2}
                             //placeholder={obj?.getJson().hp}
                               inputStyle={{width:"2.45rem", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", fontSize:fontSize[0],
@@ -281,7 +296,8 @@ export default class MonsterMapItem extends Component {
 
                           </div>
 
-                          <div title="Health"
+                          <div title="Health. Use +x or -x at the end to add or subtract from the current value. 
+                          ie: 20-1"
                             style={{
                               display: "flex",
                               height: "fit-content",
@@ -295,10 +311,11 @@ export default class MonsterMapItem extends Component {
                           >
                             <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>HP</div>
 
-                            <ParentFormComponent obj={this.props.obj} name="hp"
-                          prepareRun={true} maxLength={4}
-                          //placeholder={obj?.getJson().hp}
-                             inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
+                            <ParentFormComponent obj={obj} name="hp"
+                          prepareRun={true} maxLength={6}
+                          placeholder={obj?.getJson().maxHp?obj?.getJson().maxHp:obj?.getJson().hp}
+                          doesMath={true}
+                             inputStyle={{width:"4.4rem", padding:"4px 9px", color:styles.colors.colorWhite, 
                              height:"1.7rem", rows:"1", fontSize:fontSize[0],
                              borderRadius:"4px", background: styles.colors.color2+"00", borderWidth:"0px", alignItems:"center",
                              textAlign:"center",justifyContent:"center",}}
@@ -324,7 +341,7 @@ export default class MonsterMapItem extends Component {
                             fontSize: fontSize[0], marginLeft:".5vw", marginTop:"-6px",
                             }}>Notes</div>
 
-                            <ParentFormComponent obj={this.props.obj} name="notes"
+                            <ParentFormComponent obj={obj} name="notes"
                           prepareRun={true} maxLength={200} 
                           
                           //placeholder={obj?.getJson().hp}
@@ -453,7 +470,7 @@ export default class MonsterMapItem extends Component {
         </div>
         </div>
 
-        </div>}</div>
+        </div></div>
     )
   }
   }

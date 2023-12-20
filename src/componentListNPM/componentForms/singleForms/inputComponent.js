@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormsThemeFactory from '../formThemes/formThemeFactory';
+import diceService from '../../../services/diceService';
 class InputFormComponent extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +11,8 @@ class InputFormComponent extends Component {
         this.state = {
             value: this.props.value,
             min: this.props.min,
-            max: this.props.max
+            max: this.props.max,
+            rerender: false,
         };
     }
     handleChange(e) {
@@ -21,6 +23,11 @@ class InputFormComponent extends Component {
         }
         
         let { name, value } = e.target;
+
+        // Handle Enter key for math calculation
+        if (e.key === 'Enter' && this.props.doesMath) {
+            value = this.calculateMath(value);
+        }
         
         this.setState({ value: value });
        
@@ -37,10 +44,32 @@ class InputFormComponent extends Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
+        if (this.props.doesMath){
+        document.addEventListener('keydown', this.handleKeyDown);
+            const calculatedValue = this.calculateMath(this.props.value);
+            this.setState({ value: calculatedValue });
+            if (this.props.updateOnClickOutside) {
+                this.props.objDispatch(calculatedValue);
+            }
+        
+        }
     }
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
+        document.removeEventListener('keydown', this.handleKeyDown);
     }
+
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter' && this.props.doesMath) {
+            const calculatedValue = this.calculateMath(this.state.value);
+            this.setState({ value: calculatedValue });
+            if (this.props.objDispatch) {
+                this.props.objDispatch(calculatedValue);
+            }
+            event.preventDefault();
+        }
+    }
+
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
             if (this.props.emitClickedOutside !== undefined)
@@ -53,7 +82,31 @@ class InputFormComponent extends Component {
 
             }
         }
+
+        if (this.props.doesMath) {
+            const calculatedValue = this.calculateMath(this.state.value);
+            this.setState({ value: calculatedValue });
+            if (this.props.updateOnClickOutside) {
+                this.props.objDispatch(calculatedValue);
+            }
+        } else if (this.props.updateOnClickOutside) {
+            this.props.objDispatch(this.state.value);
+        }
     }
+
+    calculateMath(value) {
+        const originalValue = parseInt(this.state.value, 10) || 0;
+        const match = value.match(/([+-]\d+)$/);
+        
+        if (match) {
+            const changeValue = parseInt(match[1], 10);
+            return (originalValue + changeValue);
+        }
+        
+        this.setState({ value: value, rerender: false })
+        return value;
+    }
+
     render() {
         let theme= undefined;
         if(this.props.theme){
@@ -121,6 +174,7 @@ class InputFormComponent extends Component {
         return (
             <div ref={this.wrapperRef} style={this.props.wrapperStyle?this.props.wrapperStyle:theme!==undefined? theme.wrapperStyle:undefined} className={this.props.wrapperClass}>
                 {this.props.label && (<label style={this.props.labelStyle?this.props.labelStyle:theme!==undefined? theme.labelStyle:undefined} className={this.props.labelClass}>{this.props.label}</label>)}
+                
                 {inputType[this.props.input]}
                 <div className="componentErrorMessage" >{this.props.errorMessage}</div>
             </div>

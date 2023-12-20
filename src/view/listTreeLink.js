@@ -73,7 +73,7 @@ export default class ListTreeLink extends Component {
       // onClick={() => 
       //   window.open("../campaign/" + newLink, "_blank")
       // } 
-      style={{display:"flex", flexDirection:"column", alignItems:"center", 
+      style={{display:"flex", flexDirection:"column", alignItems:"center", textDecorationColor:styles.colors.color3, textDecorationThickness:"1px",
         justifyContent:"center", alignContent:"center"}}>
     <div title={"Open "+objName+" in a new tab."} className='hover-img'
     style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", }}

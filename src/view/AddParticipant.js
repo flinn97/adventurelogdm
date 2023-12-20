@@ -20,6 +20,8 @@ export default class AddParticipant extends Component {
     this.state = {
       pic: undefined,
       colors: [],
+      copyCount: 1,
+      name:'',
     };
     this.colorThief = new ColorThief();
 
@@ -43,7 +45,7 @@ export default class AddParticipant extends Component {
     
     let randomInit = (Math.floor(Math.random() * 9)).toString();
     let randomAC = (Math.floor(Math.random() * 12) + 10).toString();
-    let randomHP = (Math.floor(Math.random() * 50) + Math.floor(Math.random() * 100)).toString();
+    let randomHP = randomTextService.pickHPNotation();
 
     const { colors } = this.state;
     
@@ -95,14 +97,12 @@ const divStyle = colors?.length
     function pickNote () {
       
       let notes =[
-        "This monster is hiding in a barrel.",
+        "This monster is hiding in a barrel.", "The giant slug attacks on round 3.", "His ferocious pet monkey arrives on round 4.",
          "You can put little reminders for the monster here, you can edit them later.",
           "You can put little reminders for the monster here, you can edit them later.",
            "Don't roll initiative. Doesn't arrive until round 4.",];
-      let randomNumber2 = Math.floor(Math.random() * (notes.length));
-      let chosenNote = notes[randomNumber2];
 
-      return chosenNote;
+      return randomTextService.pickFromArray(notes);
     }
 
 let creature = randomTextService.pickName();
@@ -111,10 +111,13 @@ let noteExample = pickNote();
 
 const getColors = app.state.currentComponent.getColorList();
 
+let countPlus = this.state.copyCount;
+let RunText = countPlus===1?"Add to Encounter":"Add to Encounter (x"+countPlus.toString()+')';
+
     return (
      
      
-        <div style={{...styles.backgroundContent,
+        <div style={{...styles.backgroundContent, 
       }}>
    <div style={divStyle}>     
  <div style={{display: "flex", width:"100%", flexDirection:"column", padding:"22px", justifyContent:"right",...styles.popupSmall,
@@ -174,7 +177,7 @@ transitionDuration:"9000ms"
           />
        
 </div>
-      <ParentFormComponent app={app} name="name" label="Name"  
+      <ParentFormComponent app={app} name="name" label="Name" value={this.state.name} 
               wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
               theme={"adventureLog"} rows={1}
               maxLength={110}
@@ -190,7 +193,7 @@ transitionDuration:"9000ms"
               theme={"adventureLog"} rows={1}
               maxLength={2}
               labelStyle={{marginBottom:"8px",}}
-              inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              inputStyle={{width:"6.8rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
               }}
               placeholder={"ie: "+randomInit}/>
@@ -200,7 +203,7 @@ transitionDuration:"9000ms"
               theme={"adventureLog"} rows={1}
               maxLength={2}
               labelStyle={{marginBottom:"8px",}}
-              inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+              inputStyle={{width:"7.2rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
               borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
               }}
               placeholder={"ie: "+randomAC}/> 
@@ -208,9 +211,9 @@ transitionDuration:"9000ms"
       <ParentFormComponent app={app} name="hp" label="HP" 
             wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex", flexDirection:"column"}}
                     theme={"adventureLog"} rows={1}
-                    maxLength={5}
+                    maxLength={10}
                     labelStyle={{marginBottom:"8px",}}
-                    inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
+                    inputStyle={{width:"7.2rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
                     borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
                     }}
                     placeholder={"ie: "+randomHP}/> 
@@ -235,32 +238,67 @@ transitionDuration:"9000ms"
       }}
       placeholder={"ie: "+noteExample}/> 
 </div>
-         {/* ADD TO ENCOUNTER */}
-         <RunButton className="hover-btn"
+<div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly", width:"58.1rem",}}>
+  <div title={"This will create # number of characters in this encounter"}>
+  Number to Create:
+  <input style={{width:"65px", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1", marginTop:"11px",
+              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", marginLeft:"22px", marginBottom:"11px",
+              }}
+    type="number" value={this.state.copyCount} min="1" max="20" step="1"  inputmode="numeric"
+              onChange={(e) =>{
+          this.setState({copyCount: Math.floor(e.target.value)})
+              }}             
+  />
+  
+</div>
+
+
+  {/* ADD TO ENCOUNTER */}
+  <RunButton className="hover-btn"
               app={app} 
-              text={"Add to Encounter"} 
+              text={RunText} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
               callBack={ async (arr) => {
-                
+                let count = Math.floor(this.state.copyCount) -1;
+
                 let conditions = ConditionService.getConditions();
                 let id = await arr[0].getJson()?._id;
+                let ogMon = arr[0];
+                let maxHp = ogMon.getJson()?.hp
+                
+                await ogMon.setCompState({maxHp:maxHp});
 
-                for(let condition of conditions)
-                {
-                  condition.monsterId = id;
-                  condition.roundsActive = "0";
-                  condition._id = arr[0].getJson()?._id+idService.createId()
-                  await state.opps.jsonPrepare({addcondition: condition});
+                for(let i = 0; i < count; i++){
+                  let copyJson = {...ogMon.getJson(), _id:undefined};
+                  await state.opps.jsonPrepare({addmonster: copyJson});
+                  let newCopyMon = state.opps.getUpdater('add')[state.opps.getUpdater('add').length-1];
+                  arr.push(newCopyMon);
                 }
+
+                for (let mon of arr){
+                  
+                      for(let condition of conditions)
+                      {
+                        condition.monsterId = mon.getJson()._id;
+                        condition.roundsActive = "0";
+                        condition._id = mon.getJson()?._id+idService.createId();
+                        await state.opps.jsonPrepare({addcondition: condition});
+                      }
+
+                  }
+                
                 
                 await state.opps.run();
                 await dispatch({
                   popUpSwitchcase: "",
                   currentComponent: undefined,
                 });
+
               }}
                
             />
+</div>
+         
               
           </div>
           </div></div>
