@@ -25,6 +25,7 @@ import auth from '../services/auth';
 import TokenImage from './tokenImage';
 import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
+
 import { URLcheck } from './campaignEditorURLCheck';
 
 export default class CampaignEditor extends Component {
@@ -90,10 +91,12 @@ scrollTo = (ref, behavior) => {
     };
 
     async deleteLore () {
+      let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
-      await dispatch({popupSwitch:"", currentDelObj:undefined});
-    
-      window.location.href="/campaign/"+toolService.getIdFromURL(true,0);
+                              let sw = "popupDelete"; 
+      dispatch({currentDelObj: state.currentLore, popupSwitch: sw,});
+          
+      
     }
 
   render() {
@@ -177,17 +180,10 @@ scrollTo = (ref, behavior) => {
                   }}
                     
                     onClick={ ()=>{
-                       console.log(state.currentLore)
-                     
-                       dispatch({currentDelObj: state.currentLore, popUpSwitch:"popupDelete"}).then(()=>{
-                        // this.deleteLore();
-                      });
-                     ///UM
-                     ///TAYLOR
-                     /// WHY is this not working??
-                     /// what the crap
-                       console.log(state.popUpSwitch)
-                      }}>
+                       
+                       this.deleteLore();
+                      }
+                    }>
                       Delete This Lore
                      
                     </div>
@@ -414,7 +410,7 @@ scrollTo = (ref, behavior) => {
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      type={"richEditor"}
+                      type={"richEditor"} onPaste={this.handlePaste}
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
                       flexDirection:"column", justifyItems:"space-between"}}/>
                       </div>}

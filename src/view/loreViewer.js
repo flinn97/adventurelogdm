@@ -151,7 +151,7 @@ updateSize(width, height){
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
-                      
+                        type={"richEditor"} onPaste={this.handlePaste}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
@@ -165,14 +165,15 @@ marginTop:"22px"}}>
              <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true}/>
               </div>
               
-          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,
+          <div 
+          style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,
           marginTop:"12px", marginBottom:"32px"}}> Handout:
           <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", maxWidth:"100px"}}>
          {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
-                      
+                        type={"richEditor"} onPaste={this.handlePaste}
                       inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}

@@ -55,7 +55,7 @@ export default class LoreLogComponent extends Component {
                       // letterSpacing:".15rem",
                       userSelect:"none", cursor:"",               
                     }}
-                      type={"richEditor"}
+                    type={"richEditor"} onPaste={this.handlePaste}
                       />}
 
                 {obj.getJson().readAloud &&
@@ -69,7 +69,7 @@ export default class LoreLogComponent extends Component {
                       // letterSpacing:".15rem",
                       userSelect:"none", cursor:"", textDecoration:"underline 1px"+styles.colors.color7, textUnderlineOffset:"4px",               
                     }}
-                      type={"richEditor"}
+                    type={"richEditor"} onPaste={this.handlePaste}
                       />
                       {quote}
                       </div>}

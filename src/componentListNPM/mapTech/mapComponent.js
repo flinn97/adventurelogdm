@@ -13,8 +13,8 @@ export default class MapComponent extends Component {
     this.cellMap2 = this.cellMap2.bind(this);
 
     this.state = {
-      f: new MapThemeFactory()
-
+      f: new MapThemeFactory(),
+      reRender: false,
 
     }
   }
@@ -344,7 +344,10 @@ export default class MapComponent extends Component {
           {cursor:"pointer", ...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle }: 
           {cursor:"pointer", ...styles.delstyle }} onClick={this.props.delOptions?.func? this.props.delOptions.func: ()=>{
             
-            componentList.getOperationsFactory().cleanPrepareRun({del:item})}}>
+            componentList.getOperationsFactory().cleanPrepareRun({del:item});
+           
+            }}>
+
          {this.props.linkOptions?.cells?.includes(index)?(
          <Link style={this.props.linkOptions?.styles&&this.props.linkOptions?.styles[index]? this.props.linkOptions?.styles[index]: state.linkStyleDefault} to={this.props.linkOptions?.path[this.props.linkOptions.cells.indexOf(index)]? this.props.linkOptions.path[this.props.linkOptions.cells.indexOf(index)]+ item.getJson()._id: this.props.linkOptions.path[this.props.linkOptions.path.length-1]+ item.getJson()._id}>
            <div style={{...this.props.delOptions?.textStyle}} >{this.props.delOptions?.text}</div>
@@ -646,11 +649,13 @@ export default class MapComponent extends Component {
       </div>,
     }
 
-    return (<div style={{width:"100%", height:"100%"}}>
+    return (
+      
+    (<div style={{width:"100%", height:"100%"}}>
       {/* {this.props.type} */}
       
       {types[this.props.type?this.props.type:this.props.filter?"filteredMap":"default"]}
-      </div>
+      </div>)
       
       // <div style={{width:"100vw", paddingTop: "10px"}}><>
       //     <ParentFormComponent style={{height:"200px", border:"1px solid black"}} type="richEditor" name="html" app={app} prepareOnClick={{operation: "cleanJsonPrepare", operate:"addadventureLog"}} obj={{owner: "123", type:"adventureLog"}} />
@@ -669,6 +674,7 @@ export default class MapComponent extends Component {
       //       ):( <div dangerouslySetInnerHTML={{__html: log.getJson().html}}  />)}</div>
       //     )}</div>
       // </div>
+
     )
   }
 }

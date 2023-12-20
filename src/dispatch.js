@@ -22,7 +22,8 @@ import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
-import logo from "./pics/logoava.png"
+
+import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 
 //model
@@ -70,9 +71,9 @@ export default class Dispatch extends Component {
 justifyContent: "center",}}>
         
 
-        {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) && 
+        {(state.popupSwitch === "popupDelete"  && state.currentDelObj !== undefined) && 
         <PopupDelete 
-          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
+          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}

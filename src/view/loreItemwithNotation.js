@@ -74,7 +74,7 @@ export default class LoreItemWithNotation extends Component {
     }
   
 
-    let sendLink = "../campaign/"+newLink;
+    let sendLink = state.popupSwitch!=="popupLore"?"../campaign/"+newLink:"";
 
     let insert =<>
     {( this.props.isGrabbing!=="" && this.props.isGrabbing!==obj ) && state.popupSwitch!=="popupLore" &&
