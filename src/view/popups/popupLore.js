@@ -694,12 +694,13 @@ marginTop:"22px"}}>
               alignItems: "center", height: "100%", width: "100%",
             }}>
 
-<div style={{ color: this.state.refrence ? 'green' : "white" }} 
-                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div>
+{/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
+                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
 
                 <ParentFormComponent
                 obj={lore} name="refrence"
                 prepareRun={true} 
+                // handleChange={}
                 wrapperStyle={{ width:"fit-content", height:"fit-content",alignContent:"center", justifyContent:"center", alignContent:"center", alignItems:"center", alignText:"center",}}
                   type={"checkbox"} 
                   inputStyle={{padding:"2px 4px",color:styles.colors.colorWhite,
