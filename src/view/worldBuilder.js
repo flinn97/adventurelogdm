@@ -71,7 +71,10 @@ export default class Worldbuilder extends Component {
   this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
   //RICH TEXT READ
   let campaignDesc = document.getElementById("campaignDesc");
-  campaignDesc.innerHTML = component.getJson().description;
+  if(campaignDesc){
+    campaignDesc.innerHTML = component.getJson().description;
+
+  }
 }
 
   

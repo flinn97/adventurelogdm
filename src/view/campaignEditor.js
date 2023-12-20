@@ -27,6 +27,7 @@ import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
 
 import { URLcheck } from './campaignEditorURLCheck';
+import { LinkStateChecker } from './linkStateChecker';
 
 export default class CampaignEditor extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class CampaignEditor extends Component {
     this.encRef = React.createRef();
     this.loreRef = React.createRef();
     this.galRef = React.createRef();
+    this.delLoreForce=this.delLoreForce.bind(this);
     this.state = {
       obj: undefined,
       pic: undefined,
@@ -82,8 +84,8 @@ state.componentList.sortSelectedList("lore", "index");
 
 
 scrollTo = (ref, behavior) => {
-  if (ref.current) {
-    ref.current.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
+  if (ref?.current) {
+    ref?.current?.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
   }
 }
 
@@ -94,12 +96,29 @@ scrollTo = (ref, behavior) => {
     };
 
     async deleteLore () {
+      debugger
       let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
-                              let sw = "popupDelete"; 
-      dispatch({currentDelObj: state.currentLore, popupSwitch: sw,});
+      let compList = state.componentList;
+      let lore = this.state.ref? state.componentList.getComponent("lore", this.state.ref, "_id"):state.currentLore;
+      let referenceList = compList.getList("lore", lore.getJson()._id, "ogId");
+      let delList = [lore, ... referenceList];
+    let campaignId = toolService.getIdFromURL(true);
+      window.history.pushState({}, "Camapaign", "/campaign/"+campaignId);
+      await this.setState({start:false});
+      this.delLoreForce(delList)
+      
+      
           
       
+    }
+    async delLoreForce(loreList){
+      let state =  this.props.app.state;
+      await state.opps.cleanPrepareRun({del:loreList});
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(1000);
+     await this.props.app.dispatch({});
+      await this.componentDidMount();
     }
 
   render() {
@@ -482,11 +501,13 @@ scrollTo = (ref, behavior) => {
 
 )}
       <URLcheck onChange={async()=>{
+  
                 await this.setState({start:false});
 
         this.componentDidMount();
         // this.setState({start:true})
       }}/>
+      <LinkStateChecker dispatch={(obj)=>{this.setState(obj)}} />
         </div>
     )
   }

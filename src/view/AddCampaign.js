@@ -6,6 +6,8 @@ import CardPractice from './CardPrac';
 import Upload from './upload';
 import placeholder from '../pics/placeholderCampaign.JPG';
 import RichTextComponent from '../componentListNPM/componentForms/singleForms/RichTextComponent';
+import { useNavigate  } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 export default class AddCampaign extends Component {
   constructor(props) {
@@ -19,10 +21,16 @@ export default class AddCampaign extends Component {
 
 
   async deleteCampaign () {
+    let state = this.props.app.state;
     let dispatch = this.props.app.dispatch;
-    await dispatch({popupSwitch:"", currentDelObj:undefined});
-  
-    window.location.href="/campaign/";
+    let currentCampaign = state.currentCampaign;
+    state.opps.cleanPrepareRun({del:currentCampaign}).then(async ()=>{
+      await dispatch({popupSwitch:"", currentDelObj:undefined});
+      
+      this.setState({navigate:true})
+
+    })
+    
   }
 
   render() {
@@ -198,10 +206,25 @@ export default class AddCampaign extends Component {
                           }
                   </div>
 </div>
+{this.state.navigate&&<URLcheck/>}
 </div>
+
 
     )
   }
 }
 
 
+const URLcheck = () => {
+  const nav = useNavigate ();
+
+  useEffect(() => {
+    nav(-1); // This will navigate up one level in the history stack
+    // Send request to your server to increment page view count
+});
+
+  return (
+    <div>
+    </div>
+  );
+}

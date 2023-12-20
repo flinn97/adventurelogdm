@@ -69,7 +69,7 @@ export default class ListTreeLink extends Component {
     height:"fit-content",
     display: "flex"}}>
       {name !=="" && name !==undefined &&
-      <Link to={"../campaign/" + newLink} 
+      <Link to={"../campaign/" + newLink} state = {obj.getJson().reference? {ref: obj.getJson()._id} : undefined}
       // onClick={() => 
       //   window.open("../campaign/" + newLink, "_blank")
       // } 
