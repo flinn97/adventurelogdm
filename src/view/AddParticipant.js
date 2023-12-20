@@ -275,13 +275,15 @@ transitionDuration:"9000ms"
                   arr.push(newCopyMon);
                 }
 
+
                 for (let mon of arr){
                   
                       for(let condition of conditions)
                       {
                         condition.monsterId = mon.getJson()._id;
                         condition.roundsActive = "0";
-                        condition._id = mon.getJson()?._id+idService.createId();
+                        condition.campaignId = mon.getJson()?.campaignId;
+                        condition._id = mon.getJson()?._id+"c"+idService.createId();
                         await state.opps.jsonPrepare({addcondition: condition});
                       }
 

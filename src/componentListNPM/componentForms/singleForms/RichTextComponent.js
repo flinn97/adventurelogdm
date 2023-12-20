@@ -16,6 +16,7 @@ class RichTextComponent extends Component {
         this.checkHold = this.checkHold.bind(this);
         this.wrapperRef = React.createRef();
         this.handlePaste = this.handlePaste.bind(this);
+        this.replaceHTML = this.replaceHTML.bind(this);
         this.getCurrentCursorPosition = this.getCurrentCursorPosition.bind(this);
         this.ref = React.createRef();
         this.setWrapperRef = this.setWrapperRef;
@@ -52,7 +53,7 @@ class RichTextComponent extends Component {
          __html: DOMPurify.sanitize(data)
       })
 
-      replaceHTML(htmlString) {
+     replaceHTML(htmlString) {
         debugger
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlString, 'text/html');

@@ -17,7 +17,7 @@ export default class PopupLore extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refrence: false
+      refrence: true,
     }
   }
 
@@ -171,6 +171,8 @@ class MainContent extends Component {
       newLink = href + "-" + state.currentComponent.getJson()._id;
     };
 
+    const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5", width:"1%"}}>
+    "</div>;
 
 
     const filteredList = componentList.getList("encounter", idList[0], "campaignId")
@@ -284,28 +286,45 @@ class MainContent extends Component {
 
                 <hr></hr>
 
-                <div style={{ marginTop: "-12px", display: "flex", flexDirection: "column", }}>
-                  {/* ///LOG BUTTON */}
-                  <div style={{ display: "flex", flexDirection: "row", alignContent: "flex-end", justifyContent: "flex-end" }}>
-                    <PostLogButton app={app} obj={lore} altText={"description"} />
-                  </div>
+                <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
+              justifyContent:"flex-end", marginBottom:"-18px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+              marginTop:"12px"}}>
+            <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
+              </div>
+          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
+          <ParentFormComponent app={app} name="desc" obj={lore}
+                      theme={"adventureLog"} 
+                        rows={5}
+                        prepareRun={true}
+                        type={"richEditor"} onPaste={this.handlePaste}
+                      inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
+                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
+                      flexDirection:"column", justifyItems:"space-between"}}/></div>
 
-                  <ParentFormComponent app={app} name="desc"
-                    theme={"adventureLog"}
-                    rows={5}
 
-                    inputStyle={{
-                      maxWidth: "55.5vw", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                      borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
-                    }}
-                    type={"richEditor"} onPaste={this.handlePaste}
-                    wrapperStyle={{
-                      margin: "5px", color: styles.colors.colorWhite, display: "flex",
-                      flexDirection: "column", justifyItems: "space-between"
-                    }} />
-
-                </div>
+<div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
+justifyContent:"flex-end", marginBottom:"-30px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+marginTop:"22px"}}>
+             <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true}/>
+              </div>
+              
+          <div 
+          style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,
+          marginTop:"12px", marginBottom:"32px"}}> Handout:
+          <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", maxWidth:"100px"}}>
+         {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
+                      theme={"adventureLog"} 
+                        rows={5}
+                        prepareRun={true}
+                        type={"richEditor"} onPaste={this.handlePaste}
+                      inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
+                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
+                      
+                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", width:"99%", marginLeft:"-2px",
+                      flexDirection:"column", justifyItems:"space-between"}}/>{quote}</div></div>
               </div>}
 
             <div>
@@ -675,6 +694,19 @@ class MainContent extends Component {
               alignItems: "center", height: "100%", width: "100%",
             }}>
 
+{/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
+                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
+
+                <ParentFormComponent
+                obj={lore} name="refrence"
+                prepareRun={true} 
+                // handleChange={}
+                wrapperStyle={{ width:"fit-content", height:"fit-content",alignContent:"center", justifyContent:"center", alignContent:"center", alignItems:"center", alignText:"center",}}
+                  type={"checkbox"} 
+                  inputStyle={{padding:"2px 4px",color:styles.colors.colorWhite,
+                  color:styles.colors.colorBlack, 
+                  }}
+                />
               <div
 
                 style={{
@@ -684,7 +716,7 @@ class MainContent extends Component {
                 }}
 
               >
-                <div style={{ color: this.state.refrence ? 'green' : "white" }} onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>create a refrence instead</div>
+                
                 {
                   filteredLore.filter(obj => obj.getJson().topLevel === false)
                     .slice(0, 8)

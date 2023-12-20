@@ -76,6 +76,7 @@ async componentDidMount(){
     campaignPlayers: players,
   })
 }
+this.scrollTo(this.startRef, "smooth")
 state.componentList.sortSelectedList("lore", "index");
 }
 
@@ -122,6 +123,7 @@ scrollTo = (ref, behavior) => {
       {this.state.start&&(
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
+        <div ref={this.startRef}/> 
 <div style={{color:"red"}} onClick={()=>{
   dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
   //treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
@@ -349,7 +351,7 @@ scrollTo = (ref, behavior) => {
         </div>
 
 
-        {(state.currentLore==undefined &&
+        {/* {(state.currentLore==undefined && */}
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
                                             <div className="hover-btn">
@@ -395,11 +397,11 @@ scrollTo = (ref, behavior) => {
                                                                         zIndex: 2}}/></div>
                                 
 
-                  </div>)}
+                  </div>)
+                  {/* } */}
 
 
-
-                 
+             
         {state.currentLore===undefined &&
         <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginTop:"22px", marginBottom:"22px"}}>
            {/* {this.state.obj.getJson().title}  */}
@@ -422,7 +424,7 @@ scrollTo = (ref, behavior) => {
         <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
         </div>):(
         <>
-                <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
+                <div style={{display:"flex", flexDirection:"column", width:"100%", height:"fit-content", padding:".75%", justifyContent:"space-between", }}>
                         
                         
                              <Worldbuilder app={app} type="card"/>

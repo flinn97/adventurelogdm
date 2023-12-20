@@ -100,7 +100,7 @@ toggleSidebar = () => {
     return (
       
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
-      height:"fit-content", maxWidth:"100%",  justifyContent:"space-between"
+      height:"fit-content", maxWidth:"100%",  justifyContent:"space-between", maxHeight:"100%",
       }}>
 
            

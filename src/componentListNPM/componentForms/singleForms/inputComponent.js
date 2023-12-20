@@ -96,13 +96,14 @@ class InputFormComponent extends Component {
 
     calculateMath(value) {
         const originalValue = parseInt(this.state.value, 10) || 0;
-        const match = value.match(/([+-]\d+)$/);
-        
+                if (value.match) {
+                const match = value.match(/([+-]\d+)$/);
+            
         if (match) {
             const changeValue = parseInt(match[1], 10);
             return (originalValue + changeValue);
         }
-        
+    }
         this.setState({ value: value, rerender: false })
         return value;
     }

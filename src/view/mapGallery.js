@@ -76,7 +76,7 @@ export default class MapGallery extends Component {
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
       <div style={{width:"100%", display:"flex", height:"100%",
-      position:"absolute",
+      position:"absolute", 
       }}>
 
         {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
