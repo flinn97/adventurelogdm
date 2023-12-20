@@ -130,7 +130,6 @@ class MainContent extends Component {
   async componentDidMount() {
     let state = this.props.app.state;
     let loreName = await state.currentComponent.getJson().name;
-    console.log(loreName);
     if (loreName == "" || loreName == undefined) {
       this.setState({ hasChoice: "" })
     } else {
@@ -354,14 +353,17 @@ marginTop:"22px"}}>
                   }}
                     title="Create a new encounter, you can edit it by clicking on it."
                     onClick={() => {
+                      debugger
+                      //Taylor
+                      // I cant get this working
+                      console.log(state.currentComponent?.getJson().name+" Encounter")
                       state.opps.prepareRun({
                         "addencounter": {
                           loreId: state.currentComponent?.getJson()._id,
-                          name: "New Encounter", campaignId: id
+                          name: state.currentComponent?.getJson().name+" Encounter", campaignId: id
                         }
                       })
-
-                      // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
+    
                       this.setState({ showAddEncounter: true });
                     }}>
                     + Create New Encounter
