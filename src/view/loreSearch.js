@@ -129,10 +129,10 @@ export default class LoreSearch extends Component {
     let beginName = this.props.app.state.currentLore ? ": " + this.props.app.state.currentLore.getJson().name : "";
     let newLoreName = "New Lore";
 
-    let sortImage = this.state.sortTerm === "name" ? dateSort : nameSort
+    let sortImage = this.state.sortTerm === "name" ? dateSort : nameSort;
 
     return (
-      <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content" }}>
+      <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop:"85px" }}>
         <div style={{ marginTop: "10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}> {"Connected Lore" + beginName}
           {/* <IndexLoreHeirarchy/> */}
         </div>
