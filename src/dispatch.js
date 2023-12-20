@@ -25,6 +25,7 @@ import ViewPlayerList from './view/popups/viewPlayerList';
 
 import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
+import SplashScreen from './view/pages/splashScreen';
 
 //model
 export default class Dispatch extends Component {
@@ -54,10 +55,24 @@ export default class Dispatch extends Component {
 <BrowserRouter>
     {/*      === */}
   {state.user===undefined?(<Login app={app}/>):(
+    
+    
+    <div>
+      {(state.popupSwitch === "splashScreen") &&
+    <div style={{background:styles.colors.color2, zIndex:55000, width:"100vw", height:"100vh"}}>
+        <SplashScreen
+        options={{cardType:"bigCardBorderless"}} app={app} 
+        containerStyle={{background:styles.colors.color2, zIndex:55000,}}
+        
+      />
+    </div>
+    }
+    {(state.popupSwitch !== "splashScreen") &&
     <div  className='scroller2' style={{ width:"100%", overflow:"scroll",
       minWidth:"100%", userSelect:"none", height:"100vh",
        display:"flex", flexDirection:"column",
       }}>
+          
 <div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
             {logo: logo}
@@ -69,6 +84,8 @@ export default class Dispatch extends Component {
         
      <div   style={{ width:'100%', minHeight:"fit-content", padding:"28px", display: "flex", height:"100%",
 justifyContent: "center",}}>
+
+            
         
 
         {(state.popupSwitch === "popupDelete"  && state.currentDelObj !== undefined) && 
@@ -170,8 +187,8 @@ justifyContent: "center",}}>
 
 </div>
 </div>
-     </div>
-     )}
+     </div>}
+     </div>)}
 
      
      </BrowserRouter>

@@ -582,3 +582,28 @@ input {
   0%, 100% { opacity: 0; }
   50% { opacity: 1; }
 }
+
+@keyframes spinAndWiggle {
+  0%, 10% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(-2deg);
+  }
+  15% {
+    transform: rotate(2deg);
+  }
+  60% {
+    transform: rotate(98deg);
+  }
+  80% {
+    transform: rotate(93deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+  
+.vault-door-handle {
+  animation: spinAndWiggle 3.4s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
