@@ -112,15 +112,15 @@ scrollTo = (ref, behavior) => {
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
 
-
-
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
       {this.state.start&&(
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
 <div style={{color:"red"}} onClick={()=>{
-  treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")}}></div>
+  dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
+  //treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
+  }}>Send to Marketplace</div>
         {/* BACK BUTTON */}
       {(state.popUpSwitchcase != "updateCampaign" && state.currentLore==undefined) &&
           (<Link className="hover-btn-highlight"
@@ -478,7 +478,6 @@ scrollTo = (ref, behavior) => {
 
 
                 </>)}
-
         </div>
 
 )}

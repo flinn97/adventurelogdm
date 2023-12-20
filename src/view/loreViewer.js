@@ -17,6 +17,7 @@ import LoreSearch from './loreSearch';
 import EncounterMapItem from './encounterMapItem';
 import colorService from '../services/colorService';
 import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton.js';
+import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
 
 export default class LoreViewer extends Component {
 
@@ -147,7 +148,9 @@ updateSize(width, height){
             <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
               </div>
           <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
-          <ParentFormComponent app={app} name="desc" obj={lore}
+
+          < QuillComponent app = {app}/>
+          {/* <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
@@ -156,7 +159,9 @@ updateSize(width, height){
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
-                      flexDirection:"column", justifyItems:"space-between"}}/></div>
+                      flexDirection:"column", justifyItems:"space-between"}}/> */}
+                      
+                      </div>
 
 
 <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
