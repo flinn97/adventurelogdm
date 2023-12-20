@@ -52,6 +52,8 @@ async componentDidMount(){
   let splitURL = href.split("/");
   let id = splitURL[splitURL.length-1];
   let loreId;
+  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore")
+
   await dispatch({currentLore:undefined})
   if(id.includes("-")){
     let loreSplit = id.split('-');
