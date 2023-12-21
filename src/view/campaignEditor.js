@@ -42,6 +42,7 @@ export default class CampaignEditor extends Component {
       pic: undefined,
       showList: true,
       start: false,
+      update:false
     }
     
   }
@@ -136,6 +137,7 @@ scrollTo = (ref, behavior) => {
 
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
+    let topLore = state.componentList.getList("lore", advLogLink, "campaignId").filter(lore=>lore.getJson().parentLore)[0]
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
@@ -446,8 +448,12 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
         <>
                 <div style={{display:"flex", flexDirection:"column", width:"100%", height:"fit-content", padding:".75%", justifyContent:"space-between", }}>
                         
-                        
-                             <Worldbuilder app={app} type="card"/>
+                {state.componentList.getComponent("map",topLore.getJson()._id, "loreId") &&<div style={{color:'white'}}  onClick={async ()=>{
+          debugger
+        await state.opps.cleanPrepareRun({del:state.componentList.getComponent("map",topLore.getJson()._id, "loreId")});
+        this.setState({update:true})
+       }}>delete Map</div>}
+                             <Worldbuilder app={app} type="card" dispatch ={()=>{this.setState({update:false})}} update={this.state.update} />
                 </div>
                 <div ref={this.loreRef}/> 
                 <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}

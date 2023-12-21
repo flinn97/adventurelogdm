@@ -80,6 +80,13 @@ export default class Worldbuilder extends Component {
   
 }
 
+async componentDidUpdate(){
+  if(this.props.update){
+    await this.props.dispatch();
+    this.setState({map:undefined})
+  }
+}
+
 toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
 };
@@ -105,6 +112,7 @@ toggleSidebar = () => {
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
       height:"fit-content", maxWidth:"100%",  justifyContent:"space-between", maxHeight:"100%",
       }}>
+       
 
            
 {
