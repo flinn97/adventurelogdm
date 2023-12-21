@@ -12,7 +12,9 @@ class Auth {
     urlEnpoint = "GMS"
 
     async getCurrentUser() {
-        return localStorage.getItem("user");
+        
+        let item = localStorage.getItem("user");
+        return item;
     }
     async setCurrentUser(student) {
         await localStorage.setItem("user", JSON.stringify(student));
@@ -118,13 +120,15 @@ class Auth {
 
     }
     async getuser(email, componentList, dispatch) {
-        debugger
+        
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
             IDlist.push(list[key].getJson()._id)
         }
         let rawData = [];
+        let player = false
+
         // const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('owner', '==', email), orderBy("date"));
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('_id', '==', email), orderBy("date"));
         let comps = await getDocs(components);
@@ -132,10 +136,14 @@ class Auth {
             let data = comps.docs[key].data()
             if (!IDlist.includes(data._id)) {
                 rawData.push(data);
+                if(data.role==="player"){
+                    player = true
+                }
             }
         }
 
-        const components1 = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "campaign"), where('owner', '==', email), orderBy("date"));
+        const components1 =player?await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('owner', '==', email), orderBy("date"))
+        : await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "campaign"), where('owner', '==', email), orderBy("date"));
         let comps1 = await getDocs(components1);
         for (const key in comps1.docs) {
             let data = comps1.docs[key].data()
@@ -148,7 +156,7 @@ class Auth {
         let user = componentList.getComponent("user");
         if (user) {
 
-            dispatch({ user: user, email: email, })
+            dispatch({ user: user, email: email, start:true })
             if (user.getJson().role !== "GM") {
                 dispatch({
                     switchCase: [
@@ -307,6 +315,7 @@ class Auth {
 
     async logout() {
         await localStorage.clear();
+        localStorage.setItem("user", undefined);
         let logouser;
         await onAuthStateChanged(auth, (user) => {
             if (user) {
