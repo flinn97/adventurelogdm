@@ -33,11 +33,15 @@ import AdminPartner from './view/admin/adminPartner';
 import AdminRequests from './view/admin/adminRequests';
 import AdminSubmission from './view/admin/adminSubmissions';
 import SplashScreen from './view/pages/splashScreen';
+import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
+import auth from './services/auth';
 import PartnerPopup from './view/partnerPopup';
 //model
 export default class Dispatch extends Component {
   constructor(props){
     super(props);
+    this.state={
+    }
   }
 
   componentDidUpdate(){
@@ -56,6 +60,7 @@ export default class Dispatch extends Component {
     let state = app.state;
     let styles =state.styles;
     let RR = state.rerender;
+    
 
   return (
     
@@ -101,7 +106,12 @@ justifyContent: "center",}}>
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
-
+         {(state.popupSwitch === "seeLibrary") && 
+        <LibraryForGalleryPopup 
+          type="popup" options={{cardType:"popupMedium"}} app={app} containerStyle={{background:styles.colors.color2}}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+          
+        />}
     {state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
             <ViewPic 
             

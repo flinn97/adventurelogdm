@@ -18,6 +18,7 @@ import EncounterMapItem from './encounterMapItem';
 import colorService from '../services/colorService';
 import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton.js';
 import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
+import auth from '../services/auth.js';
 
 export default class LoreViewer extends Component {
 
@@ -69,8 +70,12 @@ async componentDidMount(){
   let component = this.props.app.state.componentList.getComponent("campaign", id);
   
   let currentLore = this.props.app.state.currentLore;
-  
+  debugger
   let map = currentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
+  if(!map){
+    map = await auth.firebaseGetter(currentLore.getJson()._id, this.props.app.state.componentList, "loreId", "map", undefined);
+    map = map[0]
+  }
   this.setState({obj: component, lore:currentLore, map: map});
   
 }
@@ -242,11 +247,11 @@ marginTop:"22px"}}>
             </div>}
       
         {(this.state.map) && 
-       
+       <>
        <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%"}}>
         <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize = {this.updateSize}/>
         
-        </div>}
+        </div></>}
 
           
         
