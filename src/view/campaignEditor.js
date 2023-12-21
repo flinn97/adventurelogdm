@@ -28,6 +28,7 @@ import toolService from '../services/toolService';
 
 import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
+import SplashScreen from './pages/splashScreen';
 
 export default class CampaignEditor extends Component {
   constructor(props) {
@@ -64,16 +65,18 @@ async componentDidMount(){
   //   await this.setState({splash:false})
 
   // }
-  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore").then(async ()=>{
-  // await dispatch({popupSwitch:""})
-
-  })
+  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore")
+  debugger
   await dispatch({currentLore:undefined})
   if(id.includes("-")){
     let loreSplit = id.split('-');
     id = loreSplit[0];
     loreId = loreSplit[1];
     let lore = state.componentList.getComponent("lore", loreId, "_id");
+    if(!lore){
+      lore = await auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined);
+      lore = lore[0]
+    }
     await dispatch({currentLore:lore});
   }
 
@@ -153,7 +156,7 @@ scrollTo = (ref, behavior) => {
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
-      {this.state.start&&(
+      {this.state.start?(
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
         <div ref={this.startRef}/> 
@@ -258,7 +261,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                       <div style={{display:"flex", alignContent:"center", position:"absolute", right:"24px", justifyContent:"space-between"}}>
 
-                      {state.currentLore==undefined &&
+                      {state.currentLore===undefined &&
                         <div className="hover-btn" style={{... styles.buttons.buttonAdd,  borderRadius:"12px", width:"fit-content", 
                         fontSize:styles.fonts.fontSmall, padding:"4px 9px", 
                         backgroundColor:styles.colors.color1+"ee", position:"relative", height:"fit-content",
@@ -276,7 +279,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                           <div id= "campaignDesc" 
                       style={{width:"1px", height:"1px", userSelect:"none", opacity:"0%", }}>
                           </div>
-                          {state.currentLore==undefined &&
+                          {state.currentLore===undefined &&
                           <div style={{
                             display:"flex", flexDirection:"column", alignItems:"flex-end",
                             justifyContent:"flex-end"}}>
@@ -520,7 +523,13 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                 </>)}
         </div>
 
-)}
+):(<div style={{background:styles.colors.color2, zIndex:55000, width:"100vw", height:"100vh", position:"absolute", left:"0px", top:"0px"}}>
+<SplashScreen
+options={{cardType:"bigCardBorderless"}} app={app} 
+containerStyle={{background:styles.colors.color2, zIndex:55000,}}
+
+/>
+</div>)}
       <URLcheck onChange={async()=>{
   
                 await this.setState({start:false});

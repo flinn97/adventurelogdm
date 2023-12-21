@@ -13,6 +13,7 @@ import Market from './view/pages/market';
 import EncounterManager from './view/pages/encounterManager';
 
 import PlayerHome from './view/pages/playerHome.js';
+import SplashScreen from './view/pages/splashScreen.js';
 
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 //New comment
@@ -104,6 +105,7 @@ export default class App extends Component {
         this.setState({currentComponent: currentComponent[key][0]});
       }
     }
+    
   }
 
   async dispatch(obj){
@@ -119,6 +121,9 @@ handleChange = (event) => {
 }
 
   async componentDidMount(){
+    
+    
+
     // if(this.state.navFactory){
     //   let f = this.statedasdfnavFactory.getNavThemeFactory();
     //   let styles = f["defaultSideNav"];
@@ -133,7 +138,7 @@ handleChange = (event) => {
       let style = this.state.globalTheme!==""? this.state.globalTheme: this.state.defaultTheme!==""? this.state.defaultTheme: "adventure"
       let styles = f[style];
       
-      this.setState({styles:styles, start:true});
+      this.setState({styles:styles, });
     }
     let list;
     if(this.state.componentListInterface && this.state.componentList===undefined){
@@ -151,16 +156,22 @@ handleChange = (event) => {
         }
         
     }
+    try{
     let user = await auth.getCurrentUser();
     if(user){
       user = JSON.parse(user);
-      await auth.getuser(user.email, list, this.dispatch);
-     
       
+      await auth.getuser(user.email, list, this.dispatch);
+      
+      this.setState({popupSwitch:""})
     
       
     }
-    
+  }
+  catch(e){
+    console.log(e)
+  }
+    this.setState({start:true});
     
     
   }
@@ -184,7 +195,14 @@ handleChange = (event) => {
       flexDirection:"column"}}>
         
       
-      {this.state.start && <Dispatch app={{run:this.run, state:this.state, handlechange:this.handleChange, dispatch:this.dispatch, factory:this.factory}} />}
+      {this.state.start ? (<Dispatch app={{run:this.run, state:this.state, handlechange:this.handleChange, dispatch:this.dispatch, factory:this.factory}} /> ):
+      (<div style={{background:styles?.colors?.color2, zIndex:55000, width:"100vw", height:"100vh"}}>{styles&&
+      <SplashScreen
+      options={{cardType:"bigCardBorderless"}} app={{run:this.run, state:this.state, handlechange:this.handleChange, dispatch:this.dispatch, factory:this.factory}}
+      containerStyle={{background:styles?.colors?.color2, zIndex:55000,}}
+      
+    />}
+  </div>)}
     </div>
   )}
 }

@@ -27,11 +27,14 @@ import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 import SplashScreen from './view/pages/splashScreen';
 import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
+import auth from './services/auth';
 
 //model
 export default class Dispatch extends Component {
   constructor(props){
     super(props);
+    this.state={
+    }
   }
 
   componentDidUpdate(){
@@ -50,6 +53,7 @@ export default class Dispatch extends Component {
     let state = app.state;
     let styles =state.styles;
     let RR = state.rerender;
+    
 
   return (
     

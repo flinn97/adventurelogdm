@@ -106,7 +106,8 @@ toggleSidebar = () => {
     
     let compListLength = compList.length;
 
-    let map = state.componentList.getComponent("map",this.props.topLore.getJson()._id, "loreId")
+
+    let map = state.componentList.getComponent("map",this.props.topLore?.getJson()?._id, "loreId")
 
     return (
       
