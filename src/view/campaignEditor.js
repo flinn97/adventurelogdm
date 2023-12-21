@@ -431,7 +431,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                                                         zIndex: 2}}/></div>
                                 
 
-                  </div>)
+                  </div>
                   {/* } */}
 
 
@@ -460,13 +460,14 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
         <>
                 <div style={{display:"flex", flexDirection:"column", width:"100%", height:"fit-content", padding:".75%", justifyContent:"space-between", }}>
                         
-                {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{color:'white'}}  onClick={async ()=>{
+                {/* {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{...styles.buttons.buttonAdd, color:'red', width:"fit-content",
+                marginBottom:"8px", alignSelf:"flex-end"}}  onClick={async ()=>{
           debugger
           let map = state.componentList.getComponent("map",topLore.getJson()._id, "loreId")
           state.opps.clearUpdater();
         await state.opps.cleanPrepareRun({del:map});
         this.setState({update:true})
-       }}>delete Map</div>}
+       }}>Delete Map</div>} */}
                              <Worldbuilder app={app} type="card" dispatch ={()=>{this.setState({update:false})}} update={this.state.update} topLore={topLore} />
                 </div>
                 <div ref={this.loreRef}/> 
