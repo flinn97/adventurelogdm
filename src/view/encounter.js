@@ -41,9 +41,7 @@ export default class Encounter extends Component {
   async componentDidMount() {
     let app = this.props.app;
     let state = app.state;
-    let href = window.location.href;
-    let splitURL = href.split("/")
-    let id = splitURL[splitURL.length - 1]
+    let id = toolService.getIdFromURL(true,0);
     let componentList = this.props.app.state.componentList;
     debugger
 

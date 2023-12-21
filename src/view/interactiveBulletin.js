@@ -204,7 +204,13 @@ export default class InteractiveBulletin extends Component {
           <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
 
-        
+        {this.props.obj &&
+<div style={{...styles.buttons.buttonAdd, color:'red', width:"fit-content", height:"40px", marginRight:"15px", border:"1px solid "+styles.colors.color6
+}}  
+onClick={()=>{
+        state.opps.cleanPrepareRun({del:this.props.obj});
+        this.setState({map:undefined});
+       }}>Delete Map</div>}
 
       </div>
 
