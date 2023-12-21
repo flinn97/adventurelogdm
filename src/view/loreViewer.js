@@ -149,8 +149,8 @@ updateSize(width, height){
               </div>
           <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
 
-          < QuillComponent app = {app}/>
-          {/* <ParentFormComponent app={app} name="desc" obj={lore}
+          {/* < QuillComponent app = {app}/> */}
+          <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
@@ -159,7 +159,7 @@ updateSize(width, height){
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
-                      flexDirection:"column", justifyItems:"space-between"}}/> */}
+                      flexDirection:"column", justifyItems:"space-between"}}/>
                       
                       </div>
 
