@@ -26,6 +26,7 @@ import ViewPlayerList from './view/popups/viewPlayerList';
 import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 import SplashScreen from './view/pages/splashScreen';
+import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
 
 //model
 export default class Dispatch extends Component {
@@ -94,7 +95,12 @@ justifyContent: "center",}}>
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
-
+         {(state.popupSwitch === "seeLibrary") && 
+        <LibraryForGalleryPopup 
+          type="popup" options={{cardType:"popupMedium"}} app={app} containerStyle={{background:styles.colors.color2}}
+          handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
+          
+        />}
     {state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
             <ViewPic 
             

@@ -71,10 +71,20 @@ export default class Worldbuilder extends Component {
   this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
   //RICH TEXT READ
   let campaignDesc = document.getElementById("campaignDesc");
-  campaignDesc.innerHTML = component.getJson().description;
+  if(campaignDesc){
+    campaignDesc.innerHTML = component.getJson().description;
+
+  }
 }
 
   
+}
+
+async componentDidUpdate(){
+  if(this.props.update){
+    await this.props.dispatch();
+    this.setState({map:undefined})
+  }
 }
 
 toggleSidebar = () => {
@@ -95,17 +105,19 @@ toggleSidebar = () => {
     let compList = state.componentList.getList("map",  id, "campaignId");
     
     let compListLength = compList.length;
-    
+
+    let map = state.componentList.getComponent("map",this.props.topLore.getJson()._id, "loreId")
 
     return (
       
       <div style={{display:"flex", flexDirection:"column", position: 'relative', overflow:'clip', padding: '0',
       height:"fit-content", maxWidth:"100%",  justifyContent:"space-between", maxHeight:"100%",
       }}>
+       
 
            
 {
-(compListLength === 0) &&
+(!map) &&
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{

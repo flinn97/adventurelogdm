@@ -121,10 +121,10 @@ class MainContent extends Component {
 
 
     await state.opps.prepareRun({ update: [item, pin] });
-    let oldPin = componentList.getComponent("pin", item.getJson()._id, "loreId");
-    if (oldPin) {
-      state.opps.cleanPrepareRun({ del: oldPin })
-    }
+    // let oldPin = componentList.getComponent("pin", item.getJson()._id, "loreId");
+    // if (oldPin) {
+    //   state.opps.cleanPrepareRun({ del: oldPin })
+    // }
   }
 
   async componentDidMount() {
@@ -701,10 +701,14 @@ marginTop:"22px"}}>
 
                 <ParentFormComponent
                 obj={lore} name="refrence"
-                prepareRun={true} 
+                
                 // handleChange={}
                 wrapperStyle={{ width:"fit-content", height:"fit-content",alignContent:"center", justifyContent:"center", alignContent:"center", alignItems:"center", alignText:"center",}}
                   type={"checkbox"} 
+                  func = {(obj, value) =>{
+                    
+                    this.setState({refrence:value})
+                  }}
                   inputStyle={{padding:"2px 4px",color:styles.colors.colorWhite,
                   color:styles.colors.colorBlack, 
                   }}
@@ -720,7 +724,20 @@ marginTop:"22px"}}>
               >
                 
                 {
-                  filteredLore.filter(obj => obj.getJson().topLevel === false)
+                  filteredLore.filter(obj => obj.getJson().topLevel === false).filter(obj=>obj.getJson().reference===false)
+                  .filter((obj)=> {
+                    let l = state.currentLore;
+                    if (!l) {
+                      l = state.currentCampaign
+                    }
+                    if(l.getJson().parentId){
+                      return !Object.keys(l.getJson().parentId).includes(obj.getJson()._id)
+                    }
+                    else{
+                      return true
+                    }
+                    
+                  })
                     .slice(0, 8)
                     .map((item, index) => (
                       <div>
@@ -730,9 +747,11 @@ marginTop:"22px"}}>
                           <div className="hover-img" key={index}
                             onClick={async () => {
                               //debugger
-
+                              let pin = state.currentPin;
                               if (!this.state.refrence) {
-                                await this.moveLore(item)
+                                await this.moveLore(item);
+                              
+
 
                               }
                               else {
@@ -746,6 +765,8 @@ marginTop:"22px"}}>
 
 
                               }
+                              
+
 
 
                               this.setState({ hasChoice: "New" });

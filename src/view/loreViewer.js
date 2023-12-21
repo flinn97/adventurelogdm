@@ -149,8 +149,8 @@ updateSize(width, height){
               </div>
           <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
 
-          < QuillComponent app = {app}/>
-          {/* <ParentFormComponent app={app} name="desc" obj={lore}
+          {/* < QuillComponent app = {app}/> */}
+          <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
@@ -159,7 +159,7 @@ updateSize(width, height){
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
-                      flexDirection:"column", justifyItems:"space-between"}}/> */}
+                      flexDirection:"column", justifyItems:"space-between"}}/>
                       
                       </div>
 
@@ -242,11 +242,14 @@ marginTop:"22px"}}>
             </div>}
       
         {(this.state.map) && 
-       
+       <><div style={{color:'white'}}  onClick={()=>{
+        state.opps.cleanPrepareRun({del:this.state.map});
+        this.setState({map:undefined});
+       }}>delete Map</div>
        <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%"}}>
         <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize = {this.updateSize}/>
         
-        </div>}
+        </div></>}
 
           
         
