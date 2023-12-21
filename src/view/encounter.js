@@ -48,8 +48,8 @@ export default class Encounter extends Component {
     let splitURL = href.split("/")
     let id = splitURL[splitURL.length-1]
     let component = this.props.app.state.componentList.getComponent("encounter", id);
-    await this.setState({obj: component, currentTurn: component.getJson().currentTurn, isRunning:component.getJson().isRunning,
-      currentIndex: component.getJson().currentIndex,});
+    await this.setState({obj: component, currentTurn: component?.getJson().currentTurn, isRunning:component?.getJson().isRunning,
+      currentIndex: component?.getJson().currentIndex,});
      toolService.rerenderTimeout(this.props.app.dispatch, 1);
     
     

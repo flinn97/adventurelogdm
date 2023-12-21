@@ -176,7 +176,7 @@ export default class AddCampaign extends Component {
                           text={textSubmit}
                           callBack={async (obj)=>{
                             
-                            let newLore = {desc:"add new description", name:obj[0].getJson().title, campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, topLevel:true,
+                            let newLore = {desc:"add new description", name:obj[0].getJson().title, campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, topLevel:true, index:0,
                             parentId:  {[obj[0].getJson()._id]:obj[0].getJson().title}}
                             
                             await state.opps.jsonPrepareRun({addlore:newLore});

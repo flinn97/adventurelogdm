@@ -70,7 +70,7 @@ export default class LoreSearch extends Component {
     let id = this.getId();
 
     let loreList = componentList.getList("lore", id, listTerm)
-    loreIndexService.reOrganizeLore(loreList, state.opps)
+    // loreIndexService.reOrganizeLore(loreList, state.opps)
   }
 
   handleStop = (loreItem) => {

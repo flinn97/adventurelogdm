@@ -47,7 +47,7 @@ class LoreIndexService {
    * @param {*} opps 
    */
   async reOrganizeLore(loreList, opps){
-
+debugger
     let i = 0;
     let checkTopLore= loreList.filter(lore => lore.getJson().parentLore ===true)[0];
     if(checkTopLore){

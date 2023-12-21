@@ -105,7 +105,8 @@ toggleSidebar = () => {
     let compList = state.componentList.getList("map",  id, "campaignId");
     
     let compListLength = compList.length;
-    
+
+    let map = state.componentList.getComponent("map",this.props.topLore.getJson()._id, "loreId")
 
     return (
       
@@ -116,7 +117,7 @@ toggleSidebar = () => {
 
            
 {
-(compListLength === 0) &&
+(!map) &&
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
