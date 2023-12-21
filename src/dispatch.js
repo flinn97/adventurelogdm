@@ -27,6 +27,8 @@ import ViewPlayerList from './view/popups/viewPlayerList';
 import logo from "./pics/logoava.png"
 import PurchasePopup from './view/purchasePopup';
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
+import PartnerPopup from './view/partnerPopup';
+import AdminUser from './view/admin/adminUser';
 
 //model
 export default class Dispatch extends Component {
@@ -139,8 +141,14 @@ justifyContent: "center",}}>
               app.dispatch({popupSwitch:"",currentComponent:undefined})}}
             />)}
             
-            {state.popupSwitch === "popupPurchase" && (state.currentComponent?.getJson().type ==="purchase" && 
+            {state.popupSwitch === "popupPurchase" && (state.currentComponent?.getJson().type ==="marketplaceItem" && 
             <PurchasePopup 
+            app={app} type="popup" options={{cardType:"bigCard"}} handleClose={()=>{
+              state.opps.clearUpdater()
+              app.dispatch({popupSwitch:"",currentComponent:undefined})
+            }}/> )}
+            {state.popupSwitch === "partnerPopup" && (state.currentComponent?.getJson().type ==="partner" && 
+            <PartnerPopup
             app={app} type="popup" options={{cardType:"bigCard"}} handleClose={()=>{
               state.opps.clearUpdater()
               app.dispatch({popupSwitch:"",currentComponent:undefined})
@@ -177,7 +185,7 @@ justifyContent: "center",}}>
 
         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
         <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
-
+          <Route path="/admin/users" element={<AdminUser app={app} />}/> 
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
       

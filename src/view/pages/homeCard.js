@@ -104,6 +104,7 @@ class MainContent extends Component{
       <hr></hr>
       <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       </div>
+      <div style={{color:"white"}} onClick={()=>{dispatch({popupSwitch:"partnerPopup", operation:"cleanJsonPrepare", operate: "addpartner", object:{type:"partner", userId:state.user.getJson()._id}})}}>Become a Partner</div>
     </div>
     )
   }

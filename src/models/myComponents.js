@@ -555,6 +555,16 @@ class Monster extends componentBase{
 
 }
 
+class Partner extends componentBase{
+    json={
+        type: "partner",
+        name: "",
+        email:"",
+        userId:"",
+        description:"",
+    }
+}
+
 function forFactory(){
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
     return {user:User,pin:Pin,campaign:Campaign,
@@ -562,7 +572,7 @@ function forFactory(){
         newNote:NewNote,map:Map, post:Post,
         marketplaceItem:MarketplaceItem,
         condition:Condition,
-        lore:Lore,image:Image, approval:Approval}
+        lore:Lore,image:Image, approval:Approval, partner:Partner}
 }
 
 

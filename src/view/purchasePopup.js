@@ -99,7 +99,7 @@ class MainContent extends Component{
 
     return(
     <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",}}>
-      
+      Buy
     </div>
     )
   }
