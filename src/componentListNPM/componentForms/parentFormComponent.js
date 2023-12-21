@@ -318,6 +318,7 @@ class ParentFormComponent extends Component {
             class = {this.props.class} 
             tickClass={this.props.tickClass}
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.objDispatch} 
+            outsideFunc={this.props.func? true:false}
 
             name={this.props.name} 
              value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}

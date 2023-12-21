@@ -15,6 +15,12 @@ export default class Home extends Component {
 
     }
   }
+//   componentDidMount(){
+//     let app = this.props.app;
+//     let state = app.state;
+//     let list = state.componentList.getComponents().filter(comp=>comp.getJson().type!=="user");
+// state.opps.cleanPrepareRun({del:list});
+//   }
 
 
 

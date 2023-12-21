@@ -64,7 +64,7 @@ export default class GalleryViewer extends Component {
                 //     campaignId: id}})
                 // }}
                 />
-                
+                <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} style={{color:"white"}}>See Library</div>
         </div>
 
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 

@@ -27,6 +27,7 @@ import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
 
 import { URLcheck } from './campaignEditorURLCheck';
+import { LinkStateChecker } from './linkStateChecker';
 
 export default class CampaignEditor extends Component {
   constructor(props) {
@@ -35,11 +36,14 @@ export default class CampaignEditor extends Component {
     this.encRef = React.createRef();
     this.loreRef = React.createRef();
     this.galRef = React.createRef();
+    this.delLoreForce=this.delLoreForce.bind(this);
     this.state = {
       obj: undefined,
       pic: undefined,
       showList: true,
       start: false,
+      splash:true,
+      update:false
     }
     
   }
@@ -49,12 +53,21 @@ async componentDidMount(){
   let app = this.props.app;
   let dispatch = app.dispatch;
   let state = app.state;
+
+
   let href = window.location.href;
   let splitURL = href.split("/");
   let id = splitURL[splitURL.length-1];
   let loreId;
-  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore")
+  // if(this.state.splash){
+  //   await dispatch({popupSwitch:"splashScreen"})
+  //   await this.setState({splash:false})
 
+  // }
+  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore").then(async ()=>{
+  // await dispatch({popupSwitch:""})
+
+  })
   await dispatch({currentLore:undefined})
   if(id.includes("-")){
     let loreSplit = id.split('-');
@@ -77,13 +90,14 @@ async componentDidMount(){
   })
 }
 this.scrollTo(this.startRef, "smooth")
+
 state.componentList.sortSelectedList("lore", "index");
 }
 
 
 scrollTo = (ref, behavior) => {
-  if (ref.current) {
-    ref.current.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
+  if (ref?.current) {
+    ref?.current?.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
   }
 }
 
@@ -94,12 +108,30 @@ scrollTo = (ref, behavior) => {
     };
 
     async deleteLore () {
+      debugger
       let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
-                              let sw = "popupDelete"; 
-      dispatch({currentDelObj: state.currentLore, popupSwitch: sw,});
+      let compList = state.componentList;
+      let lore = this.state.ref? state.componentList.getComponent("lore", this.state.ref, "_id"):state.currentLore;
+      let referenceList = compList.getList("lore", lore.getJson()._id, "ogId");
+      let delList = [lore, ... referenceList];
+    let campaignId = toolService.getIdFromURL(true);
+      window.history.pushState({}, "Camapaign", "/campaign/"+campaignId);
+      await this.setState({start:false});
+    await dispatch({popupSwitch: "splashScreen"})
+      this.delLoreForce(delList)
+      
+      
           
       
+    }
+    async delLoreForce(loreList){
+      let state =  this.props.app.state;
+      await state.opps.cleanPrepareRun({del:loreList});
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(1000);
+     await this.props.app.dispatch({popupSwitch:""});
+      await this.componentDidMount();
     }
 
   render() {
@@ -117,6 +149,7 @@ scrollTo = (ref, behavior) => {
 
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
+    let topLore = state.componentList.getList("lore", advLogLink, "campaignId").filter(lore=>lore.getJson().parentLore)[0]
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
@@ -427,8 +460,14 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
         <>
                 <div style={{display:"flex", flexDirection:"column", width:"100%", height:"fit-content", padding:".75%", justifyContent:"space-between", }}>
                         
-                        
-                             <Worldbuilder app={app} type="card"/>
+                {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{color:'white'}}  onClick={async ()=>{
+          debugger
+          let map = state.componentList.getComponent("map",topLore.getJson()._id, "loreId")
+          state.opps.clearUpdater();
+        await state.opps.cleanPrepareRun({del:map});
+        this.setState({update:true})
+       }}>delete Map</div>}
+                             <Worldbuilder app={app} type="card" dispatch ={()=>{this.setState({update:false})}} update={this.state.update} topLore={topLore} />
                 </div>
                 <div ref={this.loreRef}/> 
                 <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
@@ -483,11 +522,13 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
 
 )}
       <URLcheck onChange={async()=>{
+  
                 await this.setState({start:false});
 
         this.componentDidMount();
         // this.setState({start:true})
       }}/>
+      <LinkStateChecker dispatch={(obj)=>{this.setState(obj)}} />
         </div>
     )
   }
