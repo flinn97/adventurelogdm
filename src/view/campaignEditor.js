@@ -431,7 +431,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                                                         zIndex: 2}}/></div>
                                 
 
-                  </div>)
+                  </div>
                   {/* } */}
 
 
@@ -466,7 +466,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
           state.opps.clearUpdater();
         await state.opps.cleanPrepareRun({del:map});
         this.setState({update:true})
-       }}>delete Map</div>}
+       }}>Delete Map</div>}
                              <Worldbuilder app={app} type="card" dispatch ={()=>{this.setState({update:false})}} update={this.state.update} topLore={topLore} />
                 </div>
                 <div ref={this.loreRef}/> 

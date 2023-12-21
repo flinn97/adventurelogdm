@@ -39,19 +39,15 @@ export default class Encounter extends Component {
   ///
  
   async componentDidMount(){
-    let componentList = this.props.app.state.componentList;
-        this.setState({showMonsterMap: false});
-    await componentList.sortSelectedList("monster","lastInit",true);
-        this.setState({showMonsterMap: true})
-    await this.props.app.state.opps.run()
-    let href = window.location.href;
-    let splitURL = href.split("/")
-    let id = splitURL[splitURL.length-1]
-    let component = this.props.app.state.componentList.getComponent("encounter", id);
+
+    let id = toolService.getIdFromURL(true,0);
+    
+    let component = await this.props.app.state.componentList.getComponent("encounter", id);
+    console.log(component)
     await this.setState({obj: component, currentTurn: component?.getJson().currentTurn, isRunning:component?.getJson().isRunning,
       currentIndex: component?.getJson().currentIndex,});
      toolService.rerenderTimeout(this.props.app.dispatch, 1);
-    
+     
     
     let dispatch = this.props.app.dispatch;
     dispatch({popUpSwitchcase: "", });

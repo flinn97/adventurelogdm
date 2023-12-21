@@ -245,7 +245,9 @@ marginTop:"22px"}}>
        <><div style={{color:'white'}}  onClick={()=>{
         state.opps.cleanPrepareRun({del:this.state.map});
         this.setState({map:undefined});
-       }}>delete Map</div>
+        ///Taylor
+        ///THIS DOESNT WORK
+       }}>Delete Map</div>
        <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%"}}>
         <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize = {this.updateSize}/>
         
