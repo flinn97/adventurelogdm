@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "../../App.css"
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
+import toolService from '../../services/toolService';
 
 export default class PopupDelete extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ class MainContent extends Component{
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content",
+        display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content", 
         paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
     <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
       Are you sure you want to delete this?
@@ -103,8 +104,8 @@ class MainContent extends Component{
         <DelButton wrapperStyle={{
         ...styles.buttons.buttonAdd, padding:"9px", textAlign:"center", borderColor:styles.colors.color3+"55",
         color:styles.colors.color5, fontSize:".5vh", background:styles.colors.color7+"22"}} 
-        text="Yes, delete it" obj={state.currentDelObj} 
-        onChange={this.props.delClick} />
+        text="Yes, delete it" obj={state.currentDelObj} app={app}
+        onChange={toolService.navigateToLink.bind(this,"/campaign/"+toolService.getIdFromURL(true,0))} />
       
 
       </div>

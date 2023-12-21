@@ -25,6 +25,7 @@ import auth from '../services/auth';
 import TokenImage from './tokenImage';
 import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
+
 import { URLcheck } from './campaignEditorURLCheck';
 
 export default class CampaignEditor extends Component {
@@ -52,6 +53,8 @@ async componentDidMount(){
   let splitURL = href.split("/");
   let id = splitURL[splitURL.length-1];
   let loreId;
+  await auth.firebaseGetter(id, state.componentList, "campaignId", "lore")
+
   await dispatch({currentLore:undefined})
   if(id.includes("-")){
     let loreSplit = id.split('-');
@@ -73,6 +76,7 @@ async componentDidMount(){
     campaignPlayers: players,
   })
 }
+this.scrollTo(this.startRef, "smooth")
 state.componentList.sortSelectedList("lore", "index");
 }
 
@@ -90,10 +94,12 @@ scrollTo = (ref, behavior) => {
     };
 
     async deleteLore () {
+      let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
-      await dispatch({popupSwitch:"", currentDelObj:undefined});
-    
-      window.location.href="/campaign/"+toolService.getIdFromURL(true,0);
+                              let sw = "popupDelete"; 
+      dispatch({currentDelObj: state.currentLore, popupSwitch: sw,});
+          
+      
     }
 
   render() {
@@ -112,14 +118,14 @@ scrollTo = (ref, behavior) => {
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
 
-
-
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
       {this.state.start&&(
       <div style={{ display:"flex", flexDirection:"column",
       width:"100%", minWidth:"fit-content", height:"100%",  }}>
-<div style={{color:"red"}} onClick={()=>{
+        <div ref={this.startRef}/> 
+<div className='hover-btn-highlight'
+style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content", padding:"2px 8px", marginBottom:"8px"}} onClick={()=>{
   dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
   //treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
   }}>Send to Marketplace</div>
@@ -179,17 +185,10 @@ scrollTo = (ref, behavior) => {
                   }}
                     
                     onClick={ ()=>{
-                       console.log(state.currentLore)
-                     
-                       dispatch({currentDelObj: state.currentLore, popUpSwitch:"popupDelete"}).then(()=>{
-                        // this.deleteLore();
-                      });
-                     ///UM
-                     ///TAYLOR
-                     /// WHY is this not working??
-                     /// what the crap
-                       console.log(state.popUpSwitch)
-                      }}>
+                       
+                       this.deleteLore();
+                      }
+                    }>
                       Delete This Lore
                      
                     </div>
@@ -353,7 +352,7 @@ scrollTo = (ref, behavior) => {
         </div>
 
 
-        {(state.currentLore==undefined &&
+        {/* {(state.currentLore==undefined && */}
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
                                             <div className="hover-btn">
@@ -399,11 +398,11 @@ scrollTo = (ref, behavior) => {
                                                                         zIndex: 2}}/></div>
                                 
 
-                  </div>)}
+                  </div>)
+                  {/* } */}
 
 
-
-                 
+             
         {state.currentLore===undefined &&
         <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginTop:"22px", marginBottom:"22px"}}>
            {/* {this.state.obj.getJson().title}  */}
@@ -416,7 +415,7 @@ scrollTo = (ref, behavior) => {
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      type={"richEditor"}
+                      type={"richEditor"} onPaste={this.handlePaste}
                       wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",
                       flexDirection:"column", justifyItems:"space-between"}}/>
                       </div>}
@@ -426,7 +425,7 @@ scrollTo = (ref, behavior) => {
         <LoreViewer app={app} type ="card" _id = {this.state.obj.getJson()._id}/>        
         </div>):(
         <>
-                <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
+                <div style={{display:"flex", flexDirection:"column", width:"100%", height:"fit-content", padding:".75%", justifyContent:"space-between", }}>
                         
                         
                              <Worldbuilder app={app} type="card"/>
@@ -480,7 +479,6 @@ scrollTo = (ref, behavior) => {
 
 
                 </>)}
-
         </div>
 
 )}

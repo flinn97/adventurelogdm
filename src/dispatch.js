@@ -24,11 +24,14 @@ import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ApprovalPopup from './view/approvalPopup';
 import ApprovalPage from './view/pages/apprroval';
 import ViewPlayerList from './view/popups/viewPlayerList';
-import logo from "./pics/logoava.png"
+
+import logo from "./pics/logoava2.png"
 import PurchasePopup from './view/purchasePopup';
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
-import PartnerPopup from './view/partnerPopup';
 import AdminUser from './view/admin/adminUser';
+import AdminPartner from './view/admin/adminPartner';
+import AdminRequests from './view/admin/adminRequests';
+import AdminSubmission from './view/admin/adminSubmissions';
 
 //model
 export default class Dispatch extends Component {
@@ -58,10 +61,24 @@ export default class Dispatch extends Component {
 <BrowserRouter>
     {/*      === */}
   {state.user===undefined?(<Login app={app}/>):(
+    
+    
+    <div>
+      {(state.popupSwitch === "splashScreen") &&
+    <div style={{background:styles.colors.color2, zIndex:55000, width:"100vw", height:"100vh"}}>
+        <SplashScreen
+        options={{cardType:"bigCardBorderless"}} app={app} 
+        containerStyle={{background:styles.colors.color2, zIndex:55000,}}
+        
+      />
+    </div>
+    }
+    {(state.popupSwitch !== "splashScreen") &&
     <div  className='scroller2' style={{ width:"100%", overflow:"scroll",
       minWidth:"100%", userSelect:"none", height:"100vh",
        display:"flex", flexDirection:"column",
       }}>
+          
 <div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
             {logo: logo}
@@ -73,11 +90,13 @@ export default class Dispatch extends Component {
         
      <div   style={{ width:'100%', minHeight:"fit-content", padding:"28px", display: "flex", height:"100%",
 justifyContent: "center",}}>
+
+            
         
 
-        {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) && 
+        {(state.popupSwitch === "popupDelete"  && state.currentDelObj !== undefined) && 
         <PopupDelete 
-          type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
+          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2}}
           handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
           delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
         />}
@@ -184,8 +203,12 @@ justifyContent: "center",}}>
         <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers}/>}/>
 
         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
+
         <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
-          <Route path="/admin/users" element={<AdminUser app={app} />}/> 
+        <Route path="/admin/user" element={<AdminUser app={app}/>}/>
+        <Route path="/admin/partner" element={<AdminPartner app={app}/>}/>
+        <Route path="/admin/request" element={<AdminRequests app={app}/>}/>
+        <Route path="/admin/submission" element={<AdminSubmission app={app}/>}/>
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
       
@@ -193,10 +216,9 @@ justifyContent: "center",}}>
 
 </div>
 </div>
-     </div>
-     )}
+     </div>}
+     </div>)}
 
      
      </BrowserRouter>
-  )}
-}
+  )}}

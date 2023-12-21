@@ -4,13 +4,20 @@ import moment from 'moment';
 import FormsThemeFactory from '../formThemes/formThemeFactory';
 import adventureLogStyles from "../../themes/adventureLogStyles";
 
+
+
+
 class RichTextComponent extends Component {
     constructor(props) {
         let styles = adventureLogStyles.getStylesByScreenSize();
         super(props);
         // this.addTag=this.addTag.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.checkHold = this.checkHold.bind(this);
         this.wrapperRef = React.createRef();
+        this.handlePaste = this.handlePaste.bind(this);
+        this.replaceHTML = this.replaceHTML.bind(this);
+        this.getCurrentCursorPosition = this.getCurrentCursorPosition.bind(this);
         this.ref = React.createRef();
         this.setWrapperRef = this.setWrapperRef;
         this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -27,6 +34,7 @@ class RichTextComponent extends Component {
             d:false,
             e:false,
             f:false,
+            pressCTRL: false,
             doubleSpace:false,
             backSlash: false,
             change:false,
@@ -37,13 +45,33 @@ class RichTextComponent extends Component {
                 f: 'green',
                 e: 'maroon',
                 d:'#FFD700'
-
+           
             }
         };
     }
     sanitizedData = (data) => ({
          __html: DOMPurify.sanitize(data)
       })
+
+     replaceHTML(htmlString) {
+        debugger
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+    
+        // Find all elements with a 'style' attribute
+        const styledElements = doc.querySelectorAll('[style]');
+        
+        // Loop through each element and modify the style
+        styledElements.forEach(element => {
+            const style = element.getAttribute('style');
+            const modifiedStyle = 'color: white; background:none; font-family: "Inria" ; text-align:left; mix-blend-mode: luminosity;';
+            element.setAttribute('style', modifiedStyle);
+            // element.setAttribute('class', "");
+        });
+    
+        // Serialize the document back to a string and return it
+        return doc.body.innerHTML;
+    }
 
 //    async addTag(innerText, value, c){
 //     if(value===" " && this.state.backSlash){
@@ -99,6 +127,18 @@ class RichTextComponent extends Component {
 //     }
 //    }
 
+        getCurrentCursorPosition() {
+            const richText = this.ref.current;
+            const selection = window.getSelection();
+            if (selection.rangeCount === 0 || !richText.contains(selection.anchorNode)) {
+                return 0; // No valid selection
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(richText);
+            range.setEnd(selection.anchorNode, selection.anchorOffset);
+            return range.toString().length;
+        }
 
 
     async handleChange(e) {
@@ -110,31 +150,33 @@ class RichTextComponent extends Component {
         let value = e.key;
         let innerText = DOMPurify.sanitize(this.ref.current.innerHTML);
         
-        
-
+        const cursorPosition = this.getCurrentCursorPosition();
+        this.setState({ yourCurrentCursorPosition: cursorPosition });
         if(value===" " &&this.state.lastChar===" " &&this.state.backSlash){
             await this.setState({doubleSpace:true})
         }
         
- if(this.state.doubleSpace){
-    
-    let c = 'm'
-    let obj ={
-        m: this.state.m,
-        l: this.state.l,
-        d: this.state.d,
-        e: this.state.e,
-        f: this.state.f,
-    }
-    for(const key in obj){
-        if(obj[key]){
-            c=key
-            break;
-        }
-    }
-    
-           this.addTag(innerText, value,c )
-        }
+            if(this.state.doubleSpace){
+                
+                let c = 'm'
+                let obj ={
+                    m: this.state.m,
+                    l: this.state.l,
+                    d: this.state.d,
+                    e: this.state.e,
+                    f: this.state.f,
+                }
+                for(const key in obj){
+                    if(obj[key]){
+                        c=key
+                        break;
+                    }
+                }
+            
+
+                    this.addTag(innerText, value,c )
+                    }
+
         if(value === "/"&& !this.state.backSlash){
             this.setState({backSlash:true});
         }
@@ -153,6 +195,23 @@ class RichTextComponent extends Component {
         if(this.state.backSlash && value === 'l'&& this.state.lastChar==="/"){
             this.setState({m:false, d:false, e:false, f:false, l:true}) 
         }
+
+        if (innerText.includes('---')) {
+            const originalLength = innerText.length;
+            innerText = innerText.replace(/---/g, '<span style="width: 100%; display: block; mix-blend-mode: luminosity;"><hr></hr></span><span style="width: 100%;></span>');
+        
+            await this.setState({ theHtml: innerText, textHtml: innerText });
+        
+            // Calculate the new cursor position
+            const newLength = innerText.length;
+            const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
+        
+            // Set the cursor position
+            this.setCaret(cursorPosition + originalLength);
+        }
+
+
+
         await this.setState({save:innerText, lastChar: value});
 
         let save =DOMPurify.sanitize(this.ref.current.innerHTML);
@@ -160,21 +219,103 @@ class RichTextComponent extends Component {
         if(!this.props.updateOnClickOutside &&this.state.active){
             this.props.handleChange(save);
 
+            if (this.state.pressCTRL && value==='v'){
+                const originalLength = innerText.length;
+                debugger
+                let save =DOMPurify.sanitize(this.ref.current.innerHTML);
+                let html = this.replaceHTML(save);
+                this.setState({theHtml:html, textHtml:html, pressCTRL: false});
+                this.props.handleChange(html);
+                this.handlePaste();
+                            setTimeout( async () => {
+                                const newLength = innerText.length;
+                                const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
+                            this.setCaret(cursorPosition)
+                        }, 100 )
+            }
+            // this.setState({ pressCTRL: false});
+        }
+       
+    }
+
+    async checkHold(event){  
+        if (event.key === "Control" && !this.state.pressCTRL) {
+            await this.setState({pressCTRL: true})
         }
     }
 
-
-
     setCaret(offset) {
-        let richText = this.ref.current;
-        
-        // insert code here that does stuff to the innerHTML, such as adding/removing <span> tags
-        Cursor.setCurrentCursorPosition(offset, richText);
+        const richText = this.ref.current;
+        const range = document.createRange();
+        const selection = window.getSelection();
+    
+        // Ensure the offset is within the bounds
+        offset = Math.min(offset, richText.textContent.length);
+        offset = Math.max(offset, 0);
+    
+        // Create a walker to step through the content
+        const walker = document.createTreeWalker(richText, NodeFilter.SHOW_TEXT, null, false);
+        let current = walker.nextNode();
+        let length = 0;
+    
+        while (current) {
+            const nextLength = length + current.textContent.length;
+            if (offset <= nextLength) {
+                range.setStart(current, offset - length);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                break;
+            }
+            length = nextLength;
+            current = walker.nextNode();
+        }
+    
         richText.focus();
+    }
+    
+
+setCaretToEnd() {
+    const richText = this.ref.current;
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.selectNodeContents(richText);
+    range.collapse(false); // false to collapse the range to the end
+    selection.removeAllRanges();
+    selection.addRange(range);
 }
 
+handlePaste = (event) => {
+    setTimeout( async () => {
+    event.preventDefault();
+
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const pastedData = clipboardData.getData('text');
+
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return false;
+
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    const textNode = document.createTextNode(pastedData);
+    range.insertNode(textNode);
+
+    // Update the internal state
+    this.updateContent(this.ref.current.innerHTML);
+
+    // Set the cursor at the end of the content
+    this.setCaretToEnd();
+}, 150 )
+};
+
+updateContent = (newHtmlContent) => {
+    // Perform any additional processing if needed, then update the state
+    this.setState({ htmlContent: newHtmlContent });
+};
+
+
     async componentDidMount() {
-        //TAYLOR ERRORS i think this fix?
         
         let html;
         if(this.props.html!==undefined){
@@ -186,13 +327,17 @@ class RichTextComponent extends Component {
         }
         
         this.setState({textHtml:html})
-       
+
+        document.addEventListener('keydown', this.checkHold)
         document.addEventListener('keyup', this.handleChange);
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
+    
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
+        this.ref.current.removeEventListener('paste', this.handlePaste);
     }
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
@@ -233,7 +378,7 @@ class RichTextComponent extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} 
+            <div ref={this.wrapperRef}  title='Use --- to create a line break. Ctrl+B to bold Selections. Ctrl+I for Italics. Ctrl+U for Underline.'
             style={this.props.wrapperStyle? this.props.wrapperStyle:theme!==undefined?theme.richEditorWrapperStyle:undefined} 
             className={this.props.wrapperClass}>
                 {this.props.label && (<label style={this.props.labelStyle? this.props.labelStyle:theme!==undefined?theme.richEditorLabelStyle:undefined} className={this.props.labelClass}>{this.props.label}</label>)}

@@ -100,9 +100,9 @@ class MainContent extends Component{
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
       <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       <hr></hr>
-      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
+      {/* <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   
       <hr></hr>
-      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
+      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/> */}
       </div>
       <div style={{color:"white"}} onClick={()=>{dispatch({popupSwitch:"partnerPopup", operation:"cleanJsonPrepare", operate: "addpartner", object:{type:"partner", userId:state.user.getJson()._id}})}}>Become a Partner</div>
     </div>

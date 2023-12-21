@@ -126,7 +126,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"column",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600", 
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "-60px",
     fontSize:styles.fonts.fontSubheader1}}>
       Current Campaigns
       <div>
