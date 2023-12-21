@@ -102,7 +102,7 @@ class MainContent extends Component{
     return(
     <div style={{height:"100%"}} >
       {this.state.start &&
-      <MapComponent app={app} name="user" cells={["firstName", "lastName"]}/> }
+      <MapComponent app={app} name="partnerRequest" cells={["email"]}/> }
       
     </div>
     )
