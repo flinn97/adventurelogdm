@@ -100,10 +100,21 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"100%"}} >
+    <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}} >
+      <div>
+      <h1>First Name</h1>
+        <h1>Last Name</h1>
+        <h1>Email</h1>
+        <h1>Company Name</h1>
+        <h1>URL</h1>
+        <h1>Application Date</h1>
+        <h1>Content</h1>
+        <h1>Approve?</h1>
+      </div>
+      <div>
       {this.state.start &&
       <MapComponent app={app} name="partnerRequest" cells={["email"]}/> }
-      
+      </div>
     </div>
     )
   }

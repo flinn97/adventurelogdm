@@ -100,10 +100,17 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"100%"}} >
+    <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}} >
+      <div>
+      <h1>Parner Username</h1>
+        <h1>Submission Date</h1>
+        <h1>Link To Marketplace Submission</h1>
+        <h1>Approve?</h1>
+      </div>
+      <div>
       {this.state.start &&
       <MapComponent app={app} name="user" cells={["firstName", "lastName"]}/> }
-      
+      </div>
     </div>
     )
   }

@@ -101,9 +101,18 @@ class MainContent extends Component{
 
     return(
     <div style={{height:"100%"}} >
+      <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
+        <h1>Username</h1>
+        <h1>Payment Period</h1>
+        <h1>Payment Method</h1>
+        <h1>Payment Type</h1>
+        <h1>Partner Start Date</h1>
+        <h1>Total Payments</h1>
+      </div>
+      <div>
       {this.state.start &&
       <MapComponent app={app} name="partner" cells={["email"]} /> }
-      
+      </div>
     </div>
     )
   }
