@@ -79,6 +79,8 @@ export default class MapGallery extends Component {
       position:"absolute", 
       }}>
 
+       
+
         {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
         <div className="hover-btn"
         onClick={this.handlePrevMap}
@@ -100,7 +102,13 @@ export default class MapGallery extends Component {
           transform:'rotate(180deg)' }}></img>
           </div>}
 
+          
+          
+          
+
 <div style={{ display:"flex", position:"absolute", height:"100%", width: "100%"}}>
+
+
 
   {this.state.currentMap &&
    
