@@ -119,7 +119,7 @@ export default class GalleryViewer extends Component {
 
                                         <div className='hover-divInt' 
                                         onClick={()=>{ dispatch({currentPic:img, popupSwitch:"viewPic"})}}
-                                        style={{background:styles.colors.color6, width:"180px", height: "180px", borderRadius:"22px", 
+                                        style={{background:styles.colors.color6, width:"180px", height: "180px", borderRadius:"10px", 
                                         opacity:"24%", position:"absolute", top:0, margin:"9px",
                                          zIndex:-9, left:-170}}
                                          >
