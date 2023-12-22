@@ -87,6 +87,15 @@ export default class Upload extends Component {
         let dispatch = app.dispatch;
         let styles = state.styles;
         let text = "text";
+        
+        const styled = this.props.buttonStyle;
+        const unStyled = {...styles.buttons.buttonAdd,
+        display: "inline-block", height:"fit-content",
+        maxWidth: "fit-content", cursor:"pointer",
+         marginRight:"1rem",  position: "relative",
+         fontSize:styles.fonts.fontSmall};
+
+        let style = this.props.buttonStyle?styled:unStyled;
 
         const divI = 
                         <div style={{display:"flex", flexDirection:"row", }}>
@@ -97,24 +106,18 @@ export default class Upload extends Component {
 
         return (
 
-            <div style={{ color:styles.colors.colorWhite+"99", 
-            borderRadius:"22px", fontWeight:"550", width:"fit-content"  }}>
+            <div style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
+            borderRadius:"11px", fontWeight:"550", width:"fit-content"  }}>
 
                 {this.props.text!=="imageOnly" &&
-                <label  for="file-upload" style={{...styles.buttons.buttonAdd,
-                    display: "inline-block", height:"fit-content",
-                    maxWidth: "fit-content", cursor:"pointer",
-                     marginRight:"1rem",  position: "relative",
-                     fontSize:styles.fonts.fontSmall
-                }}>
+                <label  for="file-upload" style={style}>
 {(pText) ? pText : "* Choose a banner image"}
                     <input id="file-upload" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
-                        style={{ 
+                        style={{ ...styles.buttons.buttonAdd,
                             position: 'absolute', // Set position to absolute to make it fill the entire label
                             top: 0, 
                             left: 0, cursor:"pointer",
-                            width: '100.5%', 
-                            height: '100.5%',
+                            
                             opacity: 0, 
                         }} 
                         size="6" 

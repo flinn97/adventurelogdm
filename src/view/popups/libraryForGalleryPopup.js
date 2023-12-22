@@ -89,21 +89,22 @@ class MainContent extends Component {
     let list =[];
     let filteredImgList = []
     for(let image of imageList){
-      if(!list.includes(image.getJson().picURL)){
+      if(!list.includes(image.getJson().picURL) && !list.includes(image.getJson().isDuplicate) ){
         list.push(image.getJson().picURL);
         filteredImgList.push(image);
       }
+      ///PREVENTS FROM SEEING DUPs
     }
-    imageList = filteredImgList
+    imageList = filteredImgList;
 
     return (
       <div style={{
-        display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
+        display: "flex", width: "65vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
         paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "2%",
       }}>
 <div style={{width:"100%", minHeight:"200px",}}>
-
+Click to Copy
 
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 
                   flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap",
@@ -111,6 +112,7 @@ class MainContent extends Component {
               {
                 imageList
                 .map((img, index) => (
+                  
                   <div className="hover-img" key={index}>
                     <img onClick={async ()=>{
                       debugger
@@ -119,7 +121,7 @@ class MainContent extends Component {
                       if(state.currentLore){
                         loreId=state.currentLore.getJson()._id
                       }
-                        let newJson = await  img.copyComponent(["campaignId", "loreId"], [campaignId, loreId]);
+                        let newJson = await  img.copyComponent(["campaignId", "loreId", "isDuplicate"], [campaignId, loreId, true]);
                        await state.opps.cleanJsonPrepareRun({addimage:newJson});
                        dispatch({popupSwitch:""})
                           
@@ -130,6 +132,7 @@ class MainContent extends Component {
                     }}
                     alt={`img-${index}`} />
                   </div>
+
                 ))
               }
               
@@ -204,7 +207,7 @@ class Popup extends Component {
           <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
             onClick={this.props.handleClose}>X</div>
 
-          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <div className='scroller2' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"], marginTop:"22px", }}>
             <MainContent app={app} delClick={this.props.delClick} />
           </div>
 
