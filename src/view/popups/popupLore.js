@@ -141,7 +141,7 @@ class MainContent extends Component {
 
     let state = this.props.app.state;
     let loreName = await state.currentComponent.getJson().name;
-    debugger
+    
     if(state.currentComponent.getJson().reference){
       let lore = await state.componentList.getComponent('lore', state.currentComponent.getJson().ogId, "_id");
 
