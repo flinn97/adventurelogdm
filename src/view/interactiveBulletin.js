@@ -9,7 +9,7 @@ import image1 from '../pics/iconTest.svg';
 import image2 from '../pics/iconCapitol.svg';
 import image4 from '../pics/iconCave.svg';
 import image5 from '../pics/iconDiablo.svg';
-import image6 from '../pics/iconIsland.svg';
+import image6 from '../pics/iconTavern.svg';
 import image7 from '../pics/iconKeep.svg';
 import image8 from '../pics/iconMask.svg';
 import image9 from '../pics/iconMoai.svg';
@@ -19,10 +19,11 @@ import image12 from '../pics/iconWall.svg';
 import image13 from '../pics/iconChest.svg';
 import image14 from '../pics/iconGarg.svg';
 import image15 from '../pics/iconSword.svg';
-import image16 from '../pics/iconTavern.svg';
+import image16 from '../pics/newWindow.png';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import backarrow from '../pics/backArrow.webp';
 import auth from '../services/auth';
+import toolService from '../services/toolService';
 
 export default class InteractiveBulletin extends Component {
   constructor(props) {
@@ -287,7 +288,7 @@ onClick={()=>{
         {/* pin.getJson()._id */}
 
         
-          <div className="indent-on-click" style={{borderRadius:"50%", width:"44px", height:"44px", paddingTop:"2px", zIndex:100, 
+          <div className="indent-on-click" style={{borderRadius:"50%", width:"46px", height:"46px", paddingTop:"0px", zIndex:100, 
            
                 background:styles.colors.colorBlack+"88",}}
 
@@ -329,10 +330,10 @@ onClick={()=>{
                   <img
                 draggable="false" src={pin.getJson().iconImage} 
 
-                style={{width:"44px", height:"44px", objectFit:"contain", justifySelf:"center", 
+                style={{width:"46px", height:"46px", objectFit:"scale-down", justifySelf:"center", 
                 alignSelf:"center", verticalAlign:"center", 
                 borderRadius:"50%",
-
+                padding:"1px",
                 backgroundColor:pin.getJson().colorOverlay, 
                 filter:pin.getJson().colorFilter,
                 }}></img>
@@ -371,24 +372,45 @@ onClick={()=>{
                         marginLeft:"20px", marginTop:"-122px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
                         
                         {images.map((imgSrc, index) => (
-                          <div style={{display:"flex", flexDirection:"row", backgroundColor:styles.colors.color1+"7d", position:"sticky", zIndex:"50",  }}>
+                          <div style={{display:"flex", flexDirection:"row", backgroundColor:styles.colors.color1+"7d", position:"sticky", zIndex:"50", borderRadius:"1px"  }}>
 
                 {(typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&
+                <div style={{cursor:"pointer"}}>
                               <img 
                               style={{margin:"2px", height: '28px',  width:"28px", position:"relative", 
-                              backgroundColor:pin.getJson().colorOverlay, 
-                              filter:pin.getJson().colorFilter,
+                              backgroundColor:imgSrc!==image16 ? pin.getJson().colorOverlay:"", 
+                              filter:imgSrc!==image16 ?pin.getJson().colorFilter:"",
                               borderRadius:"50%"}}
                               className='hover-divInt'
                               key={index}
                               src={imgSrc}
-                              onClick={(item, data)=>{                                
-                                let comp = pin;
-                                comp.setCompState({
-                                    iconImage: imgSrc
-                                });
-                                  state.opps.cleanPrepareRun({update:comp});
-                              }}></img>}
+                              onClick={(item, data)=>{    
+                                
+                                          if (imgSrc!==image16){                            
+                                                let comp = pin;
+                                                comp.setCompState({
+                                                    iconImage: imgSrc
+                                                });
+                                                state.opps.cleanPrepareRun({update:comp});
+                                          }
+                              }}/>
+                                {imgSrc===image16 && 
+                                  <Upload className='hover-divInt'
+                                  app={app} buttonStyle={{width:"28px",}} 
+                                  difWidth={"14.33px"}
+                                  update={true}
+                                  // changePic={(pic)=>{
+                                  //   debugger
+                                  //   let comp = pin; 
+                                  //   state.opps.cleanPrepareRun({update:comp});
+                                  //   }}
+                                    
+                                  text=" "
+                                  obj={pin}
+                                  
+                                  />
+                                }
+                                </div>}
 
                 {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&
                               <div

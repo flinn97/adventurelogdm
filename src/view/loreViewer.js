@@ -144,8 +144,7 @@ updateSize(width, height){
 
     const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5", width:"1%"}}>
     "</div>;
-    console.log("loreview rerender")
-
+    
     return (
       <div style={{minWidth:"100%",}}>
         
@@ -203,13 +202,13 @@ marginTop:"22px"}}>
        <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path) => {
-                // Your existing logic
+                
                 let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];
                 await map.getPicSrc(path);
 
-                // Your color updating logic
+                
                 let colors = colorService.updateColors(pic, (palette) => {
                   this.setState({ colors: palette }, async () => {
                     let con = this.state.colors;

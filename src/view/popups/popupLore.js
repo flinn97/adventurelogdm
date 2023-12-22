@@ -17,7 +17,7 @@ export default class PopupLore extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refrence: true,
+      refrence: false,
     }
   }
 
@@ -383,8 +383,6 @@ class MainContent extends Component {
               {!this.state.showFindEncounter && !this.state.showFindImage &&
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
-                  {/* ///MINI EDITOR */}
-                  {/* instead */}
                   <div className="indent-on-click" style={{
                     ...styles.buttons.buttonAdd,
                     fontSize: styles.fonts.fontSmall,
@@ -393,9 +391,12 @@ class MainContent extends Component {
                     title="Create a new encounter, you can edit it by clicking on it."
                     onClick={() => {
                       debugger
-                      //Taylor
+
+                      // Taylor
+                      
                       // I cant get this working
-                      console.log(state.currentComponent?.getJson().name + " Encounter")
+
+                      //error at Opps.setComponentsList (componentsList.js:190:1)
                       state.opps.prepareRun({
                         "addencounter": {
                           loreId: state.currentComponent?.getJson()._id,
@@ -440,7 +441,7 @@ class MainContent extends Component {
                   <input app={app}
 
                     type="input"
-                    placeholder="Search..."
+                    placeholder={"Search..."}
                     value={this.state.searchTerm}
                     onChange={this.handleSearchChange}
                     style={{
@@ -686,7 +687,7 @@ class MainContent extends Component {
                 }}
                 title={"Find pre-made Lore to connect it to this Lore"}
                 style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
-                Connect an Existing Lore
+                Move or Connect Existing Lore
               </div>
             </div>
 
@@ -716,7 +717,7 @@ class MainContent extends Component {
               <input app={app}
 
                 type="input"
-                placeholder="Search..."
+                placeholder={"Search Lore..."}
                 value={this.state.searchTerm}
                 onChange={this.handleSearchChange}
                 style={{
@@ -737,15 +738,18 @@ class MainContent extends Component {
 
               {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
                 onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
-
+                <div style={{ color: styles.colors.colorWhite + "96", fontSize: styles.fonts.fontSmallest, fontWeight: "400", alignSelf: "center", marginTop: "2px" }}>
+                {this.state.refrence?"(Connecting Original Lore)":"(Moving Lore Here)"}
+              </div>
+               
+<div style={{color:styles.colors.color3, width:"fit-content", fontSize:"1.1rem", justifyContent:"center",}}>Edit Original</div>
+ 
               <ParentFormComponent
                 obj={lore} name="refrence"
 
-                // handleChange={}
-                wrapperStyle={{ width: "fit-content", height: "fit-content", alignContent: "center", justifyContent: "center", alignContent: "center", alignItems: "center", alignText: "center", }}
-                type={"checkbox"}
+                type={"checkbox"} 
                 func={(obj, value) => {
-
+                  
                   this.setState({ refrence: value })
                 }}
                 inputStyle={{
@@ -836,9 +840,7 @@ class MainContent extends Component {
                 }
               </div>
 
-              <div style={{ color: styles.colors.colorWhite + "66", fontSize: styles.fonts.fontSmall, fontWeight: "400", alignSelf: "center", marginTop: "28px" }}>
-                (Once you connect new Lore to this Pin, that Lore will always remain connected to the current Lore)
-              </div>
+              
 
             </div>
 

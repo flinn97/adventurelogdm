@@ -11,7 +11,7 @@ import backarrow from '../pics/backArrow.webp';
 import EncounterMapItem from './encounterMapItem';
 import Worldbuilder from './worldBuilder';
 import LoreViewer from './loreViewer';
-import Upload from './upload';
+
 import GalleryViewer from './galleryViewer';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import LoreSearch from './loreSearch';
