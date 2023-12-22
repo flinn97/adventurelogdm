@@ -22,6 +22,7 @@ import image15 from '../pics/iconSword.svg';
 import image16 from '../pics/iconTavern.svg';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import backarrow from '../pics/backArrow.webp';
+import auth from '../services/auth';
 
 export default class InteractiveBulletin extends Component {
   constructor(props) {
@@ -43,6 +44,10 @@ export default class InteractiveBulletin extends Component {
     }}
 
   async componentDidMount(){
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    let state = app.state;
+    let componentList = state.componentList;
     this.divRef.current.addEventListener('contextmenu', this.preventContextMenu);
     this.divRef.current.addEventListener('mousedown', this.startPanning);
     this.divRef.current.addEventListener('mouseup', this.stopPanning);
@@ -66,6 +71,8 @@ export default class InteractiveBulletin extends Component {
     if(this.imgRef?.current){
       this.setState({imgRef: this.imgRef.current})
     }
+   
+    
 
   };
 
@@ -285,8 +292,11 @@ onClick={()=>{
                 background:styles.colors.colorBlack+"88",}}
 
                 onClick={async ()=>{
+                  
                   if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
+                    await dispatch({currentComponent:undefined});
                     let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
+                    
                     dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
                   }
       

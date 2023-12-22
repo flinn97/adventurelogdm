@@ -377,7 +377,7 @@ class Auth {
          * @param {*} changeData 
          * @returns change any data I want.
          */
-    async dispatch(obj, email, dispatch) {
+    async dispatch(obj, email, dispatch, backendReloader) {
         //debugger
         for (const key in obj) {
             let operate = obj[key];
@@ -433,6 +433,9 @@ class Auth {
 
             dispatch({ dispatchComplete: true, data: obj })
 
+        }
+        if(backendReloader){
+            window.location.reload();
         }
     }
 
