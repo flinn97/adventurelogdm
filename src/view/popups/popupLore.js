@@ -146,6 +146,7 @@ class MainContent extends Component {
       let lore = await state.componentList.getComponent('lore', state.currentComponent.getJson().ogId, "_id");
 
      await this.props.app.dispatch({currentComponent:lore})
+     await state.opps.cleanPrepare({update:lore})
     }
     this.setState({start:true})
     if (loreName == "" || loreName == undefined) {
