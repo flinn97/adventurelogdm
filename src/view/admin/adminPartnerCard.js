@@ -111,7 +111,7 @@ class MainContent extends Component{
       </div>
       <div>
       {this.state.start &&
-      <MapComponent app={app} name="user" cells={["firstName", "lastName"]} /> }
+      <MapComponent app={app} name="user"  filter={{search:true, attribute:"partner"}}  cells={["firstName", "lastName"]} linkOptions={{cells:[0,1], path:["/partner/"]}}/> }
       </div>
     </div>
     )

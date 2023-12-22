@@ -36,6 +36,7 @@ import SplashScreen from './view/pages/splashScreen';
 import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
 import auth from './services/auth';
 import PartnerPopup from './view/partnerPopup';
+import PartnerCampaign from './view/admin/partnerCampaigns';
 //model
 export default class Dispatch extends Component {
   constructor(props){
@@ -220,6 +221,8 @@ justifyContent: "center",}}>
         <Route path="/admin/partners" element={<AdminPartner app={app}/>}/>
         <Route path="/admin/requests" element={<AdminRequests app={app}/>}/>
         <Route path="/admin/submissions" element={<AdminSubmission app={app}/>}/>
+
+        <Route path="/partner/:id" element={<PartnerCampaign app={app}/>}/>
         {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
       

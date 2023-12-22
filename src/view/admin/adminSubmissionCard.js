@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "../../App.css"
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import auth from '../../services/auth';
+import ApproveSubmission from './approveSubmission';
 
 /**
  * condensed version of the cards.
@@ -87,7 +88,10 @@ class MainContent extends Component{
     }
   }
   async componentDidMount(){
-    await auth.firebaseGetter("user", this.props.app.state.componentList, "type", "user")
+    let approvals = await auth.firebaseGetter("approval", this.props.app.state.componentList, "type", "approval")
+    for(let approval of approvals){
+      await auth.firebaseGetter(approval.getJson().campaignId,  this.props.app.state.componentList, "_id", "campaign")
+    }
     this.setState({start:true})
   }
 
@@ -100,8 +104,8 @@ class MainContent extends Component{
     
 
     return(
-    <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}} >
-      <div>
+    <div>
+      <div  style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
       <h1>Parner Username</h1>
         <h1>Submission Date</h1>
         <h1>Link To Marketplace Submission</h1>
@@ -109,7 +113,7 @@ class MainContent extends Component{
       </div>
       <div>
       {this.state.start &&
-      <MapComponent app={app} name="approval" cells={["title", "description", "promotional", "price"]}/> }
+      <MapComponent app={app} name="approval" cells={["title", "description", "promotional", "price", {custom:ApproveSubmission, props:{app:app}}]} linkOptions={{cells:[0,1], path:["/campaign/"], attribute:"campaignId"}}/> }
       </div>
     </div>
     )

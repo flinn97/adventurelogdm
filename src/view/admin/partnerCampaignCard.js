@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import "../../App.css"
+import AddCampaign from '../AddCampaign';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import placeholder from '../../pics/placeholderCampaign.JPG';
+import CampaignMapItem from '../campaignMapItem';
 import auth from '../../services/auth';
-import Approve from './aprrove';
 
 /**
  * condensed version of the cards.
@@ -14,7 +15,7 @@ import Approve from './aprrove';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class AdminRequestCard extends Component {
+export default class PartnerCampaignCard extends Component {
   constructor(props) {
     super(props);
     
@@ -83,12 +84,13 @@ export default class AdminRequestCard extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
-    this.state={
-      start: false
-    }
+    this.state={}
   }
   async componentDidMount(){
-    await auth.firebaseGetter("partner", this.props.app.state.componentList, "type", "user")
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    let state = app.state;
+    await auth.firebaseGetter(state.partnerId, state.componentList, "owner", "campaign")
     this.setState({start:true})
   }
 
@@ -101,22 +103,19 @@ class MainContent extends Component{
     
 
     return(
-    <div >
-      <div style ={{display:"flex", width:"100%", flexDirection: "row", justifyContent: "space-between",}}>
-      <h1>First Name</h1>
-        <h1>Last Name</h1>
-        <h1>Email</h1>
-        <h1>Company Name</h1>
-        <h1>URL</h1>
-        <h1>Application Date</h1>
-        <h1>Content</h1>
-        <h1>Approve?</h1>
+      <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       }}>
+            
+
+          <div style={{}}>
+            {this.state.start && <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} filter={{search:state.partnerId,attribute:"owner"}} 
+            theme={"selectByImage"}
+            
+            />}
+          </div>
+
       </div>
-      <div>
-      {this.state.start &&
-      <MapComponent app={app} name="partner" cells={["email", "owner", {custom:Approve, props: {app:app}}]} linkOptions={{cells:[0,1], path:["/partner/"], attribute:"owner"}}/> }
-      </div>
-    </div>
     )
   }
 }
@@ -131,19 +130,16 @@ class TabContent extends Component{
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
+    let addCampaign = (state.popUpSwitchcase === "addCampaign");
+    let updateCampaign = (state.popUpSwitchcase != "addCampaign");
 
     return(
-      <div>
-      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
-    fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
-      <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
-      </div>
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
-    fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
-      Game Master Suite
-      </div>
-      <hr></hr> */}
-      </div>
+    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"column",
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "-60px",
+    fontSize:styles.fonts.fontSubheader1}}>
+      Current Campaigns
+      
+    </div>
     )
   }
 }
@@ -248,7 +244,8 @@ handleClickOutside(event) {
     
     return(
       <div  className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
+      <div ref={this.wrapperRef}  className="popupCard" 
+      style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]}}>
       
       <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
@@ -266,9 +263,6 @@ handleClickOutside(event) {
   }
 }
   
-
-
-
 
 //********CARDs********/
 class Card extends Component{
