@@ -111,7 +111,6 @@ scrollTo = (ref, behavior) => {
     };
 
     async deleteLore () {
-      debugger
       let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
       let compList = state.componentList;
@@ -130,7 +129,7 @@ scrollTo = (ref, behavior) => {
       let delList = [lore, pin, ... referenceList, ...pins];
       delList=delList.filter(comp=> comp!==undefined);
     let campaignId = toolService.getIdFromURL(true);
-      window.history.pushState({}, "Camapaign", "/campaign/"+campaignId);
+      window.history.pushState({}, "Campaign", "/campaign/"+campaignId);
       await this.setState({start:false});
     await dispatch({popupSwitch: "splashScreen"})
       this.delLoreForce(delList)
@@ -513,7 +512,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                 <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                 />
         <hr></hr>
-
+        <div style={{minHeight:"324px",}}>
         <div 
                         style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"column", 
                         color:styles.colors.color4}}>
@@ -521,7 +520,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                              
                              </div>
 
-                             <div style={{display:"flex", flexDirection:"row",justifyItems:"center", width:"fit-content", marginTop:"11px"
+                             <div style={{display:"flex", flexDirection:"row",justifyItems:"center", width:"fit-content", marginTop:"11px", 
                       }}>
                          
                           <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
@@ -532,14 +531,14 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                   Manage Encounters
                              </Link></div>
         </div>
-
+        
         <div ref={this.encRef}/>
                              <div style={{marginBottom:"18px"}}>
             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}
             />
-          </div>
+          </div></div>
 
           <hr></hr>
           <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
