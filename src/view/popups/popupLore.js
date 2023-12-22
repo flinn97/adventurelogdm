@@ -79,6 +79,7 @@ class MainContent extends Component {
       searchTerm: "",
       imagesToShow: 5,
       hasChoice: "",
+      start:false,
     };
   }
 
@@ -87,6 +88,7 @@ class MainContent extends Component {
   }
 
   async moveLore(item) {
+    debugger
     let app = this.props.app;
     let state = app.state;
     let componentList = state.componentList;
@@ -96,6 +98,11 @@ class MainContent extends Component {
     if (!lore) {
       lore = state.currentCampaign
     }
+    if(lore.getJson().reference){
+      lore = componentList.getComponent('lore', lore.getJson().ogId, "_id");
+
+    }
+   
     let id = lore.getJson()._id;
     await item.setCompState({ parentId: {} });
     await item.updateObjInsideJson("parentId", { [id]: lore.getJson().name ? lore.getJson().name : lore.getJson().title });
@@ -109,18 +116,21 @@ class MainContent extends Component {
     let index = otherChildren.length;
     await lore.setCompState({ index: index })
     let pin = state.currentPin;
+    let oldPins = componentList.getList("pin", item.getJson()._id, "loreId")
+
     if (state.currentPin) {
 
-      let id = item.getJson()._id;
       let loreName = item.getJson().name
       await pin.setCompState({
         name: loreName,
-        loreId: id,
+        loreId: item.getJson()._id,
       });
+
     }
+    debugger
 
 
-    await state.opps.prepareRun({ update: [item, pin] });
+    await state.opps.prepareRun({ update: [item, pin], del: oldPins });
     // let oldPin = componentList.getComponent("pin", item.getJson()._id, "loreId");
     // if (oldPin) {
     //   state.opps.cleanPrepareRun({ del: oldPin })
@@ -128,8 +138,17 @@ class MainContent extends Component {
   }
 
   async componentDidMount() {
+
     let state = this.props.app.state;
     let loreName = await state.currentComponent.getJson().name;
+    
+    if(state.currentComponent.getJson().reference){
+      let lore = await state.componentList.getComponent('lore', state.currentComponent.getJson().ogId, "_id");
+
+     await this.props.app.dispatch({currentComponent:lore})
+     await state.opps.cleanPrepare({update:lore})
+    }
+    this.setState({start:true})
     if (loreName == "" || loreName == undefined) {
       this.setState({ hasChoice: "" })
     } else {
@@ -147,11 +166,17 @@ class MainContent extends Component {
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length - 1];
     let newLink = "";
-    let imageList = state.componentList.getList("image", state.currentComponent.getJson()._id, "loreId");
+    let imageList = state.componentList.getList("image", state.currentComponent.getJson().reference? state.currentComponent.getJson()._id: state.currentComponent.getJson().ogId, "loreId");
     let idList = id.split('-');
+    
     let lore = state.currentComponent;
+    if(lore.getJson().reference){
+      lore = componentList.getComponent('lore', lore.getJson().ogId, "_id");
+
+    }
 
     let placeholder = state.currentPin?.getJson().name;
+    let loreId = lore.getJson()._id
 
 
 
@@ -162,16 +187,16 @@ class MainContent extends Component {
       let str = newArr.join(',');
       str = str.replace(/,/g, '/');
 
-      let newId = idList[0] + "-" + state.currentComponent.getJson()._id
+      let newId = idList[0] + "-" + loreId
       newLink = str + "/" + newId;
 
     }
     else {
-      newLink = href + "-" + state.currentComponent.getJson()._id;
+      newLink = href + "-" +loreId;
     };
 
-    const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5", width:"1%"}}>
-    "</div>;
+    const quote = <div style={{ color: styles.colors.color8 + "d5", fontSize: styles.fonts.fontSmall, opacity: ".5", width: "1%" }}>
+      "</div>;
 
 
     const filteredList = componentList.getList("encounter", idList[0], "campaignId")
@@ -206,7 +231,7 @@ class MainContent extends Component {
         paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "2%",
       }}>
 
-
+{this.state.start &&<>
 
         {this.state.hasChoice === "New" &&
           <div style={{
@@ -285,45 +310,59 @@ class MainContent extends Component {
 
                 <hr></hr>
 
-                <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
-              justifyContent:"flex-end", marginBottom:"-18px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
-              marginTop:"12px"}}>
-            <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
-              </div>
-          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
-          <ParentFormComponent app={app} name="desc" obj={lore}
-                      theme={"adventureLog"} 
-                        rows={5}
-                        prepareRun={true}
-                        type={"richEditor"} onPaste={this.handlePaste}
-                      inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
-                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
-                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
-                      flexDirection:"column", justifyItems:"space-between"}}/></div>
+                <div style={{
+                  display: "flex", flexDirection: "row", alignContent: "flex-end",
+                  justifyContent: "flex-end", marginBottom: "-18px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                  marginTop: "12px"
+                }}>
+                  <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
+                </div>
+                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginBottom: "32px" }}> Lore:
+                  <ParentFormComponent app={app} name="desc" obj={lore}
+                    theme={"adventureLog"}
+                    rows={5}
+                    prepareRun={true}
+                    type={"richEditor"} onPaste={this.handlePaste}
+                    inputStyle={{
+                      maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                      borderRadius: "4px", background: styles.colors.colorWhite + "00",
+                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                    }}
+                    wrapperStyle={{
+                      margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "-10px",
+                      flexDirection: "column", justifyItems: "space-between"
+                    }} /></div>
 
 
-<div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
-justifyContent:"flex-end", marginBottom:"-30px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
-marginTop:"22px"}}>
-             <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true}/>
-              </div>
-              
-          <div 
-          style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,
-          marginTop:"12px", marginBottom:"32px"}}> Handout:
-          <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", maxWidth:"100px"}}>
-         {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
-                      theme={"adventureLog"} 
-                        rows={5}
-                        prepareRun={true}
-                        type={"richEditor"} onPaste={this.handlePaste}
-                      inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
-                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
-                      border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      
-                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", width:"99%", marginLeft:"-2px",
-                      flexDirection:"column", justifyItems:"space-between"}}/>{quote}</div></div>
+                <div style={{
+                  display: "flex", flexDirection: "row", alignContent: "flex-end",
+                  justifyContent: "flex-end", marginBottom: "-30px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                  marginTop: "22px"
+                }}>
+                  <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
+                </div>
+
+                <div
+                  style={{
+                    color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
+                    marginTop: "12px", marginBottom: "32px"
+                  }}> Handout:
+                  <div style={{ display: "flex", flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "100px" }}>
+                    {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
+                      theme={"adventureLog"}
+                      rows={5}
+                      prepareRun={true}
+                      type={"richEditor"} onPaste={this.handlePaste}
+                      inputStyle={{
+                        minWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
+                        borderRadius: "4px", background: styles.colors.colorWhite + "00",
+                        border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                      }}
+
+                      wrapperStyle={{
+                        margin: "5px", color: styles.colors.colorWhite, display: "flex", width: "99%", marginLeft: "-2px",
+                        flexDirection: "column", justifyItems: "space-between"
+                      }} />{quote}</div></div>
               </div>}
 
             <div>
@@ -356,14 +395,14 @@ marginTop:"22px"}}>
                       debugger
                       //Taylor
                       // I cant get this working
-                      console.log(state.currentComponent?.getJson().name+" Encounter")
+                      console.log(state.currentComponent?.getJson().name + " Encounter")
                       state.opps.prepareRun({
                         "addencounter": {
                           loreId: state.currentComponent?.getJson()._id,
-                          name: state.currentComponent?.getJson().name+" Encounter", campaignId: id
+                          name: state.currentComponent?.getJson().name + " Encounter", campaignId: id
                         }
                       })
-    
+
                       this.setState({ showAddEncounter: true });
                     }}>
                     + Create New Encounter
@@ -696,23 +735,24 @@ marginTop:"22px"}}>
               alignItems: "center", height: "100%", width: "100%",
             }}>
 
-{/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
+              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
                 onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
 
-                <ParentFormComponent
+              <ParentFormComponent
                 obj={lore} name="refrence"
-                
+
                 // handleChange={}
-                wrapperStyle={{ width:"fit-content", height:"fit-content",alignContent:"center", justifyContent:"center", alignContent:"center", alignItems:"center", alignText:"center",}}
-                  type={"checkbox"} 
-                  func = {(obj, value) =>{
-                    
-                    this.setState({refrence:value})
-                  }}
-                  inputStyle={{padding:"2px 4px",color:styles.colors.colorWhite,
-                  color:styles.colors.colorBlack, 
-                  }}
-                />
+                wrapperStyle={{ width: "fit-content", height: "fit-content", alignContent: "center", justifyContent: "center", alignContent: "center", alignItems: "center", alignText: "center", }}
+                type={"checkbox"}
+                func={(obj, value) => {
+
+                  this.setState({ refrence: value })
+                }}
+                inputStyle={{
+                  padding: "2px 4px", color: styles.colors.colorWhite,
+                  color: styles.colors.colorBlack,
+                }}
+              />
               <div
 
                 style={{
@@ -722,22 +762,22 @@ marginTop:"22px"}}>
                 }}
 
               >
-                
+
                 {
-                  filteredLore.filter(obj => obj.getJson().topLevel === false).filter(obj=>obj.getJson().reference===false)
-                  .filter((obj)=> {
-                    let l = state.currentLore;
-                    if (!l) {
-                      l = state.currentCampaign
-                    }
-                    if(l.getJson().parentId){
-                      return !Object.keys(l.getJson().parentId).includes(obj.getJson()._id)
-                    }
-                    else{
-                      return true
-                    }
-                    
-                  })
+                  filteredLore.filter(obj => obj.getJson().topLevel === false).filter(obj => obj.getJson().reference === false)
+                    .filter((obj) => {
+                      let l = state.currentLore;
+                      if (!l) {
+                        l = state.currentCampaign
+                      }
+                      if (l.getJson().parentId) {
+                        return !Object.keys(l.getJson().parentId).includes(obj.getJson()._id)
+                      }
+                      else {
+                        return true
+                      }
+
+                    })
                     .slice(0, 8)
                     .map((item, index) => (
                       <div>
@@ -750,7 +790,7 @@ marginTop:"22px"}}>
                               let pin = state.currentPin;
                               if (!this.state.refrence) {
                                 await this.moveLore(item);
-                              
+
 
 
                               }
@@ -759,13 +799,24 @@ marginTop:"22px"}}>
                                 if (!l) {
                                   l = state.currentCampaign
                                 }
-                                let loreJson = { ...item.getJson(), ...lore.getJson(), name:item.getJson().name, reference: true, ogId: item.getJson()._id, parentId: {[l.getJson()._id]: l.getJson().name?l.getJson().name:l.getJson().title} }
+                                let loreJson = { ...item.getJson(), ...lore.getJson(), name: item.getJson().name, reference: true, ogId: item.getJson()._id, parentId: { [l.getJson()._id]: l.getJson().name ? l.getJson().name : l.getJson().title } }
                                 await lore.setCompState({ ...loreJson });
-                                await state.opps.cleanPrepareRun({addlore:lore});
+
+                                if (pin) {
+
+                                  let loreName = lore.getJson().name
+                                  await pin.setCompState({
+                                    name: loreName,
+                                    loreId: lore.getJson()._id,
+                                  });
+
+                                }
+                                await state.opps.cleanPrepareRun({ addlore: lore, update:pin });
+
 
 
                               }
-                              
+
 
 
 
@@ -793,7 +844,7 @@ marginTop:"22px"}}>
 
           </div>
         }
-
+</>}
       </div>
     )
 

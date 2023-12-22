@@ -5,6 +5,8 @@ import CampaignCard from './campaignCard';
 import NoteCard from './noteCard';
 import MarketCard from './marketCard';
 import LibraryCard from '../libraryCard';
+import auth from '../../services/auth';
+
 
 
 export default class Home extends Component {
@@ -15,10 +17,11 @@ export default class Home extends Component {
 
     }
   }
-//   componentDidMount(){
+//   async componentDidMount(){
 //     let app = this.props.app;
 //     let state = app.state;
-//     let list = state.componentList.getComponents().filter(comp=>comp.getJson().type!=="user");
+//     let list =  await auth.firebaseGetter("taylormdavidson@gmail.com", state.componentList, "owner","lore");
+//   list = await state.componentList.getComponents().filter(comp=>comp.getJson().type!=="user");
 // state.opps.cleanPrepareRun({del:list});
 //   }
 

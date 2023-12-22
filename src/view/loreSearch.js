@@ -146,6 +146,8 @@ export default class LoreSearch extends Component {
 
     let sortImage = this.state.sortTerm === "name" ? dateSort : nameSort;
 
+    let placeholderT = '';
+
     return (
       <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop: "85px" }}>
         <div style={{ marginTop: "10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}> {"Connected Lore" + beginName}
@@ -198,7 +200,7 @@ export default class LoreSearch extends Component {
               <input app={app}
 
                 type="input"
-                placeholder="Search Lore Connections..."
+                placeholder={"Search Among "+loreListTotalLength+" Lore Connections..."}
                 value={this.state.searchTerm}
                 onChange={this.handleSearchChange}
                 style={{
@@ -210,7 +212,7 @@ export default class LoreSearch extends Component {
                   fontSize: '16px',
                 }}
               />
-              <div style={{
+              {/* <div style={{
                 display: "flex", flexDirection: "column", justifyContent: "center", justifyContent: "flex-end",
                 width: "100px", alignItems: "center", marginLeft: "8px", marginBottom: "-22px", marginRight: "8px"
               }}
@@ -230,7 +232,7 @@ export default class LoreSearch extends Component {
                   <img className='hover-btn-highlight'
                     src={sortImage} style={{ width: "39px", padding: "4px", cursor: "pointer" }} />
                 </div>
-              </div>
+              </div> */}
             </div>}
 
 

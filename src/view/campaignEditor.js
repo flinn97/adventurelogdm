@@ -111,15 +111,25 @@ scrollTo = (ref, behavior) => {
     };
 
     async deleteLore () {
-      debugger
       let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
       let compList = state.componentList;
-      let lore = this.state.ref? state.componentList.getComponent("lore", this.state.ref, "_id"):state.currentLore;
+      let lore = this.state.ref? compList.getComponent("lore", this.state.ref, "_id"):state.currentLore;
+      let pin = compList.getComponent("pin", lore.getJson()._id, "loreId");
       let referenceList = compList.getList("lore", lore.getJson()._id, "ogId");
-      let delList = [lore, ... referenceList];
+      let pins = [];
+      for(let l of referenceList){
+        let p =compList.getComponent("pin", l.getJson()._id, "loreId");
+        if(p){
+          pins.push(p);
+
+        }
+      }
+      debugger
+      let delList = [lore, pin, ... referenceList, ...pins];
+      delList=delList.filter(comp=> comp!==undefined);
     let campaignId = toolService.getIdFromURL(true);
-      window.history.pushState({}, "Camapaign", "/campaign/"+campaignId);
+      window.history.pushState({}, "Campaign", "/campaign/"+campaignId);
       await this.setState({start:false});
     await dispatch({popupSwitch: "splashScreen"})
       this.delLoreForce(delList)
@@ -130,11 +140,36 @@ scrollTo = (ref, behavior) => {
     }
     async delLoreForce(loreList){
       let state =  this.props.app.state;
+      await this.props.app.dispatch({backendReloader:true})
       await state.opps.cleanPrepareRun({del:loreList});
+      let itt = true;
+    
       const delay = ms => new Promise(res => setTimeout(res, ms));
-                await delay(1000);
-     await this.props.app.dispatch({popupSwitch:""});
-      await this.componentDidMount();
+      await delay(1000);
+      
+                while(itt){
+                 
+                    let bool = false;
+                    for(let item of loreList){
+                      let i = state.componentList.getComponent(item.getJson().type, item.getJson()._id, "_id");
+                      if(i){
+                        bool=true;
+                        break;
+                      }
+
+                    }
+
+                  if(!bool){
+                    itt=false;
+
+                  }
+                  
+                   
+              
+              
+                }
+
+    
     }
 
   render() {
@@ -477,7 +512,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                 <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                 />
         <hr></hr>
-
+        <div style={{minHeight:"324px",}}>
         <div 
                         style={{ display:"flex", justifyContent:"", width:"100%", flexDirection:"column", 
                         color:styles.colors.color4}}>
@@ -485,7 +520,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                              
                              </div>
 
-                             <div style={{display:"flex", flexDirection:"row",justifyItems:"center", width:"fit-content", marginTop:"11px"
+                             <div style={{display:"flex", flexDirection:"row",justifyItems:"center", width:"fit-content", marginTop:"11px", 
                       }}>
                          
                           <Link to= {"/encountermanager/"  + this.state.obj?.getJson()._id} 
@@ -496,14 +531,14 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                   Manage Encounters
                              </Link></div>
         </div>
-
+        
         <div ref={this.encRef}/>
                              <div style={{marginBottom:"18px"}}>
             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}
             />
-          </div>
+          </div></div>
 
           <hr></hr>
           <div style={{display:"flex", flexDirection:"column", width:"100%", padding:".75%", justifyContent:"space-between",}}>
