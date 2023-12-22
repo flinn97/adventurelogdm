@@ -76,8 +76,10 @@ async componentDidMount(){
     map = await auth.firebaseGetter(currentLore.getJson()._id, this.props.app.state.componentList, "loreId", "map", undefined);
     map = map[0]
   }
+  await this.props.app.state.componentList.sortSelectedList("lore", "index");
+
   this.setState({obj: component, lore:currentLore, map: map});
-  
+
 }
 
 componentDidUpdate(props, state){

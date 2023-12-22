@@ -85,7 +85,7 @@ export default class App extends Component {
   async componentDidUpdate(props, state){
     if(this.state.backend){
      await this.setState({backend: false});
-     auth.dispatch(this.state.backendUpdate, this.state.email);
+     auth.dispatch(this.state.backendUpdate, this.state.email, undefined, this.state.backendReloader);
     }
     
     if(this.state.operate!==undefined){
