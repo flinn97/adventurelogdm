@@ -430,8 +430,8 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
           <ImageButton 
           onClick={() => this.scrollTo(this.loreRef, "smooth")} 
           app={app} image={loreB} text={"Lore"} wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
-          minHeight: "95px",padding:"4px",borderRadius:"12px",
-          width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+          minHeight: "90px",padding:"4px",borderRadius:"12px",
+          width: "270px", minHeight:"95px", backgroundColor:styles.colors.color2+'de',
           overflow: 'hidden' }}
           buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
                                             transform: 'translate(-50%, -50%)', opacity:".77",
@@ -446,8 +446,8 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                               image={encounterB} 
                               text={"Encounters"} 
                               wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
-                              minHeight: "95px",padding:"4px",borderRadius:"12px",
-                              width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+                              minHeight: "90px",padding:"4px",borderRadius:"12px",
+                              width: "270px", minHeight:"95px",  backgroundColor:styles.colors.color2+'de',
                               overflow: 'hidden' }}
                               buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
                                                                 transform: 'translate(-50%, -50%)', opacity:".77",
@@ -460,8 +460,8 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                       image={galleryB} 
                                       text={"Gallery"} 
                                       wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
-                                      minHeight: "95px",padding:"4px",borderRadius:"12px",
-                                      width: "300px", minHeight:"95px", width:"300px", backgroundColor:styles.colors.color2+'de',
+                                      minHeight: "90px",padding:"4px",borderRadius:"12px",
+                                      width: "270px", minHeight:"95px",  backgroundColor:styles.colors.color2+'de',
                                       overflow: 'hidden' }}
                                       buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
                                                                         transform: 'translate(-50%, -50%)', opacity:".77",
