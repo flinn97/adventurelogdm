@@ -24,6 +24,7 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import backarrow from '../pics/backArrow.webp';
 import auth from '../services/auth';
 import toolService from '../services/toolService';
+import trash from '../pics/trashStill.png';
 
 export default class InteractiveBulletin extends Component {
   constructor(props) {
@@ -212,20 +213,7 @@ export default class InteractiveBulletin extends Component {
           <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
 
-                  {this.props.obj &&
-                  <div className='hover-container' 
-                  style={{...styles.buttons.buttonAdd,color:'red', width:"fit-content", height:"40px", border:"1px solid "+styles.colors.color6, fontSize:styles.fonts.fontSmall,
-                  position:"absolute", right: 15, padding:"8px 12px"}}>...
-                          <div className='hover-div' title={"Permanently Delete this Map"}
-                          style={{...styles.buttons.buttonAdd, color:'red', width:"170px", textAlign:"center",  
-                          height:"40px", marginLeft:"-161px", border:"1px solid "+styles.colors.color6, padding:"8px 12px",
-                          
-                          }}  
-                          onClick={()=>{
-                                  state.opps.cleanPrepareRun({del:this.props.obj});
-                                  this.setState({map:undefined});
-                                }}>Delete Map</div>
-                </div>}
+        
 
       </div>
 
@@ -238,7 +226,21 @@ export default class InteractiveBulletin extends Component {
    src={this.props.obj?.getJson().picURL} 
   style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"3700px", maxHeight:"2630px" }}/>}
   
-  
+  {this.props.obj &&
+                  
+                  <div className='hover-btn-highlight' title={"Permanently Delete this Map"}
+                  style={{...styles.buttons.buttonAdd, color:'red', width:"80px", textAlign:"center",  
+                  height:"40px",border:"1px solid "+styles.colors.color6, right:12, position:"absolute", top:12,
+                  padding:"2px 4px",
+                  
+                  }}  
+                  onClick={()=>{
+                          state.opps.cleanPrepareRun({del:this.props.obj});
+                          this.setState({map:undefined});
+                        }}>
+                         <img src={trash} style={{width:"34px", }}/>
+                        </div>
+        }   
   {/* {this.state.start && */}
 
   {/* IMAGE BACKGROUND */}
@@ -246,6 +248,8 @@ export default class InteractiveBulletin extends Component {
    width: this.state.mapWidth, 
    height:this.state.mapHeight 
    }}>
+    
+    
     
     {/* PINS PINS PINS */}
   {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").map((pin,index)=>

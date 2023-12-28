@@ -54,42 +54,55 @@ export default class ListTreeLink extends Component {
      newLink= idList[0];
     }
 
-    let maxLengthName = 22;
-
+      let maxLengthName = 27 - ((this.props.props.c*2)-(this.props.props.c-1));
+      if (maxLengthName <= 15){
+        maxLengthName = 27
+      };
+      
+      
+      
     let objName = obj.getJson()[name];
     if(obj.getJson().reference){
       let ogComp = componentList.getComponent('lore', obj.getJson().ogId, "_id");
-      objName = ogComp.getJson()[name]
+      objName = ogComp.getJson()[name];
+    
     }
       objName = objName.length > maxLengthName ? objName.substring(0, maxLengthName) + "..." : objName;
-    
-    return ( <div 
+
      
-      className='hover-container' style={{cursor:"pointer", 
-    height:"fit-content",
+      let bord = "solid 1px "+styles.colors.color3+"54";
+      let bord1 = (this.props.props.c===0)?bord:"";
+      
+      
+
+    return ( <div 
+     className='hover-container'
+       style={{cursor:"pointer", 
+      // borderTop:bord1,
+    borderTopRightRadius:"4px", 
+    borderTopLeftRadius:"4px",
+    // borderLeft:bord1,
+    // borderRight:bord1,
+    height:"fit-content", 
     display: "flex"}}>
       {name !=="" && name !==undefined &&
       <Link to={"../campaign/" + newLink} state = {obj.getJson().reference? {ref: obj.getJson()._id} : undefined}
       // onClick={() => 
       //   window.open("../campaign/" + newLink, "_blank")
       // } 
-      style={{display:"flex", flexDirection:"column", alignItems:"center", textDecorationColor:styles.colors.color3, textDecorationThickness:"1px",
+      style={{display:"flex", flexDirection:"column", textDecoration:"none", width:"278px", 
+       alignItems:"center", textDecorationColor:styles.colors.color3, textDecorationThickness:"1px",
         justifyContent:"center", alignContent:"center"}}>
     <div title={"Open "+objName+" in a new tab."} className='hover-img'
-    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", }}
+    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", textAlign:"left", width:"100%", marginLeft:"11px"}}
     >
       
       {objName}
 
     </div>
-    <div 
-    className='hover-div' title={"Open "+objName+" in a new tab."}
-     style={{ zIndex:"88",
-      backgroundColor:styles.colors.color3+"22", height:"10px", width:"100%", 
-      filter: "blur(10px)",
-      position:"absolute", top:"0", right:"50%"}}></div>
+   
 
-<div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105",
+<div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105", textDecoration:"none",
                             alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center",
                             justifyItems:"flex-end"}}>
                               {/* ICONS */}

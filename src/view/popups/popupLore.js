@@ -166,7 +166,9 @@ class MainContent extends Component {
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length - 1];
     let newLink = "";
-    let imageList = state.componentList.getList("image", state.currentComponent.getJson().reference? state.currentComponent.getJson()._id: state.currentComponent.getJson().ogId, "loreId");
+    let refid = state.currentComponent.getJson().reference? state.currentComponent.getJson().ogId:state.currentComponent.getJson()._id;
+    let imageList = state.componentList.getList("image", refid, "loreId");
+    
     let idList = id.split('-');
     
     let lore = state.currentComponent;
@@ -391,7 +393,10 @@ class MainContent extends Component {
                     title="Create a new encounter, you can edit it by clicking on it."
                     onClick={() => {
                       debugger
-
+                      console.log(refid)
+                      // Taylor
+                      
+                      
                       // Taylor
                       
                       // I cant get this working
@@ -399,7 +404,7 @@ class MainContent extends Component {
                       //error at Opps.setComponentsList (componentsList.js:190:1)
                       state.opps.prepareRun({
                         "addencounter": {
-                          loreId: state.currentComponent?.getJson()._id,
+                          loreId: refid,
                           name: state.currentComponent?.getJson().name + " Encounter", campaignId: id
                         }
                       })
@@ -465,12 +470,12 @@ class MainContent extends Component {
 
                         onClick={async () => {
                           {
-                            let enc = await encounter.copyEncounter(componentList);
+                            await this.setState({showFindEncounter: false });
+                            let enc = encounter.copyEncounter(componentList, state.currentComponent.getJson()._id);
                             if (enc) {
                               state.currentComponent.assign(enc);
                             }
-                            this.setState({ showFindEncounter: false })
-                          }
+                              }
                         }}
 
                         style={{
@@ -580,14 +585,14 @@ class MainContent extends Component {
                     </div>
                   }
                 </div>
-
+                
 
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
                   <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", }}>
 
                     <Upload text="+ Upload"
-                      //PUT THIS IN CAMPAIGN TOO
-                      prepareOnChange={{
+                      
+                      prepareOnChange={ {
                         name: "image", json: {
                           loreId: state.currentComponent.getJson()._id,
                           campaignId: id
@@ -595,16 +600,16 @@ class MainContent extends Component {
                       }}
 
 
-                      obj={app.state.currentComponent}
+                      obj={state.currentComponent}
                       update={true} skipUpdate={true}
 
                       app={app}
                       className="indent-on-click"
 
                     />
-
+                
                   </div>
-
+                  
                   {/* <div className="indent-on-click" 
         title="Find an existing image to add to this lore." 
         style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
@@ -616,6 +621,11 @@ class MainContent extends Component {
         </div> */}
 
                 </div>
+
+                {/* <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} 
+                  style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,}}
+                >
+                  + From Library</div> */}
               </div>
             }
 
@@ -736,13 +746,9 @@ class MainContent extends Component {
               alignItems: "center", height: "100%", width: "100%",
             }}>
 
-              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
-                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
-                <div style={{ color: styles.colors.colorWhite + "96", fontSize: styles.fonts.fontSmallest, fontWeight: "400", alignSelf: "center", marginTop: "2px" }}>
-                {this.state.refrence?"(Connecting Original Lore)":"(Moving Lore Here)"}
-              </div>
+              
                
-<div style={{color:styles.colors.color3, width:"fit-content", fontSize:"1.1rem", justifyContent:"center",}}>Edit Original</div>
+<div style={{color:styles.colors.color3, width:"fit-content", fontSize:"1.1rem", justifyContent:"center",}}>Edit Copy & Original</div>
  
               <ParentFormComponent
                 obj={lore} name="refrence"
@@ -757,6 +763,13 @@ class MainContent extends Component {
                   color: styles.colors.colorBlack,
                 }}
               />
+
+              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
+                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
+                <div style={{ color: styles.colors.colorWhite + "96", fontSize: styles.fonts.fontSmallest, fontWeight: "400", alignSelf: "center", marginTop: "2px" }}>
+                {this.state.refrence?"(Currently Connecting Lore a Lore Copy)":"(Currently Moving Lore)"}
+              </div>
+
               <div
 
                 style={{

@@ -19,6 +19,7 @@ import colorService from '../services/colorService';
 import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton.js';
 import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
 import auth from '../services/auth.js';
+import toolService from '../services/toolService.js';
 
 export default class LoreViewer extends Component {
 
@@ -90,6 +91,7 @@ componentDidUpdate(props, state){
 
 toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
+  
 };
 
   getUniqueRandomColor(colorList) {
@@ -263,7 +265,7 @@ marginTop:"22px"}}>
 
         <div className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
         fontSize:styles.fonts.fontSmall, display:"flex", flexDirection:"column",
-        padding:"4px 8px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+        padding:"5px 9px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
         }}>
       {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
         {!this.state.isSidebarVisible &&
@@ -380,10 +382,11 @@ marginTop:"22px"}}>
           <div 
 
          onClick={async () => {{
-            let enc = await encounter.copyEncounter(componentList);
+            await this.setState({showFindEncounter: false });
+            let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true,1));
             if (enc){
             state.currentComponent.assign(enc);}
-            this.setState({showFindEncounter: false })
+            
           }}}
 
           style={{color: styles.colors.colorWhite, 

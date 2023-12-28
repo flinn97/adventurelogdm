@@ -66,7 +66,7 @@ async componentDidMount(){
 
   // }
   await auth.firebaseGetter(id, state.componentList, "campaignId", "lore")
-  debugger
+  
   await dispatch({currentLore:undefined})
   if(id.includes("-")){
     let loreSplit = id.split('-');
@@ -110,10 +110,12 @@ scrollTo = (ref, behavior) => {
       })
     };
 
-    async deleteLore () {
+    async deleteLore (parentLore) {
       let state =  this.props.app.state;
       let dispatch = this.props.app.dispatch;
       let compList = state.componentList;
+
+
       let lore = this.state.ref? compList.getComponent("lore", this.state.ref, "_id"):state.currentLore;
       let pin = compList.getComponent("pin", lore.getJson()._id, "loreId");
       let referenceList = compList.getList("lore", lore.getJson()._id, "ogId");
@@ -125,11 +127,16 @@ scrollTo = (ref, behavior) => {
 
         }
       }
-      debugger
+      let pId = parentLore.getJson()._id;
       let delList = [lore, pin, ... referenceList, ...pins];
       delList=delList.filter(comp=> comp!==undefined);
     let campaignId = toolService.getIdFromURL(true);
+    if (!pId){
       window.history.pushState({}, "Campaign", "/campaign/"+campaignId);
+    }else{
+      window.history.pushState({}, "Campaign", "/campaign/"+campaignId+"-"+pId);
+    }
+        
       await this.setState({start:false});
     await dispatch({popupSwitch: "splashScreen"})
       this.delLoreForce(delList)
@@ -187,7 +194,11 @@ scrollTo = (ref, behavior) => {
 
     let hWidth = pCount?(24*pCount):24;
     let highlightWidth = hWidth.toString()+"px";
-    let topLore = state.componentList.getList("lore", advLogLink, "campaignId").filter(lore=>lore.getJson().parentLore)[0]
+    let topLore = state.componentList.getList("lore", advLogLink, "campaignId").filter(lore=>lore.getJson().parentLore)[0];
+
+    let parent = state.currentLore?.getJson().parentId;
+    let pId = parent?Object.keys(parent)[0]:"";
+    let parentItem = state.componentList.getComponent("lore", pId, "_id");
 
     return (<div style={{display:"flex", flexDirection:"row", maxWidth:"100%",}}>
       {/* HOMEPAGE */}
@@ -257,7 +268,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                     
                     onClick={ ()=>{
                        
-                       this.deleteLore();
+                       this.deleteLore(parentItem);
                       }
                     }>
                       Delete This Lore
@@ -500,7 +511,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                         
                 {/* {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{...styles.buttons.buttonAdd, color:'red', width:"fit-content",
                 marginBottom:"8px", alignSelf:"flex-end"}}  onClick={async ()=>{
-          debugger
+         
           let map = state.componentList.getComponent("map",topLore.getJson()._id, "loreId")
           state.opps.clearUpdater();
         await state.opps.cleanPrepareRun({del:map});

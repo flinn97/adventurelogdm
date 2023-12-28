@@ -204,6 +204,29 @@ hovering:hover .hover {
   /* filter: contrast(.89); */
 }
 
+        .hover-stacked:hover {
+          opacity: .99;
+        
+          filter: contrast(1.06);
+          border-radius: 11px;
+          
+          transition: all 0.5s ease-in-out;
+        }
+        .hover-stacked:active {
+          opacity: .82;
+          transform: scale(.99);
+          filter: contrast(1);
+          border-radius: 11px;
+          transition: all 0.5s ease-in-out;
+        }
+        .hover-stacked {
+          opacity: 1;
+          transition: all 0.5s ease-in-out;
+          /* filter: contrast(.89); */
+        }
+
+        
+
 .hover-bubble:hover {
   opacity: .99;
   transform: scale(1.001);

@@ -160,7 +160,7 @@ export default class LoreSearch extends Component {
             
           </div> { state.currentLore &&
           <div style={{ overflowY:"hidden", maxWidth:"100%", }}  className='scroller2'>
-          <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4}/>
+            <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4}/>
           </div>
           }
         </div>
