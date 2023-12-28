@@ -238,7 +238,7 @@ export default class InteractiveBulletin extends Component {
                           state.opps.cleanPrepareRun({del:this.props.obj});
                           this.setState({map:undefined});
                         }}>
-                         <img src={trash} style={{width:"34px", }}/>
+                         <img src={trash} style={{width:"34px", cursor:"pointer", zIndex:991 }}/>
                         </div>
         }   
   {/* {this.state.start && */}
