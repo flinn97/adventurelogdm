@@ -312,14 +312,15 @@ class MainContent extends Component {
 
                 <hr></hr>
 
+                
+                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginBottom: "32px" }}> Lore:
                 <div style={{
                   display: "flex", flexDirection: "row", alignContent: "flex-end",
-                  justifyContent: "flex-end", marginBottom: "-18px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                  marginTop: "12px"
+                  justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                  
                 }}>
                   <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
                 </div>
-                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginBottom: "32px" }}> Lore:
                   <ParentFormComponent app={app} name="desc" obj={lore}
                     theme={"adventureLog"}
                     rows={5}
@@ -331,24 +332,25 @@ class MainContent extends Component {
                       border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                     }}
                     wrapperStyle={{
-                      margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "-10px",
+                      margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "1px",
                       flexDirection: "column", justifyItems: "space-between"
                     }} /></div>
 
 
-                <div style={{
-                  display: "flex", flexDirection: "row", alignContent: "flex-end",
-                  justifyContent: "flex-end", marginBottom: "-30px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                  marginTop: "22px"
-                }}>
-                  <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
-                </div>
+                
 
                 <div
                   style={{
                     color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
                     marginTop: "12px", marginBottom: "32px"
                   }}> Handout:
+                  <div style={{
+                  display: "flex", flexDirection: "row", alignContent: "flex-end",
+                  justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                  
+                }}>
+                  <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
+                </div>
                   <div style={{ display: "flex", flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "100px" }}>
                     {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
                       theme={"adventureLog"}
