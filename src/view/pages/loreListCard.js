@@ -100,17 +100,23 @@ getCampId(){
     let componentList = state.componentList;
     let styles =state.styles;
 
+    let expand = state.widthLoreBar?state.widthLoreBar:"";
+    let addW = expand.length * 10;
+    let w = addW + 290;
+    let width = w.toString()+"px";
+
     return(
-      <div className='scroller'
-      style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content", maxHeight:"fit-content", marginTop:"0px",
+      <div className='scroller2'
+      style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content", maxHeight:"fit-content",
        alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, 
        }}>
             
             
           
-          <div style={{width:"fit-content", display:"flex", flexDirection:"row", marginTop:"5vh", height:"100%",}}>
+          <div style={{minWidth:"fit-content", width:width, display:"flex", flexDirection:"row", marginTop:"5vh", height:"100%",}}>
           
-            <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} attribute={"parentId"}/>
+            <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} count={0} 
+            attribute={"parentId"}/>
           </div>
           
 

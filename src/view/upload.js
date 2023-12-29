@@ -62,7 +62,7 @@ export default class Upload extends Component {
 
 
     async handleSubmission() {
-        
+        debugger
         let component = this.state.obj
         await component.getPicSrc(this.state.path)
         if (!this.props.skipUpdate) {
@@ -115,10 +115,12 @@ export default class Upload extends Component {
                     <input id="file-upload" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
                         style={{ ...styles.buttons.buttonAdd,
                             position: 'absolute', // Set position to absolute to make it fill the entire label
-                            top: 0, 
+                            top: 0,
                             left: 0, cursor:"pointer",
-                            
-                            opacity: 0, 
+                            padding:this.props.difWidth?this.props.difWidth:"",
+                            width:this.props.difWidth?this.props.difWidth:"",
+                            height:this.props.difWidth?this.props.difWidth:"",
+                            opacity:0, 
                         }} 
                         size="6" 
                         text={text}

@@ -11,6 +11,7 @@ import dropIn from '../pics/dropIn.png';
 import Draggable from 'react-draggable';
 import { Link } from 'react-router-dom';
 import loreIndexService from '../services/loreIndexService';
+import IndexLoreHierarchy from './indexLoreHierarchy';
 
 
 
@@ -139,7 +140,10 @@ export default class LoreSearch extends Component {
       // });
 
 
-    let loreListTotalLength = componentList.getList("lore", id, listTerm).length
+    let loreListTotal = componentList.getList("lore", id, listTerm).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
+    .filter(lore => !lore.getJson().parentLore);
+    let loreListTotalLength = loreListTotal.length;
+
 
     let beginName = this.props.app.state.currentLore ? ": " + this.props.app.state.currentLore.getJson().name : "";
     let newLoreName = "New Lore";
@@ -149,9 +153,16 @@ export default class LoreSearch extends Component {
     let placeholderT = '';
 
     return (
-      <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop: "85px" }}>
-        <div style={{ marginTop: "10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}> {"Connected Lore" + beginName}
-          {/* <IndexLoreHeirarchy/> */}
+      <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop: "90px", }}>
+
+        <div style={{flexDirection:"row", display:"flex" }}>
+          <div style={{  color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall, marginRight:"8px", minWidth:"fit-content" }}> {"Connected Lore:"}
+            
+          </div> { state.currentLore &&
+          <div style={{ overflowY:"hidden", maxWidth:"100%", }}  className='scroller2'>
+            <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4}/>
+          </div>
+          }
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", justifyItems: "center", marginBottom: "70px", }}>
@@ -164,8 +175,10 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px",
             }}
             onClick={async () => {
-
+              
               const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
+                      if(loreListTotalLength > 8){
+                      this.setState({searchTerm:newLoreName});}
               let idS = idService.createId();
               console.log(idS);
               let href = window.location.href;
@@ -180,7 +193,7 @@ export default class LoreSearch extends Component {
                   operate: "addlore", operation: "cleanJsonPrepareRun",
                   //                                      CHANGE NAME later
                   object: {
-                    parentId: { [id]: newName + " " + newLoreName }, _id: idS, index: otherChildren.length,
+                    parentId: { [id]: newName + " " }, _id: idS, index: otherChildren.length,
                     type: "lore", name: newName + " " + newLoreName, campaignId: campId
                   },
                 }

@@ -19,6 +19,7 @@ import colorService from '../services/colorService';
 import PostLogButton from '../componentListNPM/componentForms/buttons/postLogButton.js';
 import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
 import auth from '../services/auth.js';
+import toolService from '../services/toolService.js';
 
 export default class LoreViewer extends Component {
 
@@ -90,6 +91,7 @@ componentDidUpdate(props, state){
 
 toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
+  
 };
 
   getUniqueRandomColor(colorList) {
@@ -144,8 +146,7 @@ updateSize(width, height){
 
     const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5", width:"1%"}}>
     "</div>;
-    console.log("loreview rerender")
-
+    
     return (
       <div style={{minWidth:"100%",}}>
         
@@ -203,13 +204,13 @@ marginTop:"22px"}}>
        <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path) => {
-                // Your existing logic
+                
                 let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];
                 await map.getPicSrc(path);
 
-                // Your color updating logic
+                
                 let colors = colorService.updateColors(pic, (palette) => {
                   this.setState({ colors: palette }, async () => {
                     let con = this.state.colors;
@@ -264,7 +265,7 @@ marginTop:"22px"}}>
 
         <div className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd, 
         fontSize:styles.fonts.fontSmall, display:"flex", flexDirection:"column",
-        padding:"4px 8px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+        padding:"5px 9px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
         }}>
       {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
         {!this.state.isSidebarVisible &&
@@ -381,10 +382,11 @@ marginTop:"22px"}}>
           <div 
 
          onClick={async () => {{
-            let enc = await encounter.copyEncounter(componentList);
+            await this.setState({showFindEncounter: false });
+            let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true,1));
             if (enc){
             state.currentComponent.assign(enc);}
-            this.setState({showFindEncounter: false })
+            
           }}}
 
           style={{color: styles.colors.colorWhite, 

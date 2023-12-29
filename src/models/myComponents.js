@@ -185,10 +185,10 @@ class Pin extends componentBase{
         
     } 
     
-    async getPicSrc(){
-        let pic = await authService.downloadPics(this.json.pics);
+    async getPicSrc(path){
+        let pic = await authService.downloadPics(path);
         this.json.picURL=pic;
-        
+        this.json.iconImage=pic;
     }
 
 }
@@ -398,8 +398,9 @@ class Encounter extends componentBase{
         this.json.picURL=pic; 
     }
 
-    async copyEncounter(componentList){
-        let newEnc = this.copyComponent(["name"],["Copy of "+ this.getJson().name]);
+    async copyEncounter(componentList, loreId){
+        let id = loreId?loreId:""
+        let newEnc = this.copyComponent(["name", "loreId"],["Copy of "+ this.getJson().name, id]);
         let comps = componentList.getList("monster",this.json._id,"encounterId");
         let enc = await this.operationsFactory.cleanJsonPrepare({"addencounter":newEnc});
         enc = enc.add[0];

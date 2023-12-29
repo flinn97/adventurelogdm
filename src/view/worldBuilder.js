@@ -89,6 +89,7 @@ async componentDidUpdate(){
 
 toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
+  
 };
 
   render() {
@@ -159,7 +160,7 @@ toggleSidebar = () => {
           "The Lore tree lets you quickly find Lore and their connections"}
         className="hover-btn" onClick={this.toggleSidebar} style={{...styles.buttons.buttonAdd,
         fontSize:styles.fonts.fontSmall, display:"flex", flexDirection:"column",
-          padding:"4px 8px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
+          padding:"5px 9px", border:"none", zIndex:"9000", position:"fixed", right:"2%", top:"1vh", backgroundColor:styles.colors.color1+"dd",
           }}>
         {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
         {!this.state.isSidebarVisible &&

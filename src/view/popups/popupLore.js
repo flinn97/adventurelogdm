@@ -17,7 +17,7 @@ export default class PopupLore extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refrence: true,
+      refrence: false,
     }
   }
 
@@ -166,7 +166,9 @@ class MainContent extends Component {
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length - 1];
     let newLink = "";
-    let imageList = state.componentList.getList("image", state.currentComponent.getJson().reference? state.currentComponent.getJson()._id: state.currentComponent.getJson().ogId, "loreId");
+    let refid = state.currentComponent.getJson().reference? state.currentComponent.getJson().ogId:state.currentComponent.getJson()._id;
+    let imageList = state.componentList.getList("image", refid, "loreId");
+    
     let idList = id.split('-');
     
     let lore = state.currentComponent;
@@ -310,14 +312,15 @@ class MainContent extends Component {
 
                 <hr></hr>
 
+                
+                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginBottom: "32px" }}> Lore:
                 <div style={{
                   display: "flex", flexDirection: "row", alignContent: "flex-end",
-                  justifyContent: "flex-end", marginBottom: "-18px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                  marginTop: "12px"
+                  justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                  
                 }}>
                   <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
                 </div>
-                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginBottom: "32px" }}> Lore:
                   <ParentFormComponent app={app} name="desc" obj={lore}
                     theme={"adventureLog"}
                     rows={5}
@@ -329,24 +332,25 @@ class MainContent extends Component {
                       border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                     }}
                     wrapperStyle={{
-                      margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "-10px",
+                      margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "1px",
                       flexDirection: "column", justifyItems: "space-between"
                     }} /></div>
 
 
-                <div style={{
-                  display: "flex", flexDirection: "row", alignContent: "flex-end",
-                  justifyContent: "flex-end", marginBottom: "-30px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                  marginTop: "22px"
-                }}>
-                  <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
-                </div>
+                
 
                 <div
                   style={{
                     color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
                     marginTop: "12px", marginBottom: "32px"
                   }}> Handout:
+                  <div style={{
+                  display: "flex", flexDirection: "row", alignContent: "flex-end",
+                  justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                  
+                }}>
+                  <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
+                </div>
                   <div style={{ display: "flex", flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "100px" }}>
                     {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
                       theme={"adventureLog"}
@@ -383,8 +387,6 @@ class MainContent extends Component {
               {!this.state.showFindEncounter && !this.state.showFindImage &&
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
-                  {/* ///MINI EDITOR */}
-                  {/* instead */}
                   <div className="indent-on-click" style={{
                     ...styles.buttons.buttonAdd,
                     fontSize: styles.fonts.fontSmall,
@@ -393,12 +395,18 @@ class MainContent extends Component {
                     title="Create a new encounter, you can edit it by clicking on it."
                     onClick={() => {
                       debugger
-                      //Taylor
+                      console.log(refid)
+                      // Taylor
+                      
+                      
+                      // Taylor
+                      
                       // I cant get this working
-                      console.log(state.currentComponent?.getJson().name + " Encounter")
+
+                      //error at Opps.setComponentsList (componentsList.js:190:1)
                       state.opps.prepareRun({
                         "addencounter": {
-                          loreId: state.currentComponent?.getJson()._id,
+                          loreId: refid,
                           name: state.currentComponent?.getJson().name + " Encounter", campaignId: id
                         }
                       })
@@ -440,7 +448,7 @@ class MainContent extends Component {
                   <input app={app}
 
                     type="input"
-                    placeholder="Search..."
+                    placeholder={"Search..."}
                     value={this.state.searchTerm}
                     onChange={this.handleSearchChange}
                     style={{
@@ -464,12 +472,12 @@ class MainContent extends Component {
 
                         onClick={async () => {
                           {
-                            let enc = await encounter.copyEncounter(componentList);
+                            await this.setState({showFindEncounter: false });
+                            let enc = encounter.copyEncounter(componentList, state.currentComponent.getJson()._id);
                             if (enc) {
                               state.currentComponent.assign(enc);
                             }
-                            this.setState({ showFindEncounter: false })
-                          }
+                              }
                         }}
 
                         style={{
@@ -579,14 +587,14 @@ class MainContent extends Component {
                     </div>
                   }
                 </div>
-
+                
 
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
                   <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", }}>
 
                     <Upload text="+ Upload"
-                      //PUT THIS IN CAMPAIGN TOO
-                      prepareOnChange={{
+                      
+                      prepareOnChange={ {
                         name: "image", json: {
                           loreId: state.currentComponent.getJson()._id,
                           campaignId: id
@@ -594,16 +602,16 @@ class MainContent extends Component {
                       }}
 
 
-                      obj={app.state.currentComponent}
+                      obj={state.currentComponent}
                       update={true} skipUpdate={true}
 
                       app={app}
                       className="indent-on-click"
 
                     />
-
+                
                   </div>
-
+                  
                   {/* <div className="indent-on-click" 
         title="Find an existing image to add to this lore." 
         style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
@@ -615,6 +623,11 @@ class MainContent extends Component {
         </div> */}
 
                 </div>
+
+                {/* <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} 
+                  style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,}}
+                >
+                  + From Library</div> */}
               </div>
             }
 
@@ -686,7 +699,7 @@ class MainContent extends Component {
                 }}
                 title={"Find pre-made Lore to connect it to this Lore"}
                 style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
-                Connect an Existing Lore
+                Move or Connect Existing Lore
               </div>
             </div>
 
@@ -716,7 +729,7 @@ class MainContent extends Component {
               <input app={app}
 
                 type="input"
-                placeholder="Search..."
+                placeholder={"Search Lore..."}
                 value={this.state.searchTerm}
                 onChange={this.handleSearchChange}
                 style={{
@@ -735,17 +748,16 @@ class MainContent extends Component {
               alignItems: "center", height: "100%", width: "100%",
             }}>
 
-              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
-                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
-
+              
+               
+<div style={{color:styles.colors.color3, width:"fit-content", fontSize:"1.1rem", justifyContent:"center",}}>Edit Copy & Original</div>
+ 
               <ParentFormComponent
                 obj={lore} name="refrence"
 
-                // handleChange={}
-                wrapperStyle={{ width: "fit-content", height: "fit-content", alignContent: "center", justifyContent: "center", alignContent: "center", alignItems: "center", alignText: "center", }}
-                type={"checkbox"}
+                type={"checkbox"} 
                 func={(obj, value) => {
-
+                  
                   this.setState({ refrence: value })
                 }}
                 inputStyle={{
@@ -753,6 +765,13 @@ class MainContent extends Component {
                   color: styles.colors.colorBlack,
                 }}
               />
+
+              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
+                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
+                <div style={{ color: styles.colors.colorWhite + "96", fontSize: styles.fonts.fontSmallest, fontWeight: "400", alignSelf: "center", marginTop: "2px" }}>
+                {this.state.refrence?"(Currently Connecting Lore a Lore Copy)":"(Currently Moving Lore)"}
+              </div>
+
               <div
 
                 style={{
@@ -836,9 +855,7 @@ class MainContent extends Component {
                 }
               </div>
 
-              <div style={{ color: styles.colors.colorWhite + "66", fontSize: styles.fonts.fontSmall, fontWeight: "400", alignSelf: "center", marginTop: "28px" }}>
-                (Once you connect new Lore to this Pin, that Lore will always remain connected to the current Lore)
-              </div>
+              
 
             </div>
 

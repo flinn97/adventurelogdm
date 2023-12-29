@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import "../../App.css"
-import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
-import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
-import EncounterCard from '../pages/encounterCard';
-import AddEncounter from '../AddEncounter';
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
-import EncounterMapItem from '../encounterMapItem';
-import backarrow from '../../pics/backArrow.webp';
-import placeholder from '../../pics/placeholderEncounter.JPG';
-import newWindow from '../../pics/newWindow.png';
-import Upload from '../upload';
-import LoreItemWithNotation from '../loreItemwithNotation';
-import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
+
 
 export default class LibraryForGalleryPopup extends Component {
   constructor(props) {
@@ -101,10 +90,15 @@ class MainContent extends Component {
       <div style={{
         display: "flex", width: "65vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
-        paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "2%",
+        paddingTop: "20px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, 
+        marginBottom:"11px",color:styles.colors.color3
       }}>
-<div style={{width:"100%", minHeight:"200px",}}>
-Click to Copy
+        <div style={{fontSize:styles.fonts.fontSmall, marginTop:"-22px", marginBottom:"22px", position:"absolute", 
+        zIndex:"22", padding:"8px", borderRadius:"11px",
+        background:styles.colors.color1+"e2"}}> Click an Image to Duplicate</div>
+       
+<div style={{width:"100%", minHeight:"200px", }}>
+
 
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 
                   flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap",
