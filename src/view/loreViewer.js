@@ -71,7 +71,7 @@ async componentDidMount(){
   let component = this.props.app.state.componentList.getComponent("campaign", id);
   
   let currentLore = this.props.app.state.currentLore;
-  debugger
+  
   let map = currentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
   if(!map){
     map = await auth.firebaseGetter(currentLore.getJson()._id, this.props.app.state.componentList, "loreId", "map", undefined);

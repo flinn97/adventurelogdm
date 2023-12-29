@@ -85,6 +85,8 @@ export default class App extends Component {
   async componentDidUpdate(props, state){
     if(this.state.backend){
      await this.setState({backend: false});
+     await this.state.componentList.sortSelectedList("lore", "index");
+     this.setState({});
      auth.dispatch(this.state.backendUpdate, this.state.email, undefined, this.state.backendReloader);
     }
     
