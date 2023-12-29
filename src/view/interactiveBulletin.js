@@ -229,7 +229,7 @@ export default class InteractiveBulletin extends Component {
   {this.props.obj &&
                   
                   <div className='hover-btn-highlight' title={"Permanently Delete this Map"}
-                  style={{...styles.buttons.buttonAdd, color:'red', width:"80px", textAlign:"center",  
+                  style={{...styles.buttons.buttonAdd, color:'red', width:"80px", textAlign:"center",  cursor:"pointer",
                   height:"40px",border:"1px solid "+styles.colors.color6, right:12, position:"absolute", top:12,
                   padding:"2px 4px",
                   

@@ -94,7 +94,8 @@ async componentDidMount(){
 }
 this.scrollTo(this.startRef, "smooth")
 
-state.componentList.sortSelectedList("lore", "index");
+await state.componentList.sortSelectedList("lore", "index");
+dispatch({});
 }
 
 
@@ -120,6 +121,7 @@ scrollTo = (ref, behavior) => {
       let pin = compList.getComponent("pin", lore.getJson()._id, "loreId");
       let referenceList = compList.getList("lore", lore.getJson()._id, "ogId");
       let pins = [];
+      debugger
       for(let l of referenceList){
         let p =compList.getComponent("pin", l.getJson()._id, "loreId");
         if(p){
@@ -127,7 +129,7 @@ scrollTo = (ref, behavior) => {
 
         }
       }
-      let pId = parentLore.getJson()._id;
+      let pId = parentLore? parentLore.getJson()._id : undefined;
       let delList = [lore, pin, ... referenceList, ...pins];
       delList=delList.filter(comp=> comp!==undefined);
     let campaignId = toolService.getIdFromURL(true);
@@ -267,7 +269,9 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                   }}
                     
                     onClick={ ()=>{
-                       
+                       //get parent lore of item to delete
+                       let parentItem = Object.keys(state.currentLore.getJson().parentId)[0];
+                       parentItem = state.componentList.getComponent("lore", parentItem, "_id");
                        this.deleteLore(parentItem);
                       }
                     }>

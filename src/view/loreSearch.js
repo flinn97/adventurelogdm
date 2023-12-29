@@ -175,7 +175,7 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px",
             }}
             onClick={async () => {
-              
+              debugger
               const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
                       if(loreListTotalLength > 8){
                       this.setState({searchTerm:newLoreName});}
@@ -187,21 +187,48 @@ export default class LoreSearch extends Component {
               id = id.includes("-") ? id.split('-')[1] : id;
 
               let otherChildren = componentList.getList("lore", id, "parentId");
+              await state.opps.cleanJsonPrepareRun({addlore: {
+                parentId: { [id]: newName + " " }, _id: idS, index: otherChildren.length,
+                type: "lore", name: newName + " " + newLoreName, campaignId: campId
+              }})
+              
 
-              await dispatch(
-                {
-                  operate: "addlore", operation: "cleanJsonPrepareRun",
-                  //                                      CHANGE NAME later
-                  object: {
-                    parentId: { [id]: newName + " " }, _id: idS, index: otherChildren.length,
-                    type: "lore", name: newName + " " + newLoreName, campaignId: campId
-                  },
-                }
-              );
 
 
             }}
           >+ Create Lore</div>
+          <div
+            title={"New Lore, opens in a new Tab"}
+
+            className="hover-btn" style={{
+              ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+              paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
+              borderRadius: "9px", fontSize: "21px",
+            }}
+            onClick={async () => {
+              const newId = state.currentLore ? state.currentLore.getJson()._id: state.currentCampaign.getJson()._id;
+              let href = window.location.href;
+        let splitURL = href.split("/");
+        let id = splitURL[splitURL.length - 1];
+          
+          let otherChildren = componentList.getList("lore",id.includes("-")? state.currentLore.getJson()._id: state.currentCampaign?.getJson()._id ,"parentId");
+              await state.opps.cleanJsonPrepare({addlore: {
+                campaignId: this.props.obj?.getJson().campaignId, index:otherChildren.length,
+                parentId: 
+                {[newId]:"Unnamed"}
+              }});
+              let lore = await state.opps.getUpdater("add")[0]
+            dispatch({
+              popupSwitch: "popupLore",
+              currentComponent:lore
+
+            })
+            
+              // dispatch({popupSwitch:'popupLore', operate:"addlore", operation:"cleanPrepare"})
+
+
+            }}
+          >+ Connect Lore</div>
 
           {loreListTotalLength > 8 &&
             <div style={{

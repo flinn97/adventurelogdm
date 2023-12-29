@@ -128,9 +128,10 @@ class MainContent extends Component {
 
     }
     debugger
+    let updateList = pin? [item, pin]: [item]
 
 
-    await state.opps.prepareRun({ update: [item, pin], del: oldPins });
+    await state.opps.prepareRun({ update:updateList, del: oldPins });
     // let oldPin = componentList.getComponent("pin", item.getJson()._id, "loreId");
     // if (oldPin) {
     //   state.opps.cleanPrepareRun({ del: oldPin })
@@ -387,34 +388,6 @@ class MainContent extends Component {
               {!this.state.showFindEncounter && !this.state.showFindImage &&
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
-                  <div className="indent-on-click" style={{
-                    ...styles.buttons.buttonAdd,
-                    fontSize: styles.fonts.fontSmall,
-                    marginTop: "1vh", alignSelf: "center", padding: "1%"
-                  }}
-                    title="Create a new encounter, you can edit it by clicking on it."
-                    onClick={() => {
-                      debugger
-                      console.log(refid)
-                      // Taylor
-                      
-                      
-                      // Taylor
-                      
-                      // I cant get this working
-
-                      //error at Opps.setComponentsList (componentsList.js:190:1)
-                      state.opps.prepareRun({
-                        "addencounter": {
-                          loreId: refid,
-                          name: state.currentComponent?.getJson().name + " Encounter", campaignId: id
-                        }
-                      })
-
-                      this.setState({ showAddEncounter: true });
-                    }}>
-                    + Create New Encounter
-                  </div>
                   {/* ///MINI EDITOR */}
 
                   <div className="indent-on-click" style={{
@@ -805,7 +778,7 @@ class MainContent extends Component {
 
                           <div className="hover-img" key={index}
                             onClick={async () => {
-                              //debugger
+                              debugger
                               let pin = state.currentPin;
                               if (!this.state.refrence) {
                                 await this.moveLore(item);
