@@ -13,6 +13,7 @@ import newWindow from '../../pics/newWindow.png';
 import Upload from '../upload';
 import LoreItemWithNotation from '../loreItemwithNotation';
 import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
+import { Link } from 'react-router-dom';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -325,7 +326,7 @@ class MainContent extends Component {
                 </div>
                   <ParentFormComponent app={app} name="desc" obj={lore}
                     theme={"adventureLog"}
-                    rows={5}
+                    rows={5} linkLore={true}
                     prepareRun={true}
                     type={"richEditor"} onPaste={this.handlePaste}
                     inputStyle={{

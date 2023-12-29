@@ -224,7 +224,7 @@ scrollTo = (ref, behavior) => {
           {/* < QuillComponent app = {app}/> */}
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
-                        rows={5}
+                        rows={5} linkLore={true}
                         prepareRun={true}
                         type={"richEditor"} onPaste={this.handlePaste}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",

@@ -497,7 +497,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
-                      
+                        linkLore={true}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
