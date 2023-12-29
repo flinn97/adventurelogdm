@@ -438,7 +438,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
         </div>
 
 
-        {/* {(state.currentLore==undefined && */}
+        {(state.currentLore==undefined &&
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
                                             <div className="hover-btn">
@@ -484,8 +484,8 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                                                         zIndex: 2}}/></div>
                                 
 
-                  </div>
-                  {/* } */}
+                  </div>)
+                  }
 
 
              

@@ -54,9 +54,9 @@ export default class ListTreeLink extends Component {
      newLink= idList[0];
     }
 
-      let maxLengthName = 27 - ((this.props.props.c*2)-(this.props.props.c-1));
+      let maxLengthName = 42 - ((this.props.props.c*1.78)-(this.props.props.c-1.5));
       if (maxLengthName <= 15){
-        maxLengthName = 27
+        maxLengthName = 34
       };
       
       
@@ -90,11 +90,12 @@ export default class ListTreeLink extends Component {
       // onClick={() => 
       //   window.open("../campaign/" + newLink, "_blank")
       // } 
-      style={{display:"flex", flexDirection:"column", textDecoration:"none", width:"278px", 
+      style={{display:"flex", flexDirection:"column", textDecoration:"none", width:"480px", 
        alignItems:"center", textDecorationColor:styles.colors.color3, textDecorationThickness:"1px",
         justifyContent:"center", alignContent:"center"}}>
     <div title={"Open "+objName+" in a new tab."} className='hover-img'
-    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", textAlign:"left", width:"100%", marginLeft:"11px"}}
+    style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", textAlign:"left", width:"100%", textOverflow:"ellipsis", overflowWrap:"break-word",
+    marginLeft:"11px"}}
     >
       
       {objName}

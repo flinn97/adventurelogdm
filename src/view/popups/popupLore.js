@@ -7,7 +7,8 @@ import AddEncounter from '../AddEncounter';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
 import backarrow from '../../pics/backArrow.webp';
-import placeholder from '../../pics/placeholderEncounter.JPG';
+
+import q from '../../pics/question.png';
 import newWindow from '../../pics/newWindow.png';
 import Upload from '../upload';
 import LoreItemWithNotation from '../loreItemwithNotation';
@@ -722,27 +723,41 @@ class MainContent extends Component {
             }}>
 
               
-               
-<div style={{color:styles.colors.color3, width:"fit-content", fontSize:"1.1rem", justifyContent:"center",}}>Edit Copy & Original</div>
+               <div style={{display:"flex", flexDirection:"row", alignSelf:"flex-end", marginRight:"82px", marginTop:"8px", marginBottom:"8px"}}>
+            <div 
+            title={"Click the check box to add a reference to the original lore object. This will not move the lore from its original location"}
+            style={{color:styles.colors.color8, width:"fit-content", fontSize:"1.1rem", justifyContent:"center", marginTop:"5px", fontSize:styles.fonts.fontNormal}}>
+              Link to this Lore
+              
+              </div>
  
               <ParentFormComponent
                 obj={lore} name="refrence"
-
+                                
+                title={"Click the check box to add a reference to the original lore object."}
                 type={"checkbox"} 
                 func={(obj, value) => {
-                  
                   this.setState({ refrence: value })
                 }}
+                wrapperStyle={{ width:"fit-content", alignSelf:"flex-end"}}
+                labelStyle={{ background:styles.colors.color2, border:"1px solid "+styles.colors.color3,}}
                 inputStyle={{
                   padding: "2px 4px", color: styles.colors.colorWhite,
                   color: styles.colors.colorBlack,
                 }}
               />
+                      <div className='hover-container' style={{cursor:"help", marginTop:"-9px", marginLeft:"-3px"}}>
+                        <img src={q} style={{width:"18px"}}/>
+                        <div className='hover-div' 
+                        style={{background:styles.colors.color2, width:"640", height:"fit-content", position:"absolute", 
+                        padding:"12px 9px", borderRadius:"11px",  left:-600, top:-10, border:"1px solid grey", boxShadow:"4px 8px 9px black",
+                         fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"d9"}}>
 
-              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
-                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
-                <div style={{ color: styles.colors.colorWhite + "96", fontSize: styles.fonts.fontSmallest, fontWeight: "400", alignSelf: "center", marginTop: "2px" }}>
-                {this.state.refrence?"(Currently Connecting Lore a Lore Copy)":"(Currently Moving Lore)"}
+                                    Click the check box to add a reference to the original lore object. This will not move the lore from its original location and you will be editing the original
+<div style={{marginTop:"8px"}}></div>
+                                    If the check box is not checked, the lore you select will move to this new location.
+                        </div>
+                      </div>
               </div>
 
               <div
