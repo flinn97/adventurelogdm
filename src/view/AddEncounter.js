@@ -136,7 +136,7 @@ this.setState({start:true});}
               >X</div>
 
               <ParentFormComponent app={app} name="name" label="Encounter Name"
-              wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
+              wrapperStyle={{margin: "5px", marginTop:"25px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
               theme={"adventureLog"} rows={1}
               maxLength={app.state.maxLengthShort}
               labelStyle={{marginBottom:"8px"}}
