@@ -378,7 +378,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        //debugger
+        debugger
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -405,6 +405,9 @@ class Auth {
                             if (!component.owner) {
                                 component.owner = email
                             }
+                            if(component.type ==="user"){
+                                component._id = email;
+                            }
                             component.date = await serverTimestamp();
                             await setDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                             break;
@@ -428,8 +431,9 @@ class Auth {
 
             }
         }
-
+        
         if (dispatch) {
+            debugger
 
             dispatch({ dispatchComplete: true, data: obj })
 

@@ -131,6 +131,7 @@ class User extends componentBase{
         ...this.userInfo, 
         role:"GM",
         type: "user",
+        handle:"",
         signUpDate: moment().format('L'),
         paidCustomer: false,
 
