@@ -4,7 +4,7 @@ import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import iconTest from '../pics/iconTest.svg';
+import iconTest from '../pics/iconTest.png';
 import movePin from '../pics/movePin.png';
 import Draggable from 'react-draggable';
 import React from 'react';
