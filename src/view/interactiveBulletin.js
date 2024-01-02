@@ -312,7 +312,7 @@ export default class InteractiveBulletin extends Component {
                     await dispatch({currentComponent:undefined});
                     let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
                     
-                    dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
+                    dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore", currentPin: pin,})
                   }
       
                   else{
