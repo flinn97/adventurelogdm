@@ -213,7 +213,7 @@ export default class InteractiveBulletin extends Component {
         }}
         >
           + Lore Point
-          <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
+          <img src={iconTest} alt='ico' style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
 
         
@@ -225,7 +225,7 @@ export default class InteractiveBulletin extends Component {
 
         {this.state.mapWidth && (this.state.mapWidth !== "") &&
 
-      <img ref={this.imgRef} 
+      <img ref={this.imgRef} alt='map'
    src={this.props.obj?.getJson().picURL} 
   style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"3700px", maxHeight:"2630px" }}/>}
   
@@ -342,7 +342,7 @@ export default class InteractiveBulletin extends Component {
          
 
                   <img
-                draggable="false" src={pin.getJson().iconImage} 
+                draggable="false" src={pin.getJson().iconImage}  alt='ico'
 
                 style={{width:"46px", height:"46px", objectFit:"scale-down", justifySelf:"center", 
                 alignSelf:"center", verticalAlign:"center", 

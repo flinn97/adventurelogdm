@@ -114,7 +114,7 @@ export default class IconChange extends Component {
 
         <div style={{width:"180px", border:"1px solid "+styles.colors.color8, marginRight:"20px", padding:"20px", borderRadius:"22px", height:"fit-content",
         display:"flex", flexDirection:"row", alignContent:"center", justifyContent:"center"}}>
-                          <img src={pin.getJson().iconImage} style={{ height: "72px",  width:"72px", position:"relative", 
+                          <img alt='ico' src={pin.getJson().iconImage} style={{ height: "72px",  width:"72px", position:"relative", 
                               backgroundColor:pin.getJson().iconImage!==image16 ? pin.getJson().colorOverlay:"", 
                               filter:pin.getJson().iconImage!==image16 ?pin.getJson().colorFilter:"",
                               marginRight:pin.getJson().iconImage===image16?"42px":"",
@@ -166,7 +166,7 @@ export default class IconChange extends Component {
                   display:"flex", flexDirection:"row"}}>
 
               {imgSrc!==image16 && 
-                                            <img title={"Upload your own."}
+                                            <img title={"Upload your own."} alt='ico'
                                             style={{ height: w,  width:w, position:"relative", 
                                             backgroundColor:imgSrc!==image16 ? pin.getJson().colorOverlay:"", 
                                             filter:imgSrc!==image16 ?pin.getJson().colorFilter:"",
