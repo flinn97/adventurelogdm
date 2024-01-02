@@ -56,7 +56,7 @@ export default class InitiativeLogComponent extends Component {
      {custom:MonsterMapItemSimplified, props:{app:app,}},
      ]
    }
-   sectionStyle={{marginBottom:"2px", width:w}}
+   sectionStyle={{marginBottom:"2px",}}
    cellStyle={{alignContent:"center", verticalAlign:"center", width:"fit-content"}}
    theme={"logInitiative"}
    />;

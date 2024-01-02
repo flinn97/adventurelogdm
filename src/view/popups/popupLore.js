@@ -7,11 +7,14 @@ import AddEncounter from '../AddEncounter';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
 import backarrow from '../../pics/backArrow.webp';
-import placeholder from '../../pics/placeholderEncounter.JPG';
+
+import q from '../../pics/question.png';
 import newWindow from '../../pics/newWindow.png';
 import Upload from '../upload';
 import LoreItemWithNotation from '../loreItemwithNotation';
 import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
+import { Link } from 'react-router-dom';
+import IconChange from '../iconChange';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -80,6 +83,7 @@ class MainContent extends Component {
       imagesToShow: 5,
       hasChoice: "",
       start:false,
+      showIcon:false,
     };
   }
 
@@ -181,7 +185,8 @@ class MainContent extends Component {
     let placeholder = state.currentPin?.getJson().name;
     let loreId = lore.getJson()._id
 
-
+    let pin = state.currentPin;
+    console.log(state.currentPin)
 
     if (id.includes("-")) {
       let newArr = [...splitURL];
@@ -234,7 +239,54 @@ class MainContent extends Component {
         paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "2%",
       }}>
 
-{this.state.start &&<>
+                    {/* ICON */}
+                          <div   style={{marginTop:"-30px",display:"flex", flexDirection:"", width:"fit-content"}}> 
+                                                      {(this.state.showIcon) &&
+                                          <div className="indent-on-click"
+                                            onClick={() => {
+                                              this.setState({ showIcon: false,})
+                                            }}
+                                            style={{
+                                              ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
+                                              fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "1%"
+                                            }}
+
+                                          >
+                                            <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem" }}
+                                              src={backarrow}
+                                            />
+                                            Back
+                                          </div>}
+                            {/* ICON */}
+                            {(!this.state.showIcon) && <>
+                            <div title="Change icon" className='hover-img' 
+                            style={{ display:"flex", flexDirection:"column", alignContent:"center", alignItems:"center", borderRadius:"11px", cursor:"pointer", background:styles.colors.color8+"04",
+                            justifyContent:"center", border:"1px solid "+styles.colors.color8, padding:"4px 8px",color:styles.colors.color3, fontSize:styles.fonts.fontSmallest, }} onClick={() => {
+                                        this.setState({ showFindEncounter: false, showFindImage: false, showIcon: true, })
+                                      }}>
+                                        Change
+                                        
+                            <div title="Change icon" className='hover-btn' 
+                                  onClick={() => {
+                                              this.setState({ showFindEncounter: false, showFindImage: false, showIcon: true, })
+                                            }} 
+                                  style={{borderRadius:"50%", marginTop:"6px", background:pin?.getJson().colorOverlay, width:"39px", height:"39px", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+                            <div style={{borderRadius:"50%",  width:"36px", background:styles.colors.color1, height:"36px", display:"flex", marginTop:".5px",
+                            flexDirection:"row", justifyContent:"center", alignItems:"center"}}>     
+                                    <img src={pin?.getJson().iconImage}  
+
+                                    style={{margin:"2px", height: '32px', filter:pin.getJson().colorFilter?pin.getJson().colorFilter:"",
+                                     width:"32px", position:"relative", cursor:"pointer", marginTop:"1px",
+                                    borderRadius:"50%"}}/></div> </div>
+                                    </div>
+                                    </>}
+
+                                    {(this.state.showIcon) && <>
+                            <IconChange app={app} pin={pin}/>
+                                    </>}
+                                  </div>
+
+{(this.state.start && !this.state.showIcon) && <>
 
         {this.state.hasChoice === "New" &&
           <div style={{
@@ -263,7 +315,7 @@ class MainContent extends Component {
 
             {/* OTHER STUFF */}
             {!this.state.showFindEncounter && !this.state.showFindImage &&
-              <div style={{ flexDirection: "column", display: "flex", alignSelf: "center" }}>
+              <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop:"-24px", }}>
 
                 <ParentFormComponent app={app} name="name"
 
@@ -324,7 +376,7 @@ class MainContent extends Component {
                 </div>
                   <ParentFormComponent app={app} name="desc" obj={lore}
                     theme={"adventureLog"}
-                    rows={5}
+                    rows={5} linkLore={true}
                     prepareRun={true}
                     type={"richEditor"} onPaste={this.handlePaste}
                     inputStyle={{
@@ -722,27 +774,41 @@ class MainContent extends Component {
             }}>
 
               
-               
-<div style={{color:styles.colors.color3, width:"fit-content", fontSize:"1.1rem", justifyContent:"center",}}>Edit Copy & Original</div>
+               <div style={{display:"flex", flexDirection:"row", alignSelf:"flex-end", marginRight:"82px", marginTop:"8px", marginBottom:"8px"}}>
+            <div 
+            title={"Click the check box to add a reference to the original lore object. This will not move the lore from its original location"}
+            style={{color:styles.colors.color8, width:"fit-content", fontSize:"1.1rem", justifyContent:"center", marginTop:"5px", fontSize:styles.fonts.fontNormal}}>
+              Link to this Lore
+              
+              </div>
  
               <ParentFormComponent
                 obj={lore} name="refrence"
-
+                                
+                title={"Click the check box to add a reference to the original lore object."}
                 type={"checkbox"} 
                 func={(obj, value) => {
-                  
                   this.setState({ refrence: value })
                 }}
+                wrapperStyle={{ width:"fit-content", alignSelf:"flex-end"}}
+                labelStyle={{ background:styles.colors.color2, border:"1px solid "+styles.colors.color3,}}
                 inputStyle={{
                   padding: "2px 4px", color: styles.colors.colorWhite,
                   color: styles.colors.colorBlack,
                 }}
               />
+                      <div className='hover-container' style={{cursor:"help", marginTop:"-9px", marginLeft:"-3px"}}>
+                        <img src={q} style={{width:"18px"}}/>
+                        <div className='hover-div' 
+                        style={{background:styles.colors.color2, width:"640", height:"fit-content", position:"absolute", 
+                        padding:"12px 9px", borderRadius:"11px",  left:-600, top:-10, border:"1px solid grey", boxShadow:"4px 8px 9px black",
+                         fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite+"d9"}}>
 
-              {/* <div style={{ color: this.state.refrence ? 'green' : "white" }} 
-                onClick={() => { this.setState({ refrence: !this.state.refrence }) }}>Move Lore Here</div> */}
-                <div style={{ color: styles.colors.colorWhite + "96", fontSize: styles.fonts.fontSmallest, fontWeight: "400", alignSelf: "center", marginTop: "2px" }}>
-                {this.state.refrence?"(Currently Connecting Lore a Lore Copy)":"(Currently Moving Lore)"}
+                                    Click the check box to add a reference to the original lore object. This will not move the lore from its original location and you will be editing the original
+<div style={{marginTop:"8px"}}></div>
+                                    If the check box is not checked, the lore you select will move to this new location.
+                        </div>
+                      </div>
               </div>
 
               <div
@@ -856,6 +922,7 @@ class TabContent extends Component {
 
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+        
         <div style={{ ...styles.buttons.buttonClose }}
           onClick={this.props.handleClose}
         >
@@ -897,6 +964,9 @@ class Popup extends Component {
       <div className="popup-box" style={{ zIndex: "1010" }}>
         <div ref={this.wrapperRef} className="popupCard"
           style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+            
+            
+
           <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
             onClick={this.props.handleClose}>X</div>
 
@@ -943,6 +1013,7 @@ class PopupWithTab extends Component {
         <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
 
           <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}>
+            
             <TabContent app={app} handleClose={this.props.handleClose} delClick={this.props.delClick} /> <div style={ ///EXIT BUTTON
               styles.buttons.closeicon
             } onClick={this.props.handleClose}>x</div></div>

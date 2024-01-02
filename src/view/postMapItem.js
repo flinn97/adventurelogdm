@@ -6,6 +6,8 @@ import MessageLogComponent from './pages/LogComponents/messageLogComponent';
 import RollLogComponent from './pages/LogComponents/rollLogComponent';
 import InitiativeLogComponent from './pages/LogComponents/initLogComponent';
 import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
+import TokenImage from './tokenImage';
+import placeholderGM from '../pics/addPlayer.png';
 
 
 
@@ -51,7 +53,7 @@ export default class PostMapItem extends Component {
     let obj = this.props.obj;
     let index = this.props.index;
     const isYou = this.whichUser(obj);
-    let sender = this.props.obj.getJson().sender;
+    let sender = this.props.obj?.getJson().sender;
     const marginUser = isYou?"180px":"0px";
     let tLevel = "44";
     let chatItemColor = styles.colors.colorBlack;
@@ -62,16 +64,19 @@ export default class PostMapItem extends Component {
     :
     "linear-gradient(to left, "+chatItemColor+"99, "+chatItemColor+tLevel+")";     
 
-    let pType = obj.getJson().postType;
+    let pType = obj?.getJson().postType;
     let choiceColor = styles.colors.color9+"55";
     let w = "590px";
+    
     let oColors =  obj.getJson().colors ? obj.getJson()?.colors[0]+"66":choiceColor;
 
     const LogComponent = this.componentMap[pType];
 
+    let hasPic = obj.getJson().userPic?obj.getJson().userPic:placeholderGM;
+
     return (
       
-      <div style={{ display: "flex",
+      <div className='hover-container' style={{ display: "flex",
                   flexDirection: "row", width:w,
                   maxWidth:w, justifyContent:"center",
                   borderBottom: sender==="GM"?"solid 3px "+styles.colors.color3+"66":"solid 1px "+styles.colors.colorWhite+"55", 
@@ -89,7 +94,9 @@ export default class PostMapItem extends Component {
           <div style={{ display:"flex",
             width:"2px", backgroundColor: styles.colors.color6,
             }}>
+
              
+
             </div>
              <div style={{ display:"flex",
              width:"1px", backgroundColor: choiceColor, marginLeft:"-11px", marginLeft:"2px",
@@ -98,13 +105,20 @@ export default class PostMapItem extends Component {
                </div>
                </div>}
 
-               
+               {hasPic && !obj?.getJson().isToken && (
+                <div style={{display:"flex", position:"absolute", width:"fit-content", right:-45, zIndex:800, top:-8}}
+                 title={obj?.getJson().name?obj?.getJson().name:"GM"}
+                >
+             <TokenImage app={app} pic={hasPic} width={44} colors={obj?.getJson().colors} />
+             </div>
+              )}
 
 {/* COMPONENT */}
                   {LogComponent ? (<LogComponent {...this.props} isYou={isYou} w={w}/>) : null}
                     
 
-                  {isYou && obj.getJson().postType!=="encounter" && <div  style={{ display:"flex",flexDirection:"row", marginTop:"1.2%", marginBottom:"1.2%", position:"sticky", marginLeft:"13px"}}>
+                  {isYou && obj.getJson().postType!=="encounter" && 
+                  <div  style={{ display:"flex",flexDirection:"row", marginTop:"1.2%", marginBottom:"1.2%", position:"sticky", marginLeft:"13px"}}>
           
              <div style={{ display:"flex",
              width:"1px", backgroundColor: oColors, marginRight:"2px",

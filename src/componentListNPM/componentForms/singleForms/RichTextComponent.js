@@ -3,8 +3,8 @@ import DOMPurify from 'dompurify';
 import moment from 'moment';
 import FormsThemeFactory from '../formThemes/formThemeFactory';
 import adventureLogStyles from "../../themes/adventureLogStyles";
-
-
+import { Link } from 'react-router-dom';
+import toolService from '../../../services/toolService';
 
 
 class RichTextComponent extends Component {
@@ -44,14 +44,21 @@ class RichTextComponent extends Component {
                 l: 'yellow',
                 f: 'green',
                 e: 'maroon',
-                d:'#FFD700'
-           
-            }
+                d:'#FFD700'},
+        config: {
+                    ADD_TAGS: ['a'], // Allow link tags
+                    ADD_ATTR: ['href'], // Allow to attributes
+                
+            },
         };
     }
-    sanitizedData = (data) => ({
-         __html: DOMPurify.sanitize(data)
-      })
+
+    sanitizedData = (data) => (    
+        {
+
+         __html: DOMPurify.sanitize(data, this.state.config)
+      });
+      
 
      replaceHTML(htmlString) {
         debugger
@@ -142,13 +149,17 @@ class RichTextComponent extends Component {
 
 
     async handleChange(e) {
+        const config = {
+            ADD_TAGS: ['a'], // Allow link tags
+            ADD_ATTR: ['href'], // Allow to attributes
+        };
 
             if (!this.ref.current){
                 return
             }
 
         let value = e.key;
-        let innerText = DOMPurify.sanitize(this.ref.current.innerHTML);
+        let innerText = DOMPurify.sanitize(this.ref.current.innerHTML , config);
         
         const cursorPosition = this.getCurrentCursorPosition();
         this.setState({ yourCurrentCursorPosition: cursorPosition });
@@ -206,15 +217,17 @@ class RichTextComponent extends Component {
             const newLength = innerText.length;
             const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
         
-            // Set the cursor position
+                
             this.setCaret(cursorPosition + originalLength);
         }
+
+            
 
 
 
         await this.setState({save:innerText, lastChar: value});
 
-        let save =DOMPurify.sanitize(this.ref.current.innerHTML);
+        let save =DOMPurify.sanitize(this.ref.current.innerHTML, config);
         this.setState({theHtml:save})
         if(!this.props.updateOnClickOutside &&this.state.active){
             this.props.handleChange(save);
@@ -222,7 +235,7 @@ class RichTextComponent extends Component {
             if (this.state.pressCTRL && value==='v'){
                 const originalLength = innerText.length;
                 debugger
-                let save =DOMPurify.sanitize(this.ref.current.innerHTML);
+                let save =DOMPurify.sanitize(this.ref.current.innerHTML, config);
                 let html = this.replaceHTML(save);
                 this.setState({theHtml:html, textHtml:html, pressCTRL: false});
                 this.props.handleChange(html);
@@ -233,7 +246,23 @@ class RichTextComponent extends Component {
                             this.setCaret(cursorPosition)
                         }, 100 )
             }
-            // this.setState({ pressCTRL: false});
+            
+    // Someday help me figure this out Taylor. Change text in richtext to a link to the lore object of the given name
+        //     if ((innerText.includes(']]') && innerText.includes('[[')) && this.props.linkLore){
+        //                 const originalLength = innerText.length;
+        //                 // Check for text within double brackets and replace it with a <Link> element
+        //                 innerText = innerText.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
+        //                     const hrefLore = toolService.getIDFromLoreName(p1);
+        //                     const hrefCamp = toolService.getIdFromURL(true, 1);
+        //                     const href = `/campaign/${hrefCamp}-${hrefLore}`;
+        //                     return `<b>{ </b><a href="${href}" style="color: #CDE8E7; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; margin-left: 2px; margin-right: 2px;">${p1}</a><b> }</b>`;
+        //                 });
+
+        //             await this.setState({ theHtml: innerText, textHtml: innerText });
+        //             const newLength = innerText.length;
+        //             const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
+        //             this.setCaret(cursorPosition + originalLength);
+        //     }
         }
        
     }
@@ -316,14 +345,18 @@ updateContent = (newHtmlContent) => {
 
 
     async componentDidMount() {
-        
+        const config = {
+            ADD_TAGS: ['a'], // Allow link tags
+            ADD_ATTR: ['href'], // Allow to attributes
+            
+        };
         let html;
         if(this.props.html!==undefined){
-            html =  await DOMPurify.sanitize(this.props.html) 
+            html =  await DOMPurify.sanitize(this.props.html, config) 
 
         }
         else{
-           html= await DOMPurify.sanitize(this.props.value) 
+           html= await DOMPurify.sanitize(this.props.value,  config) 
         }
         
         this.setState({textHtml:html})

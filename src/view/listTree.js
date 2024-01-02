@@ -103,13 +103,14 @@ export default class ListTree extends Component {
              <div style={{flexDirection:"row", display:"flex", textDecoration:"none"}} >
              
              <div  style={{flexDirection:"column", display:"flex",textDecoration:"none",
-             alignItems:"center"}} >
+             alignItems:"left"}} >
 
                           {!isHidden &&
                           <Link to={/campaign/+CC.getJson()._id}
-                          className="hover-btn-highlight" style={{...styles.buttons.buttonAdd, marginBottom:"15px", padding:"2px", fontSize:styles.fonts.fontNormal, background:"", boxShadow:"",
+                          className="hover-btn-highlight" 
+                          style={{...styles.buttons.buttonAdd, marginBottom:"15px", padding:"2px", fontSize:styles.fonts.fontNormal, background:"", boxShadow:"",
                                                 textDecoration:"underline 1px "+styles.colors.color8+"48", textUnderlineOffset:"3px", color:styles.colors.color8,
-                                                marginTop:"5px", paddingLeft:"23px",  paddingRight:"23px", border:""}}>
+                                                marginTop:"5px", border:""}}>
 
                             {CC.getJson().title}
                           </Link>}
@@ -130,8 +131,8 @@ export default class ListTree extends Component {
 
 {/* //ADD IMAGE HERE// */}
                       <div className='scroller'  style={{flexDirection:"column", display:"flex",textDecoration:"none", 
-                      
-                       overflowY:"scroll", maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"4px",                   
+                      width:"100%",
+                       overflowY:"scroll", maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"4px",                  
                     }}>
                         <MapComponent app={app}  theme={bord1}
                                              

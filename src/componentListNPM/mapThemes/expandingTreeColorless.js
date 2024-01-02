@@ -8,7 +8,7 @@ class ExpandingTreeColorless {
         let style={
         containerStyle: { 
             default: {display:'flex', flexDirection:"column", backgroundColor:"#ffdead01",
-            width:"280px",height:"fit-content", alignItems:"center", flexDirection:"center",
+            width:"480px",height:"fit-content", alignItems:"center", flexDirection:"center",
             flexWrap:"wrap", alignContent:"center", justifyItems:"center", 
           },
             row: {display:'flex', flexDirection:"row", },

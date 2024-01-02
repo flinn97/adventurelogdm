@@ -2,24 +2,27 @@ import React, { Component } from 'react';
 import "../App.css"
 import Upload from './upload';
 import Draggable from 'react-draggable';
-import iconTest from '../pics/iconTest.svg';
+import iconTest from '../pics/iconTest.png';
 import movePin from '../pics/movePin.png';
 import editPin from '../pics/editPin.png';
-import image1 from '../pics/iconTest.svg';
-import image2 from '../pics/iconCapitol.svg';
-import image4 from '../pics/iconCave.svg';
-import image5 from '../pics/iconDiablo.svg';
-import image6 from '../pics/iconTavern.svg';
-import image7 from '../pics/iconKeep.svg';
-import image8 from '../pics/iconMask.svg';
-import image9 from '../pics/iconMoai.svg';
-import image10 from '../pics/iconSheep.svg';
-import image11 from '../pics/iconTree.svg';
-import image12 from '../pics/iconWall.svg';
-import image13 from '../pics/iconChest.svg';
-import image14 from '../pics/iconGarg.svg';
-import image15 from '../pics/iconSword.svg';
-import image16 from '../pics/newWindow.png';
+
+import image1 from '../pics/iconTest.png';
+import image2 from '../pics/iconCapitol.png';
+import image4 from '../pics/iconHood.png';
+import image5 from '../pics/iconSkull.png';
+import image6 from '../pics/iconTavern.png';
+import image7 from '../pics/iconKeep.png';
+import image8 from '../pics/iconMask.png';
+import image9 from '../pics/iconKnight.png';
+import image10 from '../pics/iconSheep.png';
+import image11 from '../pics/iconTree.png';
+import image12 from '../pics/iconWall.png';
+import image13 from '../pics/iconChest.png';
+import image14 from '../pics/iconGarg.png';
+import image15 from '../pics/iconSword.png';
+
+import image16 from '../pics/iconAddIcon.png';
+
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import backarrow from '../pics/backArrow.webp';
 import auth from '../services/auth';
@@ -210,7 +213,7 @@ export default class InteractiveBulletin extends Component {
         }}
         >
           + Lore Point
-          <img src={iconTest} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
+          <img src={iconTest} alt='ico' style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px", }}></img>
         </div>
 
         
@@ -222,7 +225,7 @@ export default class InteractiveBulletin extends Component {
 
         {this.state.mapWidth && (this.state.mapWidth !== "") &&
 
-      <img ref={this.imgRef} 
+      <img ref={this.imgRef} alt='map'
    src={this.props.obj?.getJson().picURL} 
   style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"3700px", maxHeight:"2630px" }}/>}
   
@@ -309,7 +312,7 @@ export default class InteractiveBulletin extends Component {
                     await dispatch({currentComponent:undefined});
                     let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
                     
-                    dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore"})
+                    dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore", currentPin: pin,})
                   }
       
                   else{
@@ -339,7 +342,7 @@ export default class InteractiveBulletin extends Component {
          
 
                   <img
-                draggable="false" src={pin.getJson().iconImage} 
+                draggable="false" src={pin.getJson().iconImage}  alt='ico'
 
                 style={{width:"46px", height:"46px", objectFit:"scale-down", justifySelf:"center", 
                 alignSelf:"center", verticalAlign:"center", 
@@ -387,7 +390,7 @@ export default class InteractiveBulletin extends Component {
 
                 {(typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&
                 <div style={{cursor:"pointer"}}>
-                              <img 
+                              <img title={"Change Icon"}
                               style={{margin:"2px", height: '28px',  width:"28px", position:"relative", 
                               backgroundColor:imgSrc!==image16 ? pin.getJson().colorOverlay:"", 
                               filter:imgSrc!==image16 ?pin.getJson().colorFilter:"",
@@ -406,7 +409,9 @@ export default class InteractiveBulletin extends Component {
                                           }
                               }}/>
                                 {imgSrc===image16 && 
-                                  <Upload className='hover-divInt'
+                                  <Upload 
+                                  
+                                  className='hover-divInt'
                                   app={app} buttonStyle={{width:"28px",}} 
                                   difWidth={"14.33px"}
                                   update={true}
@@ -425,6 +430,7 @@ export default class InteractiveBulletin extends Component {
 
                 {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&
                               <div
+                              title={imgSrc === "#F4F5F8"?"Invert":"Change Color"}
                               style={{margin:"2px",  height: '28px', width:"28px", position:"relative", backgroundColor: imgSrc, borderRadius:"50%",}}
                               className='hover-divInt'
                               key={index}
@@ -439,8 +445,8 @@ export default class InteractiveBulletin extends Component {
                                 }
 
                                 if (imgSrc == "#F4F5F8"){
-                                  colorNew = "#00000055";
-                                  filterNew = "invert(98%)"
+                                  colorNew = styles.colors.color1+"e2";
+                                  filterNew = "invert(99%)"
                                 }
 
                                 comp.setCompState({
@@ -448,7 +454,10 @@ export default class InteractiveBulletin extends Component {
                                     colorFilter: filterNew
                                 });
                                   state.opps.cleanPrepareRun({update:comp});
-                              }}></div>}
+                              }}>
+                                {imgSrc === "#F4F5F8" &&
+                                <div style={{marginLeft:"3.5px", color:styles.colors.color8, fontWeight:"800", fontSize:styles.fonts.fontSmallest, marginTop:"5px"}}>inv</div>}
+                                </div>}
 
                           </div>
                               ))}

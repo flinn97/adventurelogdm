@@ -20,6 +20,11 @@ import PostLogButton from '../componentListNPM/componentForms/buttons/postLogBut
 import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
 import auth from '../services/auth.js';
 import toolService from '../services/toolService.js';
+import ImageButton from '../componentListNPM/componentForms/buttons/imageButton.js';
+
+import loreB from '../pics/illustrations/loreScript.png';
+import encounterB from '../pics/illustrations/encounterGiant.png';
+import galleryB from '../pics/illustrations/paintingHand.png';
 
 export default class LoreViewer extends Component {
 
@@ -27,7 +32,9 @@ export default class LoreViewer extends Component {
   
   constructor(props) {
     super(props);
-
+    this.encRef = React.createRef();
+    this.loreRef = React.createRef();
+    this.galRef = React.createRef();
     this.state = {
       obj: undefined,
       draggableItems: [{}], // Initialize the draggable items array
@@ -41,6 +48,7 @@ export default class LoreViewer extends Component {
     this.addDraggableItem = this.addDraggableItem.bind(this);
     this.updateSize = this.updateSize.bind(this)
     this.eventLogger = this.eventLogger.bind(this); // bind eventLogger method
+    this.scrollTo = this.scrollTo.bind(this);
     }
 
     handleSearchChange = (e) => {
@@ -112,6 +120,12 @@ updateSize(width, height){
     bulletinWidth:width+"px",
     bulletinHeight:height+"px"
   })
+};
+
+scrollTo = (ref, behavior) => {
+  if (ref?.current) {
+    ref?.current?.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
+  }
 }
 
   render() {
@@ -149,10 +163,60 @@ updateSize(width, height){
     
     return (
       <div style={{minWidth:"100%",}}>
-        
+        {(state.currentLore!==undefined &&
+        <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
+
+                                            <div className="hover-btn">
+          <ImageButton 
+          onClick={() => this.scrollTo(this.loreRef, "smooth")} 
+          app={app} image={loreB} text={"Lore"} wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+          minHeight: "90px",padding:"4px",borderRadius:"12px",
+          width: "270px", minHeight:"95px", backgroundColor:styles.colors.color2+'de',
+          overflow: 'hidden' }}
+          buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                            transform: 'translate(-50%, -50%)', opacity:".77",
+                                            color: styles.colors.color3,
+                                            zIndex: 2}}/>
+                                            </div>
+                                
+                                            <div className="hover-btn">      
+                                <ImageButton 
+                                onClick={() => this.scrollTo(this.encRef, "smooth")} 
+                              app={app} 
+                              image={encounterB} 
+                              text={"Encounters"} 
+                              wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+                              minHeight: "90px",padding:"4px",borderRadius:"12px",
+                              width: "270px", minHeight:"95px",  backgroundColor:styles.colors.color2+'de',
+                              overflow: 'hidden' }}
+                              buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                                                transform: 'translate(-50%, -50%)', opacity:".77",
+                                                                color: styles.colors.color3,
+                                                                zIndex: 2}}/></div>
+                                
+                                <div className="hover-btn">
+                                        <ImageButton onClick={() => this.scrollTo(this.galRef, "smooth")} 
+                                       app={app} 
+                                      image={galleryB} 
+                                      text={"Gallery"} 
+                                      wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
+                                      minHeight: "90px",padding:"4px",borderRadius:"12px",
+                                      width: "270px", minHeight:"95px",  backgroundColor:styles.colors.color2+'de',
+                                      overflow: 'hidden' }}
+                                      buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
+                                                                        transform: 'translate(-50%, -50%)', opacity:".77",
+                                                                        color: styles.colors.color3,
+                                                                        zIndex: 2}}/></div>
+                                
+
+                  </div>)
+                  }
               <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
               justifyContent:"flex-end", marginBottom:"12px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
               marginTop:"12px"}}>
+
+
+                
             <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
               </div>
           <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
@@ -160,7 +224,7 @@ updateSize(width, height){
           {/* < QuillComponent app = {app}/> */}
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
-                        rows={5}
+                        rows={5} linkLore={true}
                         prepareRun={true}
                         type={"richEditor"} onPaste={this.handlePaste}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
@@ -170,6 +234,7 @@ updateSize(width, height){
                       flexDirection:"column", justifyItems:"space-between"}}/>
                       
                       </div>
+                      
 
 
 <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
@@ -272,7 +337,7 @@ marginTop:"22px"}}>
         <div style={{fontSize:".64rem", color:styles.colors.color8}}>Expand and review all Lore</div>
         }
       </div>
-
+      <div ref={this.loreRef}/>
         {this.state.isSidebarVisible && (<div style={{position:"fixed", zIndex:"8000", right:"9px", top:"3vh",  }}>
         {/* SIDEBAR */}    
                   <div   style={{display:"flex", width:"fit-content", height:"100%", }}>
@@ -283,14 +348,14 @@ marginTop:"22px"}}>
           
 
       </div>
-
+      
       <LoreSearch app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
                                 />
 
       {/* ENCOUNTER ENCOUNTER ENCOUNTER */}
       <hr></hr>
       
-
+      <div ref={this.encRef}/>
         <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
         <div>
@@ -429,7 +494,8 @@ marginTop:"22px"}}>
           <hr></hr>
                   <div style={{marginTop:"-10px", color:styles.colors.colorWhite+"55", fontSize:styles.fonts.fontSmall}}>{lore.getJson().name} Gallery</div>
                   <GalleryViewer app={app} type="card" options={{tabType:"bigCardBorderless", cardType:undefined}}
-                      />   
+                  
+                      />  <div ref={this.galRef}/>  
 
 
                                     

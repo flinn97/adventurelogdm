@@ -438,7 +438,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
         </div>
 
 
-        {/* {(state.currentLore==undefined && */}
+        {(state.currentLore==undefined &&
         <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
 
                                             <div className="hover-btn">
@@ -484,8 +484,8 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                                                                         zIndex: 2}}/></div>
                                 
 
-                  </div>
-                  {/* } */}
+                  </div>)
+                  }
 
 
              
@@ -497,7 +497,7 @@ style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content",
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
-                      
+                        linkLore={true}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}

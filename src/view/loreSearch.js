@@ -108,11 +108,8 @@ export default class LoreSearch extends Component {
     let listTerm = state.currentLore ? "parentId" : "parentId";
     //campaign shows ONLY top level lore
 
-    let path = window.location.pathname;
-    let parts = path.split('/');
-    let idSegment = parts.pop();
-    let idParts = idSegment.split('-');
-    let campId = idParts[0];
+    
+    let campId = toolService.getIdFromURL(true,0);
 
 
 

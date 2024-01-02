@@ -61,5 +61,10 @@ class ToolService {
         }
     }
 
+    getIDFromLoreName = (word) => {
+      let w = word;
+      console.log(w);
+    }
+
   };
   export default new ToolService();
