@@ -107,8 +107,9 @@ export default class IconChange extends Component {
             "#C1A71Bbb", "#1E90FFbb", "#5F0C0Cae", 
             '#3F612D', '#5F4E38', '#DB8A74', '#F45D01', '#82379D', 
             "#e4ddee55","#FF1B1B", "#0D453088", "#ffffff", "#0f141cf3",
+
             //special
-            
+            // v v v
             "#F4F5F8",'#ffdead',"#4F4F6E", ];
 
     const w = "42px";
@@ -200,7 +201,11 @@ export default class IconChange extends Component {
 
                           </div>
                               ))}
-
+                              <div style={{width:"100%", display:"flex", flexDirection:"row-reverse", marginTop:"3px", marginBottom:"-4px"}}>
+                                  <a href={'https://game-icons.net'} target='_blank'
+                                  style={{color:styles.colors.color8, alignSelf:"flex-end", 
+                                  justifySelf:"flex-end", width:"fit-content", fontSize:styles.fonts.fontSmallest, textUnderlineOffset:"2px"}}>
+                                    game-icons.net</a></div>
 <hr></hr>
 
 

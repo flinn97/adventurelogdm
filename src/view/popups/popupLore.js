@@ -275,7 +275,8 @@ class MainContent extends Component {
                             flexDirection:"row", justifyContent:"center", alignItems:"center"}}>     
                                     <img src={pin?.getJson().iconImage}  
 
-                                    style={{margin:"2px", height: '32px',  width:"32px", position:"relative", cursor:"pointer", marginTop:"1px",
+                                    style={{margin:"2px", height: '32px', filter:pin.getJson().colorFilter?pin.getJson().colorFilter:"",
+                                     width:"32px", position:"relative", cursor:"pointer", marginTop:"1px",
                                     borderRadius:"50%"}}/></div> </div>
                                     </div>
                                     </>}
@@ -314,7 +315,7 @@ class MainContent extends Component {
 
             {/* OTHER STUFF */}
             {!this.state.showFindEncounter && !this.state.showFindImage &&
-              <div style={{ flexDirection: "column", display: "flex", alignSelf: "center" }}>
+              <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop:"-24px", }}>
 
                 <ParentFormComponent app={app} name="name"
 
