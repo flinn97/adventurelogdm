@@ -17,12 +17,16 @@ import image15 from '../pics/iconSword.png';
 import image1a from "../pics/iconCrown.png";
 import image2a from "../pics/iconHood.png";
 import image3a from "../pics/iconAngel.png";
-import imageS from "../pics/iconStar.png"
+import imageS from "../pics/iconStar.png";
+import imageM from "../pics/iconMoon.png";
+import iconCh from "../pics/iconChev.png";
+import iconR from "../pics/iconRune.png";
 
 import image17x from '../pics/iconXWhite.png';
 import image18x from '../pics/iconXRed.png';
 import image17y from '../pics/iconCheckWhite.png';
 import image18y from '../pics/iconCheckGreen.png';
+import image17null from '../pics/iconXnon.png';
 
 import locA from '../pics/loc/A.png';
 import locB from '../pics/loc/B.png';
@@ -32,10 +36,14 @@ import locE from '../pics/loc/E.png';
 import locF from '../pics/loc/F.png';
 import locG from '../pics/loc/G.png';
 import locH from '../pics/loc/H.png';
-// import locaa from '../pics/loc/a lower.png';
-// import locbb from '../pics/loc/b_lower.png';
-// import loccc from '../pics/loc/c_lower.png';
+import lockey from '../pics/iconKeyhole.png';
+import locSec from '../pics/loc/Secret.png';
+import locTrap from '../pics/loc/trap.png';
+import locaa from '../pics/loc/a lower.png';
+import locbb from '../pics/loc/b_lower.png';
+import loccc from '../pics/loc/c_lower.png';
 
+import num0 from '../pics/loc/0n.png';
 import num1 from '../pics/loc/1n.png';
 import num2 from '../pics/loc/2n.png';
 import num3 from '../pics/loc/3n.png';
@@ -87,13 +95,13 @@ export default class IconChange extends Component {
 
     const images = [image16,
       image1,image2,image2a,image5,image6,image7,image8,
-      image9,image10,image11,image12,image13,image14, image15, image4, image1a, image3a,imageS, imageQ, imageP,
-
-      image17x,image18x,
-      image17y,image18y,
-
+      image9,image10,image11,image12,image13,image14, image15, image4, image1a, image3a, imageM, iconCh, iconR, imageS, imageQ, imageP,
+      image17null,
+      image17x,image18x, 
+      image17y,image18y,lockey,
+      locSec, locTrap, 
     locA, locB, locC, locD, locE, locF, locG, locH, 
-    // locaa, locbb, loccc,
+    locaa, locbb, loccc, num0,  
       num1,num2,num3,num4,num5,num6,num7,num8,num9,num10,
             
             "#C1A71Bbb", "#1E90FFbb", "#5F0C0Cae", 

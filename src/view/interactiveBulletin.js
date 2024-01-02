@@ -8,7 +8,7 @@ import editPin from '../pics/editPin.png';
 
 import image1 from '../pics/iconTest.png';
 import image2 from '../pics/iconCapitol.png';
-import image4 from '../pics/iconCave.png';
+import image4 from '../pics/iconHood.png';
 import image5 from '../pics/iconSkull.png';
 import image6 from '../pics/iconTavern.png';
 import image7 from '../pics/iconKeep.png';
