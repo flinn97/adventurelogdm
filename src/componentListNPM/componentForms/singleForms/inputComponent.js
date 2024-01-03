@@ -101,7 +101,9 @@ class InputFormComponent extends Component {
     }
 
     calculateMath(value) {
+        if (value){
         const originalValue = parseInt(this.state.value, 10) || 0;
+        
                 if (value.match) {
                 const match = value.match(/([+-]\d+)$/);
             
@@ -112,7 +114,7 @@ class InputFormComponent extends Component {
     }
         this.setState({ value: value, rerender: false })
         return value;
-    }
+    }}
 
     render() {
         let theme= undefined;
