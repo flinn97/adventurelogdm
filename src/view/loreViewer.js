@@ -295,12 +295,12 @@ marginTop:"22px"}}>
                 });
 
                 state.opps.run();
-                this.setState({map:map});
+                this.setState({map:map, currentMap:map});
 
               }}
 
                text="Add Map" style={{display:"flex", marginBottom:"20px",
-              zIndex:"1", borderRadius:".1vmin", background:"",}} 
+              zIndex:"1", borderRadius:".1vmin", background:"", cursor:"pointer"}} 
               update={true} skipUpdate={true}
                app={app}/>
 

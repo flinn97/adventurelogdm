@@ -46,6 +46,7 @@ export default class InteractiveBulletin extends Component {
       mapWidth:"1400px",
       start:false,
       isLoading: true,
+      hide:false,
     }}
 
   async componentDidMount(){
@@ -72,7 +73,7 @@ export default class InteractiveBulletin extends Component {
     }
     ///assign pins to current mapId
 
-    this.setState({isLoading: false});
+    this.setState({isLoading: false, start:true});
     if(this.imgRef?.current){
       this.setState({imgRef: this.imgRef.current})
     }
@@ -220,16 +221,7 @@ export default class InteractiveBulletin extends Component {
 
       </div>
 
-      
-      <div style={{ position:"relative", width:"100%", height:"100%",}}>
-
-        {this.state.mapWidth && (this.state.mapWidth !== "") &&
-
-      <img ref={this.imgRef} alt='map'
-   src={this.props.obj?.getJson().picURL} 
-  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"3700px", maxHeight:"2630px" }}/>}
-  
-  {this.props.obj &&
+      {this.props.obj &&
                   
                   <div className='hover-btn-highlight' title={"Permanently Delete this Map"}
                   style={{...styles.buttons.buttonAdd, color:'red', width:"80px", textAlign:"center",  cursor:"pointer",
@@ -238,16 +230,31 @@ export default class InteractiveBulletin extends Component {
                   
                   }}  
                   onClick={()=>{
+                    console.log(this.props.obj);
+                          
                           state.opps.cleanPrepareRun({del:this.props.obj});
                           this.setState({map:undefined});
+                          console.log(this.state.map);
                         }}>
                          <img src={trash} style={{width:"34px", cursor:"pointer", zIndex:991 }}/>
                         </div>
         }   
+      <div style={{ position:"relative", width:"100%", height:"100%",}}>
+        
+
+        {this.state.mapWidth && (this.state.mapWidth !== "") &&
+
+      <img ref={this.imgRef} alt='map' 
+      
+   src={this.props.obj?.getJson().picURL} 
+  style={{ position:"absolute", top:0, left:0,  borderRadius:"17px", maxWidth:"3700px", maxHeight:"2630px" }}/>}
+  
+  
   {/* {this.state.start && */}
 
-  {/* IMAGE BACKGROUND */}
-  <div ref={this.parentRef}  style={{position:"absolute", top:0, left:0,
+  {/* IMAGE BACKGROUND */}{this.props.obj &&
+  <div ref={this.props.obj}  
+              style={{position:"absolute", top:0, left:0,
    width: this.state.mapWidth, 
    height:this.state.mapHeight 
    }}>
@@ -507,7 +514,7 @@ export default class InteractiveBulletin extends Component {
 
   </Draggable>
   )}
-  </div> 
+  </div> }
   
   {/* } */}
   </div>

@@ -797,7 +797,7 @@ class MainContent extends Component {
                   color: styles.colors.colorBlack,
                 }}
               />
-                      <div className='hover-container' style={{cursor:"help", marginTop:"-9px", marginLeft:"-3px"}}>
+                      <div className='hover-container' style={{cursor:"help", marginTop:"-9px", marginLeft:"-3px", height:"18px"}}>
                         <img src={q} style={{width:"18px"}}/>
                         <div className='hover-div' 
                         style={{background:styles.colors.color2, width:"640", height:"fit-content", position:"absolute", 

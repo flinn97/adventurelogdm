@@ -13,6 +13,8 @@ import placeholder from '../pics/placeholderEncounter.JPG';
 import InteractiveBulletin from './interactiveBulletin';
 import LoreListCard from './pages/loreListCard';
 import MapUploader from './uploadMap.js';
+import toolService from '../services/toolService.js';
+import colorService from '../services/colorService.js';
 
 export default class Worldbuilder extends Component {
 
@@ -57,35 +59,62 @@ export default class Worldbuilder extends Component {
     //and stops dragging it, respectively.
  
  componentDidMount(){
-  let opps = this.props.app.state.opps
-  let href = window.location.href;
-  let splitURL = href.split("/");
-  let id = splitURL[splitURL.length-1];
+       let obj = this.props.obj;
+      let app = this.props.app;
+  let opps = this.props.app.state.opps; 
+  let state = app.state;
+  let componentList = state.componentList;
+  
+  let id = toolService.getIdFromURL(true,0);
   let component = this.props.app.state.componentList.getComponent("campaign", id);
-  if(component){
-  let parentLore = this.props.app.state.componentList.getList("lore",id, "campaignId" );
-  
-  parentLore = parentLore.length>0? parentLore.filter(obj=>{return obj.getJson().parentLore===true}): undefined;
-  
-  let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0]?.getJson()._id, "loreId");
-  this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
-  //RICH TEXT READ
-  let campaignDesc = document.getElementById("campaignDesc");
-  if(campaignDesc){
-    campaignDesc.innerHTML = component.getJson().description;
+          if(component){
+                              let parentLore = this.props.app.state.componentList.getList("lore",id, "campaignId" );
+                              
+                              parentLore = parentLore.length>0? parentLore.filter(obj=>{return obj.getJson().parentLore===true}): undefined;
 
+                              let mapList = componentList.getList("map",obj?.getJson()._id,"loreId");
+
+                              let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0]?.getJson()._id, "loreId");
+                              this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
+                              //RICH TEXT READ
+                              let campaignDesc = document.getElementById("campaignDesc");
+                              if(campaignDesc){
+                                campaignDesc.innerHTML = component.getJson().description;
+
+                              }
+                              this.setState({currentMap:map});
+                              let currentMap = mapList[0];
+                              if (mapList.length > 0){
+                                this.setState({mapList:mapList, currentMap:currentMap});
+                              }
+          }
+
+  
+}
+
+
+  
+
+  async componentDidUpdate(props, state){
+    if(this.props.update){
+      await this.props.dispatch();
+      this.setState({map:undefined})
+    }
+    let obj = this.props.obj;
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    let currentState = app.state;
+    let componentList = currentState.componentList;
+    let mapList = componentList.getList("map",obj.getJson()._id,"loreId");
+    
+    if (state.mapList.length !== mapList.length)
+    {
+      
+      this.setState({mapList:mapList, currentMap: mapList[mapList.length-1],})
+    };
+    
   }
-}
 
-  
-}
-
-async componentDidUpdate(){
-  if(this.props.update){
-    await this.props.dispatch();
-    this.setState({map:undefined})
-  }
-}
 
 toggleSidebar = () => {
   this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
@@ -123,15 +152,35 @@ toggleSidebar = () => {
 <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path)=>{
-                
+                let lore = this.state.lore;
 
                 let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: this.state.obj.getJson()._id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];
                 await map.getPicSrc(path);
+
+              
+
+                let colors = colorService.updateColors(pic, (palette) => {
+                  this.setState({ colors: palette }, async () => {
+                    let con = this.state.colors;
+                    let list = Object.values(con);
+                    await this.setState({colors: list});
+                    
+                    // Update lore colors
+                    let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
+                    let newAllColors = allColors.concat(list);
+                    await lore.setCompState({ colors: newAllColors });
+                    dispatch({
+                      operate:"update", operation:"cleanPrepareRun", object: lore
+                    })
+                    
+                   
+                  });
+                });
                 
                 state.opps.run();
-                this.setState({map:map})
+                this.setState({map:map, currentMap:map})
 
               
               }} 
@@ -146,12 +195,13 @@ toggleSidebar = () => {
           </div> */}
 
           {/* <div style={{color:'white'}}>{this.state.lore?.getJson().name}</div> */}
-      
-        {(this.state.map) && 
+          
+        {(map) &&
       //  frame
        <div style={{height:this.state.bulletinHeight?this.state.bulletinHeight:"1310px", width: this.state.bulletinWidth?this.state.bulletinWidth:"100%", 
        }}>
-        <InteractiveBulletin app={app} obj = {this.state.map} updateSize = {this.updateSize}/>
+        
+        <InteractiveBulletin app={app} obj={this.state.currentMap} updateSize = {this.updateSize}/>
         {/* backgroundIMAGE */}
         </div>}
 

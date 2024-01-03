@@ -33,6 +33,7 @@ export default class MapGallery extends Component {
       })
       this.props.updateSize(width,height)
     }
+    
     componentDidUpdate(props, state){
       let obj = this.props.obj;
       let app = this.props.app;
@@ -81,7 +82,7 @@ export default class MapGallery extends Component {
 
        
 
-        {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
+        {this.state.mapList?.indexOf(this.state.currentMap)!==0 && this.state.currentMap &&
         <div className="hover-btn"
         onClick={this.handlePrevMap}
         style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, cursor:"pointer",
