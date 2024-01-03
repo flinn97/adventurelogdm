@@ -22,12 +22,15 @@ import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
-
+import Register from './view/register';
 import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 import SplashScreen from './view/pages/splashScreen';
 import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
 import auth from './services/auth';
+import AfterPayment from './view/afterPayment';
+import PaymentFailed from './view/paymentFailed';
+import PlayerRegister from './view/playerRegister';
 
 //model
 export default class Dispatch extends Component {
@@ -59,7 +62,7 @@ export default class Dispatch extends Component {
     
 <BrowserRouter>
     {/*      === */}
-  {state.user===undefined?(<Login app={app}/>):(
+  {(state.user!==undefined &&  state.user?.getJson()?.paidCustomer) &&(
     
     
     <div>
@@ -170,7 +173,8 @@ justifyContent: "center",}}>
                 )}
                 
                 <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}} />}/> 
-                <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
+                <Route path="/login/" element={<Login app={app} />}/>
+                <Route path="/register/" element={<Register app={app} />}/>
 
                 
           </Routes>
@@ -190,8 +194,7 @@ justifyContent: "center",}}>
         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
         <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
 
-        {/* <Route path="/login/" element={<Login app={app} />}/> 
-        <Route path="/register/" element={<Register app={app} />}/> */}
+        
       
 </Routes>)}
 
@@ -199,8 +202,18 @@ justifyContent: "center",}}>
 </div>
      </div>}
      </div>)}
-
-     
+     {(state.user!==undefined &&  !state.user?.getJson()?.paidCustomer && state.user?.getJson().role==="GM") &&(
+      <div style={{width:"100%", height:"100%", position:"absolute", left:"0", top:"0", background:'black'}}>
+        <PaymentFailed app = {app} />
+      </div>
+     )}
+     <Routes>
+     <Route path="/register/" element={<Register app={app} />}/>
+     <Route path="/playerregister/" element={<PlayerRegister app={app} />}/>
+     <Route path="/login/" element={<Login app={app} />}/>
+     <Route path="/" element={<Login app={app} />}/>
+     <Route path="/paymentprocessing/" element={<AfterPayment app={app} />}/>
+     </Routes>
      </BrowserRouter>
   )}
 }
