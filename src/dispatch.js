@@ -205,14 +205,19 @@ justifyContent: "center",}}>
      {(state.user!==undefined &&  !state.user?.getJson()?.paidCustomer && state.user?.getJson().role==="GM") &&(
       <div style={{width:"100%", height:"100%", position:"absolute", left:"0", top:"0", background:'black'}}>
         <PaymentFailed app = {app} />
+                        {/* //ISAAC UI */}
       </div>
      )}
      <Routes>
+
      <Route path="/register/" element={<Register app={app} />}/>
      <Route path="/playerregister/" element={<PlayerRegister app={app} />}/>
+            {/* //ISAAC UI */}
+
      <Route path="/login/" element={<Login app={app} />}/>
      <Route path="/" element={<Login app={app} />}/>
      <Route path="/paymentprocessing/" element={<AfterPayment app={app} />}/>
+            {/* //ISAAC UI */}
      </Routes>
      </BrowserRouter>
   )}
