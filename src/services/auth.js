@@ -165,6 +165,7 @@ class Auth {
 
                     ]
                 })
+                
             }
         }
     }
@@ -271,6 +272,7 @@ class Auth {
             if (componentList !== undefined && dispatch !== undefined) {
                 await localStorage.setItem("user", JSON.stringify(saveUser));
                 await this.getuser(email, componentList, dispatch);
+            
 
             }
 

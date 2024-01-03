@@ -29,6 +29,8 @@ import SplashScreen from './view/pages/splashScreen';
 import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
 import auth from './services/auth';
 import AfterPayment from './view/afterPayment';
+import PaymentFailed from './view/paymentFailed';
+import PlayerRegister from './view/playerRegister';
 
 //model
 export default class Dispatch extends Component {
@@ -200,8 +202,16 @@ justifyContent: "center",}}>
 </div>
      </div>}
      </div>)}
+     {(state.user!==undefined &&  !state.user?.getJson()?.paidCustomer && state.user?.getJson().role==="GM") &&(
+      <div style={{width:"100%", height:"100%", position:"absolute", left:"0", top:"0", background:'black'}}>
+        <PaymentFailed app = {app} />
+      </div>
+     )}
      <Routes>
      <Route path="/register/" element={<Register app={app} />}/>
+     <Route path="/playerregister/" element={<PlayerRegister app={app} />}/>
+     <Route path="/login/" element={<Login app={app} />}/>
+     <Route path="/" element={<Login app={app} />}/>
      <Route path="/paymentprocessing/" element={<AfterPayment app={app} />}/>
      </Routes>
      </BrowserRouter>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import auth from '../services/auth';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import { Link } from 'react-router-dom';
 
 export default class Register extends Component {
     constructor(props) {
@@ -86,10 +87,11 @@ export default class Register extends Component {
                              })
 
                         }}/>
-                        <div style={{}} onClick={this.handleSubmission}>
+                        <div style={{color:"white"}} onClick={this.handleSubmission}>
                             Submit
                         </div>
-
+                        <Link to="../login" >Login</Link>
+                        <Link to="../playerregister" >Register As Player Instead</Link>
 
                     </div>
 

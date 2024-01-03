@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import authService from '../services/auth';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
     constructor(props){
@@ -84,6 +85,7 @@ export default class Login extends Component {
                          <button className="hover-btn" style={{...styles?.buttons?.buttonAdd, marginTop:"2vh",color: styles?.colors?.color3, fontSize: styles?.fonts?.fontHeader2,}} class= "btn" onClick={this.handleSubmission}>Login</button>
                     
                      </div>
+                     <Link to ="../register">Register</Link>
                      </div>
                  </div>
              )
