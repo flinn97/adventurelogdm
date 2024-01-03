@@ -44,6 +44,9 @@ export default class AdventureLogPage extends Component {
     let idSegment = toolService.getIdFromURL(true);
     let campaigns = compList.getList("campaign", idSegment, "_id");
     let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
+    let components = await compList.getComponents();
+    debugger
+    
 
     await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
     
@@ -53,7 +56,7 @@ export default class AdventureLogPage extends Component {
     await this.setState({ textI: "",showItems: true, showPopup:false  }); 
     app.dispatch({ rerender: true });
     auth.firebaseGetter(currentCampId, state.componentList, "campaignId", "lore");
-
+    await state.componentList.sortSelectedListbyFirebaseDate("post");
   }
 
 

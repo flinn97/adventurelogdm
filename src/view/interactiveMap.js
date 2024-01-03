@@ -46,6 +46,7 @@ export default class InteractiveMap extends Component {
 
     
     this.setState({width: this.currentMap?.current?.width, height: this.currentMap?.current?.height, map:map})
+    
   }
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.printref);

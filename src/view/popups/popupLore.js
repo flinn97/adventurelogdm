@@ -186,7 +186,6 @@ class MainContent extends Component {
     let loreId = lore.getJson()._id
 
     let pin = state.currentPin;
-    console.log(state.currentPin)
 
     if (id.includes("-")) {
       let newArr = [...splitURL];
@@ -240,6 +239,7 @@ class MainContent extends Component {
       }}>
 
                     {/* ICON */}
+                    {state.popupSwitch!=="popupLoreWithoutPin"&&
                           <div   style={{marginTop:"-30px",display:"flex", flexDirection:"", width:"fit-content"}}> 
                                                       {(this.state.showIcon) &&
                                           <div className="indent-on-click"
@@ -275,7 +275,7 @@ class MainContent extends Component {
                             flexDirection:"row", justifyContent:"center", alignItems:"center"}}>     
                                     <img src={pin?.getJson().iconImage}  
 
-                                    style={{margin:"2px", height: '32px', filter:pin.getJson().colorFilter?pin.getJson().colorFilter:"",
+                                    style={{margin:"2px", height: '32px', filter:pin?.getJson().colorFilter?pin?.getJson().colorFilter:"",
                                      width:"32px", position:"relative", cursor:"pointer", marginTop:"1px",
                                     borderRadius:"50%"}}/></div> </div>
                                     </div>
@@ -284,7 +284,7 @@ class MainContent extends Component {
                                     {(this.state.showIcon) && <>
                             <IconChange app={app} pin={pin}/>
                                     </>}
-                                  </div>
+                                  </div>}
 
 {(this.state.start && !this.state.showIcon) && <>
 

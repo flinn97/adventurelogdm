@@ -210,13 +210,13 @@ export default class LoreSearch extends Component {
           
           let otherChildren = componentList.getList("lore",id.includes("-")? state.currentLore.getJson()._id: state.currentCampaign?.getJson()._id ,"parentId");
               await state.opps.cleanJsonPrepare({addlore: {
-                campaignId: this.props.obj?.getJson().campaignId, index:otherChildren.length,
+                campaignId: state.currentCampaign?.getJson()._id, index:otherChildren.length,
                 parentId: 
                 {[newId]:"Unnamed"}
               }});
               let lore = await state.opps.getUpdater("add")[0]
             dispatch({
-              popupSwitch: "popupLore",
+              popupSwitch: "popupLoreWithoutPin",
               currentComponent:lore
 
             })

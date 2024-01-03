@@ -155,7 +155,20 @@ justifyContent: "center",}}>
                 delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
                 currentDelObj:undefined,})}}
               />}
+              {state.popupSwitch === "popupLoreWithoutPin" 
+              && (state.currentComponent?.getJson().type === "lore") 
+              &&
+              <PopupLore
               
+                type="popup" options={{cardType:"popupMedium"}} app={app} 
+                containerStyle={{backgroundColor:styles.colors.color1+"55",}}
+                handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined, 
+                currentComponent:undefined, currentPin:undefined});
+                state.opps.clearUpdater();
+              }}
+                delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
+                currentDelObj:undefined,})}}
+              />}
        
      {state.user.getJson().role!=="GM"?(
       

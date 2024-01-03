@@ -378,7 +378,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        //debugger
+        
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {

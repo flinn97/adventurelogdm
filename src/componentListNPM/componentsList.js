@@ -293,6 +293,9 @@ export default class Opps {
         this.components= [...arr];
         this.setComponentsList(); 
     }
+    setComponentList(list){
+        this.componentsList = list 
+    }
 
     setSelectedList(type, list){
         this.componentsList[type] = list;
