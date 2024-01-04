@@ -140,7 +140,13 @@ export default class ListTree extends Component {
                         
                         cells={cells}
 
-                        filter={{search: _id, attribute: attribute}}  />
+                        filter={{search: _id, attribute: attribute}}  filterFunc={(lore)=>{
+                          if(!lore.getJson().reference){
+                            return true;
+                          }
+                          else{
+                            return false;
+                          }}}/>
                       </div>
               </div>
             </div>

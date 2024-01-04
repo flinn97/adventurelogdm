@@ -180,6 +180,7 @@ class Pin extends componentBase{
         y:"",
         mapId:"",
         loreId:"",
+        referencePin: false,
         colorOverlay:"#5F0C0Cae",
         colorFilter:""
         
