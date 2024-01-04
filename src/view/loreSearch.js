@@ -114,7 +114,7 @@ export default class LoreSearch extends Component {
 
 
     let loreList = componentList.getList("lore", id, listTerm).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
-    .filter(lore => !lore.getJson().parentLore)
+    .filter(lore => !lore.getJson().parentLore).filter(lore=> !lore.getJson().reference)
       .filter(loreItem => {
         const name = loreItem?.getJson()?.name;
         if (this.state.searchTerm === "") {

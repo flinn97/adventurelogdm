@@ -637,7 +637,14 @@ export default class MapComponent extends Component {
     styles.containerStyle.default//otherwise
   }>
         
-      {componentList.getList(this.props.name, this.props.filter?.search, this.props.filter?.attribute).map((item, index)=>
+      {componentList.getList(this.props.name, this.props.filter?.search, this.props.filter?.attribute).filter((obj)=>{
+        if(this.props.filterFunc){
+          return this.props.filterFunc(obj)
+        }
+        else{
+          return true
+        }
+      }).map((item, index)=>
        <div style={this.props.sectionStyle? //if
        this.props.sectionStyle: //then
      this.props.sectionTheme? //else if
