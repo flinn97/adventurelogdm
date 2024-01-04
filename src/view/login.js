@@ -48,7 +48,7 @@ export default class Login extends Component {
         return(
                     <div style={{
                         padding:"5%", transition:"all ease-out", justifyContent:"center", flexDirection:"row", display:"flex",
-                        width:"100%", paddingTop:"35px",
+                        width:"100%", paddingTop:"35px", 
                         }}>
                            
                         <div 
@@ -58,7 +58,7 @@ export default class Login extends Component {
                          alignItems: "center",
                          alignSelf: "center",
                         }}>
-                                            <img src={logo} style={{width:"214px"}}/>
+                                            <img  src={logo} style={{width:"214px" , userSelect:"none",}} draggable="false"/>
                             
                             <div style={{opacity:".94",  paddingBottom:"40px", width:"fit-content" }}>
                             
@@ -99,11 +99,20 @@ export default class Login extends Component {
                          color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSubheader1,}} 
                          class="hover-btn" onClick={this.handleSubmission}>
                             Login</button>
-                    
+
+                            <div 
+                        style={{display: "flex", flexDirection:"column", justifyContent:"center", width:"200%", 
+                        background:"#0000002e", borderRadius:"28px", height:"6px", marginTop:"10px", marginBottom:"-2px",
+                         alignContent: "center",
+                         alignItems: "center",
+                         alignSelf: "center",
+                        }}></div>
                      
-                     <Link style={{...styles?.buttons?.buttonAdd, marginTop:"24px", padding:"8px 19px", width:"155px",
+                     <Link style={{...styles?.buttons?.buttonAdd, marginTop:"12px", padding:"8px 19px", width:"155px",
                          color: styles?.colors?.colorWhite+"98", fontSize: styles?.fonts?.fontNormal,}}  to ="../register">Register</Link></div>
                      </div>
+
+                    
                  </div>
              )
     }
