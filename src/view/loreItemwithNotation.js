@@ -83,7 +83,7 @@ export default class LoreItemWithNotation extends Component {
         style={{opacity:".5", borderRadius:"18px", alignmentSelf:"center",
         zIndex:"-10",
           width:"448px", border:"2px dashed green", height:"72px", position:"absolute",top: -5, left: -4,}} >
-          <img src={arrowGif} style={{width:"32px", height:"32px", marginTop:"-11px" }}/>
+          {/* <img src={arrowGif} style={{width:"32px", height:"32px", marginTop:"-11px" }}/> */}
           
         </div>
      }
@@ -103,7 +103,7 @@ fontSize:this.props.isGrabbing===obj?styles.fonts.fontSmall:styles.fonts.fontNor
 
    
 
-{this.props.isGrabbing===obj && state.popupSwitch!=="popupLore" &&
+{/* {this.props.isGrabbing===obj && state.popupSwitch!=="popupLore" &&
 (
 <div style={{color:'styles.colors.color8', fontSize:".59rem"}}>Dropping into Lore</div>
 )}
@@ -115,7 +115,7 @@ fontSize:this.props.isGrabbing===obj?styles.fonts.fontSmall:styles.fonts.fontNor
 "Accepting Lore"}
 
 </div>
-)}
+)} */}
 
 {(this.props.isGrabbing!=="" && this.props.isGrabbing!==obj) &&
 <div  className='hover-div' 
