@@ -272,7 +272,7 @@ class ParentFormComponent extends Component {
             labelStyle={this.props.labelStyle}
             onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
             wrapperStyle={this.props.wrapperStyle}
-           
+            
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 

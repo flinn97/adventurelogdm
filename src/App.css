@@ -99,6 +99,14 @@ hovering:hover .hover {
   animation: slideAndFade 1.72s ease-out forwards;
 }
 
+input:autofill {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgb(31, 31, 31);
+}
+
+input:-webkit-autofill {
+  border: 1px solid rgb(31, 31, 31);
+}
 
 
 @keyframes slideAndFade {

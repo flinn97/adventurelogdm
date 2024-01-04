@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import auth from '../services/auth';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
+import logo from '../pics/logoava2.png';
 
 export default class PlayerRegister extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ export default class PlayerRegister extends Component {
 
         }
     }
+
     async componentDidMount() {
         debugger
         let app = this.props.app;
@@ -65,48 +67,91 @@ export default class PlayerRegister extends Component {
 
         let styles = state.styles;
 
+        const iStyle = {width:"344px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.6rem", rows:"1", 
+        fontSize:"1rem",  border:"3px solid "+styles.colors.color8, 
+        borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", 
+        alignItems:"left",textAlign:"left",justifyContent:"center",};
+
+        const wStyle ={display:"flex", flexDirection:"column", marginTop:"8px"};
+        const lStyle ={color:styles.colors.color3, fontSize:"1rem"};
+        const additionalStyle ={color:styles.colors.color8, padding:"11px", fontSize:".9rem"}
+
         return (
             <div style={{
-
-                width: "98vw",
-                borderRadius: styles?.borders?.radius1,
-                marginLeft: "1vw",
-                marginTop: "3vh",
-                minHeight: "88vh",
-                maxHeight: "50vh",
-                background: styles?.colors?.Grey1,
-                boxShadow: styles?.shadows?.homeShadow,
-                paddingTop: "2vh",
-                paddingLeft: "1vw",
-                paddingRight: "1vw",
-                alignContent: "center",
-                alignItems: "center",
-                alignSelf: "center",
+                padding:"5%", transition:"all ease-out", justifyContent:"center", flexDirection:"row", display:"flex",
+                width:"100%",padding:"33px", paddingTop:"35px", 
             }}>
+<div style={{width:"8%", }}>
+<img src={logo} style={{width:"84px", height:"84px", justifySelf:"center"}}/></div>            
                 {this.state.user && (
-                    <div style={{ display: 'flex', flexDirection: 'column', }}>
-                        <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"  labelStyle ={{color:"white"}}/>
-                        <ParentFormComponent obj = {this.state.user} name= "lastName" label="Last Name" labelStyle ={{color:"white"}}/>
-                        <ParentFormComponent obj = {this.state.user} name= "handle" label="Handle" labelStyle ={{color:"white"}}/>
-                        <ParentFormComponent obj = {this.state.user} name= "email" label="Email" labelStyle ={{color:"white"}}/>
-                        <div style ={{color:'white'}}>password</div>
-                        <input name ="password"  style={{width:"200px"}} onChange={(e)=>{
-                             let { name, value } = e.target;
-                             this.setState({
-                                 password: value
-                             })
+                    
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent:"center", alignContent:"center", 
+                justifyItems:"center", width:"500px", backgroundColor:styles.colors.color8+"0a", borderRadius:"22px",padding:"33px"}}>
 
-                        }}/>
-                        <div style={{color:"white"}} onClick={this.handleSubmission}>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent:"center", alignContent:"center",}} >
+
+                    <div style={{...lStyle, color:styles.colors.color8, marginBottom:"22px", fontSize:'1.1rem'}}>Registering as Player</div>
+
+                        <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"  
+                        labelStyle ={lStyle} theme={"adventureLog"}autoComplete="off"
+                        inputStyle={iStyle} wrapperStyle={wStyle}/>
+
+                        <ParentFormComponent obj = {this.state.user} name= "lastName" label="Last Name" 
+                        labelStyle ={lStyle}   theme={"adventureLog"} autoComplete="off"                    
+                        inputStyle={iStyle} wrapperStyle={wStyle}/>
+
+                        {/* <ParentFormComponent obj = {this.state.user} name= "handle" label="Handle" 
+                        labelStyle ={{color:"white"}} 
+                        inputStyle={iStyle} wrapperStyle={wStyle}/> */}
+
+                        <ParentFormComponent obj={this.state.user} name= "email" label="Email" 
+                      theme={"adventureLog"} 
+                        labelStyle ={lStyle} autoComplete="off" type="text" 
+                        inputStyle={iStyle} wrapperStyle={wStyle}/>
+
+                        <div style={wStyle}>
+                        <div style ={lStyle}>Password</div>
+
+                        <input name ="password" type='password' style={iStyle} theme={"adventureLog"} autoComplete="off" 
+                                onChange={(e)=>{
+                                    let { name, value } = e.target;
+                                    this.setState({
+                                        password: value
+                                    })
+
+                                }}
+                        />
+                        </div>
+                        <div className='hover-btn' style={{...styles?.buttons?.buttonAdd, marginTop:"24px", padding:"8px 34px", width:"355px",  border:"1px solid "+styles.colors.color8, 
+                         color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSmall,}} onClick={this.handleSubmission}>
                             Submit
                         </div>
-                        <Link to="../login" >Login</Link>
-                        <Link to="../register" >Register As GM Instead</Link>
-
-                    </div>
+                        
+                        
+                    </div> </div>
 
                 )}
+                        <div style={{display:"flex", flexDirection:"column", 
+                        marginLeft:"13px",  width:"300px", padding:"10px", 
+                        }}><div style={{ border:"1px solid "+styles.colors.color9+'9e', borderRadius:"22px", padding:"10px", }}>
+                <Link className='hover-btn' style={{...styles?.buttons?.buttonClear, padding:"10px", height:"fit-content", textDecoration:"none",border:"1px solid "+styles.colors.color1,
+                     borderRadius:"22px",  width:"255px", alignSelf:"flex-start", fontSize:styles.fonts.fontSmall}}
+                      to="../register" >Register as a GM</Link>
+                      
+                      <div style={{...additionalStyle, color:styles.colors.color9+"f3"}}>As a GM you can: </div>
+                      <div style={additionalStyle}>&#x2022; Build Campaigns </div>
+                      <div style={additionalStyle}>&#x2022; Create Worlds and Lore </div>
+                      <div style={additionalStyle}>&#x2022; Run Encounters </div>
+                      <div style={additionalStyle}>&#x2022; Galleries and Notes </div>
+                      <div style={additionalStyle}>&#x2022; Manage Players </div>
+                      <div style={{...additionalStyle, marginBottom:"-29px"}}></div>
 
+                      
+                      </div>
+                      <Link  className='hover-btn' style={{...styles?.buttons?.buttonAdd, marginTop:"24px", 
+                      padding:"8px 14px", width:"280px",  border:"1px solid "+styles.colors.color8,
+                         color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,}} to="../login" >Back to Login</Link></div>
+                      
             </div>
         )
     }

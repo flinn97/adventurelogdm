@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import authService from '../services/auth';
 import { Link } from 'react-router-dom';
+import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import logo from '../pics/logoava2.png';
 
 export default class Login extends Component {
     constructor(props){
@@ -31,9 +33,8 @@ export default class Login extends Component {
         await this.props.app.dispatch({start:false})
         await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch)
 
-        
-        
 	};
+
     render(){
         let app = this.props.app;
         let state = app.state;
@@ -46,46 +47,62 @@ export default class Login extends Component {
         let key =compJson?.collection? "update": "add";
         return(
                     <div style={{
-                        
-                        width: "98vw", 
-                        borderRadius: styles?.borders?.radius1,
-                        marginLeft:"1vw",
-                        marginTop:"3vh",
-                        minHeight: "88vh",
-                        maxHeight: "50vh",
-                        background: styles?.colors?.Grey1,
-                        boxShadow: styles?.shadows?.homeShadow,
-                        paddingTop: "2vh",
-                        paddingLeft: "1vw",
-                        paddingRight: "1vw",
-                        alignContent: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
+                        padding:"5%", transition:"all ease-out", justifyContent:"center", flexDirection:"row", display:"flex",
+                        width:"100%", paddingTop:"35px",
                         }}>
                            
                         <div 
-                        style={{display: "flex", flexDirection:"column", justifyContent:"center",
+                        style={{display: "flex", flexDirection:"column", justifyContent:"center", width:"950px", 
+                        background:styles.colors.color2+"2e", borderRadius:"28px", height:"620px", paddingBottom:"40px",
                          alignContent: "center",
                          alignItems: "center",
                          alignSelf: "center",
-                        marginTop:styles?.margins?.marginSmallH, width:"100%"}}>
+                        }}>
+                                            <img src={logo} style={{width:"214px"}}/>
+                            
+                            <div style={{opacity:".94",  paddingBottom:"40px", width:"fit-content" }}>
+                            
+
                         {/* <div style={{fontFamily: styles?.fonts?.fontTitle, fontSize: styles?.fonts?.fontHeader5, color: styles?.colors?.color5}}>Login</div>                      */}
-                     <div style={{marginTop:"2vh",}} >
+                     <div style={{}} title={"Enter account email."}>
                     
-                            <label htmlFor="lastName"><div style={{fontFamily: styles?.fonts?.fontNormal, marginRight: styles?.margins?.marginSmallW, color: styles?.colors?.color3, fontSize: styles?.fonts?.fontHeader1,}}>Email</div></label>
-                            <input style ={{fontFamily: styles?.fonts?.fontNormal, height: "3vh", width: "18vw",
-                    borderWidth: styles?.mySpawn?.border ,}} type="text" id="last"   onChange={this.handleChange} name="email"/>
+                     <ParentFormComponent  id="last"   
+                            onChange={this.handleChange} name="email" 
+                            wrapperStyle={{display:"flex",flexDirection:"column", }}
+                            theme={"adventureLog"} rows={1}
+                            maxLength={110}
+                            labelStyle={{color:styles.colors.color3, marginTop:".4rem", marginBottom:"7px", }}
+                            inputStyle={{minWidth:"300px", padding:"4px 9px", color:"#ffffff25", height:"1.6rem", rows:"1", 
+                              fontSize:"1rem", 
+                              borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", 
+                              alignItems:"left",textAlign:"left",justifyContent:"center",
+                              }}
+                            label="Email"
+                            />
+
                         </div>
-                        <div style={{marginTop:"2vh", marginBottom:styles?.margins?.marginSmallH}} >
-                            <label htmlFor="lastName"><div style={{fontFamily: styles?.fonts?.fontNormal,marginRight: styles?.margins?.marginSmallW, color: styles?.colors?.color3, fontSize: styles?.fonts?.fontHeader1,}}>Password</div></label>
-                            <input  style ={{fontFamily: styles?.fonts?.fontNormal, height: "3vh",
-                    borderWidth: styles?.mySpawn?.border, width: "18vw"}} type="password" id="pwd"   onChange={this.handleChange} name="password"/>
-                        </div>
-                        <div>
-                         <button className="hover-btn" style={{...styles?.buttons?.buttonAdd, marginTop:"2vh",color: styles?.colors?.color3, fontSize: styles?.fonts?.fontHeader2,}} class= "btn" onClick={this.handleSubmission}>Login</button>
+
+                       
+                             <div style={{color:styles.colors.color3, marginTop:".4rem", marginBottom:"7px", marginTop:"22px"}}>Password</div>
+                            <input autoComplete='off' style ={{width:"344px", padding:"4px 9px", color:"#ffffff25", height:"1.6rem", rows:"1", 
+                              fontSize:"1rem", border:"1px solid "+styles.colors.color8,                          
+                              borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", 
+                              alignItems:"left",textAlign:"left",justifyContent:"center",}} type="password" id="pwd"   onChange={this.handleChange} name="password"/>
+                        
+                        
+                         </div>
+
+
+                        <div style={{display:"flex",flexDirection:"column", justifyContent:"center", width:"fit-content",}}>
+                         <button className="hover-btn" 
+                         style={{...styles?.buttons?.buttonAdd, marginTop:"24px", padding:"8px 34px", width:"155px",  border:"1px solid "+styles.colors.color8, 
+                         color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSubheader1,}} 
+                         class="hover-btn" onClick={this.handleSubmission}>
+                            Login</button>
                     
-                     </div>
-                     <Link to ="../register">Register</Link>
+                     
+                     <Link style={{...styles?.buttons?.buttonAdd, marginTop:"24px", padding:"8px 19px", width:"155px",
+                         color: styles?.colors?.colorWhite+"98", fontSize: styles?.fonts?.fontNormal,}}  to ="../register">Register</Link></div>
                      </div>
                  </div>
              )
