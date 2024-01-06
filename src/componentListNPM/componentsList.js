@@ -325,7 +325,7 @@ export default class Opps {
             let list  = [...this.componentsList[type]];
             
             list = list.sort(function(a, b){
-                //debugger
+                //
                 //THIS MIGHT MAKE ORDER SWITCHING WEIRD
                 let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date.seconds: new Date(0);
                 let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date.seconds: new Date(0);

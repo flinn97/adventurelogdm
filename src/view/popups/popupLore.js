@@ -122,7 +122,7 @@ class MainContent extends Component {
   }
 
   async moveLore(item) {
-    debugger
+    
     let app = this.props.app;
     let state = app.state;
     let componentList = state.componentList;
@@ -161,7 +161,7 @@ class MainContent extends Component {
       });
 
     }
-    debugger
+    
     let updateList = pin ? [item, pin] : [item]
 
 
@@ -743,7 +743,7 @@ class MainContent extends Component {
                   <RunButton app={app} text="Save"
 
                     runFunc={async (arr) => {
-                      debugger
+                      
                       let lore = arr[0];
                       if (state.currentPin) {
 
@@ -930,7 +930,7 @@ class MainContent extends Component {
 
                             <div className="hover-img" key={index}
                               onClick={async () => {
-                                debugger
+                                
                                 let pin = state.currentPin;
                                 if (!this.state.refrence) {
                                   await this.moveLore(item);

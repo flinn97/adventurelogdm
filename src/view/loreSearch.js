@@ -172,7 +172,7 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px",
             }}
             onClick={async () => {
-              debugger
+              
               const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
                       if(loreListTotalLength > 8){
                       this.setState({searchTerm:newLoreName});}
@@ -303,7 +303,7 @@ export default class LoreSearch extends Component {
                   //       }));
                   //     }}
                   //     onStart={(event, data,) => {
-                  //       //debugger
+                  //       //
                   //       this.setState({ isGrabbing: true, grabItem: loreItem });
                   //     }}
                   //     onStop={() => this.handleStop(loreItem)}
@@ -318,7 +318,7 @@ export default class LoreSearch extends Component {
                           }}>
 
                             <div className='hover-div' onClick={async()=>{
-                              debugger
+                              
                               let loreList = componentList.getList("lore", id, listTerm);
                               await loreIndexService.reOrganizeLore(loreList, state.opps);
                               await loreIndexService.moveUp( loreItem, loreList, state.opps);
@@ -334,7 +334,7 @@ export default class LoreSearch extends Component {
                               cursor:"pointer"
                             }}></div>
                             <div onClick={async()=>{
-                              debugger
+                              
                               let loreList = componentList.getList("lore", id, listTerm);
                               await loreIndexService.reOrganizeLore(loreList, state.opps);
                               await loreIndexService.moveDown( loreItem, loreList, state.opps);

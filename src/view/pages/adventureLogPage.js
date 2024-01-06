@@ -45,9 +45,9 @@ export default class AdventureLogPage extends Component {
     let campaigns = compList.getList("campaign", idSegment, "_id");
     let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
     let components = await compList.getComponents();
-    debugger
     
-
+    
+debugger
     await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
     
 
@@ -132,7 +132,7 @@ export default class AdventureLogPage extends Component {
   };
 
   scrollToBottom = async (behavior) => {
-    //debugger
+    //
     const delay = ms => new Promise(res => setTimeout(res, ms));
     await delay(500);
     this.setState({ showItems: true });

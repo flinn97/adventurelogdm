@@ -152,7 +152,7 @@ export default class IconChange extends Component {
                                 app={app}
                                 update={true}
                                 // changePic={(pic)=>{
-                                //   debugger
+                                //   
                                 //   let comp = pin; 
                                 //   state.opps.cleanPrepareRun({update:comp});
                                 //   }}

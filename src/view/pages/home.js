@@ -17,6 +17,15 @@ export default class Home extends Component {
 
     }
   }
+  // async componentDidMount(){
+  //   let app = this.props.app;
+  //   let state = app.state;
+  //   let componentList = state.componentList;
+  //   let campaigns = componentList.getList('campaign');
+  //   for(let campaign of campaigns){
+  //     await auth.firebaseGetter(campaign.getJson()._id, componentList, "parent")
+  //   }
+  // }
 //   async componentDidMount(){
 //     let app = this.props.app;
 //     let state = app.state;

@@ -56,6 +56,31 @@ class Auth {
 
     }
 
+    async getMonsters(componentList, campaignId){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "monster"),  where("campaignId"==campaignId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let monsters = componentList.getList("monster");
+        return monsters
+    }
+    async getByCampaign(componentList, campaignId, attribute, value){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"),  where("campaignId"==campaignId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let posts = componentList.getList("post");
+        return posts
+    }
+
     //Value = value pair (key value) example: string such as "1231454891"
     //ComponentList = adding to the componentList
     //Attribute = attribute pair always a string "campaignID" or "_id"
@@ -81,8 +106,9 @@ class Auth {
 
         }
         else{
+            
             let comps1 = await onSnapshot(components, async (querySnapshot) => {
-
+                debugger
 
                 rawData1 = [];
     
@@ -97,8 +123,8 @@ class Auth {
                 await componentList.addComponents(rawData1, false);
     
                     if (dispatch) {
-    
-                    } await dispatch({ rerenderFirebase: true });
+                        await dispatch({ rerenderFirebase: true });
+                    } 
     
                 
     
@@ -378,7 +404,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        
+        debugger
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -390,6 +416,9 @@ class Auth {
 
                     if (component[key] === undefined) {
                         component[key] = "";
+                    }
+                    if(Array.isArray(component[key])){
+                        component[key] =""
                     }
                 }
 
@@ -414,9 +443,10 @@ class Auth {
                             await deleteDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component));
                             break;
                         case "update":
+                            if(component.type !=="post"){
+                                component.date = await serverTimestamp();
 
-
-                            component.date = await serverTimestamp();
+                            }
 
                             await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                             break;

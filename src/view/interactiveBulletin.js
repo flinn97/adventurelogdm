@@ -253,7 +253,7 @@ export default class InteractiveBulletin extends Component {
   {/* {this.state.start && */}
 
   {/* IMAGE BACKGROUND */}{this.props.obj &&
-  <div ref={this.props.obj}  
+  <div ref={this.parentRef} 
               style={{position:"absolute", top:0, left:0,
    width: this.state.mapWidth, 
    height:this.state.mapHeight 
@@ -273,9 +273,10 @@ export default class InteractiveBulletin extends Component {
     this.setState({ isGrabbing: true });
 }}
   onStop={(item, data)=>{
+    console.log("it was supposed to stop")
     // let pinId = item.target.attributes.pinId?.value;
 
-    let parentRect = this.parentRef.current.getBoundingClientRect();
+    let parentRect = this.parentRef?.current?.getBoundingClientRect();
     let x = Math.min(Math.max(data.x, 1), parentRect.width - 1);
     let y = Math.min(Math.max(data.y, 1), parentRect.height - 1);
 
@@ -423,7 +424,7 @@ export default class InteractiveBulletin extends Component {
                                   difWidth={"14.33px"}
                                   update={true}
                                   // changePic={(pic)=>{
-                                  //   debugger
+                                  //   
                                   //   let comp = pin; 
                                   //   state.opps.cleanPrepareRun({update:comp});
                                   //   }}
