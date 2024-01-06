@@ -46,7 +46,7 @@ export default class AdventureLog extends Component {
      
     
     
-    //debugger
+    //
     let player = localStorage.getItem("player");
     if(player){
       player = state.componentList.getComponent('monster', player, "_id");

@@ -62,7 +62,7 @@ class RichTextComponent extends Component {
 
 
     replaceHTML(htmlString) {
-        debugger
+        
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlString, 'text/html');
 
@@ -235,7 +235,7 @@ class RichTextComponent extends Component {
 
             if (this.state.pressCTRL && value === 'v') {
                 const originalLength = innerText.length;
-                debugger
+                
                 let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
                 let html = this.replaceHTML(save);
                 this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
@@ -249,7 +249,7 @@ class RichTextComponent extends Component {
             }
             if (value === 'enter') {
                 const originalLength = innerText.length;
-                debugger
+                
                 let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
                 let html = this.replaceHTML(save);
                 this.setState({ theHtml: html, textHtml: html, pressCTRL: false });

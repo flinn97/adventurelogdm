@@ -19,6 +19,8 @@ import backarrow from '../pics/backArrow.webp';
 import auth from '../services/auth';
 import trash from '../pics/delSkull.png';
 import { update } from 'lodash';
+import conditionService from '../services/conditionService';
+import idService from '../componentListNPM/idService';
 
 export default class Encounter extends Component {
   constructor(props) {
@@ -43,7 +45,7 @@ export default class Encounter extends Component {
     let state = app.state;
     let id = toolService.getIdFromURL(true,0);
     let componentList = this.props.app.state.componentList;
-    debugger
+    
 
     if(!state.currentCampaign){
       let encounter = await auth.firebaseGetter(id, componentList, "_id", "encounter", false);
@@ -334,23 +336,41 @@ export default class Encounter extends Component {
                   paddingTop: "3px", paddingBottom: "3px", fontSize: styles.fonts.fontSmall, cursor: !obj?.getJson().isRunning ? "pointer" : "wait"
                 }}
                   onClick={async () => {
+
+                    
                     // this.setState({showMonsterMap: false});
                     if (!obj?.getJson().isRunning) {
-                      if (!state.currentCampaign) {
+                      let campaign=state.currentCampaign
+
+                      if (!campaign) {
                         let campId = await obj.getJson().campaignId;
+                        campaign = componentList.getComponent("campaign", campId, "_id")
 
                         await dispatch({
-                          currentCampaign: componentList.getComponent("campaign", campId, "_id")
+                          currentCampaign: campaign
                         })
                       }
-                      let players = await state.currentCampaign?.getPlayers(state.componentList);
+                      let players = await campaign.getPlayers(state.componentList, dispatch);
+                      
+                      let encPlayers=await obj.addCampaignPlayers(players, obj.getJson()._id);
 
-                      await dispatch({
-                        campaignPlayers: players,
-                      })
+                      let conditions = conditionService.getConditions();
+                      for (let mon of encPlayers){
+                  
+                        for(let condition of conditions)
+                        {
+                          condition ={... condition};
+                          condition.monsterId = mon.getJson()._id;
+                          condition.roundsActive = "0";
+                          condition.campaignId = mon.getJson()?.campaignId;
+                          condition._id = mon.getJson()?._id+"c"+idService.createId();
+                          await state.opps.jsonPrepare({addcondition: condition});
+                          await state.opps.run();
+                        }
+  
+                    }
 
-                      await obj.addCampaignPlayers(state.campaignPlayers, obj.getJson()._id, state);
-                      ;
+
                       this.setState({ showMonsterMap: true })
                     }
                     await this.setState({ showMonsterMap: true })

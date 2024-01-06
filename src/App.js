@@ -165,7 +165,12 @@ handleChange = (event) => {
       
       await auth.getuser(user.email, list, this.dispatch);
       
+      
       this.setState({popupSwitch:""})
+      await this.setState({start:true});
+
+
+
     
       
     }

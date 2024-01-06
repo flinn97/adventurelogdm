@@ -35,8 +35,16 @@ export default class MessageLogComponent extends Component {
                       wordWrap: "break-word",
                       whiteSpace: "normal",
                       overflowWrap: "break-word" }}>
+                        <div style={{color:styles.colors.colorWhite+"f2", height:"fit-content", 
+                      borderRadius:"4px", padding:"4px 4px", minWidth:"550px", maxWidth:"550px",
+                      fontSize:styles.fonts.fontSmall,pointerEvents: "none",
+                      userSelect:"none", cursor:"", 
+                      background:"linear-gradient(to left, transparent, "+styles.colors.colorBlack+","+styles.colors.color7+"44, "+styles.colors.colorBlack+", transparent)", borderRadius:"11px",
+                      wordWrap: "break-word",
+                      whiteSpace: "normal",
+                      overflowWrap: "break-word"}}>{obj.getJson().message}</div>
 
-                <ParentFormComponent app={app} name="message" obj={obj}
+                {/* <ParentFormComponent app={app} name="message" obj={obj}
                       theme={"adventureLog"} 
                       
                       inputStyle={{ color:styles.colors.colorWhite+"f2", height:"fit-content", 
@@ -49,7 +57,7 @@ export default class MessageLogComponent extends Component {
                       overflowWrap: "break-word"
                     }}
                       type={"richEditor"} 
-                      />
+                      /> */}
         </div>
           
       </div>

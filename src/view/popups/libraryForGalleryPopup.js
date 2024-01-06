@@ -109,7 +109,7 @@ class MainContent extends Component {
                   
                   <div className="hover-img" key={index}>
                     <img onClick={async ()=>{
-                      debugger
+                      
                       let campaignId = state.currentCampaign.getJson()._id;
                       let loreId=undefined;
                       if(state.currentLore){

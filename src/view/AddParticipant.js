@@ -280,6 +280,7 @@ transitionDuration:"9000ms"
                   
                       for(let condition of conditions)
                       {
+                        condition={...condition}
                         condition.monsterId = mon.getJson()._id;
                         condition.roundsActive = "0";
                         condition.campaignId = mon.getJson()?.campaignId;

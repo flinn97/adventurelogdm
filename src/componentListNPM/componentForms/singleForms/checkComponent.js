@@ -42,7 +42,7 @@ class CheckBox extends Component {
      * check the box send to backend.
      */
     async markcheckbox() {
-        debugger
+        
         await this.setState({checked:!this.state.checked})
         this.props.handleChange(this.state.checked);
     }

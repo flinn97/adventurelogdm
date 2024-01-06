@@ -9,9 +9,18 @@ class LoreIndexService {
     * @param {*} opps 
     */
   async moveUp(lore, loreList, opps){
-    debugger
+    
     let index  =  lore.getJson().index;
     let changeIndex = index +1;
+    for(let i = changeIndex; i<loreList.length; i++){
+      let lore = loreList[i];
+      if(lore.getJson().reference===true){
+        changeIndex++;
+      }
+      else{
+        break;
+      }
+    }
     if(changeIndex===loreList.length){
       changeIndex = 0;
     }
@@ -30,11 +39,30 @@ class LoreIndexService {
    * @param {*} opps 
    */
   async moveDown(lore, loreList, opps){
+    
     let index  =  lore.getJson().index;
     let changeIndex = index -1;
-    if(changeIndex<0){
-      changeIndex = loreList.length-1;
+    for(let i = changeIndex; i<loreList.length; i--){
+      if(i<0){
+        break;
+      }
+      let lore = loreList[i];
+      if(lore.getJson().reference===true){
+        changeIndex--;
+      }
+      else{
+        break;
+      }
     }
+    if(changeIndex<0){
+
+        changeIndex = loreList.length-1;
+    }
+    if(changeIndex<=0 &&loreList[0].getJson().index===1){
+      changeIndex = loreList.length-1;
+
+    }
+
     let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
     changeLore.setCompState({index:index});
     lore.setCompState({index:changeIndex});
@@ -47,7 +75,7 @@ class LoreIndexService {
    * @param {*} opps 
    */
   async reOrganizeLore(loreList, opps){
-debugger
+
     let i = 0;
     let checkTopLore= loreList.filter(lore => lore.getJson().parentLore ===true)[0];
     if(checkTopLore){
