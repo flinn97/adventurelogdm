@@ -29,6 +29,7 @@ export default class AddCampaign extends Component {
       
       this.setState({navigate:true})
 
+
     })
     
   }
@@ -193,7 +194,13 @@ export default class AddCampaign extends Component {
                           display:"flex", color:styles.colors.color6, background:styles.colors.colorWhite+"88", fontWeight:"600", borderColor:styles.colors.color6
                         }}
                         text={textNotReady}
-                        callBack={()=>{
+                        callBack={async (comp)=>{
+                          debugger
+                          comp = comp[0]
+                          let lores = componentList.getList("lore", comp.getJson()._id, "campaignId");
+                          let parent = lores.find(lore=>lore.getJson().parentLore === true);
+                          parent.setCompState({name:comp.getJson().title});
+                          await state.opps.cleanPrepareRun({update:[comp,parent]});
                           dispatch({popUpSwitchcase: "", currentComponent: undefined});
                         }}
                       />
@@ -220,7 +227,7 @@ const URLcheck = () => {
   const nav = useNavigate ();
 
   useEffect(() => {
-    nav(-1); // This will navigate up one level in the history stack
+    nav("/campaign/"); // This will navigate up one level in the history stack
     // Send request to your server to increment page view count
 });
 

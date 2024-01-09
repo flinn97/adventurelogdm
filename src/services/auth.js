@@ -137,6 +137,9 @@ class Auth {
 
 
         if (type) {
+            if (dispatch) {
+                await dispatch({ rerenderFirebase: true });
+            } 
             return componentList.getList(type, value, attribute)
         }
         else {

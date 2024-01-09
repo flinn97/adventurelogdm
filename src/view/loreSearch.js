@@ -59,10 +59,9 @@ export default class LoreSearch extends Component {
       }
 
 
-      toolService.navigateToLink("../campaign/" + newLink, true);
-    }
-
-  componentDidMount(){
+    toolService.navigateToLink("../campaign/" + newLink, true);
+  }
+  async componentDidMount(){
     let app = this.props.app;
     let state = app.state;
     let styles = state.styles;
@@ -73,7 +72,8 @@ export default class LoreSearch extends Component {
     let id = this.getId();
 
     let loreList = componentList.getList("lore", id, listTerm)
-    // loreIndexService.reOrganizeLore(loreList, state.opps)
+    await loreIndexService.reOrganizeLore(loreList, state.opps);
+    await loreIndexService.sortComponentList(componentList);
   }
 
   handleStop = (loreItem) => {
@@ -115,7 +115,7 @@ export default class LoreSearch extends Component {
 
 
 
-    let loreList = componentList.getList("lore", id, listTerm).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
+    let loreList = componentList.getList("lore", id, listTerm).sort((a, b)=>a.getJson().index - b.getJson().index).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
     .filter(lore => !lore.getJson().parentLore).filter(lore=> !lore.getJson().reference)
       .filter(loreItem => {
         const name = loreItem?.getJson()?.name;
@@ -185,13 +185,20 @@ export default class LoreSearch extends Component {
                     let id = splitURL[splitURL.length - 1];
                     id = id.includes("-") ? id.split('-')[1] : id;
 
-                    let otherChildren = componentList.getList("lore", id, "parentId");
-                    await state.opps.cleanJsonPrepareRun({addlore: {
-                      parentId: { [id]: newName + " " }, _id: idS, index: otherChildren.length,
-                      type: "lore", name: newName + " " + newLoreName, campaignId: campId
-                    }})
-                   }}
+              let otherChildren = componentList.getList("lore", id, "parentId");
+              await state.opps.cleanJsonPrepare({addlore: {
+                parentId: { [id]: newName + " " }, _id: idS, index: 0,
+                type: "lore", name: newName + " " + newLoreName, campaignId: campId
+              }})
+              let l = state.opps.getUpdater("add")[0];
+              await state.opps.run();
+              await loreIndexService.insertAtBeginning(l, otherChildren);
+              // loreIndexService.sortComponentList(componentList);
+              
 
+
+
+            }}
           >+ Create Lore</div>
           <div
             title={"New Lore, opens in a new Tab"}
