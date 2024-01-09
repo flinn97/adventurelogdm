@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import auth from '../services/auth';
 import SplashScreen from './pages/splashScreen';
 import { Link } from 'react-router-dom';
+import toolService from '../services/toolService';
 
 
 export default class AfterPayment extends Component {
@@ -14,8 +15,10 @@ export default class AfterPayment extends Component {
             showLoad:true,
         }
     }
+
     async componentDidMount() {
         
+    
         let app = this.props.app;
         let state = app.state;
         let dispatch = app.dispatch;
@@ -68,9 +71,10 @@ width:"100%", display:"flex", flexDirection:"row", justifyContent:"center",
       
       <div style={{color:'white', height:"300px", position:"absolute", userSelect:"none", top:200, justifySelf:"center", fontSize:styles.fonts.fontNormal}}>Thank you for your purchase, rerouting...</div>
        {auth.getCurrentUser() &&         
-      <Link to={"/"} style={{color:'white', height:"fit-content", position:"absolute", top:288, justifySelf:"center", cursor:"pointer",
-      zIndex:8000,   textDecoration:"underline 1px "+styles.colors.color9,textUnderlineOffset:"2.8px",
-      fontSize:styles.fonts.fontSmall}}>Click here if the page doesnt load</Link>}
+        <Link to={"/"} style={{color:'white', height:"fit-content", position:"absolute", top:288, justifySelf:"center", cursor:"pointer",
+        zIndex:8000,   textDecoration:"underline 1px "+styles.colors.color9,textUnderlineOffset:"2.8px",
+        fontSize:styles.fonts.fontSmall}}>Click here if the page doesnt load</Link>
+      }
     </div>
 
             

@@ -44,28 +44,32 @@ export default class PlayerRegister extends Component {
         let password = this.state.password;
         let repeatPassword = this.state.repeatPassword;
 
-        this.setState({ passwordMismatch: false, emailMismatch: false });
-
-        if (!email.includes('@') || email.trim() === '') {
-            this.setState({ emailMismatch: true });
-            return; // Do not proceed if email is invalid
-        }
+        this.setState({errorMessage:undefined });
 
         if (password !== repeatPassword) {
-            this.setState({ passwordMismatch: true });
+            this.setState({ errorMessage: "Passwords don't match." });
             return; // Do not proceed if passwords don't match
         }
 
+        if (!email.includes('@') || email.trim() === '') {
+            this.setState({ errorMessage: "Invalid email." });
+            return; // Do not proceed if email is invalid
+        }
+
         if (!password) {
-            this.setState({ passwordEmpty: true });
+            this.setState({ errorMessage: "Password can't be empty." });
             return; // Do not proceed if passwords don't match
         }
 
         await app.dispatch({email:email});
+        let authUser = await auth.register(email, password, true);
         await auth.register(email,password, true);
+        if (authUser.error) {  
+            this.setState({ errorMessage: authUser.error });
+        } else {
         await state.opps.run();
         await auth.login(email, password, this.props.app.state.componentList, this.props.app.dispatch);
-     
+        }
         
 
     };

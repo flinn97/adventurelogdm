@@ -253,8 +253,9 @@ class Auth {
 
     async login(email, password, componentList, dispatch) {
 
-
         let user;
+        let e;
+
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -263,11 +264,17 @@ class Auth {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
-                //console.log(errorMessage)
+                let errorMessage = error.message;
+                let eL = errorMessage.length-1;
+                let newString = errorMessage.slice(9,eL);
+                
+                
+                e = {error:newString};
+                console.log(e);
             });
         if (user) {
-            let saveUser = user
+            let saveUser = user;
+            dispatch({start:false});
 
             if (componentList !== undefined && dispatch !== undefined) {
                 await localStorage.setItem("user", JSON.stringify(saveUser));
@@ -277,8 +284,10 @@ class Auth {
             }
 
 
-
-
+        }else{
+            
+            user = e;
+            console.log(user);
         }
         return user;
     }
@@ -304,8 +313,11 @@ class Auth {
             user = userCredential.user;
         }).catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            //console.log(errorMessage);
+            let errorMessage = error.message;
+            let eL = errorMessage.length-1;
+            let newString = errorMessage.slice(9,eL);
+            
+            user = {error:newString};
         })
         if (addToCache) {
             localStorage.setItem("user", JSON.stringify(user));
