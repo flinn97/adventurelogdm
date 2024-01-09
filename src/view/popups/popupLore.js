@@ -15,6 +15,7 @@ import LoreItemWithNotation from '../loreItemwithNotation';
 import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
 import { Link } from 'react-router-dom';
 import IconChange from '../iconChange';
+import loreIndexService from '../../services/loreIndexService';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -177,6 +178,7 @@ class MainContent extends Component {
   async componentDidMount() {
 
     let state = this.props.app.state;
+   
     let loreName = await state.currentComponent.getJson().name;
 
     if (state.currentComponent.getJson().reference) {
@@ -185,6 +187,8 @@ class MainContent extends Component {
       await this.props.app.dispatch({ currentComponent: lore })
       await state.opps.cleanPrepare({ update: lore })
     }
+    
+
     this.setState({ start: true })
     if (loreName == "" || loreName == undefined) {
       this.setState({ hasChoice: "" })
@@ -733,7 +737,7 @@ class MainContent extends Component {
                 // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
                 }}>Delete This Pin</div>
 
-                <div  className="indent-on-click"
+                <div  className="hover-btn"
                   style={{
                     display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
                     alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px",
@@ -763,22 +767,32 @@ class MainContent extends Component {
                         if (lore.getJson().name === "" || lore.getJson().name === undefined) {
                           lore.setCompState({ name: pin.getJson().name });
                         }
+
+
                         pin.setCompState({
                           loreId: lore.getJson()._id,
                           name: lore.getJson().name,
                         });
-                        let reg = state.opps.getUpdater("add");
-                        if (reg.length === 0) {
-                          await state.opps.prepare({ update: lore });
-                        }
-                        await state.opps.prepareRun({ update: pin });
-                      }
-                      else {
 
-                        let check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+                            let reg = state.opps.getUpdater("add");
+                            if (reg.length === 0) {
+                              await state.opps.prepare({ update: lore });
+                            }
+                            await state.opps.prepareRun({ update: pin });
+                          }else {
 
-                        state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
-                      }
+                                  let check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                                  await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                                }
+
+                                if (lore){
+                                  let parentId = Object.keys(lore.getJson().parentId,)[0];
+                                  let otherChildren = state.componentList.getList("lore", parentId, "parentId");
+                                  await loreIndexService.insertAtBeginning(lore, otherChildren);
+                                }
+                                
+
                       this.setState({ showSaved: true });
                       setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
                     }} />

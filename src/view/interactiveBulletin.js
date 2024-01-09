@@ -273,8 +273,7 @@ export default class InteractiveBulletin extends Component {
     this.setState({ isGrabbing: true });
 }}
   onStop={(item, data)=>{
-    console.log("it was supposed to stop")
-    // let pinId = item.target.attributes.pinId?.value;
+    
 
     let parentRect = this.parentRef?.current?.getBoundingClientRect();
     let x = Math.min(Math.max(data.x, 1), parentRect.width - 1);
@@ -315,12 +314,13 @@ export default class InteractiveBulletin extends Component {
                 background:styles.colors.colorBlack+"88",}}
 
                 onClick={async ()=>{
-                  
-                  if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined){
+                  debugger
+                  let l = componentList.getComponent("lore", pin.getJson().loreId, "_id");
+
+                  if(pin.getJson().loreId!=="" && pin.getJson().loreId!==undefined && l!==undefined){
                     await dispatch({currentComponent:undefined});
-                    let lore = componentList.getComponent("lore", pin.getJson().loreId, "_id");
-                    
-                    dispatch({operate:'update', operation:"cleanPrepare", object:lore, popupSwitch: "popupLore", currentPin: pin,})
+                  
+                    dispatch({operate:'update', operation:"cleanPrepare", object:l, popupSwitch: "popupLore", currentPin: pin,})
                   }
       
                   else{
@@ -331,7 +331,7 @@ export default class InteractiveBulletin extends Component {
               let id = splitURL[splitURL.length - 1];
                 
                 let otherChildren = componentList.getList("lore",id.includes("-")? state.currentLore.getJson()._id: state.currentCampaign?.getJson()._id ,"parentId");
-                    await state.opps.cleanJsonPrepare({addlore: {
+                    await state.opps.cleanJsonPrepare({addlore: {index: 0,
                       campaignId: this.props.obj?.getJson().campaignId, index:otherChildren.length,
                       parentId: 
                       {[newId]:"Unnamed"}
@@ -408,7 +408,7 @@ export default class InteractiveBulletin extends Component {
                               src={imgSrc}
                               onClick={(item, data)=>{    
                                 
-                                          if (imgSrc!==image16){                            
+                                          if (imgSrc){                            
                                                 let comp = pin;
                                                 comp.setCompState({
                                                     iconImage: imgSrc
@@ -416,9 +416,8 @@ export default class InteractiveBulletin extends Component {
                                                 state.opps.cleanPrepareRun({update:comp});
                                           }
                               }}/>
-                                {imgSrc===image16 && 
+                                {/* {imgSrc===image16 && 
                                   <Upload 
-                                  
                                   className='hover-divInt'
                                   app={app} buttonStyle={{width:"28px",}} 
                                   difWidth={"14.33px"}
@@ -433,7 +432,7 @@ export default class InteractiveBulletin extends Component {
                                   obj={pin}
                                   
                                   />
-                                }
+                                } */}
                                 </div>}
 
                 {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&

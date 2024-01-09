@@ -116,7 +116,8 @@ export default class Upload extends Component {
                         style={{ ...styles.buttons.buttonAdd,
                             position: 'absolute', // Set position to absolute to make it fill the entire label
                             top: 0,
-                            left: 0, cursor:"pointer",
+                            left: 0, 
+                            cursor:"pointer",
                             padding:this.props.difWidth?this.props.difWidth:"",
                             width:this.props.difWidth?this.props.difWidth:"",
                             height:this.props.difWidth?this.props.difWidth:"",
