@@ -27,6 +27,7 @@ export default class LoreSearch extends Component {
       dragPosition: { x: 0, y: 0 },
       grabItem: "",
       positions: {},
+     
     }
   }
 
@@ -44,22 +45,23 @@ export default class LoreSearch extends Component {
     this.setState({ searchTerm: e.target.value });
   }
 
-  navigateToLink = (obj) => {
-    let href = window.location.href;
-    let splitURL = href.split("/");
-    let id = splitURL[splitURL.length - 1];
-    let newLink = "";
+    navigateToLink = (obj) => {
+      let href = window.location.href;
+      let splitURL = href.split("/");
+      let id = splitURL[splitURL.length - 1];
+      let newLink = "";
 
-    if (id.includes("-")) {
-      let idList = id.split('-');
-      newLink = idList[0] + "-" + obj.getJson()._id;
-    } else {
-      newLink = id + "-" + obj.getJson()._id;
+      if (id.includes("-")) {
+        let idList = id.split('-');
+        newLink = idList[0] + "-" + obj.getJson()._id;
+      } else {
+        newLink = id + "-" + obj.getJson()._id;
+      }
+
+
+      toolService.navigateToLink("../campaign/" + newLink, true);
     }
 
-
-    toolService.navigateToLink("../campaign/" + newLink, true);
-  }
   componentDidMount(){
     let app = this.props.app;
     let state = app.state;
@@ -171,28 +173,25 @@ export default class LoreSearch extends Component {
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
               borderRadius: "9px", fontSize: "21px",
             }}
-            onClick={async () => {
-              
-              const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
-                      if(loreListTotalLength > 8){
-                      this.setState({searchTerm:newLoreName});}
-              let idS = idService.createId();
-              console.log(idS);
-              let href = window.location.href;
-              let splitURL = href.split("/");
-              let id = splitURL[splitURL.length - 1];
-              id = id.includes("-") ? id.split('-')[1] : id;
+                  onClick={async () => {
+                    
+                    const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
+                            if(loreListTotalLength > 8){
+                            this.setState({searchTerm:newLoreName});}
+                    let idS = idService.createId();
+                    console.log(idS);
+                    let href = window.location.href;
+                    let splitURL = href.split("/");
+                    let id = splitURL[splitURL.length - 1];
+                    id = id.includes("-") ? id.split('-')[1] : id;
 
-              let otherChildren = componentList.getList("lore", id, "parentId");
-              await state.opps.cleanJsonPrepareRun({addlore: {
-                parentId: { [id]: newName + " " }, _id: idS, index: otherChildren.length,
-                type: "lore", name: newName + " " + newLoreName, campaignId: campId
-              }})
-              
+                    let otherChildren = componentList.getList("lore", id, "parentId");
+                    await state.opps.cleanJsonPrepareRun({addlore: {
+                      parentId: { [id]: newName + " " }, _id: idS, index: otherChildren.length,
+                      type: "lore", name: newName + " " + newLoreName, campaignId: campId
+                    }})
+                   }}
 
-
-
-            }}
           >+ Create Lore</div>
           <div
             title={"New Lore, opens in a new Tab"}
@@ -358,6 +357,7 @@ export default class LoreSearch extends Component {
                           }}
                         >
                           <Link to={"/campaign/" + toolService.getIdFromURL(true, 0) + "-" + loreItem.getJson()._id} style={{ textDecoration: "none" }}>
+                            
                             <LoreItemWithNotation
                               link={true}
                               app={app}

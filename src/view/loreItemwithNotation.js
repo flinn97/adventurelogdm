@@ -90,7 +90,7 @@ export default class LoreItemWithNotation extends Component {
 
 {isNewEmpty&&
 <div style={{width:"100%", height:"100%", position:"absolute",
-border:"2px solid"+styles.colors.color5+"33",    
+border:"2px solid"+styles.colors.color3+"e1",    
 animation:isNewEmpty?'flash-off 1s 3':"", 
 borderRadius:"18px"}}></div>}
 

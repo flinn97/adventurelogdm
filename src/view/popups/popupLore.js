@@ -21,6 +21,7 @@ export default class PopupLore extends Component {
     super(props);
     this.state = {
       refrence: false,
+      
     }
   }
 
@@ -84,6 +85,7 @@ class MainContent extends Component {
       hasChoice: "",
       start: false,
       showIcon: false,
+      loreToShow: 6,
     };
     this.moveLore =  this.moveLore.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -272,27 +274,31 @@ class MainContent extends Component {
         {state.popupSwitch !== "popupLoreWithoutPin" &&
           <div style={{ marginTop: "-30px", display: "flex", flexDirection: "", width: "fit-content" }}>
             {(this.state.showIcon) &&
+
               <div className="indent-on-click"
                 onClick={() => {
                   this.setState({ showIcon: false, })
                 }}
                 style={{
                   ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "1%"
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
                 }}
 
               >
-                <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem" }}
+                <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem",}}
                   src={backarrow}
                 />
                 Back
               </div>}
+
             {/* ICON */}
             {(!this.state.showIcon) && <>
               <div title="Change icon" className='hover-img'
                 style={{
-                  display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", borderRadius: "11px", cursor: "pointer", background: styles.colors.color8 + "04",
-                  justifyContent: "center", border: "1px solid " + styles.colors.color8, padding: "4px 8px", color: styles.colors.color3, fontSize: styles.fonts.fontSmallest,
+                  display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", borderRadius: "11px", cursor: "pointer", 
+                  background: styles.colors.color8 + "04", marginBottom:"14px",
+                  justifyContent: "center", border: "1px solid " + styles.colors.color8, padding: "4px 8px", 
+                  color: styles.colors.color3, fontSize: styles.fonts.fontSmallest,
                 }} onClick={() => {
                   this.setState({ showFindEncounter: false, showFindImage: false, showIcon: true, })
                 }}>
@@ -337,7 +343,7 @@ class MainContent extends Component {
                   }}
                   style={{
                     ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                    fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "1%"
+                    fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
                   }}
 
                 >
@@ -823,7 +829,7 @@ class MainContent extends Component {
                 }}
                 style={{
                   ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "1%"
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
                 }}
 
               >
@@ -898,7 +904,7 @@ class MainContent extends Component {
                 </div>
 
                 <div
-
+                className='scroller2' 
                   style={{
                     display: "flex", flexDirection: "row", width: "100%",
                     alignContent: "center", justifyContent: "center",
@@ -922,7 +928,7 @@ class MainContent extends Component {
                         }
 
                       })
-                      .slice(0, 8)
+                      .slice(0, this.state.loreToShow)
                       .map((item, index) => (
                         <div>
                           {(item.getJson().name !== "" && item.getJson().name !== undefined && item.getJson()._id !== idList[1]) &&
@@ -966,6 +972,26 @@ class MainContent extends Component {
                         </div>
                       ))
                   }
+                  {
+                filteredLore.length > this.state.loreToShow &&
+                <div className="hover-btn-highlight" 
+                onClick={() =>
+                  this.setState(prevState => ({ loreToShow: prevState.loreToShow + (filteredLore.length - this.state.loreToShow) }))} 
+                  style={{maxHeight: "210px", cursor:"pointer", textAlign:"center", padding:"8px",
+                    minWidth: "280px", display:"flex", alignItems:"center", justifyContent:"center",
+                     fontSize: styles.fonts.fontSmall, borderRadius:"20px", marginBottom:"3vh",
+                    color:styles.colors.colorWhite, border:""+styles.colors.colorWhite+"55 solid"
+                  }}>
+                    <div 
+                    style={{display:"flex", position:"relative",}}>
+                  Show {filteredLore.length - this.state.loreToShow} more
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', 
+                  }}>
+                    
+                  </div>
+                </div>
+              }
                 </div>
 
 
