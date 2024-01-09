@@ -408,7 +408,7 @@ export default class InteractiveBulletin extends Component {
                               src={imgSrc}
                               onClick={(item, data)=>{    
                                 
-                                          if (imgSrc){                            
+                                          if (imgSrc !== image16){                            
                                                 let comp = pin;
                                                 comp.setCompState({
                                                     iconImage: imgSrc
@@ -416,7 +416,7 @@ export default class InteractiveBulletin extends Component {
                                                 state.opps.cleanPrepareRun({update:comp});
                                           }
                               }}/>
-                                {/* {imgSrc===image16 && 
+                                {imgSrc===image16 && 
                                   <Upload 
                                   className='hover-divInt'
                                   app={app} buttonStyle={{width:"28px",}} 
@@ -432,7 +432,7 @@ export default class InteractiveBulletin extends Component {
                                   obj={pin}
                                   
                                   />
-                                } */}
+                                }
                                 </div>}
 
                 {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&

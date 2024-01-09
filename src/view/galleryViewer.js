@@ -48,18 +48,12 @@ export default class GalleryViewer extends Component {
 <div style={{display:"flex", justifyContent:"flexStart", justifyItems:"center", marginBottom:"18px", flexDirection:"column"}}>
 
                 <Upload text="+ Upload" 
-                      // changePic={ async (pic)=>{
-                      //   await state.opps.cleanJsonPrepareRun({
-                      //     "addimage":{
-                      //       loreId: this.getId(), 
-                      //       picURL: pic,
-                      //       campaignId: this.getId()}});
-                      //       console.log(pic);
-                            
-                      // }} 
+                         className="indent-on-click"
+                      
                       buttonStyle={{...styles.buttons.buttonAdd, marginTop:"5px", backgroundColor:styles.colors.colorBlack+"99",
-                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
+                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px", position:"relative",
                       borderRadius:"9px", fontSize:"21px",}}
+
                       prepareOnChange={{
                         name:"image", json:{
                           loreId: this.getId(1) ? this.getId(1):this.getId(0),
@@ -70,12 +64,8 @@ export default class GalleryViewer extends Component {
                       update={true} skipUpdate={true}
                       
                         app={app} 
-                        className="indent-on-click"
-                //   onClick={() => {
-                //  state.opps.cleanJsonPrepareRun({
-                //   "addimage":{loreId: state.currentComponent.getJson()._id, 
-                //     campaignId: id}})
-                // }}
+                     
+               
                 />
   {state.currentLore!==undefined &&
                 <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} style={{...styles.buttons.buttonAdd, marginTop:"25px", backgroundColor:styles.colors.colorBlack+"99",
