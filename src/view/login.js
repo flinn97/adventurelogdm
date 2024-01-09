@@ -15,7 +15,8 @@ export default class Login extends Component {
             selectedFile: undefined,
             path: undefined,
             email: "",
-            password: ""
+            password: "",
+            errorMessage: undefined,
         }
     }
 
@@ -28,11 +29,13 @@ export default class Login extends Component {
 	};
 
 
-	async handleSubmission()  {
-
-        await this.props.app.dispatch({start:false})
-        await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch)
-
+	async handleSubmission()  {        
+        
+        let user = await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch);
+        if (user.error){
+            console.log(user);
+            this.setState({errorMessage:user.error});
+        }
 	};
 
     render(){
@@ -45,10 +48,14 @@ export default class Login extends Component {
         let compJson = component?.getJson();
         let opps = component?.getOperationsFactory();
         let key =compJson?.collection? "update": "add";
+       
+        const warning = { color: 'red', marginTop: '10px', fontSize: styles.fonts.fontSmallest, background: "" };
+        
+
         return(
                     <div style={{
                         padding:"5%", transition:"all ease-out", justifyContent:"center", flexDirection:"row", display:"flex",
-                        width:"100%", paddingTop:"35px",
+                        width:"100%", paddingTop:"35px", 
                         }}>
                            
                         <div 
@@ -58,7 +65,7 @@ export default class Login extends Component {
                          alignItems: "center",
                          alignSelf: "center",
                         }}>
-                                            <img src={logo} style={{width:"214px"}}/>
+                                            <img  src={logo} style={{width:"214px", userSelect:"none",}} draggable="false"/>
                             
                             <div style={{opacity:".94",  paddingBottom:"40px", width:"fit-content" }}>
                             
@@ -72,7 +79,7 @@ export default class Login extends Component {
                             theme={"adventureLog"} rows={1}
                             maxLength={110}
                             labelStyle={{color:styles.colors.color3, marginTop:".4rem", marginBottom:"7px", }}
-                            inputStyle={{minWidth:"300px", padding:"4px 9px", color:"#ffffff25", height:"1.6rem", rows:"1", 
+                            inputStyle={{minWidth:"300px", padding:"4px 9px", color:"#ffffff95", height:"1.6rem", rows:"1", 
                               fontSize:"1rem", 
                               borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", 
                               alignItems:"left",textAlign:"left",justifyContent:"center",
@@ -84,7 +91,7 @@ export default class Login extends Component {
 
                        
                              <div style={{color:styles.colors.color3, marginTop:".4rem", marginBottom:"7px", marginTop:"22px"}}>Password</div>
-                            <input autoComplete='off' style ={{width:"344px", padding:"4px 9px", color:"#ffffff25", height:"1.6rem", rows:"1", 
+                            <input autoComplete='off' style ={{width:"344px", padding:"4px 9px", color:"#ffffff95", height:"1.6rem", rows:"1", 
                               fontSize:"1rem", border:"1px solid "+styles.colors.color8,                          
                               borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", 
                               alignItems:"left",textAlign:"left",justifyContent:"center",}} type="password" id="pwd"   onChange={this.handleChange} name="password"/>
@@ -92,6 +99,11 @@ export default class Login extends Component {
                         
                          </div>
 
+                         {this.state.errorMessage && (
+                                <div style={{ ...warning , marginTop:"-18px"}}>
+                                    {this.state.errorMessage}
+                                </div>
+                            )}
 
                         <div style={{display:"flex",flexDirection:"column", justifyContent:"center", width:"fit-content",}}>
                          <button className="hover-btn" 
@@ -99,11 +111,21 @@ export default class Login extends Component {
                          color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSubheader1,}} 
                          class="hover-btn" onClick={this.handleSubmission}>
                             Login</button>
-                    
+
+                           
+                            <div 
+                        style={{display: "flex", flexDirection:"column", justifyContent:"center", width:"200%", 
+                        background:"#0000002e", borderRadius:"28px", height:"6px", marginTop:"10px", marginBottom:"-2px",
+                         alignContent: "center",
+                         alignItems: "center",
+                         alignSelf: "center",
+                        }}></div>
                      
-                     <Link style={{...styles?.buttons?.buttonAdd, marginTop:"24px", padding:"8px 19px", width:"155px",
+                     <Link style={{...styles?.buttons?.buttonAdd, marginTop:"12px", padding:"8px 19px", width:"155px",
                          color: styles?.colors?.colorWhite+"98", fontSize: styles?.fonts?.fontNormal,}}  to ="../register">Register</Link></div>
                      </div>
+
+                    
                  </div>
              )
     }

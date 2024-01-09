@@ -84,22 +84,27 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{minWidth:"100vw", minHeight:"100vh", justifyContent:"center", display:"flex", flexDirection:"row",
+      <div style={{minWidth:"100vw", minHeight:"100vh", justifyContent:"center", display:"flex", flexDirection:"row", userSelect:"none",
       alignContent:"center", justifyItems:"center"}}>
-          <div style={{ width:"fit-content", height:"100vh",
+
+
+          <div style={{ width:"fit-content", height:"100vh", pointerEvents: "none",
           justifyItems:"center", alignContent:"center", alignItems:"center", justifyContent:"center",
           justifySelf:"center", display:"flex", flexDirection:"column",}}>
-            <img  alt="Arcane Vault Assembly" src={ava} style={{width:"248px", zIndex:400, position:"absolute",}}/>
-              <div style={{color:"red", width:"fit-content", height:"fit-content", opacity:"50%", marginLeft:"78px"
+
+      
+
+            <img draggable="false" alt="Arcane Vault Assembly" src={ava} style={{width:"248px", zIndex:400, position:"absolute",}}/>
+              <div style={{color:"red", width:"fit-content", height:"fit-content", opacity:"50%", marginLeft:"78px",  pointerEvents: "none"
               }}>
                 
-                <img  class="vault-door-handle" alt="Arcane Vault Assembly" src={animate} style={{width:"184px", zIndex:22, marginBottom:"64px",}}/>
-                <img  alt="Arcane Vault Assembly" src={hold} style={{width:"340px", marginLeft:"-263px", zIndex:22, rotate:"90deg",}}/>
+                <img draggable="false"  class="vault-door-handle" alt="Arcane Vault Assembly" src={animate} style={{width:"184px", zIndex:22, marginBottom:"64px",  pointerEvents: "none"}}/>
+                <img draggable="false" alt="Arcane Vault Assembly" src={hold} style={{width:"340px", marginLeft:"-263px", zIndex:22, rotate:"90deg",  pointerEvents: "none"}}/>
                 
                 
           
               </div>
-              <img  alt="Arcane Vault Assembly" src={vault} style={{width:"440px", zIndex:22, position:"absolute", opacity:"3%", marginTop:"-30px"}}/>
+              <img draggable="false" alt="Arcane Vault Assembly" src={vault} style={{width:"440px", zIndex:22, position:"absolute", opacity:"3%", marginTop:"-30px",  pointerEvents: "none"}}/>
           </div>
       </div>
     )

@@ -11,8 +11,11 @@ export default class PlayerRegister extends Component {
 
         this.state = {
             user: undefined,
-            password: ""
-
+            password: "",
+            repeatPassword: "",
+            passwordMismatch: false,
+            emailMismatch: false,
+            passwordEmpty: false,
         }
     }
 
@@ -39,14 +42,35 @@ export default class PlayerRegister extends Component {
         let user = this.state.user;
         let email = user.getJson().email;
         let password = this.state.password;
+        let repeatPassword = this.state.repeatPassword;
+
+        this.setState({errorMessage:undefined });
+
+        if (password !== repeatPassword) {
+            this.setState({ errorMessage: "Passwords don't match." });
+            return; // Do not proceed if passwords don't match
+        }
+
+        if (!email.includes('@') || email.trim() === '') {
+            this.setState({ errorMessage: "Invalid email." });
+            return; // Do not proceed if email is invalid
+        }
+
+        if (!password) {
+            this.setState({ errorMessage: "Password can't be empty." });
+            return; // Do not proceed if passwords don't match
+        }
+
         await app.dispatch({email:email});
+        let authUser = await auth.register(email, password, true);
         await auth.register(email,password, true);
+        if (authUser.error) {  
+            this.setState({ errorMessage: authUser.error });
+        } else {
         await state.opps.run();
         await auth.login(email, password, this.props.app.state.componentList, this.props.app.dispatch);
-     
-
-
-
+        }
+        
 
     };
 
@@ -69,12 +93,13 @@ export default class PlayerRegister extends Component {
 
         const iStyle = {width:"344px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.6rem", rows:"1", 
         fontSize:"1rem",  border:"3px solid "+styles.colors.color8, 
-        borderRadius:"4px", background: styles.colors.color2+"5c", borderWidth:"0px", 
+        borderRadius:"4px", background: styles.colors.color2, borderWidth:"0px", 
         alignItems:"left",textAlign:"left",justifyContent:"center",};
 
         const wStyle ={display:"flex", flexDirection:"column", marginTop:"8px"};
         const lStyle ={color:styles.colors.color3, fontSize:"1rem"};
-        const additionalStyle ={color:styles.colors.color8, padding:"11px", fontSize:".9rem"}
+        const additionalStyle ={color:styles.colors.color8, padding:"11px", fontSize:".9rem"};
+        const warning = {...iStyle, color: 'red', marginTop: '10px', fontSize:styles.fonts.fontSmallest, background:""};
 
         return (
             <div style={{
@@ -91,7 +116,7 @@ export default class PlayerRegister extends Component {
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent:"center", alignContent:"center",}} >
 
                     <div style={{...lStyle, color:styles.colors.color8, marginBottom:"22px", fontSize:'1.1rem'}}>Registering as Player</div>
-
+                    <div style={{fontSize:styles.fonts.fontSmallest, color:styles.colors.color5}}>(All fields are required)</div>
                         <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"  
                         labelStyle ={lStyle} theme={"adventureLog"}autoComplete="off"
                         inputStyle={iStyle} wrapperStyle={wStyle}/>
@@ -122,6 +147,39 @@ export default class PlayerRegister extends Component {
                                 }}
                         />
                         </div>
+
+                        <div style={wStyle}>
+                                <div style={lStyle}>Repeat Password</div>
+                                <input
+                                    name="repeatPassword"
+                                    type="password"
+                                    style={iStyle}
+                                    theme={"adventureLog"}
+                                    autoComplete="off"
+                                    onChange={(e) => {
+                                        this.setState({ repeatPassword: e.target.value, passwordMismatch: false })
+                                    }}
+                                />
+                            </div>
+
+                                                    {this.state.passwordMismatch && (
+                                                            <div style={{ ...warning}}>
+                                                                Passwords are not the same.
+                                                            </div>
+                                                        )}
+
+                                                    {this.state.emailMismatch && (
+                                                        <div style={{...warning}}>
+                                                            Invalid email address.
+                                                        </div>
+                                                    )}
+
+                                                    {this.state.passwordEmpty && (
+                                                                <div style={{...warning}}>
+                                                                    Password is empty.
+                                                                </div>
+                                                            )}
+
                         <div className='hover-btn' style={{...styles?.buttons?.buttonAdd, marginTop:"24px", padding:"8px 34px", width:"355px",  border:"1px solid "+styles.colors.color8, 
                          color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSmall,}} onClick={this.handleSubmission}>
                             Submit
