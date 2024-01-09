@@ -67,7 +67,7 @@ async componentDidMount(){
   // }
   let list = await state.componentList.getList("lore", id, "campaignId");
   if(list.length>0){
-    auth.firebaseGetter(id, state.componentList, "campaignId", false, dispatch);
+    auth.firebaseGetter(id, state.componentList, "campaignId", "lore", dispatch);
 
   }
   else{

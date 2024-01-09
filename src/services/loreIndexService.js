@@ -69,6 +69,22 @@ class LoreIndexService {
     await opps.cleanPrepareRun({update:[changeLore, lore]});
   }
 
+  async insertAtBeginning(lore, loreList){
+    debugger
+    let opps = lore.getOperationsFactory();
+    let parentLore = loreList.find(parent=>parent.getJson().parentLore===true);
+    lore.setCompState({index:parentLore?1:0});
+    for(let l of loreList){
+    if(l!==parentLore){
+      l.setCompState({index: l.getJson().index+1});
+    }
+    }
+    loreList.splice(parentLore?1:0, 0, lore);
+    this.reOrganizeLore(loreList, opps);
+    
+
+  }
+
   /**
    * make sure lore has the right index at any time.
    * @param {*} loreList 
@@ -83,11 +99,13 @@ class LoreIndexService {
       i=1;
       loreList = loreList.filter(lore=> !lore.getJson().parentLore);
     }
-
+loreList = loreList.sort((a, b)=>a.getJson().index - b.getJson().index)
 
     for(let lore of loreList){
+
+
       lore.setCompState({index:i});
-      i++
+      i++;
       
     }
     if(checkTopLore){

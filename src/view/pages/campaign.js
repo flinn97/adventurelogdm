@@ -12,6 +12,9 @@ export default class Campaign extends Component {
      
     }
   }
+  componentDidMount(){
+    this.props.app.dispatch({currentCampaign: undefined})
+  }
  
   updateImage(component){
     this.setState({campaignImage: component, change: true})

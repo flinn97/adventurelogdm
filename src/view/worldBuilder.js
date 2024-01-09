@@ -68,14 +68,20 @@ export default class Worldbuilder extends Component {
   let id = toolService.getIdFromURL(true,0);
   let component = this.props.app.state.componentList.getComponent("campaign", id);
           if(component){
-                              let parentLore = this.props.app.state.componentList.getList("lore",id, "campaignId" );
+            debugger
+            let lore = state.currentLore;
+            if(lore===undefined){
+              let parentLore = this.props.app.state.componentList.getList("lore",id, "campaignId" );
+              parentLore = parentLore.find(l=>l.getJson().parentLore===true)
+              lore = parentLore
+            }
+
                               
-                              parentLore = parentLore.length>0? parentLore.filter(obj=>{return obj.getJson().parentLore===true}): undefined;
+                              let mapList = componentList.getList("map",lore?.getJson()._id,"loreId");
 
-                              let mapList = componentList.getList("map",obj?.getJson()._id,"loreId");
 
-                              let map = parentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", parentLore[0]?.getJson()._id, "loreId");
-                              this.setState({obj: component, lore:parentLore?parentLore[0]:undefined, map: map});
+                              let map = mapList[0];
+                              this.setState({obj: component, lore:lore, map: map, currentMap:map});
                               //RICH TEXT READ
                               let campaignDesc = document.getElementById("campaignDesc");
                               if(campaignDesc){
@@ -83,10 +89,7 @@ export default class Worldbuilder extends Component {
 
                               }
                               this.setState({currentMap:map});
-                              let currentMap = mapList[0];
-                              if (mapList.length > 0){
-                                this.setState({mapList:mapList, currentMap:currentMap});
-                              }
+
           }
 
   
@@ -105,9 +108,9 @@ export default class Worldbuilder extends Component {
     let dispatch = app.dispatch;
     let currentState = app.state;
     let componentList = currentState.componentList;
-    let mapList = componentList.getList("map",obj.getJson()._id,"loreId");
+    let mapList = componentList.getList("map",obj?.getJson()._id,"loreId");
     
-    if (state.mapList.length !== mapList.length)
+    if (state.mapList.length !== mapList?.length)
     {
       
       this.setState({mapList:mapList, currentMap: mapList[mapList.length-1],})
