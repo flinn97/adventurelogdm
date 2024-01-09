@@ -698,12 +698,14 @@ class MainContent extends Component {
                 </div>
               }
 
-              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "170px" }}>
-              <div  className="indent-on-click"
+
+              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "170px", }}>
+
+              <div  className="hover-btn"
                   style={{
-                    display: "flex", width: "200px", background: "red", borderRadius: '3vh',
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "470px",
-                    position: "absolute", marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
+                    display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                     //current pin
                     let pin = state.currentPin;
@@ -728,22 +730,25 @@ class MainContent extends Component {
                   dispatch({popupSwitch:""})
 
                 
-                }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"}</div>
+                // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                }}>Delete This Pin</div>
+
                 <div  className="indent-on-click"
                   style={{
-                    display: "flex", width: "200px", background: "red", borderRadius: '3vh',
+                    display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
                     alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px",
-                    position: "absolute", marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
+                    marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                   
                   this.copyLore(lore);
                 
-                }}>Make a Copy</div>
+                }}>Copy Lore</div></div>
+
                 
                 <div className="indent-on-click"
                   style={{
                     display: "flex", width: "92px", background: "red", borderRadius: '3vh',
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "flex-end", right: "0px",
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "flex-end", right: "10px",
                     position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
                   }}>
                   <RunButton app={app} text="Save"
@@ -785,7 +790,7 @@ class MainContent extends Component {
                       fontSize: styles.fonts.fontSmallest
                     }}> Saved! </div>)}
 
-                </div></div>
+                </div>
 
             </div>}
 
