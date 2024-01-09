@@ -176,16 +176,15 @@ export default class LoreSearch extends Component {
                   onClick={async () => {
                     
                     const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
-                            if(loreListTotalLength > 8){
-                            this.setState({searchTerm:newLoreName});}
+                            // if(loreListTotalLength > 8){
+                            // this.setState({searchTerm:newLoreName});}
                     let idS = idService.createId();
-                    console.log(idS);
-                    let href = window.location.href;
-                    let splitURL = href.split("/");
-                    let id = splitURL[splitURL.length - 1];
-                    id = id.includes("-") ? id.split('-')[1] : id;
+                    
+                                        
+                    let id = toolService.getIdFromURL(true, state.currentLore!==undefined?1:0);
+                     
+                    let otherChildren = componentList.getList("lore", id, "parentId");
 
-              let otherChildren = componentList.getList("lore", id, "parentId");
               await state.opps.cleanJsonPrepare({addlore: {
                 parentId: { [id]: newName + " " }, _id: idS, index: 0,
                 type: "lore", name: newName + " " + newLoreName, campaignId: campId
@@ -193,13 +192,11 @@ export default class LoreSearch extends Component {
               let l = state.opps.getUpdater("add")[0];
               await state.opps.run();
               await loreIndexService.insertAtBeginning(l, otherChildren);
-              // loreIndexService.sortComponentList(componentList);
               
-
-
 
             }}
           >+ Create Lore</div>
+
           <div
             title={"New Lore, opens in a new Tab"}
 

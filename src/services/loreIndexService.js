@@ -69,7 +69,7 @@ class LoreIndexService {
     await opps.cleanPrepareRun({update:[changeLore, lore]});
   }
 
-  async insertAtBeginning(lore, loreList){
+  async insertAtBeginning(lore, loreList, run){
     debugger
     let opps = lore.getOperationsFactory();
     let parentLore = loreList.find(parent=>parent.getJson().parentLore===true);
@@ -80,9 +80,9 @@ class LoreIndexService {
     }
     }
     loreList.splice(parentLore?1:0, 0, lore);
-    this.reOrganizeLore(loreList, opps);
-    
 
+    this.reOrganizeLore(loreList, opps, run);
+    
   }
 
   /**
@@ -90,7 +90,7 @@ class LoreIndexService {
    * @param {*} loreList 
    * @param {*} opps 
    */
-  async reOrganizeLore(loreList, opps){
+  async reOrganizeLore(loreList, opps, run){
 
     let i = 0;
     let checkTopLore= loreList.filter(lore => lore.getJson().parentLore ===true)[0];
@@ -99,7 +99,7 @@ class LoreIndexService {
       i=1;
       loreList = loreList.filter(lore=> !lore.getJson().parentLore);
     }
-loreList = loreList.sort((a, b)=>a.getJson().index - b.getJson().index)
+    loreList = loreList.sort((a, b)=>a.getJson().index - b.getJson().index)
 
     for(let lore of loreList){
 
@@ -111,7 +111,13 @@ loreList = loreList.sort((a, b)=>a.getJson().index - b.getJson().index)
     if(checkTopLore){
       loreList.unshift(checkTopLore);
     }
-    await opps.cleanPrepareRun({update:loreList})
+
+      if (!run){
+      await opps.cleanPrepareRun({update:loreList})
+    }else{
+      await opps.prepare({update:loreList})
+    }
+
   }
 
   async sortComponentList(componentList){

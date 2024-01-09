@@ -76,9 +76,11 @@ hovering:hover .hover {
 /* Initially hide the div */
 .hover-divInt {
   display: none;
+  
   position: absolute;
   top: 0;
   left: 0;
+  
   transition:all 0.3s ease; 
   /* Add other styling as needed */
 }
