@@ -703,12 +703,12 @@ class MainContent extends Component {
               }
 
 
-              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "170px", }}>
+              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom:"30px" }}>
 
               <div  className="hover-btn"
                   style={{
                     display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
-                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px",
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
                     marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                     //current pin
@@ -740,7 +740,7 @@ class MainContent extends Component {
                 <div  className="hover-btn"
                   style={{
                     display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px",
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid white",
                     marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                   
