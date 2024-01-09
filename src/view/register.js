@@ -3,19 +3,24 @@ import auth from '../services/auth';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
 import logo from '../pics/logoava2.png';
+import { useForm } from 'react-hook-form';
+
+
 
 export default class Register extends Component {
     constructor(props) {
         super(props);
         this.handleSubmission = this.handleSubmission.bind(this);
+        this.validatePassword = this.validatePassword.bind(this);
 
         this.state = {
             user: undefined,
             password: "",
             repeatPassword: "",
-            errorMessage:undefined,
+            errorMessage: undefined,
         }
     }
+
     async componentDidMount() {
         debugger
         let app = this.props.app;
@@ -29,16 +34,39 @@ export default class Register extends Component {
 
     }
 
+    ///TAYLOR
+    async validatePassword(password) {
+        console.log(password)
+        debugger
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        if (!hasUpperCase || !hasSpecialChar) {
+            return "Password must contain at least one uppercase letter and one special character. ";
+        }
+
+        return true;
+    }
+
 
     async handleSubmission() {
         let app = this.props.app;
         let state = app.state;
         let user = this.state.user;
         let email = user.getJson().email;
+
         let password = this.state.password;
+        
+        let passwordValidationResult = await this.validatePassword(password);
+        if (passwordValidationResult !== true) {
+            this.setState({ errorMessage: passwordValidationResult });
+            return; // Stop the submission if the password validation fails
+        }
+
         let repeatPassword = this.state.repeatPassword;
 
-        this.setState({errorMessage:undefined });
+        this.setState({ errorMessage: undefined });
+
 
         if (password !== repeatPassword) {
             this.setState({ errorMessage: "Passwords don't match." });
@@ -60,8 +88,8 @@ export default class Register extends Component {
         await app.dispatch({ email: email });
 
         let authUser = await auth.register(email, password, true);
-       
-        if (authUser.error) {  
+
+        if (authUser.error) {
             this.setState({ errorMessage: authUser.error });
         } else {
             await state.opps.run();
@@ -89,6 +117,7 @@ export default class Register extends Component {
         const lStyle = { color: styles.colors.color3, fontSize: "1rem" };
         const additionalStyle = { color: styles.colors.color8, padding: "11px", fontSize: ".9rem" };
         const warning = { ...iStyle, color: 'red', marginTop: '10px', fontSize: styles.fonts.fontSmallest, background: "" };
+
 
         return (
             <div style={{
@@ -160,7 +189,7 @@ export default class Register extends Component {
                                 />
                             </div>
 
-                            
+
 
                             {this.state.errorMessage && (
                                 <div style={{ ...warning }}>

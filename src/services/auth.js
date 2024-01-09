@@ -6,6 +6,7 @@ import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
 
+
 let imageQuality = .58;
 
 class Auth {
@@ -38,7 +39,7 @@ class Auth {
 
     }
 
-
+    
 
     async createInitialStages(componentList,) {
         let list = ["Not Started", "First Email", "Second Email", "Follow up", "Nurture", "Not Interested",]
@@ -306,6 +307,10 @@ class Auth {
         return docSnap.data();
 
     }
+
+   
+    
+    
     async register(email, password, addToCache) {
 
         let user;
