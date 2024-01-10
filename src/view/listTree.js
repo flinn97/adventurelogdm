@@ -26,7 +26,7 @@ export default class ListTree extends Component {
     }
     
   }
-  componentDidMount(){
+  async componentDidMount(){
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
@@ -50,6 +50,9 @@ export default class ListTree extends Component {
     
 //   }
 // }, 60);
+await state.componentList.sortSelectedList("lore", "index");
+this.setState({})
+
   }
 
  
@@ -140,13 +143,17 @@ export default class ListTree extends Component {
                         
                         cells={cells}
 
-                        filter={{search: _id, attribute: attribute}}  filterFunc={(lore)=>{
-                          if(!lore.getJson().reference){
-                            return true;
+                        filter={{search: _id, attribute: attribute}}  filterFunc={(obj)=>{
+                          let reference = obj.getJson().reference;
+                          let firstReference = obj.getJson().firstReference;
+                          let bool  = false;
+                          if(!reference){
+                            bool = true;
                           }
-                          else{
-                            return false;
-                          }}}/>
+                          if(firstReference){
+                            bool = true;
+                          }
+                          return bool}}/>
                       </div>
               </div>
             </div>

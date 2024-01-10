@@ -22,7 +22,7 @@ export default class Note extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-    await auth.firebaseGetter("newNote", state.componentList, "type", true, false)
+    
     let list = state.componentList.getList("newNote")
     if (list.length=== 0) {
       
