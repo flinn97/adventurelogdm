@@ -57,7 +57,7 @@ export default class Upload extends Component {
         if (this.props.changePic){
             await this.props.changePic(this.state.pic);}
                 
-            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this));
+            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this), this.props.quality);
         };
 
 
@@ -65,6 +65,8 @@ export default class Upload extends Component {
         
         let component = this.state.obj
         await component.getPicSrc(this.state.path)
+
+
         if (!this.props.skipUpdate) {
             if (this.props.update) {
                 this.props.app.state.componentList.getOperationsFactory().cleanPrepareRun({ update: component })

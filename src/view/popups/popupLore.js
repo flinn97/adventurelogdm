@@ -16,6 +16,7 @@ import PostLogButton from '../../componentListNPM/componentForms/buttons/postLog
 import { Link } from 'react-router-dom';
 import IconChange from '../iconChange';
 import loreIndexService from '../../services/loreIndexService';
+import idService from '../../componentListNPM/idService';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -100,8 +101,14 @@ class MainContent extends Component {
   async copyLore(lore){
     let app = this.props.app;
     let state = app.state;
-    let loreJson = {  ...lore.getJson(), _id:undefined }
-    await state.opps.cleanJsonPrepareRun({ addlore: loreJson});
+    let newId = idService.createId();
+    let loreJson = {  ...lore.getJson(), _id:newId };
+    await state.opps.cleanJsonPrepareRun({ addlore: loreJson, });
+    if (state.currentPin){
+        await state.opps.cleanJsonPrepareRun({
+          "addpin": {
+            ...state.currentPin.getJson(), loreId:newId, x:80, y:110+this.state.imagesToShow,
+          },})}
   }
 
   async linkLore(item, l, lore, pin){
@@ -706,8 +713,9 @@ class MainContent extends Component {
               <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom:"30px" }}>
 
               <div  className="hover-btn"
+              title='Deletes the Lore and the Pin!'
                   style={{
-                    display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontSmall,
                     alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
                     marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
@@ -735,18 +743,38 @@ class MainContent extends Component {
 
                 
                 // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                }}>Delete This Pin</div>
+                }}>Delete This Lore</div>
 
-                <div  className="hover-btn"
+<div  className="hover-btn"
+              title='Deletes the Pin'
                   style={{
-                    display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid white",
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
                     marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{
+                   
+                    let pin = state.currentPin;
+                    
+                  await state.opps.cleanPrepareRun({del:pin});
+                    
+                  dispatch({popupSwitch:""})
+                
+                // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                }}>Delete Pin Only</div>
+
+                <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                  style={{
+                    display: "flex", width: "288px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                   
                   this.copyLore(lore);
+                  dispatch({popupSwitch:""})
+
+                }}>Clone Lore To Map</div>
                 
-                }}>Copy Lore</div></div>
+                </div>
 
                 
                 <div className="indent-on-click"

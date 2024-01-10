@@ -6,7 +6,7 @@ import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
 
-let imageQuality = .58;
+let imageQuality = .5;
 
 class Auth {
     urlEnpoint = "GMS"
@@ -360,10 +360,10 @@ class Auth {
         }
         window.location.reload();
     }
-    async uploadPics(file, name, dispatch) {
+    async uploadPics(file, name, dispatch, quality) {
 
         new Compressor(file, {
-            quality: imageQuality,
+            quality: quality?quality:imageQuality,
             success: async (result) => {
                 const storageRef = ref(storage, name);
                 await uploadBytes(storageRef, result).then((snapshot) => {

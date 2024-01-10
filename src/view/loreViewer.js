@@ -299,7 +299,7 @@ marginTop:"22px"}}>
                 this.setState({map:map, currentMap:map});
 
               }}
-
+              title = "Large maps will take some time to load."
                text="Add Map" style={{display:"flex", marginBottom:"20px",
               zIndex:"1", borderRadius:".1vmin", background:"", cursor:"pointer"}} 
               update={true} skipUpdate={true}
