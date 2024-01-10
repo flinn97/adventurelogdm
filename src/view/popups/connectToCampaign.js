@@ -107,10 +107,10 @@ class MainContent extends Component{
     <ParentFormComponent app={app} name="campaignId"
               placeholder={"Enter Campaign Code"}  maxLength={11} 
               inputStyle={{maxWidth:"55.5vw", width:"400px", padding:"4px 9px", color:colorWarn, height:"fit-content",
-              borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", height:"100%", cursor:"text",
+              borderRadius:"4px",background:styles.colors.colorWhite+"02", borderWidth:"0px", height:"100%", cursor:"text",
               border:"solid 1px "+styles.colors.colorWhite+"22",
               textWrap:"wrap", fontSize:styles.fonts.fontSmall}}/>
-         <div style={{color:styles.colors.color8+"77", marginTop:"11px"}}>{"(Your GM has this)"}</div>     
+         <div style={{color:styles.colors.color8, marginTop:"11px"}}>{"(Your GM has this)"}</div>     
      </div>
      <div className='hover-btn'  
      style={{width:"400px", alignSelf:"center",  justifyContent:"center", display:'flex', flexDirection:"row",}}>
