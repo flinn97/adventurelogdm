@@ -89,8 +89,9 @@ export default class PlayerCharacterMapItem extends Component {
    
     let obj = this.props.obj;
     let allColors = obj.getJson().colors;
-    let colors = obj.getJson().colors?Object.values(allColors):[styles.colors.color1, styles.colors.color2, styles.colors.color8];
+    let colors = obj.getJson().colors?Object.values(allColors):[styles.colors.color1, styles.colors.color2, styles.colors.color8, styles.colors.color1, styles.colors.color2, styles.colors.color8];
        
+    console.log(obj.getJson().colors)
     const width = 108;
     
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
