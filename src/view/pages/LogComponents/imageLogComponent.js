@@ -58,7 +58,7 @@ export default class ImageLogComponent extends Component {
            maxWidth:"100%", borderRadius:"12px"}}/>
 
            {obj.getJson().src &&
-           <div style={{maxWidth:"100%", height:"100%", textAlign:"right",color:styles.colors.color8,fontSize:".85rem", overflow:"clip"}}
+           <div style={{maxWidth:"100%", height:"100%", textAlign:"right",color:styles.colors.color8,fontSize:".85rem", overflow:"clip", marginTop:"4px"}}
            title={"The GM sent this. "+srcT}
            >{srcT}
                   </div>

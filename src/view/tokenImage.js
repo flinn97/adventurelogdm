@@ -92,12 +92,12 @@ export default class TokenImage extends Component {
         </div>
         <div style={{width:widthMd, height:widthMd, position:"absolute", mixBlendMode:"overlay",
         borderRadius:"50%", zIndex:3,opacity:"50%",
-        boxShadow:"inset 6px 10px 6px -6px"+styles.colors.colorBlack+",7px 11px 3px -8px"+ styles.colors.colorBlack+",inset 6px 12px 6px -14px"+ styles.colors.colorWhite+",-7px -11px 3px -11px"+ styles.colors.colorWhite
+        boxShadow:this.props.width>39?"inset 6px 10px 6px -6px"+styles.colors.colorBlack+",7px 11px 3px -8px"+ styles.colors.colorBlack+",inset 6px 12px 6px -14px"+ styles.colors.colorWhite+",-7px -11px 3px -11px"+ styles.colors.colorWhite:"",
         }}>
         </div>
         
         <div style={{width:widthSm, height:widthSm, position:"absolute", mixBlendMode:"overlay", zIndex:4,
-       borderRadius:"50%", boxShadow:"7px 11px 3px -10px"+ styles.colors.colorWhite, 
+       borderRadius:"50%", boxShadow:this.props.width>39?"7px 11px 3px -10px"+ styles.colors.colorWhite:"", 
          }}>
         </div>
       </div>
