@@ -538,6 +538,17 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
+                background: appColors.colorBlack+"55", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+            popupSmallSolid:
+            {
+                opacity:"100%", 
                 background: appColors.colorBlack+"f9", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
@@ -1164,6 +1175,17 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
+                background: appColors.colorBlack+"55", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+            popupSmallSolid:
+            {
+                opacity:"100%", 
                 background: appColors.colorBlack+"f9", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
@@ -1780,6 +1802,18 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
+                background: appColors.colorBlack+"55", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+
+            popupSmallSolid:
+            {
+                opacity:"100%", 
                 background: appColors.colorBlack+"f9", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
@@ -1788,6 +1822,7 @@ class AdventureLogStyles {
                 display:"flex", flexDirection:"column",
                 border: "2px solid "+appColors.color9+"22",
             },
+
                                             popupSmallest:
                                                 {
                                                     opacity:"100%", 
