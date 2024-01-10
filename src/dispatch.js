@@ -116,7 +116,7 @@ justifyContent: "center",}}>
           {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
                   <ConnectToCampaign 
                   
-                    type="popup" options={{cardType:"popupSmall"}} app={app} containerStyle={{background:styles.colors.color2}}
+                    type="popup" options={{cardType:"popupSmallSolid"}} app={app} containerStyle={{background:styles.colors.color2}}
                     handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
                   
                   />}
