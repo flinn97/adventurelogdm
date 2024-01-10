@@ -96,9 +96,11 @@ export default class EncounterMapItem extends Component {
        
         </Link>
 
+        {(mCount > 0) &&(
         <div 
         title={mCount.toString()+' combatants'}
-        className='hover-div'><img src={arms} style={{width:"22px", objectFit:"scale-down", zIndex:400}} alt='ico'></img></div>
+        className='hover-div'><img src={arms} style={{width:"22px", objectFit:"scale-down", zIndex:400}} alt='ico'></img>
+        </div>)}
 
         </div>
     )
