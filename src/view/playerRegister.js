@@ -3,7 +3,7 @@ import auth from '../services/auth';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
 import logo from '../pics/logoava2.png';
-import { useForm } from 'react-hook-form';
+// import { useForm } from 'react-hook-form';
 
 export default class PlayerRegister extends Component {
     constructor(props) {

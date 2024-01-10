@@ -30,6 +30,7 @@ export default class Login extends Component {
 
 
     async handleSubmission() {
+        debugger
 
         let user = await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch);
         if (user.error) {
@@ -72,24 +73,16 @@ export default class Login extends Component {
 
 
                         {/* <div style={{fontFamily: styles?.fonts?.fontTitle, fontSize: styles?.fonts?.fontHeader5, color: styles?.colors?.color5}}>Login</div>                      */}
-                        <div style={{}} title={"Enter account email."}>
+                        <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Email</div>
+                        <input autoComplete='off' style={{
+                            width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
+                            fontSize: "1rem", border: "1px solid " + styles.colors.color8,
+                            borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
+                            alignItems: "left", textAlign: "left", justifyContent: "center",
+                        }}  id="pwd" onChange={this.handleChange} name="email" />
 
-                            <ParentFormComponent id="last"
-                                onChange={this.handleChange} name="email"
-                                wrapperStyle={{ display: "flex", flexDirection: "column", }}
-                                theme={"adventureLog"} rows={1}
-                                maxLength={110}
-                                labelStyle={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", }}
-                                inputStyle={{
-                                    minWidth: "300px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
-                                    fontSize: "1rem",
-                                    borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
-                                    alignItems: "left", textAlign: "left", justifyContent: "center",
-                                }}
-                                label="Email"
-                            />
 
-                        </div>
+                   
 
 
                         <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Password</div>
