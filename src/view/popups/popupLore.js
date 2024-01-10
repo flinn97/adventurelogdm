@@ -757,7 +757,7 @@ class MainContent extends Component {
                     
                   await state.opps.cleanPrepareRun({del:pin1});
                     
-                  dispatch({popupSwitch:""})
+                  await dispatch({popupSwitch:""})
                 
                 // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
                 }}>Delete Pin Only</div>
