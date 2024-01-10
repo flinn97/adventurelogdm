@@ -439,7 +439,7 @@ export default class InteractiveBulletin extends Component {
                                               iconImage: imgSrc
                                             });
                                             state.opps.cleanPrepareRun({ update: comp });
-                                            pin.pushIcon(state.opps, imgSrc);
+                                            // pin.pushIcon(state, imgSrc);
                                           }
                                         }} />
                                       {imgSrc === image16 &&
@@ -451,6 +451,11 @@ export default class InteractiveBulletin extends Component {
 
                                           text=" "
                                           obj={pin}
+
+                                          // changePic={async (pic, path) => {
+                
+                                          //  await pin.pushIcon(state, pic);
+                                          // }}
                                           
 
                                         />

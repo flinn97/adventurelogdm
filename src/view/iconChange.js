@@ -60,6 +60,7 @@ import imageP from '../pics/iconEpoint.png'
 
 import image16 from '../pics/iconAddIcon.png';
 import Upload from './upload';
+import toolService from '../services/toolService';
 
 
 
@@ -84,14 +85,15 @@ export default class IconChange extends Component {
     }
     
 
+
   render() {
     let obj = this.props.obj;
     let app = this.props.app;
     let state = app.state;
     let styles = state.styles;
     let dispatch = app.dispatch;
-    let currentState = app.state;
-    let componentList = currentState.componentList;
+    
+    let componentList = state.componentList;
 
     const images = [image16,
       image1,image2,image2a,image5,image6,image7,image8,
@@ -116,6 +118,10 @@ export default class IconChange extends Component {
 
     let pin = this.props.pin;
 
+    
+    let iconList = componentList.getList("icon", toolService.getIdFromURL(true,0), "campaignId");
+
+
     return (
       <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop: "90px",  }}>
 
@@ -137,7 +143,7 @@ export default class IconChange extends Component {
                         
                         {images.map((imgSrc, index) => (typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&(
                           <div 
-                          
+                          index={index}
                           style={{display:"flex", flexDirection:"row", borderRadius:"1px", 
                            height:"fit-content", margin:"2px", 
                            border:(imgSrc!==image16 && imgSrc.startsWith('#'))? "1px solid black":"1px solid "+styles.colors.color1, borderRadius:"50%",
@@ -151,11 +157,10 @@ export default class IconChange extends Component {
                                 className='hover-divInt' text="Upload"
                                 app={app} quality={.3}
                                 update={true}
-                                // changePic={(pic)=>{
-                                //   
-                                //   let comp = pin; 
-                                //   state.opps.cleanPrepareRun({update:comp});
-                                //   }}
+                                // changePic={async (pic, path) => {
+                
+                                //   await pin.pushIcon(state, pic)
+                                //  }}
                                   
                                 
                                 obj={pin}
@@ -297,11 +302,54 @@ export default class IconChange extends Component {
 
                         </div></div>
                         <hr></hr>
-                        <div style={{color:styles.colors.color8, fontSize:styles.fonts.fontSmall}}>My Icons: (Coming Soon)</div>
+                        <div style={{color:styles.colors.color8, fontSize:styles.fonts.fontSmall}}>Recent Icons:</div>
                         <div
                         style={{
-                        justifyContent:"space-between", borderRadius:"11px",
+                          justifyContent:"center", borderRadius:"11px",
                         marginLeft:"20px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'  }}>
+
+                        {iconList.map((ico, index) => (
+                                                  <div 
+                                                  
+                                                  style={{display:"flex", flexDirection:"row", borderRadius:"1px", 
+                                                  height:"fit-content", margin:"2px", 
+                                                  border:styles.colors.color1, borderRadius:"50%",
+                                                  
+                                                    }}>
+                <div style={{cursor:"pointer"}}>
+
+                  <div  style={{background:ico.getJson().picURL===pin.getJson().iconImage?styles.colors.colorWhite:"", width:"58px", height:"58px",borderRadius:"50%",
+                  alignItems:"center", justifyContent:"center", 
+                  display:"flex", flexDirection:"row"}}>
+                    <div style={{background:ico.getJson().picURL===pin.getJson().iconImage?styles.colors.colorBlack:"", width:"54px", height:"54px",borderRadius:"50%",
+                  alignItems:"center", justifyContent:"center", 
+                  display:"flex", flexDirection:"row"}}>
+
+                                                    
+                                            <img alt='ico'
+                                            style={{ maxHeight: "50px",  maxWidth: "50px", position:"relative", width:"50px",
+                                            backgroundColor:pin.getJson().colorOverlay, 
+                                            filter:pin.getJson().colorFilter,
+                                            
+                                            borderRadius:"50%"}}
+                                            
+                                            key={index}
+                                            src={ico.getJson().picURL}
+                                            onClick={(item, data)=>{    
+                                              
+                                                        if (ico.getJson().picURL){                            
+                                                              let comp = pin;
+                                                              comp.setCompState({
+                                                                  iconImage: ico.getJson().picURL
+                                                              });
+                                                              state.opps.cleanPrepareRun({update:comp});
+                                                        }
+                                            }}/>
+                                </div></div>
+                                </div>
+                                                        
+                                                  </div>
+                                                      ))}
                           </div>
         
       </div >

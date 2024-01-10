@@ -63,8 +63,8 @@ export default class Upload extends Component {
 
     async handleSubmission() {
         
-        let component = this.state.obj
-        await component.getPicSrc(this.state.path)
+        let component = this.state.obj;
+        await component.getPicSrc(this.state.path, this.props.app.state);
 
 
         if (!this.props.skipUpdate) {
@@ -78,7 +78,10 @@ export default class Upload extends Component {
             await this.props.app.state.opps.run();
         }
 
-        this.props.updateMap(component)
+        // Check if updateMap prop is a function before calling it
+    if (typeof this.props.updateMap === 'function') {
+        await this.props.updateMap(component);
+    }
 
     };
 

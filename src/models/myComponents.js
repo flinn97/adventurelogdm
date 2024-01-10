@@ -4,6 +4,7 @@ import auth from "../services/auth.js";
 import authService from "../services/auth.js";
 import moment from 'moment';
 import toolService from "../services/toolService.js";
+import idService from "../componentListNPM/idService.js";
 
 
 class componentBase extends BaseClass {
@@ -186,22 +187,38 @@ class Pin extends componentBase {
         
     }
 
-    async getPicSrc(path) {
+    async getPicSrc(path, state) {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
         this.json.iconImage = pic;
+debugger
+        await this.pushIcon(state, this.json.picURL )
     }
 
-    async pushIcon(opps, imgSrc) {
-        debugger
+    async pushIcon(state, imgSrc) {
+        let id =  toolService.getIdFromURL(true,0);
+        const compList = await state.componentList.getList("icon", id, "campaignId");
+        
         let pic = imgSrc;
-        let json = {...this.json, picURL:pic, x:undefined, y:undefined };
+        let json = {...this.json, picURL:pic, type: "icon", color:"", date:"", referencePin:"",
+    };
 
-        opps.cleanJsonPrepareRun({
+    ///TAYLOR Why does this not work, the object is not being created again.
+    /// I ran through debugger and everything looked fine
+        if (compList.length > 29) {
+            // Delete the first item in the array
+            // keeps recent uploads to a min
+            await state.opps.cleanPrepareRun({ del: state.componentList.getList("icon", id, "campaignId")[0] }).then(() => {
+                state.opps.cleanJsonPrepareRun({
+                    "addicon": {...json, 
+                      },
+                  })
+            });
+        }else{
+        await state.opps.cleanJsonPrepareRun({
             "addicon": {...json,
-              type: "icon",
-            },
-          });
+              },
+          });}
     }
 
 }
@@ -564,8 +581,8 @@ class Icon extends componentBase {
 
     }
     json = {   
-        picURL: {},
-        color: {},
+        type: "icon",
+        picURL:"",
         campaignId: "",
     }
 
