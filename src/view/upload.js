@@ -57,14 +57,16 @@ export default class Upload extends Component {
         if (this.props.changePic){
             await this.props.changePic(this.state.pic);}
                 
-            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this));
+            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this), this.props.quality);
         };
 
 
     async handleSubmission() {
         
-        let component = this.state.obj
-        await component.getPicSrc(this.state.path)
+        let component = this.state.obj;
+        await component.getPicSrc(this.state.path, this.props.app.state);
+
+
         if (!this.props.skipUpdate) {
             if (this.props.update) {
                 this.props.app.state.componentList.getOperationsFactory().cleanPrepareRun({ update: component })
@@ -76,7 +78,10 @@ export default class Upload extends Component {
             await this.props.app.state.opps.run();
         }
 
-        this.props.updateMap(component)
+        // Check if updateMap prop is a function before calling it
+    if (typeof this.props.updateMap === 'function') {
+        await this.props.updateMap(component);
+    }
 
     };
 

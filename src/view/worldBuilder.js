@@ -190,7 +190,9 @@ export default class Worldbuilder extends Component {
 
 
             }}
-            text="Add Map" style={{
+            text="Add Map" 
+            title = "Large maps will take some time to load."
+            style={{
               display: "flex", marginBottom: "20px",
               zIndex: "1", borderRadius: ".1vmin", background: "", cursor: "pointer"
             }}

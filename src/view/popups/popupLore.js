@@ -16,6 +16,7 @@ import PostLogButton from '../../componentListNPM/componentForms/buttons/postLog
 import { Link } from 'react-router-dom';
 import IconChange from '../iconChange';
 import loreIndexService from '../../services/loreIndexService';
+import idService from '../../componentListNPM/idService';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -100,8 +101,17 @@ class MainContent extends Component {
   async copyLore(lore) {
     let app = this.props.app;
     let state = app.state;
-    let loreJson = { ...lore.getJson(), _id: undefined }
-    await state.opps.cleanJsonPrepareRun({ addlore: loreJson });
+    let newId = idService.createId();
+    let loreJson = {  ...lore.getJson(), _id:newId };
+    
+    if (lore !== state.currentPin){
+    await state.opps.cleanJsonPrepareRun({ addlore: loreJson, });}
+
+    if (state.currentPin){
+        await state.opps.cleanJsonPrepareRun({
+          "addpin": {
+            ...state.currentPin.getJson(), loreId:newId, x:80, y:110+this.state.imagesToShow,
+          },})}
   }
 
   async linkLore(item, l, lore, pin) {
@@ -713,14 +723,15 @@ class MainContent extends Component {
               }
 
 
-              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
-
-                <div className="hover-btn"
+              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom:"30px" }}>
+              
+              <div  className="hover-btn"
+              title='Deletes the Lore, all Referenced Lore, and the Pin!'
                   style={{
-                    display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
-                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", border: "1px solid white",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: "white", justifyContent: "center", cursor: "pointer"
-                  }} onClick={async () => {
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontSmall,
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{
                     //current pin
                     let pin = state.currentPin;
                     //if current pin exists and is a reference pin go get the reference lore obj. else just user the currentComponent lore
@@ -740,23 +751,56 @@ class MainContent extends Component {
                     delList = delList.filter(comp => comp !== undefined);
                     await state.opps.cleanPrepareRun({ del: delList });
 
+                
+                // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                }}>Delete All Connected Lore</div>
 
-                    dispatch({ popupSwitch: "", showPinMap: false })
-
-
-                    // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                  }}>Delete This Pin</div>
-
-                <div className="hover-btn"
+<div  className="hover-btn"
+              title='Deletes the Pin'
                   style={{
-                    display: "flex", width: "200px", background: styles.colors.color6, borderRadius: '3vh',
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center", right: "170px", border: "1px solid white",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: "white", justifyContent: "center", cursor: "pointer"
-                  }} onClick={async () => {
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{
+                   
+                    let pin1 = state.currentPin;
+                    
+                  await state.opps.cleanPrepareRun({del:pin1});
+                    
+                  await dispatch({popupSwitch:""})
+                
+                // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                }}>Delete Pin Only</div>
 
-                    this.copyLore(lore);
+                <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                  style={{
+                    display: "flex", width: "288px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808", marginRight:"22px",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{
+                  
+                  this.copyLore(lore);
+                  dispatch({popupSwitch:""})
 
-                  }}>Copy Lore</div></div>
+                }}>Clone Lore To Map</div>
+
+                <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                  style={{
+                    display: "flex", width: "258px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{
+                  
+                  this.copyLore(state.currentPin);
+                  dispatch({popupSwitch:""})
+
+                }}>Clone Pin Only</div>
+                
+                </div>
+
+                    {/* this.copyLore(lore);
+
+                  }}>Copy Lore</div></div> */}
 
 
               <div className="indent-on-click"
