@@ -16,6 +16,7 @@ class RichTextComponent extends Component {
         this.checkHold = this.checkHold.bind(this);
         this.wrapperRef = React.createRef();
         this.handlePaste = this.handlePaste.bind(this);
+        this.setEnterCaret = this.setEnterCaret.bind(this);
         this.replaceHTML = this.replaceHTML.bind(this);
         this.getCurrentCursorPosition = this.getCurrentCursorPosition.bind(this);
         this.ref = React.createRef();
@@ -247,7 +248,9 @@ class RichTextComponent extends Component {
                     this.setCaret(cursorPosition)
                 }, 100)
             }
-            if (value === 'enter') {
+            if (value === 'enter' ||value === 'Enter') {
+                const originalCursorPosition = this.getCaretPosition(); // Get current cursor position
+
                 const originalLength = innerText.length;
                 
                 let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
@@ -256,8 +259,8 @@ class RichTextComponent extends Component {
                 this.props.handleChange(html);
                 setTimeout(async () => {
                     const newLength = innerText.length;
-                    const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
-                    this.setCaret(cursorPosition)
+                    const cursorPosition = newLength - (originalLength - originalCursorPosition);
+                    this.setEnterCaret(cursorPosition)
                 }, 100)
             }
 
@@ -281,10 +284,56 @@ class RichTextComponent extends Component {
 
     }
 
+    getCaretPosition() {
+        let caretOffset = 0;
+        const sel = window.getSelection();
+        if (sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(this.ref.current); 
+            preCaretRange.setEnd(range.startContainer, range.startOffset);
+            caretOffset = preCaretRange.toString().length;
+        }
+        return caretOffset;
+    }
+
     async checkHold(event) {
         if (event.key === "Control" && !this.state.pressCTRL) {
             await this.setState({ pressCTRL: true })
         }
+    }
+
+    setEnterCaret(offset) {
+        debugger
+        const richText = this.ref.current;
+        const selection = window.getSelection();
+    
+        // Ensure the offset is within the bounds
+        offset = Math.min(offset, richText.textContent.length);
+        offset = Math.max(offset, 0);
+    
+        // Split the text node at the specified offset to handle "Enter"
+        let currentNode = richText.firstChild;
+        while (currentNode) {
+            if (currentNode.nodeType === Node.TEXT_NODE) {
+                const textLength = currentNode.textContent.length;
+    
+                if (offset <= textLength) {
+                    const range = document.createRange();
+                    range.setStart(currentNode, offset);
+                    range.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                        break;
+                }
+    
+                offset -= textLength;
+            }
+    
+            currentNode = currentNode.nextSibling;
+        }
+    
+        richText.focus();
     }
 
     setCaret(offset) {

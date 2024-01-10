@@ -83,6 +83,14 @@ export default class InteractiveBulletin extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    let state = app.state;
+    if(state.showPinMap===false){
+      console.log("showPinMap");
+      dispatch({showPinMap:true})
+
+    }
     if (this.imgRef?.current !== prevState.imgRef) {
       //prevProps.imgRef?.current
       const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -252,7 +260,7 @@ export default class InteractiveBulletin extends Component {
   
   {/* {this.state.start && */}
 
-  {/* IMAGE BACKGROUND */}{this.props.obj &&
+{/* IMAGE BACKGROUND */}{this.props.obj &&state.showPinMap &&
   <div ref={this.parentRef} 
               style={{position:"absolute", top:0, left:0,
    width: this.state.mapWidth, 
@@ -262,6 +270,7 @@ export default class InteractiveBulletin extends Component {
     
     
     {/* PINS PINS PINS */}
+    
   {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").map((pin,index)=>
   <Draggable 
   defaultPosition={{x: parseInt(pin.getJson().x, 10), y: parseInt(pin.getJson().y, 10)}}

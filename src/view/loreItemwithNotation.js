@@ -68,10 +68,12 @@ export default class LoreItemWithNotation extends Component {
   
     if (id.includes("-")) {
       let idList = id.split('-');
-      newLink = idList[0] + "-" + obj.getJson()._id;
+      let ogId  = obj.getJson().reference? obj.getJson().ogId:obj.getJson()._id
+      newLink = idList[0] + "-" + ogId;
     } else {
       newLink = id + "-" + obj.getJson()._id;
     }
+
   
 
     let sendLink = state.popupSwitch!=="popupLore"?"../campaign/"+newLink:"";

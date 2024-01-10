@@ -180,6 +180,14 @@ class Auth {
                 rawData.push(data);
             }
         }
+        const components2 =  await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "newNote"), where('owner', '==', email), orderBy("date"));
+        let comps2 = await getDocs(components2);
+        for (const key in comps2.docs) {
+            let data = comps2.docs[key].data()
+            if (!IDlist.includes(data._id)) {
+                rawData.push(data);
+            }
+        }
 
         await componentList.addComponents(rawData, false);
         let user = componentList.getComponent("user");

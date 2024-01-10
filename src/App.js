@@ -47,6 +47,7 @@ export default class App extends Component {
       // switchcase: "home",
       
       login : true,
+      showPinMap:true,
       
       
       operate: undefined,
