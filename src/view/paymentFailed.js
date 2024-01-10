@@ -37,7 +37,7 @@ export default class PaymentFailed extends Component {
         containerStyle={{background:styles.colors.color2, zIndex:55000,}}
         
       />    <div style={{color:'white', height:"300px", position:"absolute", userSelect:"none", top:200, justifySelf:"center", fontSize:styles.fonts.fontNormal}}>
-                <div style={{color:'white'}}>It looks like you haven't paid for access yet. Please try again: 
+                <div style={{color:'white'}}>It looks like you haven't paid for access yet. Something went wrong with your payment. Please try again: 
                 <a href="https://buy.stripe.com/3csdTd12T5LB2Ck7ss">Link</a></div>
                 </div>
             </div>
