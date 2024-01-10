@@ -410,7 +410,7 @@ export default class PlayerCharacterMapItem extends Component {
         </div>
         <div style={{width:"100%", display:"flex", flexDirection:"row", marginBottom:"11px",
        justifyContent:"flex-start"}}>
-        <ConnectToCampaignSwitch app={app} {...this.props} />
+        <ConnectToCampaignSwitch app={app} {...this.props}/>
         </div>                       
 
                 </div>
