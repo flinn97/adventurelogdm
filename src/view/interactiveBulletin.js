@@ -222,11 +222,11 @@ export default class InteractiveBulletin extends Component {
       </div>
 
       {this.props.obj &&
-                  
+                  ///DELETE MAP
                   <div className='hover-btn-highlight' title={"Permanently Delete this Map"}
                   style={{...styles.buttons.buttonAdd, color:'red', width:"80px", textAlign:"center",  cursor:"pointer",
                   height:"40px",border:"1px solid "+styles.colors.color6, right:12, position:"absolute", top:12,
-                  padding:"2px 4px",
+                  padding:"2px 4px", zIndex:900,
                   
                   }}  
                   onClick={()=>{
@@ -408,7 +408,7 @@ export default class InteractiveBulletin extends Component {
                               src={imgSrc}
                               onClick={(item, data)=>{    
                                 
-                                          if (imgSrc){                            
+                                          if (imgSrc !== image16){                            
                                                 let comp = pin;
                                                 comp.setCompState({
                                                     iconImage: imgSrc
@@ -416,7 +416,7 @@ export default class InteractiveBulletin extends Component {
                                                 state.opps.cleanPrepareRun({update:comp});
                                           }
                               }}/>
-                                {/* {imgSrc===image16 && 
+                                {imgSrc===image16 && 
                                   <Upload 
                                   className='hover-divInt'
                                   app={app} buttonStyle={{width:"28px",}} 
@@ -432,7 +432,7 @@ export default class InteractiveBulletin extends Component {
                                   obj={pin}
                                   
                                   />
-                                } */}
+                                }
                                 </div>}
 
                 {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&

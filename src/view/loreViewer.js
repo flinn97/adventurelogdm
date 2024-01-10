@@ -266,6 +266,7 @@ marginTop:"22px"}}>
       }}>
       
        <div>
+        
        <MapUploader 
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path) => {
