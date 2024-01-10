@@ -753,9 +753,9 @@ class MainContent extends Component {
                     marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                    
-                    let pin = state.currentPin;
+                    let pin1 = state.currentPin;
                     
-                  await state.opps.cleanPrepareRun({del:pin});
+                  await state.opps.cleanPrepareRun({del:pin1});
                     
                   dispatch({popupSwitch:""})
                 
