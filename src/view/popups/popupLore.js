@@ -103,7 +103,10 @@ class MainContent extends Component {
     let state = app.state;
     let newId = idService.createId();
     let loreJson = {  ...lore.getJson(), _id:newId };
-    await state.opps.cleanJsonPrepareRun({ addlore: loreJson, });
+    
+    if (lore !== state.currentPin){
+    await state.opps.cleanJsonPrepareRun({ addlore: loreJson, });}
+
     if (state.currentPin){
         await state.opps.cleanJsonPrepareRun({
           "addpin": {
@@ -711,7 +714,7 @@ class MainContent extends Component {
 
 
               <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom:"30px" }}>
-
+              
               <div  className="hover-btn"
               title='Deletes the Lore and the Pin!'
                   style={{
@@ -765,7 +768,7 @@ class MainContent extends Component {
                 <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
                   style={{
                     display: "flex", width: "288px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808",
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808", marginRight:"22px",
                     marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
                   }} onClick={async ()=>{
                   
@@ -773,6 +776,18 @@ class MainContent extends Component {
                   dispatch({popupSwitch:""})
 
                 }}>Clone Lore To Map</div>
+
+                <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                  style={{
+                    display: "flex", width: "258px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{
+                  
+                  this.copyLore(state.currentPin);
+                  dispatch({popupSwitch:""})
+
+                }}>Clone Pin Only</div>
                 
                 </div>
 
