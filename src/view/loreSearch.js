@@ -94,6 +94,20 @@ export default class LoreSearch extends Component {
       dragOverTarget: null,
     }));
   }
+  checkToShowRef(obj){
+    let reference = obj.getJson().reference;
+    let firstReference = obj.getJson().firstReference;
+    let bool  = false;
+    if(!reference){
+      bool = true;
+    }
+    if(firstReference){
+      bool = true;
+    }
+    return bool
+
+
+  }
 
 
 
@@ -116,7 +130,7 @@ export default class LoreSearch extends Component {
 
 
     let loreList = componentList.getList("lore", id, listTerm).sort((a, b)=>a.getJson().index - b.getJson().index).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
-    .filter(lore => !lore.getJson().parentLore).filter(lore=> !lore.getJson().reference)
+    .filter(lore => !lore.getJson().parentLore).filter((obj)=>{return this.checkToShowRef(obj)})
       .filter(loreItem => {
         const name = loreItem?.getJson()?.name;
         if (this.state.searchTerm === "") {
@@ -287,6 +301,7 @@ export default class LoreSearch extends Component {
               loreList.map((loreItem, index) => {
                   const loreItemId = loreItem.getJson()._id;
                   const position = this.state.positions[loreItemId] || { x: 0, y: 0 };
+                  let linkId = (loreItem.getJson().ogId!==undefined&& loreItem.getJson().ogId!=="")?loreItem.getJson().ogId: loreItem.getJson()._id;
 
                   return (
                   //   <Draggable
@@ -360,8 +375,8 @@ export default class LoreSearch extends Component {
                             // this.navigateToLink(loreItem);
                           }}
                         >
-                          <Link to={"/campaign/" + toolService.getIdFromURL(true, 0) + "-" + loreItem.getJson()._id} style={{ textDecoration: "none" }}>
-                            
+                          
+                            <Link to={"/campaign/" + toolService.getIdFromURL(true, 0) + "-" + linkId } style={{ textDecoration: "none" }}>
                             <LoreItemWithNotation
                               link={true}
                               app={app}

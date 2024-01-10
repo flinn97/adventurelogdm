@@ -12,6 +12,7 @@ class LoreIndexService {
     
     let index  =  lore.getJson().index;
     let changeIndex = index +1;
+    let sendToFront = false
     for(let i = changeIndex; i<loreList.length; i++){
       let lore = loreList[i];
       if(lore.getJson().reference===true){
@@ -23,11 +24,25 @@ class LoreIndexService {
     }
     if(changeIndex===loreList.length){
       changeIndex = 0;
+      sendToFront = true;
     }
-    let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
-    changeLore.setCompState({index:index});
-    lore.setCompState({index:changeIndex});
-    await opps.cleanPrepareRun({update:[changeLore, lore]});
+    //if arrow up was clicked on the end lore. else update as normal
+    if(sendToFront){
+      lore.setCompState({index:changeIndex});
+      let changeIndexes = loreList.filter(obj => obj!== lore);
+      for(let l of changeIndexes){
+        l.setCompState({index: l.getJson().index+1});
+      }
+
+      await opps.cleanPrepareRun({update:[lore, ...loreList]});
+    }
+    else{
+      let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
+      changeLore.setCompState({index:index});
+      lore.setCompState({index:changeIndex});
+      await opps.cleanPrepareRun({update:[changeLore, lore]});
+    }
+    
     // this.reOrganizeLore(loreList, opps);
 
   }
@@ -42,6 +57,7 @@ class LoreIndexService {
     
     let index  =  lore.getJson().index;
     let changeIndex = index -1;
+    let sendToBack = false;
     for(let i = changeIndex; i<loreList.length; i--){
       if(i<0){
         break;
@@ -57,20 +73,34 @@ class LoreIndexService {
     if(changeIndex<0){
 
         changeIndex = loreList.length-1;
+        sendToBack = true;
     }
     if(changeIndex<=0 &&loreList[0].getJson().index===1){
       changeIndex = loreList.length-1;
+      sendToBack = true;
 
     }
+    if(sendToBack){
+      lore.setCompState({index:changeIndex});
+      let changeIndexes = loreList.filter(obj=> obj!==lore);
+      for(let l of changeIndexes){
+        l.setCompState({index: l.getJson().index-1})
+      }
+      await opps.cleanPrepareRun({update:[lore, ...loreList]});
+    }
+    else{
+      let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
+      changeLore.setCompState({index:index});
+      lore.setCompState({index:changeIndex});
+      await opps.cleanPrepareRun({update:[changeLore, lore]});
+    }
 
-    let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
-    changeLore.setCompState({index:index});
-    lore.setCompState({index:changeIndex});
-    await opps.cleanPrepareRun({update:[changeLore, lore]});
+
   }
 
   async insertAtBeginning(lore, loreList, run){
     debugger
+    loreList = loreList.filter(obj => obj!==lore);
     let opps = lore.getOperationsFactory();
     let parentLore = loreList.find(parent=>parent.getJson().parentLore===true);
     lore.setCompState({index:parentLore?1:0});
