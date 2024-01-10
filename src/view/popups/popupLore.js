@@ -115,7 +115,7 @@ class MainContent extends Component {
   }
 
   async linkLore(item, l, lore, pin) {
-    debugger
+    //debugger
     let app = this.props.app;
     let state = app.state;
     let componentList = state.componentList;
@@ -432,7 +432,7 @@ class MainContent extends Component {
                   <hr></hr>
 
 
-                  <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginBottom: "32px" }}> Lore:
+                  <div style={{ color: styles.colors.color3 + "f5",  marginBottom: "32px" }}> Lore:
                     <div style={{
                       display: "flex", flexDirection: "row", alignContent: "flex-end",
                       justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
@@ -448,7 +448,7 @@ class MainContent extends Component {
                       inputStyle={{
                         maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
                         borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                        border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                        border: "solid 1px " + styles.colors.colorWhite + "22", 
                       }}
                       wrapperStyle={{
                         margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "1px",
@@ -479,7 +479,7 @@ class MainContent extends Component {
                         inputStyle={{
                           minWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
                           borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                          border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                          border: "solid 1px " + styles.colors.colorWhite + "22", 
                         }}
 
                         wrapperStyle={{
@@ -816,7 +816,7 @@ class MainContent extends Component {
                     let lore = arr[0];
                     let check;
                     if (state.currentPin) {
-                      debugger
+                      //debugger
                       let pin = state.currentPin;
 
                       if (lore.getJson().name === "" || lore.getJson().name === undefined) {
@@ -843,7 +843,7 @@ class MainContent extends Component {
                     }
 
                     if (lore) {
-                      debugger
+                      //debugger
                       let parentId = Object.keys(lore.getJson().parentId,)[0];
                       let otherChildren = state.componentList.getList("lore", parentId, "parentId");
                       if (!check) {

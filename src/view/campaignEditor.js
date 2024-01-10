@@ -65,7 +65,7 @@ export default class CampaignEditor extends Component {
     //   await this.setState({splash:false})
 
     // }
-    debugger
+    //debugger
     let campId = state.currentCampaign?.getJson()._id;
     if (!campId) {
       if (id.includes('-')) {

@@ -47,7 +47,7 @@ export default class AdventureLogPage extends Component {
     let components = await compList.getComponents();
     
     
-debugger
+//debugger
     await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
     
 

@@ -62,13 +62,18 @@ class RichTextComponent extends Component {
         });
 
 
-    replaceHTML(htmlString) {
+    replaceHTML(htmlString, enter) {
         
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlString, 'text/html');
 
         // Find all elements with a 'style' attribute
-        const styledElements = doc.querySelectorAll('[style]');
+        let styledElements = doc.querySelectorAll('[style]');
+        if(enter){
+            let enterEl = doc.querySelectorAll('div');
+            styledElements = [...styledElements, ...enterEl]
+
+        }
 
         // Loop through each element and modify the style
         styledElements.forEach(element => {
@@ -151,6 +156,7 @@ class RichTextComponent extends Component {
 
 
     async handleChange(e) {
+
         const config = {
             ADD_TAGS: ['a'], // Allow link tags
             ADD_ATTR: ['href'], // Allow to attributes
@@ -235,6 +241,7 @@ class RichTextComponent extends Component {
             this.props.handleChange(save);
 
             if (this.state.pressCTRL && value === 'v') {
+                
                 const originalLength = innerText.length;
                 
                 let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
@@ -249,19 +256,32 @@ class RichTextComponent extends Component {
                 }, 100)
             }
             if (value === 'enter' ||value === 'Enter') {
-                const originalCursorPosition = this.getCaretPosition(); // Get current cursor position
-
-                const originalLength = innerText.length;
+                debugger
+                // let tryhtml = this.ref.current.innerHTML;
+                // const originalLength = innerText.length;
                 
-                let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
-                let html = this.replaceHTML(save);
-                this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
-                this.props.handleChange(html);
-                setTimeout(async () => {
-                    const newLength = innerText.length;
-                    const cursorPosition = newLength - (originalLength - originalCursorPosition);
-                    this.setEnterCaret(cursorPosition)
-                }, 100)
+                // let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
+                // let html = this.replaceHTML(save, true);
+                // this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
+                // this.props.handleChange(html);
+                // this.handlePaste();
+                // setTimeout(async () => {
+                //     const newLength = innerText.length;
+                //     const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
+                //     this.setCaret(cursorPosition)
+                // }, 100)
+
+                // const originalCursorPosition = this.ref.current.innerHTML.length;
+                
+                // let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
+                // let html = this.replaceHTML(save);
+                // this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
+                // this.props.handleChange(html);
+                // setTimeout(async () => {
+                //     const newLength = innerText.length;
+                //     const cursorPosition = newLength - (originalLength- originalCursorPosition);
+                //     this.setCaret(cursorPosition)
+                // }, 100)
             }
 
             // Someday help me figure this out Taylor. Change text in richtext to a link to the lore object of the given name
@@ -303,37 +323,17 @@ class RichTextComponent extends Component {
         }
     }
 
-    setEnterCaret(offset) {
-        debugger
-        const richText = this.ref.current;
-        const selection = window.getSelection();
-    
-        // Ensure the offset is within the bounds
-        offset = Math.min(offset, richText.textContent.length);
-        offset = Math.max(offset, 0);
-    
-        // Split the text node at the specified offset to handle "Enter"
-        let currentNode = richText.firstChild;
-        while (currentNode) {
-            if (currentNode.nodeType === Node.TEXT_NODE) {
-                const textLength = currentNode.textContent.length;
-    
-                if (offset <= textLength) {
-                    const range = document.createRange();
-                    range.setStart(currentNode, offset);
-                    range.collapse(true);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                        break;
-                }
-    
-                offset -= textLength;
-            }
-    
-            currentNode = currentNode.nextSibling;
-        }
-    
-        richText.focus();
+    setEnterCaret() {
+        // debugger
+        const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.selectNodeContents(this.ref.current);
+    range.collapse(false);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+  
     }
 
     setCaret(offset) {
@@ -425,7 +425,14 @@ class RichTextComponent extends Component {
         this.setState({ textHtml: html })
 
         document.addEventListener('keydown', this.checkHold)
-        document.addEventListener('keyup', this.handleChange);
+        this.ref.current.addEventListener('keyup', this.handleChange);
+        this.ref.current.addEventListener('keydown', (e=>{
+            if(e.keyCode==13) {
+                // e.preventDefault();
+                // this.setEnterCaret(e);
+            }
+        }));
+
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
