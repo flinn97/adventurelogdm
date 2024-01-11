@@ -538,7 +538,18 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"99", 
+                background: appColors.colorBlack+"55", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+            popupSmallSolid:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"f9", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -1161,17 +1172,28 @@ class AdventureLogStyles {
                 userSelect: "none"
             },
 
-                            popupSmall:
-                            {
-                                opacity:"100%", 
-                                background: appColors.colorBlack+"99", 
-                                padding:"10px", 
-                                borderRadius:"2vmin", 
-                                // borderStyle:"solid", 
-                                // borderColor:appColors.color3+"22", 
-                                display:"flex", flexDirection:"column",
-                                border: "2px solid "+appColors.color9+"22",
-                            },
+            popupSmall:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"55", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+            popupSmallSolid:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"f9", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
 
                             popupSmallest:
                                 {
@@ -1777,17 +1799,29 @@ class AdventureLogStyles {
                 userSelect: "none"
             },
 
-                                            popupSmall:
-                                            {
-                                                opacity:"100%", 
-                                                background: appColors.colorBlack+"99", 
-                                                padding:"10px", 
-                                                borderRadius:"2vmin", 
-                                                // borderStyle:"solid", 
-                                                // borderColor:appColors.color3+"22", 
-                                                display:"flex", flexDirection:"column",
-                                                border: "2px solid "+appColors.color9+"22",
-                                            },
+            popupSmall:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"55", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+
+            popupSmallSolid:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"f9", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
 
                                             popupSmallest:
                                                 {

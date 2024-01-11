@@ -102,16 +102,19 @@ class MainContent extends Component {
     let app = this.props.app;
     let state = app.state;
     let newId = idService.createId();
-    let loreJson = {  ...lore.getJson(), _id:newId };
-    
-    if (lore !== state.currentPin){
-    await state.opps.cleanJsonPrepareRun({ addlore: loreJson, });}
+    let loreJson = { ...lore.getJson(), _id: newId };
 
-    if (state.currentPin){
-        await state.opps.cleanJsonPrepareRun({
-          "addpin": {
-            ...state.currentPin.getJson(), loreId:newId, x:80, y:110+this.state.imagesToShow,
-          },})}
+    if (lore !== state.currentPin) {
+      await state.opps.cleanJsonPrepareRun({ addlore: loreJson, });
+    }
+
+    if (state.currentPin) {
+      await state.opps.cleanJsonPrepareRun({
+        "addpin": {
+          ...state.currentPin.getJson(), loreId: newId, x: 80, y: 110 + this.state.imagesToShow,
+        },
+      })
+    }
   }
 
   async linkLore(item, l, lore, pin) {
@@ -119,16 +122,16 @@ class MainContent extends Component {
     let app = this.props.app;
     let state = app.state;
     let componentList = state.componentList;
-    let firstReference =false;
-    if(l.getJson()._id!== Object.keys(item.getJson().parentId)[0]){
+    let firstReference = false;
+    if (l.getJson()._id !== Object.keys(item.getJson().parentId)[0]) {
       let checkList = componentList.getList("lore", l.getJson()._id, "parentId");
-      let findFirstRef = checkList.find(obj => obj.getJson().ogId ===item.getJson()._id);
-      if(!findFirstRef){
-        firstReference= true;
+      let findFirstRef = checkList.find(obj => obj.getJson().ogId === item.getJson()._id);
+      if (!findFirstRef) {
+        firstReference = true;
       }
     }
 
-    let loreJson = { ...item.getJson(), ...lore.getJson(), name: item.getJson().name, reference: true, firstReference:firstReference, ogId: item.getJson()._id, parentId: { [l.getJson()._id]: l.getJson().name ? l.getJson().name : l.getJson().title } }
+    let loreJson = { ...item.getJson(), ...lore.getJson(), name: item.getJson().name, reference: true, firstReference: firstReference, ogId: item.getJson()._id, parentId: { [l.getJson()._id]: l.getJson().name ? l.getJson().name : l.getJson().title } }
     await lore.setCompState({ ...loreJson });
 
     if (pin) {
@@ -494,7 +497,7 @@ class MainContent extends Component {
                   <div style={{ marginTop: "-18px", color: styles.colors.colorWhite + "77", fontSize: styles.fonts.fontSmall, }}>Encounters</div>
 
                   <div style={{ marginTop: "2vh", marginBottom: "1vh", }}>
-                    <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }, "delete"]}
+                    <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }]}
                       filter={{ search: state.currentComponent.getJson()._id, attribute: "loreId" }}
                       theme={"selectByImageSmall"}
                     />
@@ -723,15 +726,17 @@ class MainContent extends Component {
               }
 
 
-              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom:"30px" }}>
-              
-              <div  className="hover-btn"
-              title='Deletes the Lore, all Referenced Lore, and the Pin!'
+              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
+
+                <div className="hover-btn"
+                  title='Deletes the Lore, all Referenced Lore, and the Pin!'
                   style={{
-                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontSmall,
-                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
+
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontSmallest,
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white", paddingTop:"5px",paddingBottom:"5px",
                     marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
-                  }} onClick={async ()=>{
+                  }} onClick={async ()=>{       
+
                     //current pin
                     let pin = state.currentPin;
                     //if current pin exists and is a reference pin go get the reference lore obj. else just user the currentComponent lore
@@ -751,54 +756,54 @@ class MainContent extends Component {
                     delList = delList.filter(comp => comp !== undefined);
                     await state.opps.cleanPrepareRun({ del: delList });
 
-                
-                // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                }}>Delete All Connected Lore</div>
 
-<div  className="hover-btn"
-              title='Deletes the Pin'
+                    // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                  }}>Delete All Connected Lore</div>
+
+                <div className="hover-btn"
+                  title='Deletes the Pin'
                   style={{
-                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
-                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white",
-                    marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
-                  }} onClick={async ()=>{
-                   
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
+                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", border: "1px solid white",
+                    marginTop: "8.24vh", marginBottom: "1vh", color: "white", justifyContent: "center", cursor: "pointer"
+                  }} onClick={async () => {
+
                     let pin1 = state.currentPin;
-                    
-                  await state.opps.cleanPrepareRun({del:pin1});
-                    
-                  await dispatch({popupSwitch:""})
-                
-                // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                }}>Delete Pin Only</div>
 
-                <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                    await state.opps.cleanPrepareRun({ del: pin1 });
+
+                    await dispatch({ popupSwitch: "" })
+
+                    // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                  }}>Delete Pin Only</div>
+
+                <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
                   style={{
-                    display: "flex", width: "288px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808", marginRight:"22px",
-                    marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
-                  }} onClick={async ()=>{
-                  
-                  this.copyLore(lore);
-                  dispatch({popupSwitch:""})
+                    display: "flex", width: "288px", background: styles.colors.color8 + '55', borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center", right: "170px", border: "1px solid #172808", marginRight: "22px",
+                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.colorWhite, justifyContent: "center", cursor: "pointer"
+                  }} onClick={async () => {
 
-                }}>Clone Lore To Map</div>
+                    this.copyLore(lore);
+                    dispatch({ popupSwitch: "" })
 
-                <div  className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                  }}>Clone Lore To Map</div>
+
+                <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
                   style={{
-                    display: "flex", width: "258px", background: styles.colors.color8+'55', borderRadius: '3vh', fontSize:styles.fonts.fontNormal,
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center",  right: "170px", border:"1px solid #172808",
-                    marginTop: "8.24vh", marginBottom: "1vh", color:styles.colors.colorWhite, justifyContent:"center", cursor:"pointer"
-                  }} onClick={async ()=>{
-                  
-                  this.copyLore(state.currentPin);
-                  dispatch({popupSwitch:""})
+                    display: "flex", width: "258px", background: styles.colors.color8 + '55', borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
+                    alignSelf: "flex-end", bottom: '0px', alignItems: "center", right: "170px", border: "1px solid #172808",
+                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.colorWhite, justifyContent: "center", cursor: "pointer"
+                  }} onClick={async () => {
 
-                }}>Clone Pin Only</div>
-                
-                </div>
+                    this.copyLore(state.currentPin);
+                    dispatch({ popupSwitch: "" })
 
-                    {/* this.copyLore(lore);
+                  }}>Clone Pin Only</div>
+
+              </div>
+
+              {/* this.copyLore(lore);
 
                   }}>Copy Lore</div></div> */}
 
@@ -832,8 +837,8 @@ class MainContent extends Component {
                       let reg = state.opps.getUpdater("add");
                       check = componentList.getComponent("lore", lore.getJson()._id, "_id");
 
-                        await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
-                      
+                      await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
+
                       await state.opps.prepareRun({ update: pin });
                     } else {
 
@@ -1034,9 +1039,6 @@ class MainContent extends Component {
 
                                 }
 
-
-
-
                                 this.setState({ hasChoice: "New" });
                                 this.props.app.dispatch({ currentComponent: lore, popupSwitch: "" });
 
@@ -1058,13 +1060,15 @@ class MainContent extends Component {
                         this.setState(prevState => ({ loreToShow: prevState.loreToShow + (filteredLore.length - this.state.loreToShow) }))}
                       style={{
                         maxHeight: "210px", cursor: "pointer", textAlign: "center", padding: "8px",
-                        minWidth: "280px", display: "flex", alignItems: "center", justifyContent: "center",
+                        minWidth: "408px", display: "flex", alignItems: "center", justifyContent: "center",
                         fontSize: styles.fonts.fontSmall, borderRadius: "20px", marginBottom: "3vh",
-                        color: styles.colors.colorWhite, border: "" + styles.colors.colorWhite + "55 solid"
+                        color: styles.colors.colorWhite, border: "" + styles.colors.color3+ "f2 solid",
                       }}>
                       <div
                         style={{ display: "flex", position: "relative", }}>
+
                         Show {filteredLore.length - this.state.loreToShow} more
+
                       </div>
                       <div style={{
                         display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',

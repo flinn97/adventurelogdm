@@ -255,34 +255,22 @@ class RichTextComponent extends Component {
                     this.setCaret(cursorPosition)
                 }, 100)
             }
-            if (value === 'enter' ||value === 'Enter') {
-                debugger
-                // let tryhtml = this.ref.current.innerHTML;
-                // const originalLength = innerText.length;
-                
-                // let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
-                // let html = this.replaceHTML(save, true);
-                // this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
-                // this.props.handleChange(html);
-                // this.handlePaste();
-                // setTimeout(async () => {
-                //     const newLength = innerText.length;
-                //     const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
-                //     this.setCaret(cursorPosition)
-                // }, 100)
 
-                // const originalCursorPosition = this.ref.current.innerHTML.length;
+            // if (value === 'enter' ||value === 'Enter') {
+            //     const originalCursorPosition = this.getCaretPosition(); // Get current cursor position
+
+            //     const originalLength = innerText.length;
                 
-                // let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
-                // let html = this.replaceHTML(save);
-                // this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
-                // this.props.handleChange(html);
-                // setTimeout(async () => {
-                //     const newLength = innerText.length;
-                //     const cursorPosition = newLength - (originalLength- originalCursorPosition);
-                //     this.setCaret(cursorPosition)
-                // }, 100)
-            }
+            //     let save = DOMPurify.sanitize(this.ref.current.innerHTML, config);
+            //     let html = this.replaceHTML(save);
+            //     this.setState({ theHtml: html, textHtml: html, pressCTRL: false });
+            //     this.props.handleChange(html);
+            //     setTimeout(async () => {
+            //         const newLength = innerText.length;
+            //         const cursorPosition = newLength - (originalLength - originalCursorPosition);
+            //         this.setEnterCaret(cursorPosition)
+            //     }, 100)
+            // }
 
             // Someday help me figure this out Taylor. Change text in richtext to a link to the lore object of the given name
             //     if ((innerText.includes(']]') && innerText.includes('[[')) && this.props.linkLore){

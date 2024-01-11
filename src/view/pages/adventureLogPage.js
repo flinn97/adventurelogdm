@@ -16,6 +16,8 @@ import DelButton from '../../componentListNPM/componentForms/buttons/deleteButto
 import { ScrollHelper } from '../adventureLogScrollHelper';
 import SplashScreen from './splashScreen';
 import TokenImage from '../tokenImage';
+
+
 export default class AdventureLogPage extends Component {
   constructor(props) {
     super(props);
@@ -39,24 +41,27 @@ export default class AdventureLogPage extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
+    console.log(state.user)
+    if (state.user.getJson().role!=="GM" && (state.currentCharacter===undefined||!state.currentCharacter)){
+      toolService.navigateToLink('/');
+    }
+
     let styles = state.styles;
     let compList = state.componentList;
     let idSegment = toolService.getIdFromURL(true);
     let campaigns = compList.getList("campaign", idSegment, "_id");
     let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
     let components = await compList.getComponents();
-    
-    
-//debugger
+   
     await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
-    
+    await state.compList.sortSelectedListbyFirebaseDate("post");
 
-    await this.scrollToBottom();
-    await state.componentList.sortSelectedListbyFirebaseDate("post");
     await this.setState({ textI: "",showItems: true, showPopup:false  }); 
     app.dispatch({ rerender: true });
     auth.firebaseGetter(currentCampId, state.componentList, "campaignId", "lore");
     await state.componentList.sortSelectedListbyFirebaseDate("post");
+
+    await this.scrollToBottom();
   }
 
 
@@ -106,6 +111,7 @@ export default class AdventureLogPage extends Component {
       type: "post", sender: userRole, name:cName,
       message: m, desc: d,
       senderId: this.props.app.state.user.getJson()._id,
+      characterId : char?char.getJson()._id:this.props.app.state.user.getJson()._id,
       postType: mType,
       userPic: cPic, isToken: cTok, colors: cCol,
     };
@@ -142,7 +148,8 @@ export default class AdventureLogPage extends Component {
       this.messagesEndRef.current.scrollIntoView({ behavior: behavior ? behavior : "auto", block: 'end' });
     }
 
-  }
+  };
+
 
 
   render() {
@@ -177,6 +184,8 @@ export default class AdventureLogPage extends Component {
 
     let cleanedItems = sortedLogItems
       .slice(newAmount, sLL);
+
+    
 
 
     return (
@@ -222,9 +231,10 @@ export default class AdventureLogPage extends Component {
                   marginBottom: "24px", opacity: getOpacity(index, cleanedItems.length),
                 }}>
 
-                
+                <div>
+                      
                   <PostMapItem app={app} obj={item} index={item.getJson().date} colors={this.state.colors} />
-
+                </div>
 
                 </div>
               ))}

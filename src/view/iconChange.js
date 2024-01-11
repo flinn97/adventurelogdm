@@ -327,7 +327,7 @@ export default class IconChange extends Component {
 
                                                     
                                             <img alt='ico'
-                                            style={{ maxHeight: "50px",  maxWidth: "50px", position:"relative", width:"50px",
+                                            style={{ maxHeight: "50px",  maxWidth: "50px", position:"relative", width:"50px", height:"50px",
                                             backgroundColor:pin.getJson().colorOverlay, 
                                             filter:pin.getJson().colorFilter,
                                             
