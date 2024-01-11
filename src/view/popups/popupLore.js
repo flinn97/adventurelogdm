@@ -417,7 +417,7 @@ class MainContent extends Component {
                     flexDirection: "row", justifyContent: "space-between", paddingLeft: "200px",
                   }}>
 
-                    <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                    <div className="hover-btn" title='Create an exact copy of the pin refrencing lore.'
                       style={{
                         display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
                         alignItems: 'center',
