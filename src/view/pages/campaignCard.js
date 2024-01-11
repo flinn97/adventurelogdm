@@ -98,7 +98,7 @@ class MainContent extends Component{
        }}>
             
 
-          <div style={{}}>
+          <div style={{minHeight:"400px",}}>
             <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} 
             theme={"selectByImage"}
             //filter={{search: this.state.obj?.getJson().usage, attribute: "usage"}}
@@ -126,7 +126,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"column",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "0px",
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "0px", 
     fontSize:styles.fonts.fontSubheader1}}>
       Current Campaigns
       <div>

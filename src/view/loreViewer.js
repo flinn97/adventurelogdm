@@ -25,6 +25,8 @@ import ImageButton from '../componentListNPM/componentForms/buttons/imageButton.
 import loreB from '../pics/illustrations/loreScript.png';
 import encounterB from '../pics/illustrations/encounterGiant.png';
 import galleryB from '../pics/illustrations/paintingHand.png';
+import IndexLoreHierarchy from './indexLoreHierarchy.js';
+
 
 export default class LoreViewer extends Component {
 
@@ -35,6 +37,7 @@ export default class LoreViewer extends Component {
     this.encRef = React.createRef();
     this.loreRef = React.createRef();
     this.galRef = React.createRef();
+    this.startRef = React.createRef();
     this.state = {
       obj: undefined,
       draggableItems: [{}], // Initialize the draggable items array
@@ -87,6 +90,8 @@ async componentDidMount(){
   }
   await this.props.app.state.componentList.sortSelectedList("lore", "index");
 
+  // this.scrollTo(this.startRef,"smooth");
+
   this.setState({obj: component, lore:currentLore, map: map});
 
 }
@@ -124,7 +129,7 @@ updateSize(width, height){
 
 scrollTo = (ref, behavior) => {
   if (ref?.current) {
-    ref?.current?.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
+    ref?.current?.scrollIntoView({ behavior: (behavior || "smooth"), block: "start" });
   }
 }
 
@@ -162,16 +167,21 @@ scrollTo = (ref, behavior) => {
     "</div>;
     
     return (
-      <div style={{minWidth:"100%",}}>
-        {(state.currentLore!==undefined &&
-        <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"20px"}}>
+      <div style={{minWidth:"100%",}}><div ref={this.startRef}/>  
 
+
+
+        {(state.currentLore!==undefined && 
+        // randomColor===0 &&
+        <div style={{width:"100%",display:"flex", flexDirection:"row", justifyContent:"space-evenly", marginTop:"22px"}}>
+ 
                                             <div className="hover-btn">
+                                            
           <ImageButton 
           onClick={() => this.scrollTo(this.loreRef, "smooth")} 
           app={app} image={loreB} text={"Lore"} wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
-          minHeight: "90px",padding:"4px",borderRadius:"12px",
-          width: "270px", minHeight:"95px", backgroundColor:styles.colors.color2+'de',
+          padding:"4px",borderRadius:"12px",
+          width: "270px", minHeight:"80px", backgroundColor:styles.colors.color2+'de',
           overflow: 'hidden' }}
           buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
                                             transform: 'translate(-50%, -50%)', opacity:".77",
@@ -186,8 +196,9 @@ scrollTo = (ref, behavior) => {
                               image={encounterB} 
                               text={"Encounters"} 
                               wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
-                              minHeight: "90px",padding:"4px",borderRadius:"12px",
-                              width: "270px", minHeight:"95px",  backgroundColor:styles.colors.color2+'de',
+                              padding:"4px",borderRadius:"12px",
+                              width: "270px", minHeight:"80px",  
+                              backgroundColor:styles.colors.color2+'de',
                               overflow: 'hidden' }}
                               buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
                                                                 transform: 'translate(-50%, -50%)', opacity:".77",
@@ -200,8 +211,8 @@ scrollTo = (ref, behavior) => {
                                       image={galleryB} 
                                       text={"Gallery"} 
                                       wrapperStyle={{...styles.buttons.buttonAdd,position: 'relative', cursor: "pointer",borderRadius: "12px",
-                                      minHeight: "90px",padding:"4px",borderRadius:"12px",
-                                      width: "270px", minHeight:"95px",  backgroundColor:styles.colors.color2+'de',
+                                     padding:"4px",borderRadius:"12px",
+                                      width: "270px", minHeight:"80px",  backgroundColor:styles.colors.color2+'de',
                                       overflow: 'hidden' }}
                                       buttonTextStyle={{position: "absolute",top: "50%", left: "50%",
                                                                         transform: 'translate(-50%, -50%)', opacity:".77",
@@ -211,17 +222,28 @@ scrollTo = (ref, behavior) => {
 
                   </div>)
                   }
+
+
               <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
-              justifyContent:"flex-end", marginBottom:"12px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+              justifyContent:"flex-end", marginBottom:"2px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
               marginTop:"12px"}}>
-
-
                 
             <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
-              </div>
-          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, marginBottom:"32px"}}> Lore:
 
+             
+              </div>
+
+             
+
+          <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,}}> 
+
+          <div style={{display:"flex", flexDirection:"row", marginBottom:"8px",}}>
+           <div style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall, }}>Lore:</div>
+          <div style={{ overflowY: "hidden", maxWidth: "100%", justifySelf:"flex-start", marginLeft:"2px"}} className='scroller2'>
+              <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
+            </div></div>
           {/* < QuillComponent app = {app}/> */}
+            
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
                         rows={5} linkLore={true}
@@ -301,7 +323,7 @@ marginTop:"22px"}}>
               }}
               title = "Large maps will take some time to load."
                text="Add Map" style={{display:"flex", marginBottom:"20px",
-              zIndex:"1", borderRadius:".1vmin", background:"", cursor:"pointer"}} 
+              zIndex:"1", background:"", cursor:"pointer"}} 
               update={true} skipUpdate={true}
                app={app}/>
 

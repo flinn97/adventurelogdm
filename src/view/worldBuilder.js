@@ -194,7 +194,7 @@ export default class Worldbuilder extends Component {
             title = "Large maps will take some time to load."
             style={{
               display: "flex", marginBottom: "20px",
-              zIndex: "1", borderRadius: ".1vmin", background: "", cursor: "pointer"
+              zIndex: "1", background: "", cursor: "pointer"
             }}
             update={true} skipUpdate={true}
             app={app} />}

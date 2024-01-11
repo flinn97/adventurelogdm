@@ -93,15 +93,13 @@ class MainContent extends Component {
         paddingTop: "20px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, 
         marginBottom:"11px",color:styles.colors.color3
       }}>
-        <div style={{fontSize:styles.fonts.fontSmall, marginTop:"-22px", marginBottom:"22px", position:"absolute", 
-        zIndex:"22", padding:"8px", borderRadius:"11px",
-        background:styles.colors.color1+"e2"}}> Click an Image to Duplicate</div>
+       
        
 <div style={{width:"100%", minHeight:"200px", }}>
 
 
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 
-                  flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap",
+                  flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap", marginTop:"55px",
                   }}>
               {
                 imageList
@@ -198,6 +196,11 @@ class Popup extends Component {
       <div className="popup-box" style={{ zIndex: "1010" }}>
         <div ref={this.wrapperRef} className="popupCard"
           style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+
+<div style={{fontSize:styles.fonts.fontSmall, marginTop:"-12px", marginBottom:"44px", position:"absolute", 
+        zIndex:"22", padding:"8px", borderRadius:"11px", color:styles.colors.color3,
+        background:styles.colors.color1+"e2"}}> Add Media</div>
+
           <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
             onClick={this.props.handleClose}>X</div>
 
@@ -244,7 +247,9 @@ class PopupWithTab extends Component {
         <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
 
           <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}>
-            <TabContent app={app} handleClose={this.props.handleClose} delClick={this.props.delClick} /> <div style={ ///EXIT BUTTON
+            <TabContent app={app} handleClose={this.props.handleClose} delClick={this.props.delClick} /> 
+            
+            <div style={ ///EXIT BUTTON
               styles.buttons.closeicon
             } onClick={this.props.handleClose}>x</div></div>
           <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
@@ -279,6 +284,7 @@ class Card extends Component {
     return (
       <div className='scroller' style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
         <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          
           <MainContent app={app} />
         </div>
       </div>
@@ -300,6 +306,7 @@ class CardWithTab extends Component {
     return (
       <div style={{ ...styles[this.props.type ? this.props.type : "biggestCard"] }}>
         <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /></div>
+        
         <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }} className='scroller'>
           <MainContent app={app} />
         </div>

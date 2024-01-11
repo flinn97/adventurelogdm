@@ -35,6 +35,7 @@ export default class CampaignEditor extends Component {
 
     super(props);
     this.encRef = React.createRef();
+    this.startRef = React.createRef();
     this.loreRef = React.createRef();
     this.galRef = React.createRef();
     this.delLoreForce = this.delLoreForce.bind(this);
@@ -108,6 +109,7 @@ export default class CampaignEditor extends Component {
 
     await state.componentList.sortSelectedList("lore", "index");
     dispatch({});
+    this.scrollTo(this.startRef,"smooth");
   }
 
 
@@ -232,7 +234,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
           {/* BACK BUTTON */}
           {(state.popUpSwitchcase != "updateCampaign" && state.currentLore == undefined) &&
             (<Link className="hover-btn-highlight"
-              to={"/campaign/"}
+              to={"/"}
               style={{
                 ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
                 color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem",
@@ -242,7 +244,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
               <img style={{ width: ".9rem", opacity: "98%", marginRight: "8px" }}
                 src={backarrow}
               />
-              Campaigns
+              Home
             </Link>)
             ||
             (<Link className="hover-btn"
@@ -284,8 +286,9 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
               {state.currentLore !== undefined && <div style={{ display: "flex", flexDirection: "column" }}>
                 <div className='hover-btn'
                   style={{
-                    ...styles.buttons.buttonClose, borderRadius: "2vmin", fontSize: styles.fonts.fontSmall,
-                    padding: "4px 10px", pointer: "cursor", height: "fit-content", zIndex: "200", alignSelf: "flex-end",
+                    ...styles.buttons.buttonClose, borderRadius: "11px", fontSize: styles.fonts.fontSmall,
+                    padding: "4px 10px", pointer: "cursor", color:styles.colors.color5,
+                    height: "fit-content", zIndex: "200", alignSelf: "flex-end",
                     background: styles.colors.colorBlack + "5b", marginTop: "-4px",
                     // backgroundColor:"white",
                   }}
@@ -328,8 +331,10 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
               }
               <Link to={newLink} className='hover-btn' title={advLogText}
                 style={{
-                  ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px", borderColor: "black",
-                  color: "#57a6f2" + 'd2', backgroundColor: styles.colors.colorBlack + "b8",
+                  ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px", 
+                  borderColor: "#00000000", boxShadow:"",
+                  color: styles.colors.color9, 
+                  backgroundColor: styles.colors.colorBlack + "b8",
                   marginTop: "20px", fontWeight: "600"
                 }}>
 
