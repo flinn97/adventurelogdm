@@ -194,6 +194,8 @@ justifyContent: "center",}}>
                  
                 <Route path={obj.path} element={<obj.comp app={app}/>} />
               )}
+                      <Route path="/campaign/" element={<Campaign app={app} />}/> 
+
         <Route path="/campaign/:id" element={<CampaignEditor app={app} />}/> 
         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />}/> 
         <Route path="/encountermanager/:id" element={<EncounterManager app={app}/>}/>
