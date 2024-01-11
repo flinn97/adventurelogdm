@@ -31,7 +31,7 @@ class PostLogButton extends Component {
         let newType = (this.props.forceValue && this.props.val)?this.props.val:'';
         
         return (
-            <div 
+            <div className='hover-btn'
             style={{display: "flex", flexDirection: "row", justifySelf: "flex-end", cursor:this.state.showSaved?"progress":"auto",
             width: "fit-content", marginRight:this.props.marginRight?this.props.marginRight:"0px"}}>
                  {this.state.showSaved && (

@@ -65,7 +65,9 @@ class RunButton extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.runbuttonWrapperStyle:{...styles.buttons.buttonAdd, width:"50%", backgroundColor:styles.colors.color2+"99",}}
+            <div ref={this.wrapperRef} style={this.props.wrapperStyle? this.props.wrapperStyle: theme!==undefined? theme.runbuttonWrapperStyle:{
+                ...styles.buttons.buttonAdd, border:"",
+                width:"100%", backgroundColor:styles.colors.color2+"99",}}
             className={this.props.wrapperClass}>
                 <div 
                 //TAYLOR

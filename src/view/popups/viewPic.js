@@ -95,22 +95,22 @@ class MainContent extends Component{
         paddingTop:"28px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
 
           {!isLog &&
-          <div style={{display: "flex", marginBottom:"11px",flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end"}}>
-        <PostLogButton app={app} obj={state.currentPic} altText={"description"}/>
+          <div style={{display: "flex", marginTop:"11px",flexDirection: "row",alignContent:"flex-end", justifyContent:"flex-end"}}>
+        <PostLogButton app={app} obj={state.currentPic} text={"Log Image"}/>
           </div>}
           {!isLog &&
           <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", marginTop:"22px", }}>
-           <div style={{color:styles.colors.colorWhite+"d9", marginTop:"8px"}}>Source / Additional Text:</div>
+           <div style={{color:styles.colors.colorWhite+"d9", marginTop:"8px", marginBottom:"18px", fontSize:styles.fonts.fontSmall, width:"235px"}}>Source / Add Text:</div>
          <ParentFormComponent app={app} name="src" obj={state.currentPic}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
                         maxLength={100}
-                      inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
+                      inputStyle={{width:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", cursor:"text",
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
                       
-                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", width:"71%", marginLeft:"8px",
+                      wrapperStyle={{margin:"5px", width:"100%",color:styles.colors.colorWhite, display:"flex", marginLeft:"8px",
                       flexDirection:"column", justifyItems:"space-between"}}/></div>}
 
     <div className='scroller2' style={{  maxHeight:"100%", maxWidth:"100%",

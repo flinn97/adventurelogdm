@@ -80,8 +80,7 @@ export default class Dispatch extends Component {
           
 <div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
-            {logo: logo}
-          }
+            {logo: logo,}}
           />
           </div>
         {/* WITHIN */}

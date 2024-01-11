@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import IconChange from '../iconChange';
 import loreIndexService from '../../services/loreIndexService';
 import idService from '../../componentListNPM/idService';
+import toolService from '../../services/toolService';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -87,7 +88,7 @@ class MainContent extends Component {
       hasChoice: "",
       start: false,
       showIcon: false,
-      loreToShow: 6,
+      loreToShow: 8,
     };
     this.moveLore = this.moveLore.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -111,7 +112,7 @@ class MainContent extends Component {
     if (state.currentPin) {
       await state.opps.cleanJsonPrepareRun({
         "addpin": {
-          ...state.currentPin.getJson(), loreId: newId, x: 80, y: 110 + this.state.imagesToShow,
+          ...state.currentPin.getJson(), _id: newId, x: 80, y: 110 + this.state.imagesToShow,
         },
       })
     }
@@ -218,6 +219,10 @@ class MainContent extends Component {
     } else {
       this.setState({ hasChoice: "New" })
     }
+    
+    if (state.currentComponent?.getJson().name !== "" && state.currentComponent?.getJson().name !== undefined && state.currentComponent?.getJson().name !==null){
+      this.setState({saveClicked:true})
+    }
   }
 
   render() {
@@ -278,21 +283,23 @@ class MainContent extends Component {
 
 
       let pageLore = componentList.getList("lore", state.currentLore? state.currentLore.getJson()._id: state.currentCampaign.getJson()._id, 'parentId');
-    let filteredLore = componentList.getList("lore", idList[0], "campaignId").filter(l => !pageLore.includes(l));
-    filteredLore = filteredLore.sort(function(a, b){
-      //
-      //THIS MIGHT MAKE ORDER SWITCHING WEIRD
-      let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
-      let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
-      return aD - bD;});
+    let filteredLore = componentList.getList("lore", toolService.getIdFromURL(true,0), "campaignId")
+    .filter(l => !pageLore.includes(l)).sort((a, b) => {
+      const nameA = a?.getJson()?.name;
+      const nameB = b?.getJson()?.name;
+      return nameA.localeCompare(nameB);
+    });
+    
       filteredLore=[...pageLore, ...filteredLore].filter(item => {
         const name = item?.getJson()?.name;
         return  name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-      }).sort((a, b) => {
-        const nameA = a?.getJson()?.name;
-        const nameB = b?.getJson()?.name;
-        return nameA.localeCompare(nameB);
-      });
+      })
+      // .sort(function(a, b){
+      //     //
+      //     //THIS MIGHT MAKE ORDER SWITCHING WEIRD
+      //     let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
+      //     let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
+      //     return bD-aD;});
 
 
     return (
@@ -402,7 +409,7 @@ class MainContent extends Component {
                     }} />
 
 
-                  {(lore?.getJson().name !== "" && lore?.getJson().name !== undefined && this.state.saveClicked) &&
+                  {((lore?.getJson().name !== "" && lore?.getJson().name !== undefined) && this.state.saveClicked) &&
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -732,7 +739,7 @@ class MainContent extends Component {
 
               <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
 
-                <div className="hover-btn"
+                {/* <div className="hover-btn"
                   title='Deletes the Lore, all Referenced Lore, and the Pin!'
                   style={{
 
@@ -762,14 +769,14 @@ class MainContent extends Component {
 
 
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                  }}>Delete All Connected Lore</div>
+                  }}>Delete All Connected Lore</div> */}
 
                 <div className="hover-btn"
                   title='Deletes the Pin'
                   style={{
-                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
-                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", border: "1px solid white",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: "white", justifyContent: "center", cursor: "pointer"
+                    display: "flex", width: "210px",  borderRadius: '3vh', fontSize: styles.fonts.fontNormal, background:styles.colors.color2,
+                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", border: styles.colors.color6, textDecoration:"1px underline "+styles.colors.color6,
+                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
 
                     let pin1 = state.currentPin;
@@ -779,7 +786,7 @@ class MainContent extends Component {
                     await dispatch({ popupSwitch: "" })
 
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                  }}>Delete Pin Only</div>
+                  }}>Delete Pin</div>
 
                 <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
                   style={{
@@ -814,7 +821,7 @@ class MainContent extends Component {
 
               <div className="indent-on-click"
                 style={{
-                  display: "flex", width: "92px", background: "red", borderRadius: '3vh',
+                  display: "flex", width: "92px", background: "red", borderRadius: '12px',
                   alignSelf: "flex-end", bottom: '0px', alignItems: "flex-end", right: "10px",
                   position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
                 }}>
@@ -869,7 +876,7 @@ class MainContent extends Component {
 
                 {this.state.showSaved && (
                   <div className="saved-animation" style={{
-                    color: styles.colors.color9,
+                    color: styles.colors.color9, border:"",
                     alignSelf: "flex-end", position: "absolute", marginBottom: "69px", marginLeft: "-72px",
                     fontSize: styles.fonts.fontSmallest
                   }}> Saved! </div>)}
@@ -918,7 +925,7 @@ class MainContent extends Component {
                 }}
                 style={{
                   ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "44px", padding: "2px 8px"
                 }}
 
               >
@@ -929,7 +936,7 @@ class MainContent extends Component {
               </div>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-40px", marginBottom: "25px", }}>
-
+             
                 <input app={app}
 
                   type="input"
@@ -949,19 +956,12 @@ class MainContent extends Component {
 
               <div style={{
                 display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center",
-                alignItems: "center", height: "100%", width: "100%",
-              }}>
+                alignItems: "center", height: "100%", width: "100%", color:styles.colors.colorWhite, fontSize:"1.5rem"
+              }}> Move or Connect Lore
 
 
-                <div style={{ display: "flex", flexDirection: "row", alignSelf: "flex-end", marginRight: "82px", marginTop: "8px", marginBottom: "8px" }}>
-                  <div
-                    title={"Click the check box to add a reference to the original lore object. This will not move the lore from its original location"}
-                    style={{ color: styles.colors.color8, width: "fit-content", fontSize: "1.1rem", justifyContent: "center", marginTop: "5px", fontSize: styles.fonts.fontNormal }}>
-                    Link to this Lore
-
-                  </div>
-
-                  <ParentFormComponent
+                <div style={{ display: "flex", flexDirection: "row", alignSelf: "center",marginTop: "8px", marginBottom: "8px" }}>
+                <ParentFormComponent
                     obj={lore} name="refrence"
 
                     title={"Click the check box to add a reference to the original lore object."}
@@ -976,12 +976,22 @@ class MainContent extends Component {
                       color: styles.colors.colorBlack,
                     }}
                   />
-                  <div className='hover-container' style={{ cursor: "help", marginTop: "-9px", marginLeft: "-3px", height: "18px" }}>
+                 
+                 <div
+                    title={"Click the check box to add a reference to the original lore object. This will not move the lore from its original location"}
+                    style={{ color: styles.colors.color8, width: "fit-content", marginRight:"12px", fontSize: "1.1rem", justifyContent: "center", marginTop: "5px", fontSize: styles.fonts.fontNormal }}>
+                    Link to Existing Lore
+
+                  </div>
+
+                  
+                  <div className='hover-container' 
+                  style={{ cursor: "help", marginTop: "7px", marginLeft: "-3px", height: "18px" }}>
                     <img src={q} style={{ width: "18px" }} />
                     <div className='hover-div'
                       style={{
                         background: styles.colors.color2, width: "640", height: "fit-content", position: "absolute",
-                        padding: "12px 9px", borderRadius: "11px", left: -600, top: -10, border: "1px solid grey", boxShadow: "4px 8px 9px black",
+                        padding: "12px 9px", borderRadius: "11px", left: -500, top: -10, border: "1px solid grey", boxShadow: "4px 8px 9px black",
                         fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "d9"
                       }}>
 
@@ -1065,9 +1075,9 @@ class MainContent extends Component {
                         this.setState(prevState => ({ loreToShow: prevState.loreToShow + (filteredLore.length - this.state.loreToShow) }))}
                       style={{
                         maxHeight: "210px", cursor: "pointer", textAlign: "center", padding: "8px",
-                        minWidth: "408px", display: "flex", alignItems: "center", justifyContent: "center",
+                        minWidth: "808px", display: "flex", alignItems: "center", justifyContent: "center",
                         fontSize: styles.fonts.fontSmall, borderRadius: "20px", marginBottom: "3vh",
-                        color: styles.colors.colorWhite, border: "" + styles.colors.color3+ "f2 solid",
+                        color: styles.colors.colorWhite, border: "1px" + styles.colors.color3+ "f2 solid",
                       }}>
                       <div
                         style={{ display: "flex", position: "relative", }}>
