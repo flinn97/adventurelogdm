@@ -497,7 +497,7 @@ class MainContent extends Component {
                   <div style={{ marginTop: "-18px", color: styles.colors.colorWhite + "77", fontSize: styles.fonts.fontSmall, }}>Encounters</div>
 
                   <div style={{ marginTop: "2vh", marginBottom: "1vh", }}>
-                    <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }, "delete"]}
+                    <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }]}
                       filter={{ search: state.currentComponent.getJson()._id, attribute: "loreId" }}
                       theme={"selectByImageSmall"}
                     />
@@ -731,10 +731,12 @@ class MainContent extends Component {
                 <div className="hover-btn"
                   title='Deletes the Lore, all Referenced Lore, and the Pin!'
                   style={{
-                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize: styles.fonts.fontSmall,
-                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", border: "1px solid white",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: "white", justifyContent: "center", cursor: "pointer"
-                  }} onClick={async () => {
+
+                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize:styles.fonts.fontSmallest,
+                    alignSelf: "flex-end", alignItems: "center",  marginRight:"22px", border:"1px solid white", paddingTop:"5px",paddingBottom:"5px",
+                    marginTop: "8.24vh", marginBottom: "1vh", color:"white", justifyContent:"center", cursor:"pointer"
+                  }} onClick={async ()=>{       
+
                     //current pin
                     let pin = state.currentPin;
                     //if current pin exists and is a reference pin go get the reference lore obj. else just user the currentComponent lore

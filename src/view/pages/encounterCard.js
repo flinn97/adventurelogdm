@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import "../../App.css";
 import AddEncounter from '../AddEncounter';
 import EncounterMapItem from '../encounterMapItem';
+import trash from '../../pics/trashStill.png';
 
 /**
  * condensed version of the cards.
@@ -142,10 +143,25 @@ class MainContent extends Component{
                 
           
              </div>}
-             <MapComponent app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
+
+             <div style={{width:"100%", flexDirection:"row", display:"flex", justifyContent:"center", alignContent:"center", paddingLeft:"8%", paddingRight:"8%",
+             background:styles.colors.color2+"22", marginTop:"34px", borderRadius:"22px", paddingBottom:"34px"}}>
+             <MapComponent 
+             
+             delOptions={{
+              picURL: trash, warningMessage: "Delete this encounter (this is permanent)",
+              textStyle: { fontSize: styles.fonts.fontSmallest, },
+              style: {
+                width: "35px", height: "35px", padding: "4px 2px",
+                display: "flex", flexDirection: "row", marginBottom:"13px",
+                alignItems: "center", borderRadius: "8px",
+                justifyContent: "center"
+              },
+            }}
+             app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}
-            />
+            /></div>
         </div>
       
     )
