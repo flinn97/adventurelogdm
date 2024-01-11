@@ -494,7 +494,7 @@ class ParentFormComponent extends Component {
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
             linkLore={this.props.linkLore}
-            inputStyle={this.props.inputStyle}
+            inputStyle={{...this.props.inputStyle, fontSize:""}}
             spellCheck={this.props.spellCheck}
             label={this.props.label}
             type={this.props.type? this.props.type: 'text'}
