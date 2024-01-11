@@ -32,6 +32,16 @@ export default class AdventureLogPage extends Component {
       colors: [],
       showItems: false,
       showPopup: true,
+      posts: [],
+    }
+  }
+  componentDidUpdate(){
+    let app = this.props.app;
+    let dispatch = app.dispatch
+    let state = app.state;
+    if(state.rerenderFirebase){
+      dispatch({rerenderFirebase:false});
+      state.componentList.sortSelectedListbyFirebaseDate("post");
     }
   }
 
@@ -48,17 +58,20 @@ export default class AdventureLogPage extends Component {
 
     let styles = state.styles;
     let compList = state.componentList;
+    debugger
     let idSegment = toolService.getIdFromURL(true);
     let campaigns = compList.getList("campaign", idSegment, "_id");
-    let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
-    let components = await compList.getComponents();
+    // let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
    
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
-    await state.compList.sortSelectedListbyFirebaseDate("post");
+    auth.getPosts(idSegment, compList, dispatch);
+    await compList.sortSelectedListbyFirebaseDate("post");
 
     await this.setState({ textI: "",showItems: true, showPopup:false  }); 
     app.dispatch({ rerender: true });
-    auth.firebaseGetter(currentCampId, state.componentList, "campaignId", "lore");
+    let posts = await auth.firebaseGetter(idSegment, state.componentList, "campaignId", "post").then(posts=>{
+      this.setState({posts:posts, showItems:true})
+
+    })
     await state.componentList.sortSelectedListbyFirebaseDate("post");
 
     await this.scrollToBottom();
@@ -201,6 +214,8 @@ export default class AdventureLogPage extends Component {
 
             />
           </div> }
+          {this.state.posts.length>0&&<>
+          
 
           <div style={{
             width: "100%", height: "100%", color: styles.colors.color3 + "e9",
@@ -225,6 +240,8 @@ export default class AdventureLogPage extends Component {
               overflowX: "hidden",
               padding: "3px 6px", width: "100%", overflowY: "scroll",
             }}>
+              
+            
               {cleanedItems.length > 0 && cleanedItems.map((item, index) => (
 
                 <div key={index} title={item.getJson().sender === "GM" ? "The GM sent this" : ""} style={{
@@ -238,6 +255,7 @@ export default class AdventureLogPage extends Component {
 
                 </div>
               ))}
+              
               <div ref={this.messagesEndRef} style={{ height: "2px", width: "2px" }}></div>
             </div>
             {/* } */}
@@ -353,8 +371,10 @@ export default class AdventureLogPage extends Component {
 
           </div>
           {/* </>)} */}
+          
           <ScrollHelper scroll={this.scrollToBottom} />  
-       
+          
+          </>}
       </div >
     )
   }

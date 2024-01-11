@@ -65,7 +65,7 @@ export default class CampaignEditor extends Component {
     //   await this.setState({splash:false})
 
     // }
-    debugger
+    //debugger
     let campId = state.currentCampaign?.getJson()._id;
     if (!campId) {
       if (id.includes('-')) {
@@ -79,7 +79,7 @@ export default class CampaignEditor extends Component {
 
     let list = await state.componentList.getList("lore", campId, "campaignId");
     if (list.length > 0) {
-      auth.firebaseGetter(campId, state.componentList, "campaignId", "lore", dispatch);
+      // auth.firebaseGetter(campId, state.componentList, "campaignId", "lore", dispatch);
 
     }
     else {
