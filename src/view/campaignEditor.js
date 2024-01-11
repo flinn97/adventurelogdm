@@ -60,12 +60,6 @@ export default class CampaignEditor extends Component {
     let splitURL = href.split("/");
     let id = splitURL[splitURL.length - 1];
     let loreId;
-    // if(this.state.splash){
-    //   await dispatch({popupSwitch:"splashScreen"})
-    //   await this.setState({splash:false})
-
-    // }
-    //debugger
     let campId = state.currentCampaign?.getJson()._id;
     if (!campId) {
       if (id.includes('-')) {
@@ -74,7 +68,6 @@ export default class CampaignEditor extends Component {
       else {
         campId = id
       }
-
     }
 
     let list = await state.componentList.getList("lore", campId, "campaignId");
