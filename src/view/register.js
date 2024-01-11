@@ -137,7 +137,7 @@ export default class Register extends Component {
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: "22px", fontSize: '1.1rem' }}>Registering as GM</div>
+                            <div style={{ ...lStyle, color: styles.colors.colorWhite, marginBottom: "22px", fontSize: '1.2rem' }}>GM Registration</div>
 
                             <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.color5 }}>(All fields are required)</div>
 
@@ -205,7 +205,13 @@ export default class Register extends Component {
                                 Continue to Payment
                             </div>
 
-
+                            <div style={{width:"355px", display:"flex", flexDirection:"row", justifyContent:"center"}}>
+                            <Link className='hover-btn' style={{
+                        ...styles?.buttons?.buttonAdd, marginTop: "24px",
+                        padding: "8px 14px", width: "280px", border: "1px solid " + styles.colors.color8,
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,
+                    }} to="../login" >Back to Login</Link>
+                    </div>
                         </div> </div>
 
                 )}
@@ -224,11 +230,7 @@ export default class Register extends Component {
                     </div>
 
 
-                    <Link className='hover-btn' style={{
-                        ...styles?.buttons?.buttonAdd, marginTop: "24px",
-                        padding: "8px 14px", width: "280px", border: "1px solid " + styles.colors.color8,
-                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,
-                    }} to="../login" >Back to Login</Link></div>
+                    </div>
 
 
             </div>

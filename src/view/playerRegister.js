@@ -16,6 +16,7 @@ export default class PlayerRegister extends Component {
             password: "",
             repeatPassword: "",
             errorMessage: undefined,
+            showBullets: false,
         }
     }
 
@@ -32,20 +33,20 @@ export default class PlayerRegister extends Component {
 
 
     }
-///TAYLOR
-async validatePassword(password) {
-    console.log(password)
-    debugger
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    ///TAYLOR
+    async validatePassword(password) {
+        console.log(password)
+        debugger
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-    if (!hasUpperCase || !hasSpecialChar) {
-        return "Password must contain at least one uppercase letter and one special character. ";
+        if (!hasUpperCase || !hasSpecialChar) {
+            return "Password must contain at least one uppercase letter and one special character. ";
+        }
+
+        return true;
     }
 
-    return true;
-}
-    
 
     async handleSubmission() {
         debugger
@@ -58,41 +59,41 @@ async validatePassword(password) {
 
         this.setState({ errorMessage: undefined });
 
-        
+
         let passwordValidationResult = await this.validatePassword(password);
         if (passwordValidationResult !== true) {
             this.setState({ errorMessage: passwordValidationResult });
             return; // Stop the submission if the password validation fails
         }
 
-            if (password !== repeatPassword) {
-                this.setState({ errorMessage: "Passwords don't match." });
-                return; // Do not proceed if passwords don't match
-            }
+        if (password !== repeatPassword) {
+            this.setState({ errorMessage: "Passwords don't match." });
+            return; // Do not proceed if passwords don't match
+        }
 
-            if (!email.includes('@') || email.trim() === '') {
-                this.setState({ errorMessage: "Invalid email." });
-                return; // Do not proceed if email is invalid
-            }
+        if (!email.includes('@') || email.trim() === '') {
+            this.setState({ errorMessage: "Invalid email." });
+            return; // Do not proceed if email is invalid
+        }
 
-            if (!password) {
-                this.setState({ errorMessage: "Password can't be empty." });
-                return; // Do not proceed if passwords don't match
-            }
+        if (!password) {
+            this.setState({ errorMessage: "Password can't be empty." });
+            return; // Do not proceed if passwords don't match
+        }
 
-            await app.dispatch({ email: email });
+        await app.dispatch({ email: email });
 
-            let authUser = await auth.register(email, password, true);
+        let authUser = await auth.register(email, password, true);
 
-            await auth.register(email, password, true);
-            if (authUser.error) {
-                this.setState({ errorMessage: authUser.error });
-            } else {
-                await state.opps.run();
-                await auth.login(email, password, this.props.app.state.componentList, this.props.app.dispatch);
-            }
+        await auth.register(email, password, true);
+        if (authUser.error) {
+            this.setState({ errorMessage: authUser.error });
+        } else {
+            await state.opps.run();
+            await auth.login(email, password, this.props.app.state.componentList, this.props.app.dispatch);
+        }
 
-       
+
     };
 
     componentDidUpdate() {
@@ -142,7 +143,7 @@ async validatePassword(password) {
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: "22px", fontSize: '1.1rem' }}>Registering as Player</div>
+                            <div style={{ ...lStyle, color: styles.colors.colorWhite, marginBottom: "22px", fontSize: '1.2rem' }}>Player Registration</div>
                             <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.color5 }}>(All fields are required)</div>
                             <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"
                                 labelStyle={lStyle} theme={"adventureLog"} autoComplete="off"
@@ -202,6 +203,13 @@ async validatePassword(password) {
                                 Submit
                             </div>
 
+                            <div style={{ width: "355px", display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                                <Link className='hover-btn' style={{
+                                    ...styles?.buttons?.buttonAdd, marginTop: "24px",
+                                    padding: "8px 14px", width: "280px", border: "1px solid " + styles.colors.color8,
+                                    color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,
+                                }} to="../login" >Back to Login</Link>
+                            </div>
 
                         </div> </div>
 
@@ -216,21 +224,35 @@ async validatePassword(password) {
                         }}
                             to="../register" >Register as a GM</Link>
 
-                        <div style={{ ...additionalStyle, color: styles.colors.color9 + "f3" }}>As a GM you can: </div>
-                        <div style={additionalStyle}>&#x2022; Build Campaigns </div>
-                        <div style={additionalStyle}>&#x2022; Create Worlds and Lore </div>
-                        <div style={additionalStyle}>&#x2022; Run Encounters </div>
-                        <div style={additionalStyle}>&#x2022; Galleries and Notes </div>
-                        <div style={additionalStyle}>&#x2022; Manage Players </div>
-                        <div style={{ ...additionalStyle, marginBottom: "-29px" }}></div>
+                        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                            <div style={{ ...additionalStyle, color: styles.colors.color9 + "f3", 
+                            opacity:this.state.showBullets?"99":"0",
+                        }}>As a GM you can: </div>
+    
+                            <div 
+                            title={this.state.showBullets?'close':'open'}
+                            onClick={()=>{this.setState({showBullets:!this.state.showBullets})}} 
+                            style={{fontSize:this.state.showBullets?styles.fonts.fontSmall:styles.fonts.fontSmallest, 
+                                color:this.state.showBullets?styles.colors.color5:styles.colors.color8, 
+                                cursor:"pointer", textDecoration:this.state.showBullets?"":"1px underline "+styles.colors.color8,
+                                 textAlign:"center", verticalAlign:"center", marginTop:this.state.showBullets?"10px":"15px"}}>
+                                    {this.state.showBullets?"x":"See Why"}
+                                    </div>
 
+                        </div>
+
+                        {this.state.showBullets &&
+                            <div>
+                                <div style={additionalStyle}>&#x2022; Build Campaigns </div>
+                                <div style={additionalStyle}>&#x2022; Create Worlds and Lore </div>
+                                <div style={additionalStyle}>&#x2022; Run Encounters </div>
+                                <div style={additionalStyle}>&#x2022; Galleries and Notes </div>
+                                <div style={additionalStyle}>&#x2022; Manage Players </div>
+                                <div style={{ ...additionalStyle, marginBottom: "-29px" }}></div>
+                            </div>}
 
                     </div>
-                    <Link className='hover-btn' style={{
-                        ...styles?.buttons?.buttonAdd, marginTop: "24px",
-                        padding: "8px 14px", width: "280px", border: "1px solid " + styles.colors.color8,
-                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,
-                    }} to="../login" >Back to Login</Link></div>
+                </div>
 
             </div>
         )
