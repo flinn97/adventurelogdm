@@ -103,13 +103,14 @@ class MainContent extends Component{
     
 
     return(
-      <div>
-      You can buy adventures, encounters, and more:
-      {this.state.start &&
+      <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"center", padding:"22px"}}>
+      <div style={{color:styles.colors.color3, width:"500px", textAlign:"center"}}>~ Coming Soon ~ </div>
+      {/* {this.state.start &&
       <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
         //
         treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")}]}}/>}
-       <div style={{color:styles.colors.color3}}>Buy Stuff</div>
+         */}
+       {/* <div style={{color:styles.colors.color3}}>Buy Stuff</div> */}
       </div>
       
     )
@@ -150,7 +151,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],background:"#ffdead77"}}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:styles.colors.color2+"4e", borderRadius:"1.2vw"}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
