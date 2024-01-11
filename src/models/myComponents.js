@@ -171,6 +171,7 @@ class Pin extends componentBase {
     constructor(opps) {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
+        this.pushIcon = this.pushIcon.bind(this);
 
     }
     json = {
@@ -191,34 +192,25 @@ class Pin extends componentBase {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
         this.json.iconImage = pic;
-debugger
-        await this.pushIcon(state, this.json.picURL )
+//debugger
+        await this.pushIcon(state, this.json.picURL, this.json.campaignId )
     }
 
-    async pushIcon(state, imgSrc) {
-        let id =  toolService.getIdFromURL(true,0);
+    async pushIcon(state, imgSrc, id) {
+        debugger
         const compList = await state.componentList.getList("icon", id, "campaignId");
         
         let pic = imgSrc;
-        let json = {...this.json, picURL:pic, type: "icon", color:"", date:"", referencePin:"",
-    };
+        let json = {...this.json, picURL:pic, type: "icon", color:"", date:"", referencePin:"", _id:undefined};
 
-    ///TAYLOR Why does this not work, the object is not being created again.
-    /// I ran through debugger and everything looked fine
+    /// I ran through //debugger and everything looked fine
         if (compList.length > 29) {
             // Delete the first item in the array
             // keeps recent uploads to a min
-            await state.opps.cleanPrepareRun({ del: state.componentList.getList("icon", id, "campaignId")[0] }).then(() => {
-                state.opps.cleanJsonPrepareRun({
-                    "addicon": {...json, 
-                      },
-                  })
-            });
-        }else{
-        await state.opps.cleanJsonPrepareRun({
-            "addicon": {...json,
-              },
-          });}
+            await this.operationsFactory.cleanPrepareRun({ del: state.componentList.getList("icon", id, "campaignId")[0] });
+            
+        }
+        this.operationsFactory.cleanJsonPrepareRun({"addicon": {...json, }})
     }
 
 }

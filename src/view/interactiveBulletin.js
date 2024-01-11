@@ -331,7 +331,7 @@ export default class InteractiveBulletin extends Component {
                     }}
 
                       onClick={async () => {
-                        debugger
+                        //debugger
                         let l = componentList.getComponent("lore", pin.getJson().loreId, "_id");
 
                         if (pin.getJson().loreId !== "" && pin.getJson().loreId !== undefined && l !== undefined) {
@@ -439,7 +439,7 @@ export default class InteractiveBulletin extends Component {
                                           
 
                                           if (imgSrc !== image16) {
-                                            debugger
+                                            //debugger
                                             let comp = pin;
                                             comp.setCompState({
                                               iconImage: imgSrc

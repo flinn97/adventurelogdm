@@ -98,7 +98,7 @@ export default class Worldbuilder extends Component {
       await this.props.dispatch();
       this.setState({ map: undefined })
     }
-    debugger
+    //debugger
     let obj = this.props.obj;
     let app = this.props.app;
     let dispatch = app.dispatch;

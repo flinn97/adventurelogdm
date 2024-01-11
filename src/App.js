@@ -65,8 +65,7 @@ export default class App extends Component {
 
       //THIS IS THE NAV MENU
       switchCase:[
-        {path:"/", comp:Home, name: "Home" },
-        {path: "/campaign", comp:Campaign, name: "Campaigns"},
+        {path:"/", comp:Campaign, name: "Home" },
         ///Added Notes
         {path: "/notes", comp:Note, name: "Notes"},
         ///Added Marketplace
