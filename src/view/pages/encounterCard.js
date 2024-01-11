@@ -5,6 +5,7 @@ import "../../App.css";
 import AddEncounter from '../AddEncounter';
 import EncounterMapItem from '../encounterMapItem';
 import trash from '../../pics/trashStill.png';
+import auth from '../../services/auth';
 
 /**
  * condensed version of the cards.
@@ -87,15 +88,19 @@ class MainContent extends Component{
     super(props);
 
     this.state = {
+      start:false
 
     }
   }
-  componentDidMount(){
+  async componentDidMount(){
     let href = window.location.href;
     let splitURL = href.split("/")
-    let id = splitURL[splitURL.length-1]
-    let component = this.props.app.state.componentList.getComponent("campaign", id)
-    this.setState({obj: component})
+    let id = splitURL[splitURL.length-1];
+
+    let component = this.props.app.state.componentList.getComponent("campaign", id);
+    await auth.firebaseGetter(id, this.props.app.state.componentList, "campaignId", "lore", this.props.app.dispatch);
+
+    this.setState({obj: component, start:true})
   }
 
   async deleteEncounter () {
@@ -120,6 +125,7 @@ class MainContent extends Component{
       
       
         <div>
+          {this.state.start&&<>
           {/* //TAYLOR */}
           { state.popUpSwitchcase !="addEncounter" &&
           <div style={{...styles.buttons.buttonAdd, marginTop:"2vh", marginBottom:"2vh",}}
@@ -162,6 +168,7 @@ class MainContent extends Component{
             filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
             theme={"selectByImageSmall"}
             /></div>
+            </>}
         </div>
       
     )

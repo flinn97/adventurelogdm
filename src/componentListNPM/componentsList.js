@@ -327,8 +327,8 @@ export default class Opps {
             list = list.sort(function(a, b){
                 //
                 //THIS MIGHT MAKE ORDER SWITCHING WEIRD
-                let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date.seconds: new Date(0);
-                let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date.seconds: new Date(0);
+                let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
+                let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
                 return reverse? 
                  (bD - aD)
                  : 

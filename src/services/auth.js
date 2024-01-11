@@ -148,6 +148,21 @@ class Auth {
         }
 
     }
+
+    async getPosts(value, componentList, dispatch){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"), where("campaignId", "==", value), orderBy("date"));
+        let comps1 = await onSnapshot(components, async (querySnapshot) => {
+            let rawData1 = [];
+            for (const key in querySnapshot.docs) {
+                let data = querySnapshot.docs[key].data()
+                rawData1.push(data);
+            }
+            await componentList.addComponents(rawData1, false);
+                if (dispatch) {
+                    await dispatch({ rerenderFirebase: true });
+                } 
+    })}
+
     async getuser(email, componentList, dispatch) {
         
         let list = componentList.getComponents();

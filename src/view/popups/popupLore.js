@@ -277,13 +277,18 @@ class MainContent extends Component {
       });
 
 
-
-    const filteredLore = componentList.getList("lore", idList[0], "campaignId")
-      .filter(item => {
+      let pageLore = componentList.getList("lore", state.currentLore? state.currentLore.getJson()._id: state.currentCampaign.getJson()._id, 'parentId');
+    let filteredLore = componentList.getList("lore", idList[0], "campaignId").filter(l => !pageLore.includes(l));
+    filteredLore = filteredLore.sort(function(a, b){
+      //
+      //THIS MIGHT MAKE ORDER SWITCHING WEIRD
+      let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
+      let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
+      return aD - bD;});
+      filteredLore=[...pageLore, ...filteredLore].filter(item => {
         const name = item?.getJson()?.name;
-        return name && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-      })
-      .sort((a, b) => {
+        return  name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+      }).sort((a, b) => {
         const nameA = a?.getJson()?.name;
         const nameB = b?.getJson()?.name;
         return nameA.localeCompare(nameB);
@@ -397,7 +402,7 @@ class MainContent extends Component {
                     }} />
 
 
-                  {(lore?.getJson().name !== "" && lore?.getJson().name !== undefined) &&
+                  {(lore?.getJson().name !== "" && lore?.getJson().name !== undefined && this.state.saveClicked) &&
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -428,7 +433,6 @@ class MainContent extends Component {
                       color: styles.colors.colorWhite + "88", fontSize: styles.fonts.fontSmallest, marginTop: "11px", textDecorationColor: "#ffdead22", alignSelf: "flex-end"
                     }}
                     >
-                      You must first save this lore to open it.
                     </div>}
 
 
@@ -860,6 +864,7 @@ class MainContent extends Component {
 
                     this.setState({ showSaved: true });
                     setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
+                    this.setState({saveClicked:true})
                   }} />
 
                 {this.state.showSaved && (
