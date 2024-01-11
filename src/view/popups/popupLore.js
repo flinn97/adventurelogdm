@@ -335,7 +335,7 @@ class MainContent extends Component {
 
             {/* ICON */}
             {(!this.state.showIcon) && <>
-              <div title="Change icon" className='hover-img'
+              <div title="Change icon" className='hover-btn-highlight'
                 style={{
                   display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", borderRadius: "11px", cursor: "pointer",
                   background: styles.colors.color8 + "04", marginBottom: "14px",
@@ -352,14 +352,14 @@ class MainContent extends Component {
                   }}
                   style={{ borderRadius: "50%", marginTop: "6px", background: pin?.getJson().colorOverlay, width: "39px", height: "39px", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                   <div style={{
-                    borderRadius: "50%", width: "36px", background: styles.colors.color1, height: "36px", display: "flex", marginTop: ".5px",
-                    flexDirection: "row", justifyContent: "center", alignItems: "center"
+                    borderRadius: "50%", width: "37px", background: styles.colors.color1, height: "37px", display: "flex", 
+                    flexDirection: "column", justifyContent: "center", alignItems: "center", alignContent:"center",
                   }}>
                     <img src={pin?.getJson().iconImage}
 
                       style={{
-                        margin: "2px", height: '32px', filter: pin?.getJson().colorFilter ? pin?.getJson().colorFilter : "",
-                        width: "32px", position: "relative", cursor: "pointer", marginTop: "1px",
+                        margin: "2px", height: '33px', filter: pin?.getJson().colorFilter ? pin?.getJson().colorFilter : "",
+                        width: "33px", position: "relative", cursor: "pointer", marginTop: "1px",
                         borderRadius: "50%"
                       }} /></div> </div>
               </div>
@@ -373,6 +373,7 @@ class MainContent extends Component {
         {(this.state.start && !this.state.showIcon) && <>
 
           {this.state.hasChoice === "New" &&
+
             <div style={{
               display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
@@ -399,26 +400,26 @@ class MainContent extends Component {
 
               {/* OTHER STUFF */}
               {!this.state.showFindEncounter && !this.state.showFindImage &&
-                <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", }}>
+                <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", width:"98%" }}>
 
                   <ParentFormComponent app={app} name="name"
 
                     placeholder={placeholder}
                     inputStyle={{
-                      width: "100%", padding: "4px 9px", color: styles.colors.color3, height: "fit-content",
+                      width: "100%", minWidth: "100%", padding: "4px 9px", color: styles.colors.color3, height: "fit-content",
                       borderRadius: "4px", background: styles.colors.colorWhite + "00", borderWidth: "0px", height: "100%",
                       border: "solid 1px " + styles.colors.colorWhite + "22",
                       textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
                     }} />
-
+                  {/* BUTTONS */}
                   <div style={{
-                    display: 'flex', marginTop:"14px",
-                    flexDirection: "row", justifyContent:"space-between", paddingLeft:"250px",
+                    display: 'flex', marginTop: "14px", width: "100%",
+                    flexDirection: "row", justifyContent: "space-between", paddingLeft: "200px",
                   }}>
 
-<div className="hover-btn" title='Create an exact copy plus an additional lore point.'
-                  style={{
-                    display: 'flex',borderRadius:"11px", background:styles.colors.color1+"41", padding:"2px 5px",
+                    <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                      style={{
+                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: "pointer",
@@ -428,16 +429,16 @@ class MainContent extends Component {
                         textDecoration: "underline 1px",
                         textDecorationColor: "#ffdead22",
                         alignSelf: "flex-end"
-                  }} onClick={async () => {
+                      }} onClick={async () => {
 
-                    this.copyLore(state.currentPin);
-                    dispatch({ popupSwitch: "" })
+                        this.copyLore(state.currentPin);
+                        dispatch({ popupSwitch: "" })
 
-                  }}>Clone Pin Only < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
+                      }}>Clone Pin Only < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
 
                     <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
                       style={{
-                        display: 'flex', borderRadius:"11px",background:styles.colors.color1+"41", padding:"2px 5px",
+                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: "pointer",
@@ -453,12 +454,12 @@ class MainContent extends Component {
                         dispatch({ popupSwitch: "" })
 
                       }}>Clone Pin + Lore
-                      
+
                       <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dupPlus} /></div>
 
                     {((lore?.getJson().name !== "" && lore?.getJson().name !== undefined) && this.state.saveClicked) &&
                       <div className="hover-btn" style={{
-                        display: 'flex',borderRadius:"11px",background:styles.colors.color1+"41", padding:"2px 5px",
+                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: "pointer",
@@ -742,7 +743,7 @@ class MainContent extends Component {
 
 
                   <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
-                    <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", }}>
+                    <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft:"22px"}}>
 
                       <Upload text="+ Upload"
 
@@ -823,7 +824,7 @@ class MainContent extends Component {
                   style={{
                     display: "flex", width: "210px", borderRadius: '3vh', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
                     alignSelf: "flex-end", alignItems: "center", marginRight: "22px",
-                     borderRadius:"11px", border:"1px solid "+styles.colors.color5+"11",
+                    borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
                     marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
 
@@ -838,7 +839,7 @@ class MainContent extends Component {
 
 
 
-               
+
               </div>
 
               {/* this.copyLore(lore);
