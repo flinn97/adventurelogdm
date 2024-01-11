@@ -121,7 +121,7 @@ class MainContent extends Component {
               }}
 
               wrapperStyle={{
-                margin: "5px", width: "100%", color: styles.colors.colorWhite, display: "flex", marginLeft: "8px",
+                margin: "5px", width: "100%", color: styles.colors.colorWhite, display: "flex",
                 flexDirection: "column", justifyItems: "space-between"
               }} /></div>}
 
