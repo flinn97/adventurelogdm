@@ -434,7 +434,7 @@ class MainContent extends Component {
                         this.copyLore(state.currentPin);
                         dispatch({ popupSwitch: "" })
 
-                      }}>Clone Pin Only < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
+                      }}>Clone Pin < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
 
                     <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
                       style={{
@@ -992,7 +992,7 @@ class MainContent extends Component {
                   <ParentFormComponent
                     obj={lore} name="refrence"
 
-                    title={"Click the check box to add a reference to the original lore object."}
+                    title={"Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."}
                     type={"checkbox"}
                     func={(obj, value) => {
                       this.setState({ refrence: value })
@@ -1006,7 +1006,7 @@ class MainContent extends Component {
                   />
 
                   <div
-                    title={"Click the check box to add a reference to the original lore object. This will not move the lore from its original location"}
+                    title={"Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."}
                     style={{ color: styles.colors.color8, width: "fit-content", marginRight: "12px", fontSize: "1.1rem", justifyContent: "center", marginTop: "5px", fontSize: styles.fonts.fontNormal }}>
                     Link to Existing Lore
 
@@ -1023,9 +1023,9 @@ class MainContent extends Component {
                         fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "d9"
                       }}>
 
-                      Click the check box to add a reference to the original lore object. This will not move the lore from its original location and you will be editing the original
+              Click the check box to create a link to an existing lore.
                       <div style={{ marginTop: "8px" }}></div>
-                      If the check box is not checked, the lore you select will move to this new location.
+                      If the checkbox is not checked, the lore you select will move to this new location.
                     </div>
                   </div>
                 </div>
