@@ -577,7 +577,7 @@ export default class Encounter extends Component {
                 filter={{ search: toolService.getIdFromURL(), attribute: "encounterId" }}
                 app={app} name={"monster"}
                 delOptions={{
-                  picURL: trash, warningMessage: "Delete this character (this is permanent)",
+                  picURL: trash, warningMessage: "Delete",
                   textStyle: { fontSize: styles.fonts.fontSmallest, },
                   style: {
                     width: "35px", height: "35px", padding: "4px 2px",
