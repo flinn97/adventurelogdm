@@ -223,7 +223,7 @@ class MainContent extends Component {
       this.setState({ hasChoice: "New" })
     }
 
-    if (state.currentComponent?.getJson().name !== "" && state.currentComponent?.getJson().name !== undefined && state.currentComponent?.getJson().name !== null) {
+    if (state.componentList.getComponent('lore', state.currentComponent.getJson()._id, "_id")) {
       this.setState({ saveClicked: true })
     }
   }
@@ -417,6 +417,8 @@ class MainContent extends Component {
                     flexDirection: "row", justifyContent: "space-between", paddingLeft: "200px",
                   }}>
 
+                    {state.currentPin&& componentList.getComponent("lore", state.currentComponent.getJson()._id, "_id") &&(
+
                     <div className="hover-btn" title='Create an exact copy of the pin refrencing lore.'
                       style={{
                         display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
@@ -431,11 +433,15 @@ class MainContent extends Component {
                         alignSelf: "flex-end"
                       }} onClick={async () => {
 
-                        this.copyLore(state.currentPin);
+                        // this.copyLore(state.currentPin);
+                        let pinJson = {...state.currentPin.getJson(), loreId:"", referencePin:false, _id:undefined, x: 80, y: 110 + this.state.imagesToShow};
+                        await state.opps.cleanJsonPrepareRun({addpin: pinJson});
+
                         dispatch({ popupSwitch: "" })
 
                       }}>Clone Pin < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
-
+                      )}
+                      {state.currentPin&& componentList.getComponent("lore", state.currentComponent.getJson()._id, "_id") &&(
                     <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
                       style={{
                         display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
@@ -456,7 +462,7 @@ class MainContent extends Component {
                       }}>Clone Pin + Lore
 
                       <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dupPlus} /></div>
-
+                      )}
                     {((lore?.getJson().name !== "" && lore?.getJson().name !== undefined) && this.state.saveClicked) &&
                       <div className="hover-btn" style={{
                         display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
@@ -827,12 +833,17 @@ class MainContent extends Component {
                     borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
                     marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
+                    debugger
 
                     let pin1 = state.currentPin;
+                    if(pin1.getJson().referencePin){
+                      let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
+                      await state.opps.cleanPrepare({del:l1});
+                    }
 
-                    await state.opps.cleanPrepareRun({ del: pin1 });
+                    await state.opps.prepareRun({ del: pin1 });
 
-                    await dispatch({ popupSwitch: "" })
+                    await dispatch({ popupSwitch: "", showPinMap:false })
 
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
                   }}>Delete Pin</div>
@@ -895,6 +906,18 @@ class MainContent extends Component {
 
                       }
                     }
+                    if(check){
+                      let L1 = lore;
+                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                      referenceList = referenceList.map(obj => obj.getJson()._id);
+                      let pinList = state.componentList.getList("pin");
+                      pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                      for(let p of pinList){
+                        p.setCompState({name: L1.getJson().name})
+                      }
+                      state.opps.cleanPrepareRun({update: [L1, ...pinList]})
+                    }
+                    
 
 
                     this.setState({ showSaved: true });

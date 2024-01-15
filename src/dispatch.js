@@ -22,6 +22,7 @@ import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
+import Campaign from './view/pages/campaign';
 
 import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
@@ -193,6 +194,8 @@ justifyContent: "center",}}>
                  
                 <Route path={obj.path} element={<obj.comp app={app}/>} />
               )}
+                      <Route path="/campaign/" element={<Campaign app={app} />}/> 
+
         <Route path="/campaign/:id" element={<CampaignEditor app={app} />}/> 
         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />}/> 
         <Route path="/encountermanager/:id" element={<EncounterManager app={app}/>}/>

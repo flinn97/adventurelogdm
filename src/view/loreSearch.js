@@ -270,10 +270,11 @@ export default class LoreSearch extends Component {
                   borderRadius: "11px",
                   width: "420px",
                   padding: '8px',
+                  marginRight:"115px",
                   fontSize: '16px',
                 }}
               />
-              <div style={{
+              {/* <div style={{
                 display: "flex", flexDirection: "column", justifyContent: "center", justifyContent: "flex-end",
                 width: "100px", alignItems: "center", marginLeft: "8px", marginBottom: "-22px", marginRight: "8px"
               }}
@@ -293,7 +294,7 @@ export default class LoreSearch extends Component {
                   <img className='hover-btn-highlight'
                     src={sortImage} style={{ width: "39px", padding: "4px", cursor: "pointer" }} />
                 </div>
-              </div>
+              </div> */}
             </div>}
 
 

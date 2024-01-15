@@ -206,6 +206,9 @@ class ParentFormComponent extends Component {
                     }
                     
     }
+    if (this.props.callbackFunc){
+        this.props.callbackFunc(this.state.obj)
+      }
       };
 
     /**
