@@ -32,190 +32,232 @@ import auth from './services/auth';
 
 //model
 export default class Dispatch extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
     }
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     let R = this.props.app.state.rerender;
-    if (R ==="true"){
+    if (R === "true") {
       this.props.app.dispatch({
-        rerender:"false",
+        rerender: "false",
       })
-      
+
     }
   }
 
 
-  render(){
+  render() {
     let app = this.props.app;
     let state = app.state;
-    let styles =state.styles;
+    let styles = state.styles;
     let RR = state.rerender;
-    
 
-  return (
-    
-<BrowserRouter>
-    {/*      === */}
-  {state.user===undefined?(<Login app={app}/>):(
-    
-    
-    <div>
-      {(state.popupSwitch === "splashScreen") &&
-    <div style={{background:styles.colors.color2, zIndex:55000, width:"100vw", height:"100vh"}}>
-        <SplashScreen
-        options={{cardType:"bigCardBorderless"}} app={app} 
-        containerStyle={{background:styles.colors.color2, zIndex:55000,}}
-        
-      />
-    </div>
-    }
-    {(state.popupSwitch !== "splashScreen") &&
-    <div  className='scroller2' style={{ width:"100%", overflow:"scroll",
-      minWidth:"100%", userSelect:"none", height:"100vh",
-       display:"flex", flexDirection:"column",
-      }}>
-          
-<div style={{display:'flex', zIndex:2000, marginRight:"210px",  }}>
-          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
-            {logo: logo,}}
-          />
-          </div>
-        {/* WITHIN */}
-<div  style={{display:'flex', flexDirection:'row',  width:"100%", paddingLeft:"210px", }}>
-        
-     <div   style={{ width:'100%', minHeight:"fit-content", padding:"28px", display: "flex", height:"100%",
-justifyContent: "center",}}>
+    let user = state.user ? state.user : "";
+    let isPlayer = user ? user.getJson().role === "player" : "";
 
-            
-        
+    return (
 
-        {(state.popupSwitch === "popupDelete"  && state.currentDelObj !== undefined) && 
-        <PopupDelete 
-          type="popup" options={{cardType:"popupSmallest"}} app={app} containerStyle={{background:styles.colors.color2}}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
-          delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
-        />}
-         {(state.popupSwitch === "seeLibrary") && 
-        <LibraryForGalleryPopup 
-          type="popup" options={{cardType:"popupMedium"}} app={app} containerStyle={{background:styles.colors.color2}}
-          handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined})}}
-          
-        />}
-    {state.popupSwitch === "viewPic" && state.currentPic!==undefined && 
-            <ViewPic 
-            
-              type="popup" options={{cardType:"popupLarge"}} app={app} 
-              handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-            
-            />}
+      <BrowserRouter>
+        {/*      === */}
+        {state.user === undefined ? (<Login app={app} />) : (
 
-          {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type==="monster"  && 
-                  <ConnectToCampaign 
-                  
-                    type="popup" options={{cardType:"popupSmallSolid"}} app={app} containerStyle={{background:styles.colors.color2}}
-                    handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-                  
-                  />}
 
-          {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type==="monster" &&
+          <div>
+            {(state.popupSwitch === "splashScreen") &&
+              <div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh" }}>
+                <SplashScreen
+                  options={{ cardType: "bigCardBorderless" }} app={app}
+                  containerStyle={{ background: styles.colors.color2, zIndex: 55000, }}
 
-                    <AddPlayerCharacter
-                  
-                  type="popup" options={{cardType:"popupCreate"}} app={app}
-                    handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-                  
-                  />
-                  }
-
-            {state.popupSwitch === "viewPlayers" &&
-
-            <ViewPlayerList
-
-            type="popup" options={{cardType:"popupCreate"}} app={app}
-            handleClose={()=>{app.dispatch({popupSwitch:"", currentComponent:undefined})}}
-
-            />
+                />
+              </div>
             }
+            {(state.popupSwitch !== "splashScreen") &&
+              <div className='scroller2' style={{
+                width: "100%", overflow: "scroll",
+                minWidth: "100%", userSelect: "none", height: "100vh",
+                display: "flex", flexDirection: "column",
+              }}>
 
-              {state.popupSwitch === "popupLore" 
-              && (state.currentComponent?.getJson().type === "lore") 
-              &&
-              <PopupLore
-              
-                type="popup" options={{cardType:"popupMedium"}} app={app} 
-                containerStyle={{backgroundColor:styles.colors.color1+"55",}}
-                handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined, 
-                currentComponent:undefined, currentPin:undefined});
-                state.opps.clearUpdater();
-              }}
-                delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
-                currentDelObj:undefined,})}}
-              />}
-              {state.popupSwitch === "popupLoreWithoutPin" 
-              && (state.currentComponent?.getJson().type === "lore") 
-              &&
-              <PopupLore
-              
-                type="popup" options={{cardType:"popupMedium"}} app={app} 
-                containerStyle={{backgroundColor:styles.colors.color1+"55",}}
-                handleClose={()=>{app.dispatch({popupSwitch:"", currentDelObj:undefined, 
-                currentComponent:undefined, currentPin:undefined});
-                state.opps.clearUpdater();
-              }}
-                delClick={state.handlePopupClose?state.handlePopupClose:()=>{app.dispatch({popupSwitch:"", 
-                currentDelObj:undefined,})}}
-              />}
-       
-     {state.user.getJson().role!=="GM"?(
-      
-        <Routes>
-        {state.switchCase?.map((obj, index)=>
-        <>{obj._id!==undefined?(
-          <Route path={obj.path+"/:id"} element={<obj.comp app={app}/>} />
-        ):(
-                  <Route path={obj.path} element={<obj.comp app={app}/>} />
+                <div style={{ display: 'flex', zIndex: 2000, marginRight: "210px", }}>
+
+                  {window.innerWidth > 600 && (<div>
+                    <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
+                      { logo: logo, }}
+                    />
+                  </div>) 
                   
-                  )}</>
-                )}
-                
-                <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}} />}/> 
-                <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
+                  || (
+                      <div>
+                        {!isPlayer && (<div>
+                          <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
+                            { logo: logo, }}
+                          />
 
-                
-          </Routes>
-     ):(
-     <Routes>
-      
-      {state.switchCase?.map((obj, index)=>
-                 
-                <Route path={obj.path} element={<obj.comp app={app}/>} />
-              )}
-                      <Route path="/campaign/" element={<Campaign app={app} />}/> 
+                        </div>) || (<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
 
-        <Route path="/campaign/:id" element={<CampaignEditor app={app} />}/> 
-        <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />}/> 
-        <Route path="/encountermanager/:id" element={<EncounterManager app={app}/>}/>
-        {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
-        <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers}/>}/>
+                          <Link to={"/"}
+                            style={{ width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
+                            textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px" }}> {"< Home"}
+                          </Link>
+                          <div onClick={auth.logout} style={{ width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
+                            textDecoration: "1px underline " + styles.colors.color5, color: styles.colors.color5, textUnderlineOffset: "2px" }}>Logout</div>
+                        </div>)
+                        }
+                      </div>
+                    )
+                  }
+                </div>
+                {/* WITHIN */}
+                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: "210px", }}>
 
-        {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
-        <Route path="/log/:id" element={<AdventureLog app={app} />}/> 
+                  <div style={{
+                    width: '100%', minHeight: "fit-content", padding: "28px", display: "flex", height: "100%",
+                    justifyContent: "center",
+                  }}>
+ 
 
-        {/* <Route path="/login/" element={<Login app={app} />}/> 
+                    {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) &&
+                      <PopupDelete
+                        type="popup" options={{ cardType: "popupSmallest" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+                      />}
+                    {(state.popupSwitch === "seeLibrary") &&
+                      <LibraryForGalleryPopup
+                        type="popup" options={{ cardType: "popupMedium" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+
+                      />}
+                    {state.popupSwitch === "viewPic" && state.currentPic !== undefined &&
+                      <ViewPic
+
+                        type="popup" options={{ cardType: "popupLarge" }} app={app}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />}
+
+                    {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type === "monster" &&
+                      <ConnectToCampaign
+
+                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />}
+
+                    {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type === "monster" &&
+
+                      <AddPlayerCharacter
+
+                        type="popup" options={{ cardType: "popupCreate" }} app={app}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />
+                    }
+
+                    {state.popupSwitch === "viewPlayers" &&
+
+                      <ViewPlayerList
+
+                        type="popup" options={{ cardType: "popupCreate" }} app={app}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />
+                    }
+
+                    {state.popupSwitch === "popupLore"
+                      && (state.currentComponent?.getJson().type === "lore")
+                      &&
+                      <PopupLore
+
+                        type="popup" options={{ cardType: "popupMedium" }} app={app}
+                        containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
+                        handleClose={() => {
+                          app.dispatch({
+                            popupSwitch: "", currentDelObj: undefined,
+                            currentComponent: undefined, currentPin: undefined
+                          });
+                          state.opps.clearUpdater();
+                        }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => {
+                          app.dispatch({
+                            popupSwitch: "",
+                            currentDelObj: undefined,
+                          })
+                        }}
+                      />}
+                    {state.popupSwitch === "popupLoreWithoutPin"
+                      && (state.currentComponent?.getJson().type === "lore")
+                      &&
+                      <PopupLore
+
+                        type="popup" options={{ cardType: "popupMedium" }} app={app}
+                        containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
+                        handleClose={() => {
+                          app.dispatch({
+                            popupSwitch: "", currentDelObj: undefined,
+                            currentComponent: undefined, currentPin: undefined
+                          });
+                          state.opps.clearUpdater();
+                        }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => {
+                          app.dispatch({
+                            popupSwitch: "",
+                            currentDelObj: undefined,
+                          })
+                        }}
+                      />}
+
+                    {state.user.getJson().role !== "GM" ? (
+
+                      <Routes>
+                        {state.switchCase?.map((obj, index) =>
+                          <>{obj._id !== undefined ? (
+                            <Route path={obj.path + "/:id"} element={<obj.comp app={app} />} />
+                          ) : (
+                            <Route path={obj.path} element={<obj.comp app={app} />} />
+
+                          )}</>
+                        )}
+
+                        <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{ tabType: "bigCardBorderless", cardType: undefined }} />} />
+                        <Route path="/log/:id" element={<AdventureLog app={app} />} />
+
+
+                      </Routes>
+                    ) : (
+                      <Routes>
+
+                        {state.switchCase?.map((obj, index) =>
+
+                          <Route path={obj.path} element={<obj.comp app={app} />} />
+                        )}
+                        <Route path="/campaign/" element={<Campaign app={app} />} />
+
+                        <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
+                        <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
+                        <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
+                        {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
+                        <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers} />} />
+
+                        {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
+                        <Route path="/log/:id" element={<AdventureLog app={app} />} />
+
+                        {/* <Route path="/login/" element={<Login app={app} />}/> 
         <Route path="/register/" element={<Register app={app} />}/> */}
-      
-</Routes>)}
 
-</div>
-</div>
-     </div>}
-     </div>)}
+                      </Routes>)}
 
-     
-     </BrowserRouter>
-  )}
+                  </div>
+                </div>
+              </div>}
+          </div>)}
+
+
+      </BrowserRouter>
+    )
+  }
 }
