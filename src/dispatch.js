@@ -84,20 +84,20 @@ export default class Dispatch extends Component {
 
                 <div style={{ display: 'flex', zIndex: 2000, marginRight: "210px", }}>
 
-                  {window.innerWidth > 600 && (<div>
+                  {/* {window.innerWidth > 600 && (<div> */}
                     <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
                       { logo: logo, }}
                     />
-                  </div>) 
+                  {/* </div>)  */}
                   
-                  || (
+                  {/* || (
                       <div>
                         {!isPlayer && (<div>
                           <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
                             { logo: logo, }}
                           />
 
-                        </div>) || (<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                        </div>) || (<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"22px"}}>
 
                           <Link to={"/"}
                             style={{ width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
@@ -109,7 +109,7 @@ export default class Dispatch extends Component {
                         }
                       </div>
                     )
-                  }
+                  } */}
                 </div>
                 {/* WITHIN */}
                 <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: "210px", }}>
