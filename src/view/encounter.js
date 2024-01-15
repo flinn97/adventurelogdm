@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import AddParticipant from './AddParticipant';
 import placeholder from '../pics/placeholderEncounter.JPG';
@@ -25,10 +25,10 @@ import idService from '../componentListNPM/idService';
 export default class Encounter extends Component {
   constructor(props) {
     super(props);
+
     this.lastClicked = Date.now();
-
     this.state = {
-
+      totalInit: 0,
       showMonsterMap: true,
       isRunning: false,
       currentTurn: "99999",
@@ -37,28 +37,29 @@ export default class Encounter extends Component {
     this.currentIndex = "-1";
   }
 
-  //TAYLOR. this component refuses to refresh correctly (for me)
-  ///
 
   async componentDidMount() {
     let app = this.props.app;
     let state = app.state;
-    let id = toolService.getIdFromURL(true,0);
+    let id = toolService.getIdFromURL(true, 0);
     let componentList = this.props.app.state.componentList;
-    
 
-    if(!state.currentCampaign){
+
+    if (!state.currentCampaign) {
       let encounter = await auth.firebaseGetter(id, componentList, "_id", "encounter", false);
-      encounter= encounter[0]
+      encounter = encounter[0]
       let campaign = componentList.getComponent("campaign", encounter.getJson().campaignId, "_id");
       await auth.firebaseGetter(campaign.getJson()._id, componentList, "campaignId", "lore");
     }
     this.setState({ showMonsterMap: false });
     await componentList.sortSelectedList("monster", "lastInit", true);
-    this.setState({ showMonsterMap: true })
-    await this.props.app.state.opps.run()
-    
+    this.setState({ showMonsterMap: true });
+    await this.props.app.state.opps.run();
+
+
+
     let component = this.props.app.state.componentList.getComponent("encounter", id);
+
     await this.setState({
       obj: component, currentTurn: component?.getJson().currentTurn, isRunning: component?.getJson().isRunning,
       currentIndex: component?.getJson().currentIndex,
@@ -232,7 +233,19 @@ export default class Encounter extends Component {
     let audioLink = toolService.convertStringToLink(this.state.obj?.getJson().audio);
 
     const playPause = (obj?.getJson().isRunning) ? pause : back;
-    let participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
+    let participantList = state?.componentList.getList("monster", toolService.getIdFromURL(), "encounterId");
+
+    let totalInitiative = 0;
+    participantList.forEach(participant => {
+      const lastInit = participant.getJson().lastInit;
+
+      if (lastInit !== undefined && lastInit !== "" && lastInit !== "NaN") {
+        const parsedInit = parseInt(lastInit);
+        totalInitiative += parsedInit;
+        console.log(totalInitiative);
+      }
+    });
+
     let twoParty = participantList.length;
 
     return (
@@ -279,8 +292,8 @@ export default class Encounter extends Component {
 
             {state.popUpSwitchcase !== "updateEnc" && <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "right", position: "absolute", top: "4%", right: ".25%" }}>
               <div className="hover-btn" style={{
-                ...styles.buttons.buttonAdd, borderRadius: "1rem", width: "fit-content",
-                fontSize: styles.fonts.fontSmallest, padding: "5px",
+                ...styles.buttons.buttonAdd, borderRadius: "11px", width: "fit-content",
+                fontSize: styles.fonts.fontSmallest, padding: "10px",
                 backgroundColor: styles.colors.color1 + "ee",
                 position: "absolute", width: "fit-content",
                 justifyContent: "center"
@@ -332,15 +345,15 @@ export default class Encounter extends Component {
 
               {!obj?.getJson().isRunning &&
                 <div className="hover-btn" style={{
-                  ...styles.buttons.buttonAdd, background: styles.colors.color2,
+                  ...styles.buttons.buttonAdd, background: styles.colors.color2, marginRight: "22px",
                   paddingTop: "3px", paddingBottom: "3px", fontSize: styles.fonts.fontSmall, cursor: !obj?.getJson().isRunning ? "pointer" : "wait"
                 }}
                   onClick={async () => {
 
-                    
+
                     // this.setState({showMonsterMap: false});
                     if (!obj?.getJson().isRunning) {
-                      let campaign=state.currentCampaign
+                      let campaign = state.currentCampaign
 
                       if (!campaign) {
                         let campId = await obj.getJson().campaignId;
@@ -351,24 +364,23 @@ export default class Encounter extends Component {
                         })
                       }
                       let players = await campaign.getPlayers(state.componentList, dispatch);
-                      
-                      let encPlayers=await obj.addCampaignPlayers(players, obj.getJson()._id);
+
+                      let encPlayers = await obj.addCampaignPlayers(players, obj.getJson()._id);
 
                       let conditions = conditionService.getConditions();
-                      for (let mon of encPlayers){
-                  
-                        for(let condition of conditions)
-                        {
-                          condition ={... condition};
+                      for (let mon of encPlayers) {
+
+                        for (let condition of conditions) {
+                          condition = { ...condition };
                           condition.monsterId = mon.getJson()._id;
                           condition.roundsActive = "0";
                           condition.campaignId = mon.getJson()?.campaignId;
-                          condition._id = mon.getJson()?._id+"c"+idService.createId();
-                          await state.opps.jsonPrepare({addcondition: condition});
+                          condition._id = mon.getJson()?._id + "c" + idService.createId();
+                          await state.opps.jsonPrepare({ addcondition: condition });
                           await state.opps.run();
                         }
-  
-                    }
+
+                      }
 
 
                       this.setState({ showMonsterMap: true })
@@ -414,9 +426,9 @@ export default class Encounter extends Component {
           {/* HEADER */}
           {showMonsterMap &&
             <div style={{
-              display: "flex", flexDirection: "row", width: "100%",
-              backgroundColor: styles.colors.color7 + "55", height: "60px", paddingTop: "4px", borderRadius: "12px",
-              marginTop: "20px",
+              display: "flex", flexDirection: "row", width: "800px", position: obj?.getJson().isRunning ? "absolute" : "absolute",
+              backgroundColor: styles.colors.color1 + "f9", height: "68px", paddingTop: "4px", borderRadius: "12px", border: "1px solid " + styles.colors.color4,
+              marginTop: "20px", zIndex: 1309, bottom: 30, right: 60,
             }}>
 
 
@@ -442,7 +454,6 @@ export default class Encounter extends Component {
                       width: "25px",
                     }} />
 
-
                 </div>
               )
                 ||
@@ -458,7 +469,7 @@ export default class Encounter extends Component {
               {/* NEXT     TURN */}
 
               {obj?.getJson().isRunning &&
-                <div className="indent-on-click" style={{
+                <div className="highlight-btn" style={{
                   marginLeft: "45px", cursor: "pointer", display: "flex", justifyContent: "space-evenly",
                   textAlign: "center", verticalAlign: "center", height: "fit-content", alignSelf: "center", width: "fit-content",
                   border: "1px solid " + styles.colors.color7, borderRadius: "11px", padding: "5px 9px",
@@ -466,6 +477,7 @@ export default class Encounter extends Component {
                   onClick={async () => {
                     if (obj?.getJson().isRunning) {
                       this.getNextHighestInitiative(participantList, dispatch);
+
                     }
                   }}
                   tabIndex={0} // Make the div focusable
@@ -490,11 +502,12 @@ export default class Encounter extends Component {
                     }} />
                 </div>}
 
+                
               {/* RUN BUTTON */}
               {(twoParty >= 2 || obj?.getJson().isRunning) && (
-                <div className="indent-on-click" style={{
-                  marginLeft: obj?.getJson().isRunning ? "70%" : "40px", cursor: "pointer", display: "flex", justifyContent: "space-evenly",
-                  textAlign: "center", verticalAlign: "center", height: "fit-content", alignSelf: "center", position: "relative",
+                <div className="highlight-btn" style={{
+                  marginLeft: "40px", cursor: "pointer", display: "flex", justifyContent: "space-evenly", position: obj?.getJson().isRunning ? "absolute" : "relative",
+                  textAlign: "center", verticalAlign: "center", height: "fit-content", alignSelf: "center", right: obj?.getJson().isRunning ? 20 : "",
 
                   border: obj?.getJson().isRunning ? "1px solid " + styles.colors.color5 : "1px solid " + styles.colors.color7, borderRadius: "11px", padding: "5px 9px",
                 }}
@@ -545,6 +558,20 @@ export default class Encounter extends Component {
                 </div>)}
 
 
+                {!obj?.getJson().isRunning &&
+                <div
+
+                style={{ display:"flex", flexDirection:"column",
+                
+                justifyContent: "center", alignContent:"center", alignItems:"center",
+                }}>
+                
+                <div style={{color:styles.colors.color8+"99", marginLeft:"44px",verticalAlign:"center",  fontSize: styles.fonts.fontSmall,}}>
+                  {twoParty+" Participants in this encounter"}
+                </div>
+              </div>
+                
+  }
 
 
             </div>
@@ -565,7 +592,7 @@ export default class Encounter extends Component {
           {showMonsterMap &&
             <div style={{ marginTop: "28px", width: "100%", marginBottom: "24vh", }}>
 
-              {(twoParty >= 2) &&
+              {((twoParty >= 2) && (totalInitiative > 0)) &&
                 <div style={{ display: "flex", flexDirection: "row", alignContent: "flex-end", justifyContent: "flex-end", width: "220px" }}>
                   <PostLogButton app={app} obj={obj} altText={"initiative"} text={"Log Initiative"}
                     //ENCOUNTER MUST HAVE CAMPAIGN ID 
