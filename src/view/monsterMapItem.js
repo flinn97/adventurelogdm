@@ -409,8 +409,7 @@ export default class MonsterMapItem extends Component {
                   
                   }
                   
-                
-                className="hover-bubble" key={index} style={{
+                className="hover-bubble" key={word+index} style={{
                   display: 'flex', maxHeight:"30px", 
                   padding: '6px', width:"fit-content",
                   marginLeft: (word==="Dead"?"1vw":"2px"), 

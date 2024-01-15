@@ -81,7 +81,7 @@ export default class GalleryViewer extends Component {
                 imageList
                 .slice(0, this.state.imagesToShow)
                 .map((img, index) => (
-                  <div className="hover-img" key={index}>
+                  <div className="hover-img" key={img.getJson()._id}>
                     <div className='hover-container' style={{maxWidth: "180px", minWidth:"180px", margin:"9px"}}>
                     <img title= {"Open"} onClick={()=>{
                           
@@ -139,7 +139,7 @@ export default class GalleryViewer extends Component {
                       imageList
                       .slice(this.state.imagesToShow, this.state.imagesToShow+9)
                       .map((img, index) => (
-                        <div >
+                        <div key={img.getJson()._id}>
                           
                         <img  draggable="false" key={index} src={img.getJson().picURL} 
                         style={{

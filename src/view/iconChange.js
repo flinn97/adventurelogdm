@@ -152,7 +152,7 @@ export default class IconChange extends Component {
 
             {images.map((imgSrc, index) => (typeof imgSrc === 'string' && !imgSrc.startsWith('#')) && (
               <div
-                index={index}
+                index={index} key={imgSrc+index.toString()}
                 style={{
                   display: "flex", flexDirection: "row", borderRadius: "1px",
                   height: "fit-content", margin: "2px",
@@ -235,7 +235,7 @@ export default class IconChange extends Component {
             {/* COLOR */}
             {images.map((imgSrc, index) => (typeof imgSrc === 'string' && imgSrc.startsWith('#')) && (
               <div
-
+              key={imgSrc+index.toString()}
                 style={{
                   display: "flex", flexDirection: "row", borderRadius: "1px",
                   height: "fit-content", margin: "2px",
@@ -342,7 +342,7 @@ export default class IconChange extends Component {
 
           {iconList.map((ico, index) => (
             <div
-
+            key={ico.getJson()._id}
               style={{
                 display: "flex", flexDirection: "row", borderRadius: "1px",
                 height: "fit-content", margin: "2px",

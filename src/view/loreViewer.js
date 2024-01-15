@@ -468,7 +468,7 @@ marginTop:"22px"}}>
           
           filteredList.map((encounter, index) => 
           <div 
-
+          key={encounter.getJson()._id}
          onClick={async () => {{
             await this.setState({showFindEncounter: false });
             let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true,1));

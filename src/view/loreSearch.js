@@ -335,7 +335,7 @@ export default class LoreSearch extends Component {
                     //     }}
                     //     onStop={() => this.handleStop(loreItem)}
                     //   >
-                    <div className='hover-container'
+                    <div className='hover-container' key={loreItem.getJson()._id}
                       style={{ width: "fit-content", height: "fit-content", transition: !this.state.isGrabbing ? 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)' : "", }}>
 
                       {(!this.state.isGrabbing && this.state.sortTerm !== "name") &&
