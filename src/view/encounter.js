@@ -25,7 +25,7 @@ import idService from '../componentListNPM/idService';
 export default class Encounter extends Component {
   constructor(props) {
     super(props);
-
+    
     this.lastClicked = Date.now();
     this.state = {
       totalInit: 0,
@@ -91,6 +91,7 @@ export default class Encounter extends Component {
   }
 
   getNextHighestInitiative = async (participantList, dispatch) => {
+    
     let app = this.props.app;
     let state = app.state;
     let opps = state.opps;
@@ -110,11 +111,11 @@ export default class Encounter extends Component {
     const sortedList = await [...participantList].sort((a, b) => {
       return parseInt(b.getJson().lastInit, 10) - parseInt(a.getJson().lastInit, 10);
     });
-
+    
     //  If currentTurn is '99999', set it to the highest initiative in the list.
     if (obj?.getJson().currentTurn === "99999") {
       highestLastInit = parseInt(sortedList[0].getJson().lastInit, 10);
-
+     
       await this.updateMonster(obj, { currentTurn: highestLastInit });
       await this.setState({ currentTurn: highestLastInit });
 
@@ -129,7 +130,7 @@ export default class Encounter extends Component {
 
       await this.updateMonster(obj, { currentIndex: 0, isRunning: true });
       this.currentIndex = 0; // Set to the first index
-
+      
       // Update conditions for the participant with the highest initiative
       if (highestInitiativeParticipant) {
         const conditionList = await this.props.app.state.componentList.getList("condition", highestInitiativeParticipant.getJson()._id, "monsterId");
@@ -149,8 +150,9 @@ export default class Encounter extends Component {
 
 
     this.currentIndex = (this.currentIndex + 1) % sortedList.length;
-
+    
     if (this.currentIndex >= 0) {
+      
       const nextHighestLastInit = parseInt(sortedList[this.currentIndex]?.getJson().lastInit, 10);
 
       await this.setState({ currentTurn: nextHighestLastInit });
@@ -179,6 +181,8 @@ export default class Encounter extends Component {
       await this.setState({ justUpdatedInitiative: true });
     }
   };
+
+ 
 
 
   stopInitiative = async (participantList, dispatch) => {
@@ -249,7 +253,7 @@ export default class Encounter extends Component {
     let twoParty = participantList.length;
 
     return (
-      <div style={{ width: "100%", height: "100%", }}>
+      <div id="divMain" style={{ width: "100%", height: "100%", }}>
 
         {obj?.getJson().campaignId &&
           <Link className="hover-btn-highlight"
@@ -342,6 +346,14 @@ export default class Encounter extends Component {
 
 
             <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "right" }}>
+
+            {((twoParty >= 2) && (totalInitiative > 0)) &&
+                <div style={{ display: "flex", flexDirection: "row", alignContent: "flex-start", justifyContent: "flex-start", width: "220px", position:"absolute", left:14 }}>
+                  <PostLogButton app={app} obj={obj} altText={"initiative"} text={"Log Initiative"}
+                    //ENCOUNTER MUST HAVE CAMPAIGN ID 
+                    campaignId={this.state.obj?.getJson().campaignId}
+                  />
+                </div>}
 
               {!obj?.getJson().isRunning &&
                 <div className="hover-btn" style={{
@@ -567,7 +579,7 @@ export default class Encounter extends Component {
                 }}>
                 
                 <div style={{color:styles.colors.color8+"99", marginLeft:"44px",verticalAlign:"center",  fontSize: styles.fonts.fontSmall,}}>
-                  {twoParty+" Participants in this encounter"}
+                  {"( "+twoParty+" participants)"}
                 </div>
               </div>
                 
@@ -590,15 +602,9 @@ export default class Encounter extends Component {
 
 
           {showMonsterMap &&
-            <div style={{ marginTop: "28px", width: "100%", marginBottom: "24vh", }}>
+            <div style={{ marginTop: "28px", width: "100%", marginBottom: "280px", }}>
 
-              {((twoParty >= 2) && (totalInitiative > 0)) &&
-                <div style={{ display: "flex", flexDirection: "row", alignContent: "flex-end", justifyContent: "flex-end", width: "220px" }}>
-                  <PostLogButton app={app} obj={obj} altText={"initiative"} text={"Log Initiative"}
-                    //ENCOUNTER MUST HAVE CAMPAIGN ID 
-                    campaignId={this.state.obj?.getJson().campaignId}
-                  />
-                </div>}
+              
 
               <MapComponent
                 filter={{ search: toolService.getIdFromURL(), attribute: "encounterId" }}
