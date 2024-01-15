@@ -98,7 +98,7 @@ class MainContent extends Component{
        }}>
             
 
-          <div style={{}}>
+          <div style={{minHeight:"400px",}}>
             <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} 
             theme={"selectByImage"}
             //filter={{search: this.state.obj?.getJson().usage, attribute: "usage"}}
@@ -126,7 +126,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"column",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "0px",
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "0px", 
     fontSize:styles.fonts.fontSubheader1}}>
       Current Campaigns
       <div>
@@ -158,7 +158,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:styles.colors.color2+"1e", borderRadius:"1.2vw"}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

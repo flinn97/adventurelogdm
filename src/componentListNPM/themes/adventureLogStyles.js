@@ -538,7 +538,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"55", 
+                background: appColors.colorBlack+"75", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -614,7 +614,7 @@ class AdventureLogStyles {
                 buttonAdd: {
                     boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                     cursor: "pointer",
-                    borderRadius:"2rem",
+                    borderRadius:"12px",
                     background: appColors.color7+"77",
                     border: "1px solid "+appColors.colorWhite+"44",
                     color: appColors.color3,
@@ -1175,7 +1175,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"55", 
+                background: appColors.colorBlack+"75",
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -1246,7 +1246,7 @@ class AdventureLogStyles {
                                 buttonAdd: {
                                     boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                                     cursor: "pointer",
-                                    borderRadius:"2rem",
+                                    borderRadius:"12px",
                                     background: appColors.color7+"77",
                                     border: "1px solid "+appColors.colorWhite+"44",
                                     color: appColors.color3,
@@ -1802,7 +1802,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"55", 
+                background: appColors.colorBlack+"75",
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -1876,7 +1876,7 @@ class AdventureLogStyles {
                                                 buttonAdd: {
                                                     boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                                                     cursor: "pointer",
-                                                    borderRadius:"2rem",
+                                                    borderRadius:"12px",
                                                     background: appColors.color7+"77",
                                                     border: "1px solid "+appColors.colorWhite+"44",
                                                     color: appColors.color3,

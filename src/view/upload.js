@@ -111,7 +111,7 @@ export default class Upload extends Component {
 
         return (
 
-            <div style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
+            <div className='hover-btn' style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
             borderRadius:"11px", fontWeight:"550", width:"fit-content"  }}>
 
                 {this.props.text!=="imageOnly" &&

@@ -10,6 +10,9 @@ import backarrow from '../../pics/backArrow.webp';
 
 import q from '../../pics/question.png';
 import newWindow from '../../pics/newWindow.png';
+import dup from '../../pics/dup.png'
+import dupPlus from '../../pics/dupPlus.png'
+
 import Upload from '../upload';
 import LoreItemWithNotation from '../loreItemwithNotation';
 import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
@@ -17,6 +20,7 @@ import { Link } from 'react-router-dom';
 import IconChange from '../iconChange';
 import loreIndexService from '../../services/loreIndexService';
 import idService from '../../componentListNPM/idService';
+import toolService from '../../services/toolService';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -87,7 +91,7 @@ class MainContent extends Component {
       hasChoice: "",
       start: false,
       showIcon: false,
-      loreToShow: 6,
+      loreToShow: 8,
     };
     this.moveLore = this.moveLore.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -111,7 +115,7 @@ class MainContent extends Component {
     if (state.currentPin) {
       await state.opps.cleanJsonPrepareRun({
         "addpin": {
-          ...state.currentPin.getJson(), loreId: newId, x: 80, y: 110 + this.state.imagesToShow,
+          ...state.currentPin.getJson(), _id: newId, x: 80, y: 110 + this.state.imagesToShow,
         },
       })
     }
@@ -218,6 +222,10 @@ class MainContent extends Component {
     } else {
       this.setState({ hasChoice: "New" })
     }
+
+    if (state.currentComponent?.getJson().name !== "" && state.currentComponent?.getJson().name !== undefined && state.currentComponent?.getJson().name !== null) {
+      this.setState({ saveClicked: true })
+    }
   }
 
   render() {
@@ -277,22 +285,24 @@ class MainContent extends Component {
       });
 
 
-      let pageLore = componentList.getList("lore", state.currentLore? state.currentLore.getJson()._id: state.currentCampaign.getJson()._id, 'parentId');
-    let filteredLore = componentList.getList("lore", idList[0], "campaignId").filter(l => !pageLore.includes(l));
-    filteredLore = filteredLore.sort(function(a, b){
-      //
-      //THIS MIGHT MAKE ORDER SWITCHING WEIRD
-      let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
-      let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
-      return aD - bD;});
-      filteredLore=[...pageLore, ...filteredLore].filter(item => {
-        const name = item?.getJson()?.name;
-        return  name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-      }).sort((a, b) => {
+    let pageLore = componentList.getList("lore", state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id, 'parentId');
+    let filteredLore = componentList.getList("lore", toolService.getIdFromURL(true, 0), "campaignId")
+      .filter(l => !pageLore.includes(l)).sort((a, b) => {
         const nameA = a?.getJson()?.name;
         const nameB = b?.getJson()?.name;
         return nameA.localeCompare(nameB);
       });
+
+    filteredLore = [...pageLore, ...filteredLore].filter(item => {
+      const name = item?.getJson()?.name;
+      return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+    })
+    // .sort(function(a, b){
+    //     //
+    //     //THIS MIGHT MAKE ORDER SWITCHING WEIRD
+    //     let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
+    //     let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
+    //     return bD-aD;});
 
 
     return (
@@ -325,7 +335,7 @@ class MainContent extends Component {
 
             {/* ICON */}
             {(!this.state.showIcon) && <>
-              <div title="Change icon" className='hover-img'
+              <div title="Change icon" className='hover-btn-highlight'
                 style={{
                   display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", borderRadius: "11px", cursor: "pointer",
                   background: styles.colors.color8 + "04", marginBottom: "14px",
@@ -342,14 +352,14 @@ class MainContent extends Component {
                   }}
                   style={{ borderRadius: "50%", marginTop: "6px", background: pin?.getJson().colorOverlay, width: "39px", height: "39px", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                   <div style={{
-                    borderRadius: "50%", width: "36px", background: styles.colors.color1, height: "36px", display: "flex", marginTop: ".5px",
-                    flexDirection: "row", justifyContent: "center", alignItems: "center"
+                    borderRadius: "50%", width: "37px", background: styles.colors.color1, height: "37px", display: "flex", 
+                    flexDirection: "column", justifyContent: "center", alignItems: "center", alignContent:"center",
                   }}>
                     <img src={pin?.getJson().iconImage}
 
                       style={{
-                        margin: "2px", height: '32px', filter: pin?.getJson().colorFilter ? pin?.getJson().colorFilter : "",
-                        width: "32px", position: "relative", cursor: "pointer", marginTop: "1px",
+                        margin: "2px", height: '33px', filter: pin?.getJson().colorFilter ? pin?.getJson().colorFilter : "",
+                        width: "33px", position: "relative", cursor: "pointer", marginTop: "1px",
                         borderRadius: "50%"
                       }} /></div> </div>
               </div>
@@ -363,6 +373,7 @@ class MainContent extends Component {
         {(this.state.start && !this.state.showIcon) && <>
 
           {this.state.hasChoice === "New" &&
+
             <div style={{
               display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
@@ -389,43 +400,87 @@ class MainContent extends Component {
 
               {/* OTHER STUFF */}
               {!this.state.showFindEncounter && !this.state.showFindImage &&
-                <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", }}>
+                <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", width:"98%" }}>
 
                   <ParentFormComponent app={app} name="name"
 
                     placeholder={placeholder}
                     inputStyle={{
-                      maxWidth: "55.5vw", width: "55.5vw", padding: "4px 9px", color: styles.colors.color3, height: "fit-content",
+                      width: "100%", minWidth: "100%", padding: "4px 9px", color: styles.colors.color3, height: "fit-content",
                       borderRadius: "4px", background: styles.colors.colorWhite + "00", borderWidth: "0px", height: "100%",
                       border: "solid 1px " + styles.colors.colorWhite + "22",
                       textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
                     }} />
+                  {/* BUTTONS */}
+                  <div style={{
+                    display: 'flex', marginTop: "14px", width: "100%",
+                    flexDirection: "row", justifyContent: "space-between", paddingLeft: "200px",
+                  }}>
 
+                    <div className="hover-btn" title='Create an exact copy of the pin refrencing lore.'
+                      style={{
+                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: "pointer",
+                        color: styles.colors.colorWhite,
+                        fontSize: styles.fonts.fontSmall,
+                        marginTop: "11px",
+                        textDecoration: "underline 1px",
+                        textDecorationColor: "#ffdead22",
+                        alignSelf: "flex-end"
+                      }} onClick={async () => {
 
-                  {(lore?.getJson().name !== "" && lore?.getJson().name !== undefined && this.state.saveClicked) &&
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: "pointer",
-                      color: styles.colors.colorWhite,
-                      fontSize: styles.fonts.fontSmallest,
-                      marginTop: "11px",
-                      textDecoration: "underline 1px",
-                      textDecorationColor: "#ffdead22",
-                      alignSelf: "flex-end"
-                    }}
-                      onClick={() =>
+                        this.copyLore(state.currentPin);
+                        dispatch({ popupSwitch: "" })
 
-                        (window.open(newLink, '_blank'))
+                      }}>Clone Pin < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
 
-                      }
-                    >
-                      Open in new tab
+                    <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                      style={{
+                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: "pointer",
+                        color: styles.colors.colorWhite,
+                        fontSize: styles.fonts.fontSmall,
+                        marginTop: "11px",
+                        textDecoration: "underline 1px",
+                        textDecorationColor: "#ffdead22",
+                        alignSelf: "flex-end"
+                      }} onClick={async () => {
 
-                      <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={newWindow} />
+                        this.copyLore(lore);
+                        dispatch({ popupSwitch: "" })
 
-                    </div>}
+                      }}>Clone Pin + Lore
+
+                      <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dupPlus} /></div>
+
+                    {((lore?.getJson().name !== "" && lore?.getJson().name !== undefined) && this.state.saveClicked) &&
+                      <div className="hover-btn" style={{
+                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: "pointer",
+                        color: styles.colors.colorWhite,
+                        fontSize: styles.fonts.fontSmall,
+                        marginTop: "11px",
+                        textDecoration: "underline 1px",
+                        textDecorationColor: "#ffdead22",
+                        alignSelf: "flex-end"
+                      }}
+                        onClick={() =>
+
+                          (window.open(newLink, '_blank'))
+
+                        }
+                      >
+                        Open in new tab
+
+                        <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={newWindow} />
+
+                      </div>}</div>
 
                   {(lore?.getJson().name === "" || lore?.getJson().name === undefined) &&
                     <div style={{
@@ -439,7 +494,7 @@ class MainContent extends Component {
                   <hr></hr>
 
 
-                  <div style={{ color: styles.colors.color3 + "f5",  marginBottom: "32px" }}> Lore:
+                  <div style={{ color: styles.colors.color3 + "f5", marginBottom: "32px" }}> Lore:
                     <div style={{
                       display: "flex", flexDirection: "row", alignContent: "flex-end",
                       justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
@@ -455,7 +510,7 @@ class MainContent extends Component {
                       inputStyle={{
                         maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
                         borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                        border: "solid 1px " + styles.colors.colorWhite + "22", 
+                        border: "solid 1px " + styles.colors.colorWhite + "22",
                       }}
                       wrapperStyle={{
                         margin: "5px", color: styles.colors.colorWhite, display: "flex", marginBottom: "1px",
@@ -486,7 +541,7 @@ class MainContent extends Component {
                         inputStyle={{
                           minWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
                           borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                          border: "solid 1px " + styles.colors.colorWhite + "22", 
+                          border: "solid 1px " + styles.colors.colorWhite + "22",
                         }}
 
                         wrapperStyle={{
@@ -688,7 +743,7 @@ class MainContent extends Component {
 
 
                   <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
-                    <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", }}>
+                    <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft:"22px"}}>
 
                       <Upload text="+ Upload"
 
@@ -732,7 +787,7 @@ class MainContent extends Component {
 
               <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
 
-                <div className="hover-btn"
+                {/* <div className="hover-btn"
                   title='Deletes the Lore, all Referenced Lore, and the Pin!'
                   style={{
 
@@ -762,14 +817,15 @@ class MainContent extends Component {
 
 
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                  }}>Delete All Connected Lore</div>
+                  }}>Delete All Connected Lore</div> */}
 
                 <div className="hover-btn"
                   title='Deletes the Pin'
                   style={{
-                    display: "flex", width: "210px", background: styles.colors.color6, borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
-                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", border: "1px solid white",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: "white", justifyContent: "center", cursor: "pointer"
+                    display: "flex", width: "210px", borderRadius: '3vh', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
+                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px",
+                    borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
+                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
 
                     let pin1 = state.currentPin;
@@ -779,31 +835,10 @@ class MainContent extends Component {
                     await dispatch({ popupSwitch: "" })
 
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                  }}>Delete Pin Only</div>
+                  }}>Delete Pin</div>
 
-                <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
-                  style={{
-                    display: "flex", width: "288px", background: styles.colors.color8 + '55', borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center", right: "170px", border: "1px solid #172808", marginRight: "22px",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.colorWhite, justifyContent: "center", cursor: "pointer"
-                  }} onClick={async () => {
 
-                    this.copyLore(lore);
-                    dispatch({ popupSwitch: "" })
 
-                  }}>Clone Lore To Map</div>
-
-                <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
-                  style={{
-                    display: "flex", width: "258px", background: styles.colors.color8 + '55', borderRadius: '3vh', fontSize: styles.fonts.fontNormal,
-                    alignSelf: "flex-end", bottom: '0px', alignItems: "center", right: "170px", border: "1px solid #172808",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.colorWhite, justifyContent: "center", cursor: "pointer"
-                  }} onClick={async () => {
-
-                    this.copyLore(state.currentPin);
-                    dispatch({ popupSwitch: "" })
-
-                  }}>Clone Pin Only</div>
 
               </div>
 
@@ -814,7 +849,7 @@ class MainContent extends Component {
 
               <div className="indent-on-click"
                 style={{
-                  display: "flex", width: "92px", background: "red", borderRadius: '3vh',
+                  display: "flex", width: "92px", background: "red", borderRadius: '12px',
                   alignSelf: "flex-end", bottom: '0px', alignItems: "flex-end", right: "10px",
                   position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
                 }}>
@@ -864,12 +899,12 @@ class MainContent extends Component {
 
                     this.setState({ showSaved: true });
                     setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
-                    this.setState({saveClicked:true})
+                    this.setState({ saveClicked: true })
                   }} />
 
                 {this.state.showSaved && (
                   <div className="saved-animation" style={{
-                    color: styles.colors.color9,
+                    color: styles.colors.color9, border: "",
                     alignSelf: "flex-end", position: "absolute", marginBottom: "69px", marginLeft: "-72px",
                     fontSize: styles.fonts.fontSmallest
                   }}> Saved! </div>)}
@@ -918,7 +953,7 @@ class MainContent extends Component {
                 }}
                 style={{
                   ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "44px", padding: "2px 8px"
                 }}
 
               >
@@ -949,22 +984,15 @@ class MainContent extends Component {
 
               <div style={{
                 display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center",
-                alignItems: "center", height: "100%", width: "100%",
-              }}>
+                alignItems: "center", height: "100%", width: "100%", color: styles.colors.colorWhite, fontSize: "1.5rem"
+              }}> Move or Connect Lore
 
 
-                <div style={{ display: "flex", flexDirection: "row", alignSelf: "flex-end", marginRight: "82px", marginTop: "8px", marginBottom: "8px" }}>
-                  <div
-                    title={"Click the check box to add a reference to the original lore object. This will not move the lore from its original location"}
-                    style={{ color: styles.colors.color8, width: "fit-content", fontSize: "1.1rem", justifyContent: "center", marginTop: "5px", fontSize: styles.fonts.fontNormal }}>
-                    Link to this Lore
-
-                  </div>
-
+                <div style={{ display: "flex", flexDirection: "row", alignSelf: "center", marginTop: "8px", marginBottom: "8px" }}>
                   <ParentFormComponent
                     obj={lore} name="refrence"
 
-                    title={"Click the check box to add a reference to the original lore object."}
+                    title={"Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."}
                     type={"checkbox"}
                     func={(obj, value) => {
                       this.setState({ refrence: value })
@@ -976,18 +1004,28 @@ class MainContent extends Component {
                       color: styles.colors.colorBlack,
                     }}
                   />
-                  <div className='hover-container' style={{ cursor: "help", marginTop: "-9px", marginLeft: "-3px", height: "18px" }}>
+
+                  <div
+                    title={"Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."}
+                    style={{ color: styles.colors.color8, width: "fit-content", marginRight: "12px", fontSize: "1.1rem", justifyContent: "center", marginTop: "5px", fontSize: styles.fonts.fontNormal }}>
+                    Link to Existing Lore
+
+                  </div>
+
+
+                  <div className='hover-container'
+                    style={{ cursor: "help", marginTop: "7px", marginLeft: "-3px", height: "18px" }}>
                     <img src={q} style={{ width: "18px" }} />
                     <div className='hover-div'
                       style={{
                         background: styles.colors.color2, width: "640", height: "fit-content", position: "absolute",
-                        padding: "12px 9px", borderRadius: "11px", left: -600, top: -10, border: "1px solid grey", boxShadow: "4px 8px 9px black",
+                        padding: "12px 9px", borderRadius: "11px", left: -500, top: -10, border: "1px solid grey", boxShadow: "4px 8px 9px black",
                         fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "d9"
                       }}>
 
-                      Click the check box to add a reference to the original lore object. This will not move the lore from its original location and you will be editing the original
+              Click the check box to create a link to an existing lore.
                       <div style={{ marginTop: "8px" }}></div>
-                      If the check box is not checked, the lore you select will move to this new location.
+                      If the checkbox is not checked, the lore you select will move to this new location.
                     </div>
                   </div>
                 </div>
@@ -1065,9 +1103,9 @@ class MainContent extends Component {
                         this.setState(prevState => ({ loreToShow: prevState.loreToShow + (filteredLore.length - this.state.loreToShow) }))}
                       style={{
                         maxHeight: "210px", cursor: "pointer", textAlign: "center", padding: "8px",
-                        minWidth: "408px", display: "flex", alignItems: "center", justifyContent: "center",
+                        minWidth: "808px", display: "flex", alignItems: "center", justifyContent: "center",
                         fontSize: styles.fonts.fontSmall, borderRadius: "20px", marginBottom: "3vh",
-                        color: styles.colors.colorWhite, border: "" + styles.colors.color3+ "f2 solid",
+                        color: styles.colors.colorWhite, border: "1px" + styles.colors.color3 + "f2 solid",
                       }}>
                       <div
                         style={{ display: "flex", position: "relative", }}>
