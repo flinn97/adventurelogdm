@@ -45,7 +45,7 @@ export default class LoreItemWithNotation extends Component {
 
     let listTerm = state.currentLore ? "parentId" : "campaignId";
 
-    let allList = mapList.length + encounterList.length + imageList.length;
+    
 
     let allColors = obj.getJson().colors ? obj.getJson().colors : ["#000000"];
     let colorList = Object.values(allColors);
@@ -59,6 +59,8 @@ export default class LoreItemWithNotation extends Component {
     let objParent = obj.getJson().parentId;
     
     let parentName = Object.values(objParent)[0]?Object.values(objParent)[0]:'';
+
+    let allList = mapList.length + encounterList.length + imageList.length;
 
     let isEmpty = allList === 0;
 
