@@ -158,7 +158,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"], backgroundColor:styles.colors.color2+"1e", borderRadius:"1.2vw"}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   

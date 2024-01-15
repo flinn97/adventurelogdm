@@ -329,7 +329,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
 
               </div>
               }
-              <Link to={newLink} className='hover-btn' title={advLogText}
+              <Link to={newLink} target='_blank' className='hover-btn' title={advLogText}
                 style={{
                   ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px", 
                   borderColor: "#00000000", boxShadow:"",

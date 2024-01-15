@@ -89,9 +89,9 @@ class MainContent extends Component{
     
 
     return(
-      <div>
-      This is where your purchased items will appear
-       <div style={{color:'red'}}>Coming Soon tho</div>
+      <div style={{color:styles.colors.color8}}>
+      ~Coming Soon~
+
       </div>
       
     )
@@ -132,7 +132,7 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:"#9cd9cf88" }}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:"#9cd9cf0e", borderRadius:"1.2vw", paddingBottom:"22px"}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
