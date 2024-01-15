@@ -22,6 +22,7 @@ import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
+import Campaign from './view/pages/campaign';
 
 import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';

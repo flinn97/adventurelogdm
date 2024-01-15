@@ -201,7 +201,9 @@ export default class CampaignEditor extends Component {
     let state = app.state;
 
     let styles = state.styles;
-    let players = state.campaignPlayers;
+    let checkPCount = this.state.obj?.getJson().type==="lore"?this.state.obj?.getJson().campaignId:this.state.obj?.getJson()._id;
+
+    let players = state.campaignPlayers?.filter(obj=>obj.getJson().campaignId===checkPCount);
     let pCount = players?.length;
 
     const advLogText = "Go to " + this.state.obj?.getJson().title + "'s Adventure Log";
@@ -313,8 +315,20 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
                 </div>
                 <ParentFormComponent app={app} name="name" obj={state.currentLore}
                   theme={"adventureLog"}
+                  callbackFunc={(arr)=>{
+                    let L1 = arr[0];
+                    let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                    referenceList = referenceList.map(obj => obj.getJson()._id);
+                    let pinList = state.componentList.getList("pin");
+                    pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                    for(let p of pinList){
+                      p.setCompState({name: L1.getJson().name})
+                    }
+                    state.opps.cleanPrepareRun({update: [L1, ...pinList]})
+
+                  }}
                   rows={5}
-                  prepareRun={true}
+                  // prepareRun={true}
                   inputStyle={{
                     width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
                     borderRadius: "4px", background: styles.colors.colorWhite + "00",

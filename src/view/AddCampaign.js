@@ -45,7 +45,7 @@ export default class AddCampaign extends Component {
     let campaignPlaceholder = "Campaign Name";
     let textSubmit = ""; let textNotReady ="";
     let isUpdate = (state.popUpSwitchcase === "updateCampaign");
-    let isNotUpdate = (state.popUpSwitchcase != "updateCampaign")
+    let isNotUpdate = (state.popUpSwitchcase !== "updateCampaign")
 
     if (state.currentComponent?.getJson().type === "campaign" && isUpdate)
                       { textSubmit ="Save";}
@@ -167,7 +167,7 @@ export default class AddCampaign extends Component {
                   maxLength={4} 
                   placeholder={"#"}/>  */}
 
-                  {this.state.pic
+                  {isNotUpdate
                     ? <div style={{display:"flex", justifyContent:"center"}} className="hover-btn"> 
                         <RunButton app ={app} 
                           wrapperStyle={{...styles.buttons.buttonAdd, 
@@ -189,11 +189,11 @@ export default class AddCampaign extends Component {
                     : 
                       <div className='hover-btn' style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
                       <RunButton app ={app} 
-                        wrapperStyle={{...styles.buttons.buttonAdd, cursor: isNotUpdate ? "wait":"pointer", 
+                        wrapperStyle={{...styles.buttons.buttonAdd, cursor: "pointer", 
                           width:"35%", transition:"all 1s ease-out", borderRadius:"21%",
                           display:"flex", color:styles.colors.color6, background:styles.colors.colorWhite+"88", fontWeight:"600", borderColor:styles.colors.color6
                         }}
-                        text={textNotReady}
+                        text={textSubmit}
                         callBack={async (comp)=>{
                           //debugger
                           comp = comp[0]

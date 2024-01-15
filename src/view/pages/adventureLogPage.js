@@ -214,7 +214,7 @@ export default class AdventureLogPage extends Component {
 
             />
           </div> }
-          {this.state.posts.length>0&&<>
+          {/* {this.state.posts.length>0&&<> */}
           
 
           <div style={{
@@ -374,7 +374,7 @@ export default class AdventureLogPage extends Component {
           
           <ScrollHelper scroll={this.scrollToBottom} />  
           
-          </>}
+          {/* </>} */}
       </div >
     )
   }

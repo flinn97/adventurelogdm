@@ -34,6 +34,9 @@ export default class LoreItemWithNotation extends Component {
     let dispatch = app.dispatch;
     let currentState = app.state;
     let componentList = currentState.componentList;
+  
+    obj = obj.getJson().reference? componentList.getComponent("lore", obj.getJson().ogId, "_id"): obj;
+
 
     let objName = obj.getJson().name.length > 33 ? obj.getJson().name.substring(0, 33) + "..." : obj.getJson().name;
     let mapList = componentList.getList("map", obj.getJson()._id, "loreId");
