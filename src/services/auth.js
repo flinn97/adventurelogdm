@@ -7,7 +7,6 @@ import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
 
 let imageQuality = .5;
-
 class Auth {
     urlEnpoint = "GMS"
 
@@ -38,7 +37,7 @@ class Auth {
 
     }
 
-
+    
 
     async createInitialStages(componentList,) {
         let list = ["Not Started", "First Email", "Second Email", "Follow up", "Nurture", "Not Interested",]
@@ -217,6 +216,7 @@ class Auth {
 
                     ]
                 })
+                
             }
         }
     }
@@ -304,8 +304,9 @@ class Auth {
 
     async login(email, password, componentList, dispatch) {
 
-
         let user;
+        let e;
+
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -314,21 +315,30 @@ class Auth {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
-                //console.log(errorMessage)
+                let errorMessage = error.message;
+                let eL = errorMessage.length-1;
+                let newString = errorMessage.slice(9,eL);
+                
+                
+                e = {error:newString};
+                console.log(e);
             });
         if (user) {
-            let saveUser = user
+            let saveUser = user;
+            dispatch({start:false});
 
             if (componentList !== undefined && dispatch !== undefined) {
                 await localStorage.setItem("user", JSON.stringify(saveUser));
                 await this.getuser(email, componentList, dispatch);
+            
 
             }
 
 
-
-
+        }else{
+            
+            user = e;
+            console.log(user);
         }
         return user;
     }
@@ -347,6 +357,10 @@ class Auth {
         return docSnap.data();
 
     }
+
+   
+    
+    
     async register(email, password, addToCache) {
 
         let user;
@@ -354,8 +368,11 @@ class Auth {
             user = userCredential.user;
         }).catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            //console.log(errorMessage);
+            let errorMessage = error.message;
+            let eL = errorMessage.length-1;
+            let newString = errorMessage.slice(9,eL);
+            
+            user = {error:newString};
         })
         if (addToCache) {
             localStorage.setItem("user", JSON.stringify(user));
@@ -381,7 +398,7 @@ class Auth {
             await signOut(auth);
 
         }
-        window.location.reload();
+        window.location.href ="/"
     }
     async uploadPics(file, name, dispatch, quality) {
 
@@ -430,7 +447,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        //debugger
+        debugger
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -460,6 +477,9 @@ class Auth {
                             if (!component.owner) {
                                 component.owner = email
                             }
+                            if(component.type ==="user"){
+                                component._id = email;
+                            }
                             component.date = await serverTimestamp();
                             await setDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                             break;
@@ -484,8 +504,9 @@ class Auth {
 
             }
         }
-
+        
         if (dispatch) {
+            debugger
 
             dispatch({ dispatchComplete: true, data: obj })
 
