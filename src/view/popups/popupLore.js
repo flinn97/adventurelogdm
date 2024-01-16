@@ -556,6 +556,8 @@ class MainContent extends Component {
                         }} />{quote}</div></div>
                 </div>}
 
+                {(this.state.saveClicked || componentList.getComponent("lore", lore.getJson()._id, "_id")!==undefined) &&
+
               <div>
                 {/* ENCOUNTER */}
                 {!this.state.showFindEncounter && !this.state.showFindImage && <div> <hr></hr>
@@ -593,7 +595,8 @@ class MainContent extends Component {
             <AddEncounter app={app} />
           } */}
               </div>
-
+  }
+  {(this.state.saveClicked || componentList.getComponent("lore", lore.getJson()._id, "_id")!==undefined) && <>
               {!this.state.showFindEncounter && !this.state.showFindImage &&
                 <div>
                   <hr></hr>
@@ -681,7 +684,7 @@ class MainContent extends Component {
 
                   </div>
                 </div>}
-
+                
               {/* GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY */}
 
               {!this.state.showFindImage && !this.state.showFindEncounter &&
@@ -783,13 +786,14 @@ class MainContent extends Component {
 
                   </div>
 
+
                   {/* <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} 
                   style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,}}
                 >
                   + From Library</div> */}
                 </div>
               }
-
+</>}
 
               <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
 
