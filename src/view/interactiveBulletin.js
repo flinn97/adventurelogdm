@@ -47,6 +47,7 @@ export default class InteractiveBulletin extends Component {
       start: false,
       isLoading: true,
       hide: false,
+      highestZIndex: 1000,
     }
   }
 
@@ -177,7 +178,7 @@ export default class InteractiveBulletin extends Component {
         style={{
           width: "100%", minHeight: "100%", maxHeight: "100%",
           cursor: this.state.isGrabbing !== true ? "" : "grabbing",
-          overflow: 'auto', borderRadius: "20px",
+          overflow: 'auto', borderRadius: "11px",
         }}>
 
 
@@ -226,7 +227,7 @@ export default class InteractiveBulletin extends Component {
 
             }}
           >
-            + Lore Point
+            + Lore Point 
             <img src={iconTest} alt='ico' style={{ width: "40px", height: "40px", marginLeft: "15px", marginRight: "10px", marginTop: "1px", }}></img>
           </div>
 
@@ -281,32 +282,31 @@ export default class InteractiveBulletin extends Component {
     {/* PINS PINS PINS */}
     
   {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").map((pin,index)=>
-  <Draggable 
+  <Draggable key={pin.getJson()._id}
   defaultPosition={{x: parseInt(pin.getJson().x, 10), y: parseInt(pin.getJson().y, 10)}}
    grid={[1,1]}
   bounds="parent"
   handle=".draghere"
-
                   onStart={(data) => {
                     this.setState({ isGrabbing: true });
                   }}
-                  onStop={(item, data) => {
+                  onStop={ async (item, data) => {
 
+                    let comp = pin;
+                    // state.componentList.getComponent("pin",pinId);
 
                     let parentRect = this.parentRef?.current?.getBoundingClientRect();
                     let x = Math.min(Math.max(data.x, 1), parentRect.width - 1);
                     let y = Math.min(Math.max(data.y, 1), parentRect.height - 1);
 
-                    let comp = pin;
-                    // state.componentList.getComponent("pin",pinId);
-
-                    comp.setCompState({
+                    await comp.setCompState({
                       x: x.toString(),
                       y: y.toString()
                     });
 
-                    state.opps.cleanPrepareRun({ update: comp });
+                    await state.opps.cleanPrepareRun({ update: comp });
                     this.setState({ isGrabbing: false });
+                    
                   }}
 
 
@@ -370,8 +370,6 @@ export default class InteractiveBulletin extends Component {
                       }}
 
                       title="Click to Open">
-
-
                       <img
                         draggable="false" src={pin.getJson().iconImage} alt='ico'
 
@@ -424,7 +422,7 @@ export default class InteractiveBulletin extends Component {
                               }}>
 
                               {images.map((imgSrc, index) => (
-                                <div style={{ display: "flex", flexDirection: "row", backgroundColor: styles.colors.color1 + "7d", position: "sticky", zIndex: "50", borderRadius: "1px" }}>
+                                <div key={imgSrc+index.toString()} style={{ display: "flex", flexDirection: "row", backgroundColor: styles.colors.color1 + "7d", position: "sticky", zIndex: "50", borderRadius: "1px" }}>
 
                                   {(typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&
                                     <div style={{ cursor: "pointer" }}>

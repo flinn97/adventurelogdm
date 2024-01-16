@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import "../App.css"
 import Roll from './Roll';
 import TokenImage from './tokenImage';
@@ -13,6 +13,8 @@ import diceService from '../services/diceService';
 export default class MonsterMapItem extends Component {
   constructor(props) {
     super(props);
+    this.Ref = React.createRef();
+    this.scrollTo = this.scrollTo.bind(this);
     this.roundUpdated = false;
     this.state = {
       obj: undefined,
@@ -23,6 +25,13 @@ export default class MonsterMapItem extends Component {
       
     };
     }
+   
+    scrollTo = (ref, behavior) => {
+      if (ref?.current) {
+        ref?.current?.scrollIntoView({ behavior: behavior || "smooth", block: "start" });
+      }
+    }
+  
 
     convertToLink = (statBlockLink) => {
     
@@ -46,6 +55,13 @@ export default class MonsterMapItem extends Component {
               }
 
       }}
+
+      // componentDidUpdate(){
+      //   let lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
+      //    let currentTurn = this.props.obj.getJson()?.currentTurn;
+      //    if (lastInitAsNumber = currentTurn){
+      //   this.scrollTo(this.Ref,"smooth");}
+      // }
 
   handleClickWord = (word, iValue) => {
     // Hide conditions temporarily
@@ -179,7 +195,7 @@ export default class MonsterMapItem extends Component {
                               : [];
 
               const maxCon = conList.length===""?13:12;
-                const iValue = (currentTurn == lastInitAsNumber?"1":"0")
+                const iValue = (currentTurn == lastInitAsNumber?"1":"0");
 
     return (
      
@@ -187,7 +203,7 @@ export default class MonsterMapItem extends Component {
       position: "relative", borderRadius:"22px", height:"128px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
         
-      <div className={currentTurn == lastInitAsNumber ? "gradient-animation" : ""}
+      <div className={currentTurn == lastInitAsNumber ? "gradient-animation" : ""} ref={currentTurn == lastInitAsNumber ? this.startRef:""}
       style={{
         minWidth: "100%", borderRadius:"22px",
         height:"128px",
@@ -393,8 +409,7 @@ export default class MonsterMapItem extends Component {
                   
                   }
                   
-                
-                className="hover-bubble" key={index} style={{
+                className="hover-bubble" key={word+index} style={{
                   display: 'flex', maxHeight:"30px", 
                   padding: '6px', width:"fit-content",
                   marginLeft: (word==="Dead"?"1vw":"2px"), 

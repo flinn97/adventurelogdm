@@ -77,11 +77,14 @@ export default class LoreViewer extends Component {
     //and stops dragging it, respectively.
  
 async componentDidMount(){
-
+  let app = this.props.app;
+  let state = app.state;
   let id = this.props._id;
   let component = this.props.app.state.componentList.getComponent("campaign", id);
   
   let currentLore = this.props.app.state.currentLore;
+
+  
   
   let map = currentLore===undefined? undefined:  this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
   if(!map){
@@ -468,7 +471,7 @@ marginTop:"22px"}}>
           
           filteredList.map((encounter, index) => 
           <div 
-
+          key={encounter.getJson()._id}
          onClick={async () => {{
             await this.setState({showFindEncounter: false });
             let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true,1));
