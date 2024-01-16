@@ -87,7 +87,7 @@ export default class App extends Component {
      await this.setState({backend: false});
      await this.state.componentList.sortSelectedList("lore", "index");
      this.setState({});
-     auth.dispatch(this.state.backendUpdate, this.state.email, undefined, this.state.backendReloader);
+     auth.dispatch(this.state.backendUpdate, this.state.email, this.dispatch, this.state.backendReloader);
     }
     
     if(this.state.operate!==undefined){
@@ -160,7 +160,9 @@ handleChange = (event) => {
     }
     try{
     let user = await auth.getCurrentUser();
+    debugger
     if(user){
+      
       user = JSON.parse(user);
       
       await auth.getuser(user.email, list, this.dispatch);
