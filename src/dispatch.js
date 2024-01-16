@@ -82,12 +82,18 @@ export default class Dispatch extends Component {
                 display: "flex", flexDirection: "column",
               }}>
 
-                <div style={{ display: 'flex', zIndex: 2000, marginRight: "210px", }}>
+                <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 600&&"210px", }}>
 
-                  {/* {window.innerWidth > 600 && (<div> */}
+                  {window.innerWidth > 600? (
                     <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
                       { logo: logo, }}
-                    />
+                    />):(
+                      <div style={{width:"100vw", height:"60px", border:"1px solid red", display:"flex", justifyContent:"space-around"}}>
+                        <div style={{color:"white"}}>Back</div>
+                        <div style={{color:"white"}}>Log</div>
+                        <div style={{color:"white"}}>Notes</div>
+                      </div>
+                    )}
                   {/* </div>)  */}
                   
                   {/* || (
@@ -112,7 +118,7 @@ export default class Dispatch extends Component {
                   } */}
                 </div>
                 {/* WITHIN */}
-                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: "210px", }}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: window.innerWidth > 600&&"210px", }}>
 
                   <div style={{
                     width: '100%', minHeight: "fit-content", padding: "28px", display: "flex", height: "100%",
