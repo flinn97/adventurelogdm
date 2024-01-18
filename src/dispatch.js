@@ -93,9 +93,11 @@ export default class Dispatch extends Component {
                       { logo: logo, }}
                     />):(
                       <div style={{width:"100vw", height:"60px", border:"1px solid red", display:"flex", justifyContent:"space-around"}}>
-                        <div style={{color:"white"}}>Back</div>
-                        <div style={{color:"white"}}>Log</div>
-                        <div style={{color:"white"}}>Notes</div>
+                        <Link to={"/"} style={{width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
+                            textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px" }}>Back</Link>
+                        {/* <div style={{color:"white"}}>Log</div> */}
+                        <div onClick={auth.logout} style={{ width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
+                            textDecoration: "1px underline " + styles.colors.color5, color: styles.colors.color5, textUnderlineOffset: "2px" }}>Log Out</div>
                       </div>
                     )}
                   {/* </div>)  */}
