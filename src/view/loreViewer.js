@@ -296,7 +296,7 @@ marginTop:"22px"}}>
               //ADD THIS TO ALL UPLOADS//
               changePic={async (pic, path) => {
                 
-                let map = {picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: id, type:'map'};
+                let map = {picURL: pic, loreId: this.state.lore?.getJson()._id, campaignId: id, type:'map'};
                 await state.opps.cleanJsonPrepare({addmap: map});
                 map = await state.opps.getUpdater("add")[0];
                 await map.getPicSrc(path);

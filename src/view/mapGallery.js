@@ -21,7 +21,7 @@ export default class MapGallery extends Component {
       let state = app.state;
       let componentList = state.componentList;
                                         //type , value to search,   filter key
-      let mapList = componentList.getList("map", obj.getJson()._id, "loreId");
+      let mapList = componentList.getList("map", obj?.getJson()._id, "loreId");
       let currentMap = mapList[0];
       if (mapList.length > 0){
       this.setState({mapList:mapList, currentMap:currentMap, showMap:true});
@@ -42,7 +42,7 @@ export default class MapGallery extends Component {
       let dispatch = app.dispatch;
       let currentState = app.state;
       let componentList = currentState.componentList;
-      let mapList = componentList.getList("map",obj.getJson()._id,"loreId");
+      let mapList = componentList.getList("map",obj?.getJson()._id,"loreId");
       if (state.mapList.length !== mapList.length)
       {
         this.setState({mapList:mapList, currentMap: mapList[mapList.length-1],})
