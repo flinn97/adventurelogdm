@@ -77,6 +77,8 @@ export default class Dispatch extends Component {
                   containerStyle={{ background: styles.colors.color2, zIndex: 55000, }}
 
                 />
+                
+
               </div>
             }
             {(state.popupSwitch !== "splashScreen") &&
@@ -85,6 +87,7 @@ export default class Dispatch extends Component {
                 minWidth: "100%", userSelect: "none", height: "100vh",
                 display: "flex", flexDirection: "column",
               }}>
+                
 
                 <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 600&&"210px", }}>
 
@@ -265,8 +268,17 @@ export default class Dispatch extends Component {
 </Routes>)}
 
 </div>
+      
 </div>
+{window.innerWidth > 600 && (
+          <div style={{ width:"fit-content", color:styles?.colors.color4, fontSize:styles?.fonts.fontSmallest, borderRadius:"11px",
+          alignSelf:"left", marginLeft:"222px", background:styles.colors.color1+"99",padding:"11px", marginTop:"1vh",
+          marginBottom:"1vh"}}>
+          ©2024 AVA Media & Productions
+          </div>)}
+
      </div>}
+
      </div>)}
      {(state.user!==undefined &&  !state.user?.getJson()?.paidCustomer && state.user?.getJson().role==="GM") &&(
       <div style={{width:"100%", height:"100%", position:"absolute", left:"0", top:"0", background:'black'}}>
@@ -285,6 +297,9 @@ export default class Dispatch extends Component {
      <Route path="/paymentprocessing/" element={<AfterPayment app={app} />}/>
             {/* //ISAAC UI */}
      </Routes>
+
+     
+    
      </BrowserRouter>
   )}
 }

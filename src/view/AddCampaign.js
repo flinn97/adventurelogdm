@@ -76,7 +76,7 @@ export default class AddCampaign extends Component {
       
       >
             
-          <div style={{
+          <div style={{minHeight:"710px", 
             ...styles.popupSmall,
             height: 'fit-content', 
             // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
