@@ -79,6 +79,90 @@ class TreeService {
         // this.copyAttachedItemsHelper(lastMPI, componentList, attribute);
     }
 
+     /**
+     * convert entire campaign to marketplace
+     * @param {*} lore 
+     * @param {*} componentList 
+     * 
+     * @param type if lore then => loreId, if campaign => campaignId
+     */
+     async convertToMarketplace2(lore, owner) {
+        if (!lore.purchasedItem) {
+            if (lore.type === "campaign") {
+                this.campaign = true
+            }
+            //set preliminaries
+            this.list = [];
+            //create a new mpi from campaing
+            let mpiJson = { ...lore, _id: undefined, purchasedItem: true, owner:owner,  ogId: lore._id, parentId: "" }
+            //get mpi from updater
+            this.list.push(mpiJson);
+            //debugger
+            await this.copyAttachedItemsHelper(mpi, componentList, "campaignId");
+            await this.recurseLoreTree(lore, owner);
+
+            for(let mpi of this.list.slice(1)){
+                this.copyAttachedItemsHelper(mpi, componentList, "loreId");
+            }
+             
+        }
+
+    }
+
+
+    /**
+     *  Recurse the tree and prepare marketplace items.
+     * @param {*} lore 
+     * @param {*} componentList 
+     */
+    async recurseLoreTree2(lore, owner) {
+        //get all lores that are children of the lore passed in for the param.
+        let loreList = firebase.getList("lore", lore._id, "parentId");
+
+        //take the original id of lore passed in as the param and find the marketplaceitem in this.list that as the attribute ogId as the id of that lore
+        let parentMPitem = this.list.filter(obj => obj.ogId === lore._id);
+        parentMPitem = parentMPitem[0];
+        let mpi = undefined
+        //iterate the children and add marketplace items
+        for (let l of loreList) {
+
+            //create the obj for a new market place item with ogId as l's id and parentId as parentMPitem id
+            let json = { ...l, _id: undefined, campaignId: this.list[0]._id, ogId: l_id, parentId: parentMPitem._id, owner:owner };
+
+            //add the item to list
+            this.list.push(mpi);
+
+            this.recurseLoreTree(l, owner);
+
+
+
+        }
+    }
+
+    /**
+     * Convert associated items to mpilore
+     * @param {*} mpilore 
+     * @param {*} componentList 
+     * @param {*} attribute 
+     */
+    async copyAttachedItemsHelper2(mpilore, attribute) {
+        let filterKeyArr = ["encounter", "image", "map"]; //"map","pin",
+        let components = [];
+        let id = mpilore.getJson().ogId;
+
+        //create master list from all the other lists
+        for (const key of filterKeyArr) {
+            components = attribute === "campaignId" ?
+                [...components, ...componentList.getList(key, id, attribute).filter(data => (data.getJson().loreId === "" || data.getJson().loreId === undefined))]
+                : [...components, ...componentList.getList(key, id, attribute)];
+
+        }
+        for (let obj of components) {
+            //let individual classed create the mpi's.
+            await obj.createMPI(mpilore, this.list[0].getJson()._id, componentList, undefined);
+        }
+    }
+
     /**
      *  Recurse the tree and prepare marketplace items.
      * @param {*} MPI 
