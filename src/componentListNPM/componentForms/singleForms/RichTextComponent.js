@@ -312,7 +312,7 @@ class RichTextComponent extends Component {
     }
 
     setEnterCaret() {
-        // debugger
+        // 
         const range = document.createRange();
     const selection = window.getSelection();
 

@@ -122,7 +122,7 @@ class MainContent extends Component {
   }
 
   async linkLore(item, l, lore, pin) {
-    //debugger
+    //
     let app = this.props.app;
     let state = app.state;
     let componentList = state.componentList;
@@ -837,7 +837,7 @@ class MainContent extends Component {
                     borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
                     marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
-                    debugger
+                    
 
                     let pin1 = state.currentPin;
                     if(pin1.getJson().referencePin){
@@ -875,7 +875,7 @@ class MainContent extends Component {
                     let lore = arr[0];
                     let check;
                     if (state.currentPin) {
-                      //debugger
+                      //
                       let pin = state.currentPin;
 
                       if (lore.getJson().name === "" || lore.getJson().name === undefined) {
@@ -902,7 +902,7 @@ class MainContent extends Component {
                     }
 
                     if (lore) {
-                      //debugger
+                      //
                       let parentId = Object.keys(lore.getJson().parentId,)[0];
                       let otherChildren = state.componentList.getList("lore", parentId, "parentId");
                       if (!check) {

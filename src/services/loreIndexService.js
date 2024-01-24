@@ -99,7 +99,7 @@ class LoreIndexService {
   }
 
   async insertAtBeginning(lore, loreList, run){
-    //debugger
+    //
     loreList = loreList.filter(obj => obj!==lore);
     let opps = lore.getOperationsFactory();
     let parentLore = loreList.find(parent=>parent.getJson().parentLore===true);

@@ -195,7 +195,7 @@ export default class AddCampaign extends Component {
                         }}
                         text={textSubmit}
                         callBack={async (comp)=>{
-                          //debugger
+                          //
                           comp = comp[0]
                           let lores = componentList.getList("lore", comp.getJson()._id, "campaignId");
                           let parent = lores.find(lore=>lore.getJson().parentLore === true);

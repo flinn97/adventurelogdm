@@ -107,7 +107,7 @@ class Auth {
         else{
             
             let comps1 = await onSnapshot(components, async (querySnapshot) => {
-                //debugger
+                //
 
                 rawData1 = [];
     
@@ -447,7 +447,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        debugger
+        
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -506,7 +506,7 @@ class Auth {
         }
         
         if (dispatch) {
-            debugger
+            
 
             dispatch({ dispatchComplete: true, data: obj })
 

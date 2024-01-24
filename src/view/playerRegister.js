@@ -20,7 +20,7 @@ export default class PlayerRegister extends Component {
     }
 
     async componentDidMount() {
-        debugger
+        
         let app = this.props.app;
         let state = app.state;
         let dispatch = app.dispatch;
@@ -35,7 +35,7 @@ export default class PlayerRegister extends Component {
 ///TAYLOR
 async validatePassword(password) {
     console.log(password)
-    debugger
+    
     const hasUpperCase = /[A-Z]/.test(password);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
@@ -48,7 +48,7 @@ async validatePassword(password) {
     
 
     async handleSubmission() {
-        debugger
+        
         let app = this.props.app;
         let state = app.state;
         let user = this.state.user;
@@ -98,7 +98,7 @@ async validatePassword(password) {
     componentDidUpdate() {
         if (this.props.app.state.dispatchComplete) {
 
-            debugger
+            
             this.props.app.dispatch({ dispatchComplete: false });
             window.location.href = "./"
         }

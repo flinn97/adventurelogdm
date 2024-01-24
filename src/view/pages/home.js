@@ -18,18 +18,18 @@ export default class Home extends Component {
     }
   }
   // async componentDidMount(){
-  //   let app = this.props.app;
-  //   let state = app.state;
-  //   let componentList = state.componentList;
-  //   let campaigns = componentList.getList('campaign');
-  //   for(let campaign of campaigns){
-  //     await auth.firebaseGetter(campaign.getJson()._id, componentList, "parent")
-  //   }
+    // let app = this.props.app;
+    // let state = app.state;
+    // let componentList = state.componentList;
+    // let campaigns = componentList.getList('campaign');
+    // for(let campaign of campaigns){
+    //   await auth.firebaseGetter(campaign.getJson()._id, componentList, "parent")
+    // }
   // }
 //   async componentDidMount(){
 //     let app = this.props.app;
 //     let state = app.state;
-//     let list =  await auth.firebaseGetter("taylormdavidson@gmail.com", state.componentList, "owner","lore");
+//     let list =  await auth.firebaseGetter("jaredmichaeldavidson@gmail.com", state.componentList, "owner","lore");
 //   list = await state.componentList.getComponents().filter(comp=>comp.getJson().type!=="user");
 // state.opps.cleanPrepareRun({del:list});
 //   }

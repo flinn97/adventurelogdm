@@ -160,7 +160,7 @@ handleChange = (event) => {
     }
     try{
     let user = await auth.getCurrentUser();
-    debugger
+    
     if(user){
       
       user = JSON.parse(user);
