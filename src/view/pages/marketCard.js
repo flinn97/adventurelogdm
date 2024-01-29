@@ -103,8 +103,8 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"center", padding:"22px"}}>
-      <div style={{color:styles.colors.color3, width:"500px", textAlign:"center"}}>~ Coming Soon ~ </div>
+      <div style={{width:"100%", display:"flex", flexDirection:"row", minHeight:"710px", justifyContent:"center", padding:"22px"}}>
+      <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div>
       {/* {this.state.start &&
       <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
         //
