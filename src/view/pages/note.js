@@ -65,12 +65,12 @@ export default class Note extends Component {
                   
               }}
                     style={{...styles.buttons.buttonAdd, width:"fit-content", fontSize:styles.fonts.fontSmall,padding:"2px", 
-                    display:"flex", marginBottom:"2vmin", }} >
+                    display:"flex", marginBottom:"20px", marginTop:"28px", }} >
                     + Note
               </div></div>
       
       <div style={{userSelect:"text", fontSize:styles.fonts.fontSmall, color:styles.colors.colorWhite, 
-      height:"fit-content",  marginTop:"2vmin", maxHeight:"100%"}}>
+      height:"fit-content",  marginTop:"20px", maxHeight:"100%"}}>
       
       <MapComponent app={app} name="newNote" 
       cells={[{custom:NoteMapItem, props:{app:app}},"delete"]} delOptions={{name:"X", style:{color:"red", cursor:"pointer"}}} 

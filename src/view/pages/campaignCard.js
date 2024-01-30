@@ -132,7 +132,7 @@ class TabContent extends Component{
       <div>
         {updateCampaign &&
             <div style={{ ...styles.buttons.buttonAdd, alignSelf:"flex-end", paddingLeft:"11px", paddingRight:"11px",  marginTop:"8px", height:"29px",
-            fontWeight:"200", fontSize:styles.fonts.fontBody, width:"fit-content"}} 
+            fontWeight:"200", fontSize:styles.fonts.fontBody, width:"fit-content",}} 
             onClick={()=>{
                   //                  add > campaign          clear it > prepare not run           switchcase
                   dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>

@@ -15,16 +15,25 @@ export default class NoteMapItem extends Component {
     
   }
 
-  renderNotes(){
-    //
-    let body = this.props.obj.getJson().text.substring(0, 100)+'...'
-    // let index = parseInt(body.indexOf("<br>"))
-      // body = index!==-1? body.substring(0, index): body; 
-    
-    
-    let bodyText = document.getElementById(this.props.obj.getJson()._id+"textBody");
+  renderNotes() {
+    let body = this.props.obj.getJson().text;
+
+    // Remove all HTML tags for formatting
+    body = body.replace(/<[^>]*>/g, '');
+
+    // Replace line breaks and carriage returns with an em dash
+    body = body.replace(/\r?\n|\r/g, ' — ');
+
+    // Collapse multiple spaces into a single space
+    body = body.replace(/ +/g, ' ');
+
+    // Truncate text to 134 characters
+    body = body.substring(0, 134) + '...';
+
+    let bodyText = document.getElementById(this.props.obj.getJson()._id + "textBody");
     bodyText.innerHTML = body;
-  }
+}
+
   componentDidMount(){
     this.renderNotes();
   }
@@ -64,9 +73,9 @@ export default class NoteMapItem extends Component {
         await dispatch({currentComponent: undefined});
         dispatch({currentComponent: this.props.obj}); 
         }}>
-      <div style={{width:"100%", padding:"4px 6px", backgroundColor:highlightBackground, }}
+      <div style={{width:"100%", padding:"4px 6px", backgroundColor:highlightBackground,fontSize:styles.fonts.fontSmallest, }}
       >
-      <div> 
+      <div style={{fontSize:styles.fonts.fontSmallest,}}> 
       <div style={{marginTop:"2px",
     fontSize: styles.fonts.fontSmall, 
     color: styles.colors.color3, 
@@ -78,8 +87,8 @@ export default class NoteMapItem extends Component {
         </div>
 
               <div id={this.props.obj.getJson()._id+"textBody"}
-              style={{ marginBottom: "2px", 
-              color: styles.colors.colorWhite, lineHeight:"1em", 
+              style={{ marginBottom: "2px", fontSize:styles.fonts.fontSmallest,
+              color: styles.colors.colorWhite, lineHeight:"1.2em", 
               width: "17vw", wordWrap:"break-word",
               
                 }}>

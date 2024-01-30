@@ -276,11 +276,12 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
               'url(' + (this.state.obj?.getJson().picURL || placeholder) + ')'
           }}>
 
-            <div style={{ ...styles.popupSmall, padding: "1rem", minHeight: "fit-content", width: "100%" }}>
-
+            <div style={{ ...styles.popupSmall, padding: "1rem", minHeight: "fit-content", width: "100%",  }}>
+              
+              <div>
               {(state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign") &&
                 <AddCampaign app={app} />
-              }
+              }</div>
 
               {(state.currentLore == undefined && state.popUpSwitchcase !== "updateCampaign") &&
                 <div style={{ fontSize: styles.fonts.fontHeader2, color: styles.colors.colorWhite, width: "80%", }}>{this.state.obj?.getJson().title}</div>
@@ -351,17 +352,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
 
               </div>
               }
-              <Link to={newLink} target='_blank' className='hover-btn' title={advLogText}
-                style={{
-                  ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px", 
-                  borderColor: "#00000000", boxShadow:"",
-                  color: styles.colors.color9, 
-                  backgroundColor: styles.colors.colorBlack + "b8",
-                  marginTop: "20px", fontWeight: "600"
-                }}>
-
-                Adventure Log
-              </Link>
+              
 
               {state.popUpSwitchcase !== "updateCampaign" && <>
                 <div style={{ display: "flex", alignContent: "center", position: "absolute", right: "24px", justifyContent: "space-between" }}>
@@ -379,13 +370,24 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
 
                 </div>
 
-                {/* I dont think we are doing sessions */}
-                {/* <div style={{color:styles.colors.colorWhite}}>Session {this.state.obj?.getJson().session}</div> */}
-                {/* /Description/ */}
+                <Link to={newLink} target='_blank' className='hover-btn' title={advLogText}
+                style={{
+                  ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px", 
+                  borderColor: "#00000000", boxShadow:"",
+                  color: styles.colors.color9, position:"absolute", bottom:17,
+                  backgroundColor: styles.colors.colorBlack + "b8",
+                  fontWeight: "600"
+                }}>
+
+                Adventure Log
+              </Link>
+
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", minWidth: "100%", }}>
                   <div id="campaignDesc"
                     style={{ width: "1px", height: "1px", userSelect: "none", opacity: "0%", }}>
                   </div>
+
+                  
                   {state.currentLore === undefined &&
                     <div style={{
                       display: "flex", flexDirection: "column", alignItems: "flex-end",

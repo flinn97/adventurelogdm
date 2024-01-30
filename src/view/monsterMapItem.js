@@ -79,8 +79,9 @@ export default class MonsterMapItem extends Component {
         condition._id = this.props.obj.getJson()._id + "c" + idService.createId();
         await state.opps.jsonPrepare({ addcondition: condition });
         await state.opps.run();
-      
 
+      let componentList = this.props.app.state.componentList;
+        await componentList.sortSelectedList("monster", "lastInit", true);
     }
 
   }
