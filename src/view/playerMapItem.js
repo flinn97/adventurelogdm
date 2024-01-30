@@ -231,9 +231,9 @@ export default class PlayerCharacterMapItem extends Component {
         /></div>)
         }
 
-
+{(window.innerWidth > 600) &&
   <div className='hover-container' style={{marginLeft:"0px"}}>
-    {obj?.getJson().isToken===true &&
+    {obj?.getJson().isToken===true && 
               (<TokenImage pic={obj?.getJson().picURL} width={width-8} app={app} colors={colors}/>)
               ||
               
@@ -271,7 +271,7 @@ export default class PlayerCharacterMapItem extends Component {
                                     }}
                                     
                                   /></div> 
-</div>
+</div>}
 
 
 
@@ -293,7 +293,7 @@ export default class PlayerCharacterMapItem extends Component {
                               
                            />
                           </div>
-
+                          {(window.innerWidth > 600) &&
                           <div title="Initiative Bonus" className='hover-btn'
                             style={{
                               display: "flex",
@@ -316,8 +316,8 @@ export default class PlayerCharacterMapItem extends Component {
                              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",}}
                             />
 
-                          </div>
-                          
+                          </div>}
+                          {(window.innerWidth > 600) &&
                           <div title="AC" className='hover-btn'
                             style={{
                               display: "flex",
@@ -342,8 +342,8 @@ export default class PlayerCharacterMapItem extends Component {
                               }}
                            style={{ alignSelf: "center", fontSize: fontSize[1], }}/>
 
-                          </div>
-
+                          </div>}
+                          {(window.innerWidth > 600) &&
                           <div title="Max HP" className='hover-btn'
                             style={{
                               display: "flex",
@@ -365,7 +365,7 @@ export default class PlayerCharacterMapItem extends Component {
                              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>
 
                            
-                          </div>
+                          </div>}
 
                          
                         {/* {{ACTIVE CONDITIONS}} */}

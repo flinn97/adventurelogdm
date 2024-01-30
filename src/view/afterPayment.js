@@ -128,7 +128,7 @@ export default class AfterPayment extends Component {
                         color: 'white', height: "fit-content", position: "absolute", top: 288, justifySelf: "center", cursor: "pointer",
                         zIndex: 8000, textDecoration: "underline 1px " + styles.colors.color9, textUnderlineOffset: "2.8px",
                         fontSize: styles.fonts.fontSmall
-                    }}>Click here if the page doesnt load</Link>
+                    }}> Click here if the page doesnt load </Link>
                 }
             </div>
 
