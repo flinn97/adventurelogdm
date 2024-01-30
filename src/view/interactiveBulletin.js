@@ -430,26 +430,38 @@ export default class InteractiveBulletin extends Component {
                                         style={{
                                           margin: "2px", height: '28px', width: "28px", position: "relative",
                                           backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "",
-                                          filter: imgSrc !== image16 ? pin.getJson().colorFilter : "",
+                                          filter: imgSrc !== image16 ? pin.getJson().colorFilter : "", transform:imgSrc===image16&& "rotate(45deg)",
                                           borderRadius: "50%"
                                         }}
                                         className='hover-divInt'
                                         key={index}
                                         src={imgSrc}
-                                        onClick={(item, data) => {
+                                        onClick={async (item, data) => {
                                           
 
                                           if (imgSrc !== image16) {
                                             //
                                             let comp = pin;
-                                            comp.setCompState({
+                                            await comp.setCompState({
                                               iconImage: imgSrc
                                             });
                                             state.opps.cleanPrepareRun({ update: comp });
                                             // pin.pushIcon(state, imgSrc);
                                           }
+                                          else{
+
+                                            let pin1 = pin;
+                                            if(pin1.getJson().referencePin){
+                                              let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
+                                              await state.opps.cleanPrepare({del:l1});
+                                            }
+                        
+                                            await state.opps.prepareRun({ del: pin1 });
+                        
+                                            await dispatch({ popupSwitch: "", showPinMap:false })
+                                          }
                                         }} />
-                                      {imgSrc === image16 &&
+                                      {/* {imgSrc === image16 &&
                                         <Upload
                                           className='hover-divInt'
                                           app={app} buttonStyle={{ width: "28px", }}
@@ -466,7 +478,7 @@ export default class InteractiveBulletin extends Component {
                                           
 
                                         />
-                                      }
+                                      } */}
                                     </div>}
 
                                   {(typeof imgSrc === 'string' && imgSrc.startsWith('#')) &&

@@ -131,7 +131,7 @@ export default class LoreSearch extends Component {
 
 
 
-    let loreList = componentList.getList("lore", id, listTerm).sort((a, b) => a.getJson().index - b.getJson().index).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
+    let loreList = componentList.getList("lore", id, listTerm).filter(loreItem => loreItem.getJson().name && loreItem.getJson().name !== "")
       .filter(lore => !lore.getJson().parentLore).filter((obj) => { return this.checkToShowRef(obj) })
       .filter(loreItem => {
         const name = loreItem?.getJson()?.name;
@@ -139,7 +139,7 @@ export default class LoreSearch extends Component {
           return name && name !== "";
         }
         return name && name !== "" && name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-      })
+      }).sort((a, b) => a.getJson().index - b.getJson().index)
 
     let loreListAB = this.state.sortTerm === "name" ? loreList.sort((a, b) => {
       const nameA = a.getJson().name;
@@ -270,7 +270,7 @@ export default class LoreSearch extends Component {
                   borderRadius: "11px",
                   width: "420px",
                   padding: '8px',
-                  marginRight:"115px",
+                  marginRight: "115px",
                   fontSize: '16px',
                 }}
               />
@@ -343,13 +343,14 @@ export default class LoreSearch extends Component {
                         <div
                           // className='hand' 
                           style={{
-                            color: "white", width: "fit-content", zIndex: "20",background: styles.colors.color1,
-                            fontSize: styles.fonts.fontSmallest, userSelect: "none", marginBottom: "-8px", display:"flex", flexDirection:"row",
+                            color: "white", width: "fit-content", zIndex: "20", background: styles.colors.color1,
+                            fontSize: styles.fonts.fontSmallest, userSelect: "none", marginBottom: "-8px", display: "flex", flexDirection: "row",
                             cursor: this.state.isGrabbing ? "grabbing" : "grab"
                           }}>
 
                           {/* left ARRRo */}
-                          <div title={"Reorder Lore Left"} onClick={async () => {
+                          <div title={"Reorder Lore Left"} onClick={async (e) => {
+                            e.stopPropagation();
 
                             let loreList = componentList.getList("lore", id, listTerm);
                             await loreIndexService.reOrganizeLore(loreList, state.opps);
@@ -357,29 +358,33 @@ export default class LoreSearch extends Component {
                             await loreIndexService.sortComponentList(state.componentList);
                             dispatch({})
                           }} className='hover-div' style={{
-                            
+
                             cursor: "pointer",
-                            marginLeft: "-12px",
                             borderTop: '11px solid transparent',
                             borderBottom: '11px solid transparent',
                             borderRight: '11px solid #D1BB0A',
                           }}>
 
                             {/* right ARRRo */}
-                            <div className='hover-div' title={"Reorder Lore Right"} onClick={async () => {
-
-                              let loreList = componentList.getList("lore", id, listTerm);
+                            <div className='hover-div' title={"Reorder Lore Right"} onClick={async (e) => {
+                              debugger
+                              e.stopPropagation();
+                              let loreList = await componentList.getList("lore", id, listTerm);
                               await loreIndexService.reOrganizeLore(loreList, state.opps);
-                              await loreIndexService.moveUp(loreItem, loreList, state.opps);
+                              console.log(loreList.map(item => { return { ...item.getJson() } }));
+
+                              let list = await loreIndexService.moveUp(loreItem, loreList, state.opps);
+                              console.log(list.map(item => { return { ...item.getJson() } }));
+
                               await loreIndexService.sortComponentList(state.componentList);
                               dispatch({})
                             }} style={{
-                              marginTop:"-11px",
-                            cursor: "pointer",
-                            marginLeft: "18px",
-                            borderTop: '11px solid transparent',
-                            borderBottom: '11px solid transparent',
-                            borderLeft: '11px solid #D1BB0A',
+                              marginTop: "-11px",
+                              cursor: "pointer",
+                              marginLeft: "18px",
+                              borderTop: '11px solid transparent',
+                              borderBottom: '11px solid transparent',
+                              borderLeft: '11px solid #D1BB0A',
                             }}></div>
 
 

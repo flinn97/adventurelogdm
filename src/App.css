@@ -396,8 +396,10 @@ fontNormal {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'serif';
   letter-spacing: .04rem;
+  font-size: calc(1rem + 0.25vw);
+  font-family: "Inria"; 
+  font-size: calc(0.75rem + 0.35vw);
 }
 
 .background {

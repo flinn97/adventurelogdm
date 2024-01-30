@@ -319,11 +319,16 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
                 <ParentFormComponent app={app} name="name" obj={state.currentLore}
                   theme={"adventureLog"}
                   callbackFunc={(arr)=>{
+                    debugger
                     let L1 = arr[0];
                     let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
                     referenceList = referenceList.map(obj => obj.getJson()._id);
                     let pinList = state.componentList.getList("pin");
                     pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                    let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
+                    if(lPin){
+                      pinList.push(lPin)
+                    }
                     for(let p of pinList){
                       p.setCompState({name: L1.getJson().name})
                     }

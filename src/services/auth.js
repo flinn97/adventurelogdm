@@ -9,7 +9,19 @@ import PlayerHome from "../view/pages/playerHome.js";
 let imageQuality = .5;
 class Auth {
     urlEnpoint = "GMS"
-
+    sendForgotPasswordChange(email) {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+    }
     async getCurrentUser() {
         
         let item = localStorage.getItem("user");
@@ -108,7 +120,7 @@ class Auth {
             
             let comps1 = await onSnapshot(components, async (querySnapshot) => {
                 //
-
+                
                 rawData1 = [];
     
     
