@@ -1003,7 +1003,7 @@ class MainContent extends Component {
                     display: "flex", width: "210px", borderRadius: '11px', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
                     alignSelf: "flex-end", alignItems: "center", marginRight: "22px", padding:"8px 8px",
                     borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
-                    marginTop: "8.24vh", marginBottom: "-85px", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
+                    marginTop: "8.24vh", marginBottom: "-81px", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
                     
 
@@ -1039,7 +1039,7 @@ class MainContent extends Component {
                 <RunButton app={app} text="Save"
 
                   runFunc={async (arr) => {
-
+                    try {
                     let lore = arr[0];
                     let check;
                     if (state.currentPin) {
@@ -1092,10 +1092,18 @@ class MainContent extends Component {
                     }
                     
 
-
-                    this.setState({ showSaved: true });
-                    setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
-                    this.setState({ saveClicked: true })
+                    console.log("All operations completed. Showing 'Saved' message.");
+                    
+                    this.setState({ showSaved: true, saveClicked: true  });
+                    setTimeout(
+                      () => this.setState({ showSaved: false }), 
+                      2000
+                      ); 
+                    
+                  }catch (error) {
+                    console.error("Error in save operation:", error);
+                    // Handle error appropriately
+                  }
                   }} />
 
                 {this.state.showSaved && (
