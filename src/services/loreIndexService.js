@@ -38,13 +38,11 @@ class LoreIndexService {
     }
     else{
       let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
-      changeLore.setCompState({index:index});
-      lore.setCompState({index:changeIndex});
+      await changeLore.setCompState({index:index});
+      await lore.setCompState({index:changeIndex});
       await opps.cleanPrepareRun({update:[changeLore, lore]});
+      return loreList
     }
-    
-    // this.reOrganizeLore(loreList, opps);
-
   }
   
   /**
@@ -90,16 +88,18 @@ class LoreIndexService {
     }
     else{
       let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
-      changeLore.setCompState({index:index});
-      lore.setCompState({index:changeIndex});
+      await changeLore.setCompState({index:index});
+      await lore.setCompState({index:changeIndex});
+      debugger
       await opps.cleanPrepareRun({update:[changeLore, lore]});
+      // return loreList
     }
 
 
   }
 
   async insertAtBeginning(lore, loreList, run){
-    //debugger
+    //
     loreList = loreList.filter(obj => obj!==lore);
     let opps = lore.getOperationsFactory();
     let parentLore = loreList.find(parent=>parent.getJson().parentLore===true);
@@ -134,7 +134,7 @@ class LoreIndexService {
     for(let lore of loreList){
 
 
-      lore.setCompState({index:i});
+      await lore.setCompState({index:i});
       i++;
       
     }

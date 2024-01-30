@@ -22,7 +22,7 @@ export default class Register extends Component {
     }
 
     async componentDidMount() {
-        debugger
+        
         let app = this.props.app;
         let state = app.state;
         let dispatch = app.dispatch;
@@ -37,7 +37,7 @@ export default class Register extends Component {
     ///TAYLOR
     async validatePassword(password) {
         console.log(password)
-        debugger
+        
         const hasUpperCase = /[A-Z]/.test(password);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 

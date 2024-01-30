@@ -38,6 +38,12 @@ export default class ComponentListInterface{
         }
         return this.operationsFactory;
     }
+    getNewOperationsFactory(){
+
+            let opps= new OppsFactory(this);
+
+        return opps;
+    }
     getUpdater(){
         
         if(this.updater===undefined){

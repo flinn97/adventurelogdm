@@ -19,6 +19,7 @@ export default class ListTree extends Component {
   constructor(props) {
     
     super(props);
+    this.expanse=0;
     this.state = {
       obj: undefined,
       pic: undefined,
@@ -55,6 +56,10 @@ this.setState({})
 
   }
 
+  setExpanse(arr){
+    this.expanse=[...arr]
+  }
+
  
 
 
@@ -80,7 +85,6 @@ this.setState({})
     
     let bord = "solid 1px "+styles.colors.color3+"54";
     let bord1 = (this.props.count===0)?"expandingTree":"expandingTreeColorless";
-    
 
     let cells=  
   
@@ -91,13 +95,20 @@ this.setState({})
       {custom:ExpandTreeArrow, props:{app:app, c:count,
         
       }},
-      {custom:ListTreeInner, props:{app:app, c:count,
+    {custom:ListTreeInner, props:{app:app, c:count, setExpanse:this.props.setExpanse?this.props.setExpanse:this.setExpanse.bind(this), expanse:this.props.expanse?this.props.expanse:this.expanse, 
         
-      }},
+      }
+    }
+    ,
       
     ]
 
     const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
+    if(state.currentExpanse===undefined || state.currentExpanse?.length===0){
+      this.expanse=1;
+      
+
+    }
     // console.log(isHidden)
 
 
@@ -108,7 +119,7 @@ this.setState({})
              <div  style={{flexDirection:"column", display:"flex",textDecoration:"none",
              alignItems:"left"}} >
 
-                          {!isHidden &&
+                          {!isHidden &&this.expanse===1 &&
                           <Link to={/campaign/+CC.getJson()._id}
                           className="hover-btn-highlight" 
                           style={{...styles.buttons.buttonAdd, marginBottom:"15px", padding:"2px", fontSize:styles.fonts.fontNormal, background:"", boxShadow:"",

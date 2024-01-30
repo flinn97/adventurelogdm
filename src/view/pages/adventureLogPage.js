@@ -58,7 +58,7 @@ export default class AdventureLogPage extends Component {
 
     let styles = state.styles;
     let compList = state.componentList;
-    debugger
+    
     let idSegment = toolService.getIdFromURL(true);
     let campaigns = compList.getList("campaign", idSegment, "_id");
     // let currentCampId = campaigns ? campaigns[0].getJson()._id : "";

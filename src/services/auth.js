@@ -9,7 +9,19 @@ import PlayerHome from "../view/pages/playerHome.js";
 let imageQuality = .5;
 class Auth {
     urlEnpoint = "GMS"
-
+    sendForgotPasswordChange(email) {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+    }
     async getCurrentUser() {
         
         let item = localStorage.getItem("user");
@@ -107,8 +119,8 @@ class Auth {
         else{
             
             let comps1 = await onSnapshot(components, async (querySnapshot) => {
-                //debugger
-
+                //
+                
                 rawData1 = [];
     
     
@@ -447,7 +459,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        debugger
+        
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -506,7 +518,7 @@ class Auth {
         }
         
         if (dispatch) {
-            debugger
+            
 
             dispatch({ dispatchComplete: true, data: obj })
 

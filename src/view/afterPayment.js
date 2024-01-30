@@ -90,7 +90,7 @@ export default class AfterPayment extends Component {
 
     componentDidUpdate() {
         if (this.props.app.state.dispatchComplete) {
-            debugger
+            
             this.props.app.dispatch({ dispatchComplete: false });
             window.location.href = "./"
         }

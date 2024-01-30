@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "gamemanagementsuite",
     "public": "build",
     "ignore": [
       "firebase.json",

@@ -25,7 +25,7 @@ import auth from '../services/auth';
 import TokenImage from './tokenImage';
 import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
-
+import { convertToMarketplace2 } from '../services/conversionService';
 import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
@@ -219,6 +219,9 @@ export default class CampaignEditor extends Component {
     let parentItem = state.componentList.getComponent("lore", pId, "_id");
 
     return (<div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
+      {/* <div style={{color:"white"}} onClick={()=>{
+        convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
+      }}>Campaign Editor</div> */}
       {/* HOMEPAGE */}
       {this.state.start ? (
         <div style={{
@@ -316,11 +319,16 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
                 <ParentFormComponent app={app} name="name" obj={state.currentLore}
                   theme={"adventureLog"}
                   callbackFunc={(arr)=>{
+                    debugger
                     let L1 = arr[0];
                     let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
                     referenceList = referenceList.map(obj => obj.getJson()._id);
                     let pinList = state.componentList.getList("pin");
                     pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                    let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
+                    if(lPin){
+                      pinList.push(lPin)
+                    }
                     for(let p of pinList){
                       p.setCompState({name: L1.getJson().name})
                     }

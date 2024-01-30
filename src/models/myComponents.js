@@ -193,18 +193,18 @@ class Pin extends componentBase {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
         this.json.iconImage = pic;
-//debugger
+//
         await this.pushIcon(state, this.json.picURL, this.json.campaignId )
     }
 
     async pushIcon(state, imgSrc, id) {
-        debugger
+        
         const compList = await state.componentList.getList("icon", id, "campaignId");
         
         let pic = imgSrc;
         let json = {...this.json, picURL:pic, type: "icon", color:"", date:"", referencePin:"", _id:undefined};
 
-    /// I ran through //debugger and everything looked fine
+    /// I ran through // and everything looked fine
         if (compList.length > 29) {
             // Delete the first item in the array
             // keeps recent uploads to a min

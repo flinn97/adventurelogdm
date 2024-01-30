@@ -18,8 +18,8 @@ export default class NoteMapItem extends Component {
   renderNotes(){
     //
     let body = this.props.obj.getJson().text.substring(0, 100)+'...'
-    let index = parseInt(body.indexOf("<br>"))
-      body = index!==-1? body.substring(0, index): body; 
+    // let index = parseInt(body.indexOf("<br>"))
+      // body = index!==-1? body.substring(0, index): body; 
     
     
     let bodyText = document.getElementById(this.props.obj.getJson()._id+"textBody");
@@ -64,13 +64,13 @@ export default class NoteMapItem extends Component {
         await dispatch({currentComponent: undefined});
         dispatch({currentComponent: this.props.obj}); 
         }}>
-      <div style={{width:"100%", height:"3.5em",padding:"4px 6px", backgroundColor:highlightBackground, }}
+      <div style={{width:"100%", padding:"4px 6px", backgroundColor:highlightBackground, }}
       >
       <div> 
       <div style={{marginTop:"2px",
     fontSize: styles.fonts.fontSmall, 
     color: styles.colors.color3, 
-    width: "17vw",
+    width: "17vw", 
     whiteSpace: "nowrap", 
     overflow: "hidden",   
     textOverflow: "ellipsis"}}>
@@ -79,10 +79,9 @@ export default class NoteMapItem extends Component {
 
               <div id={this.props.obj.getJson()._id+"textBody"}
               style={{ marginBottom: "2px", 
-              fontSize: styles.fonts.fontSmallest, 
-              color: styles.colors.colorWhite, lineHeight:"1em", maxHeight:"3.5em",
+              color: styles.colors.colorWhite, lineHeight:"1em", 
               width: "17vw", wordWrap:"break-word",
-              overflow:"hidden"
+              
                 }}>
           
                 </div>

@@ -122,7 +122,7 @@ class MainContent extends Component {
   }
 
   async linkLore(item, l, lore, pin) {
-    //debugger
+    //
     let app = this.props.app;
     let state = app.state;
     let componentList = state.componentList;
@@ -148,7 +148,8 @@ class MainContent extends Component {
       });
 
     }
-    await state.opps.cleanPrepareRun({ addlore: lore, update: pin });
+    debugger
+    await state.opps.cleanPrepareRun(pin?{ addlore: lore, update: pin }:{ addlore: lore } );
   }
 
   async moveLore(item) {
@@ -341,7 +342,63 @@ class MainContent extends Component {
                   background: styles.colors.color8 + "04", marginBottom: "14px",
                   justifyContent: "center", border: "1px solid " + styles.colors.color8, padding: "4px 8px",
                   color: styles.colors.color3, fontSize: styles.fonts.fontSmallest,
-                }} onClick={() => {
+                }} onClick={async () => {
+                  
+                  let lore = state.currentComponent;
+                    let check;
+                    if (state.currentPin) {
+                      //
+                      let pin = state.currentPin;
+
+                      if (lore.getJson().name === "" || lore.getJson().name === undefined) {
+                        lore.setCompState({ name: pin.getJson().name });
+                      }
+
+
+                      pin.setCompState({
+                        loreId: lore.getJson()._id,
+                        name: lore.getJson().name,
+                      });
+
+                      let reg = state.opps.getUpdater("add");
+                      check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                      await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
+
+                      await state.opps.prepareRun({ update: pin });
+                    } else {
+
+                      check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                      await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                    }
+
+                    if (lore) {
+                      //
+                      let parentId = Object.keys(lore.getJson().parentId,)[0];
+                      let otherChildren = state.componentList.getList("lore", parentId, "parentId");
+                      if (!check) {
+                        await loreIndexService.insertAtBeginning(lore, otherChildren);
+
+                      }
+                    }
+                    if(check){
+                      let L1 = lore;
+                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                      referenceList = referenceList.map(obj => obj.getJson()._id);
+                      let pinList = state.componentList.getList("pin");
+                      pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                      for(let p of pinList){
+                        p.setCompState({name: L1.getJson().name})
+                      }
+                      state.opps.cleanPrepareRun({update: [L1, ...pinList]})
+                    }
+                    
+
+
+                    this.setState({ showSaved: true });
+                    setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
+                    this.setState({ saveClicked: true })
                   this.setState({ showFindEncounter: false, showFindImage: false, showIcon: true, })
                 }}>
                 Change
@@ -584,7 +641,62 @@ class MainContent extends Component {
                     }}
                       title="Find an existing encounter to add to this lore.
             This will create a COPY."
-                      onClick={() => {
+                      onClick={async () => {
+                        let lore = state.currentComponent;
+                    let check;
+                    if (state.currentPin) {
+                      //
+                      let pin = state.currentPin;
+
+                      if (lore.getJson().name === "" || lore.getJson().name === undefined) {
+                        lore.setCompState({ name: pin.getJson().name });
+                      }
+
+
+                      pin.setCompState({
+                        loreId: lore.getJson()._id,
+                        name: lore.getJson().name,
+                      });
+
+                      let reg = state.opps.getUpdater("add");
+                      check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                      await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
+
+                      await state.opps.prepareRun({ update: pin });
+                    } else {
+
+                      check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                      await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                    }
+
+                    if (lore) {
+                      //
+                      let parentId = Object.keys(lore.getJson().parentId,)[0];
+                      let otherChildren = state.componentList.getList("lore", parentId, "parentId");
+                      if (!check) {
+                        await loreIndexService.insertAtBeginning(lore, otherChildren);
+
+                      }
+                    }
+                    if(check){
+                      let L1 = lore;
+                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                      referenceList = referenceList.map(obj => obj.getJson()._id);
+                      let pinList = state.componentList.getList("pin");
+                      pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                      for(let p of pinList){
+                        p.setCompState({name: L1.getJson().name})
+                      }
+                      state.opps.cleanPrepareRun({update: [L1, ...pinList]})
+                    }
+                    
+
+
+                    this.setState({ showSaved: true });
+                    setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
+                    this.setState({ saveClicked: true })
                         this.setState({ showFindEncounter: true })
                       }}>
                       Find Encounter
@@ -755,7 +867,63 @@ class MainContent extends Component {
                     <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft:"22px"}}>
 
                       <Upload text="+ Upload"
+                      updateMap={async ()=>{
+                        let lore = state.currentComponent;
+                    let check;
+                    if (state.currentPin) {
+                      //
+                      let pin = state.currentPin;
 
+                      if (lore.getJson().name === "" || lore.getJson().name === undefined) {
+                        lore.setCompState({ name: pin.getJson().name });
+                      }
+
+
+                      pin.setCompState({
+                        loreId: lore.getJson()._id,
+                        name: lore.getJson().name,
+                      });
+
+                      let reg = state.opps.getUpdater("add");
+                      check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                      await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
+
+                      await state.opps.prepareRun({ update: pin });
+                    } else {
+
+                      check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                      await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                    }
+
+                    if (lore) {
+                      //
+                      let parentId = Object.keys(lore.getJson().parentId,)[0];
+                      let otherChildren = state.componentList.getList("lore", parentId, "parentId");
+                      if (!check) {
+                        await loreIndexService.insertAtBeginning(lore, otherChildren);
+
+                      }
+                    }
+                    if(check){
+                      let L1 = lore;
+                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                      referenceList = referenceList.map(obj => obj.getJson()._id);
+                      let pinList = state.componentList.getList("pin");
+                      pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
+                      for(let p of pinList){
+                        p.setCompState({name: L1.getJson().name})
+                      }
+                      state.opps.cleanPrepareRun({update: [L1, ...pinList]})
+                    }
+                    
+
+
+                    this.setState({ showSaved: true });
+                    setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
+                    this.setState({ saveClicked: true })
+                      }}
                         prepareOnChange={{
                           name: "image", json: {
                             loreId: state.currentComponent.getJson()._id,
@@ -837,7 +1005,7 @@ class MainContent extends Component {
                     borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
                     marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
-                    debugger
+                    
 
                     let pin1 = state.currentPin;
                     if(pin1.getJson().referencePin){
@@ -875,7 +1043,7 @@ class MainContent extends Component {
                     let lore = arr[0];
                     let check;
                     if (state.currentPin) {
-                      //debugger
+                      //
                       let pin = state.currentPin;
 
                       if (lore.getJson().name === "" || lore.getJson().name === undefined) {
@@ -902,7 +1070,7 @@ class MainContent extends Component {
                     }
 
                     if (lore) {
-                      //debugger
+                      //
                       let parentId = Object.keys(lore.getJson().parentId,)[0];
                       let otherChildren = state.componentList.getList("lore", parentId, "parentId");
                       if (!check) {
@@ -917,9 +1085,10 @@ class MainContent extends Component {
                       let pinList = state.componentList.getList("pin");
                       pinList = pinList.filter(pin=> referenceList.includes(pin.getJson().loreId));
                       for(let p of pinList){
-                        p.setCompState({name: L1.getJson().name})
+                        await p.setCompState({name: L1.getJson().name})
                       }
-                      state.opps.cleanPrepareRun({update: [L1, ...pinList]})
+                      console.log(L1);
+                      await state.opps.cleanPrepareRun({update: [L1, ...pinList]})
                     }
                     
 
@@ -1124,7 +1293,7 @@ class MainContent extends Component {
                       ))
                   }
                   {
-                    filteredLore.length > this.state.loreToShow &&
+                    filteredLore.filter(obj => obj.getJson().topLevel === false).filter(obj => obj.getJson().reference === false).length > this.state.loreToShow &&
                     <div className="hover-btn-highlight"
                       onClick={() =>
                         this.setState(prevState => ({ loreToShow: prevState.loreToShow + (filteredLore.length - this.state.loreToShow) }))}
@@ -1137,7 +1306,7 @@ class MainContent extends Component {
                       <div
                         style={{ display: "flex", position: "relative", }}>
 
-                        Show {filteredLore.length - this.state.loreToShow} more
+                        Show {filteredLore.filter(obj => obj.getJson().topLevel === false).filter(obj => obj.getJson().reference === false).length - this.state.loreToShow} more
 
                       </div>
                       <div style={{

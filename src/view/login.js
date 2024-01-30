@@ -30,7 +30,7 @@ export default class Login extends Component {
 
 
     async handleSubmission() {
-        debugger
+
 
         let user = await authService.login(this.state.email, this.state.password, this.props.app.state.componentList, this.props.app.dispatch);
         if (user.error) {
@@ -79,19 +79,19 @@ export default class Login extends Component {
                             fontSize: "1rem", border: "1px solid " + styles.colors.color8,
                             borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
                             alignItems: "left", textAlign: "left", justifyContent: "center",
-                        }}  id="pwd" onChange={this.handleChange} name="email" />
+                        }} id="pwd" onChange={this.handleChange} name="email" />
 
 
-                   
 
 
-                        <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Password</div>
-                        <input autoComplete='off' style={{
-                            width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
-                            fontSize: "1rem", border: "1px solid " + styles.colors.color8,
-                            borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
-                            alignItems: "left", textAlign: "left", justifyContent: "center",
-                        }} type="password" id="pwd" onChange={this.handleChange} name="password" />
+                        {!this.state.forgot && <>
+                            <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Password</div>
+                            <input autoComplete='off' style={{
+                                width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
+                                fontSize: "1rem", border: "1px solid " + styles.colors.color8,
+                                borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
+                                alignItems: "left", textAlign: "left", justifyContent: "center",
+                            }} type="password" id="pwd" onChange={this.handleChange} name="password" /></>}
 
 
                     </div>
@@ -108,8 +108,17 @@ export default class Login extends Component {
                                 ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "155px", border: "1px solid " + styles.colors.color8,
                                 color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSubheader1,
                             }}
-                            class="hover-btn" onClick={this.handleSubmission}>
-                            Login</button>
+                            class="hover-btn" onClick={() => { 
+                                if(!this.state.forgot){
+                                    this.handleSubmission()
+                             }
+                             else{
+                                this.setState({errorMessage:"An email was sent to your account."});
+                                authService.sendForgotPasswordChange(this.state.email);
+                             }
+                              }}>
+                            {this.state.forgot ? ("Submit") : ("Login")}</button>
+
 
 
                         <div
@@ -124,7 +133,20 @@ export default class Login extends Component {
                         <Link style={{
                             ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
                             color: styles?.colors?.colorWhite + "98", fontSize: styles?.fonts?.fontNormal,
-                        }} to="../register">Register</Link></div>
+                        }} to="../register">Register</Link>
+
+                        {this.state.forgot ?(<div onClick={()=>{this.setState({forgot:false})}} style={{
+                                ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px", 
+                                color: styles?.colors?.colorWhite + "98", fontSize: styles?.fonts?.fontNormal,
+                            }} >Back</div>):(
+                            <div onClick={() => {
+                                this.setState({ forgot: true })
+                            }} style={{
+                                ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px", 
+                                color: styles?.colors?.colorWhite + "98", fontSize: "14px",
+                            }}>Forgot Password?</div>)}
+
+                    </div>
                 </div>
 
 

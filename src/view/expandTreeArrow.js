@@ -39,13 +39,13 @@ render() {
 
   return(
     <div>
-      {(name) &&
+      {(name) && 
     <div  className="hover-btn" title={"Open"} style={{ 
       cursor: l!==0?"pointer":"", fontSize:styles.fonts.fontSmallest, textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
     alignContent:"stretch",
     marginBottom:l===0?"5px":"11px",}}
     onClick={() => {
-      
+      debugger
       this.setState({ expanded: !this.state.expanded });
       
       let r = state.currentExpanse ? state.currentExpanse : [];
