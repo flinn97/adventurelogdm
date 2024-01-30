@@ -261,6 +261,7 @@ class ParentFormComponent extends Component {
          types={
             text: <InputFormComponent 
             doesMath={this.props.doesMath}
+            onFocus={this.props.onFocus}
             rows={this.props.rows}
             cols={this.props.cols}
             objDispatch={this.objDispatch}
@@ -305,7 +306,7 @@ class ParentFormComponent extends Component {
             />,
 
             checkbox: <CheckBox 
-            
+            onFocus={this.props.onFocus}
             objDispatch={this.objDispatch}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
@@ -330,7 +331,7 @@ class ParentFormComponent extends Component {
             requiredMessage={this.props.requiredMessage}
             />,
             switch: <SwitchComponent 
-           
+            onFocus={this.props.onFocus}
             objDispatch={this.objDispatch}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
@@ -349,7 +350,7 @@ class ParentFormComponent extends Component {
             requiredMessage={this.props.requiredMessage}
             />,
             range: <RangeComponent 
-           
+            onFocus={this.props.onFocus}
             objDispatch={this.objDispatch}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
@@ -368,7 +369,7 @@ class ParentFormComponent extends Component {
             requiredMessage={this.props.requiredMessage}
             />,
             radio: <RadioComponent 
-           
+            onFocus={this.props.onFocus}
             objDispatch={this.objDispatch}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
@@ -388,6 +389,7 @@ class ParentFormComponent extends Component {
             requiredMessage={this.props.requiredMessage}
             />,
             textArea:<TextBoxComponent 
+            onFocus={this.props.onFocus}
             rows={this.props.rows}
             theme={this.props.theme}
             objDispatch={this.objDispatch}
@@ -421,6 +423,7 @@ class ParentFormComponent extends Component {
 
 
             inputToTextArea:<InputToTextBoxComponent 
+            onFocus={this.props.onFocus}
             rows={this.props.rows}
             app={this.props.app}
             inputStartStyle={this.props.inputStartStyle}
@@ -453,6 +456,7 @@ class ParentFormComponent extends Component {
             requiredMessage={this.props.requiredMessage}/>,
 
             inputToRichEditor: <InputToRichTextComponent
+            onFocus={this.props.onFocus}
             rows={this.props.rows}
             theme={this.props.theme}
             objDispatch={this.objDispatch}

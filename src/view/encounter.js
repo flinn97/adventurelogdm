@@ -244,7 +244,6 @@ export default class Encounter extends Component {
       if (lastInit !== undefined && lastInit !== "" && lastInit !== "NaN") {
         const parsedInit = parseInt(lastInit);
         totalInitiative += parsedInit;
-        console.log(totalInitiative);
       }
     });
 
@@ -454,7 +453,7 @@ export default class Encounter extends Component {
                     await this.setState({ showMonsterMap: false });
 
                     //Taylor this is too slow
-                    
+
                     await componentList.sortSelectedList("monster", "lastInit", true);
                     await this.setState({ showMonsterMap: true });
                     dispatch({});
