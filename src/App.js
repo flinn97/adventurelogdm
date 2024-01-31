@@ -47,6 +47,7 @@ export default class App extends Component {
       // switchcase: "home",
       
       login : true,
+      showPinMap:true,
       
       
       operate: undefined,
@@ -64,8 +65,7 @@ export default class App extends Component {
 
       //THIS IS THE NAV MENU
       switchCase:[
-        {path:"/", comp:Home, name: "Home" },
-        {path: "/campaign", comp:Campaign, name: "Campaigns"},
+        {path:"/", comp:Campaign, name: "Campaigns" },
         ///Added Notes
         {path: "/notes", comp:Note, name: "Notes"},
         ///Added Marketplace
@@ -85,7 +85,9 @@ export default class App extends Component {
   async componentDidUpdate(props, state){
     if(this.state.backend){
      await this.setState({backend: false});
-     auth.dispatch(this.state.backendUpdate, this.state.email, undefined, this.state.backendReloader);
+     await this.state.componentList.sortSelectedList("lore", "index");
+     this.setState({});
+     auth.dispatch(this.state.backendUpdate, this.state.email, this.dispatch, this.state.backendReloader);
     }
     
     if(this.state.operate!==undefined){
@@ -158,12 +160,19 @@ handleChange = (event) => {
     }
     try{
     let user = await auth.getCurrentUser();
+    
     if(user){
+      
       user = JSON.parse(user);
       
       await auth.getuser(user.email, list, this.dispatch);
       
+      
       this.setState({popupSwitch:""})
+      await this.setState({start:true});
+
+
+
     
       
     }
@@ -203,6 +212,7 @@ handleChange = (event) => {
       
     />}
   </div>)}
+  
     </div>
   )}
 }

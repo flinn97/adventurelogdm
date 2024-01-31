@@ -9,6 +9,7 @@ import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import ConnectToCampaignButton from '../connectToCampaignbutton';
 import PlayerCharacterMapItem from '../playerMapItem';
 import ConnectToCampaignSwitch from '../connectToCampaignSwitch';
+import trash from '../../pics/trashStill.png';
 
 export default class PlayerHomeCard extends Component {
   constructor(props) {
@@ -96,8 +97,8 @@ class MainContent extends Component{
             
                     
                   <div title=' You can connect them to an adventure later'
-                  style = {{...styles.buttons.buttonAdd, marginTop:"22px", pointer:"cursor"}} onClick={()=>{
-                    //debugger
+                  style = {{...styles.buttons.buttonAdd, borderRadius:"11px",marginTop:"22px", pointer:"cursor"}} onClick={()=>{
+                    //
                    
                     let obj = {name:"", type:"monster", role:"player", isToken:true};
 
@@ -110,7 +111,18 @@ class MainContent extends Component{
                 
   <div className='scroller2'  style={{color:styles.colors.colorWhite+"99", marginTop:"45px", overflowX:"scroll"}}> 
   Your Characters:
-      <MapComponent app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
+      <MapComponent 
+      delOptions={{
+                  picURL: trash, warningMessage: "Delete this character (this is permanent)",
+                  textStyle: { fontSize: styles.fonts.fontSmallest, },
+                  style: {
+                    width: "35px", height: "35px", padding: "4px 2px",
+                    display: "flex", flexDirection: "row",
+                    alignItems: "center", borderRadius: "8px",
+                    justifyContent: "center"
+                  },
+                }}
+      app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
       cells={[{custom:PlayerCharacterMapItem, props:{app:app}}, "delete"]}
       theme={"selectByImageSmall"}
       

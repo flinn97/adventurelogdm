@@ -41,10 +41,10 @@ export default class ImageLogComponent extends Component {
     let colorList = colors.length>1?obj.getJson()?.colors:[styles.colors.colorWhite+"22"];
     let colorN = colors.length>1?2:0;
     
-   
+    let srcT = obj.getJson().src?obj.getJson().src:""
 
     return (
-      <div className="hover-img" title={"The GM sent this. "+obj.getJson().src} style={{ justifyContent:"center",  maxHeight:"650px",
+      <div className="hover-img" title={"The GM sent this. "+srcT} style={{ justifyContent:"center",  maxHeight:"650px",
       display:"flex", flexDirection:"center", padding:"12px", width:"100%", cursor:"pointer",
                   flexDirection:"column",
       }}>
@@ -58,9 +58,9 @@ export default class ImageLogComponent extends Component {
            maxWidth:"100%", borderRadius:"12px"}}/>
 
            {obj.getJson().src &&
-           <div style={{maxWidth:"100%", height:"100%", textAlign:"right",color:styles.colors.color8,fontSize:".85rem", overflow:"clip"}}
-           title={"The GM sent this. "+obj.getJson().src}
-           >{obj.getJson().src}
+           <div style={{maxWidth:"100%", height:"100%", textAlign:"right",color:styles.colors.color8,fontSize:".85rem", overflow:"clip", marginTop:"4px"}}
+           title={"The GM sent this. "+srcT}
+           >{srcT}
                   </div>
            }
       </div>

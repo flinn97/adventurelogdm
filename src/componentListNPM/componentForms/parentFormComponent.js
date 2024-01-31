@@ -206,6 +206,9 @@ class ParentFormComponent extends Component {
                     }
                     
     }
+    if (this.props.callbackFunc){
+        this.props.callbackFunc(this.state.obj)
+      }
       };
 
     /**
@@ -272,7 +275,7 @@ class ParentFormComponent extends Component {
             labelStyle={this.props.labelStyle}
             onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
             wrapperStyle={this.props.wrapperStyle}
-           
+            
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
@@ -493,8 +496,8 @@ class ParentFormComponent extends Component {
             cols={this.props.cols}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
-            
-            inputStyle={this.props.inputStyle}
+            linkLore={this.props.linkLore}
+            inputStyle={{...this.props.inputStyle, fontSize:""}}
             spellCheck={this.props.spellCheck}
             label={this.props.label}
             type={this.props.type? this.props.type: 'text'}

@@ -183,20 +183,24 @@ export default class Opps {
      * if this is a new type of component that has never been added before add a new array.
      * Otherwise add it to the current array
      */
-    setComponentsList(){
-        let comps = [...this.components];
-        let tempcomps={};
-        for(const key in comps){
-            let type = comps[key].getJson().type
-            if(Object.keys(tempcomps).includes(type)){
-                tempcomps[type]=[...tempcomps[type], comps[key]];
+        setComponentsList() {
+            let comps = [...this.components];
+            let tempcomps = {};
+            for (const key in comps) {
+                if (comps[key] && typeof comps[key].getJson === "function") {
+                    let type = comps[key].getJson().type;
+                    if (Object.keys(tempcomps).includes(type)) {
+                        tempcomps[type] = [...tempcomps[type], comps[key]];
+                    } else {
+                        tempcomps[type] = [comps[key]];
+                    }
+                } else {
+                    console.error('Invalid component detected in setComponentsList:', comps[key]);
+                    // Handle the invalid component scenario, throw an error
+                }
             }
-            else{
-                tempcomps[type]=[comps[key]]
-            }
+            this.componentsList = tempcomps;
         }
-        this.componentsList = tempcomps;
-    }
 
     /**
      * 
@@ -289,6 +293,9 @@ export default class Opps {
         this.components= [...arr];
         this.setComponentsList(); 
     }
+    setComponentList(list){
+        this.componentsList = list 
+    }
 
     setSelectedList(type, list){
         this.componentsList[type] = list;
@@ -318,10 +325,10 @@ export default class Opps {
             let list  = [...this.componentsList[type]];
             
             list = list.sort(function(a, b){
-                //debugger
+                //
                 //THIS MIGHT MAKE ORDER SWITCHING WEIRD
-                let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date.seconds: new Date(0);
-                let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date.seconds: new Date(0);
+                let aD = a.getJson().date||a.getJson().date!==""?a.getJson().date?.seconds: new Date(0);
+                let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
                 return reverse? 
                  (bD - aD)
                  : 

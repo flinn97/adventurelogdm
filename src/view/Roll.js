@@ -20,20 +20,17 @@ export default class Roll extends Component {
   }
 
 
-
   // // Clear method to delete the specific initiative
-  clearInitiative() {
+  async clearInitiative() {
     let obj = this.props.obj;
-
     if ((obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "")) {
-     this.setState({initiative: undefined});
-     obj.setCompState({lastInit:undefined});
-     
+      await obj.setCompState({lastInit:""});
+      this.setState({initiative: ""});
     }
   }
 
 
-  componentDidMount(){
+  async componentDidMount(){
     let obj = this.props.obj;
     
     if ((obj.getJson().lastInit !== undefined && obj.getJson().lastInit !== "")) {
@@ -55,7 +52,7 @@ export default class Roll extends Component {
 
    let state = app.state;
 
-   let initiativeBonus = parseInt(obj.getJson().initiative);
+   let initiativeBonus = obj.getJson().initiative?parseInt(obj.getJson().initiative):0;
    let totalInitiative = randomNumber + initiativeBonus;
    this.setState({initiative: totalInitiative });
    

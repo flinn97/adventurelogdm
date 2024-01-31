@@ -11,6 +11,8 @@ export default class ConnectToCampaignLink extends Component {
     }
   }
  
+  
+
 
 
   render() {
@@ -18,6 +20,8 @@ export default class ConnectToCampaignLink extends Component {
     let state = app.state;
     let dispatch= app.dispatch;
     let obj = this.props.obj
+
+    
 
     let styles =state.styles;
 

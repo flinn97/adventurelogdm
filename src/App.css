@@ -51,6 +51,10 @@ hovering:hover .hover {
   display: inline-block; /* Keeps the container size to the content */
 }
 
+.div{
+  color: white; background:none; font-family: "Inria" ; text-align:left; mix-blend-mode: luminosity;font-size: calc(0.75rem + 0.35vw);
+}
+
 /* Initially hide the div */
 .hover-div {
   display: none !important;
@@ -76,9 +80,11 @@ hovering:hover .hover {
 /* Initially hide the div */
 .hover-divInt {
   display: none;
+  
   position: absolute;
   top: 0;
   left: 0;
+  
   transition:all 0.3s ease; 
   /* Add other styling as needed */
 }
@@ -99,6 +105,14 @@ hovering:hover .hover {
   animation: slideAndFade 1.72s ease-out forwards;
 }
 
+input:autofill {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgb(31, 31, 31);
+}
+
+input:-webkit-autofill {
+  border: 1px solid rgb(31, 31, 31);
+}
 
 
 @keyframes slideAndFade {
@@ -203,6 +217,29 @@ hovering:hover .hover {
   transition: all 0.5s ease-in-out;
   /* filter: contrast(.89); */
 }
+
+        .hover-stacked:hover {
+          opacity: .99;
+        
+          filter: contrast(1.06);
+          border-radius: 11px;
+          
+          transition: all 0.5s ease-in-out;
+        }
+        .hover-stacked:active {
+          opacity: .82;
+          transform: scale(.99);
+          filter: contrast(1);
+          border-radius: 11px;
+          transition: all 0.5s ease-in-out;
+        }
+        .hover-stacked {
+          opacity: 1;
+          transition: all 0.5s ease-in-out;
+          /* filter: contrast(.89); */
+        }
+
+        
 
 .hover-bubble:hover {
   opacity: .99;
@@ -359,8 +396,10 @@ fontNormal {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'serif';
   letter-spacing: .04rem;
+  font-size: calc(1rem + 0.25vw);
+  font-family: "Inria"; 
+  font-size: calc(0.75rem + 0.35vw);
 }
 
 .background {

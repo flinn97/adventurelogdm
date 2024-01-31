@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "avaadventurelog",
+    "site": "gamemanagementsuite",
     "public": "build",
     "ignore": [
       "firebase.json",

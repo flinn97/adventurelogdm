@@ -57,14 +57,16 @@ export default class Upload extends Component {
         if (this.props.changePic){
             await this.props.changePic(this.state.pic);}
                 
-            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this));
+            await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this), this.props.quality);
         };
 
 
     async handleSubmission() {
         
-        let component = this.state.obj
-        await component.getPicSrc(this.state.path)
+        let component = this.state.obj;
+        await component.getPicSrc(this.state.path, this.props.app.state);
+
+
         if (!this.props.skipUpdate) {
             if (this.props.update) {
                 this.props.app.state.componentList.getOperationsFactory().cleanPrepareRun({ update: component })
@@ -76,7 +78,10 @@ export default class Upload extends Component {
             await this.props.app.state.opps.run();
         }
 
-        this.props.updateMap(component)
+        // Check if updateMap prop is a function before calling it
+    if (typeof this.props.updateMap === 'function') {
+        await this.props.updateMap(component);
+    }
 
     };
 
@@ -106,7 +111,7 @@ export default class Upload extends Component {
 
         return (
 
-            <div style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
+            <div className='hover-btn' style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
             borderRadius:"11px", fontWeight:"550", width:"fit-content"  }}>
 
                 {this.props.text!=="imageOnly" &&
@@ -115,10 +120,13 @@ export default class Upload extends Component {
                     <input id="file-upload" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
                         style={{ ...styles.buttons.buttonAdd,
                             position: 'absolute', // Set position to absolute to make it fill the entire label
-                            top: 0, 
-                            left: 0, cursor:"pointer",
-                            
-                            opacity: 0, 
+                            top: 0,
+                            left: 0, 
+                            cursor:"pointer",
+                            padding:this.props.difWidth?this.props.difWidth:"",
+                            width:this.props.difWidth?this.props.difWidth:"",
+                            height:this.props.difWidth?this.props.difWidth:"",
+                            opacity:0, 
                         }} 
                         size="6" 
                         text={text}

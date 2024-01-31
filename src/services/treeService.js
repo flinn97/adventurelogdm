@@ -90,53 +90,67 @@ class TreeService {
     * @param type if lore then => loreId, if campaign => campaignId
     */
     async convertToMarketplace2(lore, owner) {
+        
         if (!lore.purchasedItem) {
             //set preliminaries
             let list = [];
             //create a new mpi from campaing
-            let mpiJson = { ...lore, _id: Math.floor(Math.random()*100000).toString(), purchasedItem: true, owner: owner, ogId: lore._id, campaignId: "",parentId: "", topItem:true, library:true }
+            let mpiJson = { ...lore, _id: Math.floor(Math.random() * 10000000).toString(), purchasedItem: true, owner: owner, ogRef: lore._id, campaignId: "", parentId: "", topItem: true, library: true }
             //get mpi from updater
             list.push(mpiJson);
+            const components = await query(collection(db, "GMSusers", "GMSAPP", "components"), where("type", '==', "lore"), where("campaignId", "==", lore._id));
+            let comps = await getDocs(components);
+            let allLoreList = comps.docs.map(doc => doc.data());
+            let refList =[];
             /**
      *  Recurse the tree and prepare marketplace items.
      * @param {*} child 
      * @param {*} componentList 
      */
-            recurseLoreTree2 = async (child) => {
+            const recurseLoreTree2 = async (child) => {
                 //get all lores that are children of the lore passed in for the param. from the backend
-                let loreList = [];
-                firebase.getList("lore", child._id, "parentId");
-                const components = await query(collection(db, "GMSusers", "GMSAPP", "components"), where(type, '==', "lore"), where("parentId", "==", child._id));
-                let comps = await getDocs(components);
-                loreList = [...comps.docs.data()];
-                //take the original id of lore passed in as the param and find the marketplaceitem in this.list that as the attribute ogId as the id of that lore
-                let parentMPitem = list.find(obj => obj.ogId === child._id);
+                let loreList = allLoreList.filter(obj => Object.keys(obj.parentId)[0] === child._id);
                 //iterate the children and add marketplace items
                 for (let l of loreList) {
+                    let parentMPitem = list.find(obj => obj.ogRef === Object.keys(l.parentId)[0]);
                     //create the obj for a new market place item with ogId as l's id and parentId as parentMPitem id
-                    let json = { ...l, _id: Math.floor(Math.random()*100000).toString(), campaignId: list[0]._id, ogId: l._id, parentId: parentMPitem._id, owner: owner, purchasedItem: true, };
+                    let json = { ...l, _id: Math.floor(Math.random() * 10000000).toString(), campaignId: list[0]._id, ogRef: l._id, parentId: {[parentMPitem._id]:parentMPitem.name?parentMPitem.name:parentMPitem.title?parentMPitem.title:""}, owner: owner, purchasedItem: true, };
                     //add the item to list
-                    list.push(json);
-                    recurseLoreTree2(l, owner);
+                    if(!json.reference){
+                        list.push(json);
+                    }
+                    else{
+                        refList.push(json)
+                    }
+
+
+                    recurseLoreTree2(l);
                 }
             }
-            await recurseLoreTree(lore, owner);
+            
+            await recurseLoreTree2(lore);
+            for(let l of refList){
+                let newOgId = list.find(lo => lo.ogRef === l.ogId)._id;
+                l.ogId = newOgId;
+                list.push(l);
+            }
+
 
             /**
              * get the rest of the items.
              */
-            copyOtherItems= async(type, config)=>{
+            const copyOtherItems = async (type, config) => {
                 //could refactor so that we get the whole list instead but keep it here for now
-                const components = await query(collection(db, "GMSusers", "GMSAPP", "components"), where("type", '==', type), where("campaignId", "==", lore._id));
-                let comps = await getDocs(components);
-                itemList = [...comps.docs.data()];
-                for(let item of itemList){
+                const itemcomponents = await query(collection(db, "GMSusers", "GMSAPP", "components"), where("type", '==', type), where("campaignId", "==", lore._id));
+                let itemcomps = await getDocs(itemcomponents);
+                let itemList = itemcomps.docs.map(doc => doc.data());
+                for (let item of itemList) {
                     let obj = {};
-                    for(let c of config){
-                        obj[c]= list.find(listItem=> listItem.ogId===item[c])._id;
-                        
+                    for (let c of config) {
+                        obj[c] = list.find(listItem => listItem.ogRef === item[c])._id;
+
                     }
-                    itemJson={...item, _id:Math.floor(Math.random()*100000).toString(),campaignId: list[0]._id, ogId: item._id,owner: owner, purchasedItem: true, ...obj}
+                    let itemJson = { ...item, _id: Math.floor(Math.random() * 100000).toString(), campaignId: list[0]._id, ogRef: item._id, owner: owner, purchasedItem: true, ...obj }
                     list.push(itemJson);
                 }
 
@@ -153,6 +167,7 @@ class TreeService {
             //get encounters relationships: lore
             await copyOtherItems("encounter", ["loreId"]);
             //get monsters relationshipis: 
+            debugger
             await copyOtherItems("monster", ["loreId", "encounterId"]);
             console.log(list);
 

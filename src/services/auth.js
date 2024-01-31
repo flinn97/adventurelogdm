@@ -6,11 +6,22 @@ import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
 
-let imageQuality = .58;
-
+let imageQuality = .5;
 class Auth {
     urlEnpoint = "GMS"
-
+    sendForgotPasswordChange(email) {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+    }
     async getCurrentUser() {
         
         let item = localStorage.getItem("user");
@@ -38,7 +49,7 @@ class Auth {
 
     }
 
-
+    
 
     async createInitialStages(componentList,) {
         let list = ["Not Started", "First Email", "Second Email", "Follow up", "Nurture", "Not Interested",]
@@ -54,6 +65,31 @@ class Auth {
         await componentList.addComponents(rawData, false);
 
 
+    }
+
+    async getMonsters(componentList, campaignId){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "monster"),  where("campaignId"==campaignId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let monsters = componentList.getList("monster");
+        return monsters
+    }
+    async getByCampaign(componentList, campaignId, attribute, value){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"),  where("campaignId"==campaignId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let posts = componentList.getList("post");
+        return posts
     }
 
     //Value = value pair (key value) example: string such as "1231454891"
@@ -81,9 +117,10 @@ class Auth {
 
         }
         else{
+            
             let comps1 = await onSnapshot(components, async (querySnapshot) => {
-
-
+                //
+                
                 rawData1 = [];
     
     
@@ -97,8 +134,8 @@ class Auth {
                 await componentList.addComponents(rawData1, false);
     
                     if (dispatch) {
-    
-                    } await dispatch({ rerenderFirebase: true });
+                        await dispatch({ rerenderFirebase: true });
+                    } 
     
                 
     
@@ -111,6 +148,9 @@ class Auth {
 
 
         if (type) {
+            if (dispatch) {
+                await dispatch({ rerenderFirebase: true });
+            } 
             return componentList.getList(type, value, attribute)
         }
         else {
@@ -119,6 +159,21 @@ class Auth {
         }
 
     }
+
+    async getPosts(value, componentList, dispatch){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"), where("campaignId", "==", value), orderBy("date"));
+        let comps1 = await onSnapshot(components, async (querySnapshot) => {
+            let rawData1 = [];
+            for (const key in querySnapshot.docs) {
+                let data = querySnapshot.docs[key].data()
+                rawData1.push(data);
+            }
+            await componentList.addComponents(rawData1, false);
+                if (dispatch) {
+                    await dispatch({ rerenderFirebase: true });
+                } 
+    })}
+
     async getuser(email, componentList, dispatch) {
         
         let list = componentList.getComponents();
@@ -151,6 +206,14 @@ class Auth {
                 rawData.push(data);
             }
         }
+        const components2 =  await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "newNote"), where('owner', '==', email), orderBy("date"));
+        let comps2 = await getDocs(components2);
+        for (const key in comps2.docs) {
+            let data = comps2.docs[key].data()
+            if (!IDlist.includes(data._id)) {
+                rawData.push(data);
+            }
+        }
 
         await componentList.addComponents(rawData, false);
         let user = componentList.getComponent("user");
@@ -165,6 +228,7 @@ class Auth {
 
                     ]
                 })
+                
             }
         }
     }
@@ -252,8 +316,9 @@ class Auth {
 
     async login(email, password, componentList, dispatch) {
 
-
         let user;
+        let e;
+
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -262,21 +327,30 @@ class Auth {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
-                //console.log(errorMessage)
+                let errorMessage = error.message;
+                let eL = errorMessage.length-1;
+                let newString = errorMessage.slice(9,eL);
+                
+                
+                e = {error:newString};
+                console.log(e);
             });
         if (user) {
-            let saveUser = user
+            let saveUser = user;
+            dispatch({start:false});
 
             if (componentList !== undefined && dispatch !== undefined) {
                 await localStorage.setItem("user", JSON.stringify(saveUser));
                 await this.getuser(email, componentList, dispatch);
+            
 
             }
 
 
-
-
+        }else{
+            
+            user = e;
+            console.log(user);
         }
         return user;
     }
@@ -295,6 +369,10 @@ class Auth {
         return docSnap.data();
 
     }
+
+   
+    
+    
     async register(email, password, addToCache) {
 
         let user;
@@ -302,8 +380,11 @@ class Auth {
             user = userCredential.user;
         }).catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            //console.log(errorMessage);
+            let errorMessage = error.message;
+            let eL = errorMessage.length-1;
+            let newString = errorMessage.slice(9,eL);
+            
+            user = {error:newString};
         })
         if (addToCache) {
             localStorage.setItem("user", JSON.stringify(user));
@@ -329,12 +410,12 @@ class Auth {
             await signOut(auth);
 
         }
-        window.location.reload();
+        window.location.href ="/"
     }
-    async uploadPics(file, name, dispatch) {
+    async uploadPics(file, name, dispatch, quality) {
 
         new Compressor(file, {
-            quality: imageQuality,
+            quality: quality?quality:imageQuality,
             success: async (result) => {
                 const storageRef = ref(storage, name);
                 await uploadBytes(storageRef, result).then((snapshot) => {
@@ -378,7 +459,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        //debugger
+        
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
@@ -390,6 +471,9 @@ class Auth {
 
                     if (component[key] === undefined) {
                         component[key] = "";
+                    }
+                    if(Array.isArray(component[key])){
+                        component[key] =""
                     }
                 }
 
@@ -405,6 +489,9 @@ class Auth {
                             if (!component.owner) {
                                 component.owner = email
                             }
+                            if(component.type ==="user"){
+                                component._id = email;
+                            }
                             component.date = await serverTimestamp();
                             await setDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                             break;
@@ -414,9 +501,10 @@ class Auth {
                             await deleteDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component));
                             break;
                         case "update":
+                            if(component.type !=="post"){
+                                component.date = await serverTimestamp();
 
-
-                            component.date = await serverTimestamp();
+                            }
 
                             await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                             break;
@@ -428,8 +516,9 @@ class Auth {
 
             }
         }
-
+        
         if (dispatch) {
+            
 
             dispatch({ dispatchComplete: true, data: obj })
 

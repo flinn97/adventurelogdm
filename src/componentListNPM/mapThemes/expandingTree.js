@@ -1,6 +1,6 @@
 
 
-class SelectByImageSmall {
+class ExpandingTree {
 
   
     getMapTheme(){
@@ -8,7 +8,7 @@ class SelectByImageSmall {
         let style={
         containerStyle: { 
             default: {display:'flex', flexDirection:"column", backgroundColor:"#ffdead01",
-            width:"280px",height:"fit-content", alignItems:"center", flexDirection:"center",
+            width:"488px",height:"fit-content", alignItems:"center", flexDirection:"center",
             flexWrap:"wrap", alignContent:"center", justifyItems:"center", 
           },
             row: {display:'flex', flexDirection:"row", },
@@ -26,8 +26,10 @@ class SelectByImageSmall {
 
           sectionStyle:{
             default:  {display:'flex', flexDirection:"column", alignItems:"center", height:"fit-content",  marginBottom:"2px",
-            border:"solid 1px #C1A71B55", alignContent:"center", justifyItems:"center", 
-              borderRadius:"2px", width:"100%", borderRightStyle:"",  borderLeftStyle:"solid 1px #C1A71B55",  borderRightStyle:"solid 1px #C1A71B55", 
+            border:"solid 1px #C1A71B55", 
+            alignContent:"center", justifyItems:"center", 
+              borderRadius:"4px", width:"100%", borderRightStyle:"",  
+              borderLeftStyle:"solid 1px #C1A71B55",  borderRightStyle:"solid 1px #C1A71B55", 
               
             mixBlendMode:"",
             
@@ -92,4 +94,6 @@ class SelectByImageSmall {
 
    
 }
-export default new SelectByImageSmall();
+export default new ExpandingTree();
+
+

@@ -15,6 +15,9 @@ import { multiFactor } from 'firebase/auth';
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 import { ScrollHelper } from '../adventureLogScrollHelper';
 import SplashScreen from './splashScreen';
+import TokenImage from '../tokenImage';
+
+
 export default class AdventureLogPage extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +32,16 @@ export default class AdventureLogPage extends Component {
       colors: [],
       showItems: false,
       showPopup: true,
+      posts: [],
+    }
+  }
+  componentDidUpdate(){
+    let app = this.props.app;
+    let dispatch = app.dispatch
+    let state = app.state;
+    if(state.rerenderFirebase){
+      dispatch({rerenderFirebase:false});
+      state.componentList.sortSelectedListbyFirebaseDate("post");
     }
   }
 
@@ -38,21 +51,30 @@ export default class AdventureLogPage extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
+    console.log(state.user)
+    if (state.user.getJson().role!=="GM" && (state.currentCharacter===undefined||!state.currentCharacter)){
+      toolService.navigateToLink('/');
+    }
+
     let styles = state.styles;
     let compList = state.componentList;
+    
     let idSegment = toolService.getIdFromURL(true);
     let campaigns = compList.getList("campaign", idSegment, "_id");
-    let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
+    // let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
+   
+    auth.getPosts(idSegment, compList, dispatch);
+    await compList.sortSelectedListbyFirebaseDate("post");
 
-    await auth.firebaseGetter(currentCampId, compList, "campaignId", false, dispatch);
-    
-
-    await this.scrollToBottom();
-    await state.componentList.sortSelectedListbyFirebaseDate("post");
     await this.setState({ textI: "",showItems: true, showPopup:false  }); 
     app.dispatch({ rerender: true });
-    auth.firebaseGetter(currentCampId, state.componentList, "campaignId", "lore");
+    let posts = await auth.firebaseGetter(idSegment, state.componentList, "campaignId", "post").then(posts=>{
+      this.setState({posts:posts, showItems:true})
 
+    })
+    await state.componentList.sortSelectedListbyFirebaseDate("post");
+
+    await this.scrollToBottom();
   }
 
 
@@ -91,14 +113,20 @@ export default class AdventureLogPage extends Component {
       };
     }
 
-
+    let char = this.props.app.state.currentCharacter;
+    let cPic = char?char.getJson().picURL:"";
+    let cTok = char?char.getJson().isToken:"";
+    let cCol = char?char.getJson().colors:"";
+    let cName = char?char.getJson().name:"";
 
     const payload = {
       campaignId: toolService.getIdFromURL(true),
-      type: "post", sender: userRole,
+      type: "post", sender: userRole, name:cName,
       message: m, desc: d,
       senderId: this.props.app.state.user.getJson()._id,
+      characterId : char?char.getJson()._id:this.props.app.state.user.getJson()._id,
       postType: mType,
+      userPic: cPic, isToken: cTok, colors: cCol,
     };
 
 
@@ -123,7 +151,7 @@ export default class AdventureLogPage extends Component {
   };
 
   scrollToBottom = async (behavior) => {
-    //debugger
+    //
     const delay = ms => new Promise(res => setTimeout(res, ms));
     await delay(500);
     this.setState({ showItems: true });
@@ -133,7 +161,8 @@ export default class AdventureLogPage extends Component {
       this.messagesEndRef.current.scrollIntoView({ behavior: behavior ? behavior : "auto", block: 'end' });
     }
 
-  }
+  };
+
 
 
   render() {
@@ -143,10 +172,9 @@ export default class AdventureLogPage extends Component {
     let styles = state.styles;
 
     let compList = state.componentList;
-    let path = window.location.pathname;
-    let parts = path.split('/');
-    let idSegment = parts.pop();
-    let campaigns = compList.getList("campaign", idSegment, "_id")
+    
+    let idSegment = toolService.getIdFromURL(true,0);
+    let campaigns = compList.getList("campaign", idSegment, "_id");
     let currentCampId = campaigns ? campaigns[0]?.getJson()?._id : "";
     const getOpacity = (index, length) => {
       const diffFromEnd = length - index - 1;
@@ -170,6 +198,8 @@ export default class AdventureLogPage extends Component {
     let cleanedItems = sortedLogItems
       .slice(newAmount, sLL);
 
+    
+
 
     return (
       <div style={{
@@ -184,12 +214,14 @@ export default class AdventureLogPage extends Component {
 
             />
           </div> }
+          {/* {this.state.posts.length>0&&<> */}
+          
 
           <div style={{
             width: "100%", height: "100%", color: styles.colors.color3 + "e9",
             fontWeight: "600", fontSize: styles.fonts.fontSubheader1, marginBottom: "11px"
           }}>
-            {campaigns[0].getJson().title} Log
+            {campaigns[0]?.getJson().title} Log
           </div>
 
           {/* ADVENTURE LOG */}
@@ -208,18 +240,22 @@ export default class AdventureLogPage extends Component {
               overflowX: "hidden",
               padding: "3px 6px", width: "100%", overflowY: "scroll",
             }}>
+              
+            
               {cleanedItems.length > 0 && cleanedItems.map((item, index) => (
 
                 <div key={index} title={item.getJson().sender === "GM" ? "The GM sent this" : ""} style={{
                   marginBottom: "24px", opacity: getOpacity(index, cleanedItems.length),
                 }}>
 
-
+                <div>
+                      
                   <PostMapItem app={app} obj={item} index={item.getJson().date} colors={this.state.colors} />
-
+                </div>
 
                 </div>
               ))}
+              
               <div ref={this.messagesEndRef} style={{ height: "2px", width: "2px" }}></div>
             </div>
             {/* } */}
@@ -335,8 +371,10 @@ export default class AdventureLogPage extends Component {
 
           </div>
           {/* </>)} */}
+          
           <ScrollHelper scroll={this.scrollToBottom} />  
-       
+          
+          {/* </>} */}
       </div >
     )
   }

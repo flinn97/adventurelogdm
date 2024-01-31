@@ -89,8 +89,9 @@ export default class PlayerCharacterMapItem extends Component {
    
     let obj = this.props.obj;
     let allColors = obj.getJson().colors;
-    let colors = obj.getJson().colors?Object.values(allColors):[styles.colors.color1, styles.colors.color2, styles.colors.color8];
+    let colors = obj.getJson().colors?Object.values(allColors):[styles.colors.color1, styles.colors.color2, styles.colors.color8, styles.colors.color1, styles.colors.color2, styles.colors.color8];
        
+    console.log(obj.getJson().colors)
     const width = 108;
     
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
@@ -209,7 +210,7 @@ export default class PlayerCharacterMapItem extends Component {
         </a><ParentFormComponent obj={this.props.obj} name="statBlockLink"
         prepareRun={true} maxLength={30}
 
-          inputStyle={{width:"151px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
+          inputStyle={{width:"200px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
           color:styles.colors.colorBlack, height:"1.7rem", rows:"1",  fontSize: fontSize[2], cursor:"text",
           borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
           }}
@@ -222,7 +223,7 @@ export default class PlayerCharacterMapItem extends Component {
         </div><ParentFormComponent obj={this.props.obj} name="statBlockLink"
         prepareRun={true} maxLength={30}
           placeholder={"Link to Sheet"}
-          inputStyle={{width:"151px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
+          inputStyle={{width:"200px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
           color:styles.colors.colorBlack, height:"1.7rem", rows:"1",  fontSize: fontSize[2],
           borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",
           }}
@@ -231,7 +232,7 @@ export default class PlayerCharacterMapItem extends Component {
         }
 
 
-  <div className='hover-container' style={{marginLeft:"-11px"}}>
+  <div className='hover-container' style={{marginLeft:"0px"}}>
     {obj?.getJson().isToken===true &&
               (<TokenImage pic={obj?.getJson().picURL} width={width-8} app={app} colors={colors}/>)
               ||
@@ -410,7 +411,7 @@ export default class PlayerCharacterMapItem extends Component {
         </div>
         <div style={{width:"100%", display:"flex", flexDirection:"row", marginBottom:"11px",
        justifyContent:"flex-start"}}>
-        <ConnectToCampaignSwitch app={app} {...this.props} />
+        <ConnectToCampaignSwitch app={app} {...this.props}/>
         </div>                       
 
                 </div>

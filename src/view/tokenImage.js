@@ -53,7 +53,7 @@ export default class TokenImage extends Component {
   render() {
     let app = this.props.app;
     let state = app.state;
-    const colors = this.props.colors;
+    let colors = this.props?.colors;
     let width = this.state.width.toString();
     let widthSm = (this.state.width * 0.908).toString()+"px"
     let widthMd = (this.state.width * 0.959).toString()+"px"
@@ -64,7 +64,7 @@ export default class TokenImage extends Component {
       <div style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px", boxShadow:"6px 10px 16px -3px"+styles.colors.colorBlack+"55",
           borderRadius:"50%", marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center",
           marginRight:"30px", 
-          backgroundColor: colors[1] || styles.popupSmall.border, 
+          backgroundColor: colors?colors[1]: styles.popupSmall.border, 
           }}>
             
             <img src={background} draggable="false"  
@@ -78,7 +78,7 @@ export default class TokenImage extends Component {
                                  mixBlendMode:"multiply",
                                  borderRadius:"50%",
                 opacity:".75", opacity:"36%", 
-                backgroundColor: colors[2] || styles.popupSmall.border,}}>
+                backgroundColor: colors?colors[2]: styles.popupSmall.border,}}>
         </div>
            
         <img src={pic||placeholder} draggable="false"
@@ -88,16 +88,16 @@ export default class TokenImage extends Component {
             }}/>
          <div style={{width:widthSm, height:widthSm, position:"absolute", borderRadius:"50%",
                 opacity:".15", 
-                backgroundColor: colors[3] || styles.popupSmall.border,}}>
+                backgroundColor: colors?colors[3]: styles.popupSmall.border,}}>
         </div>
         <div style={{width:widthMd, height:widthMd, position:"absolute", mixBlendMode:"overlay",
         borderRadius:"50%", zIndex:3,opacity:"50%",
-        boxShadow:"inset 6px 10px 6px -6px"+styles.colors.colorBlack+",7px 11px 3px -8px"+ styles.colors.colorBlack+",inset 6px 12px 6px -14px"+ styles.colors.colorWhite+",-7px -11px 3px -11px"+ styles.colors.colorWhite
+        boxShadow:this.props.width>39?"inset 6px 10px 6px -6px"+styles.colors.colorBlack+",7px 11px 3px -8px"+ styles.colors.colorBlack+",inset 6px 12px 6px -14px"+ styles.colors.colorWhite+",-7px -11px 3px -11px"+ styles.colors.colorWhite:"",
         }}>
         </div>
         
         <div style={{width:widthSm, height:widthSm, position:"absolute", mixBlendMode:"overlay", zIndex:4,
-       borderRadius:"50%", boxShadow:"7px 11px 3px -10px"+ styles.colors.colorWhite, 
+       borderRadius:"50%", boxShadow:this.props.width>39?"7px 11px 3px -10px"+ styles.colors.colorWhite:"", 
          }}>
         </div>
       </div>

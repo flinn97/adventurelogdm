@@ -5,7 +5,8 @@ import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterCard from './encounterCard';
 import placeholder from '../../pics/placeholderEncounter.JPG';
 import AddEncounter from '../AddEncounter';
-
+import backarrow from '../../pics/backArrow.webp';
+import toolService from '../../services/toolService';
 
 export default class EncounterManager extends Component {
   constructor(props) {
@@ -37,15 +38,26 @@ export default class EncounterManager extends Component {
 
     return (
       <div style={{width:"100%",}}>
+        <Link className="hover-btn-highlight"
+          to={"/campaign/"+toolService.getIdFromURL(false)} 
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:"", padding:"8px 8px", 
+          color:styles.colors.color3+"e6", boxShadow:"", fontSize:".95rem",
+          fontWeight:"bold", letterSpacing:".05rem", marginBottom:"10px", border:"" }}
+          >
+            <img style={{width:".9rem", opacity:"98%", marginRight:"8px"}}
+            src={backarrow}
+            />
+            Back
+          </Link>
           <div style={{...styles.backgroundContent, width:"100%",
           backgroundImage: 'url('+(this.state.obj?.getJson().picURL||placeholder)+')' }}>
               <div style={{ ...styles.popupSmall,
                 }}>
               <div 
-                style={{display: "flex", marginTop:"3vmin", flexDirection: 'row', justifyContent:"flex-start", 
+                style={{display: "flex", marginTop:"20px", flexDirection: 'row', justifyContent:"flex-start", 
               
                 width: 'fit-content', height: 'fit-content',  borderRadius:"2vmin",}}>
-                      <div style={{marginBottom:"70px", color:styles.colors.colorWhite, fontSize:styles.fonts.fontSubheader2,
+                      <div style={{marginBottom:"20px", color:styles.colors.colorWhite, fontSize:styles.fonts.fontSubheader2,
 
                     }}>
                         

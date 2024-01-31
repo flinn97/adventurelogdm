@@ -538,7 +538,18 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"99", 
+                background: appColors.colorBlack+"75", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+            popupSmallSolid:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"f9", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -603,7 +614,7 @@ class AdventureLogStyles {
                 buttonAdd: {
                     boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                     cursor: "pointer",
-                    borderRadius:"2rem",
+                    borderRadius:"12px",
                     background: appColors.color7+"77",
                     border: "1px solid "+appColors.colorWhite+"44",
                     color: appColors.color3,
@@ -1161,17 +1172,28 @@ class AdventureLogStyles {
                 userSelect: "none"
             },
 
-                            popupSmall:
-                            {
-                                opacity:"100%", 
-                                background: appColors.colorBlack+"99", 
-                                padding:"10px", 
-                                borderRadius:"2vmin", 
-                                // borderStyle:"solid", 
-                                // borderColor:appColors.color3+"22", 
-                                display:"flex", flexDirection:"column",
-                                border: "2px solid "+appColors.color9+"22",
-                            },
+            popupSmall:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"75",
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+            popupSmallSolid:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"f9", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
 
                             popupSmallest:
                                 {
@@ -1224,7 +1246,7 @@ class AdventureLogStyles {
                                 buttonAdd: {
                                     boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                                     cursor: "pointer",
-                                    borderRadius:"2rem",
+                                    borderRadius:"12px",
                                     background: appColors.color7+"77",
                                     border: "1px solid "+appColors.colorWhite+"44",
                                     color: appColors.color3,
@@ -1777,17 +1799,29 @@ class AdventureLogStyles {
                 userSelect: "none"
             },
 
-                                            popupSmall:
-                                            {
-                                                opacity:"100%", 
-                                                background: appColors.colorBlack+"99", 
-                                                padding:"10px", 
-                                                borderRadius:"2vmin", 
-                                                // borderStyle:"solid", 
-                                                // borderColor:appColors.color3+"22", 
-                                                display:"flex", flexDirection:"column",
-                                                border: "2px solid "+appColors.color9+"22",
-                                            },
+            popupSmall:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"75",
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
+
+            popupSmallSolid:
+            {
+                opacity:"100%", 
+                background: appColors.colorBlack+"f9", 
+                padding:"10px", 
+                borderRadius:"2vmin", 
+                // borderStyle:"solid", 
+                // borderColor:appColors.color3+"22", 
+                display:"flex", flexDirection:"column",
+                border: "2px solid "+appColors.color9+"22",
+            },
 
                                             popupSmallest:
                                                 {
@@ -1842,7 +1876,7 @@ class AdventureLogStyles {
                                                 buttonAdd: {
                                                     boxShadow:"0px 10px 6px -6px"+appColors.colorBlack,
                                                     cursor: "pointer",
-                                                    borderRadius:"2rem",
+                                                    borderRadius:"12px",
                                                     background: appColors.color7+"77",
                                                     border: "1px solid "+appColors.colorWhite+"44",
                                                     color: appColors.color3,

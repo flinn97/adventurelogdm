@@ -19,6 +19,7 @@ export default class ListTree extends Component {
   constructor(props) {
     
     super(props);
+    this.expanse=0;
     this.state = {
       obj: undefined,
       pic: undefined,
@@ -26,7 +27,7 @@ export default class ListTree extends Component {
     }
     
   }
-  componentDidMount(){
+  async componentDidMount(){
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
@@ -50,6 +51,13 @@ export default class ListTree extends Component {
     
 //   }
 // }, 60);
+await state.componentList.sortSelectedList("lore", "index");
+this.setState({})
+
+  }
+
+  setExpanse(arr){
+    this.expanse=[...arr]
   }
 
  
@@ -73,35 +81,53 @@ export default class ListTree extends Component {
     let campId =  idParts[0];
     let CC = state.currentCampaign;
 
+    let count = this.props.count;
+    
+    let bord = "solid 1px "+styles.colors.color3+"54";
+    let bord1 = (this.props.count===0)?"expandingTree":"expandingTreeColorless";
+
     let cells=  
   
     [
-      {custom: ListTreeLink, props:{app:app, 
+      {custom: ListTreeLink, props:{app:app, c:count+1,
         name:"name",
       }},
-      {custom:ExpandTreeArrow, props:{app:app}},
-      {custom:ListTreeInner, props:{app:app}},
+      {custom:ExpandTreeArrow, props:{app:app, c:count,
+        
+      }},
+    {custom:ListTreeInner, props:{app:app, c:count, setExpanse:this.props.setExpanse?this.props.setExpanse:this.setExpanse.bind(this), expanse:this.props.expanse?this.props.expanse:this.expanse, 
+        
+      }
+    }
+    ,
       
     ]
 
     const isHidden = state.currentExpanse && state.currentExpanse.includes(_id);
+    if(state.currentExpanse===undefined || state.currentExpanse?.length===0){
+      this.expanse=1;
+      
+
+    }
     // console.log(isHidden)
 
 
     return (<div style={{}}>
       
-             <div style={{flexDirection:"row", display:"flex", }} >
+             <div style={{flexDirection:"row", display:"flex", textDecoration:"none"}} >
              
-             <div  style={{flexDirection:"column", display:"flex",
-             alignItems:"center"}} >
-              {!isHidden &&
-<Link to={/campaign/+CC.getJson()._id}
-className="hover-btn-highlight" style={{...styles.buttons.buttonAdd, marginBottom:"15px", padding:"2px", fontSize:styles.fonts.fontNormal, background:"", boxShadow:"",
-                      textDecoration:"underline 1px "+styles.colors.color8+"48", textUnderlineOffset:"3px", color:styles.colors.color8,
-                      marginTop:"5px", paddingLeft:"23px",  paddingRight:"23px", border:""}}>
+             <div  style={{flexDirection:"column", display:"flex",textDecoration:"none",
+             alignItems:"left"}} >
 
-  {CC.getJson().title}
-</Link>}
+                          {!isHidden &&this.expanse===1 &&
+                          <Link to={/campaign/+CC.getJson()._id}
+                          className="hover-btn-highlight" 
+                          style={{...styles.buttons.buttonAdd, marginBottom:"15px", padding:"2px", fontSize:styles.fonts.fontNormal, background:"", boxShadow:"",
+                                                textDecoration:"underline 1px "+styles.colors.color8+"48", textUnderlineOffset:"3px", color:styles.colors.color8,
+                                                marginTop:"5px", border:""}}>
+
+                            {CC.getJson().title}
+                          </Link>}
                     {/* {!isHidden && (
                       <div className="hover-btn" style={{...styles.buttons.buttonAdd, marginBottom:"15px", 
                       marginTop:"5px", paddingLeft:"13px",  paddingRight:"13px", 
@@ -118,15 +144,27 @@ className="hover-btn-highlight" style={{...styles.buttons.buttonAdd, marginBotto
 
 
 {/* //ADD IMAGE HERE// */}
-                      <div className='scroller'  style={{flexDirection:"column", display:"flex", overflowY:"scroll", maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"12px",                   
+                      <div className='scroller'  style={{flexDirection:"column", display:"flex",textDecoration:"none", 
+                      width:"100%",
+                       overflowY:"scroll", maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"4px",                  
                     }}>
-                        <MapComponent app={app}  theme={"expandingTree"} 
+                        <MapComponent app={app}  theme={bord1}
                                              
                         name={name} 
                         
                         cells={cells}
 
-                        filter={{search: _id, attribute: attribute}}  />
+                        filter={{search: _id, attribute: attribute}}  filterFunc={(obj)=>{
+                          let reference = obj.getJson().reference;
+                          let firstReference = obj.getJson().firstReference;
+                          let bool  = false;
+                          if(!reference){
+                            bool = true;
+                          }
+                          if(firstReference){
+                            bool = true;
+                          }
+                          return bool}}/>
                       </div>
               </div>
             </div>

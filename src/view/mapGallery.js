@@ -10,7 +10,8 @@ export default class MapGallery extends Component {
     this.state = {
      mapList:[],
      lore: this.props.obj,
-     currentMap:""
+     currentMap:"",
+     showMap:false,
     }}
 
     componentDidMount(){
@@ -20,12 +21,13 @@ export default class MapGallery extends Component {
       let state = app.state;
       let componentList = state.componentList;
                                         //type , value to search,   filter key
-      let mapList = componentList.getList("map", obj.getJson()._id, "loreId");
+      let mapList = componentList.getList("map", obj?.getJson()._id, "loreId");
       let currentMap = mapList[0];
       if (mapList.length > 0){
-      this.setState({mapList:mapList, currentMap:currentMap});
+      this.setState({mapList:mapList, currentMap:currentMap, showMap:true});
     }
     }
+
     updateSize(width, height){
       this.setState({
         bulletinWidth:width+"px",
@@ -33,34 +35,35 @@ export default class MapGallery extends Component {
       })
       this.props.updateSize(width,height)
     }
+    
     componentDidUpdate(props, state){
       let obj = this.props.obj;
       let app = this.props.app;
       let dispatch = app.dispatch;
       let currentState = app.state;
       let componentList = currentState.componentList;
-      let mapList = componentList.getList("map",obj.getJson()._id,"loreId");
-
+      let mapList = componentList.getList("map",obj?.getJson()._id,"loreId");
       if (state.mapList.length !== mapList.length)
       {
         this.setState({mapList:mapList, currentMap: mapList[mapList.length-1],})
       };
-      
     }
 
     handleNextMap = () => {
+      this.setState({showMap:false});
       let currentIndex = this.state.mapList.indexOf(this.state.currentMap);
       let nextIndex = currentIndex + 1;
       if (nextIndex < this.state.mapList.length) {
-        this.setState({ currentMap: this.state.mapList[nextIndex] } , () => this.forceUpdate());
+        this.setState({ currentMap: this.state.mapList[nextIndex] , showMap:true} , () => this.forceUpdate());
       }
     };
 
     handlePrevMap = () => {
+      this.setState({showMap:false});
       let currentIndex = this.state.mapList.indexOf(this.state.currentMap);
       let prevIndex = currentIndex - 1;
       if (prevIndex >= 0) {
-        this.setState({ currentMap: this.state.mapList[prevIndex] } , () => this.forceUpdate());
+        this.setState({ currentMap: this.state.mapList[prevIndex], showMap:true } , () => this.forceUpdate());
       }
     };
   
@@ -81,7 +84,7 @@ export default class MapGallery extends Component {
 
        
 
-        {this.state.mapList?.indexOf(this.state.currentMap)!==0 &&
+        {this.state.mapList?.indexOf(this.state.currentMap)!==0 && this.state.currentMap &&
         <div className="hover-btn"
         onClick={this.handlePrevMap}
         style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, cursor:"pointer",
@@ -110,7 +113,7 @@ export default class MapGallery extends Component {
 
 
 
-  {this.state.currentMap &&
+  {this.state.currentMap && this.state.showMap &&
    
       <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color} updateSize = {this.updateSize}/>
       }

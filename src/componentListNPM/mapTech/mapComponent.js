@@ -4,6 +4,7 @@ import ParentFormComponent from '../componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
 import MapThemeFactory from '../mapThemes/mapThemeFactory';
 import expandingTree from '../mapThemes/expandingTree';
+import expandingTreeColorless from '../mapThemes/expandingTreeColorless';
 
 
 export default class MapComponent extends Component {
@@ -30,7 +31,7 @@ export default class MapComponent extends Component {
     }
     let inputTypes=["text", "textArea", "richEditor"];
     let mapThemes=["default", "keep", "mySpawn", "calendar", "logInitiative",
-    "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree"];
+    "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree", "expandingTreeColorless"];
 
     return <div style={this.props.iSectionStyle? //if
     this.props.iSectionStyle: //then
@@ -280,7 +281,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor", "checkbox", ];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree"];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree", "expandingTreeColorless"];
     let html = <>
     
       {this.props.cells.map((c, index)=><div style={this.props.cellStyle? //if
@@ -595,7 +596,7 @@ export default class MapComponent extends Component {
       styles= f.getMapThemeFactory()[this.props.theme]
     }
     let inputTypes=["text", "textArea", "richEditor"];
-    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate","selectByImage", "selectByImageSmall", "expandingTree" ];
+    let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate","selectByImage", "selectByImageSmall", "expandingTree" , "expandingTreeColorless"];
     
 
     let types={
@@ -636,7 +637,14 @@ export default class MapComponent extends Component {
     styles.containerStyle.default//otherwise
   }>
         
-      {componentList.getList(this.props.name, this.props.filter?.search, this.props.filter?.attribute).map((item, index)=>
+      {componentList.getList(this.props.name, this.props.filter?.search, this.props.filter?.attribute).filter((obj)=>{
+        if(this.props.filterFunc){
+          return this.props.filterFunc(obj)
+        }
+        else{
+          return true
+        }
+      }).map((item, index)=>
        <div style={this.props.sectionStyle? //if
        this.props.sectionStyle: //then
      this.props.sectionTheme? //else if

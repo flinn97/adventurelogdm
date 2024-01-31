@@ -46,6 +46,7 @@ export default class InteractiveMap extends Component {
 
     
     this.setState({width: this.currentMap?.current?.width, height: this.currentMap?.current?.height, map:map})
+    
   }
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.printref);
@@ -109,7 +110,8 @@ export default class InteractiveMap extends Component {
               text="Set Background" style={{display:"flex",
               zIndex:"1", borderRadius:".1vmin", background:"", }} 
               update={true} skipUpdate={true} 
-              updateMap={(obj)=>{this.setState({completedPic: obj.getJson().picURL})}}/>
+              // updateMap={(obj)=>{this.setState({completedPic: obj.getJson().picURL})}}
+              />
     
       </div>
       

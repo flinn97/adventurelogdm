@@ -6,6 +6,7 @@ import selectByImage from "./selectByImage";
 import selectByImageSmall from "./selectByImageSmall";
 import expandingTree from "./expandingTree";
 import logInitiative from "./logInitiative";
+import expandingTreeColorless from "./expandingTreeColorless";
 
 class MapThemeFactory {
     operationsFactory; 
@@ -18,6 +19,7 @@ class MapThemeFactory {
        selectByImage: selectByImage.getMapTheme(),
        selectByImageSmall: selectByImageSmall.getMapTheme(),
        expandingTree: expandingTree.getMapTheme(),
+       expandingTreeColorless: expandingTreeColorless.getMapTheme(),
        logInitiative: logInitiative.getMapTheme(),
     }
 

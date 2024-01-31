@@ -29,6 +29,7 @@ export default class AddCampaign extends Component {
       
       this.setState({navigate:true})
 
+
     })
     
   }
@@ -44,7 +45,7 @@ export default class AddCampaign extends Component {
     let campaignPlaceholder = "Campaign Name";
     let textSubmit = ""; let textNotReady ="";
     let isUpdate = (state.popUpSwitchcase === "updateCampaign");
-    let isNotUpdate = (state.popUpSwitchcase != "updateCampaign")
+    let isNotUpdate = (state.popUpSwitchcase !== "updateCampaign")
 
     if (state.currentComponent?.getJson().type === "campaign" && isUpdate)
                       { textSubmit ="Save";}
@@ -75,7 +76,7 @@ export default class AddCampaign extends Component {
       
       >
             
-          <div style={{
+          <div style={{minHeight:"710px", 
             ...styles.popupSmall,
             height: 'fit-content', 
             // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
@@ -166,7 +167,7 @@ export default class AddCampaign extends Component {
                   maxLength={4} 
                   placeholder={"#"}/>  */}
 
-                  {this.state.pic
+                  {isNotUpdate
                     ? <div style={{display:"flex", justifyContent:"center"}} className="hover-btn"> 
                         <RunButton app ={app} 
                           wrapperStyle={{...styles.buttons.buttonAdd, 
@@ -176,7 +177,8 @@ export default class AddCampaign extends Component {
                           text={textSubmit}
                           callBack={async (obj)=>{
                             
-                            let newLore = {desc:"add new description", name:obj[0].getJson().title, campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, topLevel:true, index:0,
+                            let newLore = {desc:"add new description", name:obj[0].getJson().title, 
+                            campaignId: obj[0].getJson()._id, type:"lore", parentLore:true, topLevel:true, index:0,
                             parentId:  {[obj[0].getJson()._id]:obj[0].getJson().title}}
                             
                             await state.opps.jsonPrepareRun({addlore:newLore});
@@ -187,12 +189,18 @@ export default class AddCampaign extends Component {
                     : 
                       <div className='hover-btn' style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
                       <RunButton app ={app} 
-                        wrapperStyle={{...styles.buttons.buttonAdd, cursor: isNotUpdate ? "wait":"pointer", 
+                        wrapperStyle={{...styles.buttons.buttonAdd, cursor: "pointer", 
                           width:"35%", transition:"all 1s ease-out", borderRadius:"21%",
                           display:"flex", color:styles.colors.color6, background:styles.colors.colorWhite+"88", fontWeight:"600", borderColor:styles.colors.color6
                         }}
-                        text={textNotReady}
-                        callBack={()=>{
+                        text={textSubmit}
+                        callBack={async (comp)=>{
+                          //
+                          comp = comp[0]
+                          let lores = componentList.getList("lore", comp.getJson()._id, "campaignId");
+                          let parent = lores.find(lore=>lore.getJson().parentLore === true);
+                          parent.setCompState({name:comp.getJson().title});
+                          await state.opps.cleanPrepareRun({update:[comp,parent]});
                           dispatch({popUpSwitchcase: "", currentComponent: undefined});
                         }}
                       />
@@ -219,7 +227,7 @@ const URLcheck = () => {
   const nav = useNavigate ();
 
   useEffect(() => {
-    nav(-1); // This will navigate up one level in the history stack
+    nav("/campaign/"); // This will navigate up one level in the history stack
     // Send request to your server to increment page view count
 });
 
