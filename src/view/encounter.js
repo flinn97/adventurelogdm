@@ -56,8 +56,6 @@ export default class Encounter extends Component {
     this.setState({ showMonsterMap: true });
     await this.props.app.state.opps.run();
 
-
-
     let component = this.props.app.state.componentList.getComponent("encounter", id);
 
     await this.setState({
@@ -246,7 +244,6 @@ export default class Encounter extends Component {
       if (lastInit !== undefined && lastInit !== "" && lastInit !== "NaN") {
         const parsedInit = parseInt(lastInit);
         totalInitiative += parsedInit;
-        console.log(totalInitiative);
       }
     });
 
@@ -454,7 +451,10 @@ export default class Encounter extends Component {
                   }}
                   onClick={async () => {
                     await this.setState({ showMonsterMap: false });
-                    await componentList.sortSelectedList("monster", "lastInit", true)
+
+                    //Taylor this is too slow
+
+                    await componentList.sortSelectedList("monster", "lastInit", true);
                     await this.setState({ showMonsterMap: true });
                     dispatch({});
                   }

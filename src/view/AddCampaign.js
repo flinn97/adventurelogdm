@@ -76,13 +76,13 @@ export default class AddCampaign extends Component {
       
       >
             
-          <div style={{minHeight:"710px", 
+          <div style={{minHeight:"224px", 
             ...styles.popupSmall,
             height: 'fit-content', 
             // backgroundColor: state.currentComponent?.getJson().type === "campaign" && state.popUpSwitchcase === "updateCampaign"?"#000000":styles.popupSmall.backgroundColor,
             }}>
 
-              <div style={{display:"flex", flexDirection:"column", height:"fit-content", width:"fit-content"}}>
+              <div style={{display:"flex", flexDirection:"column", height:"fit-content", width:"fit-content", }}>
 
         {/* //DELETE CAMPAIGN */}
                     {isUpdate && 
@@ -189,10 +189,10 @@ export default class AddCampaign extends Component {
                     : 
                       <div className='hover-btn' style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
                       <RunButton app ={app} 
-                        wrapperStyle={{...styles.buttons.buttonAdd, cursor: "pointer", 
-                          width:"35%", transition:"all 1s ease-out", borderRadius:"21%",
-                          display:"flex", color:styles.colors.color6, background:styles.colors.colorWhite+"88", fontWeight:"600", borderColor:styles.colors.color6
-                        }}
+                        wrapperStyle={{...styles.buttons.buttonAdd, 
+                          width:"45%",
+                          display:"flex", transition:"all 1s easeOutQuart",
+                           }}
                         text={textSubmit}
                         callBack={async (comp)=>{
                           //

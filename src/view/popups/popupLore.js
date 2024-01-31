@@ -310,7 +310,7 @@ class MainContent extends Component {
       <div style={{
         display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
-        paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "2%",
+        paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
       }}>
 
         {/* ICON */}
@@ -434,7 +434,7 @@ class MainContent extends Component {
             <div style={{
               display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
-              paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "2%",
+              paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "20px",
             }}>
               {(this.state.showFindEncounter || this.state.showFindImage) &&
                 <div className="indent-on-click"
@@ -834,7 +834,7 @@ class MainContent extends Component {
                         style={{
                           maxHeight: "150px", cursor: "pointer", textAlign: "center", padding: "8px",
                           maxWidth: "150px", display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: "24px", borderRadius: "20px", marginBottom: "3vh",
+                          fontSize: "24px", borderRadius: "20px", marginBottom: "2vh",
                           color: styles.colors.colorWhite, border: "" + styles.colors.colorWhite + "55 solid"
                         }}>
                         <div
@@ -1000,10 +1000,10 @@ class MainContent extends Component {
                 <div className="hover-btn"
                   title='Deletes the Pin'
                   style={{
-                    display: "flex", width: "210px", borderRadius: '3vh', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
-                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px",
+                    display: "flex", width: "210px", borderRadius: '11px', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
+                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", padding:"8px 8px",
                     borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
-                    marginTop: "8.24vh", marginBottom: "1vh", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
+                    marginTop: "8.24vh", marginBottom: "-81px", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
                     
 
@@ -1033,13 +1033,13 @@ class MainContent extends Component {
               <div className="indent-on-click"
                 style={{
                   display: "flex", width: "92px", background: "red", borderRadius: '12px',
-                  alignSelf: "flex-end", bottom: '0px', alignItems: "flex-end", right: "10px",
+                  alignSelf: "flex-end", bottom: '8px', alignItems: "flex-end", right: "10px",
                   position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
                 }}>
                 <RunButton app={app} text="Save"
 
                   runFunc={async (arr) => {
-
+                    try {
                     let lore = arr[0];
                     let check;
                     if (state.currentPin) {
@@ -1092,10 +1092,18 @@ class MainContent extends Component {
                     }
                     
 
-
-                    this.setState({ showSaved: true });
-                    setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
-                    this.setState({ saveClicked: true })
+                    console.log("All operations completed. Showing 'Saved' message.");
+                    
+                    this.setState({ showSaved: true, saveClicked: true  });
+                    setTimeout(
+                      () => this.setState({ showSaved: false }), 
+                      2000
+                      ); 
+                    
+                  }catch (error) {
+                    console.error("Error in save operation:", error);
+                    // Handle error appropriately
+                  }
                   }} />
 
                 {this.state.showSaved && (
