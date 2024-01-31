@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import AddCampaign from '../AddCampaign';
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
-import placeholder from '../../pics/placeholderCampaign.JPG';
-import CampaignMapItem from '../campaignMapItem';
+
 import ListTree from '../listTree';
 
 /**

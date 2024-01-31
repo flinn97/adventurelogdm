@@ -1,14 +1,10 @@
 import { Component } from 'react';
 import "../App.css"
-import CardPractice from './CardPrac';
-import AddCampaign from './AddCampaign';
+
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 // https://www.npmjs.com/package/react-lazyload;
-import placeholder from '../pics/placeholderEncounter.JPG';
-import backarrow from '../pics/backArrow.webp';
-import EncounterMapItem from './encounterMapItem';
-import LoreListCard from './pages/loreListCard';
+
 import ExpandTreeArrow from './expandTreeArrow';
 import ListTreeInner from './listTreeInner';
 import ListTreeLink from './listTreeLink';

@@ -76,7 +76,7 @@ export default class Login extends Component {
                         <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Email</div>
                         <input autoComplete='off' style={{
                             width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
-                            fontSize: "1rem", border: "1px solid " + styles.colors.color8,
+                            fontSize: "1rem", border: "1px solid " + styles.colors.colorWhite,
                             borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
                             alignItems: "left", textAlign: "left", justifyContent: "center",
                         }} id="pwd" onChange={this.handleChange} name="email" />
@@ -88,7 +88,7 @@ export default class Login extends Component {
                             <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Password</div>
                             <input autoComplete='off' style={{
                                 width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
-                                fontSize: "1rem", border: "1px solid " + styles.colors.color8,
+                                fontSize: "1rem", border: "1px solid " + styles.colors.colorWhite,
                                 borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
                                 alignItems: "left", textAlign: "left", justifyContent: "center",
                             }} type="password" id="pwd" onChange={this.handleChange} name="password" /></>}
@@ -105,7 +105,7 @@ export default class Login extends Component {
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "fit-content", }}>
                         <button className="hover-btn"
                             style={{
-                                ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "155px", border: "1px solid " + styles.colors.color8,
+                                ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "155px",border: "1px solid " + styles.colors.colorWhite,
                                 color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSubheader1,
                             }}
                             class="hover-btn" onClick={() => { 

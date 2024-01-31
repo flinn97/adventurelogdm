@@ -8,6 +8,7 @@ class InputFormComponent extends Component {
         this.wrapperRef = React.createRef();
         this.setWrapperRef = this.setWrapperRef;
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        
         this.state = {
             value: this.props.value,
             min: this.props.min,
@@ -15,19 +16,26 @@ class InputFormComponent extends Component {
             rerender: false,
         };
     }
+
+
     handleChange(e) {
 
         if(this.props.type==="checkbox"){
             this.check();
             return
         }
+
         
         let { name, value } = e.target;
+
+        
 
         // Handle Enter key for math calculation
         if (e.key === 'Enter' && this.props.doesMath) {
             value = this.calculateMath(value);
         }
+
+       
         
         this.setState({ value: value });
        
@@ -36,6 +44,7 @@ class InputFormComponent extends Component {
 
         }
     }
+
     async check(){
         
         await this.setState({value:!this.state.value})
@@ -126,6 +135,7 @@ class InputFormComponent extends Component {
         let inputType = {
             required: <input 
             type={this.props.type}
+            onFocus={this.props.onFocus}
             className={this.props.class ? this.props.class : "form-control"}
             placeholder={this.props.placeholder}
             onChange={this.handleChange}
@@ -146,6 +156,7 @@ class InputFormComponent extends Component {
             />,
 
             normal: <input
+            onFocus={this.props.onFocus}
                 type={this.props.type}
                 className={this.props.class ? this.props.class : "form-control"}
                 placeholder={this.props.placeholder}
@@ -165,6 +176,7 @@ class InputFormComponent extends Component {
             />,
             disabled: <input
             id={this.props.id}
+            onFocus={this.props.onFocus}
                 type={this.props.type}
                 style={this.props.inputStyle?this.props.inputStyle:theme!==undefined? theme.inputStyle:undefined}
                 className={this.props.class ? this.props.class : "form-control"}
