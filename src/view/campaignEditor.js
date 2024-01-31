@@ -221,7 +221,32 @@ export default class CampaignEditor extends Component {
     return (<div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
       <div style={{color:"white"}} onClick={()=>{
         debugger
-        treeService.convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
+        // Sample data for the request body
+        const requestBody = {
+          email: "jaredmichaeldavidson",
+          lore: {
+              ...state.currentCampaign.getJson()
+          }
+      };
+
+      // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
+      const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
+
+      // Make a POST request to the Cloud Function
+      fetch(cloudFunctionUrl, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Success:', data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
       }}>send</div>
       {/* <div style={{color:"white"}} onClick={()=>{
         convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
