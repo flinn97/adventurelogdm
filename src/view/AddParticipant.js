@@ -149,10 +149,9 @@ transitionDuration:"9000ms"
               let colors = colorService.updateColors(pic, (palette) => {
                 this.setState({ colors: palette }, () => {
                                   
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
+                  let con = palette;
+                  app.state.currentComponent.setCompState({colors: con})
+                  this.setState({colors: con})
 
                 });
                 
@@ -165,11 +164,11 @@ transitionDuration:"9000ms"
               await colorService.updateColors(pic, palette => {
                 this.setState({ colors: palette }, () => {
 
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
-
+                  let con = palette;
+                  app.state.currentComponent.setCompState({colors: con})
+                  this.setState({colors: con})
+                  
+          obj.setCompState({color:con, colors: con});
                 });
               });
             }}

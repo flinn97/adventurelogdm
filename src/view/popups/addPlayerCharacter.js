@@ -92,7 +92,7 @@ class MainContent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-     colors:[]
+     colors:{}
     }
   }
   render(){
@@ -131,11 +131,11 @@ New Character:
               
               let colors = colorService.updateColors(pic, (palette) => {
                 this.setState({ colors: palette }, () => {
-                                  
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
+                                 
+                    let con = palette;
+                    app.state.currentComponent.setCompState({colors: con})
+                    this.setState({colors: con})
+                    
 
                 });
                 
@@ -148,10 +148,13 @@ New Character:
               await colorService.updateColors(pic, palette => {
                 this.setState({ colors: palette }, () => {
 
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
+                    let con = palette;
+                    app.state.currentComponent.setCompState({colors: con})
+                    this.setState({colors: con})
+                    
+            obj.setCompState({color:con, colors: con});
+            
+                    
 
                 });
               });
@@ -221,7 +224,8 @@ New Character:
       <div style={{ display:"flex", flexDirection: "column", width:"100%", alignItems:"center", marginTop:"7%", alignSelf:"flex-end"}}>
           <RunButton className="hover-btn" app={app} text="Create" 
           callBack={ async (arr) => {
-                      
+            
+            
             let conditions = conditionService.getConditions();
             let id = await arr[0].getJson()?._id;
 

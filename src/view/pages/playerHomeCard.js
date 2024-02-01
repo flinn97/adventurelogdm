@@ -10,6 +10,7 @@ import ConnectToCampaignButton from '../connectToCampaignbutton';
 import PlayerCharacterMapItem from '../playerMapItem';
 import ConnectToCampaignSwitch from '../connectToCampaignSwitch';
 import trash from '../../pics/trashStill.png';
+import PlayerCharacterMapItemPhone from '../playerMapItemPhone';
 
 export default class PlayerHomeCard extends Component {
   constructor(props) {
@@ -111,7 +112,8 @@ class MainContent extends Component{
                 
   <div className={window.innerWidth > 800?'scroller2':""}  style={{color:styles.colors.colorWhite+"99", marginTop:"45px", overflowX:"scroll"}}> 
   Your Characters:
-      <MapComponent 
+  {(window.innerWidth > 800) &&
+      (<MapComponent 
       delOptions={{
                   picURL: trash, warningMessage: "Delete this character (this is permanent)",
                   textStyle: { fontSize: styles.fonts.fontSmallest, },
@@ -126,7 +128,28 @@ class MainContent extends Component{
       cells={[{custom:PlayerCharacterMapItem, props:{app:app}}, "delete"]}
       theme={"selectByImageSmall"}
       
+      />) || (
+<div>
+<MapComponent 
+      delOptions={{
+                  picURL: trash, warningMessage: "Delete this character (this is permanent)",
+                  textStyle: { fontSize: styles.fonts.fontSmallest, },
+                  style: {
+                    width: "35px", height: "35px", padding: "4px 2px",
+                    display: "flex", flexDirection: "row",
+                    alignItems: "center", borderRadius: "8px",
+                    justifyContent: "center"
+                  },
+                }}
+      app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
+      cells={[{custom:PlayerCharacterMapItemPhone, props:{app:app}},]}
+      // theme={"selectByImageSmall"}
+      
       />
+  </div>
+      )
+      
+      }
       </div>
       </div>
       

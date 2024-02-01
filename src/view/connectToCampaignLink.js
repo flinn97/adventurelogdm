@@ -44,6 +44,7 @@ export default class ConnectToCampaignLink extends Component {
                 
                     </div>
             </div>
+            {window.innerWidth > 800 &&
         <div className='hover-containerInt' style={{height:"fit-content", width:"fit-content"}}>
               <div style={{marginLeft:"22px", marginTop:"4px", pointerEvents:"none"}}>
               <ParentFormComponent app={app}
@@ -57,6 +58,7 @@ export default class ConnectToCampaignLink extends Component {
               
 
               </div>
+              
                     <div 
                      onClick={() => {
                       if (obj){                          
@@ -70,7 +72,7 @@ export default class ConnectToCampaignLink extends Component {
                     position:"absolute", background:"#000000f9"}}>
                         Disconnect
                     </div>
-              </div>
+              </div>}
              
              
       </div>

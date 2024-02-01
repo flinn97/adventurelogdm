@@ -202,6 +202,12 @@ async validatePassword(password) {
                                 Submit
                             </div>
 
+                            <Link className='hover-img' style={{
+                        ...styles?.buttons?.buttonAdd, marginTop: "24px", background:"",
+                        padding: "8px 14px", width: "280px", border: "", boxShadow:"", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center",
+                    }} to="../login" >Back to Login</Link>
+
 
                         </div> </div>
 
@@ -226,11 +232,12 @@ async validatePassword(password) {
 
 
                     </div>
-                    <Link className='hover-btn' style={{
+                    {/* <Link className='hover-btn' style={{
                         ...styles?.buttons?.buttonAdd, marginTop: "24px",
                         padding: "8px 14px", width: "280px", border: "1px solid " + styles.colors.color8,
                         color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,
-                    }} to="../login" >Back to Login</Link></div>
+                    }} to="../login" >Back to Login</Link> */}
+                    </div>
 
             </div>
         )

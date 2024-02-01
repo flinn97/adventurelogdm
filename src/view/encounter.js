@@ -93,7 +93,7 @@ export default class Encounter extends Component {
     let app = this.props.app;
     let state = app.state;
     let opps = state.opps;
-
+    
     const now = Date.now();
     if (now - this.lastClicked < 90) {
       return;
@@ -105,8 +105,8 @@ export default class Encounter extends Component {
     if (obj?.getJson().currentTurn === undefined) {
       await this.updateMonster(obj, { currentTurn: this.state.currentTurn })
     }
-
-    const sortedList = await [...participantList].sort((a, b) => {
+    const validParticipants = participantList.filter(participant => participant.getJson().lastInit !== undefined && participant.getJson().lastInit !== "");
+    const sortedList = await validParticipants.sort((a, b) => {
       return parseInt(b.getJson().lastInit, 10) - parseInt(a.getJson().lastInit, 10);
     });
     
@@ -218,6 +218,7 @@ export default class Encounter extends Component {
     if (e.key === 'Enter') {
       e.preventDefault();
       if (obj?.getJson().isRunning) {
+        await state.componentList.sortSelectedList("monster", "lastInit", true);
         this.getNextHighestInitiative(participantList, dispatch);
       }
     }
@@ -488,6 +489,7 @@ export default class Encounter extends Component {
                 }}
                   onClick={async () => {
                     if (obj?.getJson().isRunning) {
+                      await state.componentList.sortSelectedList("monster", "lastInit", true);
                       this.getNextHighestInitiative(participantList, dispatch);
 
                     }
@@ -530,6 +532,7 @@ export default class Encounter extends Component {
                       // console.log(this.state.isRunning)
 
                       if (this.state.isRunning === true) {
+                        await state.componentList.sortSelectedList("monster", "lastInit", true);
                         this.getNextHighestInitiative(participantList, dispatch);  // Run logic
                         state.opps.run();
                         obj.setCompState({ isRunning: true });
