@@ -51,7 +51,7 @@ export default class ChatTokenComponent extends Component {
                 await state.opps.cleanPrepareRun({ del: obj });
 
               }}
-              style={{ width: "30px", marginLeft: "0px", background: styles.colors.color1 + "99", borderRadius: "50%", opacity:"95%"}} />
+              style={{ width: phone?"21px":"30px", marginLeft: "0px", background: styles.colors.color1 + "99", borderRadius: "50%", opacity:"95%"}} />
           </div>}
 
 

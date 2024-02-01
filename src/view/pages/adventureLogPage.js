@@ -205,12 +205,12 @@ export default class AdventureLogPage extends Component {
       <div style={{
         width: "100%",  height: "fit-content", display: "flex", flexDirection: "column", marginTop: window.innerWidth > 800?"30px":"42px", 
         paddingBottom: window.innerWidth > 800?"40px":"0px",
-        alignItems:window.innerWidth > 800?"center":"", alignSelf: window.innerWidth > 800?"center":"flex-start", justifySelf:"center",
+        alignItems:window.innerWidth > 800?"center":"", alignSelf:"center", justifySelf:"center",
 
         // marginBottom:window.innerWidth > 800?"":"-100%"
       }}>
         
-        {!this.state.showItems &&<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh", position: "absolute", left: "0px", top: "0px" }}>
+        {!this.state.showItems &&<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: window.innerWidth > 800?"100vh":"", position: "absolute", left: "0px", top: "0px" }}>
             <SplashScreen
               options={{ cardType: "bigCardBorderless" }} app={app}
               containerStyle={{ background: styles.colors.color2, zIndex: 55000, }}
@@ -230,11 +230,13 @@ export default class AdventureLogPage extends Component {
           {/* ADVENTURE LOG */}
           <div style={{
             display: "flex", flexDirection: "column",
-            justifyContent: "flex-end", height: "100%",
-            width: window.innerWidth > 800?"840px":"98vw", minHeight:window.innerWidth > 800? "860px":"83%", maxHeight: window.innerWidth > 800? "860px":"83%", border: window.innerWidth > 800?"8px solid " + styles.colors.color6 + "55":"",
+            justifyContent: "flex-end", height: window.innerWidth > 800?"100%":"",
+            width: window.innerWidth > 800?"840px":"98vw", minHeight:window.innerWidth > 800? "860px":"fit-content", maxHeight: window.innerWidth > 800? "860px":"", 
+            border: window.innerWidth > 800?"8px solid " + styles.colors.color6 + "55":"",
             backgroundColor: window.innerWidth > 800?styles.colors.color7 + "44":styles.colors.color7 + "1e", 
             marginTop:window.innerWidth > 800?"":"12px",
-            borderRadius: "20px", padding: window.innerWidth > 800?"2px":"",
+            
+            borderRadius: "20px", padding: window.innerWidth > 800?"2px":"",paddingBottom:window.innerWidth > 800?"":"64px",
           }}>
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
@@ -271,8 +273,10 @@ export default class AdventureLogPage extends Component {
           {/* THIS IS THE MESSAGE STUFF */}
           <div
             style={{
-              width: window.innerWidth > 800?"915px":"", height: "44px", display: "flex", flexDirection: "row", marginTop: window.innerWidth >800?"12px":"", 
-              position:window.innerWidth >800?"":"absolute", bottom:window.innerWidth >800?"":4, zIndex:window.innerWidth >800?"":8000,
+              width: window.innerWidth > 800?"915px":"100%", height: "44px", display: "flex", flexDirection: "row", marginTop: window.innerWidth >800?"12px":"", 
+              position:window.innerWidth >800?"":"absolute", 
+              background:window.innerWidth >800?"":styles.colors.color1+88,
+              bottom:window.innerWidth >800?"":4, zIndex:window.innerWidth >800?"":8000,
               justifyContent: "center"
             }}>
 
