@@ -218,7 +218,9 @@ export default class Encounter extends Component {
     if (e.key === 'Enter') {
       e.preventDefault();
       if (obj?.getJson().isRunning) {
+
         await state.componentList.sortSelectedList("monster", "lastInit", true);
+
         this.getNextHighestInitiative(participantList, dispatch);
       }
     }
@@ -452,9 +454,6 @@ export default class Encounter extends Component {
                   }}
                   onClick={async () => {
                     await this.setState({ showMonsterMap: false });
-
-                    //Taylor this is too slow
-
                     await componentList.sortSelectedList("monster", "lastInit", true);
                     await this.setState({ showMonsterMap: true });
                     dispatch({});
