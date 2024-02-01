@@ -104,7 +104,7 @@ class MainContent extends Component{
 
      </div>
      <div style={{
-      width:(window.innerWidth > 800)?"300px":"128vw", height:(window.innerWidth > 800)?"128vh":window.innerWidth, background:styles.colors.colorBlack, zIndex:"-9", 
+      width:(window.innerWidth > 800)?"480px":"128vw", height:(window.innerWidth > 800)?"400px":"128vh", background:"#00000022", zIndex:"-9", 
      position:"absolute", alignSelf:"center", top:"22px", filter:"blur(33px)"}}>
 
      </div>
