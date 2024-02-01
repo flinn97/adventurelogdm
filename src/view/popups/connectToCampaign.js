@@ -6,27 +6,12 @@ import RunButton from '../../componentListNPM/componentForms/buttons/runButton';
 
 
 
-/**
- * condensed version of the cards.
- * Works with themes.
- * props
- * theme
- * type
- * app
- * options
- * options can include cardType, cardContent, tabType, 
- */
 export default class ConnectToCampaign extends Component {
   constructor(props) {
     super(props);
     
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
 
 
   render() {
@@ -102,22 +87,25 @@ class MainContent extends Component{
     return(
       <div style={{
         display:"flex", width:"100%", flexDirection:"column", justifyContent:"center", height:"fit-content", 
-        paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
+        paddingTop:"35%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
     <div style={{ display:"flex", flexDirection:"column", textAlign:"center", paddingBottom:"42px", alignContent:"center", justifyContent:"center" }}> 
     <ParentFormComponent app={app} name="campaignId"
               placeholder={"Enter Campaign Code"}  maxLength={11} 
-              inputStyle={{maxWidth:"55.5vw", width:"400px", padding:"4px 9px", color:colorWarn, height:"fit-content",
+              inputStyle={{maxWidth:(window.innerWidth > 800)?"55.5vw":"100%", width:(window.innerWidth > 800)?"400px":"100%", 
+              padding:"4px 9px", color:colorWarn, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"02", borderWidth:"0px", height:"100%", cursor:"text",
               border:"solid 1px "+styles.colors.colorWhite+"22",
-              textWrap:"wrap", fontSize:styles.fonts.fontSmall}}/>
+              textWrap:"wrap", fontSize:(window.innerWidth > 800)?styles.fonts.fontSmall:"1.5rem"}}/>
          <div style={{color:styles.colors.color8, marginTop:"11px"}}>{"(Your GM has this)"}</div>     
      </div>
      <div className='hover-btn'  
-     style={{width:"400px", alignSelf:"center",  justifyContent:"center", display:'flex', flexDirection:"row",}}>
+     style={{width:(window.innerWidth > 800)?"400px":"fit-content", alignSelf:"center",  justifyContent:"center", display:'flex', flexDirection:"row",}}>
      <RunButton app={app} text="Enroll" callBack={(obj)=>{dispatch({popupSwitch:"", currentComponent:undefined})}}/>
 
      </div>
-     <div style={{width:"300px", height:"300px", background:styles.colors.colorBlack, zIndex:"-9", position:"absolute", alignSelf:"center", top:"22px", filter:"blur(33px)"}}>
+     <div style={{
+      width:(window.innerWidth > 800)?"300px":"128vw", height:(window.innerWidth > 800)?"128vh":window.innerWidth, background:styles.colors.colorBlack, zIndex:"-9", 
+     position:"absolute", alignSelf:"center", top:"22px", filter:"blur(33px)"}}>
 
      </div>
 
@@ -176,6 +164,7 @@ handleClickOutside(event) {
     let componentList = state.componentList;
     let styles =state.styles;
     
+    
     return(
       <div className="popup-box" style={{ zIndex: "1010" }}>
       <div ref={this.wrapperRef}  className="popupCard" 
@@ -183,7 +172,7 @@ handleClickOutside(event) {
       <div style={{...styles.buttons.buttonClose, position:"absolute", right:"1vw"}}
       onClick={this.props.handleClose}>X</div>
           
-          <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+          <div className={(window.innerWidth > 800)?'scroller':''} style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app}  delClick={this.props.delClick} />
         </div>
           
@@ -226,9 +215,12 @@ handleClickOutside(event) {
       <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
       
       <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> 
-        <TabContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/> <div style={ ///EXIT BUTTON
+        <TabContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/> 
+        <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>x</div></div>   
+                  } onClick={this.props.handleClose}>x</div>
+                  
+                  </div>   
       <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/>
         </div>

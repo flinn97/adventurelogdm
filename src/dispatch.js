@@ -175,7 +175,8 @@ export default class Dispatch extends Component {
                     {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type === "monster" &&
                       <ConnectToCampaign
 
-                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        type="popup" options={{ cardType: (window.innerWidth > 800)?"popupSmallSolid":"popupLarge" }} app={app} containerStyle={{ background: styles.colors.color2 }} 
+                        theme="adventure"
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
                       />}
@@ -184,7 +185,7 @@ export default class Dispatch extends Component {
 
                       <AddPlayerCharacter
 
-                        type="popup" options={{ cardType: "popupCreate" }} app={app}
+                        type="popup" options={{ cardType: (window.innerWidth > 800)?"popupCreate":"popupLarge"}} app={app}
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
                       />

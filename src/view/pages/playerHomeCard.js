@@ -88,7 +88,7 @@ class MainContent extends Component{
     
 
     return(
-    <div style={{height:"100%", width:"fit-content" }}>
+    <div style={{height:"100%", width:"fit-content", }}>
 
       
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif", 
@@ -96,7 +96,7 @@ class MainContent extends Component{
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
 
             
-                    
+                    {window.innerWidth > 800 &&
                   <div title=' You can connect them to an adventure later'
                   style = {{...styles.buttons.buttonAdd, borderRadius:"11px",marginTop:"22px", pointer:"cursor"}} onClick={()=>{
                     //
@@ -108,10 +108,27 @@ class MainContent extends Component{
                     operation:"cleanJsonPrepare", object:obj, 
                   })
 
-                  }}>+ Create New Character</div>
+                  }}>+ Create New Character</div>}
                 
   <div className={window.innerWidth > 800?'scroller2':""}  style={{color:styles.colors.colorWhite+"99", marginTop:"45px", overflowX:"scroll"}}> 
-  Your Characters:
+  <div style={{width:"100%", justifyContent:"space-between", display:"flex", flexDirection:"row",  }}>
+  
+  <div style={{width:"fit-content",height:"fit-content"}}>{window.innerWidth > 800?"Your Characters":""}</div>
+
+  {window.innerWidth < 800 &&
+                  <div title=' You can connect them to an adventure later'
+                  style = {{...styles.buttons.buttonAdd, borderRadius:"11px",pointer:"cursor", }} onClick={()=>{
+                    //
+                   
+                    let obj = {name:"", type:"monster", role:"player", isToken:true};
+
+                    // state.opps.cleanJsonPrepareRun({addmonster:obj});
+                    dispatch({popupSwitch:"addCharacter", operate:"addmonster", 
+                    operation:"cleanJsonPrepare", object:obj, 
+                  })
+
+                  }}>+ Create New Character</div>}</div>
+
   {(window.innerWidth > 800) &&
       (<MapComponent 
       delOptions={{
@@ -129,7 +146,7 @@ class MainContent extends Component{
       theme={"selectByImageSmall"}
       
       />) || (
-<div>
+<div style={{}}>
 <MapComponent 
       delOptions={{
                   picURL: trash, warningMessage: "Delete this character (this is permanent)",

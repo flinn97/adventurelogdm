@@ -173,10 +173,10 @@ export default class PlayerCharacterMapItem extends Component {
 
       <div style={{
         width: "100%", overflowX: "visible", marginTop: "1vh",
-        position: "relative", borderRadius: "22px", minWidth: "1300px",
+        position: "relative", borderRadius: "22px", minWidth: "100%",
         alignSelf: "flex-start", justifySelf: "flex-start",
       }}>
-        <div className={window.innerWidth > 800?'scroller2':""}
+        <div className='scroller2'
           style={{
             width: "100%", borderRadius: "22px",
             height: "fit-content", overflowX: "visible",
@@ -222,7 +222,7 @@ export default class PlayerCharacterMapItem extends Component {
                       prepareRun={true} maxLength={30}
 
                       inputStyle={{
-                        width: "200px", padding: "2px 4px", color: styles.colors.colorWhite, marginTop: "8px",
+                        width: "10.5vw", padding: "2px 4px", color: styles.colors.colorWhite, marginTop: "8px",
                         color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: fontSize[2], cursor: "text",
                         borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
                       }}
@@ -235,10 +235,10 @@ export default class PlayerCharacterMapItem extends Component {
                       <img src={bookCursor} style={{ width: "50px", opacity: "0%" }} />
 
                     </div><ParentFormComponent obj={this.props.obj} name="statBlockLink"
-                      prepareRun={true} maxLength={30}
+                      prepareRun={true} maxLength={38}
                       placeholder={"Link to Sheet"}
                       inputStyle={{
-                        width: "200px", padding: "2px 4px", color: styles.colors.colorWhite, marginTop: "8px",
+                        width: "10.5vw", padding: "2px 4px", color: styles.colors.colorWhite, marginTop: "8px",
                         color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: fontSize[2],
                         borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
                       }}
@@ -246,7 +246,7 @@ export default class PlayerCharacterMapItem extends Component {
                     /></div>)
                 }
 
-                {(window.innerWidth > 600) &&
+                
                   <div className='hover-container' style={{ marginLeft: "0px" }}>
                     {obj?.getJson().isToken === true &&
                       (<TokenImage pic={obj?.getJson().picURL} width={width - 8} app={app} colors={colors} />)
@@ -292,7 +292,7 @@ export default class PlayerCharacterMapItem extends Component {
                         }}
 
                       /></div>
-                  </div>}
+                  </div>
 
 
 
@@ -308,7 +308,7 @@ export default class PlayerCharacterMapItem extends Component {
                     prepareRun={true} maxLength={30}
 
                     inputStyle={{
-                      width: "520px", padding: "4px 9px", color: styles.colors.colorWhite, height: "1.7rem", rows: "1",
+                      width: "30vw", padding: "4px 9px", color: styles.colors.colorWhite, height: "1.7rem", rows: "1",
                       fontSize: fontSize[0], cursor: "text",
                       borderRadius: "11px",
                       background: "linear-gradient(90deg, " + styles.colors.colorBlack + "5c, " + colors[0] + "11," + styles.colors.colorBlack + "5c)", borderWidth: "0px", alignItems: "center", textAlign: "center", justifyContent: "center",
@@ -316,7 +316,7 @@ export default class PlayerCharacterMapItem extends Component {
 
                   />
                 </div>
-                {(window.innerWidth > 600) &&
+                
                   <div title="Initiative Bonus" className='hover-btn'
                     style={{
                       display: "flex",
@@ -341,8 +341,8 @@ export default class PlayerCharacterMapItem extends Component {
                       }}
                     />
 
-                  </div>}
-                {(window.innerWidth > 600) &&
+                  </div>
+                
                   <div title="AC" className='hover-btn'
                     style={{
                       display: "flex",
@@ -368,8 +368,8 @@ export default class PlayerCharacterMapItem extends Component {
                       }}
                       style={{ alignSelf: "center", fontSize: fontSize[1], }} />
 
-                  </div>}
-                {(window.innerWidth > 600) &&
+                  </div>
+                
                   <div title="Max HP" className='hover-btn'
                     style={{
                       display: "flex",
@@ -393,7 +393,7 @@ export default class PlayerCharacterMapItem extends Component {
                       }} />
 
 
-                  </div>}
+                  </div>
 
 
                 {/* {{ACTIVE CONDITIONS}} */}

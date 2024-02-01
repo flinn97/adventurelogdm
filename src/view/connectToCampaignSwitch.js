@@ -26,7 +26,7 @@ export default class ConnectToCampaignSwitch extends Component {
     let comps = state.componentList.getList("campaign", objCampId, "_id")
 
     return (
-      <div  style={{width:"800px", display:"flex", flexDirection:"row", justifyContent:"left", marginLeft:"22px", }}>
+      <div  style={{width:(window.innerWidth > 800)?"800px":"fit-content", display:"flex", flexDirection:"row", justifyContent:"left", marginLeft:(window.innerWidth > 800)?"22px":"", }}>
         <div>
         {objCampId!=="" && 
         objCampId!==undefined &&

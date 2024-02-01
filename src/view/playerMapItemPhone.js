@@ -92,7 +92,7 @@ export default class PlayerCharacterMapItemPhone extends Component {
     let obj = this.props.obj;
     let allColors = obj.getJson().colors;
     let colors = obj.getJson().colors ? Object.values(allColors) : [styles.colors.color1, styles.colors.color2, styles.colors.color8, styles.colors.color1, styles.colors.color2, styles.colors.color8];
-console.log(allColors)
+    console.log(allColors)
     const width = 108;
 
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
@@ -127,12 +127,12 @@ console.log(allColors)
 
       <div style={{
         width: "100%", overflowX: "visible", marginTop: "18px",
-        position: "relative", borderRadius: "22px",
+        position: "relative", borderRadius: "22px", minWidth: "100%",
         alignSelf: "flex-start", justifySelf: "flex-start",
       }}>
         <div
           style={{
-            width: "100%", borderRadius: "22px",
+            width: "100%", borderRadius: "22px", minWidth: "100%",
             height: "fit-content",
           }}>
 
@@ -153,17 +153,17 @@ console.log(allColors)
               zIndex: "0",
               height: 'fit-content',
               width: "100%", background: "linear-gradient(90deg, " + colors[4] + "55, #45526e27, " + colors[2] + "22)",
-              ...styles.backgroundContent, 
+              ...styles.backgroundContent,
             }}>
               <div
 
                 style={{
                   display: "flex", flexDirection: "row", justifyContent: "space-between", borderRadius: "22px",
-                  height: "fit-content", alignContent: "center", alignItems: "center", padding: "8px 12px",
+                  height: "fit-content", alignContent: "center", alignItems: "center", padding: "8px 8px",
                 }}
 
               >
-                {this.state.showMore &&
+                {/* {this.state.showMore &&
                   <div>
                     {stat &&
                       (<div title={stat} style={{ justifyContent: "center",display: "flex", marginLeft: "11px", flexDirection: "column", alignContent: "center", alignItems: "center", }}>
@@ -186,10 +186,12 @@ console.log(allColors)
 
                       </div>) ||
                       (<div title={stat} style={{ justifyContent: "center", display: "flex", marginLeft: "11px", flexDirection: "column", alignContent: "center", alignItems: "center", }}>
+                        
                         <div className='hover-btn'>
                           <img src={bookCursor} style={{ width: "50px", opacity: "0%" }} />
 
-                        </div><ParentFormComponent obj={this.props.obj} name="statBlockLink"
+                        </div>
+                        {!this.state.showMore &&<ParentFormComponent obj={this.props.obj} name="statBlockLink"
                           prepareRun={true} maxLength={30}
                           placeholder={"Link to Sheet"}
                           inputStyle={{
@@ -198,65 +200,50 @@ console.log(allColors)
                             borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
                           }}
 
-                        /></div>)
+                        />}</div>)
                     }
-                  </div>}
+                  </div>} */}
 
 
 
 
 
 
+                {!this.state.showMore &&
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                  <div className='hover-btn' title="Name"
+                    style={{
+                      display: "flex", height: "fit-content", width: "100%", fontWeight: "bold", fontFamily: "serif",
+                      textDecoration: styles.colors.colorWhite + "88 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
+                      textShadow: "1px 1px 0 " + styles.colors.colorBlack, border: "1px solid " + styles.colors.color8 + '22',
+                      alignSelf: "center", borderRadius: "11px", background: styles.colors.color1 + '55', maxWidth:"61vw",
+                      alignItems: "center", justifyContent: "center", fontSize: fontSize[0],
+                    }}>
+                    <ParentFormComponent obj={this.props.obj} name="name"
+                      prepareRun={true} maxLength={30}
 
-                <div className='hover-btn' title="Name"
-                  style={{
-                    display: "flex", height: "fit-content", width: "fit-content", fontWeight: "bold", fontFamily: "serif",
-                    textDecoration: styles.colors.colorWhite + "88 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                    textShadow: "1px 1px 0 " + styles.colors.colorBlack, marginRight: ".5vw", border: "1px solid "+styles.colors.color8+'22',
-                    alignSelf: "center", borderRadius: "11px", background:styles.colors.color1+'55',
-                    alignItems: "center", justifyContent: "center", fontSize: fontSize[0],
-                  }}>
-                  <ParentFormComponent obj={this.props.obj} name="name"
-                    prepareRun={true} maxLength={30}
-
-                    inputStyle={{
-                      width: "100%", padding: "4px 9px", color: styles.colors.colorWhite, height: "1.7rem", rows: "1",
-                      fontSize: fontSize[0], cursor: "text",
-                      borderRadius: "11px", 
-                      background: "linear-gradient(90deg, " + styles.colors.colorBlack + "5c, " + colors[0] + "11," + styles.colors.colorBlack + "5c)", borderWidth: "0px", alignItems: "center", textAlign: "center", justifyContent: "center",
-                    }}
-
-                  />
-                </div>
-
-
-                <div className='hover-container' style={{ marginLeft: "0px", background:'red', width:"fit-content", marginRight:"-22px", marginLeft:"-22px",  }}>
-                  <TokenImage pic={obj?.getJson().picURL} width={70} app={app} colors={colors} obj={obj} />
-                      
-                  <div className='hover-div' style={{
-                    position: "absolute",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "8px",
-                    borderRadius: "11px",
-                    width: "190px",
-                    background: styles.colors.colorBlack,
-                    left: 0,
-                    top: -5
-                  }}>
-                    <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.colorWhite, width: "fit-content" }}>Show Token Border?</div>
-                    <ParentFormComponent obj={this.props.obj} name="isToken"
-                      prepareRun={true} wrapperStyle={{ width: "fit-content", height: "fit-content", alignContent: "center", justifyContent: "center", alignContent: "center", alignItems: "center", alignText: "center", }}
-                      type={"checkbox"}
                       inputStyle={{
-                        padding: "2px 4px", color: styles.colors.colorWhite,
-                        color: styles.colors.colorBlack, fontSize: fontSize[0],
+                        width: "100%", padding: "4px 9px", color: styles.colors.colorWhite, height: "1.7rem", rows: "1",
+                        fontSize: fontSize[0], cursor: "text",
+                        borderRadius: "11px", minWidth:"20",
+                        background: "linear-gradient(90deg, " + styles.colors.colorBlack + "5c, " + colors[0] + "11," + styles.colors.colorBlack + "5c)", 
+                        borderWidth: "0px", alignItems: "center", textAlign: "center", justifyContent: "center",
                       }}
 
-                    /></div>
-                </div>
+                    />
+                  </div>
+
+               
+                  <div className='indent-on-click' style={{ marginLeft: "0px", width: "60px", borderRadius: "50%", height: "60px", padding:"1px", marginRight:"25px" }}
+                    onClick={() => {
+                      this.setState({ showMore: !this.state.showMore })
+
+                    }}
+                  >
+                    <TokenImage pic={obj?.getJson().picURL} width={60} app={app} colors={colors} obj={obj} />
+
+                   
+                  </div></div>}
 
                 {(this.state.showMore) &&
                   <div title="Initiative Bonus" className='hover-btn'
@@ -277,7 +264,7 @@ console.log(allColors)
                       prepareRun={true} maxLength={4} label={"+"}
 
                       inputStyle={{
-                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "8px",
+                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "2px",
                         color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: styles.fonts.fontNormal,
                         borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
                       }}
@@ -304,7 +291,7 @@ console.log(allColors)
                       prepareRun={true} maxLength={2}
 
                       inputStyle={{
-                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "8px",
+                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "2px",
                         color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: styles.fonts.fontNormal,
                         borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
                       }}
@@ -329,7 +316,7 @@ console.log(allColors)
                     <ParentFormComponent obj={this.props.obj} name="hp"
                       prepareRun={true} maxLength={4} doesMath={true}
                       inputStyle={{
-                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "8px",
+                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "2px",
                         color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: styles.fonts.fontNormal, cursor: "text",
                         borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
                       }} />
@@ -337,51 +324,20 @@ console.log(allColors)
 
                   </div>}
 
+                {this.state.showMore && (
+                  <div style={{fontSize:"2.1rem", marginLeft:"3px", padding:"8px", color:"red"}}  onClick={() => {
+                    this.setState({ showMore: !this.state.showMore })
 
-                {/* {{ACTIVE CONDITIONS}} */}
+                  }}>
+                    x
+                  </div>
+                )}
 
-                {/* {activeConList &&
-                        <div style={{display: 'flex', flexWrap: 'wrap',  width:"fit-content", opacity:"79%", 
-                        alignContent:"flex-start", marginLeft:"3px",
-                        color:styles.colors.colorWhite, flexDirection:"column", width:"100%",
-                        maxHeight:"112px",
-                        padding:"0px 4px",}}>
-                        {activeConList.slice(0, maxCon).map((word, index) => {
-                                  
-                                  return (
-                          <div style={{display: 'flex', flexDirection:"row", justifyContent:"flex-start", alignSelf:"flex-start", maxWidth:"240px",}}>
-                            {word.getJson().name && word.getJson().name!=="" &&
-                            <div  key={index}
-                            style={{
-                              fontSize:fontSize[1], textAlign:"flex-start",
-                              width:"fit-content", padding:word.getJson().name==="Dead"?"2px 8px":"2px", 
-                              alignSelf:"flex-end", alignSelf:"flex-end",
-                              color:word.getJson().name==="Dead"?styles.colors.color5:styles.colors.colorWhite,
-                              fontWeight: word.getJson().name==="Dead"?600:200,
-                              borderRadius:"11px",
-                              border:  word.getJson().name==="Dead"?"1px solid "+styles.colors.color6:"",
-                              
-                               }}>
-                              {word.getJson().name}
-                            </div>}
-                            
-                              <div style={{
-                              fontSize:fontSize[2], alignSelf:"center",
-                              
-                            width:"fit-content", marginRight:"32px", marginLeft:"4px", opacity:word.getJson().name==="Dead"?"0%":"70%",
-                              }}>
-                               {"("+word.getJson().roundsActive+")"}
-                          
-                            
-                              </div>
-                              
-                            </div>)
-  })}
-                          </div>   }       */}
               </div>
+
               <div style={{
-                width: "100%", display: "flex", flexDirection: "row", marginBottom: "11px",
-                justifyContent: "flex-start"
+                width: "fit-content", display: "flex", flexDirection: "row", marginBottom: "11px",
+                justifyContent: "center", alignSelf: "center", height: "fit-content", marginTop: "11px",
               }}>
                 <ConnectToCampaignSwitch app={app} {...this.props} />
               </div>
