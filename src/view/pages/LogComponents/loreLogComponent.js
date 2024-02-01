@@ -22,7 +22,7 @@ export default class LoreLogComponent extends Component {
     let styles = state.styles;
     let obj = this.props.obj;
     let index = this.props.index;
-  
+    let phone = window.innerWidth > 800?false:true;
     let w = this.props.w;
 
     const quote = <div style={{color:styles.colors.color8+"d5",fontSize:styles.fonts.fontSmall, opacity:".5"}}>
@@ -50,7 +50,7 @@ export default class LoreLogComponent extends Component {
                       theme={"adventureLog"} 
                       
                       inputStyle={{ color:styles.colors.colorWhite+"f6", height:"fit-content", 
-                      borderRadius:"4px", padding:"4px 4px", minWidth:"550px", maxWidth:"550px",
+                      borderRadius:"4px", padding:"4px 4px", minWidth:phone?"90%":"550px", maxWidth:"550px",
                       fontSize:styles.fonts.fontSmall,pointerEvents: "none", 
                       // letterSpacing:".15rem",
                       userSelect:"none", cursor:"",               

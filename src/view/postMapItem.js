@@ -58,10 +58,13 @@ export default class PostMapItem extends Component {
     let index = this.props.index;
     let isYou = this.whichUser(obj);
     let sender = this.props.obj?.getJson().sender;
-    const marginUser = isYou ? "180px" : "0px";
+    
     let tLevel = "44";
     let chatItemColor = styles.colors.colorBlack;
 
+    let notPhone = window.innerWidth > 800;
+    let marginUser = isYou ? "180px" : "0px";
+    marginUser = notPhone?marginUser:"0px"
 
     const backgroundUser = isYou ?
       "linear-gradient(to right, " + chatItemColor + tLevel + ", " + chatItemColor + "99)"
@@ -70,7 +73,7 @@ export default class PostMapItem extends Component {
 
     let pType = obj?.getJson().postType;
     let choiceColor = styles.colors.color9 + "55";
-    let w = "590px";
+    let w = notPhone?"590px":"94%";
 
     let oColors = obj.getJson().colors ? obj.getJson()?.colors[0] + "66" : choiceColor;
 
@@ -81,7 +84,7 @@ export default class PostMapItem extends Component {
       <div className='hover-container' style={{
         display: "flex",
         flexDirection: "row", width: w,
-        maxWidth: w, justifyContent: "center",
+        maxWidth: w, justifyContent:"center",
         borderBottom: sender === "GM" ? "solid 3px " + styles.colors.color3 + "66" : "solid 1px " + styles.colors.colorWhite + "55",
         borderTop: sender === "GM" ? "solid 1px " + styles.colors.color3 + "66" : "solid 1px " + styles.colors.color8 + "22",
 
@@ -98,10 +101,10 @@ export default class PostMapItem extends Component {
 
 
         {/* COMPONENT */}
-        {LogComponent ? (<LogComponent {...this.props} isYou={isYou} w={w} />) : null}
+        {LogComponent ? (<LogComponent {...this.props} isYou={isYou} w={w}/>) : null}
 
 
-        {isYou && obj.getJson().postType !== "encounter" &&
+        {isYou && obj.getJson().postType !== "encounter" && notPhone &&
           <div style={{ display: "flex", flexDirection: "row", marginTop: "1.2%", marginBottom: "1.2%", position: "sticky", marginLeft: "13px" }}>
 
             <div style={{

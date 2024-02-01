@@ -109,7 +109,7 @@ class MainContent extends Component{
 
                   }}>+ Create New Character</div>
                 
-  <div className='scroller2'  style={{color:styles.colors.colorWhite+"99", marginTop:"45px", overflowX:"scroll"}}> 
+  <div className={window.innerWidth > 800?'scroller2':""}  style={{color:styles.colors.colorWhite+"99", marginTop:"45px", overflowX:"scroll"}}> 
   Your Characters:
       <MapComponent 
       delOptions={{

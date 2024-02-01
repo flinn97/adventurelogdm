@@ -79,8 +79,10 @@ export default class AdventureLog extends Component {
    
 
     return (
-      <div  style={{minHeight:"100%", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%", }} >
-        {state.user.getJson().role!=="GM" && state.currentCharacter && <div style={{color:"white"}}>{state.currentCharacter.getJson().name}</div>}
+      <div  style={{minHeight:"100%", display:"flex", flexDirection:"column",maxHeight:"100%", justifyContent:"center", width:"100%", }} >
+        {state.user.getJson().role!=="GM" && state.currentCharacter &&  window.innerWidth > 800 &&
+        <div style={{color:"white"}}>
+          {state.currentCharacter.getJson().name}</div>}
       {this.state.gotCampaign&&(<AdventureLogPage app= {app} type="cardWithTab" options={{tabType:"bigCardBorderless", cardType:undefined}}/>)} 
       <div 
           style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-start",

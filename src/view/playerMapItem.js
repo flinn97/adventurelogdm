@@ -176,7 +176,7 @@ export default class PlayerCharacterMapItem extends Component {
         position: "relative", borderRadius: "22px", minWidth: "1300px",
         alignSelf: "flex-start", justifySelf: "flex-start",
       }}>
-        <div className='scroller2'
+        <div className={window.innerWidth > 800?'scroller2':""}
           style={{
             width: "100%", borderRadius: "22px",
             height: "fit-content", overflowX: "visible",
@@ -213,9 +213,12 @@ export default class PlayerCharacterMapItem extends Component {
                 {stat &&
                   (<div title={stat} style={{ justifyContent: "center", display: "flex", marginLeft: "11px", flexDirection: "column", alignContent: "center", alignItems: "center", }}>
                     <a href={stat} target='_blank'>
-                      <img className='hover-img' src={bookCursor} style={{ width: "50px", opacity: "" }} />
 
-                    </a><ParentFormComponent obj={this.props.obj} name="statBlockLink"
+                      <img className='hover-img' src={bookCursor} style={{ width: "50px", opacity: "" }}/>
+
+                    </a>
+
+                    <ParentFormComponent obj={this.props.obj} name="statBlockLink"
                       prepareRun={true} maxLength={30}
 
                       inputStyle={{
@@ -224,7 +227,9 @@ export default class PlayerCharacterMapItem extends Component {
                         borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
                       }}
 
-                    /></div>) ||
+                    />
+                    
+                    </div>) ||
                   (<div title={stat} style={{ justifyContent: "center", display: "flex", marginLeft: "11px", flexDirection: "column", alignContent: "center", alignItems: "center", }}>
                     <div className='hover-btn'>
                       <img src={bookCursor} style={{ width: "50px", opacity: "0%" }} />

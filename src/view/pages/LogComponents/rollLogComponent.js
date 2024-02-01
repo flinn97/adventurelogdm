@@ -55,7 +55,7 @@ export default class RollLogComponent extends Component {
     let styles = state.styles;
     let obj = this.props.obj;
     let index = this.props.index;
-  
+    let phone = window.innerWidth > 800?false:true;
     let w = this.props.w;
     
     const b1 = <div style={{color:styles.colors.colorWhite+"11", marginRight:"8px"}}>{"[ "}</div>
@@ -77,20 +77,21 @@ export default class RollLogComponent extends Component {
                       whiteSpace: "normal",
                       overflowWrap: "break-word" }}>
 
-
+{!phone &&
                 <img title={obj.getJson()?.desc} src={die} style={{
                   opacity: this.state.randomN === ""?1:0,
-                  width:"25px", zIndex:"10", filter:"contrast(0%)", marginLeft:"-17px", marginTop:"15px",
-                height:"25px", marginBottom:"-25px"}}/>
+                  width:phone?"14px":"25px", zIndex:"10", filter:"contrast(0%)", marginLeft:phone?"":"-17px", marginTop:phone?"11px":"15px", 
+                  verticalAlign:"center",
+                height:phone?"14px":"25px", marginBottom:"-25px"}}/>}
                 
                 <div style={{
-                  color:this.state.randomN === ""?styles.colors.colorWhite+"55":styles.colors.color5+"55", fontSize:styles.fonts.fontSmallest, marginTop:"-10px",
+                  color:this.state.randomN === ""?styles.colors.colorWhite+"55":styles.colors.color5+"55", fontSize:phone?styles.fonts.fontSmall:styles.fonts.fontSmallest, marginTop:phone?"0%":"-10px",
                 display:"flex", cursor:"default",pointerEvents: "none", textAlign:"center", flexDirection:"column", 
-                minWidth:"550px", maxWidth:"550px", height:"45px",  verticalAlign:"center", justifyContent:"center",
+                minWidth:phone?"90%":"550px", maxWidth:"550px", height:"45px",  verticalAlign:"center", justifyContent:"center",
                 textAlign:"center", textAlign:"center"}}>
                   Rolled
                   
-                  <div style={{height:"fit-content",width:"550px",
+                  <div style={{height:"fit-content",width:phone?"90%":"550px",
                    opacity: this.state.showMessage ? "1" : ".02", transition: "opacity 1s ease-out", marginBottom:"8px",
                    display:"flex", flexDirection:"row", alignContent:"center", justifyContent:"center", 
                    
@@ -99,7 +100,7 @@ export default class RollLogComponent extends Component {
                   </div>
 
           {this.state.randomN !== "" &&(
-                  <div style={{height:"fit-content",width:"550px", marginTop:"-35px",
+                  <div style={{height:"fit-content",width:phone?"90%":"550px", marginTop:phone?"0px":"-35px",
                   color:styles.colors.color3+"88", zIndex:"20"}}>
                   {this.state.randomN}
                   </div>)}

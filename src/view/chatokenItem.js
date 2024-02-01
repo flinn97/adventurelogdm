@@ -9,6 +9,7 @@ import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import TokenImage from './tokenImage';
 import placeholderGM from '../pics/GM.png';
 import trash from '../pics/trash.gif';
+import trashStill from '../pics/trashStill.png';
 
 
 
@@ -33,7 +34,7 @@ export default class ChatTokenComponent extends Component {
     let obj = this.props.obj;
     let userRole = obj.getJson().sender;
 
-
+    let phone = window.innerWidth < 800?true:false;
     let isYourPost = obj.getJson().characterId === char.getJson()._id ? true : false;
 
     return (
@@ -42,8 +43,9 @@ export default class ChatTokenComponent extends Component {
 
 
         {(state.user.getJson().role === "GM") &&
-          <div className='hover-container' style={{ display: "flex", flexDirection: "row", position: "absolute", right: 0, zIndex: 8100, top: -15, cursor: "pointer", width: "32px" }}>
-            <img className='hover-div' src={trash} title='Delete this post'
+          <div className={phone?'':'hover-container'} style={{ display: "flex", flexDirection: "row", position: "absolute", right:phone?-26 : 0, 
+          zIndex: 8100, top:"", cursor: "pointer", width: "32px" }}>
+            <img className={phone?'':'hover-div'} src={phone?trashStill:trash} title='Delete this post'
               onClick={async () => {
 
                 await state.opps.cleanPrepareRun({ del: obj });
@@ -55,7 +57,7 @@ export default class ChatTokenComponent extends Component {
 
         {/* {ALIGN to RIGHT SIDE} */}
         {isYourPost &&
-          <div style={{ display: "flex", flexDirection: "row", position: "absolute", right: -45, zIndex: 8100, top: -15 }}>
+          <div style={{ display: "flex", flexDirection: "row", position: "absolute", right: phone?0:-45, zIndex: 8100, top: phone?0:-15 }}>
             <div style={{
               display: "flex",
 
@@ -66,10 +68,14 @@ export default class ChatTokenComponent extends Component {
                 <div style={{}}
                   title={obj?.getJson().name ? obj?.getJson().name + " sent this." : "GM sent this."}
                 >
-
+{!phone &&
                   <TokenImage app={app} pic={obj.getJson().userPic} width={32} colors={obj?.getJson().colors} />
-
-
+  }
+{phone &&
+                  <div style={{fontSize:styles.fonts.fontSmallest, color:styles.colors.color8}}>
+                    {obj?.getJson().name}
+                    </div>
+  }
 
 
                 </div>
@@ -85,7 +91,7 @@ export default class ChatTokenComponent extends Component {
 
         {/* {ALIGN to Left SIDE} */}
         {!isYourPost &&
-          <div style={{ display: "flex", flexDirection: "row", position: "absolute", left: -39, zIndex: 800, top: -15 }}>
+          <div style={{ display: "flex", flexDirection: "row", position: "absolute", left: phone?0:-39, zIndex: 800, top: phone?0:-15 }}>
             <div style={{
               display: "flex",
 
@@ -95,9 +101,14 @@ export default class ChatTokenComponent extends Component {
                 <div style={{}}
                   title={obj?.getJson().name ? obj?.getJson().name + " sent this." : "GM sent this."}
                 >
-
+{!phone &&
                   <TokenImage app={app} pic={obj.getJson().userPic} width={32} colors={obj?.getJson().colors} />
-
+}
+{phone &&
+                  <div style={{fontSize:styles.fonts.fontSmallest, color:styles.colors.color8}}>
+                    {obj?.getJson().name}
+                    </div>
+  }
 
                 </div>
               ) || (
@@ -105,7 +116,7 @@ export default class ChatTokenComponent extends Component {
                     title={"GM sent this."}
                   >
                     {state.user.getJson().role !== "GM" &&
-                      <img src={placeholderGM} style={{ width: "32px", marginLeft: "40px", background: styles.colors.color1 + "99", borderRadius: "50%" }} />
+                      <img src={placeholderGM} style={{ width: phone?"12px":"32px", marginLeft: phone?"6px":"40px", background: styles.colors.color1 + "99", borderRadius: "50%" }} />
                     }
 
                   </div>

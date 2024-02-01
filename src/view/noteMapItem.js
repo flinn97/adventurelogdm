@@ -28,7 +28,7 @@ export default class NoteMapItem extends Component {
     body = body.replace(/ +/g, ' ');
 
     // Truncate text to 134 characters
-    body = body.substring(0, 134) + '...';
+    body = body.substring(0, 130) + '...';
 
     let bodyText = document.getElementById(this.props.obj.getJson()._id + "textBody");
     bodyText.innerHTML = body;
@@ -69,7 +69,7 @@ export default class NoteMapItem extends Component {
 //console.log(this.props.obj.getJson().text.length) 
 
     return (
-      <div style={{width:"100%", height:"3.5em",}} onClick={async ()=>{
+      <div style={{width:"100%", minHeight:"3.5em", userSelect:"none", cursor:"pointer"}} onClick={async ()=>{
         await dispatch({currentComponent: undefined});
         dispatch({currentComponent: this.props.obj}); 
         }}>
@@ -98,7 +98,9 @@ export default class NoteMapItem extends Component {
         </div>
         
         </div>
-        {state.currentComponent === this.props.obj && <hr style={{marginTop:"0px",}}></hr>}
+        {/* {state.currentComponent === this.props.obj &&  */}
+        <hr style={{marginTop:"0px",}}></hr>
+        {/* } */}
         </div>
     )
   }
