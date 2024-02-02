@@ -230,7 +230,6 @@ export default class MonsterMapItem extends Component {
 
     const maxCon = conList.length === "" ? 13 : 12;
     const iValue = (currentTurn == lastInitAsNumber ? "1" : "0");
-console.log(obj)
     return (
 
       <div title={obj?.getJson().notes} style={{
