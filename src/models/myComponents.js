@@ -625,16 +625,9 @@ function forFactory() {
         encounter:Encounter,monster:Monster,
         newNote:NewNote,map:Map, post:Post,
         marketplaceItem:MarketplaceItem,
-        condition:Condition,
+        condition:Condition, icon:Icon, 
         lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest}
-    return {
-        user: User, pin: Pin, campaign: Campaign,
-        encounter: Encounter, monster: Monster,
-        newNote: NewNote, map: Map, post: Post,
-        marketplaceItem: MarketplaceItem, icon:Icon,
-        condition: Condition,
-        lore: Lore, image: Image
-    }
+
 }
 
 

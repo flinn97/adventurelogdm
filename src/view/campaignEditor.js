@@ -219,15 +219,18 @@ export default class CampaignEditor extends Component {
     let parentItem = state.componentList.getComponent("lore", pId, "_id");
 
     return (<div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
-      <div style={{color:"white"}} onClick={()=>{
-        debugger
-        // Sample data for the request body
-        const requestBody = {
+      {state.user.getJson().partner?( <div 
+style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content", padding:"2px 8px", marginBottom:"8px"}} onClick={async ()=>{
+debugger
+// dispatch({popupSwitch:"approval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
+   // Sample data for the request body
+   let campaign = {...state.currentCampaign.getJson()}
+        let requestBody = {
           email: "jaredmichaeldavidson",
-          lore: {
-              ...state.currentCampaign.getJson()
-          }
+          lore: {...campaign}
       };
+      requestBody=await JSON.stringify(requestBody)
+
 
       // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
       const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
@@ -238,7 +241,7 @@ export default class CampaignEditor extends Component {
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify(requestBody),
+          body: requestBody,
       })
       .then(response => response.json())
       .then(data => {
@@ -247,7 +250,13 @@ export default class CampaignEditor extends Component {
       .catch(error => {
           console.error('Error:', error);
       });
-      }}>send</div>
+}}>Send to Marketplace</div>):(<div style={{color:"white"}} onClick={async ()=>{
+        
+        let obj = await state.opps.cleanJsonPrepare({addpartnerRequest: {type:"partnerRequest", email:state.user.getJson()._id}});
+        app.dispatch({ popupSwitch:"partnerRequest", currentComponent:obj.add[0]});
+        
+     
+      }}>Become a Partner</div>)}
       {/* <div style={{color:"white"}} onClick={()=>{
         convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
       }}>Campaign Editor</div> */}
@@ -259,11 +268,7 @@ export default class CampaignEditor extends Component {
         }}>
           <div ref={this.startRef} />
 
-          {/* <div className='hover-btn-highlight'
-style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content", padding:"2px 8px", marginBottom:"8px"}} onClick={()=>{
-dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
-//treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
-}}>Send to Marketplace</div> */}
+         
 
           {/* BACK BUTTON */}
           {(state.popUpSwitchcase != "updateCampaign" && state.currentLore == undefined) &&

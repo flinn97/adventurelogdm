@@ -90,7 +90,7 @@ class MainContent extends Component{
   async componentDidMount(){
     let approvals = await auth.firebaseGetter("approval", this.props.app.state.componentList, "type", "approval")
     for(let approval of approvals){
-      await auth.firebaseGetter(approval.getJson().campaignId,  this.props.app.state.componentList, "_id", "campaign")
+      auth.firebaseGetter(approval.getJson().campaignId,  this.props.app.state.componentList, "_id", "campaign")
     }
     this.setState({start:true})
   }

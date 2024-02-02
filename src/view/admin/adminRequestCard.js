@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "../../App.css"
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import auth from '../../services/auth';
-import Approve from './aprrove';
+import Approve from './approve';
 
 /**
  * condensed version of the cards.
@@ -88,7 +88,9 @@ class MainContent extends Component{
     }
   }
   async componentDidMount(){
-    await auth.firebaseGetter("partner", this.props.app.state.componentList, "type", "user")
+    debugger
+
+    await auth.firebaseGetter("partnerRequest", this.props.app.state.componentList, "type", "user")
     this.setState({start:true})
   }
 
@@ -114,7 +116,7 @@ class MainContent extends Component{
       </div>
       <div>
       {this.state.start &&
-      <MapComponent app={app} name="partner" cells={["email", "owner", {custom:Approve, props: {app:app}}]} linkOptions={{cells:[0,1], path:["/partner/"], attribute:"owner"}}/> }
+      <MapComponent app={app} name="partnerRequest" cells={["email",{custom:Approve, props: {app:app}}]} linkOptions={{cells:[0], path:["/partner/"], attribute:"owner"}}/> }
       </div>
     </div>
     )

@@ -75,7 +75,7 @@ export default class Dispatch extends Component {
 
       <BrowserRouter>
         {/*      === */}
-        {(state.user!==undefined &&  state.user?.getJson()?.paidCustomer) &&(
+        {(state.user !== undefined && state.user?.getJson()?.paidCustomer) && (
 
 
           <div>
@@ -86,7 +86,7 @@ export default class Dispatch extends Component {
                   containerStyle={{ background: styles.colors.color2, zIndex: 55000, }}
 
                 />
-                
+
 
               </div>
             }
@@ -96,24 +96,28 @@ export default class Dispatch extends Component {
                 minWidth: "100%", userSelect: "none", height: "100vh",
                 display: "flex", flexDirection: "column",
               }}>
-                
 
-                <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 600&&"210px", }}>
 
-                  {window.innerWidth > 600? (
+                <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 600 && "210px", }}>
+
+                  {window.innerWidth > 600 ? (
                     <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
                       { logo: logo, }}
-                    />):(
-                      <div style={{width:"100vw", height:"60px", border:"1px solid red", display:"flex", justifyContent:"space-around"}}>
-                        <Link to={"/"} style={{width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
-                            textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px" }}>Back</Link>
-                        {/* <div style={{color:"white"}}>Log</div> */}
-                        <div onClick={auth.logout} style={{ width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor:"pointer",
-                            textDecoration: "1px underline " + styles.colors.color5, color: styles.colors.color5, textUnderlineOffset: "2px" }}>Log Out</div>
-                      </div>
-                    )}
+                    />) : (
+                    <div style={{ width: "100vw", height: "60px", border: "1px solid red", display: "flex", justifyContent: "space-around" }}>
+                      <Link to={"/"} style={{
+                        width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor: "pointer",
+                        textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
+                      }}>Back</Link>
+                      {/* <div style={{color:"white"}}>Log</div> */}
+                      <div onClick={auth.logout} style={{
+                        width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor: "pointer",
+                        textDecoration: "1px underline " + styles.colors.color5, color: styles.colors.color5, textUnderlineOffset: "2px"
+                      }}>Log Out</div>
+                    </div>
+                  )}
                   {/* </div>)  */}
-                  
+
                   {/* || (
                       <div>
                         {!isPlayer && (<div>
@@ -136,13 +140,13 @@ export default class Dispatch extends Component {
                   } */}
                 </div>
                 {/* WITHIN */}
-                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: window.innerWidth > 600&&"210px", }}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: window.innerWidth > 600 && "210px", }}>
 
                   <div style={{
                     width: '100%', minHeight: "fit-content", padding: "28px", display: "flex", height: "100%",
                     justifyContent: "center",
                   }}>
- 
+
 
                     {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) &&
                       <PopupDelete
@@ -171,7 +175,20 @@ export default class Dispatch extends Component {
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
                       />}
+                    {state.popupSwitch === "partnerRequest" && state.currentComponent?.getJson()?.type === "partnerRequest" &&
+                      <PartnerPopup
 
+                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />}
+                      {state.popupSwitch === "approval" && state.currentComponent?.getJson()?.type === "approval" &&
+                      <ApprovalPopup
+
+                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />}
                     {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type === "monster" &&
 
                       <AddPlayerCharacter
@@ -249,8 +266,8 @@ export default class Dispatch extends Component {
 
                         <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{ tabType: "bigCardBorderless", cardType: undefined }} />} />
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
-                        <Route path="/login/" element={<Login app={app} />}/>
-                <Route path="/register/" element={<Register app={app} />}/>
+                        <Route path="/login/" element={<Login app={app} />} />
+                        <Route path="/register/" element={<Register app={app} />} />
 
 
                       </Routes>
@@ -273,47 +290,51 @@ export default class Dispatch extends Component {
 
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
 
-        <Route path="/admin/users" element={<AdminUser app={app}/>}/>
-        <Route path="/admin/partners" element={<AdminPartner app={app}/>}/>
-        <Route path="/admin/requests" element={<AdminRequests app={app}/>}/>
-        <Route path="/admin/submissions" element={<AdminSubmission app={app}/>}/>
-        
-        <Route path="/partner/:id" element={<PartnerCampaign app={app}/>}/>
-      
-</Routes>)}
+                        <Route path="/admin/users" element={<AdminUser app={app} />} />
+                        <Route path="/admin/partners" element={<AdminPartner app={app} />} />
+                        <Route path="/admin/requests" element={<AdminRequests app={app} />} />
+                        <Route path="/admin/submissions" element={<AdminSubmission app={app} />} />
 
-</div>
-      
-</div>
-{window.innerWidth > 600 && (
-          <div style={{ width:"fit-content", color:styles?.colors.color4, fontSize:styles?.fonts.fontSmallest, borderRadius:"11px",
-          alignSelf:"left", marginLeft:"222px", background:styles.colors.color1+"99",padding:"11px", marginTop:"1vh",
-          marginBottom:"1vh"}}>
-          ©2024 AVA Media & Productions
+                        <Route path="/partner/:id" element={<PartnerCampaign app={app} />} />
+
+                      </Routes>)}
+
+                  </div>
+
+                </div>
+                {window.innerWidth > 600 && (
+                  <div style={{
+                    width: "fit-content", color: styles?.colors.color4, fontSize: styles?.fonts.fontSmallest, borderRadius: "11px",
+                    alignSelf: "left", marginLeft: "222px", background: styles.colors.color1 + "99", padding: "11px", marginTop: "1vh",
+                    marginBottom: "1vh"
+                  }}>
+                    ©2024 AVA Media & Productions
+                  </div>)}
+
+              </div>}
+
           </div>)}
-
-     </div>}
-
-     </div>)}
-     {(state.user!==undefined &&  !state.user?.getJson()?.paidCustomer && state.user?.getJson().role==="GM") &&(
-      <div style={{width:"100%", height:"100%", position:"absolute", left:"0", top:"0", background:'black'}}>
-        <PaymentFailed app = {app} />
-                        {/* //ISAAC UI */}
-      </div>
-     )}
-     <Routes>
-
-     <Route path="/register/" element={<Register app={app} />}/>
-     <Route path="/playerregister/" element={<PlayerRegister app={app} />}/>
+        {(state.user !== undefined && !state.user?.getJson()?.paidCustomer && state.user?.getJson().role === "GM") && (
+          <div style={{ width: "100%", height: "100%", position: "absolute", left: "0", top: "0", background: 'black' }}>
+            <PaymentFailed app={app} />
             {/* //ISAAC UI */}
+          </div>
+        )}
+        <Routes>
 
-     <Route path="/login/" element={<Login app={app} />}/>
-     <Route path="/" element={<Login app={app} />}/>
-     <Route path="/paymentprocessing/" element={<AfterPayment app={app} />}/>
-            {/* //ISAAC UI */}
-     </Routes>
+          <Route path="/register/" element={<Register app={app} />} />
+          <Route path="/playerregister/" element={<PlayerRegister app={app} />} />
+          {/* //ISAAC UI */}
 
-     
-    
-     </BrowserRouter>
-  )}}
+          <Route path="/login/" element={<Login app={app} />} />
+          <Route path="/" element={<Login app={app} />} />
+          <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
+          {/* //ISAAC UI */}
+        </Routes>
+
+
+
+      </BrowserRouter>
+    )
+  }
+}
