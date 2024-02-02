@@ -16,7 +16,8 @@ export default class TokenImage extends Component {
 
   async componentDidUpdate(prevProps){
     let obj = this.props.app.state.currentComponent;
-
+    
+    
     if (prevProps.pic !== this.props.pic){
       this.setState({  pic: this.props.pic});
 
@@ -27,24 +28,27 @@ export default class TokenImage extends Component {
         }, 
         () => console.log(this.state.colors))
       });
+      // await obj?.setCompState({colors:this.state.colors});
     }
-   await obj?.setCompState({colors:this.state.colors});
+    
   };
 
   async componentDidMount() {
     this.setState({ width: this.props.width });
   
     await colorService.updateColors(this.props.pic, (paletteObject) => {
+      // Directly use paletteObject without converting to an array
       this.setState({
         colors: paletteObject,
         width: this.props.width
-      }, async () => {
-        // console.log(this.state.colors);
-        await this.props.obj.setCompState({ 
-          colors: this.props.colors, 
-          pic: this.props.pic 
-        });
       });
+
+      // If necessary to update the component's prop object
+      if (this.props.obj) {
+        this.props.obj.setCompState({
+          colors: paletteObject
+        });
+      }
     });
   }
 
@@ -53,7 +57,9 @@ export default class TokenImage extends Component {
   render() {
     let app = this.props.app;
     let state = app.state;
-    let colors = this.props?.colors;
+    
+    let colors = Object.values(this.props?.colors);
+    
     let width = this.state.width.toString();
     let widthSm = (this.state.width * 0.908).toString()+"px"
     let widthMd = (this.state.width * 0.959).toString()+"px"

@@ -130,7 +130,7 @@ export default class Login extends Component {
                                 alignSelf: "center",
                             }}></div>
 
-                        <Link style={{
+                        <Link className='hover-btn' title="Register as a GM or Player" style={{
                             ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
                             color: styles?.colors?.colorWhite + "98", fontSize: styles?.fonts?.fontNormal,
                         }} to="../register">Register</Link>
@@ -139,11 +139,11 @@ export default class Login extends Component {
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px", 
                                 color: styles?.colors?.colorWhite + "98", fontSize: styles?.fonts?.fontNormal,
                             }} >Back</div>):(
-                            <div onClick={() => {
+                            <div className='hover-btn' onClick={() => {
                                 this.setState({ forgot: true })
                             }} style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px", 
-                                color: styles?.colors?.colorWhite + "98", fontSize: "14px",
+                                color: styles?.colors?.colorWhite + "98", fontSize: "14px", background:"", border:"",
                             }}>Forgot Password?</div>)}
 
                     </div>

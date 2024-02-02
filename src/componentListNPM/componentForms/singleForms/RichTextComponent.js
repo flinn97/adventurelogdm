@@ -273,21 +273,21 @@ class RichTextComponent extends Component {
             // }
 
             // Someday help me figure this out Taylor. Change text in richtext to a link to the lore object of the given name
-            //     if ((innerText.includes(']]') && innerText.includes('[[')) && this.props.linkLore){
-            //                 const originalLength = innerText.length;
-            //                 // Check for text within double brackets and replace it with a <Link> element
-            //                 innerText = innerText.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
-            //                     const hrefLore = toolService.getIDFromLoreName(p1);
-            //                     const hrefCamp = toolService.getIdFromURL(true, 1);
-            //                     const href = `/campaign/${hrefCamp}-${hrefLore}`;
-            //                     return `<b>{ </b><a href="${href}" style="color: #CDE8E7; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; margin-left: 2px; margin-right: 2px;">${p1}</a><b> }</b>`;
-            //                 });
+                // if ((innerText.includes(']]') && innerText.includes('[[')) && this.props.linkLore){
+                //             const originalLength = innerText.length;
+                //             // Check for text within double brackets and replace it with a <Link> element
+                //             innerText = innerText.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
+                //                 const hrefLore = toolService.getIDFromLoreName(p1);
+                //                 const hrefCamp = toolService.getIdFromURL(true, 1);
+                //                 const href = `/campaign/${hrefCamp}-${hrefLore}`;
+                //                 return `<b>{ </b><a href="${href}" style="color: #CDE8E7; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; margin-left: 2px; margin-right: 2px;">${p1}</a><b> }</b>`;
+                //             });
 
-            //             await this.setState({ theHtml: innerText, textHtml: innerText });
-            //             const newLength = innerText.length;
-            //             const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
-            //             this.setCaret(cursorPosition + originalLength);
-            //     }
+                //         await this.setState({ theHtml: innerText, textHtml: innerText });
+                //         const newLength = innerText.length;
+                //         const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
+                //         this.setCaret(cursorPosition + originalLength);
+                // }
         }
 
     }

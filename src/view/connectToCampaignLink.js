@@ -26,9 +26,9 @@ export default class ConnectToCampaignLink extends Component {
     let styles =state.styles;
 
     return (<div style={{display:"flex", flexDirection:"row", width:"100%",  alignContent:"center", justifyContent:"center" }}>
-      <div className='hover-container' style={{width:"200px"}}> 
+      <div className='hover-container' style={{width: window.innerWidth > 800? "10.5vw":"45vw",}}> 
                 <Link className='hover-btn'
-                style={{ ...styles.buttons.buttonAdd, padding:"5px 10px",  width:"200px",
+                style={{ ...styles.buttons.buttonAdd, padding:"5px 10px",  width: window.innerWidth > 800? "10.5vw":"45vw",
                 
                 fontSize:styles.fonts.fontNormal, textAlign:"center",
                 color:styles.colors.color9+"d9",
@@ -38,12 +38,13 @@ export default class ConnectToCampaignLink extends Component {
                 </Link>
 
               <div className='hover-div' style={{...styles.buttons.buttonAdd,height:"100%", zIndex:-90,
-              position:"absolute", left:0, animation:"flash-off 1s 4", padding:"5px 10px",  width:"200px",
+              position:"absolute", left:0, animation:"flash-off 1s 4", padding:"5px 10px",  width: "10.5vw",
                 background:styles.colors.color4+"1d",
                 borderRadius:"11px",}}>
                 
                     </div>
             </div>
+            {window.innerWidth > 800 &&
         <div className='hover-containerInt' style={{height:"fit-content", width:"fit-content"}}>
               <div style={{marginLeft:"22px", marginTop:"4px", pointerEvents:"none"}}>
               <ParentFormComponent app={app}
@@ -57,6 +58,7 @@ export default class ConnectToCampaignLink extends Component {
               
 
               </div>
+              
                     <div 
                      onClick={() => {
                       if (obj){                          
@@ -64,13 +66,13 @@ export default class ConnectToCampaignLink extends Component {
                           state.opps.run();
                            }         
                         }}
-                    className='hover-divInt' style={{cursor:"pointer",width:"7.2rem", textAlign:"center", marginLeft:"22px", borderRadius:"6px",
+                    className='hover-divInt' style={{cursor:"pointer",width:"7.2rem", textAlign:"center", marginLeft:"2vw", borderRadius:"6px",
                     justifyContent:"center",color:styles.colors.color5, height:"29px", fontSize:styles.fonts.fontSmall, cursor:"pointer",
                     padding:"3px",marginBottom:"-7px", pointerEvents:"all",
                     position:"absolute", background:"#000000f9"}}>
                         Disconnect
                     </div>
-              </div>
+              </div>}
              
              
       </div>

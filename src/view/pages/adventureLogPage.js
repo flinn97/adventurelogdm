@@ -203,11 +203,14 @@ export default class AdventureLogPage extends Component {
 
     return (
       <div style={{
-        width: "100%", height: "100%", display: "flex", flexDirection: "column", marginTop: "30px", paddingBottom: "40px",
-        alignItems: "center", alignSelf: "center", justifySelf: "center",
+        width: "100%",  height: "fit-content", display: "flex", flexDirection: "column", marginTop: window.innerWidth > 800?"30px":"42px", 
+        paddingBottom: window.innerWidth > 800?"40px":"0px",
+        alignItems:window.innerWidth > 800?"center":"", alignSelf:"center", justifySelf:"center",
+
+        // marginBottom:window.innerWidth > 800?"":"-100%"
       }}>
         
-        {!this.state.showItems &&<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh", position: "absolute", left: "0px", top: "0px" }}>
+        {!this.state.showItems &&<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: window.innerWidth > 800?"100vh":"", position: "absolute", left: "0px", top: "0px" }}>
             <SplashScreen
               options={{ cardType: "bigCardBorderless" }} app={app}
               containerStyle={{ background: styles.colors.color2, zIndex: 55000, }}
@@ -216,27 +219,30 @@ export default class AdventureLogPage extends Component {
           </div> }
           {/* {this.state.posts.length>0&&<> */}
           
-
+{window.innerWidth > 800 &&(
           <div style={{
             width: "100%", height: "100%", color: styles.colors.color3 + "e9",
-            fontWeight: "600", fontSize: styles.fonts.fontSubheader1, marginBottom: "11px"
+            fontWeight: "600", fontSize: styles.fonts.fontSubheader1, marginBottom: "8px"
           }}>
             {campaigns[0]?.getJson().title} Log
-          </div>
+          </div>)}
 
           {/* ADVENTURE LOG */}
           <div style={{
-            display: "flex", flexDirection: "column", width: "fit-content",
-            justifyContent: "flex-end", height: "100%",
-            width: "840px", minHeight: "860px", maxHeight: "860px", border: "8px solid " + styles.colors.color6 + "55",
-            backgroundColor: styles.colors.color7 + "44",
-            borderRadius: "20px", padding: "2px"
+            display: "flex", flexDirection: "column",
+            justifyContent: "flex-end", height: window.innerWidth > 800?"100%":"",
+            width: window.innerWidth > 800?"840px":"98vw", minHeight:window.innerWidth > 800? "860px":"fit-content", maxHeight: window.innerWidth > 800? "860px":"", 
+            border: window.innerWidth > 800?"8px solid " + styles.colors.color6 + "55":"",
+            backgroundColor: window.innerWidth > 800?styles.colors.color7 + "44":styles.colors.color7 + "1e", 
+            marginTop:window.innerWidth > 800?"":"12px",
+            
+            borderRadius: "20px", padding: window.innerWidth > 800?"2px":"",paddingBottom:window.innerWidth > 800?"":"64px",
           }}>
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
             */}
             {/* {this.state.showItems && */}
-            <div className='scroller2' style={{
+            <div className={window.innerWidth > 800?'scroller2':""} style={{
               overflowX: "hidden",
               padding: "3px 6px", width: "100%", overflowY: "scroll",
             }}>
@@ -245,7 +251,7 @@ export default class AdventureLogPage extends Component {
               {cleanedItems.length > 0 && cleanedItems.map((item, index) => (
 
                 <div key={index} title={item.getJson().sender === "GM" ? "The GM sent this" : ""} style={{
-                  marginBottom: "24px", opacity: getOpacity(index, cleanedItems.length),
+                  marginBottom:  window.innerWidth > 800?"24px":"11px", opacity: getOpacity(index, cleanedItems.length),
                 }}>
 
                 <div>
@@ -267,20 +273,24 @@ export default class AdventureLogPage extends Component {
           {/* THIS IS THE MESSAGE STUFF */}
           <div
             style={{
-              width: "915px", height: "44px", display: "flex", flexDirection: "row", marginTop: "12px", justifyContent: "center"
+              width: window.innerWidth > 800?"915px":"100%", height: "44px", display: "flex", flexDirection: "row", marginTop: window.innerWidth >800?"12px":"", 
+              position:window.innerWidth >800?"":"absolute", 
+              background:window.innerWidth >800?"":styles.colors.color1+88,
+              bottom:window.innerWidth >800?"":4, zIndex:window.innerWidth >800?"":8000,
+              justifyContent: "center"
             }}>
 
             <div style={{
               background: styles.colors.color1, position: "absolute",
               zIndex: "-255", filter: "blur(55px)", mixBlendMode: "multiply", opacity: "44%",
-              width: "915px", height: "100%", top: "0",
+              width: window.innerWidth > 800?"915px":"", height: "100%", top: "0",
             }}></div>
 
             {userRole === "GM" &&
               (
 
                 <div
-                  style={{ marginRight: "11px", flexDirection: "row", display: "flex", height: "35px", marginTop: "4px", color: styles.colors.color9 + "77", fontSize: styles.fonts.fontNormal, fontWeight: "600" }}>
+                  style={{ marginRight:window.innerWidth > 800? "11px":"2px", flexDirection: "row", display: "flex", height: "35px", marginTop: "4px", color: styles.colors.color9 + "77", fontSize: styles.fonts.fontNormal, fontWeight: "600" }}>
 
                   <Upload app={app} text={"imageOnly"} img={img}
 
@@ -344,9 +354,9 @@ export default class AdventureLogPage extends Component {
                   backgroundColor: styles.colors.color1 + "ee",
                   color: styles.colors.colorWhite,
                   borderRadius: "11px",
-                  width: "780px",
+                  width: window.innerWidth > 800?"780px":window.innerWidth/1.3,
                   padding: '8px', height: "42px",
-                  fontSize: styles.fonts.fontSmall,
+                  fontSize: window.innerWidth > 800?styles.fonts.fontSmall:"1.2rem",
                   cursor: "text",
                   resize: 'none'
                 }}
@@ -366,7 +376,7 @@ export default class AdventureLogPage extends Component {
 
             >
 
-              <img src={sendArr} style={{ width: "31px", transform: "rotate(90deg)", objectFit: "scale-down", marginTop: "5px", marginLeft: "11px" }}></img>
+              <img src={sendArr} style={{ width: "31px", transform: "rotate(90deg)", objectFit: "scale-down", marginTop: "5px", marginLeft: window.innerWidth > 800? "11px":"2px" }}></img>
             </div>
 
           </div>

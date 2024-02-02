@@ -345,7 +345,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
                   }}
 
                   wrapperStyle={{
-                    margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "1px",
+                    margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "45px",
                     flexDirection: "column", justifyItems: "space-between",
                   }} />
 

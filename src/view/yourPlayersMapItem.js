@@ -169,7 +169,7 @@ export default class YourPlayersMapItem extends Component {
       <div style={{width: "100%", overflowX:"visible", marginTop:"1vh",
       position: "relative", borderRadius:"22px", minWidth:"800px",
       alignSelf:"flex-start", justifySelf:"flex-start", }}>
-      <div className='scroller2'
+      <div className={window.innerWidth > 800?'scroller2':""}
       style={{
         width: "100%", borderRadius:"22px",
         height:"fit-content",overflowX:"visible",
