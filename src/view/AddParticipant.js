@@ -276,7 +276,7 @@ transitionDuration:"9000ms"
                   let newCopyMon = state.opps.getUpdater('add')[state.opps.getUpdater('add').length-1];
                   arr.push(newCopyMon);
                 }
-                debugger
+                
 
                 for (let mon of arr){
                   
@@ -293,12 +293,15 @@ transitionDuration:"9000ms"
                   }
                 
                 
-                await state.opps.run();
+                  
+                
+              }
+              await state.opps.run();
                 await dispatch({
                   popUpSwitchcase: "",
                   currentComponent: undefined,
                 });
-              }
+              
               }}
                
             />

@@ -367,7 +367,7 @@ export default class LoreSearch extends Component {
 
                             {/* right ARRRo */}
                             <div className='hover-div' title={"Reorder Lore Right"} onClick={async (e) => {
-                              debugger
+                              
                               e.stopPropagation();
                               let loreList = await componentList.getList("lore", id, listTerm);
                               await loreIndexService.reOrganizeLore(loreList, state.opps);
