@@ -48,9 +48,7 @@ export default class AfterPayment extends Component {
                     return response.json();
                 })
                 .then(customers => {
-                    console.log('Customers:', customers);
                     let u = customers[0];
-                    console.log(u)
                     if(u){
                     if (!u.delinquent) {
                         user.setCompState({paidCustomer:true});

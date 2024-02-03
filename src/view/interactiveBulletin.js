@@ -248,11 +248,9 @@ export default class InteractiveBulletin extends Component {
 
             }}
             onClick={() => {
-              console.log(this.props.obj);
 
               state.opps.cleanPrepareRun({ del: this.props.obj });
               this.setState({ map: undefined });
-              console.log(this.state.map);
             }}>
             <img src={trash} style={{ width: "34px", cursor: "pointer", zIndex: 991 }} />
           </div>

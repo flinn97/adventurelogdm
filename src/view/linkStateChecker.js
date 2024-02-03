@@ -6,7 +6,6 @@ export const LinkStateChecker = (props) => {
   const location = useLocation();
   const receivedData = location.state;
   useEffect( () => {
-    console.log("data",receivedData);
 
   if(receivedData?.ref){
     props.dispatch(receivedData);

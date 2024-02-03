@@ -6,7 +6,6 @@ export const EncounterLinkHelper = (props) => {
   const location = useLocation();
   const receivedData = location.state;
   useEffect( () => {
-    console.log("data",receivedData);
 
     props.dispatch(receivedData);
 

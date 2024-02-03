@@ -50,7 +50,6 @@ class PostLogButton extends Component {
 
 
                                     if (isVisible==="true"){
-                                        console.log(newType)
 
                                         type!=="encounter"?sendToChatService.dispatchLog(obj, app, this.props?.campaignId, newType)
                                         :

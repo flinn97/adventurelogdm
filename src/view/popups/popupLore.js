@@ -148,7 +148,7 @@ class MainContent extends Component {
       });
 
     }
-    debugger
+    
     await state.opps.cleanPrepareRun(pin?{ addlore: lore, update: pin }:{ addlore: lore } );
   }
 
@@ -1087,7 +1087,6 @@ class MainContent extends Component {
                       for(let p of pinList){
                         await p.setCompState({name: L1.getJson().name})
                       }
-                      console.log(L1);
                       await state.opps.cleanPrepareRun({update: [L1, ...pinList]})
                     }
                     
