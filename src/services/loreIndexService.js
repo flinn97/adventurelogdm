@@ -90,7 +90,7 @@ class LoreIndexService {
       let changeLore = loreList.filter(l => l.getJson().index===changeIndex)[0];
       await changeLore.setCompState({index:index});
       await lore.setCompState({index:changeIndex});
-      debugger
+      
       await opps.cleanPrepareRun({update:[changeLore, lore]});
       // return loreList
     }

@@ -320,7 +320,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
                 <ParentFormComponent app={app} name="name" obj={state.currentLore}
                   theme={"adventureLog"}
                   callbackFunc={(arr)=>{
-                    debugger
+                    
                     let L1 = arr[0];
                     let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
                     referenceList = referenceList.map(obj => obj.getJson()._id);

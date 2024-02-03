@@ -24,7 +24,7 @@ export default class AfterPayment extends Component {
         let dispatch = app.dispatch;
         let componentList = state.componentList;
 
-        debugger
+        
         let user = await auth.getCurrentUser();
         
         if(user!=="undefined" && user!==undefined && user!==null){

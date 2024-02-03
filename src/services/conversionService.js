@@ -28,7 +28,7 @@ async function convertToMarketplace2(lore, owner) {
             await copyType("encounter", lore._id, mpiJson._id, owner, ["loreId"]);
             
             //these two don't have to wait for each other ba
-            debugger
+            
             await copyType("monster", lore._id, mpiJson._id, owner, ["encounterId"]);
             
             await copyType("pin", lore._id, mpiJson._id, owner, ["mapId", "loreId"]);

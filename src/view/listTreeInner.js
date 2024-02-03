@@ -27,7 +27,7 @@ export default class ListTreeInner extends Component {
     let styles = state.styles;
     let bool = true;
     if(state.currentExpanse?.indexOf(this.props.obj.getJson()._id)===state.currentExpanse?.length-1){
-      debugger
+      
       this.showList= 1;
     }
 
