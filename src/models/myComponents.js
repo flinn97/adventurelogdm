@@ -446,12 +446,10 @@ class Encounter extends componentBase {
         let comps = await playerList;
         let encPlayer = []
 
-        console.log(playerList)
         if (comps) {
             for (let obj of comps) {
                 ///TAYLOR help me get this right
                 let monsterJson = await obj.copyComponent(["encounterId", "role",], [id, "",],);
-                console.log(monsterJson)
                 await this.operationsFactory.jsonPrepare({ "addmonster": monsterJson });
                 let p = await this.operationsFactory.getUpdater("add")[0];
                 encPlayer.push(p);

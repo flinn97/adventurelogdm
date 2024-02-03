@@ -51,7 +51,6 @@ export default class AdventureLogPage extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-    console.log(state.user)
     if (state.user.getJson().role!=="GM" && (state.currentCharacter===undefined||!state.currentCharacter)){
       toolService.navigateToLink('/');
     }

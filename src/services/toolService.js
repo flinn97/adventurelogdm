@@ -63,7 +63,6 @@ class ToolService {
 
     getIDFromLoreName = (word) => {
       let w = word;
-      console.log(w);
     }
 
   };

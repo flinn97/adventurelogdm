@@ -31,8 +31,6 @@ export default class ListTreeInner extends Component {
       this.showList= 1;
     }
 
-    console.log(this.props.obj.getJson()._id)
-    console.log(this.showList)
     
 
     

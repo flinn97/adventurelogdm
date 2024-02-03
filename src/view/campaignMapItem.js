@@ -30,7 +30,6 @@ export default class CampaignMapItem extends Component {
     const newLink = 
     // loreItem?("/campaign/"+obj?.getJson()._id+"-"+newId):
     ("/campaign/"+obj?.getJson()._id);
-    console.log(newLink);
 
     return (
       <Link to={newLink} style={{ color: styles.colors.colorWhite, 

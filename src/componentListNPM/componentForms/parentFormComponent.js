@@ -36,6 +36,7 @@ class ParentFormComponent extends Component {
           //
           
           for(const key in this.state.obj){
+            
               this.state.obj[key].setJson({...this.state.obj[key].getJson(), [this.props.name]:change});
               if(this.props.cleanPrepareRun){
                 

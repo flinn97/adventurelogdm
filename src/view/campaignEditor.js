@@ -110,6 +110,7 @@ export default class CampaignEditor extends Component {
     await state.componentList.sortSelectedList("lore", "index");
     dispatch({});
     this.scrollTo(this.startRef,"smooth");
+    
   }
 
 
@@ -673,6 +674,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
         this.componentDidMount();
         // this.setState({start:true})
       }} />
+      {/* <div onClick={()=>{auth.deleteAllConditoins(state.componentList, state.user.getJson().email);}} style={{color:"wheat"}}>del conditions</div> */}
       <LinkStateChecker dispatch={(obj) => { this.setState(obj) }} />
     </div>
     )
