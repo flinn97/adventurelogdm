@@ -72,10 +72,10 @@ export default class Login extends Component {
 
 
                         {/* <div style={{fontFamily: styles?.fonts?.fontTitle, fontSize: styles?.fonts?.fontHeader5, color: styles?.colors?.color5}}>Login</div>                      */}
-                        <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Email</div>
+                        <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px", fontSize: window.innerWidth > 800?"1rem":"1.4rem" }}>Email</div>
                         <input autoComplete='off' style={{
-                            width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
-                            fontSize: "1rem", border: "1px solid " + styles.colors.colorWhite,
+                            width: "344px", padding: "4px 9px", color: "#ffffffe4", height: window.innerWidth > 800?"1.6rem":"2rem", rows: "1",
+                            fontSize: window.innerWidth > 800?"1rem":"1.4rem", border: "1px solid " + styles.colors.colorWhite,
                             borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
                             alignItems: "left", textAlign: "left", justifyContent: "center",
                         }} id="pwd" onChange={this.handleChange} name="email" />
@@ -84,10 +84,10 @@ export default class Login extends Component {
 
 
                         {!this.state.forgot && <>
-                            <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px" }}>Password</div>
+                            <div style={{ color: styles.colors.color3, marginTop: ".4rem", marginBottom: "7px", marginTop: "22px", fontSize: window.innerWidth > 800?"1rem":"1.4rem" }}>Password</div>
                             <input autoComplete='off' style={{
-                                width: "344px", padding: "4px 9px", color: "#ffffffe4", height: "1.6rem", rows: "1",
-                                fontSize: "1rem", border: "1px solid " + styles.colors.colorWhite,
+                                width: "344px", padding: "4px 9px", color: "#ffffffe4", height: window.innerWidth > 800?"1.6rem":"2rem", rows: "1",
+                                fontSize: window.innerWidth > 800?"1rem":"1.4rem", border: "1px solid " + styles.colors.colorWhite,
                                 borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
                                 alignItems: "left", textAlign: "left", justifyContent: "center",
                             }} type="password" id="pwd" onChange={this.handleChange} name="password" /></>}
@@ -105,7 +105,7 @@ export default class Login extends Component {
                         <button className="hover-btn"
                             style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "155px",border: "1px solid " + styles.colors.colorWhite,
-                                color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSubheader1,
+                                color: styles?.colors?.color3, fontSize: window.innerWidth > 800?styles?.fonts?.fontNormal:"1.8rem",
                             }}
                             class="hover-btn" onClick={() => { 
                                 if(!this.state.forgot){
@@ -131,7 +131,7 @@ export default class Login extends Component {
 
                         <Link className='hover-btn' title="Register as a GM or Player" style={{
                             ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
-                            color: styles?.colors?.colorWhite + "98", fontSize: styles?.fonts?.fontNormal,
+                            color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800?styles?.fonts?.fontNormal:"1.4rem",
                         }} to="../register">Register</Link>
 
                         {this.state.forgot ?(<div onClick={()=>{this.setState({forgot:false})}} style={{
@@ -142,7 +142,7 @@ export default class Login extends Component {
                                 this.setState({ forgot: true })
                             }} style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px", 
-                                color: styles?.colors?.colorWhite + "98", fontSize: "14px", background:"", border:"",
+                                color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800?"14px":"15px", background:"", border:"",
                             }}>Forgot Password?</div>)}
 
                     </div>
