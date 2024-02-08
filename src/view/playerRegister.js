@@ -126,7 +126,9 @@ async validatePassword(password) {
         const warning = { ...iStyle, color: 'red', marginTop: '10px', fontSize: styles.fonts.fontSmallest, background: "" };
 
         return (
-            <div style={{
+            <div 
+            className={window.innerWidth > 800?'':'scroller'}
+            style={{
                 padding: window.innerWidth > 800?"5%":"2px", transition: "all ease-out", justifyContent: "center", flexDirection: window.innerWidth > 800?"row":"column", display: "flex",
                 width: "100%", padding: "33px", paddingTop: "35px",
             }}>
