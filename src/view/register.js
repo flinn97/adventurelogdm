@@ -131,7 +131,7 @@ export default class Register extends Component {
 
                     <div style={{
                         display: 'flex', flexDirection: 'row', justifyContent: "center", alignContent: "center",
-                        justifyItems: "center", width: window.innerWidth > 800?"500px":"100%", backgroundColor: styles.colors.color8 + "0a", borderRadius: "22px", padding:window.innerWidth > 800?"33px":"20px",
+                        justifyItems: "center", width: window.innerWidth > 800?"500px":"100%", backgroundColor: window.innerWidth > 800?styles.colors.color8 + "0a":"", borderRadius: "22px", padding:window.innerWidth > 800?"33px":"20px",
                     }}>
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
@@ -198,7 +198,7 @@ export default class Register extends Component {
 
 
                             <div className='hover-btn' style={{
-                                ...styles?.buttons?.buttonAdd, marginTop: "254px", padding: "8px 34px", width: window.innerWidth > 800?"355px":"100%", border: "1px solid " + styles.colors.color8,
+                                ...styles?.buttons?.buttonAdd, marginTop: "25px", padding: "8px 34px", width: window.innerWidth > 800?"355px":"100%", border: "1px solid " + styles.colors.color8,
                                 color: styles?.colors?.color3, fontSize: window.innerWidth > 800?styles?.fonts?.fontSmall:"1.4rem",
                             }} onClick={this.handleSubmission}>
                                 Continue to Payment

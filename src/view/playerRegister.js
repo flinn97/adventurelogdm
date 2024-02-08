@@ -136,7 +136,7 @@ async validatePassword(password) {
 
                     <div style={{
                         display: 'flex', flexDirection: 'row', justifyContent: "center", alignContent: "center",
-                        justifyItems: "center", width: window.innerWidth > 800?"500px":"100%", backgroundColor: styles.colors.color8 + "0a", borderRadius: "22px",  padding:window.innerWidth > 800?"33px":"20px",
+                        justifyItems: "center", width: window.innerWidth > 800?"500px":"100%", backgroundColor: window.innerWidth > 800?styles.colors.color8 + "0a":"", borderRadius: "22px",  padding:window.innerWidth > 800?"33px":"20px",
                     }}>
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
