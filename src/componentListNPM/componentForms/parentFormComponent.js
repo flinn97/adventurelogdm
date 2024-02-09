@@ -10,6 +10,7 @@ import InputToRichTextComponent from './singleForms/inputToRichEditor.js';
 import CheckBox from './singleForms/checkComponent.js';
 import FormWithUpdateAndRun from './buttons/formWithUpdateAndRun.js';
 import SelectComponent from './singleForms/selectComponent.js';
+import QuillForm from './singleForms/quillForm.js';
 /**
  * Parent form component has every option that is a single form or a button
  * 
@@ -524,7 +525,25 @@ class ParentFormComponent extends Component {
             input={this.props.required? "required": this.props.disabled? "disabled": "normal"}
             requiredMessage={this.props.requiredMessage}
             />,
-            
+            quill: <QuillForm 
+            theme={this.props.theme}
+            objDispatch={this.objDispatch}
+            updateOnClickOutside= {this.props.updateOnClickOutside}
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleHTMLChange} 
+            emitClickedOutside={this.props.emitClickedOutside}
+            id={this.props.id}
+            inputStyle={this.props.inputStyle}
+            label={this.props.label}
+            prepareOnClick={this.props.prepareOnClick}
+            labelStyle={this.props.labelStyle}
+            onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
+            wrapperStyle={this.props.wrapperStyle}
+            class = {this.props.class} 
+            placeholder={this.props.placeholder} 
+            name={this.props.name} 
+             value={!this.state.obj?"": this.state.obj[0].getJson()[this.props.name]}
+            html ={!this.state.obj? undefined: this.state.obj[0].getJson().html}
+            />,
             select: <SelectComponent 
             name={this.props.name}
         defaultValue={this.props.defaultValue}
