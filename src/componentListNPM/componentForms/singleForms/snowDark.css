@@ -1,0 +1,39 @@
+/* Override Snow theme classes for dark mode */
+
+/* Set the background color to dark */
+.ql-editor {
+    background-color: #333;
+    color: #eee; /* Text color */
+}
+
+/* Set the color of the toolbar */
+.ql-toolbar {
+    background-color: #222;
+}
+
+/* Set the color of the toolbar icons */
+.ql-toolbar .ql-picker-label,
+.ql-toolbar .ql-picker-options {
+    color: #eee;
+}
+
+/* Set the color of the toolbar buttons */
+.ql-toolbar button {
+    color: #eee;
+}
+
+/* Set the color of active toolbar buttons */
+.ql-toolbar button:hover,
+.ql-toolbar button:focus {
+    color: #fff;
+}
+
+/* Set the color of the placeholder text */
+.ql-editor::before {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Set the color of the text selection */
+.ql-editor ::selection {
+    background-color: #666;
+}
