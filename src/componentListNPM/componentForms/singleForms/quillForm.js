@@ -187,7 +187,7 @@ export default class QuillForm extends Component {
     return (
 
 
-      <div >
+      <div title='Use [[ ]] around a Lore title to connect it' >
 
         <ReactQuill
           ref={this.quillRef}
