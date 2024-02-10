@@ -526,6 +526,7 @@ class ParentFormComponent extends Component {
             requiredMessage={this.props.requiredMessage}
             />,
             quill: <QuillForm 
+            app={this.props.app}
             theme={this.props.theme}
             objDispatch={this.objDispatch}
             updateOnClickOutside= {this.props.updateOnClickOutside}

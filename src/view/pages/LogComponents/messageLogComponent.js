@@ -56,7 +56,7 @@ export default class MessageLogComponent extends Component {
                       whiteSpace: "normal",
                       overflowWrap: "break-word"
                     }}
-                      type={"richEditor"} 
+                      type={"quill"} 
                       /> */}
         </div>
           
