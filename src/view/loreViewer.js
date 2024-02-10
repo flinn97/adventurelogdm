@@ -228,7 +228,7 @@ scrollTo = (ref, behavior) => {
 
 
               <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
-              justifyContent:"flex-end", marginBottom:"2px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+              justifyContent:"flex-end", marginBottom:"-20px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88",  marginRight:"38px",
               marginTop:"12px"}}>
                 
             <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
@@ -251,38 +251,37 @@ scrollTo = (ref, behavior) => {
                       theme={"adventureLog"} 
                         rows={5} linkLore={true}
                         prepareRun={true}
-                        type={"richEditor"} onPaste={this.handlePaste}
+                        type={"quill"} onPaste={this.handlePaste}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
-                      borderRadius:"4px",background:styles.colors.colorWhite+"00", 
+                      borderRadius:"4px",background:styles.colors.colorWhite+"00", background:"",
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
-                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", marginBottom:"-10px",
-                      flexDirection:"column", justifyItems:"space-between"}}/>
+                      wrapperStyle={{marginLeft:"10px", color:styles.colors.colorWhite, display:"flex", width:"97%",
+                      flexDirection:"column", justifyItems:"space-between", background:""}}/>
                       
                       </div>
                       
 
 
 <div style={{display: "flex", flexDirection: "row",alignContent:"flex-end", 
-justifyContent:"flex-end", marginBottom:"-22px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", 
+justifyContent:"flex-end", marginBottom:"-29px", fontSize:styles.fonts.fontNormal, color:styles.colors.color8+"88", marginRight:"38px",
 marginTop:"22px"}}>
              <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true}/>
               </div>
               
           <div 
           style={{color:styles.colors.color3+"f5", fontSize:styles.fonts.fontSmall,
-          marginTop:"12px", marginBottom:"32px"}}> Handout:
-          <div style={{display:"flex", flexDirection:"row", minWidth:"100%", width:"100%", maxWidth:"100px"}}>
-         {quote} <ParentFormComponent app={app} name="handoutText" obj={lore}
+          marginTop:"12px", marginBottom:"3px"}}> Handout:
+          <ParentFormComponent app={app} name="handoutText" obj={lore}
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
-                        type={"richEditor"} onPaste={this.handlePaste}
-                      inputStyle={{minWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
+                        type={"quill"} onPaste={this.handlePaste}
+                      inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
                       
-                      wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex", width:"99%", marginLeft:"-2px",
-                      flexDirection:"column", justifyItems:"space-between"}}/>{quote}</div></div>
+                      wrapperStyle={{marginLeft:"10px", color:styles.colors.colorWhite, display:"flex", width:"97%", marginTop:"10px",
+                      flexDirection:"column", justifyItems:"space-between"}}/></div>
 
                       
 

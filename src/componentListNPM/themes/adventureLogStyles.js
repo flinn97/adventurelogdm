@@ -86,6 +86,8 @@ class AdventureLogStyles {
             colorBlack:colorPalette.color1,
             }
 
+            
+
         let background = {
             backgroundColor: colorPalette.color1+"00",//dark
             backgroundBlend: "overlay",

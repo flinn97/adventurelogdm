@@ -151,7 +151,7 @@ export default class AddCampaign extends Component {
                   labelStyle={{marginBottom:"8px"}}
                   inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px", marginBottom:"2vh" }}
-                  type={"richEditor"}
+                  type={"quill"}
                   placeholder={"Briefly describe your campaign. 200 Characters Max"}
                   
                   wrapperStyle={{margin:"5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"space-between"}}
