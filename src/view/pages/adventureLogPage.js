@@ -205,7 +205,7 @@ export default class AdventureLogPage extends Component {
         width: "100%",  height: "fit-content", display: "flex", flexDirection: "column", marginTop: window.innerWidth > 800?"30px":"42px", 
         paddingBottom: window.innerWidth > 800?"40px":"0px",
         alignItems:window.innerWidth > 800?"center":"", alignSelf:"center", justifySelf:"center",
-
+        
         // marginBottom:window.innerWidth > 800?"":"-100%"
       }}>
         
@@ -242,15 +242,15 @@ export default class AdventureLogPage extends Component {
             */}
             {/* {this.state.showItems && */}
             <div className={window.innerWidth > 800?'scroller2':""} style={{
-              overflowX: "hidden",
-              padding: "3px 6px", width: "100%", overflowY: "scroll",
+              overflowX: "hidden", 
+              padding: "3px 6px", width: "100%", overflowY: "scroll", paddingBottom:window.innerWidth > 800?"":"8px",
             }}>
               
             
               {cleanedItems.length > 0 && cleanedItems.map((item, index) => (
 
-                <div key={index} title={item.getJson().sender === "GM" ? "The GM sent this" : ""} style={{
-                  marginBottom:  window.innerWidth > 800?"24px":"11px", opacity: getOpacity(index, cleanedItems.length),
+                <div key={index} title={item.getJson().sender === "GM" ? "The GM sent this" : ""} style={{ zIndex:0,
+                  marginBottom:  window.innerWidth > 800?"24px":"11px", opacity: getOpacity(index, cleanedItems.length), 
                 }}>
 
                 <div>
@@ -273,9 +273,10 @@ export default class AdventureLogPage extends Component {
           <div
             style={{
               width: window.innerWidth > 800?"915px":"100%", height: "44px", display: "flex", flexDirection: "row", marginTop: window.innerWidth >800?"12px":"", 
-              position:window.innerWidth >800?"":"absolute", 
+              position:window.innerWidth >800?"":"absolute",
+               zIndex:9999, alignSelf:"flex-end", justifySelf:"flex-end", alignItems:"flex-end",
               background:window.innerWidth >800?"":styles.colors.color1+88,
-              bottom:window.innerWidth >800?"":4, zIndex:window.innerWidth >800?"":8000,
+              bottom:window.innerWidth >800?"":5, zIndex:window.innerWidth >800?"":8000,
               justifyContent: "center"
             }}>
 
@@ -289,7 +290,7 @@ export default class AdventureLogPage extends Component {
               (
 
                 <div
-                  style={{ marginRight:window.innerWidth > 800? "11px":"2px", flexDirection: "row", display: "flex", height: "35px", marginTop: "4px", color: styles.colors.color9 + "77", fontSize: styles.fonts.fontNormal, fontWeight: "600" }}>
+                  style={{ marginRight:window.innerWidth > 800? "11px":"2px",zIndex:9999, flexDirection: "row", display: "flex", height: "35px", marginTop: "4px", color: styles.colors.color9 + "77", fontSize: styles.fonts.fontNormal, fontWeight: "600" }}>
 
                   <Upload app={app} text={"imageOnly"} img={img}
 
@@ -342,7 +343,7 @@ export default class AdventureLogPage extends Component {
                 </div>)}
 
 
-            <div>
+            <div style={{zIndex:9999}}>
               <input
                 app={app}
                 placeholder={this.state.invalidD === "" ? "Type a message..." : this.state.invalidD}
@@ -362,7 +363,7 @@ export default class AdventureLogPage extends Component {
               />
             </div>
 
-            <div style={{ cursor: "pointer" }}
+            <div style={{ cursor: "pointer", zIndex:99999 }}
 
               onClick={() => {
                 if (this.state.textI !== "") {
@@ -375,7 +376,8 @@ export default class AdventureLogPage extends Component {
 
             >
 
-              <img src={sendArr} style={{ width: "31px", transform: "rotate(90deg)", objectFit: "scale-down", marginTop: "5px", marginLeft: window.innerWidth > 800? "11px":"2px" }}></img>
+              <img src={sendArr} style={{ width: "31px", transform: "rotate(90deg)", objectFit: "scale-down", marginTop: "5px", 
+              zIndex:99999,marginLeft: window.innerWidth > 800? "11px":"2px" }}></img>
             </div>
 
           </div>

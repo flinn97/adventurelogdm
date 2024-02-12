@@ -44,14 +44,20 @@ async validatePassword(password) {
 
     return true;
 }
-    
+
+handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({
+        [name]: name === "email" ? value.toLowerCase() : value
+    });
+}
 
     async handleSubmission() {
         
         let app = this.props.app;
         let state = app.state;
         let user = this.state.user;
-        let email = user.getJson().email;
+        let email = user.getJson().email.toLowerCase();
         let password = this.state.password;
         let repeatPassword = this.state.repeatPassword;
 
@@ -78,7 +84,7 @@ async validatePassword(password) {
                 this.setState({ errorMessage: "Password can't be empty." });
                 return; // Do not proceed if passwords don't match
             }
-
+            user.setCompState({email: email, owner: email, _id: email})
             await app.dispatch({ email: email });
 
             let authUser = await auth.register(email, password, true);
@@ -158,7 +164,7 @@ async validatePassword(password) {
                         inputStyle={iStyle} wrapperStyle={wStyle}/> */}
 
                             <ParentFormComponent obj={this.state.user} name="email" label="Email"
-                                theme={"adventureLog"}
+                                theme={"adventureLog"}  handleChange={this.handleChange}
                                 labelStyle={lStyle} autoComplete="off" type="text"
                                 inputStyle={iStyle} wrapperStyle={wStyle} />
 

@@ -90,7 +90,7 @@ export default class PostMapItem extends Component {
 
         borderRadius: "11px", padding: "1px 5px",
         fontSize: styles.fonts.fontNormal,
-
+paddingTop:notPhone?"":"8px",
         background: backgroundUser,
         marginLeft: marginUser,
       }}>
