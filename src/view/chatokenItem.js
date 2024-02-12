@@ -44,7 +44,7 @@ export default class ChatTokenComponent extends Component {
 
         {(state.user.getJson().role === "GM") &&
           <div className={phone?'':'hover-container'} style={{ display: "flex", flexDirection: "row", position: "absolute", right:phone?-26 : 0, 
-          zIndex: 8100, top:"", cursor: "pointer", width: "32px" }}>
+          zIndex: phone?100:8100, top:"", cursor: "pointer", width: "32px" }}>
             <img className={phone?'':'hover-div'} src={phone?trashStill:trash} title='Delete this post'
               onClick={async () => {
 
@@ -57,7 +57,7 @@ export default class ChatTokenComponent extends Component {
 
         {/* {ALIGN to RIGHT SIDE} */}
         {isYourPost &&
-          <div style={{ display: "flex", flexDirection: "row", position: "absolute", right: phone?0:-45, zIndex: 8100, top: phone?0:-15 }}>
+          <div style={{ display: "flex", flexDirection: "row", position: "absolute", right: phone?0:-45, zIndex: phone?100:8100, top: phone?0:-15 }}>
             <div style={{
               display: "flex",
 
