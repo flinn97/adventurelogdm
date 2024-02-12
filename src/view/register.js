@@ -12,6 +12,7 @@ export default class Register extends Component {
         super(props);
         this.handleSubmission = this.handleSubmission.bind(this);
         this.validatePassword = this.validatePassword.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
         this.state = {
             user: undefined,
@@ -47,12 +48,18 @@ export default class Register extends Component {
         return true;
     }
 
+    handleChange(event) {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: name === "email" ? value.toLowerCase() : value
+        });
+    }
 
     async handleSubmission() {
         let app = this.props.app;
         let state = app.state;
         let user = this.state.user;
-        let email = user.getJson().email;
+        let email = user.getJson().email.toLowerCase();
 
         let password = this.state.password;
         
@@ -64,8 +71,8 @@ export default class Register extends Component {
 
         let repeatPassword = this.state.repeatPassword;
 
-        this.setState({ errorMessage: undefined });
-
+        this.setState({ errorMessage: undefined, email: email });
+        
 
         if (password !== repeatPassword) {
             this.setState({ errorMessage: "Passwords don't match." });
@@ -82,8 +89,7 @@ export default class Register extends Component {
             return; // Do not proceed if passwords don't match
         }
 
-
-        // Proceed with registration
+        user.setCompState({email: email, owner: email, _id: email})
         await app.dispatch({ email: email });
 
         let authUser = await auth.register(email, password, true);
@@ -153,7 +159,7 @@ export default class Register extends Component {
                         inputStyle={iStyle} wrapperStyle={wStyle}/> */}
 
                             <ParentFormComponent obj={this.state.user} name="email" label="Email"
-                                theme={"adventureLog"}
+                                theme={"adventureLog"} handleChange={this.handleChange} 
                                 labelStyle={lStyle} autoComplete="off" type="text"
                                 inputStyle={iStyle} wrapperStyle={wStyle} />
 
