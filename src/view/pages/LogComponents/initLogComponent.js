@@ -69,7 +69,7 @@ export default class InitiativeLogComponent extends Component {
                   fontSize: styles.fonts.fontNormal,
                   alignContent:"flex-end",
       }}>
-        <div style={{color:styles.colors.color4, fontSize:phone?styles.fonts.fontSmall:styles.fonts.fontSmallest, marginTop:phone?"15px":"18px", marginBottom:phone?"2px":"8px"}}>
+        <div style={{color:styles.colors.color4, fontSize:phone?styles.fonts.fontSmall:styles.fonts.fontSmallest, marginTop:phone?"8px":"18px", marginBottom:phone?"12px":"8px"}}>
           Initiative Order
         </div>
        <div style={{ borderRadius:"11px", justifyContent:"flex-start",  marginBottom:"8px"}}>

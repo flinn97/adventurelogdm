@@ -34,7 +34,7 @@ export default class MonsterMapItemSimplified extends Component {
     let colors = Object.values(allColors); // ["#000000", "#ffffff", "#44fead"]
        let uRole = state.user.getJson().role;
     let name = obj?.getJson().name;
-    let maxLengthName = 22;
+    let maxLengthName = phone?18:22;
 
     let objName = name.length > maxLengthName ? name.substring(0, maxLengthName) + "..." : name;
 
@@ -44,10 +44,10 @@ export default class MonsterMapItemSimplified extends Component {
     return (
      
       <div style={{
-        width:phone?this.props.w:580, margin:".5px 2px", 
-        minWidth:phone?"300px":this.props.w, fontSize:styles.fonts.fontSmall,
+        width:phone?this.props.w:580, margin:phone?"":".5px 2px", 
+        minWidth:phone?"89vw":this.props.w, fontSize:styles.fonts.fontSmall,
         minHeight:(obj?.getJson().lastInit && !isHiddenforPlayers)?"40px":"0px",
-        maxWidth:phone?"320px":"",
+        maxWidth:phone?"310px":"",
         height:(obj?.getJson().lastInit && !isHiddenforPlayers)?"50px":"0px", 
         padding:(obj?.getJson().lastInit && !isHiddenforPlayers)?"4px 8px":"0px",
         maxHeight:"fit-content", background:(obj?.getJson().lastInit && !isHiddenforPlayers)?styles.colors.colorWhite+"11":"",
@@ -57,13 +57,14 @@ export default class MonsterMapItemSimplified extends Component {
 
   
 {(obj?.getJson().lastInit && this.state.show) &&
-  <div style={{display:"flex", flexDirection:"row", fontSize:styles.fonts.fontSmall,
-   width:phone?"70%":this.props.w, height:"48px", justifyContent:phone?"flex-start":"center", marginLeft:phone?"40px":"0px",
+  <div style={{display:"flex", flexDirection:"row", fontSize:styles.fonts.fontSmall, 
+   width:phone?"80vw":this.props.w, height:"48px", justifyContent:phone?"flex-start":"center", marginLeft:phone?"0px":"0px",
   color:styles.colors.colorWhite,}}> 
 
 
 
-  <div style={{marginRight:phone?"11px":"20px", width:phone?"40%":"84px", textAlign:"right", marginTop:phone?"16px":"10px", fontSize:phone?"1rem":styles.fonts.fontSmall}}>
+  <div style={{marginRight:phone?"11px":"20px", width:phone?"2rem":"84px",
+ textAlign:phone?"center":"right", marginTop:phone?"16px":"10px", fontSize:phone?"1rem":styles.fonts.fontSmall}}>
       {isHiddenforPlayers?"":obj?.getJson().lastInit}
       </div>
 
@@ -72,7 +73,7 @@ export default class MonsterMapItemSimplified extends Component {
   <TokenImage pic={obj?.getJson().picURL} width={phone?35:35} app={app} colors={colors}/>
      </div>}
 
-    <div style={{width:phone?"40%":"320px", color:styles.colors.color8, textAlign:"left",marginTop:phone?"16px":"10px", fontSize:phone?"1rem":styles.fonts.fontSmall }}>
+    <div style={{width:phone?"48%":"320px", color:styles.colors.color8, textAlign:"left",marginTop:phone?"16px":"10px", fontSize:phone?"1rem":styles.fonts.fontSmall }}>
       {isHiddenforPlayers?"":objName}
       </div>
 
