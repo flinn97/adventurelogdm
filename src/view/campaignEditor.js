@@ -581,7 +581,7 @@ dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"a
                   borderRadius: "4px", background: styles.colors.colorWhite + "00",
                   border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                 }}
-                type={"richEditor"} onPaste={this.handlePaste}
+                type={"quill"} onPaste={this.handlePaste}
                 wrapperStyle={{
                   margin: "5px", color: styles.colors.colorWhite, display: "flex",
                   flexDirection: "column", justifyItems: "space-between"
