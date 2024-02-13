@@ -22,6 +22,33 @@ class Auth {
                 // ..
             });
     }
+    checkIfLoggedIn(){
+        debugger
+        onAuthStateChanged(auth, async (user)=>{
+            if(user){
+                return
+            }
+            else{
+                await localStorage.setItem("user", null);
+                await localStorage.clear();
+                localStorage.setItem("user", undefined);
+                let logouser;
+                await onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        // User is signed in, see docs for a list of available properties
+                        // https://firebase.google.com/docs/reference/js/firebase.User
+                        logouser = user.uid;
+                        // ...
+                    }
+                })
+                if (logouser) {
+                    await signOut(auth);
+        
+                }
+                window.location.reload();
+            }
+        })
+    }
     async getCurrentUser() {
         
         let item = localStorage.getItem("user");
@@ -427,6 +454,7 @@ class Auth {
             await signOut(auth);
 
         }
+        await localStorage.setItem("user", null);
         window.location.href ="/"
     }
     async uploadPics(file, name, dispatch, quality) {
