@@ -100,8 +100,13 @@ export default class QuillForm extends Component {
     let id = toolService.getIdFromURL(true, 0);
     let lore = this.props.app.state.componentList.getComponent("lore", loreName, "name");
     let newid = lore.getJson()._id;
+ if (id !== "notes"){
     const loreLink = `/campaign/` + id + '-' + newid;
     return `<a href="${loreLink}" target="_blank">${loreName}</a>`;
+  }else{
+    console.log(id)
+    return loreName;
+  }
   }
 
 
