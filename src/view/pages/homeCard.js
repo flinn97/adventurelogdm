@@ -5,7 +5,7 @@ import NoteCard from './noteCard';
 import LibraryCard from '../libraryCard';
 import MarketCard from './marketCard';
 import logo from '../../pics/logo.png'
-
+import auth from '../../services/auth'
 /**
  * condensed version of the cards.
  * Works with themes.
@@ -98,6 +98,8 @@ class MainContent extends Component{
     <div style={{height:"100%"}}>
       <div style={{display:"flex", flexDirection:"column", justifyContent:"center", fontFamily:"serif",
     fontSize:styles.fonts.fontHeader4,  color:styles.colors.colorWhite}}>
+      
+      
       <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
       <hr></hr>
       {/* <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>   

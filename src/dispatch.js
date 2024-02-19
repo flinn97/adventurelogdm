@@ -87,7 +87,7 @@ export default class Dispatch extends Component {
               <div className={window.innerWidth > 800 ? 'scroller2' : ""} style={{
                 width: "100%", overflow: "scroll",
                 minWidth: "100%", userSelect: "none", height: "100vh",
-                display: "flex", flexDirection: "column",
+              display: "flex", flexDirection: "column",
               }}>
 
 
@@ -100,7 +100,7 @@ export default class Dispatch extends Component {
 
                   ) : (
                     <>
-                    {window.location.href.includes("log") && (
+                    {window.location.href.includes("log") && (<>
                     <div style={{ width: "100vw", height: "52px", background:styles.colors.color2, display: "flex", 
                     position:"absolute",
                     justifyContent: "space-between", alignItems: "center", fontSize: "1.1rem", }}>
@@ -112,12 +112,11 @@ export default class Dispatch extends Component {
                           textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
                         }}>Back</div>
                       </Link>
-                      {/* <div style={{color:"white"}}>Log</div> */}
-                      {/* <div onClick={auth.logout} style={{
-                        width: "400px", borderRadius: "11px", cursor: "pointer",
-                        textDecoration: "1px underline " + styles.colors.color5, color: styles.colors.color5, textUnderlineOffset: "2px"
-                      }}>Log Out</div> */}
-                    </div>)}
+                      
+                    </div>
+                    
+                    </>)
+                    }
                     </>
                   )}
                   {/* </div>)  */}
