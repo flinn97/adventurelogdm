@@ -274,7 +274,7 @@ export default class AdventureLogPage extends Component {
             style={{
               width: window.innerWidth > 800?"915px":"100%", height: "44px", display: "flex", flexDirection: "row", marginTop: window.innerWidth >800?"12px":"", 
               position:window.innerWidth >800?"":"absolute",
-               zIndex:9999, alignSelf:"flex-end", justifySelf:"flex-end", alignItems:"flex-end",
+               zIndex:9999, alignSelf:"center", justifySelf:"flex-end", alignItems:"flex-end",
               background:window.innerWidth >800?"":styles.colors.color1+88,
               bottom:window.innerWidth >800?"":5, zIndex:window.innerWidth >800?"":8000,
               justifyContent: "center"

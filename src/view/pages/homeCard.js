@@ -153,7 +153,7 @@ class CardWithTab extends Component{
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
             <MainContent app={app} />
             </div>
         </div>

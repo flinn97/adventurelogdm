@@ -94,7 +94,7 @@ class MainContent extends Component{
 
     return(
       <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
-       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px", overflow:"hidden"
        }}>
             
 
@@ -162,7 +162,7 @@ class CardWithTab extends Component{
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
             <MainContent app={app} />
             </div>
         </div>
