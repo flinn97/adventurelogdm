@@ -430,8 +430,8 @@ export default class InteractiveBulletin extends Component {
                                           backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "",
                                           filter: imgSrc !== image16 ? pin.getJson().colorFilter : "", 
                                           // transform:imgSrc===image16&& "rotate(4.5deg)",
-                                          boxShadow:imgSrc===image16&&"inset black 4px 4px, inset black -4px -4px", 
-                                          mixBlendMode:imgSrc===image16&&"plus-lighter",
+                                          boxShadow:imgSrc===image16&&"inset white 4px 4px, inset white -4px -4px", 
+                                          
                                           borderRadius: "50%"
                                         }}
                                         className='hover-divInt'
