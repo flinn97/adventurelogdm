@@ -427,11 +427,9 @@ export default class InteractiveBulletin extends Component {
                                       <img title={imgSrc === image16?"DELETE":"Change Icon"}
                                         style={{
                                           margin: "2px", height: '28px', width: "28px", position: "relative",
-                                          backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "",
+                                          backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "#000000e3",
                                           filter: imgSrc !== image16 ? pin.getJson().colorFilter : "", 
                                           // transform:imgSrc===image16&& "rotate(4.5deg)",
-                                          boxShadow:imgSrc===image16&&"inset white 4px 4px, inset white -4px -4px", 
-                                          
                                           borderRadius: "50%"
                                         }}
                                         className='hover-divInt'
