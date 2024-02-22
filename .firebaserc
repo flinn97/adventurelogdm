@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "avagms-c2fee"
-  }
+    "default": "avagms-c2fee",
+    "production": "avagms-c2fee"
+  },
+  "targets": {},
+  "etags": {}
 }
