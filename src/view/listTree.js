@@ -140,9 +140,9 @@ this.setState({})
 
 
 {/* //ADD IMAGE HERE// */}
-                      <div className='scroller'  style={{flexDirection:"column", display:"flex",textDecoration:"none", 
+                      <div style={{flexDirection:"column", display:"flex",textDecoration:"none", 
                       width:"100%",
-                       overflowY:"scroll", maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"4px",                  
+                       maxHeight:"87.5vh", alignItems:"left", background:styles.colors.color8+"03", padding:"2px", borderRadius:"4px",                  
                     }}>
                         <MapComponent app={app}  theme={bord1}
                                              

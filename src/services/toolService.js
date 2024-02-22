@@ -14,6 +14,14 @@ class ToolService {
       }, t);
   }
 
+  isLikelyUrl(url) {
+
+    // Check for common domain suffixes or the presence of "http(s)://" or "mailto:" at the start
+  
+    return /\.(com|net|org|io|gov|edu|co)\b/.test(url) || /^(?:f|ht)tps?\:\/\//.test(url) || /^mailto\:/i.test(url);
+  
+  }
+
         checkURLforString(s){
             let href = window.location.href;
             return href.includes(s);

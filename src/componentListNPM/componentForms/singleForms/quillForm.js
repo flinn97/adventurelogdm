@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import './snowDark.css';
 import toolService from '../../../services/toolService';
 import idService from '../../idService';
+import loreIndexService from '../../../services/loreIndexService';
 
 
 export default class QuillForm extends Component {
@@ -17,7 +18,7 @@ export default class QuillForm extends Component {
     this.quillRef = React.createRef();
     this.setLoreLink = this.setLoreLink.bind(this);
     this.ensureProtocol = this.ensureProtocol.bind(this);
-    // this.newLoreLink = this.newLoreLink.bind(this);
+    this.newLoreLink = this.newLoreLink.bind(this);
   }
 
 
@@ -83,98 +84,99 @@ export default class QuillForm extends Component {
   }
 
   ensureProtocol(url) {
-    // Check if the URL does not contain a period
-    if (!url.includes('.')) {
-      // If there's no period, log a message or handle as needed and end the process
-      console.log("URL does not contain a period and will not be processed.");
-      return null; // Return null or an appropriate value indicating no URL should be processed
-    }
-  
-    // Check for the presence of http://, https://, or mailto: at the beginning of the URL
+
     if (!/^(?:f|ht)tps?\:\/\//.test(url) && !/^mailto\:/i.test(url)) {
-      return `http://${url}`; // Prepend http:// if none of those are present
-    }
-    
-    return url; // Return the original or modified URL
-  }
   
+      return `http://${url}`;
+  
+    }
+  
+    return url;
+  
+  }
+
 
   setLoreLink(loreName) {
     let id = toolService.getIdFromURL(true, 0);
     let lore = this.props.app.state.componentList.getComponent("lore", loreName, "name");
     let newid = lore.getJson()._id;
+ if (id !== "notes"){
     const loreLink = `/campaign/` + id + '-' + newid;
     return `<a href="${loreLink}" target="_blank">${loreName}</a>`;
+  }else{
+    console.log(id)
+    return loreName;
+  }
   }
 
-  // async newLoreLink(loreName) {
-  //   debugger
-    
-  //   let loreId = await idService.createId();
 
-  //   let obj = this.props?.obj;
-  //   let app = this.props?.app;
-  //   let state = app?.state;
 
-  //   let campId = toolService.getIdFromURL(true, 0);
-  //   let newId = toolService.getIdFromURL(true, 1);
+  async newLoreLink(loreName) {
+    let state = this.props.app?.state;
+    let campId = toolService.getIdFromURL(true, 0);
+    let componentList = this.props.app.state.componentList;
+    let idS = idService.createId();
+    let id = toolService.getIdFromURL(true, state.currentLore !== undefined ? 1 : 0);
+    const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
 
-  //   let name = state.currentLore ? state.currentLore.getJson().name : "Unnamed";
+    let otherChildren = componentList.getList("lore", id, "parentId");
 
-  //   let json = {
-  //     name: loreName,
-  //     type: "lore",
-  //     _id: loreId,
-  //     campaignId: campId,
-  //     index: 0,
-  //     parentId: { [newId]: name }
-  //   };
-
-  //   await state.opps.cleanJsonPrepareRun({ "addlore": json });
-
-  //   const loreLink = `/campaign/${campId}-${loreId}`;
-  //   return `<a href="${loreLink}" target="_blank">${loreName}</a>`;
-  // }
-
-  handleChange(value) {
-    let names = this.props.app.state.loreNames;
-    const linkPattern = /\[\[(.*?)\]\]/g;
-    let modifiedValue = value;
-
-    modifiedValue = modifiedValue.replace(linkPattern, (match, text) => {
-      if (names && names.includes(text)) {
-        // The text matches a lore name, so use setLoreLink
-        return this.setLoreLink(text);
-      } else {
-        // Attempt to ensure the protocol, in case text is a URL
-        const ensuredUrl = this.ensureProtocol(text);
-        if (ensuredUrl) {
-          // ensureProtocol returned a URL, so create a link
-          return `<a href="${ensuredUrl}" target="_blank">${text}</a>`;
-        } else {
-          // ensureProtocol returned null, indicating this isn't a proper URL to process
-          
-          return text; // Just return the text without making it a link
-        }
+    await state.opps.cleanJsonPrepare({
+      addlore: {
+        parentId: { [id]: newName + " " }, _id: idS, index: 0,
+        type: "lore", name: loreName, campaignId: campId
       }
     });
 
-    // Update the state and the editor's content as before
-    if (modifiedValue !== value) {
-      this.setState({ value: modifiedValue }, () => {
-        const editor = this.quillRef.current.getEditor();
-        // Use clipboard API to update content safely, consider alternatives for better control and safety
-        editor.clipboard.dangerouslyPasteHTML(modifiedValue);
-      });
-    } else {
-      this.setState({ value });
+    let l = state.opps.getUpdater("add")[0];
+    await state.opps.run();
+    await loreIndexService.insertAtBeginning(l, otherChildren);
+
+    // Wait for any needed state updates or asynchronous operations before continuing
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // Now that newLoreLink has completed, you can generate the link
+    return this.setLoreLink(loreName);
+  }
+
+
+  async handleChange(value) {
+    let names = this.props.app.state.loreNames;
+    const linkPattern = /\[\[(.*?)\]\]/g;
+    let matches = [...value.matchAll(linkPattern)];
+    let modifiedValue = value;
+
+    for (const match of matches) {
+        const text = match[1];
+        let replacementText;
+        if (names && names.includes(text)) {
+            replacementText = await this.setLoreLink(text);
+        } else if (toolService.isLikelyUrl(text)) {
+            const ensuredUrl = this.ensureProtocol(text);
+            if (ensuredUrl) {
+                replacementText = `<a href="${ensuredUrl}" target="_blank">${text}</a>`;
+            } else {
+                replacementText = await this.newLoreLink(text);
+            }
+        } else {
+            replacementText = await this.newLoreLink(text);;
+        }
+        modifiedValue = modifiedValue.replace(match[0], replacementText);
     }
 
-    // Call the original handleChange prop, if provided
-    if (this.props.handleChange) {
-      this.props.handleChange(modifiedValue);
+    if (modifiedValue !== value) {
+        this.setState({ value: modifiedValue }, () => {
+            const editor = this.quillRef.current.getEditor();
+            editor.clipboard.dangerouslyPasteHTML(modifiedValue);
+        });
+    } else {
+        this.setState({ value });
     }
-  };
+
+    if (this.props.handleChange) {
+        this.props.handleChange(modifiedValue);
+    }
+};
 
 
   render() {

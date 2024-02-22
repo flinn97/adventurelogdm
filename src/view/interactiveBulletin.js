@@ -21,7 +21,7 @@ import image13 from '../pics/iconChest.png';
 import image14 from '../pics/iconGarg.png';
 import image15 from '../pics/iconSword.png';
 
-import image16 from '../pics/iconAddIcon.png';
+import image16 from '../pics/trash.gif';
 
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import backarrow from '../pics/backArrow.webp';
@@ -178,7 +178,7 @@ export default class InteractiveBulletin extends Component {
         style={{
           width: "100%", minHeight: "100%", maxHeight: "100%",
           cursor: this.state.isGrabbing !== true ? "" : "grabbing",
-          overflow: 'auto', borderRadius: "11px",
+          overflow: 'auto', borderRadius: "11px", 
         }}>
 
 
@@ -202,7 +202,7 @@ export default class InteractiveBulletin extends Component {
 
           <div className="hover-btn" style={{
             ...styles.buttons.buttonAdd, padding: "0px", paddingLeft: "10px", borderColor: styles.colors.color3,
-            backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
+            backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition:"all",
           }}
             onClick={async (e) => {
               let scrollLeft = this.divRef.current.scrollLeft;
@@ -227,8 +227,8 @@ export default class InteractiveBulletin extends Component {
 
             }}
           >
-            + Lore Point 
-            <img src={iconTest} alt='ico' style={{ width: "40px", height: "40px", marginLeft: "15px", marginRight: "10px", marginTop: "1px", }}></img>
+            {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").length === 0 ?"+ Lore Point":"+"} 
+            <img src={iconTest} alt='ico' style={{ width: "40px", height: "40px", marginLeft: state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").length === 0 ?"15px":"10px", marginRight: "10px", marginTop: "1px", }}></img>
           </div>
 
 
@@ -255,7 +255,7 @@ export default class InteractiveBulletin extends Component {
             <img src={trash} style={{ width: "34px", cursor: "pointer", zIndex: 991 }} />
           </div>
         }
-        <div style={{ position: "relative", width: "100%", height: "100%", }}>
+        <div style={{ position: "relative", width: "100%", height: "100%",   }}>
 
 
           {this.state.mapWidth && (this.state.mapWidth !== "") &&
@@ -263,7 +263,7 @@ export default class InteractiveBulletin extends Component {
             <img ref={this.imgRef} alt='map'
 
               src={this.props.obj?.getJson().picURL}
-              style={{ position: "absolute", top: 0, left: 0, borderRadius: "17px", maxWidth: "3700px", maxHeight: "2630px" }} />}
+              style={{ position: "absolute", top: 0, left: 0, borderRadius: "17px", maxWidth: "3700px", maxHeight: "2630px", marginTop:"40px", }} />}
 
 
           {/* {this.state.start && */}
@@ -271,7 +271,7 @@ export default class InteractiveBulletin extends Component {
 {/* IMAGE BACKGROUND */}{this.props.obj &&state.showPinMap &&
   <div ref={this.parentRef} 
               style={{position:"absolute", top:0, left:0,
-   width: this.state.mapWidth, 
+   width: this.state.mapWidth,
    height:this.state.mapHeight 
    }}>
     
@@ -424,11 +424,12 @@ export default class InteractiveBulletin extends Component {
 
                                   {(typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&
                                     <div style={{ cursor: "pointer" }}>
-                                      <img title={"Change Icon"}
+                                      <img title={imgSrc === image16?"DELETE":"Change Icon"}
                                         style={{
                                           margin: "2px", height: '28px', width: "28px", position: "relative",
-                                          backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "",
-                                          filter: imgSrc !== image16 ? pin.getJson().colorFilter : "", transform:imgSrc===image16&& "rotate(45deg)",
+                                          backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "#000000e3",
+                                          filter: imgSrc !== image16 ? pin.getJson().colorFilter : "", 
+                                          // transform:imgSrc===image16&& "rotate(4.5deg)",
                                           borderRadius: "50%"
                                         }}
                                         className='hover-divInt'
