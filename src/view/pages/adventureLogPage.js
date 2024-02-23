@@ -243,7 +243,7 @@ export default class AdventureLogPage extends Component {
             {/* {this.state.showItems && */}
             <div className={window.innerWidth > 800?'scroller2':""} style={{
               overflowX: "hidden", 
-              padding: "3px 6px", width: "100%", overflowY: "scroll", paddingBottom:window.innerWidth > 800?"":"8px",
+              padding: "3px 6px", width: "100%", overflowY: "scroll", paddingBottom:window.innerWidth > 800?"":"100px",
             }}>
               
             
