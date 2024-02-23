@@ -102,7 +102,7 @@ export default class QuillForm extends Component {
     let newid = lore.getJson()._id;
  if (id !== "notes"){
     const loreLink = `/campaign/` + id + '-' + newid;
-    return `<a href="${loreLink}" target="_blank">${loreName}</a>`;
+    return `<a href="${loreLink}" >${loreName}</a>`;
   }else{
     console.log(id)
     return loreName;
