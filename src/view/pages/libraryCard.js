@@ -123,7 +123,7 @@ class TabContent extends Component{
     <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
     userSelect:"none", verticalAlign:"center", fontWeight:"600",
     fontSize:styles.fonts.fontSubheader1}}>
-    Marketplace
+    Library
     </div>
     )
   }
