@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import CampaignCard from './campaignCard';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
-import LibraryCard from '../libraryCard';
 import auth from '../../services/auth';
 
 export default class Campaign extends Component {
@@ -45,7 +44,7 @@ export default class Campaign extends Component {
                           
         <CampaignCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>
         <hr></hr>
-        <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>  
+
       </div>
 
     )

@@ -591,7 +591,7 @@ function forFactory() {
         user: User, pin: Pin, campaign: Campaign,
         encounter: Encounter, monster: Monster,
         newNote: NewNote, map: Map, post: Post,
-        marketplaceItem: MarketplaceItem, icon:Icon,
+        mpItem: MarketplaceItem, icon:Icon,
         condition: Condition,
         lore: Lore, image: Image
     }

@@ -523,7 +523,9 @@ class Auth {
                 }
 
                 try {
-
+                    if(component.type==="mpItem"){
+                        return
+                    }
 
                     switch (key) {
                         case "add":
