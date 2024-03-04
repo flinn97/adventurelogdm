@@ -8,6 +8,7 @@ let json=[
     promotional: "this is cool",
     price:"$20", publisher:"Nentindo Corp.",
     stripePrice:"2000",
+    listedComponents: "4 maps\n  8 battlemaps\n  10 magic items\n  12 images\n  and more!",
     picURL:"https://assets-prd.ignimgs.com/2023/06/21/screenshot-2023-06-21-at-3-21-19-pm-1687386088079.png?width=1920",
     topDisplay:true,
     _id: "1",

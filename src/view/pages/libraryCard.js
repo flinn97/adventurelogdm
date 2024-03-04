@@ -3,6 +3,7 @@ import auth from '../../services/auth';
 import treeService from '../../services/treeService';
 import { MapComponent } from '../../mapTech/mapComponentInterface';
 
+
 /**
  * condensed version of the cards.
  * Works with themes.
@@ -100,7 +101,16 @@ class MainContent extends Component{
       <div style={{width:"100%", display:"flex", flexDirection:"row", minHeight:"710px", justifyContent:"center", padding:"22px"}}>
       {/* <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div> */}
 
-      <MapComponent app={app} name = "mpItem" cells={["name"]}/>
+      <MapComponent app={app} name="mpItem" theme="defaultRow" cells={[
+
+{ type: "img", class: "Img-Midsize" },
+{ type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item" },
+
+// { type: "attribute", name: "listedComponents", class: "DR-Attribute-Item Ellipsis-Text" },
+// { name: "See More", class: "DR-Attribute-Item .Button-Type1 a", hasLink: true, to: "/purchase/" },
+{ type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", }
+
+]}/>
 
       </div>
       
