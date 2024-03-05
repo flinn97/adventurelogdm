@@ -105,21 +105,7 @@ class MainContent extends Component{
     return(
       <div style={{width:"100%", display:"flex", flexDirection:"row", minHeight:"710px", justifyContent:"center", padding:"22px"}}>
       <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div>
-      {/* {this.state.start &&
-      <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
-<<<<<<< HEAD
-        debugger
-        dispatch({popupSwitch:"popupPurchase", currentComponent:comp, })
-        //treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")
-        
-        }]}}/>}
-       <div style={{color:styles.colors.color3}}>Buy Stuff</div>
-=======
-        //
-        treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")}]}}/>}
-         */}
-       {/* <div style={{color:styles.colors.color3}}>Buy Stuff</div> */}
->>>>>>> 1528bd5fac14988e13cc1d77a9a76f6447e86ea5
+
       </div>
       
     )
