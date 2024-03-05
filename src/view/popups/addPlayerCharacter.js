@@ -92,7 +92,7 @@ class MainContent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-     colors:[]
+     colors:{}
     }
   }
   render(){
@@ -102,21 +102,22 @@ class MainContent extends Component{
     let componentList = state.componentList;
     let styles =state.styles;
     let obj = state.currentComponent;
-    
+    let phone = window.innerWidth < 800;
     let { colors } = this.state;
     let placeholderName = randomTextService.pickCharacterName();
 
     return(
       <div style={{
-        display:"flex", width:"100%", flexDirection:"column", justifyContent:"center",
-        minHeight:"fit-content", maxHeight:"825px", minWidth:"855px", maxWidth:"100%",
+        display:"flex", width:"100%", flexDirection:"column", justifyContent:phone?"":"center",
+        minHeight:"fit-content", maxHeight:"825px", minWidth: phone?"":"855px", maxWidth:"100%",
         alignContent:"center", alignItems:"center", height:"100%",
-        paddingTop:"31px", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, color:styles.colors.color3}}>
+        paddingTop:phone?"31px":"31px", fontFamily:"serif", fontSize:phone?"2rem":styles.fonts.fontSubheader1, color:styles.colors.color3}}>
 New Character:
 
 
            {/* FORMS */}
-           <div style={{ display: "flex", width:"45%", flexDirection:"row", alignItems:"center", }}>
+           <div style={{ display: "flex", width:phone?"":"45%", height:phone?"150px":"",
+           flexDirection:phone?"column":"row", alignItems:"center", justifyContent:phone?"space-between":"" }}>
 
     <TokenImage pic={this.state.pic} app={app} width={110} colors={colors}/>
 
@@ -131,11 +132,11 @@ New Character:
               
               let colors = colorService.updateColors(pic, (palette) => {
                 this.setState({ colors: palette }, () => {
-                                  
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
+                                 
+                    let con = palette;
+                    app.state.currentComponent.setCompState({colors: con})
+                    this.setState({colors: con})
+                    
 
                 });
                 
@@ -148,10 +149,13 @@ New Character:
               await colorService.updateColors(pic, palette => {
                 this.setState({ colors: palette }, () => {
 
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
+                    let con = palette;
+                    app.state.currentComponent.setCompState({colors: con})
+                    this.setState({colors: con})
+                    
+            obj.setCompState({color:con, colors: con});
+            
+                    
 
                 });
               });
@@ -167,21 +171,21 @@ New Character:
     <ParentFormComponent app={app} name="name" obj={obj}
               placeholder={"ie: "+placeholderName}
               label={"Name Your Character"}
-              labelStyle={{color:styles.colors.color9,}}
+              labelStyle={{color:styles.colors.color9,fontSize: phone?"1.2rem":styles.fonts.fontNormal, }}
               inputStyle={{ width:"100%", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
-              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
+              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: phone?"1.2rem":styles.fonts.fontNormal,
               borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>
 
-              <div style={{display:"flex",flexDirection:"row", width:"100%", 
-              justifyContent:"space-around", marginTop:"25px", marginBottom:"25px", }}>
+              <div style={{display:"flex", flexDirection:"row", width:phone?"102%":"100%",  
+              justifyContent:phone?"flex-start":"space-around", marginTop:"25px", marginBottom:"25px", }}>
 
                   <ParentFormComponent app={app}  obj={obj}
                   name="initiative" label="Initiative Bonus" wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                           theme={"adventureLog"} rows={1}
                           maxLength={2}
-                          labelStyle={{color:styles.colors.color9, marginBottom:"8px",}}
+                          labelStyle={{color:styles.colors.color9, marginBottom:"8px", fontSize: phone?"1rem":styles.fonts.fontNormal,}}
                           inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-                          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: styles.fonts.fontNormal,
+                          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: phone?"1.2rem":styles.fonts.fontNormal,
                           }}
                           placeholder={"ie: 3"}
                           />
@@ -190,9 +194,9 @@ New Character:
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                           theme={"adventureLog"} rows={1}
                           maxLength={2}
-                          labelStyle={{color:styles.colors.color9, marginBottom:"8px",}}
+                          labelStyle={{color:styles.colors.color9, marginBottom:"8px", fontSize: phone?"1rem":styles.fonts.fontNormal,}}
                           inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-                          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: styles.fonts.fontNormal,
+                          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: phone?"1.2rem":styles.fonts.fontNormal,
                           }}
                           placeholder={"ie: 13"}
                           />
@@ -201,9 +205,9 @@ New Character:
                         wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex", flexDirection:"column"}}
                                 theme={"adventureLog"} rows={1}
                                 maxLength={5}
-                                labelStyle={{color:styles.colors.color9, marginBottom:"8px",}}
+                                labelStyle={{color:styles.colors.color9, marginBottom:"8px",fontSize: phone?"1rem":styles.fonts.fontNormal,}}
                                 inputStyle={{width:"7.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
-                                borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: styles.fonts.fontNormal,
+                                borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",fontSize: phone?"1.2rem":styles.fonts.fontNormal,
                                 }}
                                 placeholder={"ie: 44"}
                                 /> 
@@ -212,16 +216,17 @@ New Character:
               <ParentFormComponent app={app} name="statBlockLink" obj={obj}
               placeholder={"optional"}
               label={"Link to Character Sheet"}
-              labelStyle={{color:styles.colors.color9,}}
+              labelStyle={{color:styles.colors.color9, fontSize: phone?"1.2rem":styles.fonts.fontNormal,}}
               inputStyle={{ width:"100%", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
-              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
+              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: phone?"1.2rem":styles.fonts.fontNormal,
               borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>
               
      </div>
       <div style={{ display:"flex", flexDirection: "column", width:"100%", alignItems:"center", marginTop:"7%", alignSelf:"flex-end"}}>
           <RunButton className="hover-btn" app={app} text="Create" 
           callBack={ async (arr) => {
-                      
+            
+            
             let conditions = conditionService.getConditions();
             let id = await arr[0].getJson()?._id;
 
@@ -400,7 +405,7 @@ class CardWithTab extends Component{
     return(
       <div  style={{...styles[this.props.type?this.props.type:"biggestCard"] }}>   
       <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>   
-      <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+      <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app} />
         </div>
         </div>

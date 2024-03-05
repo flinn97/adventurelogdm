@@ -1,5 +1,5 @@
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import { doc, getDocs, collection, getDoc, updateDoc, addDoc, where, query, setDoc, deleteDoc, onSnapshot, querySnapshot, Timestamp, serverTimestamp, orderBy, limit } from "firebase/firestore";
+import { doc, getDocs, collection, getDoc, updateDoc, addDoc, writeBatch, where, query, setDoc, deleteDoc, onSnapshot, querySnapshot, Timestamp, serverTimestamp, orderBy, limit } from "firebase/firestore";
 import { db, storage, auth } from '../firbase.config.js';
 import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail, updateEmail, deleteUser } from "firebase/auth";
 import Compressor from "compressorjs";
@@ -26,6 +26,33 @@ class Auth {
                 const errorMessage = error.message;
                 // ..
             });
+    }
+    checkIfLoggedIn(){
+        debugger
+        onAuthStateChanged(auth, async (user)=>{
+            if(user){
+                return
+            }
+            else{
+                await localStorage.setItem("user", null);
+                await localStorage.clear();
+                localStorage.setItem("user", undefined);
+                let logouser;
+                await onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        // User is signed in, see docs for a list of available properties
+                        // https://firebase.google.com/docs/reference/js/firebase.User
+                        logouser = user.uid;
+                        // ...
+                    }
+                })
+                if (logouser) {
+                    await signOut(auth);
+        
+                }
+                window.location.reload();
+            }
+        })
     }
     async getCurrentUser() {
         
@@ -84,6 +111,24 @@ class Auth {
         let monsters = componentList.getList("monster");
         return monsters
     }
+
+
+    async deleteAllConditoins(componentList, email){
+        
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "condition"),  where("owner", "==", email));
+        let list = await getDocs(components);
+        let rawData = [];
+        for (const key in list.docs) {
+            let data = await list.docs[key].data()
+            rawData.push(data);
+        }
+        await componentList.addComponents(rawData, false);
+        let conditions = componentList.getList("condition");
+        componentList.getOperationsFactory().cleanPrepareRun({del:conditions})
+            
+        
+    }
+
     async getByCampaign(componentList, campaignId, attribute, value){
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"),  where("campaignId"==campaignId));
         let comps = await getDocs(components);
@@ -368,7 +413,6 @@ class Auth {
         }else{
             
             user = e;
-            console.log(user);
         }
         return user;
     }
@@ -428,6 +472,7 @@ class Auth {
             await signOut(auth);
 
         }
+        await localStorage.setItem("user", null);
         window.location.href ="/"
     }
     async uploadPics(file, name, dispatch, quality) {

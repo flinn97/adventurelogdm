@@ -6,7 +6,6 @@ export const URLcheck = (props) => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathname);
     if(props.onChange){
         props.onChange();
     }

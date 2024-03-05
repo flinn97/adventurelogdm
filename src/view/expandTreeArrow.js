@@ -45,7 +45,7 @@ render() {
     alignContent:"stretch",
     marginBottom:l===0?"5px":"11px",}}
     onClick={() => {
-      debugger
+      
       this.setState({ expanded: !this.state.expanded });
       
       let r = state.currentExpanse ? state.currentExpanse : [];

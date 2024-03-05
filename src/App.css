@@ -505,63 +505,49 @@ body {
   flex-direction: column;
 }
 
-.scroller {
+.scroller, .scroller2 {
   scrollbar-width: thin; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer 10+ */
   overflow-y: scroll; /* Add the ability to scroll */
+  
 }
 
-/* Style the scrollbar for Chrome, Safari and Opera */
-.scroller::-webkit-scrollbar {
+/* Style the scrollbar for Chrome, Safari, and Opera */
+.scroller::-webkit-scrollbar, .scroller2::-webkit-scrollbar {
   width: 12px; /* Width of the scrollbar */
+  
 }
 
-.scroller::-webkit-scrollbar-track {
+.scroller::-webkit-scrollbar-track, .scroller2::-webkit-scrollbar-track {
   background: transparent; /* Make the track transparent */
+  
 }
 
-.scroller::-webkit-scrollbar-thumb {
+.scroller::-webkit-scrollbar-thumb, .scroller2::-webkit-scrollbar-thumb {
   background-color: rgba(128, 128, 128, 0.5); /* Color and transparency of the thumb */
-  border-radius: 6px; /* Roundness of the scrollbar thumb */
+  border-radius: 6px; /* Roundness of the scrollbar thumb, adjust as needed */
+
 }
 
 /* Style the scrollbar for IE, Edge, and Firefox */
-.scroller {
+.scroller, .scroller2 {
   scrollbar-color: rgba(128, 128, 128, 0.5) transparent; /* Thumb and track color */
 }
 
-.scroller2 {
-  scrollbar-width:thin;
-  
-  /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer 10+ */
-  overflow-y: scroll; /* Add the ability to scroll */
-  
-}
 
-/* Style the scrollbar for Chrome, Safari and Opera */
+/* Adjustments for .scroller2 specifics */
 .scroller2::-webkit-scrollbar {
-  width: 9px; /* Width of the scrollbar */
+  width: 9px; /* Adjust width for .scroller2 specifically */
   height: 9px;
 }
 
-.scroller2::-webkit-scrollbar-track {
-  background: transparent; /* Make the track transparent */
-  
-}
-
 .scroller2::-webkit-scrollbar-thumb {
-  background-color:  rgba(128, 128, 128, 0.7); /* Color and transparency of the thumb */
-  border-radius: 6px; /* Roundness of the scrollbar thumb */
+  background-color: rgba(128, 128, 128, 0.7); /* Adjust color/transparency for .scroller2 */
+  border-radius: 6px; 
 }
 
 .scroller2::-webkit-scrollbar-corner {
   background-color: transparent; /* Make the corner transparent */
-}
-
-/* Style the scrollbar for IE, Edge, and Firefox */
-.scroller2 {
-  scrollbar-color: rgba(128, 128, 128, 0.7) transparent; /* Thumb and track color */
 }
 
 input {

@@ -94,11 +94,11 @@ class MainContent extends Component{
 
     return(
       <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
-       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px"
+       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px", overflow:"hidden"
        }}>
             
 
-          <div style={{minHeight:"400px",}}>
+          <div style={{minHeight:window.innerWidth > 800?"400px":"100px",}}>
             <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} 
             theme={"selectByImage"}
             //filter={{search: this.state.obj?.getJson().usage, attribute: "usage"}}
@@ -126,7 +126,7 @@ class TabContent extends Component{
 
     return(
     <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"column",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "0px", minWidth:"710px", 
+    userSelect:"none", verticalAlign:"center", fontWeight:"600",  marginTop: "0px", minWidth:window.innerWidth > 800?"710px":"100%", 
     fontSize:styles.fonts.fontSubheader1}}>
       Current Campaigns
       <div>
@@ -162,7 +162,7 @@ class CardWithTab extends Component{
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
             <MainContent app={app} />
             </div>
         </div>

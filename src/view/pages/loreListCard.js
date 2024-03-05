@@ -103,14 +103,14 @@ getCampId(){
     let width = w.toString()+"px";
 
     return(
-      <div className='scroller2'
+      <div 
       style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content", maxHeight:"fit-content",
-       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, 
+       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, overflowX:"hidden"
        }}>
             
             
           
-          <div style={{minWidth:"480px", width:width, display:"flex", flexDirection:"row", marginTop:"5vh", height:"100%",}}>
+          <div className='scroller2' style={{minWidth:"480px", width:width, display:"flex", flexDirection:"row", marginTop:"5vh", height:"100%",  overflowX:"hidden",}}>
           
             <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} count={0} 
             attribute={"parentId"}/>
@@ -159,7 +159,7 @@ class CardWithTab extends Component{
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
             <MainContent app={app} />
             </div>
         </div>

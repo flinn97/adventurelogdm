@@ -149,10 +149,9 @@ transitionDuration:"9000ms"
               let colors = colorService.updateColors(pic, (palette) => {
                 this.setState({ colors: palette }, () => {
                                   
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
+                  let con = palette;
+                  app.state.currentComponent.setCompState({colors: con})
+                  this.setState({colors: con})
 
                 });
                 
@@ -165,11 +164,11 @@ transitionDuration:"9000ms"
               await colorService.updateColors(pic, palette => {
                 this.setState({ colors: palette }, () => {
 
-                    let con = this.state.colors;
-                    let list = Object.values(con);
-                    this.setState({colors: list})
-                    console.log(this.state.colors)
-
+                  let con = palette;
+                  app.state.currentComponent.setCompState({colors: con})
+                  this.setState({colors: con})
+                  
+          obj.setCompState({color:con, colors: con});
                 });
               });
             }}
@@ -246,7 +245,9 @@ transitionDuration:"9000ms"
               }}
     type="number" value={this.state.copyCount} min="1" max="20" step="1"  inputmode="numeric"
               onChange={(e) =>{
-          this.setState({copyCount: Math.floor(e.target.value)})
+                let val = Math.floor(e.target.value)
+
+          this.setState({copyCount: val})
               }}             
   />
   
@@ -259,7 +260,8 @@ transitionDuration:"9000ms"
               text={RunText} 
               wrapperStyle={{...styles.buttons.buttonAdd, width:"600px" }}
               callBack={ async (arr) => {
-                let count = Math.floor(this.state.copyCount) -1;
+                let count = Math.floor(this.state.copyCount)-1;
+                if(count>0){
 
                 let conditions = ConditionService.getConditions();
                 let id = await arr[0].getJson()?._id;
@@ -274,29 +276,32 @@ transitionDuration:"9000ms"
                   let newCopyMon = state.opps.getUpdater('add')[state.opps.getUpdater('add').length-1];
                   arr.push(newCopyMon);
                 }
-
+                
 
                 for (let mon of arr){
                   
                       for(let condition of conditions)
                       {
                         condition={...condition}
-                        condition.monsterId = mon.getJson()._id;
+                        condition.monsterId = await mon.getJson()._id;
                         condition.roundsActive = "0";
-                        condition.campaignId = mon.getJson()?.campaignId;
-                        condition._id = mon.getJson()?._id+"c"+idService.createId();
+                        condition.campaignId = await mon.getJson()?.campaignId;
+                        condition._id = await mon.getJson()?._id+"c"+ await idService.createId();
                         await state.opps.jsonPrepare({addcondition: condition});
                       }
 
                   }
                 
                 
-                await state.opps.run();
+                  
+                
+              }
+              await state.opps.run();
                 await dispatch({
                   popUpSwitchcase: "",
                   currentComponent: undefined,
                 });
-
+              
               }}
                
             />

@@ -12,6 +12,7 @@ export default class Register extends Component {
         super(props);
         this.handleSubmission = this.handleSubmission.bind(this);
         this.validatePassword = this.validatePassword.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
         this.state = {
             user: undefined,
@@ -36,7 +37,6 @@ export default class Register extends Component {
 
     ///TAYLOR
     async validatePassword(password) {
-        console.log(password)
         
         const hasUpperCase = /[A-Z]/.test(password);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
@@ -48,12 +48,18 @@ export default class Register extends Component {
         return true;
     }
 
+    handleChange(event) {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: name === "email" ? value.toLowerCase() : value
+        });
+    }
 
     async handleSubmission() {
         let app = this.props.app;
         let state = app.state;
         let user = this.state.user;
-        let email = user.getJson().email;
+        let email = user.getJson().email.toLowerCase();
 
         let password = this.state.password;
         
@@ -65,8 +71,8 @@ export default class Register extends Component {
 
         let repeatPassword = this.state.repeatPassword;
 
-        this.setState({ errorMessage: undefined });
-
+        this.setState({ errorMessage: undefined, email: email });
+        
 
         if (password !== repeatPassword) {
             this.setState({ errorMessage: "Passwords don't match." });
@@ -83,8 +89,7 @@ export default class Register extends Component {
             return; // Do not proceed if passwords don't match
         }
 
-
-        // Proceed with registration
+        user.setCompState({email: email, owner: email, _id: email})
         await app.dispatch({ email: email });
 
         let authUser = await auth.register(email, password, true);
@@ -107,21 +112,21 @@ export default class Register extends Component {
         let styles = state.styles;
 
         const iStyle = {
-            width: "344px", padding: "4px 9px", color: styles.colors.colorWhite, height: "1.6rem", rows: "1",
-            fontSize: "1rem", border: "3px solid " + styles.colors.color8,
+            width: "344px", padding: "4px 9px", color: styles.colors.colorWhite, height:window.innerWidth > 800? "1.6rem":"1.7rem", rows: "1",
+            fontSize: window.innerWidth > 800?"1rem":"1.4rem", border: "3px solid " + styles.colors.color8,
             borderRadius: "4px", background: styles.colors.color2, borderWidth: "0px",
             alignItems: "left", textAlign: "left", justifyContent: "center",
         };
 
         const wStyle = { display: "flex", flexDirection: "column", marginTop: "8px", };
-        const lStyle = { color: styles.colors.color3, fontSize: "1rem" };
-        const additionalStyle = { color: styles.colors.color8, padding: "11px", fontSize: ".9rem" };
+        const lStyle = { color: styles.colors.color3, fontSize: window.innerWidth > 800?"1rem":"1.4rem" };
+        const additionalStyle = { color: styles.colors.color8, padding: "11px", fontSize: window.innerWidth > 800?".9rem":"1.3rem"  };
         const warning = { ...iStyle, color: 'red', marginTop: '10px', fontSize: styles.fonts.fontSmallest, background: "" };
 
 
         return (
             <div style={{
-                padding: "5%", transition: "all ease-out", justifyContent: "center", flexDirection: "row", display: "flex",
+                padding: window.innerWidth > 800?"5%":"2px", transition: "all ease-out", justifyContent: "center", flexDirection: window.innerWidth > 800?"row":"column", display: "flex",
                 width: "100%", padding: "33px", paddingTop: "35px",
             }}>
 
@@ -132,12 +137,12 @@ export default class Register extends Component {
 
                     <div style={{
                         display: 'flex', flexDirection: 'row', justifyContent: "center", alignContent: "center",
-                        justifyItems: "center", width: "500px", backgroundColor: styles.colors.color8 + "0a", borderRadius: "22px", padding: "33px"
+                        justifyItems: "center", width: window.innerWidth > 800?"500px":"100%", backgroundColor: window.innerWidth > 800?styles.colors.color8 + "0a":"", borderRadius: "22px", padding:window.innerWidth > 800?"33px":"20px",
                     }}>
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: "22px", fontSize: '1.1rem' }}>Registering as GM</div>
+                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom:  window.innerWidth > 800?"22px":"10px", fontSize: window.innerWidth > 800?'1.1rem':"1.4rem" }}>Registering as GM</div>
 
                             <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.color5 }}>(All fields are required)</div>
 
@@ -154,7 +159,7 @@ export default class Register extends Component {
                         inputStyle={iStyle} wrapperStyle={wStyle}/> */}
 
                             <ParentFormComponent obj={this.state.user} name="email" label="Email"
-                                theme={"adventureLog"}
+                                theme={"adventureLog"} handleChange={this.handleChange} 
                                 labelStyle={lStyle} autoComplete="off" type="text"
                                 inputStyle={iStyle} wrapperStyle={wStyle} />
 
@@ -199,13 +204,17 @@ export default class Register extends Component {
 
 
                             <div className='hover-btn' style={{
-                                ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "355px", border: "1px solid " + styles.colors.color8,
-                                color: styles?.colors?.color3, fontSize: styles?.fonts?.fontSmall,
+                                ...styles?.buttons?.buttonAdd, marginTop: "25px", padding: "8px 34px", width: window.innerWidth > 800?"355px":"100%", border: "1px solid " + styles.colors.color8,
+                                color: styles?.colors?.color3, fontSize: window.innerWidth > 800?styles?.fonts?.fontSmall:"1.4rem",
                             }} onClick={this.handleSubmission}>
                                 Continue to Payment
                             </div>
 
-
+                            <Link className='hover-img' style={{
+                        ...styles?.buttons?.buttonAdd, marginTop: "24px", background:"",
+                        padding: "8px 14px", width: "280px", border: "", boxShadow:"", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center",
+                    }} to="../login" >Back to Login</Link>
                         </div> </div>
 
                 )}
@@ -224,11 +233,7 @@ export default class Register extends Component {
                     </div>
 
 
-                    <Link className='hover-btn' style={{
-                        ...styles?.buttons?.buttonAdd, marginTop: "24px",
-                        padding: "8px 14px", width: "280px", border: "1px solid " + styles.colors.color8,
-                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall,
-                    }} to="../login" >Back to Login</Link></div>
+                    </div>
 
 
             </div>

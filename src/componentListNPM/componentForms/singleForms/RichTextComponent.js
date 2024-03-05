@@ -156,7 +156,11 @@ class RichTextComponent extends Component {
 
 
     async handleChange(e) {
-
+        if(e.key==="Tab"){
+            this.setState({active:true});
+            return
+        }
+        
         const config = {
             ADD_TAGS: ['a'], // Allow link tags
             ADD_ATTR: ['href'], // Allow to attributes
@@ -171,50 +175,50 @@ class RichTextComponent extends Component {
 
         const cursorPosition = this.getCurrentCursorPosition();
         this.setState({ yourCurrentCursorPosition: cursorPosition });
-        if (value === " " && this.state.lastChar === " " && this.state.backSlash) {
-            await this.setState({ doubleSpace: true })
-        }
+        // if (value === " " && this.state.lastChar === " " && this.state.backSlash) {
+        //     await this.setState({ doubleSpace: true })
+        // }
 
-        if (this.state.doubleSpace) {
+        // if (this.state.doubleSpace) {
 
-            let c = 'm'
-            let obj = {
-                m: this.state.m,
-                l: this.state.l,
-                d: this.state.d,
-                e: this.state.e,
-                f: this.state.f,
-            }
-            for (const key in obj) {
-                if (obj[key]) {
-                    c = key
-                    break;
-                }
-            }
+        //     let c = 'm'
+        //     let obj = {
+        //         m: this.state.m,
+        //         l: this.state.l,
+        //         d: this.state.d,
+        //         e: this.state.e,
+        //         f: this.state.f,
+        //     }
+        //     for (const key in obj) {
+        //         if (obj[key]) {
+        //             c = key
+        //             break;
+        //         }
+        //     }
 
 
-            this.addTag(innerText, value, c)
-        }
+        //     this.addTag(innerText, value, c)
+        // }
 
-        if (value === "/" && !this.state.backSlash) {
-            this.setState({ backSlash: true });
-        }
-        if (this.state.backSlash && value === 'm' && this.state.lastChar === "/") {
-            this.setState({ m: true, d: false, e: false, f: false, l: false })
-        }
-        if (this.state.backSlash && value === 'd' && this.state.lastChar === "/") {
-            this.setState({ m: false, d: true, e: false, f: false, l: false })
-        }
-        if (this.state.backSlash && value === 'e' && this.state.lastChar === "/") {
-            this.setState({ m: false, d: false, e: true, f: false, l: false })
-        }
-        if (this.state.backSlash && value === 'f' && this.state.lastChar === "/") {
-            this.setState({ m: false, d: false, e: false, f: true, l: false })
-        }
-        if (this.state.backSlash && value === 'l' && this.state.lastChar === "/") {
-            this.setState({ m: false, d: false, e: false, f: false, l: true })
-        }
-
+        // if (value === "/" && !this.state.backSlash) {
+        //     this.setState({ backSlash: true });
+        // }
+        // if (this.state.backSlash && value === 'm' && this.state.lastChar === "/") {
+        //     this.setState({ m: true, d: false, e: false, f: false, l: false })
+        // }
+        // if (this.state.backSlash && value === 'd' && this.state.lastChar === "/") {
+        //     this.setState({ m: false, d: true, e: false, f: false, l: false })
+        // }
+        // if (this.state.backSlash && value === 'e' && this.state.lastChar === "/") {
+        //     this.setState({ m: false, d: false, e: true, f: false, l: false })
+        // }
+        // if (this.state.backSlash && value === 'f' && this.state.lastChar === "/") {
+        //     this.setState({ m: false, d: false, e: false, f: true, l: false })
+        // }
+        // if (this.state.backSlash && value === 'l' && this.state.lastChar === "/") {
+        //     this.setState({ m: false, d: false, e: false, f: false, l: true })
+        // }
+        
         if (innerText.includes('---')) {
             const originalLength = innerText.length;
             innerText = innerText.replace(/---/g, '<span style="width: 100%; display: block; mix-blend-mode: luminosity;"><hr></hr></span><span style="width: 100%;></span>');
@@ -273,21 +277,21 @@ class RichTextComponent extends Component {
             // }
 
             // Someday help me figure this out Taylor. Change text in richtext to a link to the lore object of the given name
-            //     if ((innerText.includes(']]') && innerText.includes('[[')) && this.props.linkLore){
-            //                 const originalLength = innerText.length;
-            //                 // Check for text within double brackets and replace it with a <Link> element
-            //                 innerText = innerText.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
-            //                     const hrefLore = toolService.getIDFromLoreName(p1);
-            //                     const hrefCamp = toolService.getIdFromURL(true, 1);
-            //                     const href = `/campaign/${hrefCamp}-${hrefLore}`;
-            //                     return `<b>{ </b><a href="${href}" style="color: #CDE8E7; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; margin-left: 2px; margin-right: 2px;">${p1}</a><b> }</b>`;
-            //                 });
+                // if ((innerText.includes(']]') && innerText.includes('[[')) && this.props.linkLore){
+                //             const originalLength = innerText.length;
+                //             // Check for text within double brackets and replace it with a <Link> element
+                //             innerText = innerText.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
+                //                 const hrefLore = toolService.getIDFromLoreName(p1);
+                //                 const hrefCamp = toolService.getIdFromURL(true, 1);
+                //                 const href = `/campaign/${hrefCamp}-${hrefLore}`;
+                //                 return `<b>{ </b><a href="${href}" style="color: #CDE8E7; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; margin-left: 2px; margin-right: 2px;">${p1}</a><b> }</b>`;
+                //             });
 
-            //             await this.setState({ theHtml: innerText, textHtml: innerText });
-            //             const newLength = innerText.length;
-            //             const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
-            //             this.setCaret(cursorPosition + originalLength);
-            //     }
+                //         await this.setState({ theHtml: innerText, textHtml: innerText });
+                //         const newLength = innerText.length;
+                //         const cursorPosition = newLength - (originalLength - this.state.yourCurrentCursorPosition);
+                //         this.setCaret(cursorPosition + originalLength);
+                // }
         }
 
     }
@@ -414,12 +418,7 @@ class RichTextComponent extends Component {
 
         document.addEventListener('keydown', this.checkHold)
         this.ref.current.addEventListener('keyup', this.handleChange);
-        this.ref.current.addEventListener('keydown', (e=>{
-            if(e.keyCode==13) {
-                // e.preventDefault();
-                // this.setEnterCaret(e);
-            }
-        }));
+
 
         document.addEventListener('mousedown', this.handleClickOutside);
     }
@@ -428,6 +427,8 @@ class RichTextComponent extends Component {
 
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
+        document.removeEventListener('mouseup', this.handleClickOutside);
+
         this.ref.current.removeEventListener('paste', this.handlePaste);
     }
     handleClickOutside(event) {

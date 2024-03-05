@@ -20,16 +20,16 @@ export default class PlayerCharacterMapItem extends Component {
       runEncounter: undefined,
       encounterId: undefined,
       showConditions: true
-      
-    };
-    }
 
-    convertToLink = (statBlockLink) => {
-    
-      if (statBlockLink && !statBlockLink.startsWith('http')) {
-        return 'https://' + statBlockLink;
-      }
-      return statBlockLink;
+    };
+  }
+
+  convertToLink = (statBlockLink) => {
+
+    if (statBlockLink && !statBlockLink.startsWith('http')) {
+      return 'https://' + statBlockLink;
+    }
+    return statBlockLink;
   }
 
   handleClickWord = (word, iValue) => {
@@ -38,9 +38,9 @@ export default class PlayerCharacterMapItem extends Component {
     // Get the full list of conditions related to this monster
     const conditionList = this.props.app.state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId");
     // Ensure it's an array before filtering
-    const activeConList = Array.isArray(conditionList) 
-                      ? conditionList.filter(cond => cond.getJson().isActive === true) 
-                      : [];
+    const activeConList = Array.isArray(conditionList)
+      ? conditionList.filter(cond => cond.getJson().isActive === true)
+      : [];
     // Find the condition object that matches the clicked word
     const targetCondition = conditionList.find(cond => cond.getJson().name === word);
     const targetActiveCondition = activeConList.find(cond => cond.getJson().name === word);
@@ -50,327 +50,354 @@ export default class PlayerCharacterMapItem extends Component {
       conditionJson.isActive = !conditionJson.isActive;
       targetCondition.setCompState(conditionJson.isActive);
       this.props.app.dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: targetCondition
-  })}
-    
+        operate: "update", operation: "cleanPrepareRun", object: targetCondition
+      })
+    }
 
-    if (targetActiveCondition){
+
+    if (targetActiveCondition) {
       let conditionJson = targetActiveCondition.getJson();
-      conditionJson.roundsActive =  "0"
+      conditionJson.roundsActive = "0"
       // let currentR = parseInt(conditionJson.roundsActive, 10);
       // let newR = currentR + parseInt(iValue)
       // conditionJson.roundsActive =  iValue.toString();
-      
+
       ///TAYLOR 
       // WHY DOES THIS NOT SET A NEW CONDITION ON AN ACTIVE MONSTER to 1???
-      
-      
+
+
       targetCondition.setCompState(conditionJson.roundsActive);
       this.props.app.dispatch({
-        operate:"update", operation:"cleanPrepareRun", object: targetActiveCondition
-  })}
-    
-  
+        operate: "update", operation: "cleanPrepareRun", object: targetActiveCondition
+      })
+    }
+
+
     // Show conditions again and trigger a re-render
     this.setState({ showConditions: true });
     // this.props.app.dispatch({
     //   // operate:"update", operation:"jsonPrepareRun", object:targetCondition
     // });
   };
-  
+
 
   render() {
-    
+
     let app = this.props.app;
     // let dispatch = app.dispatch;
     let state = app.state;
     let length = app.state.maxLengthShort;
     let styles = state.styles;
-   
+
     let obj = this.props.obj;
     let allColors = obj.getJson().colors;
-    let colors = obj.getJson().colors?Object.values(allColors):[styles.colors.color1, styles.colors.color2, styles.colors.color8, styles.colors.color1, styles.colors.color2, styles.colors.color8];
-       
-    console.log(obj.getJson().colors)
+    let colors = obj.getJson().colors ? Object.values(allColors) : [styles.colors.color1, styles.colors.color2, styles.colors.color8, styles.colors.color1, styles.colors.color2, styles.colors.color8];
+
     const width = 108;
-    
+
     let stat = this.convertToLink(obj?.getJson().statBlockLink);
-          let name = obj?.getJson().name;
-          let x = name.length;
-          let fontSizePx;
+    let name = obj?.getJson().name;
+    let x = name.length;
+    let fontSizePx;
 
-              if(x <= 18) {
-                  fontSizePx = 16;
-              }
-              else if(x >= length) {
-                  fontSizePx = 11;
-              }
-              else {
-                  fontSizePx = 16 + (x - 18) * ((11 - 16) / (length - 18));
-              }        
-              let fontSizeRem = fontSizePx / 12;
-              let fontSizeRemSm=fontSizePx / 14;
-              let fontSizeRemTiny=fontSizePx / 17;
-              let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem", fontSizeRemTiny+"rem"]
-    
-              const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
-              // const roundCount = this.state.roundCount;
-          
-              const currentTurn = this.props.obj.getJson()?.currentTurn;
+    if (x <= 18) {
+      fontSizePx = 16;
+    }
+    else if (x >= length) {
+      fontSizePx = 11;
+    }
+    else {
+      fontSizePx = 16 + (x - 18) * ((11 - 16) / (length - 18));
+    }
+    let fontSizeRem = fontSizePx / 12;
+    let fontSizeRemSm = fontSizePx / 14;
+    let fontSizeRemTiny = fontSizePx / 17;
+    let fontSize = [fontSizeRem + "rem", fontSizeRemSm + "rem", fontSizeRemTiny + "rem"]
 
-              let borderGradient = currentTurn === lastInitAsNumber ?
-              `solid 1px ${colors[5]}66` : "";
-              
-              const otherWord =( 
-              
-              <ParentFormComponent 
-              obj={this.props.obj} 
-              isPropArray={true} name="conditions" 
-              // prepareRun={true} 
-              
-              maxLength={22} 
-              placeholder={"Add your own"}
-              
-               inputStyle={{
-                width:"250px",
-                color: styles.colors.colorWhite,
-                fontSize: styles.fonts.fontSmallest,
-                borderRadius: "4px", paddingBottom:"3px",paddingTop:"3px", paddingLeft:"4px",
-                background: styles.colors.colorWhite+"0e",
-                borderWidth: "1px",
-                
-                textAlign: "flex-start",
-                justifyContent: "center",}}
-                wrapperStyle={{justifyContent: "center", marginTop:"-8px"}}
-              app={app}/>);
-              
-                //DEAD LAST 
-                            //hahaha
-                            const createSortConditions = (reverse = false) => (a, b) => {
-                              const orderA = parseInt(a.getJson().order, 10);
-                              const orderB = parseInt(b.getJson().order, 10);
-                              return reverse ? orderB - orderA : orderA - orderB;
-                            };
-                            
-                            // Using the factory function
-                            const sortConditions = createSortConditions();
-                            const sortConditionsOpp = createSortConditions(true);
-                            
-                            // Your original code
-                            const conList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId").sort(sortConditions);
-                            const conListNames = conList.map(item => item.getJson().name);
-                            const activeConList = Array.isArray(conList) 
-                              ? conList.filter(cond => cond.getJson().isActive === true).sort(sortConditionsOpp)
-                              : [];
+    const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
+    // const roundCount = this.state.roundCount;
 
-              const maxCon = conList.length===""?13:12;
-                const iValue = (currentTurn == lastInitAsNumber?"1":"0")
+    const currentTurn = this.props.obj.getJson()?.currentTurn;
+
+    let borderGradient = currentTurn === lastInitAsNumber ?
+      `solid 1px ${colors[5]}66` : "";
+
+    const otherWord = (
+
+      <ParentFormComponent
+        obj={this.props.obj}
+        isPropArray={true} name="conditions"
+        // prepareRun={true} 
+
+        maxLength={22}
+        placeholder={"Add your own"}
+
+        inputStyle={{
+          width: "250px",
+          color: styles.colors.colorWhite,
+          fontSize: styles.fonts.fontSmallest,
+          borderRadius: "4px", paddingBottom: "3px", paddingTop: "3px", paddingLeft: "4px",
+          background: styles.colors.colorWhite + "0e",
+          borderWidth: "1px",
+
+          textAlign: "flex-start",
+          justifyContent: "center",
+        }}
+        wrapperStyle={{ justifyContent: "center", marginTop: "-8px" }}
+        app={app} />);
+
+    //DEAD LAST 
+    //hahaha
+    const createSortConditions = (reverse = false) => (a, b) => {
+      const orderA = parseInt(a.getJson().order, 10);
+      const orderB = parseInt(b.getJson().order, 10);
+      return reverse ? orderB - orderA : orderA - orderB;
+    };
+
+    // Using the factory function
+    const sortConditions = createSortConditions();
+    const sortConditionsOpp = createSortConditions(true);
+
+    // Your original code
+    const conList = state.componentList.getList("condition", this.props.obj.getJson()._id, "monsterId").sort(sortConditions);
+    const conListNames = conList.map(item => item.getJson().name);
+    const activeConList = Array.isArray(conList)
+      ? conList.filter(cond => cond.getJson().isActive === true).sort(sortConditionsOpp)
+      : [];
+
+    const maxCon = conList.length === "" ? 13 : 12;
+    const iValue = (currentTurn == lastInitAsNumber ? "1" : "0")
 
     return (
-     
-      <div style={{width: "100%", overflowX:"visible", marginTop:"1vh",
-      position: "relative", borderRadius:"22px", minWidth:"1300px",
-      alignSelf:"flex-start", justifySelf:"flex-start", }}>
-      <div className='scroller2'
-      style={{
-        width: "100%", borderRadius:"22px",
-        height:"fit-content",overflowX:"visible",
+
+      <div style={{
+        width: "100%", overflowX: "visible", marginTop: "1vh",
+        position: "relative", borderRadius: "22px", minWidth: "100%",
+        alignSelf: "flex-start", justifySelf: "flex-start",
       }}>
-        
-      <div
-      // to={"/encounter/" + obj?.getJson()._id} 
-      style={{ color: styles.colors.colorWhite, 
-        textDecoration: "none", userSelect:"none",
-        height: "fit-content", overflow:"visible", 
-       }}
-      > 
+        <div className='scroller2'
+          style={{
+            width: "100%", borderRadius: "22px",
+            height: "fit-content", overflowX: "visible",
+          }}>
 
-      <div style={{display: "flex", flexDirection: 'column', 
-      borderRadius:styles.popupSmall.borderRadius,
-      border:"", verticalAlign:"center",
-      justifyContent:"center",  position:"absolute",
-      zIndex:"0",
-      height: 'fit-content', 
-      width:"100%", background: "linear-gradient(90deg, "+colors[4]+"55, #45526e27, "+colors[2]+"22)",
-      ...styles.backgroundContent,
-      }}>     
-                        <div 
-                        
-                        style={{ 
-                        display: "flex", flexDirection: "row", justifyContent:"space-between", borderRadius:"22px",
-                        height: "fit-content", alignContent:"center", alignItems:"center", padding:"8px 12px",
-                        
-                         }}>
+          <div
+            // to={"/encounter/" + obj?.getJson()._id} 
+            style={{
+              color: styles.colors.colorWhite,
+              textDecoration: "none", userSelect: "none",
+              height: "fit-content", overflow: "visible",
+            }}
+          >
 
-        {stat &&
-        (<div  title={stat} style={{justifyContent:"center", display:"flex", marginLeft:"11px", flexDirection:"column",alignContent:"center", alignItems:"center", }}>
-        <a href={stat} target='_blank'>
-          <img className='hover-img' src={bookCursor} style={{width:"50px", opacity:""}}/>
-          
-        </a><ParentFormComponent obj={this.props.obj} name="statBlockLink"
-        prepareRun={true} maxLength={30}
+            <div style={{
+              display: "flex", flexDirection: 'column',
+              borderRadius: styles.popupSmall.borderRadius,
+              border: "", verticalAlign: "center",
+              justifyContent: "center", position: "absolute",
+              zIndex: "0",
+              height: 'fit-content',
+              width: "100%", background: "linear-gradient(90deg, " + colors[4] + "55, #45526e27, " + colors[2] + "22)",
+              ...styles.backgroundContent,
+            }}>
+              <div
 
-          inputStyle={{width:"200px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
-          color:styles.colors.colorBlack, height:"1.7rem", rows:"1",  fontSize: fontSize[2], cursor:"text",
-          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",
-          }}
-          
-        /></div>)||
-        ( <div title={stat} style={{justifyContent:"center", display:"flex",  marginLeft:"11px",flexDirection:"column",alignContent:"center", alignItems:"center", }}>
-        <div  className='hover-btn'>
-          <img src={bookCursor} style={{width:"50px", opacity:"0%"}}/>
-          
-        </div><ParentFormComponent obj={this.props.obj} name="statBlockLink"
-        prepareRun={true} maxLength={30}
-          placeholder={"Link to Sheet"}
-          inputStyle={{width:"200px", padding:"2px 4px",color:styles.colors.colorWhite, marginTop:"8px",
-          color:styles.colors.colorBlack, height:"1.7rem", rows:"1",  fontSize: fontSize[2],
-          borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",
-          }}
-          
-        /></div>)
-        }
+                style={{
+                  display: "flex", flexDirection: "row", justifyContent: "space-between", borderRadius: "22px",
+                  height: "fit-content", alignContent: "center", alignItems: "center", padding: "8px 12px",
+                }}
 
-{(window.innerWidth > 600) &&
-  <div className='hover-container' style={{marginLeft:"0px"}}>
-    {obj?.getJson().isToken===true && 
-              (<TokenImage pic={obj?.getJson().picURL} width={width-8} app={app} colors={colors}/>)
-              ||
-              
-              (<div>
-                <img src={obj?.getJson().picURL} style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px",
-              marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center", objectFit:"contain",
-              marginRight:"30px", }}/>
-              
-              
-              <img src={obj?.getJson().picURL} style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px",
-              marginLeft:"2vw", display:"flex", alignItems:"center", justifyContent:"center", position:"absolute", top:5, objectFit:"contain",
-              mixBlendMode:"multiply", opacity:"44%", zIndex:"-10",
-              filter:"contrast(5%) brightness(0%) blur(2px)",
-              marginRight:"30px", }}/>
-              </div> )
-    }
-                            <div className='hover-div' style={{ position: "absolute", 
-                            display: "flex", 
-                            flexDirection: "row",
-                            justifyContent: "center", 
-                            alignItems: "center", 
-                            padding: "8px", 
-                            borderRadius: "11px",
-                            width: "190px", 
-                            background: styles.colors.colorBlack, 
-                            left: 0, 
-                            top: -5 
-                            }}>
-                              <div style={{fontSize:styles.fonts.fontSmallest,  color:styles.colors.colorWhite, width:"fit-content"}}>Show Token Border?</div>
-                                <ParentFormComponent obj={this.props.obj} name="isToken"
-                                  prepareRun={true} wrapperStyle={{ width:"fit-content", height:"fit-content",alignContent:"center", justifyContent:"center", alignContent:"center", alignItems:"center", alignText:"center",}}
-                                    type={"checkbox"} 
-                                    inputStyle={{padding:"2px 4px",color:styles.colors.colorWhite,
-                                    color:styles.colors.colorBlack,  fontSize: fontSize[0],
-                                    }}
-                                    
-                                  /></div> 
-</div>}
+              >
+
+                {stat &&
+                  (<div title={stat} style={{ justifyContent: "center", display: "flex", marginLeft: "11px", flexDirection: "column", alignContent: "center", alignItems: "center", }}>
+                    <a href={stat} target='_blank'>
+
+                      <img className='hover-img' src={bookCursor} style={{ width: "50px", opacity: "" }}/>
+
+                    </a>
+
+                    <ParentFormComponent obj={this.props.obj} name="statBlockLink"
+                      prepareRun={true} maxLength={30}
+
+                      inputStyle={{
+                        width: "10.5vw", padding: "2px 4px", color: styles.colors.colorWhite, marginTop: "8px",
+                        color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: fontSize[2], cursor: "text",
+                        borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
+                      }}
+
+                    />
+                    
+                    </div>) ||
+                  (<div title={stat} style={{ justifyContent: "center", display: "flex", marginLeft: "11px", flexDirection: "column", alignContent: "center", alignItems: "center", }}>
+                    <div className='hover-btn'>
+                      <img src={bookCursor} style={{ width: "50px", opacity: "0%" }} />
+
+                    </div><ParentFormComponent obj={this.props.obj} name="statBlockLink"
+                      prepareRun={true} maxLength={38}
+                      placeholder={"Link to Sheet"}
+                      inputStyle={{
+                        width: "10.5vw", padding: "2px 4px", color: styles.colors.colorWhite, marginTop: "8px",
+                        color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: fontSize[2],
+                        borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
+                      }}
+
+                    /></div>)
+                }
+
+                
+                  <div className='hover-container' style={{ marginLeft: "0px" }}>
+                    {obj?.getJson().isToken === true &&
+                      (<TokenImage pic={obj?.getJson().picURL} width={width - 8} app={app} colors={colors} />)
+                      ||
+
+                      (<div>
+                        <img src={obj?.getJson().picURL} style={{
+                          minWidth: width + "px", minHeight: width + "px", maxWidth: width + "px", maxHeight: width + "px",
+                          marginLeft: "2vw", display: "flex", alignItems: "center", justifyContent: "center", objectFit: "contain",
+                          marginRight: "30px",
+                        }} />
 
 
+                        <img src={obj?.getJson().picURL} style={{
+                          minWidth: width + "px", minHeight: width + "px", maxWidth: width + "px", maxHeight: width + "px",
+                          marginLeft: "2vw", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", top: 5, objectFit: "contain",
+                          mixBlendMode: "multiply", opacity: "44%", zIndex: "-10",
+                          filter: "contrast(5%) brightness(0%) blur(2px)",
+                          marginRight: "30px",
+                        }} />
+                      </div>)
+                    }
+                    <div className='hover-div' style={{
+                      position: "absolute",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "8px",
+                      borderRadius: "11px",
+                      width: "190px",
+                      background: styles.colors.colorBlack,
+                      left: 0,
+                      top: -5
+                    }}>
+                      <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.colorWhite, width: "fit-content" }}>Show Token Border?</div>
+                      <ParentFormComponent obj={this.props.obj} name="isToken"
+                        prepareRun={true} wrapperStyle={{ width: "fit-content", height: "fit-content", alignContent: "center", justifyContent: "center", alignContent: "center", alignItems: "center", alignText: "center", }}
+                        type={"checkbox"}
+                        inputStyle={{
+                          padding: "2px 4px", color: styles.colors.colorWhite,
+                          color: styles.colors.colorBlack, fontSize: fontSize[0],
+                        }}
 
-                          <div    className='hover-btn'     title="Name"         
-                          style={{display: "flex", height:"fit-content", width:"fit-content", fontWeight:"bold", fontFamily:"serif", 
-                          textDecoration: styles.colors.colorWhite+"88 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack,  marginRight:".5vw", border: borderGradient,
-                          alignSelf:"center", borderRadius:"11px",
-                          alignItems:"center", justifyContent:"center", fontSize:fontSize[0],
-                         }}>
-                           <ParentFormComponent obj={this.props.obj} name="name"
-                            prepareRun={true} maxLength={30}
-                            
-                              inputStyle={{width:"520px", padding:"4px 9px", color:styles.colors.colorWhite, height:"1.7rem", rows:"1", 
-                              fontSize:fontSize[0],  cursor:"text",
-                              borderRadius:"11px", 
-                              background: "linear-gradient(90deg, "+styles.colors.colorBlack+"5c, "+colors[0]+"11,"+styles.colors.colorBlack+"5c)", borderWidth:"0px", alignItems:"center",textAlign:"center",justifyContent:"center",
-                              }}
-                              
-                           />
-                          </div>
-                          {(window.innerWidth > 600) &&
-                          <div title="Initiative Bonus" className='hover-btn'
-                            style={{
-                              display: "flex",
-                              background:styles.colors.colorBlack,
-                             padding:"11px", borderRadius:"11px",
-                              alignSelf: "center",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexDirection: "column", 
-                              textAlign: "center",marginRight:"5px",
-                            }}
-                          >
-                            <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Initiative Bonus</div>
+                      /></div>
+                  </div>
 
-                            <ParentFormComponent obj={this.props.obj} name="initiative"
-                          prepareRun={true} maxLength={4} label={"+"} 
-                         
-                             inputStyle={{width:"3.4rem", padding:"4px 9px",color:styles.colors.colorWhite, marginTop:"8px",
-                             color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
-                             borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",}}
-                            />
 
-                          </div>}
-                          {(window.innerWidth > 600) &&
-                          <div title="AC" className='hover-btn'
-                            style={{
-                              display: "flex",
-                              background:styles.colors.colorBlack,
-                             padding:"11px", borderRadius:"11px",
-                              alignSelf: "center",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexDirection: "column", 
-                              textAlign: "center",marginRight:"5px",
-                            }}
-                          >
-                            
-                            <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>AC</div>
 
-                            <ParentFormComponent obj={this.props.obj} name="ac"
-                            prepareRun={true} maxLength={2}
-                           
-                              inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
-                              color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal,
-                              borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px", cursor:"text",
-                              }}
-                           style={{ alignSelf: "center", fontSize: fontSize[1], }}/>
+                <div className='hover-btn' title="Name"
+                  style={{
+                    display: "flex", height: "fit-content", width: "fit-content", fontWeight: "bold", fontFamily: "serif",
+                    textDecoration: styles.colors.colorWhite + "88 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
+                    textShadow: "1px 1px 0 " + styles.colors.colorBlack, marginRight: ".5vw", border: borderGradient,
+                    alignSelf: "center", borderRadius: "11px",
+                    alignItems: "center", justifyContent: "center", fontSize: fontSize[0],
+                  }}>
+                  <ParentFormComponent obj={this.props.obj} name="name"
+                    prepareRun={true} maxLength={30}
 
-                          </div>}
-                          {(window.innerWidth > 600) &&
-                          <div title="Max HP" className='hover-btn'
-                            style={{
-                              display: "flex",
-                              background:styles.colors.colorBlack,
-                             padding:"11px", borderRadius:"11px",
-                              alignSelf: "center",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexDirection: "column", 
-                              textAlign: "center",marginRight:"5px",
-                            }}
-                          >
-                            <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Max HP</div>
+                    inputStyle={{
+                      width: "30vw", padding: "4px 9px", color: styles.colors.colorWhite, height: "1.7rem", rows: "1",
+                      fontSize: fontSize[0], cursor: "text",
+                      borderRadius: "11px",
+                      background: "linear-gradient(90deg, " + styles.colors.colorBlack + "5c, " + colors[0] + "11," + styles.colors.colorBlack + "5c)", borderWidth: "0px", alignItems: "center", textAlign: "center", justifyContent: "center",
+                    }}
 
-                            <ParentFormComponent obj={this.props.obj} name="hp" 
-                          prepareRun={true} maxLength={4}  doesMath={true}
-                             inputStyle={{width:"3.4rem", padding:"4px 9px", color:styles.colors.colorWhite, marginTop:"8px",
-                             color:styles.colors.colorBlack, height:"1.7rem", rows:"1", fontSize: styles.fonts.fontNormal, cursor:"text",
-                             borderRadius:"4px",background:styles.colors.colorWhite+"9c", borderWidth:"0px",}}/>
+                  />
+                </div>
+                
+                  <div title="Initiative Bonus" className='hover-btn'
+                    style={{
+                      display: "flex",
+                      background: styles.colors.colorBlack,
+                      padding: "11px", borderRadius: "11px",
+                      alignSelf: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      textAlign: "center", marginRight: "5px",
+                    }}
+                  >
+                    <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Initiative Bonus</div>
 
-                           
-                          </div>}
+                    <ParentFormComponent obj={this.props.obj} name="initiative"
+                      prepareRun={true} maxLength={4} label={"+"}
 
-                         
-                        {/* {{ACTIVE CONDITIONS}} */}
-                        
-                        {/* {activeConList &&
+                      inputStyle={{
+                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "8px",
+                        color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: styles.fonts.fontNormal,
+                        borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
+                      }}
+                    />
+
+                  </div>
+                
+                  <div title="AC" className='hover-btn'
+                    style={{
+                      display: "flex",
+                      background: styles.colors.colorBlack,
+                      padding: "11px", borderRadius: "11px",
+                      alignSelf: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      textAlign: "center", marginRight: "5px",
+                    }}
+                  >
+
+                    <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>AC</div>
+
+                    <ParentFormComponent obj={this.props.obj} name="ac"
+                      prepareRun={true} maxLength={2}
+
+                      inputStyle={{
+                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "8px",
+                        color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: styles.fonts.fontNormal,
+                        borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", cursor: "text",
+                      }}
+                      style={{ alignSelf: "center", fontSize: fontSize[1], }} />
+
+                  </div>
+                
+                  <div title="Max HP" className='hover-btn'
+                    style={{
+                      display: "flex",
+                      background: styles.colors.colorBlack,
+                      padding: "11px", borderRadius: "11px",
+                      alignSelf: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      textAlign: "center", marginRight: "5px",
+                    }}
+                  >
+                    <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Max HP</div>
+
+                    <ParentFormComponent obj={this.props.obj} name="hp"
+                      prepareRun={true} maxLength={4} doesMath={true}
+                      inputStyle={{
+                        width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "8px",
+                        color: styles.colors.colorBlack, height: "1.7rem", rows: "1", fontSize: styles.fonts.fontNormal, cursor: "text",
+                        borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
+                      }} />
+
+
+                  </div>
+
+
+                {/* {{ACTIVE CONDITIONS}} */}
+
+                {/* {activeConList &&
                         <div style={{display: 'flex', flexWrap: 'wrap',  width:"fit-content", opacity:"79%", 
                         alignContent:"flex-start", marginLeft:"3px",
                         color:styles.colors.colorWhite, flexDirection:"column", width:"100%",
@@ -408,23 +435,25 @@ export default class PlayerCharacterMapItem extends Component {
                             </div>)
   })}
                           </div>   }       */}
-        </div>
-        <div style={{width:"100%", display:"flex", flexDirection:"row", marginBottom:"11px",
-       justifyContent:"flex-start"}}>
-        <ConnectToCampaignSwitch app={app} {...this.props}/>
-        </div>                       
+              </div>
+              <div style={{
+                width: "100%", display: "flex", flexDirection: "row", marginBottom: "11px",
+                justifyContent: "flex-start"
+              }}>
+                <ConnectToCampaignSwitch app={app} {...this.props} />
+              </div>
 
-                </div>
-                
-        </div>
-        
-        </div>
+            </div>
 
-        
+          </div>
 
         </div>
+
+
+
+      </div>
     )
   }
-  }
+}
 
 

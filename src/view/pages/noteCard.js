@@ -140,7 +140,7 @@ class MainContent extends Component{
                   inputStyle={{maxWidth:"65.5vw !important", width:"65.5vw", padding:"4px 9px", color:styles.colors.colorWhite, height:"fit-content",
                   borderRadius:"4px",background:styles.colors.colorWhite+"00", borderWidth:"0px", marginBottom:"2vh", height:"100%",
                   textWrap:"wrap", overflowX:"clip", overflowY:"auto", fontSize:styles.fonts.fontNormal,border:"solid 1px "+styles.colors.colorWhite+"22", }}
-                  type={"richEditor"} onPaste={this.handlePaste}
+                  type={"quill"} onPaste={this.handlePaste}
                  
                   name="text"
                   wrapperStyle={{ color:styles.colors.colorWhite, display:"flex",flexDirection:"column", justifyItems:"center"}}
@@ -190,7 +190,7 @@ class CardWithTab extends Component{
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
             <MainContent app={app} />
             </div>
         </div>

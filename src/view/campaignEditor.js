@@ -110,6 +110,7 @@ export default class CampaignEditor extends Component {
     await state.componentList.sortSelectedList("lore", "index");
     dispatch({});
     this.scrollTo(this.startRef,"smooth");
+    
   }
 
 
@@ -354,7 +355,7 @@ debugger
                 <ParentFormComponent app={app} name="name" obj={state.currentLore}
                   theme={"adventureLog"}
                   callbackFunc={(arr)=>{
-                    debugger
+                    
                     let L1 = arr[0];
                     let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
                     referenceList = referenceList.map(obj => obj.getJson()._id);
@@ -379,7 +380,7 @@ debugger
                   }}
 
                   wrapperStyle={{
-                    margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "1px",
+                    margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "45px",
                     flexDirection: "column", justifyItems: "space-between",
                   }} />
 
@@ -614,7 +615,7 @@ debugger
                   borderRadius: "4px", background: styles.colors.colorWhite + "00",
                   border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                 }}
-                type={"richEditor"} onPaste={this.handlePaste}
+                type={"quill"} onPaste={this.handlePaste}
                 wrapperStyle={{
                   margin: "5px", color: styles.colors.colorWhite, display: "flex",
                   flexDirection: "column", justifyItems: "space-between"
@@ -707,6 +708,7 @@ debugger
         this.componentDidMount();
         // this.setState({start:true})
       }} />
+      {/* <div onClick={()=>{auth.deleteAllConditoins(state.componentList, state.user.getJson().email);}} style={{color:"wheat"}}>del conditions</div> */}
       <LinkStateChecker dispatch={(obj) => { this.setState(obj) }} />
     </div>
     )

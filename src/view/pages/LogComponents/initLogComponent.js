@@ -46,7 +46,7 @@ export default class InitiativeLogComponent extends Component {
     let styles = state.styles;
     let obj = this.props.obj;
     let index = this.props.index;
-  
+    let phone = window.innerWidth > 800?false:true;
     let w = this.props.w;
     let sorted = state.componentList.sortSelectedList("monster","lastInit",true);
     const currentInit = obj.getJson().currentInit?obj.getJson().currentInit:<MapComponent
@@ -69,7 +69,7 @@ export default class InitiativeLogComponent extends Component {
                   fontSize: styles.fonts.fontNormal,
                   alignContent:"flex-end",
       }}>
-        <div style={{color:styles.colors.color4, fontSize:styles.fonts.fontSmallest, marginTop:"18px", marginBottom:"8px"}}>
+        <div style={{color:styles.colors.color4, fontSize:phone?styles.fonts.fontSmall:styles.fonts.fontSmallest, marginTop:phone?"8px":"18px", marginBottom:phone?"12px":"8px"}}>
           Initiative Order
         </div>
        <div style={{ borderRadius:"11px", justifyContent:"flex-start",  marginBottom:"8px"}}>

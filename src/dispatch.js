@@ -21,28 +21,27 @@ import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
 import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
-import ApprovalPopup from './view/approvalPopup';
-import ApprovalPage from './view/pages/apprroval';
-
 import ViewPlayerList from './view/popups/viewPlayerList';
 import Register from './view/register';
 import Campaign from './view/pages/campaign';
-
-import logo from "./pics/logoava2.png"
-import PurchasePopup from './view/purchasePopup';
-import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
+import ApprovalPopup from './view/approvalPopup';
+import ApprovalPage from './view/pages/apprroval';
 import AdminUser from './view/admin/adminUser';
 import AdminPartner from './view/admin/adminPartner';
 import AdminRequests from './view/admin/adminRequests';
 import AdminSubmission from './view/admin/adminSubmissions';
+import logo from "./pics/logoava2.png"
+import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 import SplashScreen from './view/pages/splashScreen';
 import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
 import auth from './services/auth';
 import AfterPayment from './view/afterPayment';
 import PaymentFailed from './view/paymentFailed';
 import PlayerRegister from './view/playerRegister';
-import PartnerPopup from './view/partnerPopup';
 import PartnerCampaign from './view/admin/partnerCampaigns';
+
+import backarrow from '../src/pics/backArrow.webp'
+
 //model
 export default class Dispatch extends Component {
   constructor(props) {
@@ -78,7 +77,7 @@ export default class Dispatch extends Component {
         {(state.user !== undefined && state.user?.getJson()?.paidCustomer) && (
 
 
-          <div>
+          <div >
             {(state.popupSwitch === "splashScreen") &&
               <div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh" }}>
                 <SplashScreen
@@ -91,30 +90,40 @@ export default class Dispatch extends Component {
               </div>
             }
             {(state.popupSwitch !== "splashScreen") &&
-              <div className='scroller2' style={{
+              <div className={window.innerWidth > 800 ? 'scroller2' : ""} style={{
                 width: "100%", overflow: "scroll",
                 minWidth: "100%", userSelect: "none", height: "100vh",
-                display: "flex", flexDirection: "column",
+              display: "flex", flexDirection: "column",
               }}>
 
 
-                <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 600 && "210px", }}>
+                <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 800 ? "210px" : "", }}>
 
-                  {window.innerWidth > 600 ? (
+                  {window.innerWidth > 800 ? (
                     <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={
                       { logo: logo, }}
-                    />) : (
-                    <div style={{ width: "100vw", height: "60px", border: "1px solid red", display: "flex", justifyContent: "space-around" }}>
-                      <Link to={"/"} style={{
-                        width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor: "pointer",
-                        textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
-                      }}>Back</Link>
-                      {/* <div style={{color:"white"}}>Log</div> */}
-                      <div onClick={auth.logout} style={{
-                        width: "400px", borderRadius: "11px", fontSize: styles.fonts.fontSmallest, cursor: "pointer",
-                        textDecoration: "1px underline " + styles.colors.color5, color: styles.colors.color5, textUnderlineOffset: "2px"
-                      }}>Log Out</div>
+                    />
+
+                  ) : (
+                    <>
+                    {window.location.href.includes("log") && (<>
+                    <div style={{ width: "100vw", height: "52px", background:styles.colors.color2, display: "flex", 
+                    position:"absolute",
+                    justifyContent: "space-between", alignItems: "center", fontSize: "1.1rem", }}>
+                     
+                      <Link to={"/"} style={{display:"flex", flexDirection:"row",}}>
+                        <img src={backarrow} style={{height:"16px", marginLeft:"18px", marginRight:"11px"}}/>
+                        <div style={{
+                          width: "", borderRadius: "11px", cursor: "pointer",
+                          textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
+                        }}>Back</div>
+                      </Link>
+                      
                     </div>
+                    
+                    </>)
+                    }
+                    </>
                   )}
                   {/* </div>)  */}
 
@@ -140,10 +149,10 @@ export default class Dispatch extends Component {
                   } */}
                 </div>
                 {/* WITHIN */}
-                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: window.innerWidth > 600 && "210px", }}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: "100%", paddingLeft: window.innerWidth > 800 ? "210px" : "", }}>
 
                   <div style={{
-                    width: '100%', minHeight: "fit-content", padding: "28px", display: "flex", height: "100%",
+                    width: '100%', minHeight: "fit-content", padding: window.innerWidth > 800 ? "28px" : "", display: "flex", height: "100%",
                     justifyContent: "center",
                   }}>
 
@@ -171,29 +180,17 @@ export default class Dispatch extends Component {
                     {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type === "monster" &&
                       <ConnectToCampaign
 
-                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        type="popup" options={{ cardType: (window.innerWidth > 800)?"popupSmallSolid":"popupLarge" }} app={app} containerStyle={{ background: styles.colors.color2 }} 
+                        theme="adventure"
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
                       />}
-                    {state.popupSwitch === "partnerRequest" && state.currentComponent?.getJson()?.type === "partnerRequest" &&
-                      <PartnerPopup
 
-                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
-                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
-
-                      />}
-                      {state.popupSwitch === "approval" && state.currentComponent?.getJson()?.type === "approval" &&
-                      <ApprovalPopup
-
-                        type="popup" options={{ cardType: "popupSmallSolid" }} app={app} containerStyle={{ background: styles.colors.color2 }}
-                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
-
-                      />}
                     {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type === "monster" &&
 
                       <AddPlayerCharacter
 
-                        type="popup" options={{ cardType: "popupCreate" }} app={app}
+                        type="popup" options={{ cardType: (window.innerWidth > 800)?"popupCreate":"popupLarge"}} app={app}
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
                       />
@@ -287,15 +284,14 @@ export default class Dispatch extends Component {
                         <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers} />} />
 
                         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
-
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
 
-                        <Route path="/admin/users" element={<AdminUser app={app} />} />
-                        <Route path="/admin/partners" element={<AdminPartner app={app} />} />
-                        <Route path="/admin/requests" element={<AdminRequests app={app} />} />
-                        <Route path="/admin/submissions" element={<AdminSubmission app={app} />} />
-
-                        <Route path="/partner/:id" element={<PartnerCampaign app={app} />} />
+                        <Route path="/admin/users" element={<AdminUser app={app}/>}/>
+        <Route path="/admin/partners" element={<AdminPartner app={app}/>}/>
+        <Route path="/admin/requests" element={<AdminRequests app={app}/>}/>
+        <Route path="/admin/submissions" element={<AdminSubmission app={app}/>}/>
+        
+        <Route path="/partner/:id" element={<PartnerCampaign app={app}/>}/>
 
                       </Routes>)}
 
@@ -314,12 +310,7 @@ export default class Dispatch extends Component {
               </div>}
 
           </div>)}
-        {(state.user !== undefined && !state.user?.getJson()?.paidCustomer && state.user?.getJson().role === "GM") && (
-          <div style={{ width: "100%", height: "100%", position: "absolute", left: "0", top: "0", background: 'black' }}>
-            <PaymentFailed app={app} />
-            {/* //ISAAC UI */}
-          </div>
-        )}
+
         <Routes>
 
           <Route path="/register/" element={<Register app={app} />} />
@@ -328,10 +319,16 @@ export default class Dispatch extends Component {
 
           <Route path="/login/" element={<Login app={app} />} />
           <Route path="/" element={<Login app={app} />} />
+
           <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
           {/* //ISAAC UI */}
         </Routes>
-
+        {(state.user !== undefined && !state.user?.getJson()?.paidCustomer && state.user?.getJson().role === "GM") && (!window.location.href.includes("paymentprocessing")) && (
+          <div style={{ width: "100%", height: "100%", position: "absolute", left: "0", top: "0", zIndex: 2800, background: "black" }}>
+            <PaymentFailed app={app} />
+            {/* //ISAAC UI */}
+          </div>
+        )}
 
 
       </BrowserRouter>

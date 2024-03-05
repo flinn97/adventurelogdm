@@ -83,7 +83,7 @@ export default class LoreSearch extends Component {
 
     const droppedOntoId = this.state.dragOverTarget;
     const droppedOntoLoreItemId = this.dropTargetRef.current;
-    console.log(`Dropped ${id} onto ${droppedOntoLoreItemId}`);
+    // console.log(`Dropped ${id} onto ${droppedOntoLoreItemId}`);
 
 
     this.setState(prevState => ({
@@ -367,14 +367,12 @@ export default class LoreSearch extends Component {
 
                             {/* right ARRRo */}
                             <div className='hover-div' title={"Reorder Lore Right"} onClick={async (e) => {
-                              debugger
+                              
                               e.stopPropagation();
                               let loreList = await componentList.getList("lore", id, listTerm);
                               await loreIndexService.reOrganizeLore(loreList, state.opps);
-                              console.log(loreList.map(item => { return { ...item.getJson() } }));
 
                               let list = await loreIndexService.moveUp(loreItem, loreList, state.opps);
-                              console.log(list.map(item => { return { ...item.getJson() } }));
 
                               await loreIndexService.sortComponentList(state.componentList);
                               dispatch({})

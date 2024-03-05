@@ -23,11 +23,13 @@ export default class AfterPayment extends Component {
         let state = app.state;
         let dispatch = app.dispatch;
         let componentList = state.componentList;
-        let user = await auth.getCurrentUser();
-        
-        if(user!=="undefined"){
 
         
+        let user = await auth.getCurrentUser();
+        
+        if(user!=="undefined" && user!==undefined && user!==null){
+
+            
         user = JSON.parse(user);
         user = await auth.firebaseGetter(user.email, componentList, "email", "user");
         user = user[0]
@@ -46,9 +48,7 @@ export default class AfterPayment extends Component {
                     return response.json();
                 })
                 .then(customers => {
-                    console.log('Customers:', customers);
                     let u = customers[0];
-                    console.log(u)
                     if(u){
                     if (!u.delinquent) {
                         user.setCompState({paidCustomer:true});
@@ -56,13 +56,13 @@ export default class AfterPayment extends Component {
                     }
                     else{
                         auth.logout().then(()=>{
-                            window.location.href = "./"
+                            window.location.href = "../"
                         })
                     }
                 }
                 else{
                     auth.logout().then(()=>{
-                        window.location.href = "./"
+                        window.location.href = "../"
                     })
                 }
                     // Do something with the customers data
@@ -70,7 +70,7 @@ export default class AfterPayment extends Component {
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
                     auth.logout().then(()=>{
-                        window.location.href = "./"
+                        window.location.href = "../"
                     })
 
                     // Handle the error
@@ -78,12 +78,13 @@ export default class AfterPayment extends Component {
 
         }
         else{
-            window.location.href = "./"
+            window.location.href = "../"
 
         }
     }
     else{
-        window.location.href = "./"
+        
+        window.location.href = "../"
 
     }
     }
@@ -92,7 +93,7 @@ export default class AfterPayment extends Component {
         if (this.props.app.state.dispatchComplete) {
             
             this.props.app.dispatch({ dispatchComplete: false });
-            window.location.href = "./"
+            window.location.href = "../"
         }
     }
 

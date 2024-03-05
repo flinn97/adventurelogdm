@@ -22,7 +22,7 @@ export default class ConnectToCampaignButton extends Component {
 
     return (
       <div className='hover-btn'
-      style={{ ...styles.buttons.buttonAdd, padding:"4px 8px",  width:"200px",
+      style={{ ...styles.buttons.buttonAdd, padding:"4px 8px",  width: window.innerWidth > 800? "10.5vw":"45vw",
       
       fontSize:styles.fonts.fontSmall, textAlign:"center",
       

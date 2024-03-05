@@ -5,7 +5,7 @@ import CampaignCard from './campaignCard';
 import NoteCard from './noteCard';
 import MarketCard from './marketCard';
 import LibraryCard from '../libraryCard';
-import auth from '../../services/auth';
+
 
 
 

@@ -30,14 +30,13 @@ export default class CampaignMapItem extends Component {
     const newLink = 
     // loreItem?("/campaign/"+obj?.getJson()._id+"-"+newId):
     ("/campaign/"+obj?.getJson()._id);
-    console.log(newLink);
 
     return (
       <Link to={newLink} style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
         height: "fit-content",
-        width: "fit-content"}}
-     
+        width: "fit-content",
+      }}
       >
 
       <div style={{display: "flex", flexDirection: 'column', 
@@ -55,10 +54,10 @@ export default class CampaignMapItem extends Component {
                           
                           <div 
                           
-                          style={{display: "flex", height:"220px", width:"78vmax", fontWeight:"bold", fontFamily:"serif", 
+                          style={{display: "flex", height:window.innerWidth > 800?"220px":"100px", width:window.innerWidth > 800?"78vmax":"90vw", fontWeight:"bold", fontFamily:"serif", 
                           textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack,
-                          alignItems:"center", justifyContent:"center", fontSize:styles.fonts.fontHeader2,}}>
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack, textAlign:"center", justifyItems:"center",
+                          alignItems:"center", justifyContent:"center", fontSize:window.innerWidth > 800?styles.fonts.fontHeader2:"2rem",}}>
                             {obj?.getJson().title}
                           </div>
                 </div>

@@ -86,6 +86,8 @@ class AdventureLogStyles {
             colorBlack:colorPalette.color1,
             }
 
+            
+
         let background = {
             backgroundColor: colorPalette.color1+"00",//dark
             backgroundBlend: "overlay",
@@ -502,9 +504,9 @@ class AdventureLogStyles {
          
             popupLarge:
                             {
-                                width: "fit-content",
-                                height:"fit-content", 
-                                maxHeight:"80vh", maxWidth:"70vw",
+                                width: window.innerWidth > 800?"fit-content":"100%",
+                                height:window.innerWidth > 800?"fit-content":"100%",
+                                maxHeight:window.innerWidth > 800?"80vh":"80vh", maxWidth:window.innerWidth > 800?"70vw":"98%",
                                alignSelf:"center",
                                 border: appBorders.borderThick,
                                 background: appColors.color1,
@@ -1369,7 +1371,7 @@ class AdventureLogStyles {
                                             smallestCardContentWithTab:
                                             {   padding: ".5rem 1rem",
                                                 top: "50%",
-                                                height: "55%"
+                                                height: "100%"
                                             },
 
                                             smallerCardContentWithTab:
@@ -1815,7 +1817,7 @@ class AdventureLogStyles {
             {
                 opacity:"100%", 
                 background: appColors.colorBlack+"f9", 
-                padding:"10px", 
+                
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
                 // borderColor:appColors.color3+"22", 
