@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
-import auth from '../../services/auth';
-import treeService from '../../services/treeService';
+import { Component } from 'react';
+import "../App.css"
+import RunButton from '../componentListNPM/componentForms/buttons/runButton';
+import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
+import CardPractice from './CardPrac';
+import Upload from './upload';
+import placeholder from '../pics/placeholderCampaign.JPG';
+import RichTextComponent from '../componentListNPM/componentForms/singleForms/RichTextComponent';
+import React from 'react';
+import treeService from '../services/treeService';
 
 /**
  * condensed version of the cards.
@@ -13,7 +19,7 @@ import treeService from '../../services/treeService';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class MarketCard extends Component {
+export default class PurchasePopup extends Component {
   constructor(props) {
     super(props);
     
@@ -48,14 +54,14 @@ export default class MarketCard extends Component {
 
 
 
-        //********CARD ASSIGN********/
+    //********CARD ASSIGN********/
 
-        let cards={
+    let cards={
 
-          card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
-          cardWithTab: <CardWithTab app={{...app, state:{...app.state, styles:styles}}} options={this.props.options} type={this.props.type}/>,
-          popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type}/>,
-          popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}/>
+      card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
+      cardWithTab: <CardWithTab app={{...app, state:{...app.state, styles:styles}}} options={this.props.options} type={this.props.type}/>,
+      popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type}/>,
+      popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}/>
 //popupType={this.props.popupType} popupTab={this.props.popupTab}
     
     }
@@ -82,18 +88,7 @@ export default class MarketCard extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
-    this.state={
-      start: false,
-    }
   }
-  async componentDidMount(){
-    //
-
-    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type", false, this.props.app.dispatch)
-    this.setState({start: true})
-
-  }
-
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -103,11 +98,9 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{width:"100%", display:"flex", flexDirection:"row", minHeight:"710px", justifyContent:"center", padding:"22px"}}>
-      <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div>
-
-      </div>
-      
+    <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",}}>
+      Buy
+    </div>
     )
   }
 }
@@ -124,36 +117,9 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",
-    fontSize:styles.fonts.fontSubheader1}}>
-    Marketplace
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+      
     </div>
-    )
-  }
-}
-
-class CardWithTab extends Component{
-  constructor(props) {
-    super(props);
-  }
-  render(){
-    let app = this.props.app;
-    let dispatch = app.dispatch;
-    let state = app.state;
-    let componentList = state.componentList;
-    let styles =state.styles;
-
-    return(
-      //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:styles.colors.color2+"4e", borderRadius:"1.2vw"}}>  
-          {/* //Tab content  */}
-          <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
-          {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-            <MainContent app={app} />
-            </div>
-        </div>
     )
   }
 }
@@ -205,7 +171,6 @@ handleClickOutside(event) {
     )
   }
 }
-
 class PopupWithTab extends Component{
   constructor(props) {
     super(props);
@@ -235,11 +200,12 @@ handleClickOutside(event) {
       <div  className="popup-box" style={{ zIndex: "1010" }}>
       <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
       
-      <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
+      <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> 
+        <TabContent app={app} handleClose={this.props.handleClose} /> <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>X</div></div>   
+                  } onClick={this.props.handleClose}>x</div></div>   
       <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+        <MainContent app={app} handleClose={this.props.handleClose}/>
         </div>
         </div>
         
@@ -276,3 +242,27 @@ class Card extends Component{
     )
   }
 }
+
+class CardWithTab extends Component{
+  constructor(props) {
+    super(props);
+  }
+  render(){
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    let state = app.state;
+    let componentList = state.componentList;
+    let styles =state.styles;
+
+    return(
+      <div  style={{...styles[this.props.type?this.props.type:"biggestCard"] }}>   
+      <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>   
+      <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
+        <MainContent app={app} />
+        </div>
+        </div>
+    )
+  }
+}
+
+

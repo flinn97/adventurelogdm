@@ -24,7 +24,12 @@ import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
 import Register from './view/register';
 import Campaign from './view/pages/campaign';
-
+import ApprovalPopup from './view/approvalPopup';
+import ApprovalPage from './view/pages/apprroval';
+import AdminUser from './view/admin/adminUser';
+import AdminPartner from './view/admin/adminPartner';
+import AdminRequests from './view/admin/adminRequests';
+import AdminSubmission from './view/admin/adminSubmissions';
 import logo from "./pics/logoava2.png"
 import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 import SplashScreen from './view/pages/splashScreen';
@@ -33,6 +38,7 @@ import auth from './services/auth';
 import AfterPayment from './view/afterPayment';
 import PaymentFailed from './view/paymentFailed';
 import PlayerRegister from './view/playerRegister';
+import PartnerCampaign from './view/admin/partnerCampaigns';
 
 import backarrow from '../src/pics/backArrow.webp'
 
@@ -280,7 +286,12 @@ export default class Dispatch extends Component {
                         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
 
-
+                        <Route path="/admin/users" element={<AdminUser app={app}/>}/>
+        <Route path="/admin/partners" element={<AdminPartner app={app}/>}/>
+        <Route path="/admin/requests" element={<AdminRequests app={app}/>}/>
+        <Route path="/admin/submissions" element={<AdminSubmission app={app}/>}/>
+        
+        <Route path="/partner/:id" element={<PartnerCampaign app={app}/>}/>
 
                       </Routes>)}
 
