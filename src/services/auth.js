@@ -7,7 +7,6 @@ import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
 import Campaign from '../view/pages/campaign';
 import Note from '../view/pages/note';
-import Market from '../view/pages/market';
 import AdminUser from '../view/admin/adminUser';
 
 

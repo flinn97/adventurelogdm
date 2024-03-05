@@ -1,10 +1,5 @@
 import { Component } from 'react';
-import App from '../../App';
-import HomeCard from './homeCard';
-import CampaignCard from './campaignCard';
-import NoteCard from './noteCard';
-import MarketCard from './marketCard';
-import LibraryCard from '../libraryCard';
+
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 
 
