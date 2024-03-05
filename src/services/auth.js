@@ -5,6 +5,11 @@ import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, on
 import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
+import Campaign from '../view/pages/campaign';
+import Note from '../view/pages/note';
+import Market from '../view/pages/market';
+import AdminUser from '../view/admin/adminUser';
+
 
 let imageQuality = .5;
 class Auth {
@@ -264,7 +269,19 @@ class Auth {
         let user = componentList.getComponent("user");
         if (user) {
 
-            dispatch({ user: user, email: email, start:true })
+            dispatch({ user: user, email: email, start:true });
+            //admin@arcanevaultassembly.com
+            if(user.getJson()._id==="admin@arcanevaultassembly.com"){
+                dispatch({
+                    switchCase:[
+                        {path:"/", comp:Campaign, name: "Campaigns" },
+                        ///Added Notes
+                        {path: "/notes", comp:Note, name: "Notes"},
+                        ///Added Marketplace
+                        {path: "/admin/user", comp:AdminUser, name: "Admin"},
+                    ]
+                })
+            }
             if (user.getJson().role !== "GM") {
                 dispatch({
                     switchCase: [
