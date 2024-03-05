@@ -278,7 +278,6 @@ class Auth {
                         ///Added Notes
                         {path: "/notes", comp:Note, name: "Notes"},
                         ///Added Marketplace
-                        {path: "/market", comp:Market, name: "Marketplace"},
                         {path: "/admin/user", comp:AdminUser, name: "Admin"},
                     ]
                 })
