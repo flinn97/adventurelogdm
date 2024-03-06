@@ -57,6 +57,10 @@
   font-size: 1.1rem;
 }
 
+.DR-Cell{
+  display: flex;
+}
+
 .DR-Link, .Button-Type1 {
   background: #e8d259;
   color: "#111319";
@@ -64,17 +68,56 @@
   padding: 6px 18px;
   margin-bottom: 11px;
   width: fit-content;
+  cursor: pointer;
 }
+
+.Button-Type2 {
+  background: #0f141cf5;
+  color: #ffffdf;
+  padding: 6px 10px;
+  margin: 5px;
+  margin-bottom: 11px;
+  cursor: pointer;
+  display: flex;
+  align-self: end;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 9px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  justify-items: center;
+  font-family: 'inria';
+  justify-self: flex-end;
+}
+
+/* .DR-Link:hover {
+  box-shadow: inset 2px 2px black;
+  transform: scale(0.98);
+  color: "#111319";
+} */
+
+.DR-Link:hover{
+  transform: scale(0.98);
+  box-shadow: inset 2px 2px #00000055, inset -2px -2px  #ffffff55;
+  color: "#111319";
+}
+
+.Button-Type1:hover,.Button-Type2:hover{
+  transform: scale(0.98);
+  color: "#111319";
+}
+
 
 .a {
   color: #000;
+  cursor: pointer;
 }
 
 .Publisher {
-  text-align: right;
-  width: 100%; 
-  align-items: flex-end;
-  text-align: end;
+  width: 100%;
+  opacity: 90%;
+  margin-top: -11px;
   color:  #e8d259
 }
 
@@ -100,6 +143,53 @@
   width: 100px;
   border-radius: 15px;
   min-width: 100px;
+}
+
+.DR-hover-shimmer {
+  top: 15px;
+  position: absolute;
+  border: 1px solid #1E90FF00;
+  right: 0px;
+  opacity: 92%;
+  overflow: hidden;
+}
+
+.DR-hover-shimmer:hover {
+  position: absolute;
+  opacity: 98%;
+  border: 1px solid #1E90FF;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #ffffff55;
+}
+
+.DR-hover-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start from the left */
+  width: 100%; /* Full width of the parent */
+  height: 100%; /* Full height of the parent */
+  background: linear-gradient(90deg, transparent, rgba(52, 55, 73, 0.4), transparent);
+  animation: none; /* No animation by default */
+  opacity: 0; /* Make it invisible by default */
+  transition: opacity 0.5s ease; /* Smooth transition for the shimmer effect */
+  mix-blend-mode: lighten;
+}
+
+.DR-hover-shimmer:hover::before {
+  animation: shimmer 8s infinite; /* Adjust time as needed */
+  opacity: 1; /* Make the shimmer visible on hover */
+}
+
+@keyframes shimmer {
+  0% {
+    left: -980%; /* Start from the left */
+  }
+  50% {
+    left: 980%; /* Move to the right */
+  }
+  100% {
+    left: -100%; /* Return to start */
+  }
 }
 
 .DR-Custom-Edit-Item,
