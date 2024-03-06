@@ -494,6 +494,17 @@ class Auth {
         });
     }
 
+    async uploadPicsWithoutCompression(file, name) {
+
+       
+                const storageRef = ref(storage, name);
+                await uploadBytes(storageRef, file).then((snapshot) => {
+                   
+                    console.log('Uploaded a file!');
+             
+    })
+}
+
     async downloadPics(newName) {
         let src;
         await getDownloadURL(ref(storage, newName)).then((url) => {

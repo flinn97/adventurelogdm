@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import VideoPlayer from './videoJS';
 
 
-
 export default class ViewMedia extends Component {
   constructor(props) {
     super(props);

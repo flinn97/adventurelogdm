@@ -31,11 +31,11 @@ export default class ApproveSubmission extends Component {
    
 
     return (
-     
+     <div style={{display:"flex", flexDirection:'row', width:'200px', justifyContent:"space-between"}}>
       <div style={{marginLeft:"100px"}} onClick={async()=>{
         debugger
         let approval = this.props.obj
-        let mpItem = {...approval.getJson(), _id:idService.createId(), type:"mpCampaign"}
+        let mpItem = {...approval.getJson(), _id:idService.createId(), type:approval.getJson().mytype}
 
         mpItem.date = await serverTimestamp();
       await setDoc(doc(db, "MPusers", "MPAPP", "components", mpItem._id), mpItem);
@@ -56,7 +56,8 @@ export default class ApproveSubmission extends Component {
       }}>
         yes
     </div>
-    
+    <div onClick={()=>{state.opps.cleanPrepareRun({del:this.props.obj})}} >no</div>
+    </div>
 
     )
   }

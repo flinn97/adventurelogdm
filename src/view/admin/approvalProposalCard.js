@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import "../../App.css"
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import auth from '../../services/auth';
-import ApproveSubmission from './approveSubmission';
+import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
+import Upload from '../upload';
+import UploadComponent from './uploadComponent';
+import TagCreate from './tagCreator';
 
 /**
  * condensed version of the cards.
@@ -14,7 +17,7 @@ import ApproveSubmission from './approveSubmission';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class AdminSubmissionCard extends Component {
+export default class ApprovalProposalCard extends Component {
   constructor(props) {
     super(props);
     
@@ -84,15 +87,12 @@ class MainContent extends Component{
   constructor(props) {
     super(props);
     this.state={
-      start: false
+      start: false,
+      pic:this.props.app.state.currentApproval.getJson().picURL
     }
   }
   async componentDidMount(){
-    let approvals = await auth.firebaseGetter("approval", this.props.app.state.componentList, "type", "approval")
-    for(let approval of approvals){
-      auth.firebaseGetter(approval.getJson().campaignId,  this.props.app.state.componentList, "_id", "campaign")
-    }
-    this.setState({start:true})
+
   }
 
   render(){
@@ -104,17 +104,36 @@ class MainContent extends Component{
     
 
     return(
-    <div>
-      <div  style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
-      <h1>Parner Username</h1>
-        <h1>Submission Date</h1>
-        <h1>Link To Marketplace Submission</h1>
-        <h1>Approve?</h1>
-      </div>
-      <div>
-      {this.state.start &&
-      <MapComponent filter={{search:true, attribute:"readyForDistribution"}} app={app} name="approval" cells={["title", "description", "promotional", "price", {custom:ApproveSubmission, props:{app:app}}]} linkOptions={{cells:[0,1], path:["/campaign/"], attribute:"campaignId"}}/> }
-      </div>
+      
+    <div style={{height:"100%", width:"95%", marginLeft:"20px"}} >
+      <ParentFormComponent app={app} obj={state.currentApproval} name="title" label = "title" />
+      <ParentFormComponent app={app} obj={state.currentApproval} name="description" label = "title" type="quill"/>
+      <ParentFormComponent app={app} obj={state.currentApproval} name="mptype"  type="select" selectOptions={["campaign", "image", "lore", "encounter", "map"]}/>
+
+      <ParentFormComponent app={app} obj={state.currentApproval} name="promotional" label = "title" type="quill"/>
+      <div style={{color:"white"}}>Primary Pic</div>
+      <img src={this.state.pic}/>
+      <Upload 
+              //ADD THIS TO ALL UPLOADS//
+              changePic={(pic)=>{this.setState({pic:pic})}} 
+              obj={app.state.currentApproval} text="Upload Primary" style={{display:"flex",
+              zIndex:"1", borderRadius:".1vmin", background:"",}} 
+              update={true} 
+               app={app}/>
+
+               <UploadComponent app={app} obj={state.currentApproval}/>
+               <TagCreate app={app} obj = {state.currentApproval} />
+
+               <ParentFormComponent app={app} obj={state.currentApproval} name="gameSystem"  type="select" selectOptions={["", "dnd", "pathfinder"]}/>
+
+      <div style={{color:"white"}} onClick={ async ()=>{
+        await state.currentApproval.setCompState({readyForDistribution:true});
+        state.opps.cleanPrepareRun({update:state.currentApproval})
+        }}>Save</div>
+
+
+      
+
     </div>
     )
   }
@@ -133,15 +152,7 @@ class TabContent extends Component{
 
     return(
       <div>
-      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
-    fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
-      <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
-      </div>
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
-    fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
-      Game Master Suite
-      </div>
-      <hr></hr> */}
+
       </div>
     )
   }
