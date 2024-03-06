@@ -281,7 +281,7 @@ class ParentFormComponent extends Component {
             
             class = {this.props.class} 
             placeholder={this.props.placeholder} 
-            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value)}:this.handleChange} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value, this)}:this.handleChange} 
             name={this.props.name} 
             //TAYLOR
             value={

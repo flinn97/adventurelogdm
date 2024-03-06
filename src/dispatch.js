@@ -41,6 +41,7 @@ import PlayerRegister from './view/playerRegister';
 import PartnerCampaign from './view/admin/partnerCampaigns';
 
 import backarrow from '../src/pics/backArrow.webp'
+import ApprovalProposal from './view/admin/approvalProposal';
 
 //model
 export default class Dispatch extends Component {
@@ -292,6 +293,7 @@ export default class Dispatch extends Component {
         <Route path="/admin/submissions" element={<AdminSubmission app={app}/>}/>
         
         <Route path="/partner/:id" element={<PartnerCampaign app={app}/>}/>
+        <Route path="/sendtomarketplace/:id" element={<ApprovalProposal app={app}/>}/>
 
                       </Routes>)}
 
