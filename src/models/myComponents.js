@@ -548,22 +548,7 @@ class Approval extends componentBase{
         
     }
 }
-class MarketplaceItem extends componentBase {
-    constructor(opps) {
-        super(opps);
-        this.getPicSrc = this.getPicSrc.bind(this);
 
-    }
-    json = {
-        type: "marketplaceItem",
-        id: "",
-    }
-    async getPicSrc(path) {
-        let pic = await authService.downloadPics(path);
-        this.json.picURL = pic;
-
-    }
-}
 class Monster extends componentBase {
     constructor(opps) {
         super(opps);
@@ -652,6 +637,22 @@ class PartnerRequest extends componentBase{
         description:"",
     }
 }
+class MarketplaceItem extends componentBase {
+    constructor(opps) {
+        super(opps);
+        this.getPicSrc = this.getPicSrc.bind(this);
+
+    }
+    json = {
+        type: "mpItem",
+        id: "",
+    }
+    async getPicSrc(path) {
+        let pic = await authService.downloadPics(path);
+        this.json.picURL = pic;
+
+    }
+}
 
 function forFactory() {
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
@@ -660,7 +661,7 @@ function forFactory() {
         newNote:NewNote,map:Map, post:Post,
         marketplaceItem:MarketplaceItem,
         condition:Condition, icon:Icon, 
-        lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest}
+        lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem}
 
 }
 
