@@ -231,12 +231,9 @@ export default class CampaignEditor extends Component {
         }}>
           <div ref={this.startRef} />
 
-          {/* <div className='hover-btn-highlight'
-style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content", padding:"2px 8px", marginBottom:"8px"}} onClick={()=>{
-dispatch({popupSwitch:"popupApproval", operation: "cleanJsonPrepare", operate:"addapproval", object:{campaignId:state.currentCampaign.getJson()._id, type:"approval"}})
-//treeService.convertToMarketplace(state.currentCampaign, state.componentList, "campaignId")
-}}>Send to Marketplace</div> */}
-
+        {state.user.getJson().partner&&(
+          <Link style={{textDecoration:"none", width:"250px"}} to={"../sendtomarketplace/"+ state.currentCampaign.getJson()._id} target="_blank"><div className='hover-btn-highlight'style={{color:"red", cursor:"pointer", borderRadius:"11px", width:"fit-content", padding:"2px 8px", marginBottom:"8px"}} >Send to Marketplace</div></Link>
+          )}
           {/* BACK BUTTON */}
           {(state.popUpSwitchcase != "updateCampaign" && state.currentLore == undefined) &&
             (<Link className="hover-btn-highlight"

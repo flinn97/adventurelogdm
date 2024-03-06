@@ -14,6 +14,7 @@ class componentBase extends BaseClass {
         this.addConnectedItemsMPI = this.addConnectedItemsMPI.bind(this)
         this.createFromMPI = this.createFromMPI.bind(this);
         this.addConnectedItemsLore = this.addConnectedItemsLore.bind(this);
+        this.createUUID=this.createUUID.bind(this);
     }
     json;
     startobj = {
@@ -46,6 +47,16 @@ class componentBase extends BaseClass {
     checksandtime = {
         checked: { mon: false, tues: false, wed: false, thur: false, fri: false, sat: false, sun: false, },
         time: { mon: '0', tues: '0', wed: '0', thur: '0', fri: '0', sat: '0', sun: '0' },
+    }
+
+    createUUID(length){
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
+        var charactersLength = characters.length;
+        for(var i =0; i<length; i++){
+            result +=characters.charAt(Math.floor(Math.random()*charactersLength));
+        }
+        return result;
     }
 
     /**
@@ -509,7 +520,32 @@ class Approval extends componentBase{
         description: "",
         promotional: "",
         price: "",
+        selector:"",
+        mytype:"campaign",
+        tags:"",
         type: "approval",
+        gameSystem: "",
+        readyForDistribution:false
+    }
+
+    async getPicSrc(path) {
+        let pic = await authService.downloadPics(path);
+        this.json.picURL = pic;
+
+    }
+
+    async getPicSrcMedia(path){
+        
+        let obj={}
+        for(const key in path){
+            let pic = await auth.downloadPics(path[key]);
+            obj["media"+this.createUUID(3)]= pic;
+        }
+        obj = {...obj, ...this.json.picURLs}
+
+        
+        this.json.picURLs = obj
+        
     }
 }
 class MarketplaceItem extends componentBase {
