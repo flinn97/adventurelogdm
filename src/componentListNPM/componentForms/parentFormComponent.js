@@ -502,7 +502,7 @@ class ParentFormComponent extends Component {
             cols={this.props.cols}
             emitClickedOutside={this.props.emitClickedOutside}
             id={this.props.id}
-            linkLore={this.props.linkLore}
+           
             inputStyle={{...this.props.inputStyle, fontSize:""}}
             spellCheck={this.props.spellCheck}
             label={this.props.label}
@@ -535,6 +535,7 @@ class ParentFormComponent extends Component {
             id={this.props.id}
             inputStyle={this.props.inputStyle}
             label={this.props.label}
+            connectLore={this.props.connectLore?this.props.connectLore:false}
             prepareOnClick={this.props.prepareOnClick}
             labelStyle={this.props.labelStyle}
             onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}

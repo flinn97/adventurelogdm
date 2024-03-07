@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import toolService from '../../services/toolService';
 import ApprovalProposalCard from './approvalProposalCard';
+import "../../App.css"
+import Upload from '../upload';
 
 
 export default class ApprovalProposal extends Component {
@@ -31,9 +33,8 @@ export default class ApprovalProposal extends Component {
     let dispatch = app.dispatch
     let state = app.state;
     return (
-      <div style={{}}>           
+      <div style={{width:"100%"}}>           
         {this.state.start && <ApprovalProposalCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>}
-        
         
       </div>
 

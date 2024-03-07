@@ -569,7 +569,7 @@ class MainContent extends Component {
                       theme={"adventureLog"}
                       rows={5} linkLore={true}
                       // prepareRun={true}
-                      type={"quill"} onPaste={this.handlePaste}
+                      type={"quill"} onPaste={this.handlePaste} connectLore={true}
                       /></div>
 
 
@@ -593,7 +593,7 @@ class MainContent extends Component {
                         theme={"adventureLog"}
                         rows={5}
                         // prepareRun={true}
-                        type={"quill"} onPaste={this.handlePaste}
+                        type={"quill"} onPaste={this.handlePaste} connectLore={true}
                       
                        /></div>
                   </div>

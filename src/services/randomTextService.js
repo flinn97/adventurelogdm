@@ -15,6 +15,15 @@ class RandomTextService {
   
       };
 
+      pickTag() {
+        let names =["dungeon","tavern","chromatic dragon","halloween","one-shot","map pack","orcs","illustration","snow","spells","feywild","druid"];
+        let randomNumber = Math.floor(Math.random() * (names.length));
+        let chosenName = names[randomNumber];
+  
+        return chosenName;
+  
+      };
+
       pickCharacterName() {
         let names =["Thomas the Tank Eladrin",
             "Barry the Brief Aarakocra",

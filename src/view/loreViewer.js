@@ -249,9 +249,9 @@ scrollTo = (ref, behavior) => {
             
           <ParentFormComponent app={app} name="desc" obj={lore}
                       theme={"adventureLog"} 
-                        rows={5} linkLore={true}
+                        rows={5}
                         prepareRun={true}
-                        type={"quill"} onPaste={this.handlePaste}
+                        type={"quill"} onPaste={this.handlePaste} connectLore={true}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite, height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", background:"",
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}
@@ -275,7 +275,7 @@ marginTop:"22px"}}>
                       theme={"adventureLog"} 
                         rows={5}
                         prepareRun={true}
-                        type={"quill"} onPaste={this.handlePaste}
+                        type={"quill"} onPaste={this.handlePaste} connectLore={true}
                       inputStyle={{maxWidth:"100%", padding:"2px 5px", color:styles.colors.colorWhite+"d9", height:"fit-content",
                       borderRadius:"4px",background:styles.colors.colorWhite+"00", 
                       border:"solid 1px "+styles.colors.colorWhite+"22", fontSize:styles.fonts.fontSmall }}

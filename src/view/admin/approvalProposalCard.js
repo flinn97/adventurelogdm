@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import "../../App.css"
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+
 import auth from '../../services/auth';
 import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
 import Upload from '../upload';
 import UploadComponent from './uploadComponent';
 import TagCreate from './tagCreator';
+import { MapComponent } from '../../mapTech/mapComponentInterface';
 
 /**
  * condensed version of the cards.
@@ -20,7 +21,7 @@ import TagCreate from './tagCreator';
 export default class ApprovalProposalCard extends Component {
   constructor(props) {
     super(props);
-    
+
 
   }
 
@@ -31,39 +32,39 @@ export default class ApprovalProposalCard extends Component {
 
 
   render() {
-    let app = {...this.props.app};
+    let app = { ...this.props.app };
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    
-    if(this.props.theme){
-      if(Object.prototype.toString.call(this.props.theme) === "[object String]"){
+    let styles = state.styles;
+
+
+    if (this.props.theme) {
+      if (Object.prototype.toString.call(this.props.theme) === "[object String]") {
         styles = state.themeFactory.getThemeFactory()[this.props.theme];
       }
-      else{
-        styles= this.props.theme;
+      else {
+        styles = this.props.theme;
       }
     }
-    app.state.styles=styles
-    
+    app.state.styles = styles
 
 
 
 
-        //********CARD ASSIGN********/
 
-        let cards={
+    //********CARD ASSIGN********/
 
-          card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
-          cardWithTab: <CardWithTab app={{...app, state:{...app.state, styles:styles}}} options={this.props.options} type={this.props.type}/>,
-          popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type}/>,
-          popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}/>
-//popupType={this.props.popupType} popupTab={this.props.popupTab}
-    
+    let cards = {
+
+      card: <Card app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} />,
+      cardWithTab: <CardWithTab app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} />,
+      popup: <Popup app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />,
+      popupWithTab: <PopupWithTab app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />
+      //popupType={this.props.popupType} popupTab={this.props.popupTab}
+
     }
-    
+
     //*********CARD ASSIGN********/
 
 
@@ -72,9 +73,9 @@ export default class ApprovalProposalCard extends Component {
 
     return (
       <div >
-        
-        {cards[this.props.type? this.props.type: "card"]}
-        </div>
+
+        {cards[this.props.type ? this.props.type : "card"]}
+      </div>
 
     )
   }
@@ -83,74 +84,149 @@ export default class ApprovalProposalCard extends Component {
 
 
 //********CONTENTS********/
-class MainContent extends Component{
+class MainContent extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       start: false,
-      pic:this.props.app.state.currentApproval.getJson().picURL
+      pic: this.props.app.state.currentApproval.getJson().picURL
     }
   }
-  async componentDidMount(){
+  async componentDidMount() {
 
   }
 
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
+    let styles = state.styles;
 
-    return(
-      
-    <div style={{height:"100%", width:"95%", marginLeft:"20px"}} >
-      <ParentFormComponent app={app} obj={state.currentApproval} name="title" label = "title" />
-      <ParentFormComponent app={app} obj={state.currentApproval} name="description" label = "title" type="quill"/>
-      <ParentFormComponent app={app} obj={state.currentApproval} name="mptype"  type="select" selectOptions={["campaign", "image", "lore", "encounter", "map"]}/>
 
-      <ParentFormComponent app={app} obj={state.currentApproval} name="promotional" label = "title" type="quill"/>
-      <div style={{color:"white"}}>Primary Pic</div>
-      <img src={this.state.pic}/>
-      <Upload 
+    return (
+
+      <div style={{ height: "100%", width: "98%", margin: "20px", marginTop: "-44px" }} >
+        <div style={{ marginTop: "8px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
+        <ParentFormComponent app={app} obj={state.currentApproval} name="title" label="Marketplace Title"
+          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", }}
+          theme={"adventureLog"} rows={1}
+          maxLength={110}
+          labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
+          inputStyle={{
+            width: "58.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1", marginLeft: "20px",
+            borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
+          }}
+          placeholder={"Title"}
+        />
+        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Long Description</div>
+        <ParentFormComponent app={app} obj={state.currentApproval} name="description" label="title" type="quill" connectLore={false}
+          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px", marginLeft: "20px" }} />
+
+
+
+        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Short Promotional Description</div>
+        <ParentFormComponent app={app} obj={state.currentApproval} name="promotional" label="title" type="quill" connectLore={false}
+          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", marginLeft: "20px" }} />
+
+
+        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Type</div>
+        <ParentFormComponent app={app} obj={state.currentApproval} name="mptype"
+          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px" }}
+          theme={"adventureLog"} rows={1}
+          maxLength={110}
+          labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
+          inputStyle={{
+            width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
+            borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "20px",
+          }}
+          type="select"
+          textOptions={["Campaign", "Image", "Lore", "Encounter", "Map"]}
+          selectOptions={["campaign", "image", "lore", "encounter", "map"]} />
+</div>
+
+
+        <div style={{ marginTop: "0px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
+          <div style={{ color: styles.colors.colorWhite, fontSize: "1.4rem", marginLeft: "5px", marginBottom: "8px" }}>Marketplace Banner</div>
+          <img src={this.state.pic} style={{
+            marginLeft: "20px", objectFit: "cover", width: "440px", borderRadius: "9px",
+            maxHeight: "200px",
+            minHeight: "200px",
+          }} />
+          <div style={{ marginLeft: "20px", marginBottom: "28px", marginTop: "22px" }}>
+            <Upload
               //ADD THIS TO ALL UPLOADS//
-              changePic={(pic)=>{this.setState({pic:pic})}} 
-              obj={app.state.currentApproval} text="Upload Primary" style={{display:"flex",
-              zIndex:"1", borderRadius:".1vmin", background:"",}} 
-              update={true} 
-               app={app}/>
-
-               <UploadComponent app={app} obj={state.currentApproval}/>
-               <TagCreate app={app} obj = {state.currentApproval} />
-
-               <ParentFormComponent app={app} obj={state.currentApproval} name="gameSystem"  type="select" selectOptions={["", "dnd", "pathfinder"]}/>
-
-      <div style={{color:"white"}} onClick={ async ()=>{
-        await state.currentApproval.setCompState({readyForDistribution:true});
-        state.opps.cleanPrepareRun({update:state.currentApproval})
-        }}>Save</div>
+              changePic={(pic) => { this.setState({ pic: pic }) }}
+              obj={app.state.currentApproval} text="Upload Banner" style={{
+                display: "flex",
+                zIndex: "1", borderRadius: ".1vmin", background: "",
+              }}
+              update={true}
+              app={app} />
+          </div></div>
 
 
-      
+        {/* UM TAYLOR WHAT ARE WE DOING HERE? */}
+        {/* <UploadComponent app={app} obj={state.currentApproval} /> */}
+        <div style={{ marginTop: "8px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
+          <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Tags</div>
+          <TagCreate app={app} obj={state.currentApproval} />
+        
 
-    </div>
+        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>System</div>
+        <ParentFormComponent app={app} obj={state.currentApproval} name="gameSystem" type="select"
+          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px" }}
+          theme={"adventureLog"} rows={1}
+          maxLength={110}
+          labelStyle={{ marginBottom: "8px", }}
+          inputStyle={{
+            width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
+            borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "35px",
+          }}
+
+          selectOptions={["", "5e", "pathfinder", "other"]}
+          textOptions={["No System", "DnD 5e", "DnD Pathfinder", "Other"]} /></div>
+
+        <div style={{ ...styles.buttons.buttonAdd, width: "600px", justifySelf: "center", alignSelf: "center", display: "flex", marginTop: "100px", marginLeft:"38px" }} onClick={async () => {
+          await state.currentApproval.setCompState({ readyForDistribution: true });
+          state.opps.cleanPrepareRun({ update: state.currentApproval })
+        }}>Send Proposal</div>
+
+
+
+
+
+        {/* <MapComponent app={app} name="approval" theme="defaultRow" cells={[
+          
+          { name: "Add to Campaign", class: "DR-hover-shimmer Button-Type2", },
+          { type: "img", class: "Img-Midsize" },
+          { type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item" },
+
+          // { type: "attribute", name: "listedComponents", class: "DR-Attribute-Item Ellipsis-Text" },
+          // { name: "See More", class: "DR-Attribute-Item .Button-Type1 a", hasLink: true, to: "/purchase/" },
+          { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
+
+          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/library/" },
+          
+
+        ]} /> */}
+      </div>
     )
   }
 }
 
-class TabContent extends Component{
+class TabContent extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
+    return (
       <div>
 
       </div>
@@ -158,33 +234,33 @@ class TabContent extends Component{
   }
 }
 
-class CardWithTab extends Component{
+class CardWithTab extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
+    return (
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
-          {/* //Tab content  */}
-          <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
-          {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
-            <MainContent app={app} />
-            </div>
+      <div style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCardBorderless"], }}>
+        {/* //Tab content  */}
+        <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /></div>
+        {/* //Main card content  */}
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <MainContent app={app} />
         </div>
+      </div>
     )
   }
 }
 
 /**Popups */
-class Popup extends Component{
+class Popup extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -193,36 +269,36 @@ class Popup extends Component{
   }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-}
-componentWillUnmount() {
+  }
+  componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
-}
-handleClickOutside(event) {
+  }
+  handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-       this.props.handleClose();
+      this.props.handleClose();
     }
-}
-  
-  render(){
+  }
+
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    return(
+    let styles = state.styles;
+
+    return (
       <div className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
-      <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>x</div>
-          
-          <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+        <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+          <div style={ ///EXIT BUTTON
+            styles.buttons.closeicon
+          } onClick={this.props.handleClose}>x</div>
+
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+            <MainContent app={app} />
+          </div>
+
+
         </div>
-          
-      
-      </div>
 
 
 
@@ -231,7 +307,7 @@ handleClickOutside(event) {
   }
 }
 
-class PopupWithTab extends Component{
+class PopupWithTab extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -240,34 +316,34 @@ class PopupWithTab extends Component{
   }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-}
-componentWillUnmount() {
+  }
+  componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
-}
-handleClickOutside(event) {
+  }
+  handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-       this.props.handleClose();
+      this.props.handleClose();
     }
-}
-  render(){
+  }
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    return(
-      <div  className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
-      
-      <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>X</div></div>   
-      <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+    let styles = state.styles;
+
+    return (
+      <div className="popup-box" style={{ zIndex: "1010" }}>
+        <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+
+          <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
+            styles.buttons.closeicon
+          } onClick={this.props.handleClose}>X</div></div>
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+            <MainContent app={app} />
+          </div>
         </div>
-        </div>
-        
+
 
 
 
@@ -275,28 +351,28 @@ handleClickOutside(event) {
     )
   }
 }
-  
+
 
 
 
 
 //********CARDs********/
-class Card extends Component{
+class Card extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
-      <div className='scroller'  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"] }}>   
-            <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-              <MainContent app={app} />
-            </div>
+    return (
+      <div className='scroller' style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <MainContent app={app} />
+        </div>
       </div>
     )
   }

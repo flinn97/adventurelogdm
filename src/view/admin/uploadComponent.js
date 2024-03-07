@@ -97,7 +97,7 @@ class UploadComponent extends Component {
       debugger
         let component = this.props.obj? this.props.obj: this.props.app.state.currentComponent
         if(this.state.newPics.length===0 && this.state.list.length===0){
-            this.setState({message:"You still need to Upload an image."})
+            this.setState({message:"You still need to upload an image."})
             return
         }
 
@@ -187,10 +187,11 @@ class UploadComponent extends Component {
         return (
             
             <div  ref={this.wrapperRef} style={this.props.wrapperStyle?this.props.wrapperStyle:{
-                display:"flex", flexDirection:"column", alignItems:"center", alignContent:"center", alignSelf:"center", height:"87.1vh", marginTop:"0vmin", 
-                fontFamily: styles.fonts.fontNormal, zIndex:"10000", padding: "2vh", border:"solid 2px #44444444", borderRadius:"2vmin",  marginBottom:"5vh", background:"#eeeeee",
+                display:"flex", flexDirection:"column", alignItems:"center", alignContent:"center", alignSelf:"center", marginTop:"0vmin", 
+                fontFamily: styles.fonts.fontNormal, zIndex:"10000", padding: "2vh", borderRadius:"2vmin", color:styles.colors.colorWhite,
+                marginBottom:"5vh",
                 }} className={this.props.wrapperClass}>
-                   <div style={{
+                   {/* <div style={{
                     fontFamily: styles.fonts.fontBold, 
                     fontSize: styles.fonts.fontSubheader2,
                     marginBottom: styles.margins.marginMediumH,
@@ -201,12 +202,12 @@ class UploadComponent extends Component {
                     top:"1vmin",
                 }} onClick={() =>
                     this.props.app.dispatch({ myswitch: "", currentComponent:undefined })
-                    } >Cancel</div>
-                    <div style={{fontFamily:styles.fonts.fontTitle, color:styles.colors.linkVisitedColor, fontSize:"4vh", marginTop:"",  zIndex:"900"}}>
-                    ~ New Content ~
+                    } >Cancel</div> */}
+                    <div style={{fontFamily:styles.fonts.fontTitle, color:styles.colors.colorWhite, fontSize:"2rem", marginTop:"", zIndex:"900"}}>
+                    New Content
                     </div>
 
-                <div style={{fontFamily: styles.fonts.fontBold, fontSize:"1.6vh", color:styles.colors.color2}}>
+                <div style={{fontFamily: styles.fonts.fontBold, fontSize:"1.6vh", color:styles.colors.color8}}>
               Limit: 5 Images
               </div>
                 <div style={{display:"flex", flexDirection:"column", alignItems:"center", userSelect:"none", background:"#22222222", width:"28vw", borderRadius:"2vmin", marginBottom:"2vmin" }}>
@@ -240,8 +241,9 @@ class UploadComponent extends Component {
 
 
 
-                    <div style={{...styles.buttons.buttonFollow, height:"5.9vh", marginTop:"2vmax", padding:"2vmin", cursor:"pointer", width:"3.9vmax"}} onClick={this.handleSubmission}>Create Content</div>
-            <div style={{fontFamily: styles.fonts.fontBold, fontSize:"2.1vh", marginTop:"1vh", color:styles.colors.color2}}>{this.state.message}</div>
+                    <div style={{...styles.buttons.buttonAdd, marginTop:"2vmax", padding:"20px", cursor:"pointer",}}
+                     onClick={this.handleSubmission}>Create Content</div>
+            <div style={{fontFamily: styles.fonts.fontBold, fontSize:"2.1vh", marginTop:"1vh", color:styles.colors.color5}}>{this.state.message}</div>
             </div>
         );
     }

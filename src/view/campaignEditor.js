@@ -219,6 +219,10 @@ export default class CampaignEditor extends Component {
     let pId = parent ? Object.keys(parent)[0] : "";
     let parentItem = state.componentList.getComponent("lore", pId, "_id");
 
+    let loreList = state.currentLore?state.componentList.getList("lore", state.currentLore.getJson().name, "name"):"";
+    let hasName = ((state.currentLore)&&(state?.currentLore?.getJson().name!=undefined)&&(state?.currentLore?.getJson().name!=""))?true:false;
+    let warning = ((loreList.length>1)&&(state.currentLore)&&(hasName))?<div style={{color:styles.colors.color5, background:styles.colors.color2, padding:"3px 8px", borderRadius:"8px", fontSize:styles.fonts.fontSmall, position:"absolute", top:15}}>{"You already have another lore named "+state?.currentLore?.getJson().name}</div>:""
+
     return (<div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
       {/* <div style={{color:"white"}} onClick={()=>{
         convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
@@ -307,14 +311,16 @@ export default class CampaignEditor extends Component {
                   Delete This Lore
 
                 </div>
+                
                 <div
                   style={{ width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3, padding: "5px 6px" }}>
                   <div
                     style={{ fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "69", }}>
-                    {this.state.obj?.getJson().title + ":"}
+                    {this.state.obj?.getJson().title + ": "}{warning}
 
                   </div>
                 </div>
+                
                 <ParentFormComponent app={app} name="name" obj={state.currentLore}
                   theme={"adventureLog"}
                   callbackFunc={(arr)=>{
@@ -572,13 +578,13 @@ export default class CampaignEditor extends Component {
                 theme={"adventureLog"}
                 rows={5}
                 prepareRun={true}
-                linkLore={true}
+
                 inputStyle={{
                   maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
                   borderRadius: "4px", background: styles.colors.colorWhite + "00",
                   border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                 }}
-                type={"quill"} onPaste={this.handlePaste}
+                type={"quill"} onPaste={this.handlePaste} connectLore={true}
                 wrapperStyle={{
                   margin: "5px", color: styles.colors.colorWhite, display: "flex",
                   flexDirection: "column", justifyItems: "space-between"
