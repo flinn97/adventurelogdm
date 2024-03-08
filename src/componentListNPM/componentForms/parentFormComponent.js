@@ -308,8 +308,8 @@ class ParentFormComponent extends Component {
             input={this.props.required? "required": this.props.disabled? "disabled": "normal"}
             requiredMessage={this.props.requiredMessage}
             />,
-            price: <PriceFormComponent 
 
+            price: <PriceFormComponent 
             unit={this.props.unit?this.props.unit:"$"}
             unitStyle={this.props.unitStyle}
             onFocus={this.props.onFocus}
@@ -332,7 +332,6 @@ class ParentFormComponent extends Component {
             placeholder={this.props.placeholder} 
             handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value, this)}:this.handleChange} 
             name={this.props.name} 
-            //TAYLOR
             value={
                 !this.state.obj ? "" :
                 (this.props.isPropArray && 
