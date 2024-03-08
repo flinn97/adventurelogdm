@@ -142,7 +142,7 @@ class MainContent extends Component {
           }}
           type="select"
           textOptions={["Campaign", "Image", "Lore", "Encounter", "Map"]}
-          selectOptions={["campaign", "image", "lore", "encounter", "map"]} />
+          selectOptions={["mpCampaign", "mpImage", "mpLore", "mpEncounter", "mpMap"]} />
 </div>
 
 
@@ -167,7 +167,7 @@ class MainContent extends Component {
 
 
         {/* UM TAYLOR WHAT ARE WE DOING HERE? */}
-        {/* <UploadComponent app={app} obj={state.currentApproval} /> */}
+        <UploadComponent app={app} obj={state.currentApproval} />
         <div style={{ marginTop: "8px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
           <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Tags</div>
           <TagCreate app={app} obj={state.currentApproval} />

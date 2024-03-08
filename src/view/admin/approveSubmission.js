@@ -35,7 +35,7 @@ export default class ApproveSubmission extends Component {
       <div style={{marginLeft:"100px"}} onClick={async()=>{
         debugger
         let approval = this.props.obj
-        let mpItem = {...approval.getJson(), _id:idService.createId(), type:approval.getJson().mytype}
+        let mpItem = {...approval.getJson(), _id:idService.createId(), type:approval.getJson().mptype}
 
         mpItem.date = await serverTimestamp();
       await setDoc(doc(db, "MPusers", "MPAPP", "components", mpItem._id), mpItem);

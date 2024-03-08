@@ -110,7 +110,18 @@ class Auth {
         let monsters = componentList.getList("monster");
         return monsters
     }
-
+    async getMPItems(componentList, userId){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "mpItem"),  where("owner" , "==", userId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let mpItems = componentList.getList("mpItem");
+        return mpItems
+    }
 
     async deleteAllConditoins(componentList, email){
         
