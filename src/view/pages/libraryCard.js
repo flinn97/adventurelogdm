@@ -96,7 +96,6 @@ class MainContent extends Component {
   };
   requestBody=await JSON.stringify(requestBody)
 
-
   // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
   const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
 
@@ -142,16 +141,14 @@ class MainContent extends Component {
 {this.state.start&&
         <MapComponent app={app} name="mpItem" theme="defaultRow" cells={[
           
-          { name: "Add to Campaign", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
+          { name: "Download", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
           { type: "img", class: "Img-Midsize" },
           { type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item" },
 
           // { type: "attribute", name: "listedComponents", class: "DR-Attribute-Item Ellipsis-Text" },
           // { name: "See More", class: "DR-Attribute-Item .Button-Type1 a", hasLink: true, to: "/purchase/" },
           { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
-
-          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/library/" },
-          
+          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/purchase/" },
 
         ]} />
 }

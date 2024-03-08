@@ -271,6 +271,7 @@ export default class Dispatch extends Component {
                         <Route path="/campaign/" element={<Campaign app={app} />} />
 
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
+                        {/* <Route path="/library/:id" element={<CampaignEditor app={app} />} /> */}
                         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
                         <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
                         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}

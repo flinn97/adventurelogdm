@@ -6,7 +6,7 @@ class RandomTextService {
 
     
     pickName() {
-        let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Undead Druid", "Anxious Warrior", "Barbalang", 
+        let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Undead Druid", "Anxious Warrior", "Barlgang Ape", "Northchop Orc",
         "Violinist Devil", "Hedgehog Demon", "Sir Dante Rabbitlord", "Duke Dean", "Clifford the Floofy Giant"];
         let randomNumber = Math.floor(Math.random() * (names.length));
         let chosenName = names[randomNumber];
