@@ -11,6 +11,8 @@ import CheckBox from './singleForms/checkComponent.js';
 import FormWithUpdateAndRun from './buttons/formWithUpdateAndRun.js';
 import SelectComponent from './singleForms/selectComponent.js';
 import QuillForm from './singleForms/quillForm.js';
+import PriceFormComponent from './singleForms/priceComponent.js'
+
 /**
  * Parent form component has every option that is a single form or a button
  * 
@@ -263,6 +265,53 @@ class ParentFormComponent extends Component {
          types={
             text: <InputFormComponent 
             doesMath={this.props.doesMath}
+            onFocus={this.props.onFocus}
+            rows={this.props.rows}
+            cols={this.props.cols}
+            objDispatch={this.objDispatch}
+            emitClickedOutside={this.props.emitClickedOutside}
+            id={this.props.id}
+            theme={this.props.theme}
+            inputStyle={this.props.inputStyle}
+            spellCheck={this.props.spellCheck}
+            label={this.props.label}
+            type={this.props.differentInputType? this.props.differentInputType: 'text'}
+            prepareOnClick={this.props.prepareOnClick}
+            labelStyle={this.props.labelStyle}
+            onClick={this.props.prepareOnClickFunc? this.props.prepareOnClickFunc:this.prepareOnClick}
+            wrapperStyle={this.props.wrapperStyle}
+            
+            class = {this.props.class} 
+            placeholder={this.props.placeholder} 
+            handleChange={this.props.func? (value)=>{this.props.func(this.state.obj, value, this)}:this.handleChange} 
+            name={this.props.name} 
+            //TAYLOR
+            value={
+                !this.state.obj ? "" :
+                (this.props.isPropArray && 
+                 this.state.obj[0] && 
+                 this.state.obj[0].getJson() && 
+                 this.state.obj[0].getJson()[this.props.name] ?
+                 this.state.obj[0].getJson()[this.props.name][0] :
+                 this.state.obj[0] && 
+                 this.state.obj[0].getJson() ? 
+                 this.state.obj[0].getJson()[this.props.name] : 
+                 "")
+              }
+            min={this.props.min}
+            max={this.props.max}
+            autoComplete={this.props.autoComplete}
+            checked={this.props.checked}
+            minLength={this.props.minLength}
+            maxLength={this.props.maxLength}
+            updateOnClickOutside= {this.props.updateOnClickOutside}
+            input={this.props.required? "required": this.props.disabled? "disabled": "normal"}
+            requiredMessage={this.props.requiredMessage}
+            />,
+            price: <PriceFormComponent 
+
+            unit={this.props.unit?this.props.unit:"$"}
+            unitStyle={this.props.unitStyle}
             onFocus={this.props.onFocus}
             rows={this.props.rows}
             cols={this.props.cols}

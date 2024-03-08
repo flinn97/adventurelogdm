@@ -33,7 +33,7 @@ export default class TagCreate extends Component {
 
     return (
 
-      <div style={{ marginLeft: "20px", color: styles.colors.color8, marginBottom: "40px" }} >
+      <div style={{ marginLeft: "5px", color: styles.colors.color8+88, marginBottom: "40px" }} >
         5 tags maximum
         {this.state.showTags &&
           <div style={{
@@ -65,7 +65,7 @@ export default class TagCreate extends Component {
             labelStyle={{ marginBottom: "8px", marginTop: "6px" }}
             inputStyle={{
               width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1", marginTop: "6px",
-              borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "20px",
+              borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "30px",
             }}
             func={(obj, val,) => {
 
@@ -74,7 +74,7 @@ export default class TagCreate extends Component {
               obj[0].setCompState({ selector: val })
             }} />
 
-          <div style={{ ...styles.buttons.buttonAdd, color: "white", marginTop: "11px", padding: "3px 11px", marginLeft: "18px" }} onClick={async () => {
+          <div style={{ ...styles.buttons.buttonAdd, color: "white", marginTop: "11px", padding: "3px 11px", marginLeft: "30px" }} onClick={async () => {
             debugger
             if (this.props.obj.getJson().tags?.split(",").length < 5 && this.state.currentSelection.trim() !== "") {
               let existingTags = this.props.obj.getJson().tags ? this.props.obj.getJson().tags.split(",") : [];
