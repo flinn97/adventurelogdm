@@ -27,7 +27,7 @@ class Auth {
             });
     }
     checkIfLoggedIn(){
-        debugger
+        
         onAuthStateChanged(auth, async (user)=>{
             if(user){
                 return
@@ -110,7 +110,31 @@ class Auth {
         let monsters = componentList.getList("monster");
         return monsters
     }
+    async getMPItems(componentList, userId){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "mpItem"),  where("owner" , "==", userId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let mpItems = componentList.getList("mpItem");
+        return mpItems
+    }
 
+    async getAllofTypeByUser(componentList, userId, type){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', type),  where("owner" , "==", userId));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let images = componentList.getList(type);
+        return images
+    }
 
     async deleteAllConditoins(componentList, email){
         

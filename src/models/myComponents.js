@@ -521,7 +521,7 @@ class Approval extends componentBase{
         promotional: "",
         price: "",
         selector:"",
-        mytype:"campaign",
+        mptype:"mpCampaign",
         tags:"",
         type: "approval",
         gameSystem: "",

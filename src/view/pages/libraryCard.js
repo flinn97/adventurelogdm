@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MapComponent } from '../../mapTech/mapComponentInterface';
+import auth from '../../services/auth';
 
 
 /**
@@ -86,6 +87,46 @@ class MainContent extends Component {
     }
   }
 
+  async download(mpItem){
+    
+    let campaign = await auth.firebaseGetter(mpItem.getJson().campaignId, this.props.app.state.componentList, "_id", "campaign", false );
+    let requestBody = {
+      email: this.props.app.state.user.getJson()._id,
+      lore: {...campaign[0].getJson()}
+  };
+  requestBody=await JSON.stringify(requestBody)
+
+
+  // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
+  const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
+
+  // Make a POST request to the Cloud Function
+  fetch(cloudFunctionUrl, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: requestBody,
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+  }
+
+  async componentDidMount(){
+    
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    let state = app.state;
+    let componentList = state.componentList;
+    await auth.getMPItems(componentList, state.user.getJson()._id);
+    this.setState({start:true})
+  }
+
 
   render() {
     let app = this.props.app;
@@ -98,10 +139,10 @@ class MainContent extends Component {
     return (
       <div style={{ width: "100%", display: "flex", flexDirection: "row", minHeight: "710px", justifyContent: "center", padding: "22px" }}>
         {/* <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div> */}
-
+{this.state.start&&
         <MapComponent app={app} name="mpItem" theme="defaultRow" cells={[
           
-          { name: "Add to Campaign", class: "DR-hover-shimmer Button-Type2", },
+          { name: "Add to Campaign", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
           { type: "img", class: "Img-Midsize" },
           { type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item" },
 
@@ -113,7 +154,7 @@ class MainContent extends Component {
           
 
         ]} />
-
+}
       </div>
 
     )

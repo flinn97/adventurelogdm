@@ -130,20 +130,20 @@ class MainContent extends Component {
             wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", marginLeft: "20px" }} />
 
 
-          <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Type</div>
-          <ParentFormComponent app={app} obj={state.currentApproval} name="mptype"
-            wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px" }}
-            theme={"adventureLog"} rows={1}
-            maxLength={110}
-            labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
-            inputStyle={{
-              width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
-              borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "20px",
-            }}
-            type="select"
-            textOptions={["Campaign", "Image", "Lore", "Encounter", "Map"]}
-            selectOptions={["campaign", "image", "lore", "encounter", "map"]} />
-        </div>
+        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Type</div>
+        <ParentFormComponent app={app} obj={state.currentApproval} name="mptype"
+          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px" }}
+          theme={"adventureLog"} rows={1}
+          maxLength={110}
+          labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
+          inputStyle={{
+            width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
+            borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "20px",
+          }}
+          type="select"
+          textOptions={["Campaign", "Image", "Lore", "Encounter", "Map"]}
+          selectOptions={["mpCampaign", "mpImage", "mpLore", "mpEncounter", "mpMap"]} />
+</div>
 
 
         <div style={{ marginTop: "0px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>

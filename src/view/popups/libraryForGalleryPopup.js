@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../../App.css"
+import auth from '../../services/auth';
 
 
 export default class LibraryForGalleryPopup extends Component {
@@ -74,7 +75,7 @@ class MainContent extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
    
-    let imageList = componentList.getList("image", "image", "type")
+    let imageList = componentList.getList("image")
     let list =[];
     let filteredImgList = []
     for(let image of imageList){
@@ -129,6 +130,14 @@ class MainContent extends Component {
               }
               
             </div>
+            <div style={{color:"white"}} onClick={async ()=>{
+              debugger
+              let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
+              if(images){
+                dispatch({});
+              }
+
+            }}>From Other Campaigns</div>
 
             
       </div>

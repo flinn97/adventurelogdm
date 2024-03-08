@@ -168,7 +168,7 @@ handleChange = (event) => {
     }
     try{
     let user = await auth.getCurrentUser();
-    debugger
+    
     if(user && user!=="null" && user!=="undefined"){
       await auth.checkIfLoggedIn();
       

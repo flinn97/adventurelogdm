@@ -75,7 +75,7 @@ export default class TagCreate extends Component {
             }} />
 
           <div style={{ ...styles.buttons.buttonAdd, color: "white", marginTop: "11px", padding: "3px 11px", marginLeft: "30px" }} onClick={async () => {
-            debugger
+            
             if (this.props.obj.getJson().tags?.split(",").length < 5 && this.state.currentSelection.trim() !== "") {
               let existingTags = this.props.obj.getJson().tags ? this.props.obj.getJson().tags.split(",") : [];
               if (!existingTags.includes(this.state.currentSelection.trim())) {

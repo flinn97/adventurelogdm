@@ -151,7 +151,7 @@ scrollTo = (ref, behavior) => {
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
 
-    const filteredList = componentList.getList("encounter", id, "campaignId")
+    const filteredList = componentList.getList("encounter")
     .filter(encounter => {
       const name = encounter?.getJson()?.name || "";
       return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
@@ -511,6 +511,12 @@ marginTop:"22px"}}>
           </div>
           
           )}
+          <div style={{color:"white"}} onClick={async()=>{
+            let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+            if(encounter){
+              dispatch({})
+            }
+          }}>From other campaigns</div>
 
         </div>
         </div>}

@@ -94,7 +94,7 @@ class UploadComponent extends Component {
       
 	};
     async handleSubmission()  {
-      debugger
+      
         let component = this.props.obj? this.props.obj: this.props.app.state.currentComponent
         if(this.state.newPics.length===0 && this.state.list.length===0){
             this.setState({message:"You still need to upload an image."})

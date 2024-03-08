@@ -109,7 +109,7 @@ class TreeService {
               count-= increment;
 
             }
-            debugger
+            
             for (let key in listobj) {
                 const batch = await writeBatch(db);
                 for (let comp of listobj[key]) {
