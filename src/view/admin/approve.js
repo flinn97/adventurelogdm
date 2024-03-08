@@ -23,7 +23,7 @@ export default class Approve extends Component {
     return (
      
       <div style={{marginLeft:"100px"}} onClick={async()=>{
-        debugger
+        
         let approval = this.props.obj
         let email = approval.getJson().owner
         let user = await state.componentList.getComponent("user", email, "_id")

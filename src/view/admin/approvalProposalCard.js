@@ -108,26 +108,26 @@ class MainContent extends Component {
 
       <div style={{ height: "100%", width: "98%", margin: "20px", marginTop: "-44px" }} >
         <div style={{ marginTop: "8px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
-        <ParentFormComponent app={app} obj={state.currentApproval} name="title" label="Marketplace Title"
-          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", }}
-          theme={"adventureLog"} rows={1}
-          maxLength={110}
-          labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
-          inputStyle={{
-            width: "58.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1", marginLeft: "20px",
-            borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
-          }}
-          placeholder={"Title"}
-        />
-        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Long Description</div>
-        <ParentFormComponent app={app} obj={state.currentApproval} name="description" label="title" type="quill" connectLore={false}
-          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px", marginLeft: "20px" }} />
+          <ParentFormComponent app={app} obj={state.currentApproval} name="title" label="Marketplace Title"
+            wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", }}
+            theme={"adventureLog"} rows={1}
+            maxLength={110}
+            labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
+            inputStyle={{
+              width: "58.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1", marginLeft: "20px",
+              borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
+            }}
+            placeholder={"Title"}
+          />
+          <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Long Description</div>
+          <ParentFormComponent app={app} obj={state.currentApproval} name="description" label="title" type="quill" connectLore={false}
+            wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px", marginLeft: "20px" }} />
 
 
 
-        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Short Promotional Description</div>
-        <ParentFormComponent app={app} obj={state.currentApproval} name="promotional" label="title" type="quill" connectLore={false}
-          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", marginLeft: "20px" }} />
+          <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Short Promotional Description</div>
+          <ParentFormComponent app={app} obj={state.currentApproval} name="promotional" label="title" type="quill" connectLore={false}
+            wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "18px", marginLeft: "20px" }} />
 
 
         <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Type</div>
@@ -166,28 +166,52 @@ class MainContent extends Component {
           </div></div>
 
 
-        {/* UM TAYLOR WHAT ARE WE DOING HERE? */}
+
         <UploadComponent app={app} obj={state.currentApproval} />
+        {/* TAYLOR */}
+        {/* THIS SEEMS TO upload the media multiple times? */}
+
         <div style={{ marginTop: "8px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
+          <div style={{ marginTop: "8px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px", paddingLeft: "0px" }}>
+            <ParentFormComponent app={app} obj={state.currentApproval} name="price" label="Price" type="price"
+              wrapperStyle={{
+                margin: "5px", color: styles.colors.colorWhite, display: "flex",
+                flexDirection: "column", marginBottom: "2px",
+              }}
+              theme={"adventureLog"} rows={1}
+              placeholder={"USD"}
+              maxLength={110}
+              unitStyle={{ marginLeft: "17px", opacity: "30%", marginRight: "5px" }}
+              labelStyle={{ marginBottom: "8px", fontSize: "1.4rem" }}
+              inputStyle={{
+                width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
+                borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px",
+              }} />
+            <div style={{ color: styles.colors.color8 + "88", fontSize: "1.1rem", margin: "5px" }}>0.00 is a free listing</div>
+          </div>
+
+
+
           <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>Tags</div>
           <TagCreate app={app} obj={state.currentApproval} />
-        
 
-        <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>System</div>
-        <ParentFormComponent app={app} obj={state.currentApproval} name="gameSystem" type="select"
-          wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px" }}
-          theme={"adventureLog"} rows={1}
-          maxLength={110}
-          labelStyle={{ marginBottom: "8px", }}
-          inputStyle={{
-            width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
-            borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "35px",
-          }}
 
-          selectOptions={["", "5e", "pathfinder", "other"]}
-          textOptions={["No System", "DnD 5e", "DnD Pathfinder", "Other"]} /></div>
 
-        <div style={{ ...styles.buttons.buttonAdd, width: "600px", justifySelf: "center", alignSelf: "center", display: "flex", marginTop: "100px", marginLeft:"38px" }} onClick={async () => {
+          <div style={{ marginTop: "18px", margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", fontSize: "1.4rem" }}>System</div>
+          <ParentFormComponent app={app} obj={state.currentApproval} name="gameSystem" type="select"
+            wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column", marginBottom: "28px" }}
+            theme={"adventureLog"} rows={1}
+            maxLength={110}
+            labelStyle={{ marginBottom: "8px", }}
+            inputStyle={{
+              width: "18.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
+              borderRadius: "4px", background: styles.colors.colorWhite + "9c", borderWidth: "0px", marginLeft: "35px",
+            }}
+
+            selectOptions={["", "5e", "pathfinder", "3.5e", "other"]}
+            textOptions={["No System", "D&D 5e", "D&D Pathfinder", "D&D 3.5e", "Other"]} /></div>
+
+        <div style={{ ...styles.buttons.buttonAdd, width: "600px", justifySelf: "center", alignSelf: "center", display: "flex", marginTop: "100px", marginLeft: "38px" }} onClick={async () => {
           await state.currentApproval.setCompState({ readyForDistribution: true });
           state.opps.cleanPrepareRun({ update: state.currentApproval })
         }}>Send Proposal</div>
@@ -196,20 +220,7 @@ class MainContent extends Component {
 
 
 
-        {/* <MapComponent app={app} name="approval" theme="defaultRow" cells={[
-          
-          { name: "Add to Campaign", class: "DR-hover-shimmer Button-Type2", },
-          { type: "img", class: "Img-Midsize" },
-          { type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item" },
 
-          // { type: "attribute", name: "listedComponents", class: "DR-Attribute-Item Ellipsis-Text" },
-          // { name: "See More", class: "DR-Attribute-Item .Button-Type1 a", hasLink: true, to: "/purchase/" },
-          { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
-
-          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/library/" },
-          
-
-        ]} /> */}
       </div>
     )
   }

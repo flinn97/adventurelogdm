@@ -88,7 +88,7 @@ class MainContent extends Component{
     }
   }
   async componentDidMount(){
-    debugger
+    
 
     await auth.firebaseGetter("partnerRequest", this.props.app.state.componentList, "type", "user")
     this.setState({start:true})

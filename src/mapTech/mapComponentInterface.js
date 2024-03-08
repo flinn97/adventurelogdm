@@ -115,7 +115,7 @@ class MapComponent extends Component {
         let componentList = mapComponentInterface?.getComponentList();
         let cells = this.props.cells;
         let name = this.props.name;
-        debugger
+        
         let filters = this.props.filters;
         let filterFunc = this.props.filterFunc;
         if(!filterFunc && filters!==undefined){

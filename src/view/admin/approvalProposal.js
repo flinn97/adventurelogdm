@@ -15,7 +15,7 @@ export default class ApprovalProposal extends Component {
   }
  
   async componentDidMount(){
-    debugger
+    
     let app = this.props.app;
     let dispatch = app.dispatch;
     let componentList = app.state.componentList

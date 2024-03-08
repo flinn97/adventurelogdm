@@ -94,7 +94,7 @@ class UploadComponent extends Component {
       
 	};
     async handleSubmission()  {
-      debugger
+      
         let component = this.props.obj? this.props.obj: this.props.app.state.currentComponent
         if(this.state.newPics.length===0 && this.state.list.length===0){
             this.setState({message:"You still need to upload an image."})
@@ -187,9 +187,9 @@ class UploadComponent extends Component {
         return (
             
             <div  ref={this.wrapperRef} style={this.props.wrapperStyle?this.props.wrapperStyle:{
-                display:"flex", flexDirection:"column", alignItems:"center", alignContent:"center", alignSelf:"center", marginTop:"0vmin", 
-                fontFamily: styles.fonts.fontNormal, zIndex:"10000", padding: "2vh", borderRadius:"2vmin", color:styles.colors.colorWhite,
-                marginBottom:"5vh",
+                display:"flex", flexDirection:"column",alignContent:"center", width:"60%",
+                fontFamily: styles.fonts.fontNormal, zIndex:"100", padding: "20px", borderRadius:"2vmin", color:styles.colors.colorWhite,
+                marginBottom:"48px",
                 }} className={this.props.wrapperClass}>
                    {/* <div style={{
                     fontFamily: styles.fonts.fontBold, 
@@ -203,12 +203,12 @@ class UploadComponent extends Component {
                 }} onClick={() =>
                     this.props.app.dispatch({ myswitch: "", currentComponent:undefined })
                     } >Cancel</div> */}
-                    <div style={{fontFamily:styles.fonts.fontTitle, color:styles.colors.colorWhite, fontSize:"2rem", marginTop:"", zIndex:"900"}}>
-                    New Content
+                    <div style={{fontFamily:styles.fonts.fontTitle, color:styles.colors.colorWhite, fontSize:"1.4rem", marginTop:"", zIndex:"900"}}>
+                    Interior Previews
                     </div>
 
-                <div style={{fontFamily: styles.fonts.fontBold, fontSize:"1.6vh", color:styles.colors.color8}}>
-              Limit: 5 Images
+                <div style={{fontFamily: styles.fonts.fontBold, fontSize:"1rem", color:styles.colors.color8}}>
+              Limit: 5 Images or Videos
               </div>
                 <div style={{display:"flex", flexDirection:"column", alignItems:"center", userSelect:"none", background:"#22222222", width:"28vw", borderRadius:"2vmin", marginBottom:"2vmin" }}>
                             <img style={{width:"24vw", height:"19.8vh", objectFit:"cover", marginTop:"1vmin", borderRadius:"2vmin", userSelect:"none"}}
@@ -218,7 +218,7 @@ class UploadComponent extends Component {
                             <div style={{ cursor: "pointer", width:"24vw",
                         height:"20vh", marginTop:"-20vh"  }}> <input style={{ cursor: "pointer", width:"24vw",
                         height:"20vh", marginTop:"-22vh", opacity:"0"  }} type="file" name="file" onChange={this.changeHandler}  /></div>
-                        
+                    
                                                 </div>  
 
                     <ViewMedia removeMedia={(obj)=>{
@@ -235,15 +235,16 @@ class UploadComponent extends Component {
                         this.setState({list:list, delList:delList, paths:paths, newPics:newPics});
                        
                     }} editable={true} media={[...this.state.list]} 
+                    scale={1}
                     inputStyle={{objectFit:"scale-down"}}
                     wrapperStyle={{objectFit:"scale-down"}} 
                     labelStyle={{fontFamily: styles.fonts.fontBold, fontSize:"2.1vh", marginBottom:"1vh"}}/>
 
 
 
-                    <div style={{...styles.buttons.buttonAdd, marginTop:"2vmax", padding:"20px", cursor:"pointer",}}
-                     onClick={this.handleSubmission}>Create Content</div>
-            <div style={{fontFamily: styles.fonts.fontBold, fontSize:"2.1vh", marginTop:"1vh", color:styles.colors.color5}}>{this.state.message}</div>
+                    {/* <div style={{...styles.buttons.buttonAdd, marginTop:"2vmax", padding:"20px", cursor:"pointer",}}
+                     onClick={this.handleSubmission}>Create Content</div> */}
+            {/* <div style={{fontFamily: styles.fonts.fontBold, fontSize:"2.1vh", marginTop:"1vh", color:styles.colors.color5}}>{this.state.message}</div> */}
             </div>
         );
     }

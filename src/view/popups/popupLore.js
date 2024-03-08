@@ -7,7 +7,7 @@ import AddEncounter from '../AddEncounter';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
 import backarrow from '../../pics/backArrow.webp';
-
+import auth from '../../services/auth';
 import q from '../../pics/question.png';
 import newWindow from '../../pics/newWindow.png';
 import dup from '../../pics/dup.png'
@@ -274,7 +274,7 @@ class MainContent extends Component {
       "</div>;
 
 
-    const filteredList = componentList.getList("encounter", idList[0], "campaignId")
+    const filteredList = componentList.getList("encounter")
       .filter(encounter => {
         const name = encounter?.getJson()?.name || "";
         return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
@@ -559,7 +559,7 @@ class MainContent extends Component {
                   <div style={{
                     display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
                     justifySelf: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width:"fit-content", alignSelf:"flex-end"
+                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
                   }}>
                     <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
                   </div>
@@ -570,32 +570,32 @@ class MainContent extends Component {
                       rows={5} linkLore={true}
                       // prepareRun={true}
                       type={"quill"} onPaste={this.handlePaste} connectLore={true}
-                      /></div>
+                    /></div>
 
 
 
                   <div style={{
                     display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
                     justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width:"fit-content", alignSelf:"flex-end"
-                  
+                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
+
                   }}>
                     <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
                   </div>
                   <div
                     style={{
                       color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
-                      marginTop: "42px" , marginBottom: "45px",
+                      marginTop: "42px", marginBottom: "45px",
                     }}> Handout:
 
-                    <div style={{flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "99%", justifyContent:"center" }}>
-                    <ParentFormComponent app={app} name="handoutText" obj={lore}
+                    <div style={{ flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "99%", justifyContent: "center" }}>
+                      <ParentFormComponent app={app} name="handoutText" obj={lore}
                         theme={"adventureLog"}
                         rows={5}
                         // prepareRun={true}
                         type={"quill"} onPaste={this.handlePaste} connectLore={true}
-                      
-                       /></div>
+
+                      /></div>
                   </div>
                 </div>}
 
@@ -779,7 +779,12 @@ class MainContent extends Component {
                           </div>
 
                         )}
-
+                      <div style={{ color: "white" }} onClick={async () => {
+                        let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+                        if (encounter) {
+                          dispatch({})
+                        }
+                      }}>From other campaigns</div>
                     </div>
                   </div>}
 
