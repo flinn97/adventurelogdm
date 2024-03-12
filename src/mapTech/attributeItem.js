@@ -3,10 +3,10 @@ import BaseClass from './baseClass';
 
 //model
 export default class AttributeItem extends BaseClass {
-  constructor(props){
-    super(props);
+  // constructor(props){
+  //   super(props);
 
-  }
+  // }
 
 
   render(){

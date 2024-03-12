@@ -21,6 +21,7 @@ import IconChange from '../iconChange';
 import loreIndexService from '../../services/loreIndexService';
 import idService from '../../componentListNPM/idService';
 import toolService from '../../services/toolService';
+import LibraryLoreSearch from '../libraryLoreSearch';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -704,7 +705,15 @@ class MainContent extends Component {
                 {this.state.showFindEncounter &&
                   <div>
                     <div style={{ display: "flex", justifyContent: "flex-end", }}>
-
+                      <div className='hover-btn' style={{
+                        ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginRight: "20px",
+                        alignSelf: "center", color: styles.colors.color9, padding: "4px 16px"
+                      }} onClick={async () => {
+                        let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+                        if (encounter) {
+                          dispatch({})
+                        }
+                      }}>Import Library</div>
                       <input app={app}
 
                         type="input"
@@ -722,7 +731,7 @@ class MainContent extends Component {
                       />
                     </div>
 
-                    <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3vh", }}>
+                    <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3vh", flexWrap: "wrap" }}>
 
 
                       {
@@ -779,12 +788,7 @@ class MainContent extends Component {
                           </div>
 
                         )}
-                      <div style={{ color: "white" }} onClick={async () => {
-                        let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
-                        if (encounter) {
-                          dispatch({})
-                        }
-                      }}>From other campaigns</div>
+
                     </div>
                   </div>}
 
@@ -1134,8 +1138,64 @@ class MainContent extends Component {
                   style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
                   Move or Connect Existing Lore
                 </div>
+
+                <div className='hover-btn'
+                  onClick={async () => {
+                    this.setState({ hasChoice: "fromLibrary" });
+                    state.opps.clearUpdater();
+
+                    let libLore = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "lore");
+                    if (libLore) {
+                      dispatch({})
+                    }
+                    
+                  }}
+                  title={"Find pre-made Lore from Library"}
+                  style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
+                  Use Lore in Library
+                </div>
               </div>
 
+            </div>
+          }
+
+          {(this.state.hasChoice === "fromLibrary") &&
+            <div>
+              <div className="hover-btn"
+                onClick={() => {
+                  this.setState({ hasChoice: "" })
+                }}
+                style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "44px", padding: "2px 8px"
+                }}
+
+              >
+                <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem" }}
+                  src={backarrow}
+                />
+                Back
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-40px", marginBottom: "25px", }}>
+                <input app={app}
+
+                  type="input"
+                  placeholder={"Search Lore..."}
+                  value={this.state.searchTerm}
+                  onChange={this.handleSearchChange}
+                  style={{
+                    backgroundColor: styles.colors.color1 + "ee",
+                    color: styles.colors.colorWhite,
+                    borderRadius: "11px",
+                    width: "420px",
+                    padding: '8px',
+                    fontSize: '16px',
+                  }}
+                />
+              </div>
+
+              <LibraryLoreSearch app={app} search={this.state.searchTerm.toLowerCase()} />
             </div>
           }
 
@@ -1158,6 +1218,8 @@ class MainContent extends Component {
               </div>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-40px", marginBottom: "25px", }}>
+
+
 
                 <input app={app}
 

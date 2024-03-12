@@ -47,6 +47,7 @@ export default class LoreViewer extends Component {
       showSaved: false, 
       searchTerm: "",
       imagesToShow: 5,
+      isFullEnc: false,
     }
     this.addDraggableItem = this.addDraggableItem.bind(this);
     this.updateSize = this.updateSize.bind(this)
@@ -434,7 +435,8 @@ marginTop:"22px"}}>
           onClick={() => {
             this.setState({showFindEncounter: false, showFindImage: false })
           }}
-          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa", marginTop:"4px",
+          style={{...styles.buttons.buttonAdd, textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"aa",
+           marginTop:"11px",
           fontWeight:"bold", letterSpacing:".05rem", padding:".1%"}}
           
           >
@@ -447,6 +449,15 @@ marginTop:"22px"}}>
           {this.state.showFindEncounter &&
         <div>
 <div style={{ display:"flex", justifyContent:"flex-end", }}>
+{!this.stateisFullEnc &&
+          <div style={{...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginRight:"20px",
+                        alignSelf: "center", color:styles.colors.color9, padding:"4px 16px"}} onClick={async()=>{
+            let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+            if(encounter){
+              dispatch({})
+              this.setState({isFullEnc: true})
+            }
+          }}>Import Library</div>}
 
         <input app={app}
         
@@ -463,7 +474,7 @@ marginTop:"22px"}}>
       />
 
 </div>
-        <div style={{display:"flex", justifyContent:"space-around", marginTop:"3vh",}}>
+        <div style={{display:"flex", justifyContent:"space-around", marginTop:"3vh", flexWrap:"wrap"}}>
 
 
           {
@@ -511,13 +522,7 @@ marginTop:"22px"}}>
           </div>
           
           )}
-          <div style={{color:"white"}} onClick={async()=>{
-            let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
-            if(encounter){
-              dispatch({})
-            }
-          }}>From other campaigns</div>
-
+         
         </div>
         </div>}
        

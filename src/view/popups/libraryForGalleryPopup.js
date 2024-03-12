@@ -97,7 +97,15 @@ class MainContent extends Component {
        
        
 <div style={{width:"100%", minHeight:"200px", }}>
+<div className='hover-btn' style={{...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "2vh",
+                        marginTop: "1vh", alignSelf: "center", padding: "1%", color:styles.colors.color9}} onClick={async ()=>{
+              debugger
+              let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
+              if(images){
+                dispatch({});
+              }
 
+            }}>Import Library</div>
 
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 
                   flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap", marginTop:"55px",
@@ -130,14 +138,7 @@ class MainContent extends Component {
               }
               
             </div>
-            <div style={{color:"white"}} onClick={async ()=>{
-              debugger
-              let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
-              if(images){
-                dispatch({});
-              }
-
-            }}>From Other Campaigns</div>
+            
 
             
       </div>

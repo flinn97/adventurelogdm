@@ -116,6 +116,7 @@ class MainContent extends Component {
   });
   }
 
+
   async componentDidMount(){
     
     let app = this.props.app;
@@ -134,6 +135,8 @@ class MainContent extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
+    let dButton = componentList.getComponents("mpItem");
+    console.log(dButton)
 
     return (
       <div style={{ width: "100%", display: "flex", flexDirection: "row", minHeight: "710px", justifyContent: "center", padding: "22px" }}>

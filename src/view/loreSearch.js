@@ -12,6 +12,7 @@ import Draggable from 'react-draggable';
 import { Link } from 'react-router-dom';
 import loreIndexService from '../services/loreIndexService';
 import IndexLoreHierarchy from './indexLoreHierarchy';
+import auth from '../services/auth';
 
 import arrow from '../pics/priorityIcon.png';
 
@@ -257,6 +258,7 @@ export default class LoreSearch extends Component {
               position: "relative", marginTop: "-36px", height: "36px",
               width: "fit-content", alignSelf: "flex-end",
             }}>
+              
 
               <input app={app}
 
@@ -297,7 +299,7 @@ export default class LoreSearch extends Component {
               </div> */}
             </div>}
 
-
+            
 
           <div style={{
             alignContent: "flex-start", alignItems: "center", alignSelf: "center",
