@@ -3,7 +3,7 @@ import BaseClass from './baseClass';
 
 
 //model
-export default class AttributeItem extends BaseClass {
+export default class QuillItem extends BaseClass {
   constructor(props){
     super(props);
 
@@ -16,7 +16,7 @@ export default class AttributeItem extends BaseClass {
     if(!name){
       name = cell
     }
-    let html = <ParentFormComponent type={"quill"} 
+    let html = <ParentFormComponent type={"quill"} name={this.props.name}
     style={this.state.cell.style} 
     className={this.state.cell.class?this.state.cell.class:this.state.theme.MCAttributeItem}/>
 

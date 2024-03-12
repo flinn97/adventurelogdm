@@ -143,11 +143,10 @@ class MainContent extends Component {
           
           { name: "Download", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
           { type: "img", class: "Img-Midsize" },
-          { type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item" },
-
-          // { type: "attribute", name: "listedComponents", class: "DR-Attribute-Item Ellipsis-Text" },
-          // { name: "See More", class: "DR-Attribute-Item .Button-Type1 a", hasLink: true, to: "/purchase/" },
           { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
+          { type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item" },
+          { type: "richReader", name:"promotional", class:"Ellipsis-Text"},
+          
           { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/purchase/" },
 
         ]} />

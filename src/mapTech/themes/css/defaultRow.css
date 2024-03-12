@@ -67,6 +67,7 @@
   font-size: 1.1rem;
   padding: 6px 18px;
   margin-bottom: 11px;
+  margin-top: 18px;
   width: fit-content;
   cursor: pointer;
 }
@@ -115,10 +116,18 @@
 }
 
 .Publisher {
-  width: 100%;
+  width: 102.5%;
+  padding-right: 3px;
+  margin-right: -10px;
+  margin-left: -8px;
+  height: fit-content;
+  font-size: 1.1rem;
   opacity: 90%;
-  margin-top: -11px;
-  color:  #e8d259
+  text-align: right;
+  color:  #e8d259;
+  margin-top: -10px;
+  border-radius: 0%;
+  background-color: #0f141cf5;
 }
 
 /* Add specific styles for each item type if needed */

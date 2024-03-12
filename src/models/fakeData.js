@@ -3,9 +3,9 @@
 let json=[
   {
     type:"mpItem",
-    name: "LOZ TOTK",
+    title: "Loztotetc",
     description: "asdf",
-    promotional: "this is cool",
+    promotional: "Embark on an unparalleled journey through Loztotetc, a realm where the veils between dimensions grow thin and the ancient magic breathes life into the unimaginable. In this 3.5 campaign, heroes are not born; they are forged in the crucible of destiny, amidst the ruins of civilizations that defy time and the machinations of deities playing at the edges of reality. Navigate the intricate politics of the Skyborne Isles, delve into the secrets of the Underdepths, and stand against the Twilight Court in a quest that will redefine the boundaries of power and sacrifice. Loztotetc awaits those brave enough to rewrite their fates. Will you rise as its next legend?",
     price:"$20", publisher:"Nentindo Corp.",
     stripePrice:"2000",
     listedComponents: "4 maps\n  8 battlemaps\n  10 magic items\n  12 images\n  and more!",
@@ -17,7 +17,7 @@ let json=[
 
 {
   type:"mpItem",
-  name: "Phandalin's Face",
+  title: "Phandalin's Face",
   description: "asdfg",   promotional: "Uncover the secrets of Phandalin and the lost mine. Face dangerous foes, delve into ancient ruins, and form alliances.",
   price:"$20", realizedPrice:"$14.95",
   topDisplay:true, publisher:"Wiz of da Coast",
@@ -28,7 +28,7 @@ let json=[
 
 {
   type:"mpItem",
-  name: "The Curse of Strahd",
+  title: "The Curse of Strahd",
   description: "asdfgh",    promotional: "Adventurers are mysteriously drawn to the realm of Barovia which is surrounded by deadly fog and ruled by the vampire wizard Strahd von Zarovich. This gothic horror adventure takes the players on a course through Barovia that culminates with a vampire hunt inside Castle Ravenloft.",
   price:"$49.99",
   topDisplay:true, publisher:"Wizards of the Coast",
@@ -38,7 +38,7 @@ let json=[
 },
 {
   type:"mpItem",
-  name: "fake3",
+  title: "fake3",
   description: "asdf",    promotional: "this is cool",
   price:"$20", publisher:"Arcane Vault Assembly",
   topDisplay:true,
@@ -48,7 +48,7 @@ let json=[
 },
 {
 type:"mpItem",
-name: "fake1",
+title: "fake1",
 description: "asdfg",    promotional: "this is cool",
 price:"$20", publisher:"Arcane Vault Assembly",
 topDisplay:true,
@@ -57,7 +57,7 @@ picURL:"https://www.dndbeyond.com/avatars/thumbnails/28079/774/1000/1000/6379618
 },
 {
 type:"mpItem",
-name: "fake2",  publisher:"Arcane Vault Assembly",
+title: "fake2",  publisher:"Arcane Vault Assembly",
 description: "asdfgh",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -66,7 +66,7 @@ picURL:"https://www.dndbeyond.com/avatars/thumbnails/10836/994/1000/1000/6372663
 },
 {
   type:"mpItem",
-  name: "fake2",  publisher:"Arcane Vault Assembly",
+  title: "fake2",  publisher:"Arcane Vault Assembly",
   description: "asdfgh",    promotional: "this is cool",
   price:"$20",
   topDisplay:true,
@@ -75,7 +75,7 @@ picURL:"https://www.dndbeyond.com/avatars/thumbnails/10836/994/1000/1000/6372663
   },
 {
 type:"mpItem",
-name: "fake1",  publisher:"Arcane Vault Assembly",
+title: "fake1",  publisher:"Arcane Vault Assembly",
 description: "asdfg",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -85,7 +85,7 @@ picURL:"https://www.dndbeyond.com/avatars/thumbnails/10836/994/1000/1000/6372663
 },
 {
 type:"mpItem",
-name: "fake2",  publisher:"Arcane Vault Assembly",
+title: "fake2",  publisher:"Arcane Vault Assembly",
 description: "asdfgh",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -93,7 +93,7 @@ _id: "9"
 },
 {
   type:"mpItem",
-  name: "fake",
+  title: "fake",
   description: "asdf",    promotional: "this is cool",
   price:"$20",
   topDisplay:true,
@@ -101,7 +101,7 @@ _id: "9"
 },
 {
 type:"mpItem",
-name: "fake1",
+title: "fake1",
 description: "asdfg",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -109,7 +109,7 @@ _id: "11"
 },
 {
 type:"mpItem",
-name: "fake2",
+title: "fake2",
 description: "asdfgh",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -119,7 +119,7 @@ owner:"taylormdavidson@gmail.com"
 },
 {
   type:"mpItem",
-  name: "fake",
+  title: "fake",
   description: "asdf",    promotional: "this is cool",
   price:"$20",
   topDisplay:true,
@@ -128,7 +128,7 @@ owner:"taylormdavidson@gmail.com"
 },
 {
 type:"mpItem",
-name: "fake1",
+title: "fake1",
 description: "asdfg",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -136,14 +136,14 @@ _id: "14"
 },
 {
 type:"mpItem",
-name: "fake2",
+title: "fake2",
 description: "asdfgh",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
 _id: "15"
 },{
   type:"mpItem",
-  name: "fake",
+  title: "fake",
   description: "asdf",    promotional: "this is cool",
   price:"$20",
   topDisplay:true,
@@ -153,7 +153,7 @@ _id: "15"
 },
 {
 type:"mpItem",
-name: "fake1",
+title: "fake1",
 description: "asdfg",    promotional: "this is cool",
 price:"$20",
 topDisplay:true,
@@ -162,7 +162,7 @@ picURL:"https://media.dndbeyond.com/compendium-images/gotg/YGa7uVZhrRWLTUnV/map-
 },
 {
 type:"mpItem",
-name: "fake2",
+title: "fake2",
 description: "asdfgh",    promotional: "Uncover the secrets of Phandalin and the lost mine. Face dangerous foes, delve into ancient ruins, and form alliances.",
 price:"$20",
 topDisplay:true,
@@ -174,35 +174,35 @@ picURL:"https://media.dndbeyond.com/compendium-images/gotg/YGa7uVZhrRWLTUnV/map-
 
 {
   type:"mpItem",
-  name: "fake1 map",
+  title: "fake1 map",
   description: "asdfg",
   topDisplayID:"1",
   _id: "22"
   },
   {
     type:"mpItem",
-    name: "fake2 image",
+    title: "fake2 image",
     description: "asdfgh",
     topDisplayID:"1",
     _id: "23"
     },
     {
       type:"mpItem",
-      name: "fake2",
+      title: "fake2",
       description: "asdfgh",
       topDisplayID:"1",
       _id: "234234"
       },
       {
         type:"mpItem",
-        name: "fake2",
+        title: "fake2",
         description: "asdfgh",
         topDisplayID:"1",
         _id: "24"
         },
         {
           type:"mpItem",
-          name: "fake2",
+          title: "fake2",
           description: "asdfgh",
           topDisplayID:"1",
 
