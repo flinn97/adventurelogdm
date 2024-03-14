@@ -1407,7 +1407,7 @@ class TabContent extends Component {
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
 
-        <div style={{ ...styles.buttons.buttonClose }}
+        <div style={{ ...styles.buttons.buttonClose,  }}
           onClick={this.props.handleClose}
         >
           X
@@ -1451,7 +1451,7 @@ class Popup extends Component {
 
 
 
-          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
+          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: 32 }}
             onClick={this.props.handleClose}>X</div>
 
           <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>

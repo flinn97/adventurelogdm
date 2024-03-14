@@ -211,7 +211,7 @@ class Popup extends Component {
         zIndex:"22", padding:"8px", borderRadius:"11px", color:styles.colors.color3,
         background:styles.colors.color1+"e2"}}> Add Media</div>
 
-          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
+          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: 32 }}
             onClick={this.props.handleClose}>X</div>
 
           <div className='scroller2' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"], marginTop:"22px", }}>
