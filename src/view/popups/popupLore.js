@@ -1152,7 +1152,7 @@ class MainContent extends Component {
                   }}
                   title={"Find pre-made Lore from Library"}
                   style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
-                  Use Lore in Library
+                  Add-On From Library
                 </div>
               </div>
 
