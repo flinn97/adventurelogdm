@@ -91,7 +91,7 @@ class RunButton extends Component {
                 width:"100%", backgroundColor:styles.colors.color2+"99",}}
             className={this.props.wrapperClass}>
                 <div 
-                //TAYLOR
+
                     style={this.props.buttonTextStyle? {...this.props.buttonTextStyle} : theme !== undefined ? theme.buttonTextStyle : {}}
                     
                     >

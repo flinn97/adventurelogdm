@@ -362,7 +362,7 @@ export default class LoreViewer extends Component {
             <div className='hover-btn' style={{
               ...styles.buttons.buttonAdd,
               display: "inline-block", height: "fit-content",
-              maxWidth: "fit-content", cursor: "pointer",
+              maxWidth: "fit-content", cursor: "pointer", marginTop: "24px",
               marginRight: "1rem", position: "relative", fontWeight: "600",
               fontSize: styles.fonts.fontSmall
             }}

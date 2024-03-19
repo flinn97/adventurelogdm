@@ -91,19 +91,10 @@ export default class LibraryLoreSearch extends Component {
                     <div className="hover-img" key={index}
                       onClick={async () => {
 
-                        let pin = state.currentPin;
-
-                        let l = state.currentLore;
-                        if (!l) {
-                          l = state.currentCampaign
-                        }
-                        await this.linkLore(item, l, lore, pin)
-
-                        this.setState({ hasChoice: "New" });
-                        this.props.app.dispatch({ currentComponent: lore, popupSwitch: "" });
-
+                       
                         //TAYLOR what do we want to do here? Copy lore or Connect Existing??
                         //will this edit the library if we connect here? should we copy the lore instead?
+                        // we can pull in a lore but we need the MAPS, ENCOUNTERS, and other  connected LORE pulled in as well.
 
                       }}
                       style={{ cursor: "pointer", }}>
