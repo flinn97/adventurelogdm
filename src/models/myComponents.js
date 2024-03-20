@@ -525,6 +525,7 @@ class Approval extends componentBase{
         tags:"",
         type: "approval",
         gameSystem: "",
+        indexes: {},
         readyForDistribution:false
     }
 
@@ -534,15 +535,46 @@ class Approval extends componentBase{
 
     }
 
-    async getPicSrcMedia(path){
+    deleteByIndex(index){
+        let id = this.json.indexes["index"+index];
+        let obj ={};
+        for(let key in this.json.picURLs){
+            if(key!==id){
+                obj[key]=this.json.picURLs[key];
+            }
+
+        }
+        this.json.picURLs = obj;
+        let indexes= {}
         
-        let obj={}
+        for(let key in this.json.indexes){
+            let i = key[key.length - 1];
+            if(parseInt(i)>parseInt(index)){
+                let str = "index"+(parseInt(i)-1);
+                indexes[str]=this.json.indexes[key];
+            }
+            else if(parseInt(i)!==parseInt(index)){
+                indexes[key] = this.json.indexes[key];
+            }
+        }
+        this.json.indexes=indexes
+
+    }
+
+    async getPicSrcMedia(path, index){
+        
+        let obj={};
+        let indexes = {}
         for(const key in path){
             let pic = await auth.downloadPics(path[key]);
-            obj["media"+this.createUUID(3)]= pic;
+            let id = "media"+this.createUUID(3)
+            obj[id]= pic;
+            indexes["index"+index] = id;
+
         }
         obj = {...obj, ...this.json.picURLs}
-
+        indexes= {...indexes, ...this.json.indexes};
+        this.json.indexes = indexes
         
         this.json.picURLs = obj
         

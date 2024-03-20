@@ -1139,6 +1139,7 @@ class MainContent extends Component {
                   Move or Connect Existing Lore
                 </div>
 
+                {/* DISABLE FOR NOW 
                 <div className='hover-btn'
                   onClick={async () => {
                     this.setState({ hasChoice: "fromLibrary" });
@@ -1153,7 +1154,7 @@ class MainContent extends Component {
                   title={"Find pre-made Lore from Library"}
                   style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
                   Add-On From Library
-                </div>
+                </div> */}
               </div>
 
             </div>

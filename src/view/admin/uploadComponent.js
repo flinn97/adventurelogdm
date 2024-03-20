@@ -21,7 +21,8 @@ class UploadComponent extends Component {
             loading:false,
             name: "",
             type: "monster",
-            delList:[]
+            delList:[],
+            uploaded: [],
 
 
         };
@@ -94,7 +95,7 @@ class UploadComponent extends Component {
       
 	};
     async handleSubmission()  {
-      
+      debugger
         let component = this.props.obj? this.props.obj: this.props.app.state.currentComponent
         if(this.state.newPics.length===0 && this.state.list.length===0){
             this.setState({message:"You still need to upload an image."})
@@ -110,14 +111,18 @@ class UploadComponent extends Component {
         await this.setState({loading:true});
         let list = [...this.state.newPics];
         for(const key in list){
+
             await auth.uploadPicsWithoutCompression(list[key], this.state.paths[key]);
+            
 
         }
+        
        
 
         
         //check
-        await component.getPicSrcMedia([...this.state.paths]);
+        await component.getPicSrcMedia([...this.state.paths], this.state.list?.length-1);
+        this.setState({newPics:[], paths:[]})
 
         // if(this.props.app.state.uploadKey==="update"){
         //     let li = Object.values(component.getJson().picURLs);
@@ -222,6 +227,7 @@ class UploadComponent extends Component {
                                                 </div>  
 
                     <ViewMedia removeMedia={(obj)=>{
+                        debugger
                         
                         let list = [...this.state.list];
                         let paths =[...this.state.paths];
@@ -233,6 +239,8 @@ class UploadComponent extends Component {
                         newPics.splice(obj.index, 1);
 
                         this.setState({list:list, delList:delList, paths:paths, newPics:newPics});
+                        debugger
+                        this.props.obj.deleteByIndex(obj.index);
                        
                     }} editable={true} media={[...this.state.list]} 
                     scale={1}

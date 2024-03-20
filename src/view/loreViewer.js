@@ -104,6 +104,11 @@ export default class LoreViewer extends Component {
     if (this.props.app.state.currentLore !== props.app.state.currentLore) {
       this.componentDidMount();
     }
+
+    if(this.props.app.state.viewMap!==props.app.state.viewMap && this.props.app.state.viewMap!==undefined){
+      this.setState({map:this.props.app.state.viewMap, currentMap:this.props.app.state.viewMap})
+
+    }
   }
 
   toggleSidebar = () => {

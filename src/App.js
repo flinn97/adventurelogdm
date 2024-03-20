@@ -64,6 +64,7 @@ export default class App extends Component {
       myswitch: "home",
       defaultTheme: "adventure",
       globalTheme: "",
+      viewMap:undefined,
 
       //THIS IS THE NAV MENU
       switchCase:[

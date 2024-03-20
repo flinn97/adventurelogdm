@@ -335,18 +335,15 @@ export default class Dispatch extends Component {
 
           <Route path="/register/" element={<Register app={app} />} />
           <Route path="/playerregister/" element={<PlayerRegister app={app} />} />
-          {/* //ISAAC UI */}
 
           <Route path="/login/" element={<Login app={app} />} />
           <Route path="/" element={<Login app={app} />} />
 
           <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
-          {/* //ISAAC UI */}
         </Routes>
         {(state.user !== undefined && !state.user?.getJson()?.paidCustomer && state.user?.getJson().role === "GM") && (!window.location.href.includes("paymentprocessing")) && (
           <div style={{ width: "100%", height: "100%", position: "absolute", left: "0", top: "0", zIndex: 2800, background: "black" }}>
             <PaymentFailed app={app} />
-            {/* //ISAAC UI */}
           </div>
         )}
 
