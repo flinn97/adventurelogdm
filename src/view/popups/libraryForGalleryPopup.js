@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../../App.css"
+import auth from '../../services/auth';
 
 
 export default class LibraryForGalleryPopup extends Component {
@@ -74,7 +75,7 @@ class MainContent extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
    
-    let imageList = componentList.getList("image", "image", "type")
+    let imageList = componentList.getList("image")
     let list =[];
     let filteredImgList = []
     for(let image of imageList){
@@ -96,7 +97,15 @@ class MainContent extends Component {
        
        
 <div style={{width:"100%", minHeight:"200px", }}>
+<div className='hover-btn' style={{...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "2vh",
+                        marginTop: "1vh", alignSelf: "center", padding: "1%", color:styles.colors.color9}} onClick={async ()=>{
+              debugger
+              let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
+              if(images){
+                dispatch({});
+              }
 
+            }}>Import Library</div>
 
         <div className="image-grid" style={{display:"flex", justifyContent:"center", 
                   flexDirection:"row", justifyItems:"space-around", flexWrap:"wrap", marginTop:"55px",
@@ -129,6 +138,7 @@ class MainContent extends Component {
               }
               
             </div>
+            
 
             
       </div>
@@ -201,7 +211,7 @@ class Popup extends Component {
         zIndex:"22", padding:"8px", borderRadius:"11px", color:styles.colors.color3,
         background:styles.colors.color1+"e2"}}> Add Media</div>
 
-          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
+          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: 32 }}
             onClick={this.props.handleClose}>X</div>
 
           <div className='scroller2' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"], marginTop:"22px", }}>

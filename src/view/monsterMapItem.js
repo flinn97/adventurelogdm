@@ -396,7 +396,7 @@ export default class MonsterMapItem extends Component {
                     justifyContent: "center",
                     flexDirection: "column",
                     textAlign: "center",
-                    marginRight: "1vw",
+                    marginright: 32,
                   }}
                 >
                   <div style={{

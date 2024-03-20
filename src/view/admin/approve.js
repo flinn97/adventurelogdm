@@ -1,11 +1,5 @@
 import { Component } from 'react';
-import App from '../../App';
-import HomeCard from '../pages/homeCard';
-import CampaignCard from '../pages/campaignCard';
-import NoteCard from '../pages/noteCard';
-import MarketCard from '../pages/marketCard';
-import LibraryCard from '../libraryCard';
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+
 import auth from '../../services/auth';
 
 
@@ -29,7 +23,7 @@ export default class Approve extends Component {
     return (
      
       <div style={{marginLeft:"100px"}} onClick={async()=>{
-        debugger
+        
         let approval = this.props.obj
         let email = approval.getJson().owner
         let user = await state.componentList.getComponent("user", email, "_id")

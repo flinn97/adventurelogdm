@@ -96,11 +96,11 @@ export default class QuillForm extends Component {
   }
 
 
-  setLoreLink(loreName) {
+  async setLoreLink(loreName) {
     let id = toolService.getIdFromURL(true, 0);
-    let lore = this.props.app.state.componentList.getComponent("lore", loreName, "name");
-    let newid = lore.getJson()._id;
- if (id !== "notes"){
+    let lore = await this.props.app.state.componentList.getComponent("lore", loreName, "name");
+    let newid = await lore.getJson()._id;
+ if (this.props.connectLore){
     const loreLink = `/campaign/` + id + '-' + newid;
     return `<a href="${loreLink}" >${loreName}</a>`;
   }else{

@@ -8,33 +8,25 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import CampaignEditor from './view/campaignEditor';
 import Worldbuilder from './view/worldBuilder';
 import EncounterManager from './view/pages/encounterManager';
-import AddEncounter from './view/AddEncounter';
 import Encounter from './view/encounter';
 import Nav from './componentListNPM/navTech/nav';
-import Background from './pics/back1.png'
 import Login from './view/login';
 import PopupDelete from './view/popups/popupDelete';
 import PopupLore from './view/popups/popupLore';
 import ViewPic from './view/popups/viewPic';
-import AdventureLogPage from './view/pages/adventureLogPage';
 import ConnectToCampaign from './view/popups/connectToCampaign';
 import AdventureLog from './view/pages/adventureLog';
-import AddParticipant from './view/AddParticipant';
 import AddPlayerCharacter from './view/popups/addPlayerCharacter';
 import ViewPlayerList from './view/popups/viewPlayerList';
 import Register from './view/register';
 import Campaign from './view/pages/campaign';
-import ApprovalPopup from './view/approvalPopup';
-import ApprovalPage from './view/pages/apprroval';
 import AdminUser from './view/admin/adminUser';
 import AdminPartner from './view/admin/adminPartner';
 import AdminRequests from './view/admin/adminRequests';
 import AdminSubmission from './view/admin/adminSubmissions';
 import logo from "./pics/logoava2.png"
-import AdventureLogPageWrapper from './view/pages/adventurePageWrapper';
 import SplashScreen from './view/pages/splashScreen';
 import LibraryForGalleryPopup from './view/popups/libraryForGalleryPopup';
-import auth from './services/auth';
 import AfterPayment from './view/afterPayment';
 import PaymentFailed from './view/paymentFailed';
 import PlayerRegister from './view/playerRegister';
@@ -42,6 +34,7 @@ import PartnerCampaign from './view/admin/partnerCampaigns';
 
 import backarrow from '../src/pics/backArrow.webp'
 import ApprovalProposal from './view/admin/approvalProposal';
+import PopupExtendedMapSelector from './view/popups/popupExtendedMapGallery';
 
 //model
 export default class Dispatch extends Component {
@@ -94,7 +87,7 @@ export default class Dispatch extends Component {
               <div className={window.innerWidth > 800 ? 'scroller2' : ""} style={{
                 width: "100%", overflow: "scroll",
                 minWidth: "100%", userSelect: "none", height: "100vh",
-              display: "flex", flexDirection: "column",
+                display: "flex", flexDirection: "column",
               }}>
 
 
@@ -107,23 +100,25 @@ export default class Dispatch extends Component {
 
                   ) : (
                     <>
-                    {window.location.href.includes("log") && (<>
-                    <div style={{ width: "100vw", height: "52px", background:styles.colors.color2, display: "flex", 
-                    position:"absolute",
-                    justifyContent: "space-between", alignItems: "center", fontSize: "1.1rem", }}>
-                     
-                      <Link to={"/"} style={{display:"flex", flexDirection:"row",}}>
-                        <img src={backarrow} style={{height:"16px", marginLeft:"18px", marginRight:"11px"}}/>
+                      {window.location.href.includes("log") && (<>
                         <div style={{
-                          width: "", borderRadius: "11px", cursor: "pointer",
-                          textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
-                        }}>Back</div>
-                      </Link>
-                      
-                    </div>
-                    
-                    </>)
-                    }
+                          width: "100vw", height: "52px", background: styles.colors.color2, display: "flex",
+                          position: "absolute",
+                          justifyContent: "space-between", alignItems: "center", fontSize: "1.1rem",
+                        }}>
+
+                          <Link to={"/"} style={{ display: "flex", flexDirection: "row", }}>
+                            <img src={backarrow} style={{ height: "16px", marginLeft: "18px", marginRight: "11px" }} />
+                            <div style={{
+                              width: "", borderRadius: "11px", cursor: "pointer",
+                              textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
+                            }}>Back</div>
+                          </Link>
+
+                        </div>
+
+                      </>)
+                      }
                     </>
                   )}
                   {/* </div>)  */}
@@ -181,7 +176,7 @@ export default class Dispatch extends Component {
                     {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type === "monster" &&
                       <ConnectToCampaign
 
-                        type="popup" options={{ cardType: (window.innerWidth > 800)?"popupSmallSolid":"popupLarge" }} app={app} containerStyle={{ background: styles.colors.color2 }} 
+                        type="popup" options={{ cardType: (window.innerWidth > 800) ? "popupSmallSolid" : "popupLarge" }} app={app} containerStyle={{ background: styles.colors.color2 }}
                         theme="adventure"
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
@@ -191,7 +186,7 @@ export default class Dispatch extends Component {
 
                       <AddPlayerCharacter
 
-                        type="popup" options={{ cardType: (window.innerWidth > 800)?"popupCreate":"popupLarge"}} app={app}
+                        type="popup" options={{ cardType: (window.innerWidth > 800) ? "popupCreate" : "popupLarge" }} app={app}
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
 
                       />
@@ -250,6 +245,28 @@ export default class Dispatch extends Component {
                         }}
                       />}
 
+                    {state.popupSwitch === "chooseMap"
+                      &&
+                      <PopupExtendedMapSelector
+                        uploader={state.mapUpload}
+
+                        type="popup" options={{ cardType: "popupMedium" }} app={app}
+                        containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
+                        handleClose={() => {
+                          app.dispatch({
+                            popupSwitch: "", currentDelObj: undefined,
+                            currentComponent: undefined, currentPin: undefined
+                          });
+                          state.opps.clearUpdater();
+                        }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => {
+                          app.dispatch({
+                            popupSwitch: "",
+                            currentDelObj: undefined,
+                          })
+                        }}
+                      />}
+
                     {state.user.getJson().role !== "GM" ? (
 
                       <Routes>
@@ -279,6 +296,7 @@ export default class Dispatch extends Component {
                         <Route path="/campaign/" element={<Campaign app={app} />} />
 
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
+                        {/* <Route path="/library/:id" element={<CampaignEditor app={app} />} /> */}
                         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
                         <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
                         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
@@ -287,13 +305,13 @@ export default class Dispatch extends Component {
                         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
 
-                        <Route path="/admin/users" element={<AdminUser app={app}/>}/>
-        <Route path="/admin/partners" element={<AdminPartner app={app}/>}/>
-        <Route path="/admin/requests" element={<AdminRequests app={app}/>}/>
-        <Route path="/admin/submissions" element={<AdminSubmission app={app}/>}/>
-        
-        <Route path="/partner/:id" element={<PartnerCampaign app={app}/>}/>
-        <Route path="/sendtomarketplace/:id" element={<ApprovalProposal app={app}/>}/>
+                        <Route path="/admin/users" element={<AdminUser app={app} />} />
+                        <Route path="/admin/partners" element={<AdminPartner app={app} />} />
+                        <Route path="/admin/requests" element={<AdminRequests app={app} />} />
+                        <Route path="/admin/submissions" element={<AdminSubmission app={app} />} />
+
+                        <Route path="/partner/:id" element={<PartnerCampaign app={app} />} />
+                        <Route path="/sendtomarketplace/:id" element={<ApprovalProposal app={app} />} />
 
                       </Routes>)}
 

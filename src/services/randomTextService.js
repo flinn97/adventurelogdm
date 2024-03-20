@@ -6,8 +6,17 @@ class RandomTextService {
 
     
     pickName() {
-        let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Undead Druid", "Anxious Warrior", "Barbalang", 
+        let names =["Adult Blue Dragon", "Pterodactyl", "Slothking Druid", "Undead Druid", "Anxious Warrior", "Barlgang Ape", "Northchop Orc",
         "Violinist Devil", "Hedgehog Demon", "Sir Dante Rabbitlord", "Duke Dean", "Clifford the Floofy Giant"];
+        let randomNumber = Math.floor(Math.random() * (names.length));
+        let chosenName = names[randomNumber];
+  
+        return chosenName;
+  
+      };
+
+      pickTag() {
+        let names =["dungeon","tavern","chromatic dragon","halloween","one-shot","map pack","orcs","illustration","snow","spells","feywild","druid"];
         let randomNumber = Math.floor(Math.random() * (names.length));
         let chosenName = names[randomNumber];
   

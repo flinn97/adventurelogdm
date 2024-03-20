@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import "../../App.css"
 import CampaignCard from './campaignCard';
 import NoteCard from './noteCard';
-import LibraryCard from '../libraryCard';
-import MarketCard from './marketCard';
 import logo from '../../pics/logo.png'
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import ConnectToCampaignButton from '../connectToCampaignbutton';

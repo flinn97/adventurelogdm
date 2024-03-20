@@ -1,0 +1,254 @@
+.DR-Map-Container {
+  display: flex;
+  font-family: "inria";
+  flex-direction: row;
+  /* Switched to row layout */
+  width: 100%;
+  max-width: 68vw;
+  height: 100%;
+  flex-wrap: wrap; 
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+
+.DR-Map-Section {
+  display: flex;
+  font-family: "inria";
+  flex-direction: column;
+  /* Switched to column layout */
+  align-items: center;
+  margin: 12px;
+  justify-content: space-evenly;
+  background: linear-gradient(#e6646500, #b0c9df09);
+  position: relative;
+  
+  width: 340px;
+  max-height: fit-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Box shadow */
+  border-radius: 10px;
+  /* Border radius */
+}
+
+.DR-Map-Section:hover {
+  background: linear-gradient(#b0c9df09, #b0c9df0e);
+
+}
+
+/* General styling for all items */
+.DR-Link,
+.DR-Cell,
+.DR-Custom-Del-Item,
+.DR-Del-Item,
+.DR-Del-imgItem,
+.DR-Custom-Edit-Item,
+.DR-Edit-imgItem,
+.DR-Edit-Item,
+.DR-Attribute-Item,
+.DR-imgItem,
+.DR-Text-Item {
+  width: 100%;
+  border-radius: 11px;
+  margin: 5px;
+  /* background-color: #16161605; */
+  font-family: "inria";
+  user-select: none;
+  font-size: 1.1rem;
+}
+
+.DR-Cell{
+  display: flex;
+}
+
+.DR-Link, .Button-Type1 {
+  background: #e8d259;
+  color: "#111319";
+  font-size: 1.1rem;
+  padding: 6px 18px;
+  margin-bottom: 11px;
+  margin-top: 18px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.Button-Type2 {
+  background: #0f141cf5;
+  color: #ffffdf;
+  padding: 6px 10px;
+  margin: 5px;
+  margin-bottom: 11px;
+  cursor: pointer;
+  display: flex;
+  align-self: end;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 9px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  justify-items: center;
+  font-family: 'inria';
+  justify-self: flex-end;
+}
+
+/* .DR-Link:hover {
+  box-shadow: inset 2px 2px black;
+  transform: scale(0.98);
+  color: "#111319";
+} */
+
+.DR-Link:hover{
+  transform: scale(0.98);
+  box-shadow: inset 2px 2px #00000055, inset -2px -2px  #ffffff55;
+  color: "#111319";
+}
+
+.Button-Type1:hover,.Button-Type2:hover{
+  transform: scale(0.98);
+  color: "#111319";
+}
+
+
+.a {
+  color: #000;
+  cursor: pointer;
+}
+
+.Publisher {
+  width: 102.5%;
+  padding-right: 3px;
+  margin-right: -10px;
+  margin-left: -8px;
+  height: fit-content;
+  font-size: 1.1rem;
+  opacity: 90%;
+  text-align: right;
+  color:  #e8d259;
+  margin-top: -10px;
+  border-radius: 0%;
+  background-color: #0f141cf5;
+}
+
+/* Add specific styles for each item type if needed */
+.DR-Link {
+  text-decoration: none;
+  cursor: pointer;
+  color: rgb(190, 221, 226);
+}
+
+.DR-Custom-Del-Item,
+.DR-Del-Item,
+.DR-Del-imgItem {
+  color: #dc3545;
+  cursor: pointer;
+  position: absolute;
+  padding: 0px;
+  right: 3px;
+  top: 3px;
+}
+
+.DR-imgItem {
+  width: 100px;
+  border-radius: 15px;
+  min-width: 100px;
+}
+
+.DR-hover-shimmer {
+  top: 15px;
+  position: absolute;
+  border: 1px solid #1E90FF00;
+  right: 0px;
+  opacity: 92%;
+  overflow: hidden;
+}
+
+.DR-hover-shimmer:hover {
+  position: absolute;
+  opacity: 98%;
+  border: 1px solid #1E90FF;
+  box-shadow: inset 2px 2px 4px #000000, inset -2px -2px 4px #ffffff55;
+}
+
+.DR-hover-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start from the left */
+  width: 100%; /* Full width of the parent */
+  height: 100%; /* Full height of the parent */
+  background: linear-gradient(90deg, transparent, rgba(52, 55, 73, 0.4), transparent);
+  animation: none; /* No animation by default */
+  opacity: 0; /* Make it invisible by default */
+  transition: opacity 0.5s ease; /* Smooth transition for the shimmer effect */
+  mix-blend-mode: lighten;
+}
+
+.DR-hover-shimmer:hover::before {
+  animation: shimmer 8s infinite; /* Adjust time as needed */
+  opacity: 1; /* Make the shimmer visible on hover */
+}
+
+@keyframes shimmer {
+  0% {
+    left: -580%; /* Start from the left */
+  }
+  50% {
+    left: 980%; /* Move to the right */
+  }
+  100% {
+    left: -100%; /* Return to start */
+  }
+}
+
+.DR-Custom-Edit-Item,
+.DR-Edit-imgItem,
+.DR-Edit-Item {
+  color: #ffc107;
+  background-color: none;
+  cursor: pointer;
+  position: absolute;
+  padding: 0px;
+  left: 3px;
+  top: 3px;
+}
+
+.Bold-Title {
+  font-weight: 600;
+  font-size: 1.3rem;
+  text-align: left;
+  width: 100%;
+  color: aliceblue;
+  text-overflow: ellipsis;
+}
+
+.Ellipsis-Text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ color: rgb(190, 221, 226);
+  hyphens: auto;
+  max-width: 330px;
+  min-height: 5.5rem;
+  max-height: 5.5rem;
+  padding: 8px;
+  font-size: 1.1rem;
+  text-align: justify;
+}
+
+
+.Img-Midsize {
+  width: 100%;
+  max-height: 200px;
+  min-height: 200px;
+  border-radius: 11px;
+  object-fit: cover;
+}
+
+.Img-Large {
+  width: 80vw;
+  max-height: 400px;
+  min-height: 400px;
+  border-radius: 11px;
+  object-fit: cover;
+}
