@@ -92,7 +92,7 @@ class MainContent extends Component {
     let campaign = await auth.firebaseGetter(mpItem.getJson().campaignId, this.props.app.state.componentList, "_id", "campaign", false );
     let requestBody = {
       email: this.props.app.state.user.getJson()._id,
-      lore: {...campaign[0].getJson()}
+      lore: {...campaign[0].getJson(), mptype:mpItem.getJson().mptype}
   };
   requestBody=await JSON.stringify(requestBody)
 

@@ -99,9 +99,23 @@ class MainContent extends Component{
             
 
           <div style={{minHeight:window.innerWidth > 800?"400px":"100px",}}>
-            <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]} 
+            <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]}
+            filter={{search:"campaign", attribute:"type"}} 
+            filterFunc={(obj)=>{
+              let returnVal = obj.getJson().mpType;
+              if(!returnVal){
+                return true;
+              }
+              if(returnVal===""){
+                return true;
+              }
+              if(returnVal==="mpCampaign"){
+                return true;
+              }
+              return false
+
+            }}
             theme={"selectByImage"}
-            //filter={{search: this.state.obj?.getJson().usage, attribute: "usage"}}
             //Sort by last clicked?
             />
           </div>
