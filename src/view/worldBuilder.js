@@ -142,7 +142,51 @@ export default class Worldbuilder extends Component {
     let compListLength = compList ? compList.length : 0;
 
 
-    let map = state.componentList.getComponent("map", this.props.topLore?.getJson()?._id, "loreId")
+    let map = state.componentList.getComponent("map", this.props.topLore?.getJson()?._id, "loreId");
+
+    const mapUpload = <MapUploader
+    //ADD THIS TO ALL UPLOADS//
+    changePic={async (pic, path) => {
+      let lore = this.state.lore;
+
+      let map = { picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: this.state.obj.getJson()._id, type: 'map' };
+      await state.opps.cleanJsonPrepare({ addmap: map });
+      map = await state.opps.getUpdater("add")[0];
+      await map.getPicSrc(path);
+
+
+
+      let colors = colorService.updateColors(pic, (palette) => {
+        this.setState({ colors: palette }, async () => {
+          let con = this.state.colors;
+          let list = Object.values(con);
+          await this.setState({ colors: list });
+
+          // Update lore colors
+          let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
+          let newAllColors = allColors.concat(list);
+          await lore.setCompState({ colors: newAllColors });
+          dispatch({
+            operate: "update", operation: "cleanPrepareRun", object: lore
+          })
+
+
+        });
+      });
+
+      state.opps.run();
+      this.setState({ map: map, currentMap: map })
+
+
+    }}
+    text="Add Map" 
+    title = "Large maps will take some time to load."
+    style={{
+      display: "flex", marginBottom: "20px",
+      zIndex: "1", background: "", cursor: "pointer"
+    }}
+    update={true} skipUpdate={true}
+    app={app} />;
 
     return (
 
@@ -155,49 +199,21 @@ export default class Worldbuilder extends Component {
 
         {
           (!map) &&
-          <MapUploader
-            //ADD THIS TO ALL UPLOADS//
-            changePic={async (pic, path) => {
-              let lore = this.state.lore;
-
-              let map = { picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: this.state.obj.getJson()._id, type: 'map' };
-              await state.opps.cleanJsonPrepare({ addmap: map });
-              map = await state.opps.getUpdater("add")[0];
-              await map.getPicSrc(path);
-
-
-
-              let colors = colorService.updateColors(pic, (palette) => {
-                this.setState({ colors: palette }, async () => {
-                  let con = this.state.colors;
-                  let list = Object.values(con);
-                  await this.setState({ colors: list });
-
-                  // Update lore colors
-                  let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
-                  let newAllColors = allColors.concat(list);
-                  await lore.setCompState({ colors: newAllColors });
-                  dispatch({
-                    operate: "update", operation: "cleanPrepareRun", object: lore
-                  })
-
-
-                });
-              });
-
-              state.opps.run();
-              this.setState({ map: map, currentMap: map })
-
-
-            }}
-            text="Add Map" 
-            title = "Large maps will take some time to load."
-            style={{
-              display: "flex", marginBottom: "20px",
-              zIndex: "1", background: "", cursor: "pointer"
-            }}
-            update={true} skipUpdate={true}
-            app={app} />}
+          <div>
+            <div className='hover-btn' style={{
+              ...styles.buttons.buttonAdd,
+              display: "inline-block", height: "fit-content",
+              maxWidth: "fit-content", cursor: "pointer", marginTop: "24px",
+              marginRight: "1rem", position: "relative", fontWeight: "600",
+              fontSize: styles.fonts.fontSmall
+            }} onClick={() => {
+                dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
+              }}>
+              Add Map
+              </div>
+          
+            
+            </div>}
 
         {/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}
 

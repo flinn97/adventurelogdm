@@ -6,7 +6,7 @@ import colorService from '../../services/colorService';
 import { MapComponent } from '../../mapTech/mapComponentInterface';
 import auth from '../../services/auth';
 
-export default class PopupExtendedMapSelector extends Component {
+export default class PopupExtendedLibrary extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,86 +103,20 @@ class MainContent extends Component {
     return (
       <div className='scroller2' style={{
         display: "flex", width: "62vw", flexDirection: "column", height: "100%", alignContent: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-between", color:styles.colors.colorWhite,
         paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
       }}>
+        Added to your library!
         <div style={{
           display: "flex", flexDirection: "column", position: 'relative',
           height: "100%", maxWidth: "100%", marginTop: "2px", marginBottom: "-140px"
         }}>
-          {/* THIS ISN't WORKING? */}
-
-          <MapUploader
-            //TAYLOR //
-            //Why is this not working//
-            changePic={async (pic, path) => {
-              debugger
-              let lore = state.currentLore;
-              let map = { picURL: pic, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
-              await state.opps.cleanJsonPrepare({ addmap: map });
-              map = await state.opps.getUpdater("add")[0];
-              await map.getPicSrc(path);
-              await state.opps.run();
-
-              let colors = colorService.updateColors(pic, (palette) => {
-                this.setState({ colors: palette }, async () => {
-                  let con = this.state.colors;
-                  let list = Object.values(con);
-                  await this.setState({ colors: list });
-
-                  // Update lore colors
-                  let allColors = await lore.getJson().colors || [];  // Initialize to empty array if undefined
-                  let newAllColors = allColors.concat(list);
-                  await lore.setCompState({ colors: newAllColors });
-                  await state.opp.cleanPrepareRun({ update: lore });
-
-
-                });
-              });
-
-
-              await dispatch({ viewMap: map, popupSwitch: "" });
-              this.setState({ map: map, currentMap: map });
-
-            }}
-            title="Large maps will take some time to load."
-            text="Upload a Map" style={{
-              display: "flex", marginBottom: "20px",
-              zIndex: "1", background: "", cursor: "pointer"
-            }}
-            update={true} skipUpdate={true}
-            app={app} />
-
-          {/* {state.mapUpload} 
-          I am initializing this, and this doesn't work either
-          */}
-          <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-end", width: "fit-content", height: "fit-content" }}>
-            <div style={{ color: styles.colors.color8, marginTop: "12px", fontSize: "1rem", }}>or</div>
-            <div style={{ color: styles.colors.colorWhite, marginTop: "12px", marginLeft: "13px", fontSize: "1.2rem" }}>Choose from Library:</div>
-          </div>
-        </div>
-
-
-
-
-        <div style={{ height: "fit-content", paddingTop: "135px", justifyContent: "flex-start" }}>
-          <hr></hr>
-          <div className='hover-btn' style={{
-            ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "12px", cursor: "pointer", zIndex: 200,
-            marginTop: "10px", alignSelf: "center", padding: "11px", color: styles.colors.color9
-          }} onClick={async () => {
-
-            let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
-            let maps = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "map")
-            dispatch({});
-
-
-          }}>Import Library</div>
           
-          <MapComponent theme="defaultRowWrap" app={app}
+          
+          {/* <MapComponent theme="defaultRowWrap" app={app}
             cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="map" />
           <MapComponent theme="defaultRowWrap" app={app}
-            cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="image" />
+            cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="image" /> */}
 
         </div>
       </div>

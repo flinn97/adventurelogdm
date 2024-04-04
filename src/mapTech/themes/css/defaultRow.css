@@ -137,6 +137,7 @@
   color: rgb(190, 221, 226);
 }
 
+
 .DR-Custom-Del-Item,
 .DR-Del-Item,
 .DR-Del-imgItem {
@@ -188,6 +189,7 @@
   animation: shimmer 8s infinite; /* Adjust time as needed */
   opacity: 1; /* Make the shimmer visible on hover */
 }
+
 
 @keyframes shimmer {
   0% {
@@ -252,3 +254,4 @@
   border-radius: 11px;
   object-fit: cover;
 }
+

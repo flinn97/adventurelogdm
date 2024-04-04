@@ -35,6 +35,7 @@ import PartnerCampaign from './view/admin/partnerCampaigns';
 import backarrow from '../src/pics/backArrow.webp'
 import ApprovalProposal from './view/admin/approvalProposal';
 import PopupExtendedMapSelector from './view/popups/popupExtendedMapGallery';
+import PopupExtendedLibrary from './view/popups/popupExtendedLibrary';
 
 //model
 export default class Dispatch extends Component {
@@ -248,6 +249,28 @@ export default class Dispatch extends Component {
                     {state.popupSwitch === "chooseMap"
                       &&
                       <PopupExtendedMapSelector
+                        uploader={state.mapUpload}
+
+                        type="popup" options={{ cardType: "popupMedium" }} app={app}
+                        containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
+                        handleClose={() => {
+                          app.dispatch({
+                            popupSwitch: "", currentDelObj: undefined,
+                            currentComponent: undefined, currentPin: undefined
+                          });
+                          state.opps.clearUpdater();
+                        }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => {
+                          app.dispatch({
+                            popupSwitch: "",
+                            currentDelObj: undefined,
+                          })
+                        }}
+                      />}
+
+                    {state.popupSwitch === "downloadLibrary"
+                      &&
+                      <PopupExtendedLibrary
                         uploader={state.mapUpload}
 
                         type="popup" options={{ cardType: "popupMedium" }} app={app}

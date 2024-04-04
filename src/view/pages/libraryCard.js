@@ -114,6 +114,10 @@ class MainContent extends Component {
   .catch(error => {
       console.error('Error:', error);
   });
+
+  let app = this.props.app;
+  let dispatch = app.dispatch;
+  dispatch({ popupSwitch: "downloadLibrary"})
   }
 
 
