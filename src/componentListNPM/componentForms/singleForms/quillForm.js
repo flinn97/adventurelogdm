@@ -19,16 +19,50 @@ export default class QuillForm extends Component {
     this.setLoreLink = this.setLoreLink.bind(this);
     this.ensureProtocol = this.ensureProtocol.bind(this);
     this.newLoreLink = this.newLoreLink.bind(this);
+    this.updateCampaignLinks= this.updateCampaignLinks.bind(this);
   }
 
+updateCampaignLinks(text) {
+  let app = this.props.app;
+  let state = app.state;
+  let componentList = state.componentList;
+  let campaignId = toolService.getIdFromURL(true, 0);
+    // Define the regular expression pattern to find links containing "/campaign/"
+    var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_blank")?/g;
+
+    // Use String.prototype.replace() to find and replace links
+    var updatedText = text.replace(pattern, function(match, p1) {
+      debugger
+        // Extract the number from the URL
+        var number;
+        let id = p1.split("-")[1];
+        let obj = componentList.getComponent("lore", id, "ogRef");
+        number = obj.getJson()._id; 
+        
+        // Perform additional operations with the extracted number if needed
+
+        // Return the updated link
+        return '<a href="/campaign/' + campaignId + '-' + number + '"';
+    });
+
+    return updatedText;
+}
 
 
   async componentDidMount() {
+    let obj = this.props?.obj[0];
+
     if (this.props.value) {
-      this.setState({ value: this.props.value });
+
+      let val = this.props.value;
+      if(obj?.getJson().ogRef!=="" &&obj?.getJson().ogRef!==undefined&&obj?.getJson().type==="lore"){
+        val = this.updateCampaignLinks(val);
+      }
+
+
+      this.setState({ value: val });
     }
 
-    let obj = this.props?.obj;
     let app = this.props?.app;
     let state = await app?.state;
     let dispatch = app.dispatch;
@@ -86,13 +120,13 @@ export default class QuillForm extends Component {
   ensureProtocol(url) {
 
     if (!/^(?:f|ht)tps?\:\/\//.test(url) && !/^mailto\:/i.test(url)) {
-  
+
       return `http://${url}`;
-  
+
     }
-  
+
     return url;
-  
+
   }
 
 
@@ -100,18 +134,19 @@ export default class QuillForm extends Component {
     let id = toolService.getIdFromURL(true, 0);
     let lore = await this.props.app.state.componentList.getComponent("lore", loreName, "name");
     let newid = await lore.getJson()._id;
- if (this.props.connectLore){
-    const loreLink = `/campaign/` + id + '-' + newid;
-    return `<a href="${loreLink}" >${loreName}</a>`;
-  }else{
-    console.log(id)
-    return loreName;
-  }
+    if (this.props.connectLore) {
+      const loreLink = `/campaign/` + id + '-' + newid;
+      return `<a href="${loreLink}" >${loreName}</a>`;
+    } else {
+      console.log(id)
+      return loreName;
+    }
   }
 
 
 
   async newLoreLink(loreName) {
+    debugger
     let state = this.props.app?.state;
     let campId = toolService.getIdFromURL(true, 0);
     let componentList = this.props.app.state.componentList;
@@ -147,36 +182,36 @@ export default class QuillForm extends Component {
     let modifiedValue = value;
 
     for (const match of matches) {
-        const text = match[1];
-        let replacementText;
-        if (names && names.includes(text)) {
-            replacementText = await this.setLoreLink(text);
-        } else if (toolService.isLikelyUrl(text)) {
-            const ensuredUrl = this.ensureProtocol(text);
-            if (ensuredUrl) {
-                replacementText = `<a href="${ensuredUrl}" target="_blank">${text}</a>`;
-            } else {
-                replacementText = await this.newLoreLink(text);
-            }
+      const text = match[1];
+      let replacementText;
+      if (names && names.includes(text)) {
+        replacementText = await this.setLoreLink(text);
+      } else if (toolService.isLikelyUrl(text)) {
+        const ensuredUrl = this.ensureProtocol(text);
+        if (ensuredUrl) {
+          replacementText = `<a href="${ensuredUrl}">${text}</a>`;
         } else {
-            replacementText = await this.newLoreLink(text);;
+          replacementText = await this.newLoreLink(text);
         }
-        modifiedValue = modifiedValue.replace(match[0], replacementText);
+      } else {
+        replacementText = await this.newLoreLink(text);;
+      }
+      modifiedValue = modifiedValue.replace(match[0], replacementText);
     }
 
     if (modifiedValue !== value) {
-        this.setState({ value: modifiedValue }, () => {
-            const editor = this.quillRef.current.getEditor();
-            editor.clipboard.dangerouslyPasteHTML(modifiedValue);
-        });
+      this.setState({ value: modifiedValue }, () => {
+        const editor = this.quillRef.current.getEditor();
+        editor.clipboard.dangerouslyPasteHTML(modifiedValue);
+      });
     } else {
-        this.setState({ value });
+      this.setState({ value });
     }
 
     if (this.props.handleChange) {
-        this.props.handleChange(modifiedValue);
+      this.props.handleChange(modifiedValue);
     }
-};
+  };
 
 
   render() {
@@ -211,9 +246,11 @@ export default class QuillForm extends Component {
 
 
               // [],['link'], // Link insertion
-              [], ['clean']
+              [], ['clean'],
               // remove formatting button
-            ]
+            
+            ],
+            
           }}
 
           style={this.props.wrapperStyle ?

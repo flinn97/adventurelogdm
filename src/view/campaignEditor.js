@@ -218,12 +218,11 @@ export default class CampaignEditor extends Component {
     let parent = state.currentLore?.getJson().parentId;
     let pId = parent ? Object.keys(parent)[0] : "";
     let parentItem = state.componentList.getComponent("lore", pId, "_id");
-
     let loreList = state.currentLore?state.componentList.getList("lore", state.currentLore.getJson().name, "name"):"";
     let hasName = ((state.currentLore)&&(state?.currentLore?.getJson().name!=undefined)&&(state?.currentLore?.getJson().name!=""))?true:false;
     let warning = ((loreList.length>1)&&(state.currentLore)&&(hasName))?<div style={{color:styles.colors.color5, background:styles.colors.color2, padding:"3px 8px", borderRadius:"8px", fontSize:styles.fonts.fontSmall, position:"absolute", top:15}}>{"You already have another lore named "+state?.currentLore?.getJson().name}</div>:""
-
-    return (<div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
+    return (
+    <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
       {/* <div style={{color:"white"}} onClick={()=>{
         convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
       }}>Campaign Editor</div> */}

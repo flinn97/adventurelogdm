@@ -91,16 +91,19 @@ export default class InteractiveBulletin extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    let mapHeight = this.imgRef?.current?.clientHeight;
-    let mapWidth = this.imgRef?.current?.clientWidth;
-    this.setState({
-        bounds: {
-          left: 0,
-          top: 0,
-          right: mapWidth,
-          bottom: mapHeight,
-        },
-      })
+    if(prevProps.obj!==this.props.obj){
+      let mapHeight = this.imgRef?.current?.clientHeight;
+      let mapWidth = this.imgRef?.current?.clientWidth;
+      this.setState({
+          bounds: {
+            left: 0,
+            top: 0,
+            right: mapWidth,
+            bottom: mapHeight,
+          },
+        })
+    }
+   
 
 
     let app = this.props.app;
