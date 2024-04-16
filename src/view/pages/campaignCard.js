@@ -102,7 +102,7 @@ class MainContent extends Component{
             <MapComponent app={app} name={"campaign"} cells={[{custom:CampaignMapItem, props:{app:app}},]}
             filter={{search:"campaign", attribute:"type"}} 
             filterFunc={(obj)=>{
-              let returnVal = obj.getJson().mpType;
+              let returnVal = obj.getJson().mptype;
               if(!returnVal){
                 return true;
               }

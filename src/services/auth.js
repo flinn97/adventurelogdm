@@ -8,6 +8,7 @@ import PlayerHome from "../view/pages/playerHome.js";
 import Campaign from '../view/pages/campaign';
 import Note from '../view/pages/note';
 import AdminUser from '../view/admin/adminUser';
+import Library from "../view/pages/library.js";
 
 
 let imageQuality = .5;
@@ -308,6 +309,7 @@ class Auth {
                         {path: "/notes", comp:Note, name: "Notes"},
                         ///Added Marketplace
                         {path: "/admin/user", comp:AdminUser, name: "Admin"},
+                        {path: "/library", comp:Library, name: "Library"},
                     ]
                 })
             }

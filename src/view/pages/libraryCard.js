@@ -90,9 +90,11 @@ class MainContent extends Component {
   async download(mpItem){
     
     let campaign = await auth.firebaseGetter(mpItem.getJson().campaignId, this.props.app.state.componentList, "_id", "campaign", false );
+    debugger
+    await campaign[0].setCompState({mptype:mpItem.getJson().mptype})
     let requestBody = {
       email: this.props.app.state.user.getJson()._id,
-      lore: {...campaign[0].getJson(), mptype:mpItem.getJson().mptype}
+      lore: {...campaign[0].getJson(), }
   };
   requestBody=await JSON.stringify(requestBody)
 
@@ -154,7 +156,7 @@ class MainContent extends Component {
           { type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item" },
           { type: "richReader", name:"promotional", class:"Ellipsis-Text"},
           
-          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/purchase/" },
+          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", },
 
         ]} />
 }

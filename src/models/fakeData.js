@@ -3,213 +3,125 @@
 let json=[
   {
     type:"mpItem",
-    title: "Loztotetc",
-    description: "asdf",
-    promotional: "Embark on an unparalleled journey through Loztotetc, a realm where the veils between dimensions grow thin and the ancient magic breathes life into the unimaginable. In this 3.5 campaign, heroes are not born; they are forged in the crucible of destiny, amidst the ruins of civilizations that defy time and the machinations of deities playing at the edges of reality. Navigate the intricate politics of the Skyborne Isles, delve into the secrets of the Underdepths, and stand against the Twilight Court in a quest that will redefine the boundaries of power and sacrifice. Loztotetc awaits those brave enough to rewrite their fates. Will you rise as its next legend?",
-    price:"$20", publisher:"Nentindo Corp.",
-    stripePrice:"2000",
-    listedComponents: "4 maps\n  8 battlemaps\n  10 magic items\n  12 images\n  and more!",
-    picURL:"https://assets-prd.ignimgs.com/2023/06/21/screenshot-2023-06-21-at-3-21-19-pm-1687386088079.png?width=1920",
-    topDisplay:true,
+    publisher:"Arcane Vault Assembly LLC",
+    owner:"admin@arcanevaultassembly.com",
+
+
     _id: "1",
-    owner:"taylormdavidson@gmail.com"
+    title: "Devils Artwork Pack",
+    description: "asdf",
+    promotional: "All the original Devils in one pack led by the Pit Fiend! The infernal cast of villains includes the Pit Fiend, Ice Devil, Horned Devil, Erinyes, Chain Devil, Bone Devil, Barbed Devil, Bearded Devil, Hell Hound, Imp, and Lemure. Creating these was so much fun! We hope you enjoy them!!",
+    picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F6001-0416DevilsPack_GMS.jpg?alt=media&token=af0fc6b4-9236-466e-a6bc-5616f2603a99",
+    campaignId: "831j5041124",
+    gameSystem: "5e",
+    mptype:"mpImage",
+    tags: "comma separated string"
 },
 
 {
   type:"mpItem",
-  title: "Phandalin's Face",
-  description: "asdfg",   promotional: "Uncover the secrets of Phandalin and the lost mine. Face dangerous foes, delve into ancient ruins, and form alliances.",
+  title: "Beasts Artwork Pack",
+  description: "asdfg",   
+  promotional: "Over 50 Illustrations of Beasts to populate your world, provide hand outs,  illustrate wild shapes, summoned creatures, and beast encounters. ",
   price:"$20", realizedPrice:"$14.95",
   topDisplay:true, publisher:"Wiz of da Coast",
   _id: "2",
-  picURL:"https://firebasestorage.googleapis.com/v0/b/flinnapps.appspot.com/o/media%2F16758691346190c167c_fe2ab2d3f6404c3685f39b8eaa5b5d86_mv2.webp?alt=media&token=9cbe3a11-3062-42a8-a081-a3fdf11dc608",
-  owner:"taylormdavidson@gmail.com"
+  picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F4690-0416BeastPack_GMS.jpg?alt=media&token=896ec6ab-ba44-4ebc-9319-c5e39237851a",
+  owner:"taylormdavidson@gmail.com",
+  mptype: "mpImage",
+  campaignId: "7z8d3041124"
 },
 
 {
   type:"mpItem",
-  title: "The Curse of Strahd",
-  description: "asdfgh",    promotional: "Adventurers are mysteriously drawn to the realm of Barovia which is surrounded by deadly fog and ruled by the vampire wizard Strahd von Zarovich. This gothic horror adventure takes the players on a course through Barovia that culminates with a vampire hunt inside Castle Ravenloft.",
+  title: "Undead Artwork Pack",
+  description: "asdfgh",    
+  promotional: "Thirteen unique undead monsters to add horror to your next game! Undead villains including Banshee, Death Knight, Ghast, Ghost, Ghoul, Lich, Mummy, Skeleton, Specter, Vampire, Wight, Wraith, and Zombie. Enjoy!",
   price:"$49.99",
   topDisplay:true, publisher:"Wizards of the Coast",
   _id: "3",
-  picURL:"https://images.ctfassets.net/swt2dsco9mfe/5ufckdRJoL1Nh1XJv6clTt/1e8faa90bb0cfef53e3e5dbefc54b661/cos-rp.jpg",
-  isPromo: "priority1"
+  picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F1931-0416UndeadPack_GMS.jpg?alt=media&token=f6aeca25-05f4-48e8-9b83-5497fca43a31",
+  isPromo: "priority1",
+  mptype:"mpImage",
+  gameSystem: "5e",
+  campaignId: "5443h041124"
 },
 {
   type:"mpItem",
-  title: "fake3",
-  description: "asdf",    promotional: "this is cool",
+  title: "Elemental Artwork Pack",
+  description: "asdf",    
+  promotional: "Hand-crafted custom artwork for the Elementals in your RPG! Fire, Earth, Water, and Air. Multiple Perspectives. Includes accompanying handout for players.",
   price:"$20", publisher:"Arcane Vault Assembly",
   topDisplay:true,
   _id: "4",
   owner:"taylormdavidson@gmail.com",
-  picURL: "https://www.dndbeyond.com/avatars/thumbnails/30783/984/1000/1000/638062025138800879.png"
+  picURL: "https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F354-0416ElementalPack_GMS.jpg?alt=media&token=97ef0e45-0bed-4b5f-b0ac-f75d8af77e74",
+  mptype:"mpImage",
+  gameSystem:"5e",
+  campaignId: "2434s041124"
 },
 {
 type:"mpItem",
-title: "fake1",
-description: "asdfg",    promotional: "this is cool",
+title: "Weapon Artwork Pack",
+description: "asdfg",    promotional: "All the weapon artwork you will ever need! 24 weapons ready to be dropped into any game! ",
 price:"$20", publisher:"Arcane Vault Assembly",
 topDisplay:true,
 _id: "5",
-picURL:"https://www.dndbeyond.com/avatars/thumbnails/28079/774/1000/1000/637961800649770847.jpeg"
+picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F8101-0416WeaponPack_GMS.jpg?alt=media&token=1174a2e4-e6e6-4e22-8ad1-487f76fd3ea4",
+gameSystem:"5e",
+campaignId: "278zl041124",
+mptype: "mpImage"
 },
 {
 type:"mpItem",
-title: "fake2",  publisher:"Arcane Vault Assembly",
-description: "asdfgh",    promotional: "this is cool",
+title: "Castles Maps Pack",  publisher:"Arcane Vault Assembly",
+description: "asdfgh",    promotional: "Four awesome castle battle maps to add to your library! Castle Winter, Castle Summer, The Moat House, and the hilltop Rook.",
 price:"$20",
 topDisplay:true,
 _id: "6",
-picURL:"https://www.dndbeyond.com/avatars/thumbnails/10836/994/1000/1000/637266357250135239.jpeg",
+picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F2407-0411CastleKitAd.png?alt=media&token=968ec85c-8162-47bb-bd23-87fc5e94ee30",
+gameSystem: "5e",
+campaignId: "85y42041124",
+mptype: "mpMap"
 },
 {
   type:"mpItem",
-  title: "fake2",  publisher:"Arcane Vault Assembly",
-  description: "asdfgh",    promotional: "this is cool",
+  title: "Dungeon Maps Pack",  publisher:"Arcane Vault Assembly",
+  description: "asdfgh",    promotional: "15 different dungeon maps ready for use in your next adventure!",
   price:"$20",
   topDisplay:true,
   _id: "6235",
-  picURL:"https://www.dndbeyond.com/avatars/thumbnails/21205/98/1000/1000/637707682268309075.jpeg"
+  picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F1360-0416dungeonPack_GMS.jpg?alt=media&token=a5405ea0-e8ba-41a6-b154-a40257c0d4d6",
+  gameSystem: "5e",
+  mptype: "mpMap",
+  campaignId: "x477i041124"
   },
 {
 type:"mpItem",
-title: "fake1",  publisher:"Arcane Vault Assembly",
-description: "asdfg",    promotional: "this is cool",
+title: "City + Towns Maps Pack",  publisher:"Arcane Vault Assembly",
+description: "asdfg",    promotional: "need promotional",
 price:"$20",
 topDisplay:true,
 owner:"taylormdavidson@gmail.com",
 _id: "8",
-picURL:"https://www.dndbeyond.com/avatars/thumbnails/10836/994/1000/1000/637266357250135239.jpeg",
+picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F1249-0416cityTownPack_GMS.jpg?alt=media&token=4317cab3-130b-48ee-b01b-78a3a3d90cee",
+gameSystem: "5e",
+campaignId:"286rj041124",
+mptype: "mpMap"
 },
 {
 type:"mpItem",
-title: "fake2",  publisher:"Arcane Vault Assembly",
-description: "asdfgh",    promotional: "this is cool",
+title: "Character Artwork Pack",  publisher:"Arcane Vault Assembly",
+description: "asdfgh",    
+promotional: "Wizards, rogues, monks, fighters and more! Characters and NPC artwork ready for use in your creations.",
 price:"$20",
 topDisplay:true,
-_id: "9"
+_id: "9",
+picURL: "https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F1094-0416CharacterPack_GMS.jpg?alt=media&token=5fc1019c-42a0-48cc-86e7-52b924eea31e",
+gameSystem: "5e",
+campaignId: "561b2041524",
+mptype: "mpImage"
 },
-{
-  type:"mpItem",
-  title: "fake",
-  description: "asdf",    promotional: "this is cool",
-  price:"$20",
-  topDisplay:true,
-  _id: "10"
-},
-{
-type:"mpItem",
-title: "fake1",
-description: "asdfg",    promotional: "this is cool",
-price:"$20",
-topDisplay:true,
-_id: "11"
-},
-{
-type:"mpItem",
-title: "fake2",
-description: "asdfgh",    promotional: "this is cool",
-price:"$20",
-topDisplay:true,
-_id: "12",
-owner:"taylormdavidson@gmail.com"
-
-},
-{
-  type:"mpItem",
-  title: "fake",
-  description: "asdf",    promotional: "this is cool",
-  price:"$20",
-  topDisplay:true,
-  _id: "13",
-  owner:"taylormdavidson@gmail.com"
-},
-{
-type:"mpItem",
-title: "fake1",
-description: "asdfg",    promotional: "this is cool",
-price:"$20",
-topDisplay:true,
-_id: "14"
-},
-{
-type:"mpItem",
-title: "fake2",
-description: "asdfgh",    promotional: "this is cool",
-price:"$20",
-topDisplay:true,
-_id: "15"
-},{
-  type:"mpItem",
-  title: "fake",
-  description: "asdf",    promotional: "this is cool",
-  price:"$20",
-  topDisplay:true,
-  _id: "16",
-  owner:"taylormdavidson@gmail.com",
-  picURL:"https://media.dndbeyond.com/compendium-images/gotg/YGa7uVZhrRWLTUnV/map-4.01-annams-cradle.jpg",
-},
-{
-type:"mpItem",
-title: "fake1",
-description: "asdfg",    promotional: "this is cool",
-price:"$20",
-topDisplay:true,
-_id: "17",
-picURL:"https://media.dndbeyond.com/compendium-images/gotg/YGa7uVZhrRWLTUnV/map-4.02-ashen-grotto.jpg"
-},
-{
-type:"mpItem",
-title: "fake2",
-description: "asdfgh",    promotional: "Uncover the secrets of Phandalin and the lost mine. Face dangerous foes, delve into ancient ruins, and form alliances.",
-price:"$20",
-topDisplay:true,
-_id: "18",
-owner:"taylormdavidson@gmail.com",
-picURL:"https://media.dndbeyond.com/compendium-images/gotg/YGa7uVZhrRWLTUnV/map-4.06-forsaken-deep.jpg"
-
-},
-
-{
-  type:"mpItem",
-  title: "fake1 map",
-  description: "asdfg",
-  topDisplayID:"1",
-  _id: "22"
-  },
-  {
-    type:"mpItem",
-    title: "fake2 image",
-    description: "asdfgh",
-    topDisplayID:"1",
-    _id: "23"
-    },
-    {
-      type:"mpItem",
-      title: "fake2",
-      description: "asdfgh",
-      topDisplayID:"1",
-      _id: "234234"
-      },
-      {
-        type:"mpItem",
-        title: "fake2",
-        description: "asdfgh",
-        topDisplayID:"1",
-        _id: "24"
-        },
-        {
-          type:"mpItem",
-          title: "fake2",
-          description: "asdfgh",
-          topDisplayID:"1",
-
-          _id: "25"
-          },
-
-    
 
 ]
 export {json}

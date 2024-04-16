@@ -9,6 +9,7 @@ export default class ComponentListInterface{
     operationsFactory;
     dispatch;
     constructor(dispatch){
+        debugger
         this.getFactory= this.getFactory.bind(this);
         this.createComponentList= this.createComponentList.bind(this);
         this.getOperationsFactory= this.getOperationsFactory.bind(this);
@@ -19,18 +20,18 @@ export default class ComponentListInterface{
     }
 
     getFactory(){
-        
+        debugger
         if(this.factory===undefined){
             this.factory= new Factory(this);
         }
         return this.factory;
     }
     createComponentList(){
-        
+        debugger
         return new Opps(this)
     }
     getOperationsFactory(){
-        
+        debugger
         if(this.operationsFactory===undefined){
             this.operationsFactory= new OppsFactory(this);
             
@@ -39,13 +40,13 @@ export default class ComponentListInterface{
         return this.operationsFactory;
     }
     getNewOperationsFactory(){
-
+        debugger
             let opps= new OppsFactory(this);
 
         return opps;
     }
     getUpdater(){
-        
+        debugger
         if(this.updater===undefined){
             this.updater =new Updater();
         }
