@@ -3,7 +3,7 @@
 let json=[
   {
     type:"mpItem",
-    publisher:"Arcane Vault Assembly LLC",
+    publisher:"Arcane Vault Assembly",
     owner:"admin@arcanevaultassembly.com",
 
 
@@ -24,7 +24,7 @@ let json=[
   description: "asdfg",   
   promotional: "Over 50 Illustrations of Beasts to populate your world, provide hand outs,  illustrate wild shapes, summoned creatures, and beast encounters. ",
   price:"$20", realizedPrice:"$14.95",
-  topDisplay:true, publisher:"Wiz of da Coast",
+  topDisplay:true, publisher:"Arcane Vault Assembly",
   _id: "2",
   picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F4690-0416BeastPack_GMS.jpg?alt=media&token=896ec6ab-ba44-4ebc-9319-c5e39237851a",
   owner:"taylormdavidson@gmail.com",
@@ -38,7 +38,7 @@ let json=[
   description: "asdfgh",    
   promotional: "Thirteen unique undead monsters to add horror to your next game! Undead villains including Banshee, Death Knight, Ghast, Ghost, Ghoul, Lich, Mummy, Skeleton, Specter, Vampire, Wight, Wraith, and Zombie. Enjoy!",
   price:"$49.99",
-  topDisplay:true, publisher:"Wizards of the Coast",
+  topDisplay:true, publisher:"Arcane Vault Assembly",
   _id: "3",
   picURL:"https://firebasestorage.googleapis.com/v0/b/avagms-c2fee.appspot.com/o/images%2F1931-0416UndeadPack_GMS.jpg?alt=media&token=f6aeca25-05f4-48e8-9b83-5497fca43a31",
   isPromo: "priority1",
