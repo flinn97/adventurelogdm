@@ -82,8 +82,22 @@ export default class LibraryCard extends Component {
 class MainContent extends Component {
   constructor(props) {
     super(props);
+    this.openMPItem = this.openMPItem.bind(this)
     this.state = {
       start: false,
+    }
+  }
+
+  
+  openMPItem(mpItem){
+    let app = this.props.app
+    let state = app.state
+  let componentList = state.componentList 
+    
+    let campaignId = mpItem.getJson().campaignId
+    let campaign = componentList.getComponent("campaign", campaignId, "ogRef")
+    if(campaign){
+      window.location.href = "./campaign/" + campaign.getJson()._id
     }
   }
 
@@ -153,9 +167,9 @@ class MainContent extends Component {
           { name: "Download", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
           { type: "img", class: "Img-Midsize" },
           { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
-          { type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item" },
+          { type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item",  func:(obj)=>{this.openMPItem(obj)}},
           { type: "richReader", name:"promotional", class:"Ellipsis-Text"},
-          
+           
           { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", },
 
         ]} />
