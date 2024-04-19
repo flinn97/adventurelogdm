@@ -7,6 +7,7 @@ import Upload from '../upload';
 import UploadComponent from './uploadComponent';
 import TagCreate from './tagCreator';
 import { MapComponent } from '../../mapTech/mapComponentInterface';
+import toolService from '../../services/toolService';
 
 /**
  * condensed version of the cards.
@@ -214,6 +215,17 @@ class MainContent extends Component {
         <div style={{ ...styles.buttons.buttonAdd, width: "600px", justifySelf: "center", alignSelf: "center", display: "flex", marginTop: "100px", marginLeft: "38px" }} onClick={async () => {
           await state.currentApproval.setCompState({ readyForDistribution: true });
           state.opps.cleanPrepareRun({ update: state.currentApproval })
+          
+          
+          setTimeout(() => {
+            
+            dispatch({popupSwitch: "approvalSubmitted",})
+          }, 20)
+          setTimeout(() => {
+            
+            toolService.navigateToLink("../")
+          }, 3000)
+          
         }}>Send Proposal</div>
 
 
