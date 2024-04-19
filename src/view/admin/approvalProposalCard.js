@@ -212,9 +212,14 @@ class MainContent extends Component {
             textOptions={["No System", "D&D 5e", "D&D Pathfinder", "D&D 3.5e", "Other"]} /></div>
 
         <div style={{ ...styles.buttons.buttonAdd, width: "600px", justifySelf: "center", alignSelf: "center", display: "flex", marginTop: "100px", marginLeft: "38px" }} onClick={async () => {
-          await state.currentApproval.setCompState({ readyForDistribution: true });
-          state.opps.cleanPrepareRun({ update: state.currentApproval })
-        }}>Send Proposal</div>
+          debugger
+          let number = state.currentApproval.getJson().price;
+          number = number.replace('.', '');
+
+          await state.currentApproval.setCompState({ readyForDistribution: true, stripePrice:number });
+          state.opps.cleanPrepareRun({ update: state.currentApproval });
+          this.setState({proposalSent:true})
+        }}>{this.state.proposalSent?"Proposal Sent":"Send Proposal"}</div>
 
 
 

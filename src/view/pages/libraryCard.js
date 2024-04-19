@@ -165,7 +165,7 @@ class MainContent extends Component {
         <MapComponent app={app} name="mpItem" theme="defaultRow" cells={[
           
           { name: "Download", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
-          { type: "img", class: "Img-Midsize" },
+          { type: "img", class: "Img-Midsize",  func:(obj)=>{this.openMPItem(obj)} },
           { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
           { type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item",  func:(obj)=>{this.openMPItem(obj)}},
           { type: "richReader", name:"promotional", class:"Ellipsis-Text"},
