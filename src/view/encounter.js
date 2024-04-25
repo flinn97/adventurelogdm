@@ -361,7 +361,7 @@ export default class Encounter extends Component {
                   paddingTop: "3px", paddingBottom: "3px", fontSize: styles.fonts.fontSmall, cursor: !obj?.getJson().isRunning ? "pointer" : "wait"
                 }}
                   onClick={async () => {
-
+                    debugger
 
                     // this.setState({showMonsterMap: false});
                     if (!obj?.getJson().isRunning) {
@@ -389,10 +389,11 @@ export default class Encounter extends Component {
                           condition.campaignId = mon.getJson()?.campaignId;
                           condition._id = mon.getJson()?._id + "c" + idService.createId();
                           await state.opps.jsonPrepare({ addcondition: condition });
-                          await state.opps.run();
+                          // await state.opps.run();
                         }
 
                       }
+                      await state.opps.run();
 
 
                       this.setState({ showMonsterMap: true })
