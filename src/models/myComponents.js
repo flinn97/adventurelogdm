@@ -464,7 +464,7 @@ class Encounter extends componentBase {
                 await this.operationsFactory.jsonPrepare({ "addmonster": monsterJson });
                 let p = await this.operationsFactory.getUpdater("add")[0];
                 encPlayer.push(p);
-                await this.operationsFactory.run();
+                // await this.operationsFactory.run();
             };
         }
         return encPlayer

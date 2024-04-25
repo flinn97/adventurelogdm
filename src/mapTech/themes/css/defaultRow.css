@@ -113,6 +113,7 @@
 .a {
   color: #000;
   cursor: pointer;
+  opacity: 0;
 }
 
 .Publisher {
@@ -136,6 +137,7 @@
   cursor: pointer;
   color: rgb(190, 221, 226);
 }
+
 
 .DR-Custom-Del-Item,
 .DR-Del-Item,
@@ -189,6 +191,7 @@
   opacity: 1; /* Make the shimmer visible on hover */
 }
 
+
 @keyframes shimmer {
   0% {
     left: -580%; /* Start from the left */
@@ -227,13 +230,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
  color: rgb(190, 221, 226);
-  hyphens: auto;
-  max-width: 330px;
-  min-height: 5.5rem;
-  max-height: 5.5rem;
-  padding: 8px;
-  font-size: 1.1rem;
-  text-align: justify;
+  hyphens:auto;
+  max-width: 335px;
+  min-height: 6rem;
+  max-height: 6rem;
+  padding: 4px;
+  font-size: 1.05rem;
+  text-align:justify;
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
 
 
@@ -252,3 +256,4 @@
   border-radius: 11px;
   object-fit: cover;
 }
+

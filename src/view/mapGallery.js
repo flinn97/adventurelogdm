@@ -15,7 +15,7 @@ export default class MapGallery extends Component {
     }}
 
     componentDidMount(){
-      debugger
+      
       let obj = this.props.obj;
       let app = this.props.app;
       let dispatch = app.dispatch;
@@ -46,8 +46,14 @@ export default class MapGallery extends Component {
       let mapList = componentList.getList("map",obj?.getJson()._id,"loreId");
       if (state.mapList.length !== mapList.length)
       {
+        
         //ISAAC I changed this so we wern't updating the currentMap at this point. Could you check to make sure it isn't breaking anything?
-        this.setState({mapList:mapList,})
+        this.setState({mapList:mapList,});
+
+        if(mapList.length===0){
+          this.setState({currentMap:undefined})
+        }
+
       };
     }
 
@@ -117,7 +123,7 @@ export default class MapGallery extends Component {
 
   {this.state.currentMap && this.state.showMap &&
    
-      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color} updateSize = {this.updateSize}/>
+      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color} updateSize = {this.updateSize} />
       }
 
         {/* backgroundIMAGE */}

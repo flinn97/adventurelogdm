@@ -11,6 +11,7 @@ import { Component } from 'react';
 import { doc, setDoc, serverTimestamp} from "firebase/firestore";
 import idService from '../../componentListNPM/idService';
 import { db, storage, auth } from '../../firbase.config.js';
+import authservice from '../../services/auth.js';
 
 
 export default class ApproveSubmission extends Component {
@@ -34,8 +35,14 @@ export default class ApproveSubmission extends Component {
      <div style={{display:"flex", flexDirection:'row', width:'200px', justifyContent:"space-between"}}>
       <div style={{marginLeft:"100px"}} onClick={async()=>{
         
-        let approval = this.props.obj
-        let mpItem = {...approval.getJson(), _id:idService.createId(), type:approval.getJson().mptype}
+        let approval = this.props.obj;
+        
+        let encCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "encounter");
+        let loreCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "lore");
+        let imgCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "image");
+        let mapCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "map");
+
+        let mpItem = {...approval.getJson(), _id:idService.createId(), type:approval.getJson().mptype, encCount: encCount, imageCount:imgCount, loreCount:loreCount, mapCount:mapCount}
 
         mpItem.date = await serverTimestamp();
       await setDoc(doc(db, "MPusers", "MPAPP", "components", mpItem._id), mpItem);

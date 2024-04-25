@@ -49,14 +49,15 @@ export default class CampaignMapItem extends Component {
                         
                         <div style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',borderRadius:radius,
-                        height: "fit-content", 
+                        height: "fit-content", border: "1px solid "+styles.colors.color9+"85",
                          width: "fit-content"}}>
                           
                           <div 
                           
-                          style={{display: "flex", height:window.innerWidth > 800?"220px":"100px", width:window.innerWidth > 800?"78vmax":"90vw", fontWeight:"bold", fontFamily:"serif", 
-                          textDecoration: styles.colors.colorWhite+"22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1px -1px 0 "+styles.colors.colorBlack, textAlign:"center", justifyItems:"center",
+                          style={{display: "flex", height:window.innerWidth > 800?"220px":"100px", 
+                          width:window.innerWidth > 800?"78vmax":"90vw", fontWeight:"bold", fontFamily:"serif", 
+                          textDecorationThickness: "0px", textUnderlineOffset: "4px", color: styles.colors.colorWhite,
+                          textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1.5px -1.5px 0 "+styles.colors.colorBlack, textAlign:"center", justifyItems:"center",
                           alignItems:"center", justifyContent:"center", fontSize:window.innerWidth > 800?styles.fonts.fontHeader2:"2rem",}}>
                             {obj?.getJson().title}
                           </div>

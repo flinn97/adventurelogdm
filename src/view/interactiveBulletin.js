@@ -38,7 +38,7 @@ export default class InteractiveBulletin extends Component {
     this.startX = 0;
     this.startY = 0;
     this.isPanning = false;
-
+    
     this.state = {
       pins: [],
       isGrabbing: false,
@@ -48,6 +48,7 @@ export default class InteractiveBulletin extends Component {
       isLoading: true,
       hide: false,
       highestZIndex: 1000,
+      bounds: { left: 0, top: 0, right: 1400, bottom: 1200 },
     }
   }
 
@@ -68,6 +69,12 @@ export default class InteractiveBulletin extends Component {
     this.setState({
       mapHeight: mapHeight,
       mapWidth: mapWidth,
+      bounds: {
+        left: 0,
+        top: 0,
+        right: mapWidth,
+        bottom: mapHeight,
+      },
     }, () => this.forceUpdate())
     if (mapWidth < 1500 && mapWidth > 300) {
       this.props.updateSize(mapWidth, mapHeight);
@@ -81,16 +88,30 @@ export default class InteractiveBulletin extends Component {
     }
 
 
-
   };
 
   async componentDidUpdate(prevProps, prevState) {
+    if(prevProps.obj!==this.props.obj){
+      let mapHeight = this.imgRef?.current?.clientHeight;
+      let mapWidth = this.imgRef?.current?.clientWidth;
+      this.setState({
+          bounds: {
+            left: 0,
+            top: 0,
+            right: mapWidth,
+            bottom: mapHeight,
+          },
+        })
+    }
+   
+
+
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
-    if(state.showPinMap===false){
-      console.log("showPinMap");
-      dispatch({showPinMap:true})
+    if (state.showPinMap === false) {
+     
+      dispatch({ showPinMap: true })
 
     }
     if (this.imgRef?.current !== prevState.imgRef) {
@@ -99,18 +120,26 @@ export default class InteractiveBulletin extends Component {
       await delay(1000);
       let mapHeight = this.imgRef?.current?.clientHeight;
       let mapWidth = this.imgRef?.current?.clientWidth;
+      let img = this.imgRef?.current;
       this.setState({
         mapHeight: mapHeight,
         mapWidth: mapWidth,
-        imgRef: this.imgRef.current
+        imgRef: this.imgRef.current,
+          bounds: {
+            left: 0,
+            top: 0,
+            right: mapWidth,
+            bottom: mapHeight,
+          },
       }, () => this.forceUpdate());
       if (mapWidth < 1500 && mapWidth > 300) {
         this.props.updateSize(mapWidth, mapHeight);
 
       }
-
+      
 
     }
+
 
   }
 
@@ -151,6 +180,7 @@ export default class InteractiveBulletin extends Component {
     }
   }
 
+
   render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -178,7 +208,7 @@ export default class InteractiveBulletin extends Component {
         style={{
           width: "100%", minHeight: "100%", maxHeight: "100%",
           cursor: this.state.isGrabbing !== true ? "" : "grabbing",
-          overflow: 'auto', borderRadius: "11px", 
+          overflow: 'auto', borderRadius: "11px",
         }}>
 
 
@@ -202,7 +232,7 @@ export default class InteractiveBulletin extends Component {
 
           <div className="hover-btn" style={{
             ...styles.buttons.buttonAdd, padding: "0px", paddingLeft: "10px", borderColor: styles.colors.color3,
-            backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition:"all",
+            backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
           }}
             onClick={async (e) => {
               let scrollLeft = this.divRef.current.scrollLeft;
@@ -227,8 +257,8 @@ export default class InteractiveBulletin extends Component {
 
             }}
           >
-            {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").length === 0 ?"+ Lore Point":"+"} 
-            <img src={iconTest} alt='ico' style={{ width: "40px", height: "40px", marginLeft: state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").length === 0 ?"15px":"10px", marginRight: "10px", marginTop: "1px", }}></img>
+            {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").length === 0 ? "+ Lore Point" : "+"}
+            <img src={iconTest} alt='ico' style={{ width: "40px", height: "40px", marginLeft: state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").length === 0 ? "15px" : "10px", marginRight: "10px", marginTop: "1px", }}></img>
           </div>
 
 
@@ -240,60 +270,62 @@ export default class InteractiveBulletin extends Component {
           <div className='hover-btn-highlight' title={"Permanently Delete this Map"}
             style={{
               color: 'red', width: "80px", textAlign: "center", cursor: "pointer",
-              height: "40px",  background:"", boxShadow:"",
+              height: "40px", background: "", boxShadow: "",
               // border: "1px solid " + styles.colors.color6,
-               right: 8, position: "absolute", top: 12,
-              padding: "2px 4px", zIndex: 900, 
+              right: 8, position: "absolute", top: 12,
+              padding: "2px 4px", zIndex: 900,
 
 
             }}
             onClick={() => {
 
               state.opps.cleanPrepareRun({ del: this.props.obj });
-              this.setState({ map: undefined });
+              this.setState({ map: undefined, obj:undefined });
             }}>
             <img src={trash} style={{ width: "34px", cursor: "pointer", zIndex: 991 }} />
           </div>
         }
-        <div style={{ position: "relative", width: "100%", height: "100%",   }}>
+        <div style={{ position: "relative", width: "100%", height: "100%", }}>
 
 
           {this.state.mapWidth && (this.state.mapWidth !== "") &&
 
             <img ref={this.imgRef} alt='map'
-
+              onLoad={this.handleImageLoaded}
               src={this.props.obj?.getJson().picURL}
-              style={{ position: "absolute", top: 0, left: 0, borderRadius: "17px", maxWidth: "3700px", maxHeight: "2630px", marginTop:"40px", }} />}
+              style={{ position: "absolute", top: 0, left: 0, borderRadius: "17px", maxWidth: "3700px", maxHeight: "2630px", marginTop: "40px", }} />}
 
 
           {/* {this.state.start && */}
 
-{/* IMAGE BACKGROUND */}{this.props.obj &&state.showPinMap &&
-  <div ref={this.parentRef} 
-              style={{position:"absolute", top:0, left:0,
-   width: this.state.mapWidth,
-   height:this.state.mapHeight 
-   }}>
-    
-    
-    
-    {/* PINS PINS PINS */}
-    
-  {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").map((pin,index)=>
-  <Draggable key={pin.getJson()._id}
-  defaultPosition={{x: parseInt(pin.getJson().x, 10), y: parseInt(pin.getJson().y, 10)}}
-   grid={[1,1]}
-  bounds="parent"
-  handle=".draghere"
+          {/* IMAGE BACKGROUND */}{this.props.obj && state.showPinMap &&
+            <div ref={this.parentRef}
+              style={{
+                position: "absolute", top: 0, left: 0,
+                width: this.state.mapWidth,
+                height: this.state.mapHeight
+              }}>
+
+
+
+              {/* PINS PINS PINS */}
+
+              {state.componentList.getList("pin", this.props.obj?.getJson()._id, "mapId").map((pin, index) =>
+                <Draggable key={pin.getJson()._id}
+                  defaultPosition={{ x: parseInt(pin.getJson().x, 10), y: parseInt(pin.getJson().y, 10) }}
+                  grid={[1, 1]}
+                  bounds={this.state.bounds}
+                  handle=".draghere"
                   onStart={(data) => {
                     this.setState({ isGrabbing: true });
                   }}
-                  onStop={ async (item, data) => {
+                  onStop={async (item, data) => {
 
                     let comp = pin;
                     // state.componentList.getComponent("pin",pinId);
 
                     let parentRect = this.parentRef?.current?.getBoundingClientRect();
+                    
                     let x = Math.min(Math.max(data.x, 1), parentRect.width - 1);
                     let y = Math.min(Math.max(data.y, 1), parentRect.height - 1);
 
@@ -304,7 +336,7 @@ export default class InteractiveBulletin extends Component {
 
                     await state.opps.cleanPrepareRun({ update: comp });
                     this.setState({ isGrabbing: false });
-                    
+
                   }}
 
 
@@ -420,15 +452,15 @@ export default class InteractiveBulletin extends Component {
                               }}>
 
                               {images.map((imgSrc, index) => (
-                                <div key={imgSrc+index.toString()} style={{ display: "flex", flexDirection: "row", backgroundColor: styles.colors.color1 + "7d", position: "sticky", zIndex: "50", borderRadius: "1px" }}>
+                                <div key={imgSrc + index.toString()} style={{ display: "flex", flexDirection: "row", backgroundColor: styles.colors.color1 + "7d", position: "sticky", zIndex: "50", borderRadius: "1px" }}>
 
                                   {(typeof imgSrc === 'string' && !imgSrc.startsWith('#')) &&
                                     <div style={{ cursor: "pointer" }}>
-                                      <img title={imgSrc === image16?"DELETE":"Change Icon"}
+                                      <img title={imgSrc === image16 ? "DELETE" : "Change Icon"}
                                         style={{
                                           margin: "2px", height: '28px', width: "28px", position: "relative",
                                           backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "#000000e3",
-                                          filter: imgSrc !== image16 ? pin.getJson().colorFilter : "", 
+                                          filter: imgSrc !== image16 ? pin.getJson().colorFilter : "",
                                           // transform:imgSrc===image16&& "rotate(4.5deg)",
                                           borderRadius: "50%"
                                         }}
@@ -436,7 +468,7 @@ export default class InteractiveBulletin extends Component {
                                         key={index}
                                         src={imgSrc}
                                         onClick={async (item, data) => {
-                                          
+
 
                                           if (imgSrc !== image16) {
                                             //
@@ -447,17 +479,17 @@ export default class InteractiveBulletin extends Component {
                                             state.opps.cleanPrepareRun({ update: comp });
                                             // pin.pushIcon(state, imgSrc);
                                           }
-                                          else{
+                                          else {
 
                                             let pin1 = pin;
-                                            if(pin1.getJson().referencePin){
+                                            if (pin1.getJson().referencePin) {
                                               let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
-                                              await state.opps.cleanPrepare({del:l1});
+                                              await state.opps.cleanPrepare({ del: l1 });
                                             }
-                        
+
                                             await state.opps.prepareRun({ del: pin1 });
-                        
-                                            await dispatch({ popupSwitch: "", showPinMap:false })
+
+                                            await dispatch({ popupSwitch: "", showPinMap: false })
                                           }
                                         }} />
                                       {/* {imgSrc === image16 &&

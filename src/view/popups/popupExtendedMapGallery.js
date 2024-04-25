@@ -72,7 +72,7 @@ class MainContent extends Component {
   }
 
   async createMapFromObj(obj) {
-  
+
     let app = this.props.app;
     let state = app.state;
     let dispatch = app.dispatch;
@@ -101,14 +101,14 @@ class MainContent extends Component {
     let styles = state.styles;
 
     return (
-      <div style={{
-        display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
-
+      <div className='scroller2' style={{
+        display: "flex", width: "62vw", flexDirection: "column", height: "100%", alignContent: "center",
+        justifyContent: "space-between",
         paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
       }}>
         <div style={{
           display: "flex", flexDirection: "column", position: 'relative',
-          height: "100%", maxWidth: "100%", marginTop: "20px",
+          height: "100%", maxWidth: "100%", marginTop: "2px", marginBottom: "-140px"
         }}>
           {/* THIS ISN't WORKING? */}
 
@@ -116,7 +116,7 @@ class MainContent extends Component {
             //TAYLOR //
             //Why is this not working//
             changePic={async (pic, path) => {
-              debugger
+              
               let lore = state.currentLore;
               let map = { picURL: pic, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
               await state.opps.cleanJsonPrepare({ addmap: map });
@@ -156,28 +156,34 @@ class MainContent extends Component {
           {/* {state.mapUpload} 
           I am initializing this, and this doesn't work either
           */}
+          <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-end", width: "fit-content", height: "fit-content" }}>
+            <div style={{ color: styles.colors.color8, marginTop: "12px", fontSize: "1rem", }}>or</div>
+            <div style={{ color: styles.colors.colorWhite, marginTop: "12px", marginLeft: "13px", fontSize: "1.2rem" }}>Choose from Library:</div>
+          </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-end" }}>
-          <div style={{ color: styles.colors.color8, marginTop: "12px", fontSize: "1rem", }}>or</div>
-          <div style={{ color: styles.colors.colorWhite, marginTop: "12px", marginLeft: "13px", fontSize: "1.2rem" }}>Choose from Library:</div>
-        </div>
-        <hr></hr>
-        <div className='hover-btn' style={{...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "2vh",
-                        marginTop: "1vh", alignSelf: "center", padding: "1%", color:styles.colors.color9}} onClick={async ()=>{
-              
-              let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
-              let maps = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "map")
-                dispatch({});
-              
 
-            }}>Import Library</div>
-        <div className='scroller2' style={{ height: "400px", paddingTop: "300px" }}>
-          <MapComponent theme="defaultRow" app={app} cells={[{ type: "img", func: (obj) => {this.createMapFromObj(obj) } }]} name="image" />
-          <MapComponent theme="defaultRow" app={app} cells={[{ type: "img", func: (obj) => {this.createMapFromObj(obj) } }]} name="map" />
 
-          {/* TAYLOR add 
-        <LibraryMapMapComponent /> 
-        here or some other name, and then inside that component we can use the new MapComponent? or just use .map? */}
+
+
+        <div style={{ height: "fit-content", paddingTop: "135px", justifyContent: "flex-start" }}>
+          <hr></hr>
+          <div className='hover-btn' style={{
+            ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "12px", cursor: "pointer", zIndex: 200,
+            marginTop: "10px", alignSelf: "center", padding: "11px", color: styles.colors.color9
+          }} onClick={async () => {
+
+            let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
+            let maps = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "map")
+            dispatch({});
+
+
+          }}>Import Library</div>
+          
+          <MapComponent theme="defaultRowWrap" app={app}
+            cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="map" />
+          <MapComponent theme="defaultRowWrap" app={app}
+            cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="image" />
+
         </div>
       </div>
     )

@@ -1,5 +1,5 @@
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import { doc, getDocs, collection, getDoc, updateDoc, addDoc, writeBatch, where, query, setDoc, deleteDoc, onSnapshot, querySnapshot, Timestamp, serverTimestamp, orderBy, limit } from "firebase/firestore";
+import { doc, getDocs, collection, getDoc, updateDoc, addDoc, writeBatch, where, query, setDoc, deleteDoc, onSnapshot, querySnapshot, Timestamp, serverTimestamp, orderBy, limit, getCountFromServer } from "firebase/firestore";
 import { db, storage, auth } from '../firbase.config.js';
 import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail, updateEmail, deleteUser } from "firebase/auth";
 import Compressor from "compressorjs";
@@ -8,6 +8,7 @@ import PlayerHome from "../view/pages/playerHome.js";
 import Campaign from '../view/pages/campaign';
 import Note from '../view/pages/note';
 import AdminUser from '../view/admin/adminUser';
+import Library from "../view/pages/library.js";
 
 
 let imageQuality = .5;
@@ -136,6 +137,12 @@ class Auth {
         return images
     }
 
+    async getCountByCampaingId(id, type){
+        let countQuery = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type",'==',type), where("campaignId", "==", id))
+        let count = await getCountFromServer(countQuery)
+        return count.data().count
+    }
+
     async deleteAllConditoins(componentList, email){
         
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "condition"),  where("owner", "==", email));
@@ -169,15 +176,19 @@ class Auth {
     //ComponentList = adding to the componentList
     //Attribute = attribute pair always a string "campaignID" or "_id"
     //Type = OPTIONAL this RETURNS the getList, string "monster",
-    async firebaseGetter(value, componentList, attribute, type, dispatch) {
-        
+    async firebaseGetter(value, componentList, attribute, type, dispatch, disclude) {
+        debugger
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
             IDlist.push(list[key].getJson()?._id)
         }
         let rawData1 = [];
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
+        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
+        if(disclude){
+            components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), where(disclude.attribute, "!=", disclude.value), orderBy('type'), orderBy("date") );
+        }
+
         if(type){
             let comps = await getDocs(components);
             for (const key in comps.docs) {
@@ -302,6 +313,7 @@ class Auth {
                         {path: "/notes", comp:Note, name: "Notes"},
                         ///Added Marketplace
                         {path: "/admin/user", comp:AdminUser, name: "Admin"},
+                        {path: "/library", comp:Library, name: "Library"},
                     ]
                 })
             }

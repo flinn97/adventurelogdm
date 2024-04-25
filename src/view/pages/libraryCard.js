@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
 import { MapComponent } from '../../mapTech/mapComponentInterface';
 import auth from '../../services/auth';
+import FilterByTypeComponent from '../sortComponents/filterByTypeComponent';
 
 
-/**
- * condensed version of the cards.
- * Works with themes.
- * props
- * theme
- * type
- * app
- * options
- * options can include cardType, cardContent, tabType, 
- */
 export default class LibraryCard extends Component {
   constructor(props) {
     super(props);
 
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
-
 
   render() {
     let app = { ...this.props.app };
@@ -82,49 +67,69 @@ export default class LibraryCard extends Component {
 class MainContent extends Component {
   constructor(props) {
     super(props);
+    this.openMPItem = this.openMPItem.bind(this)
     this.state = {
       start: false,
     }
   }
 
-  async download(mpItem){
+
+  openMPItem(mpItem) {
+    let app = this.props.app
+    let state = app.state
+    let componentList = state.componentList
+
+    let campaignId = mpItem.getJson().campaignId
+    let campaign = componentList.getComponent("campaign", campaignId, "ogRef")
+    if (campaign) {
+      window.location.href = "./campaign/" + campaign.getJson()._id
+    }
+  }
+
+  async download(mpItem) {
+
+    let campaign = await auth.firebaseGetter(mpItem.getJson().campaignId, this.props.app.state.componentList, "_id", "campaign", false);
     
-    let campaign = await auth.firebaseGetter(mpItem.getJson().campaignId, this.props.app.state.componentList, "_id", "campaign", false );
+    await campaign[0].setCompState({ mptype: mpItem.getJson().mptype })
     let requestBody = {
       email: this.props.app.state.user.getJson()._id,
-      lore: {...campaign[0].getJson(), mptype:mpItem.getJson().mptype}
-  };
-  requestBody=await JSON.stringify(requestBody)
+      lore: { ...campaign[0].getJson(), }
+    };
+    requestBody = await JSON.stringify(requestBody)
 
-  // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
-  const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
+    // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
+    const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
 
-  // Make a POST request to the Cloud Function
-  fetch(cloudFunctionUrl, {
+    // Make a POST request to the Cloud Function
+    fetch(cloudFunctionUrl, {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: requestBody,
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log('Success:', data);
-  })
-  .catch(error => {
-      console.error('Error:', error);
-  });
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    let app = this.props.app;
+    let dispatch = app.dispatch;
+    dispatch({ popupSwitch: "downloadLibrary" })
   }
 
 
-  async componentDidMount(){
-    
+  async componentDidMount() {
+
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
     await auth.getMPItems(componentList, state.user.getJson()._id);
-    this.setState({start:true})
+    this.setState({ start: true })
   }
 
 
@@ -135,25 +140,42 @@ class MainContent extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
-    let dButton = componentList.getComponents("mpItem");
-    console.log(dButton)
+    // let dButton = componentList.getComponents("mpItem");
+    // console.log(dButton)
 
     return (
-      <div style={{ width: "100%", display: "flex", flexDirection: "row", minHeight: "710px", justifyContent: "center", padding: "22px" }}>
+      <div style={{ width: "100%", display: "flex", flexDirection: "column", minHeight: "710px", 
+      justifyContent: "center", padding: "22px", }}>
         {/* <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div> */}
-{this.state.start&&
-        <MapComponent app={app} name="mpItem" theme="defaultRow" cells={[
-          
-          { name: "Download", class: "DR-hover-shimmer Button-Type2", func:(obj)=>{this.download(obj)}},
-          { type: "img", class: "Img-Midsize" },
-          { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
-          { type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item" },
-          { type: "richReader", name:"promotional", class:"Ellipsis-Text"},
-          
-          { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", hasLink: true, to: "/purchase/" },
 
-        ]} />
-}
+        <div style={{ width: "fit-content", display:"flex", flexDirection:"column",
+        position:"relative", alignSelf:"flex-end", paddingRight:"3vw"
+        }}>
+          <FilterByTypeComponent app={app} />
+          {/* // TAYLOR CONNECT THIS FILTER */}
+          <div style={{width:"99.9%", background:styles.colors.color8+"55", height:"2px",}}></div>
+        </div>
+
+        {this.state.start &&
+          <MapComponent app={app} name="mpItem" theme="defaultRow"
+            filters={[
+              { type: "textAndTag2", attributes: "title,promotional,description", search: state.search },
+            ]}
+            cells={[
+
+              { name: "Download", class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
+              { type: "img", class: "Img-Midsize" },
+              { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
+              {
+                type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item",
+                // func:(obj)=>{this.openMPItem(obj)} TAYLOR what do we want here
+              },
+              { type: "richReader", name: "promotional", class: "Ellipsis-Text" },
+
+              { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", },
+
+            ]} />
+        }
       </div>
 
     )

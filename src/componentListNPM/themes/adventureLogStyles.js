@@ -540,7 +540,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"75", 
+                background: appColors.colorBlack+"89", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -1177,7 +1177,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"75",
+                background: appColors.colorBlack+"89", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 
@@ -1804,7 +1804,7 @@ class AdventureLogStyles {
             popupSmall:
             {
                 opacity:"100%", 
-                background: appColors.colorBlack+"75",
+                background: appColors.colorBlack+"89", 
                 padding:"10px", 
                 borderRadius:"2vmin", 
                 // borderStyle:"solid", 

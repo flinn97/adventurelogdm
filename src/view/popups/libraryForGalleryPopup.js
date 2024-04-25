@@ -99,7 +99,7 @@ class MainContent extends Component {
 <div style={{width:"100%", minHeight:"200px", }}>
 <div className='hover-btn' style={{...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "2vh",
                         marginTop: "1vh", alignSelf: "center", padding: "1%", color:styles.colors.color9}} onClick={async ()=>{
-              debugger
+              
               let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
               if(images){
                 dispatch({});
