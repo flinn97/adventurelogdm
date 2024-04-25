@@ -89,7 +89,7 @@ class MainContent extends Component {
   async download(mpItem) {
 
     let campaign = await auth.firebaseGetter(mpItem.getJson().campaignId, this.props.app.state.componentList, "_id", "campaign", false);
-    debugger
+    
     await campaign[0].setCompState({ mptype: mpItem.getJson().mptype })
     let requestBody = {
       email: this.props.app.state.user.getJson()._id,

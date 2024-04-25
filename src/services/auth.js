@@ -176,15 +176,19 @@ class Auth {
     //ComponentList = adding to the componentList
     //Attribute = attribute pair always a string "campaignID" or "_id"
     //Type = OPTIONAL this RETURNS the getList, string "monster",
-    async firebaseGetter(value, componentList, attribute, type, dispatch) {
-        
+    async firebaseGetter(value, componentList, attribute, type, dispatch, disclude) {
+        debugger
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
             IDlist.push(list[key].getJson()?._id)
         }
         let rawData1 = [];
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
+        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
+        if(disclude){
+            components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), where(disclude.attribute, "!=", disclude.value), orderBy('type'), orderBy("date") );
+        }
+
         if(type){
             let comps = await getDocs(components);
             for (const key in comps.docs) {

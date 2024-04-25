@@ -32,7 +32,7 @@ updateCampaignLinks(text) {
 
     // Use String.prototype.replace() to find and replace links
     var updatedText = text.replace(pattern, function(match, p1) {
-      debugger
+      
         // Extract the number from the URL
         var number;
         let id = p1.split("-")[1];
@@ -146,7 +146,7 @@ updateCampaignLinks(text) {
 
 
   async newLoreLink(loreName) {
-    debugger
+    
     let state = this.props.app?.state;
     let campId = toolService.getIdFromURL(true, 0);
     let componentList = this.props.app.state.componentList;

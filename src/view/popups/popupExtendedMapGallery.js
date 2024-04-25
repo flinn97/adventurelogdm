@@ -116,7 +116,7 @@ class MainContent extends Component {
             //TAYLOR //
             //Why is this not working//
             changePic={async (pic, path) => {
-              debugger
+              
               let lore = state.currentLore;
               let map = { picURL: pic, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
               await state.opps.cleanJsonPrepare({ addmap: map });

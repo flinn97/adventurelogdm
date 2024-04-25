@@ -77,7 +77,7 @@ export default class CampaignEditor extends Component {
 
     }
     else {
-      await auth.firebaseGetter(campId, state.componentList, "campaignId", "lore")
+      await auth.firebaseGetter(campId, state.componentList, "campaignId", "lore", undefined, {attribute:"type", value:"condition"} )
 
     }
 
@@ -88,7 +88,7 @@ export default class CampaignEditor extends Component {
       loreId = loreSplit[1];
       let lore = state.componentList.getComponent("lore", loreId, "_id");
       if (!lore) {
-        lore = await auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined);
+        lore = await auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined, {attribute:"type", value:"condition"});
         lore = lore[0]
       }
       await dispatch({ currentLore: lore });

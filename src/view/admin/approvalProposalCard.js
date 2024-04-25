@@ -213,7 +213,7 @@ class MainContent extends Component {
             textOptions={["No System", "D&D 5e", "D&D Pathfinder", "D&D 3.5e", "Other"]} /></div>
 
         <div style={{ ...styles.buttons.buttonAdd, width: "600px", justifySelf: "center", alignSelf: "center", display: "flex", marginTop: "100px", marginLeft: "38px" }} onClick={async () => {
-          debugger
+          
           let number = state.currentApproval.getJson().price;
           number = number.replace('.', '');
 

@@ -95,7 +95,7 @@ class UploadComponent extends Component {
       
 	};
     async handleSubmission()  {
-      debugger
+      
         let component = this.props.obj? this.props.obj: this.props.app.state.currentComponent
         if(this.state.newPics.length===0 && this.state.list.length===0){
             this.setState({message:"You still need to upload an image."})
@@ -227,7 +227,7 @@ class UploadComponent extends Component {
                                                 </div>  
 
                     <ViewMedia removeMedia={(obj)=>{
-                        debugger
+                        
                         
                         let list = [...this.state.list];
                         let paths =[...this.state.paths];
@@ -239,7 +239,7 @@ class UploadComponent extends Component {
                         newPics.splice(obj.index, 1);
 
                         this.setState({list:list, delList:delList, paths:paths, newPics:newPics});
-                        debugger
+                        
                         this.props.obj.deleteByIndex(obj.index);
                        
                     }} editable={true} media={[...this.state.list]} 

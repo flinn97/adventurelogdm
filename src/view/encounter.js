@@ -361,7 +361,7 @@ export default class Encounter extends Component {
                   paddingTop: "3px", paddingBottom: "3px", fontSize: styles.fonts.fontSmall, cursor: !obj?.getJson().isRunning ? "pointer" : "wait"
                 }}
                   onClick={async () => {
-                    debugger
+                    
 
                     // this.setState({showMonsterMap: false});
                     if (!obj?.getJson().isRunning) {

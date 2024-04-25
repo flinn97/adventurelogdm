@@ -36,7 +36,7 @@ export default class ApproveSubmission extends Component {
       <div style={{marginLeft:"100px"}} onClick={async()=>{
         
         let approval = this.props.obj;
-        debugger
+        
         let encCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "encounter");
         let loreCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "lore");
         let imgCount = await authservice.getCountByCampaingId(approval.getJson().campaignId, "image");
