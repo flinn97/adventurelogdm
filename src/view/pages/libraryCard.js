@@ -144,23 +144,24 @@ class MainContent extends Component {
     // console.log(dButton)
 
     return (
-      <div style={{ width: "100%", display: "flex", flexDirection: "column", minHeight: "710px", 
-      justifyContent: "center", padding: "22px", }}>
+      <div style={{ width: "100%", display: "flex", flexDirection: "column", minHeight: "71vh", minWidth:"70vw", 
+      padding: "22px", }}>
         {/* <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div> */}
 
         <div style={{ width: "fit-content", display:"flex", flexDirection:"column",
         position:"relative", alignSelf:"flex-end", paddingRight:"3vw"
         }}>
           <FilterByTypeComponent app={app} />
-          {/* // TAYLOR CONNECT THIS FILTER */}
+         
           <div style={{width:"99.9%", background:styles.colors.color8+"55", height:"2px",}}></div>
         </div>
 
         {this.state.start &&
           <MapComponent app={app} name="mpItem" theme="defaultRow"
             filters={[
-              { type: "textAndTag2", attributes: "title,promotional,description", search: state.search },
+              { type: "text", attribute: "mptype", search: state.filter },
             ]}
+            //FIX RESIZING
             cells={[
 
               { name: "Download", class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
