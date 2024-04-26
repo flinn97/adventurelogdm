@@ -632,3 +632,28 @@ input {
 .vault-door-handle {
   animation: spinAndWiggle 3.4s cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
+
+.vault-door-handle-stop {
+  animation: spinAndWiggle 3.4s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+@keyframes spin360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  94% {
+    transform: rotate(900deg);
+  }
+
+  97% {
+    transform: rotate(922deg);
+  }
+
+  100% {
+    transform: rotate(900deg);
+  }
+}
+
+.vault-door-handle-fast {
+  animation: spin360 3s cubic-bezier(.17,.67,.88,.86) forwards;
+}

@@ -144,7 +144,7 @@ class MainContent extends Component {
     // console.log(dButton)
 
     return (
-      <div style={{ width: "100%", display: "flex", flexDirection: "column", minHeight: "71vh", minWidth:"70vw", 
+      <div style={{ width: "100%", display: "flex", flexDirection: "column", minHeight: "71vh", minWidth:"71vw", 
       padding: "22px", }}>
         {/* <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div> */}
 

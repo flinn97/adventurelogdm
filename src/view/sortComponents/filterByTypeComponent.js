@@ -1,22 +1,27 @@
 import React, { useState, useEffect, Component } from "react";
-import placeholder from "../../pics/loreFeather.png";
+import placeholder from "../../pics/animateSplash.png";
 import encSwords from "../../pics/encounterSwords.png";
+import encSwords2 from "../../pics/encounterSwords2.png";
 import imgSquareIco from "../../pics/imgSquareIco.png";
+import imgSquareIco2 from "../../pics/imgSquareIco2.png";
 import campaignBook from "../../pics/campaignBook.png";
+import campaignBook2 from "../../pics/campaignBook2.png";
 import mapPin from "../../pics/mapPin.png";
+import mapPin2 from "../../pics/mapPin2.png";
 import loreFeather from "../../pics/loreFeather.png";
+import loreFeather2 from "../../pics/loreFeather2.png";
 
 export default class FilterByTypeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSel: this.props.app.state?.searchState
+      currentSel: undefined
     };
 
   }
 
   componentDidMount() {
-    this.setState({ currentSel: this.props.app.state?.searchState })
+    this.setState({ currentSel: undefined })
   }
 
   render() {
@@ -44,6 +49,15 @@ export default class FilterByTypeComponent extends Component {
       
     };
 
+    const typeIcons2 = {
+      Campaign: campaignBook2,
+      Map: mapPin2,
+      Lore: loreFeather2,
+      Encounter: encSwords2,
+      Image: imgSquareIco2,
+      
+    };
+
     return (
       <div style={{ width: "fit-content", color: styles.colors.colorWhite + "99", userSelect: "none" }}>
 
@@ -62,12 +76,28 @@ export default class FilterByTypeComponent extends Component {
               border: (type + "s") === this.state.currentSel ? "2px solid " + styles.colors.color3 + "44" : "2px solid " + styles.colors.color2 + "1e",
             }}>
 
-            <img src={typeIcons[type] || placeholder} alt={"ico"} style={{ width: "fit-content", alignSelf: "center", justifySelf: "center", width: "32px", marginBottom:"6px" }} />
+            <img src={(type + "s") === this.state.currentSel ?typeIcons2[type]:typeIcons[type] || placeholder} alt={"ico"} style={{ width: "fit-content", alignSelf: "center", justifySelf: "center", width: "32px", marginBottom:"6px" }} />
             <div style={{ fontFamily: "inria", fontSize: "1.02rem", color: styles.colors.colorWhite + "e8", width: "fit-content", alignSelf: "center", justifySelf: "center", }}>{type !== "Lore" ? type + "s" : type}
             </div>
           </div>
           )}
+          <div
+            className="hover-img"
+            onClick={() => {
+              this.setState({ currentSel: undefined })
+              dispatch({ searchState: "", filter:"" })
+            }} style={{
+              ...styling,
+              background: this.state.currentSel === undefined ? styles.colors.color4 + "30" : "",
+              border: this.state.currentSel === undefined ? "2px solid " + styles.colors.color3 + "44" : "2px solid " + styles.colors.color2 + "1e",
+            }}>
+
+            <img className={this.state.currentSel === undefined ?"vault-door-handle-fast":"vault-door-handle-stop"} src={placeholder} alt={"ico"} style={{ width: "fit-content", alignSelf: "center", justifySelf: "center", width: "32px", marginBottom:"6px" }} />
+            <div style={{ fontFamily: "inria", fontSize: "1.02rem", color: styles.colors.colorWhite + "e8", width: "fit-content", alignSelf: "center", justifySelf: "center", }}>All
+            </div>
+          </div>
         </div>
+        
       </div>
     );
   }
