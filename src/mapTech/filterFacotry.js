@@ -40,6 +40,7 @@ export default class FilterFactory {
 
 }
 
+
 function filterByTag(json) {
     let { list, attribute, tagList } = json;
     if (list.length > 0) {

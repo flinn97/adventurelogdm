@@ -109,14 +109,15 @@ class MapComponent extends Component {
     render() {
         
         let mapComponentInterface = mapInterface;
-        let filterFacotry = mapComponentInterface.getFilterFactory();
+        let filterFactory = mapComponentInterface.getFilterFactory();
         let app = this.props.app?this.props.app:mapComponentInterface.getApp();
         let state = app?.state;
         let componentList = mapComponentInterface?.getComponentList();
         let cells = this.props.cells;
         let name = this.props.name;
         
-        let filters = this.props.filters;
+        let filter = this.props.filter;
+        let filters = this.props.filters || [];
         let filterFunc = this.props.filterFunc;
         if(!filterFunc && filters!==undefined){
             let funcOb = filters?.find(obj=>obj.type==="filterFunc");
@@ -124,7 +125,7 @@ class MapComponent extends Component {
                 filterFunc = funcOb.func 
             }
         }
-        let filter = this.props.filter;
+        
         if(!filter&& filters!==undefined){
             let filterOb = filters?.find(obj=>obj.type==="filter");
             if(filterOb){
@@ -134,27 +135,49 @@ class MapComponent extends Component {
 
         
         let list = this.props.list ? this.props.list : filter ? componentList?.getList(name, filter?.search, filter?.attribute) : componentList?.getList(name);
-        if (list) {
-            list =list.filter((obj) => {
-                if (filterFunc) {
-                    return filterFunc(obj)
-                }
-                else {
-                    return true
-                }
-            }
-            );
+        //TAYLOR
+        // why not let list = this.props.list || componentList?.getList(this.props.name); ??? 
+
+        // if (filterFunc) {
+        //     list = list.filter(filterFunc);
+        // }
+        
+        // if (list) {
+        //     list =list.filter((obj) => {
+        //         if (filterFunc) {
+        //             return filterFunc(obj)
+        //         }
+        //         else {
+        //             return true
+        //         }
+        //     }
+        //     );
+        // }
+
+        // if(filters){
+        //     for(let obj of filters){
+        //         let func = filterFacotry.getFilter(obj.type);
+        //         if(func){
+        //             list = func({list:list, ...obj});
+        //         }
+        //     }
+
+        // }
+
+        if (filterFunc) {
+            list = list.filter(filterFunc);
         }
 
-        if(filters){
-            for(let obj of filters){
-                let func = filterFacotry.getFilter(obj.type);
-                if(func){
-                    list = func({list:list, ...obj});
-                }
+        filters.forEach(filterItem => {
+            if (typeof filterItem === 'function') {
+                // Apply direct function filters
+                list = list.filter(filterItem);
+            } else if (filterItem.type && filterFactory.getFilter(filterItem.type)) {
+                // Apply filters defined by type, using the filter factory
+                let func = filterFactory.getFilter(filterItem.type);
+                list = func({ list, ...filterItem });
             }
-
-        }
+        });
 
 
         let props = { interface: mapComponentInterface, app: app, cells: cells, list: list, theme:this.props.theme, type:this.props.type, ...this.props }

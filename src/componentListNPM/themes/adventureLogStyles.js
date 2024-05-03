@@ -526,6 +526,18 @@ class AdventureLogStyles {
                                     alignSelf: "center",
                                     justifySelf: "center"
                                 },
+
+                                popupCreate2:
+                                    {     width: "83vw",
+                                    height: "85vh", marginRight:"1.1vw", marginLeft:window.innerWidth > 800?"240px":"",
+                                    border: "3px solid #ffffff55",
+                                    background: appColors.colorBlack,
+                                    borderRadius: "23px",
+                                    boxShadow: "2px 3px 6px" + appColors.colorBlack,
+                                    userSelect: "none",
+                                    alignSelf: "center",
+                                    justifySelf: "center"
+                                },
             popupMedium:
             {
                 width: "fit-content",
@@ -1163,6 +1175,17 @@ class AdventureLogStyles {
                                     alignSelf: "center",
                                     justifySelf: "center"
                                 },
+                                popupCreate2:
+                                    {     width: "83vw",
+                                    height: "85vh", marginRight:"1.1vw", marginLeft:window.innerWidth > 800?"240px":"",
+                                    border: "3px solid #ffffff55",
+                                    background: appColors.colorBlack,
+                                    borderRadius: "23px",
+                                    boxShadow: "2px 3px 6px" + appColors.colorBlack,
+                                    userSelect: "none",
+                                    alignSelf: "center",
+                                    justifySelf: "center"
+                                },
                             popupMedium:
             {
                 width: "fit-content",
@@ -1778,6 +1801,17 @@ class AdventureLogStyles {
                                             alignSelf: "center",
                                             justifySelf: "center"
                                         },
+                                        popupCreate2:
+                                    {     width: "83vw",
+                                    height: "85vh", marginRight:"1.1vw", marginLeft:window.innerWidth > 800?"240px":"",
+                                    border: "3px solid #ffffff55",
+                                    background: appColors.colorBlack,
+                                    borderRadius: "23px",
+                                    boxShadow: "2px 3px 6px" + appColors.colorBlack,
+                                    userSelect: "none",
+                                    alignSelf: "center",
+                                    justifySelf: "center"
+                                },
                                         popupLarge:
                                         {
                                             width: "fit-content",

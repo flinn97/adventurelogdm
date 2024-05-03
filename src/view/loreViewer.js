@@ -96,8 +96,8 @@ export default class LoreViewer extends Component {
 
     // this.scrollTo(this.startRef,"smooth");
 
-    this.setState({ obj: component, lore: currentLore, map: map });
-
+    this.setState({ obj: component, lore: currentLore, map: map, isSideBarVisible: false });
+    app.dispatch({isSideBarVisible:app.state.isSideBarVisible?app.state.isSideBarVisible:false})
   }
 
   componentDidUpdate(props, state) {
@@ -105,15 +105,14 @@ export default class LoreViewer extends Component {
       this.componentDidMount();
     }
 
-    if(this.props.app.state.viewMap!==props.app.state.viewMap && this.props.app.state.viewMap!==undefined){
-      this.setState({map:this.props.app.state.viewMap, currentMap:this.props.app.state.viewMap})
+    if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
+      this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
 
     }
   }
 
   toggleSidebar = () => {
-    this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
-
+    this.props.app.dispatch({isSideBarVisible:!this.props.app.state.isSideBarVisible})
   };
 
   getUniqueRandomColor(colorList) {
@@ -152,6 +151,7 @@ export default class LoreViewer extends Component {
     let componentList = currentState.componentList;
     let id = this.state.obj?.getJson()._id;
 
+
     let lore = this.props.app.state.currentLore;
 
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
@@ -176,7 +176,7 @@ export default class LoreViewer extends Component {
       "</div>;
 
     const mapUpload = <MapUploader
-    //TAYLOR //
+      //TAYLOR //
       //Why is this not working//
       changePic={async (pic, path) => {
 
@@ -403,21 +403,30 @@ export default class LoreViewer extends Component {
 
           </div>
 
-          <div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
-            ...styles.buttons.buttonAdd,
+          {(state.popupSwitch===""||state.popupSwitch===undefined) && (<div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
+            ...styles.buttons.buttonAdd, overflow:"hidden", justifyContent:"flex-start",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
+            transition:'all 0.5s ease-in-out',
+            height:state.isSideBarVisible?"28px":"45px",
             padding: "5px 9px", border: "none", zIndex: "9000", position: "fixed", right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
           }}>
-            {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
-            {!this.state.isSidebarVisible &&
+            <div style={{display:"flex", flexDirection:"row"}}>{state.isSideBarVisible ? "Hide Lore": "Show All Lore"}
+              <img src={backarrow} alt=">" style={{ width: "12px", marginLeft: "11px", marginTop:"6px", height:"11px", 
+              transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out" }}></img>
+            </div>
+            
               <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
-            }
-          </div>
+            
+          </div>)}
           <div ref={this.loreRef} />
-          {this.state.isSidebarVisible && (<div style={{ position: "fixed", zIndex: "8000", right: "9px", top: "3vh", }}>
+          {
+          // state.isSideBarVisible && 
+          (state.popupSwitch===""||state.popupSwitch===undefined) && 
+          (<div style={{ position: "fixed", zIndex: "8000", right: "9px", top: "3vh"}}>
             {/* SIDEBAR */}
             <div style={{ display: "flex", width: "fit-content", height: "100%", }}>
-              <LoreListCard app={app} type="card" options={{ cardType: "tallestCard" }} />
+            <LoreListCard app={app} type="card" options={{ cardType:state.isSideBarVisible? "tallestCard":"none" }} isVisible={state.isSideBarVisible}/>
+
             </div>
           </div>)}
 
