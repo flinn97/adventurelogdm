@@ -153,7 +153,11 @@ export default class MonsterMapItem extends Component {
     let obj = this.props.obj;
 
     let allColors = obj.getJson().colors;
-    let colors = Object.values(allColors); // ["#000000", "#ffffff", "#44fead"]
+    let colors;
+    if(allColors){
+      colors = Object.values(allColors); 
+    }
+    // ["#000000", "#ffffff", "#44fead"]
 
 
 
@@ -181,8 +185,8 @@ export default class MonsterMapItem extends Component {
 
     const currentTurn = this.props.obj.getJson()?.currentTurn;
 
-    let borderGradient = currentTurn === lastInitAsNumber ?
-      `solid 1px ${colors[5]}66` : "";
+    let borderGradient = colors? currentTurn === lastInitAsNumber ?
+      `solid 1px ${colors[5]}66` : "": "";
 
     const otherWord = (
 
@@ -396,7 +400,7 @@ export default class MonsterMapItem extends Component {
                     justifyContent: "center",
                     flexDirection: "column",
                     textAlign: "center",
-                    marginRight: "1vw",
+                    marginright: 32,
                   }}
                 >
                   <div style={{

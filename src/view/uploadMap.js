@@ -24,6 +24,7 @@ export default class MapUploader extends Component {
     async componentDidUpdate(){
         if(this.state.uploaded ===true){
           await this.setState({uploaded:false});
+          
           this.props.changePic(this.state.pic, this.state.path);  
         }
     }

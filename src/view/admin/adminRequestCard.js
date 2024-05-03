@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import "../../App.css"
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import auth from '../../services/auth';
-import treeService from '../../services/treeService';
+import Approve from './approve';
 
 /**
  * condensed version of the cards.
@@ -13,7 +14,7 @@ import treeService from '../../services/treeService';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class MarketCard extends Component {
+export default class AdminRequestCard extends Component {
   constructor(props) {
     super(props);
     
@@ -83,15 +84,14 @@ class MainContent extends Component{
   constructor(props) {
     super(props);
     this.state={
-      start: false,
+      start: false
     }
   }
   async componentDidMount(){
-    //
+    
 
-    await auth.firebaseGetter("marketplaceItem", this.props.app.state.componentList, "type", false, this.props.app.dispatch)
-    this.setState({start: true})
-
+    await auth.firebaseGetter("partnerRequest", this.props.app.state.componentList, "type", "user")
+    this.setState({start:true})
   }
 
   render(){
@@ -103,16 +103,22 @@ class MainContent extends Component{
     
 
     return(
-      <div style={{width:"100%", display:"flex", flexDirection:"row", minHeight:"710px", justifyContent:"center", padding:"22px"}}>
-      <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div>
-      {/* {this.state.start &&
-      <MapComponent app ={app} name="marketplaceItem" filter={{search: "campaign", attribute:"ogType"}} cells={["title", "delete"]} functions={{cells:[0], functions:[(comp)=>{
-        //
-        treeService.convertMarketplaceItemToLoreTree(comp, componentList, "campaignId")}]}}/>}
-         */}
-       {/* <div style={{color:styles.colors.color3}}>Buy Stuff</div> */}
+    <div >
+      <div style ={{display:"flex", width:"100%", flexDirection: "row", justifyContent: "space-between",}}>
+      <h1>First Name</h1>
+        <h1>Last Name</h1>
+        <h1>Email</h1>
+        <h1>Company Name</h1>
+        <h1>URL</h1>
+        <h1>Application Date</h1>
+        <h1>Content</h1>
+        <h1>Approve?</h1>
       </div>
-      
+      <div>
+      {this.state.start &&
+      <MapComponent app={app} name="partnerRequest" cells={["email",{custom:Approve, props: {app:app}}]} linkOptions={{cells:[0], path:["/partner/"], attribute:"owner"}}/> }
+      </div>
+    </div>
     )
   }
 }
@@ -129,11 +135,17 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",
-    fontSize:styles.fonts.fontSubheader1}}>
-    Marketplace
-    </div>
+      <div>
+      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
+      <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
+      </div>
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
+      Game Master Suite
+      </div>
+      <hr></hr> */}
+      </div>
     )
   }
 }
@@ -151,11 +163,11 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:styles.colors.color2+"4e", borderRadius:"1.2vw"}}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
             <MainContent app={app} />
             </div>
         </div>

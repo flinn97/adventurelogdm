@@ -41,6 +41,7 @@ render() {
     <div>
       {(name) && 
     <div  className="hover-btn" title={"Open"} style={{ 
+      transition:"all .4s ease-out",
       cursor: l!==0?"pointer":"", fontSize:styles.fonts.fontSmallest, textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
     alignContent:"stretch",
     marginBottom:l===0?"5px":"11px",}}
@@ -67,7 +68,7 @@ render() {
       
       src={backarrow} style={{ transition:"all .4s ease-out", marginLeft:"8px", verticalAlign:"center", marginTop:"8px", 
         transform:expanded?"rotate(270deg)":"rotate(180deg)",
-         
+        transition: "transform 0.3s ease-in-out",
         filter: "grayscale(100%) contrast(300%) brightness(200%)",
          objectFit:"contain", 
          opacity:l===0?"0%":"100%",

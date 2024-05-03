@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import MarketCard from './marketCard';
+import LibraryCard from './libraryCard';
 
 
-export default class Market extends Component {
+export default class Library extends Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +22,7 @@ export default class Market extends Component {
     return (
       <div>     
       
-      <MarketCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      <LibraryCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
       </div>
 
     )

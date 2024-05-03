@@ -93,7 +93,7 @@ class MainContent extends Component{
     
 
     return(
-      <div className='scroller2'  style={{ overflowX:"scroll",
+      <div style={{ 
         display:"flex", width:"100%", height:"100%", flexDirection:"column", justifyContent:"space-between",
         
         paddingTop:"8px", fontFamily:"serif", fontSize:styles.fonts.fontNormal,}}>
@@ -253,7 +253,7 @@ handleClickOutside(event) {
         <TabContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/> <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
                   } onClick={this.props.handleClose}>x</div></div>   
-      <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+      <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app} handleClose={this.props.handleClose}  delClick={this.props.delClick}/>
         </div>
         </div>
@@ -281,7 +281,7 @@ class Card extends Component{
     let styles =state.styles;
 
     return(
-      <div className='scroller'  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"] }}>   
+      <div style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"] }}>   
             <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
               <MainContent app={app} />
             </div>

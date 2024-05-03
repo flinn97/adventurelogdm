@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import "../../App.css"
 import CampaignCard from './campaignCard';
 import NoteCard from './noteCard';
-import LibraryCard from '../libraryCard';
-import MarketCard from './marketCard';
+
 import animate from '../../pics/animateSplash.png';
 import hold from '../../pics/holdSplash.png';
 import ava from '../../pics/ava logo empty.png';

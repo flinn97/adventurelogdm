@@ -9,11 +9,13 @@ import ThemeFactory from './componentListNPM/themes/themeFactory';
 import Home from './view/pages/home';
 import Campaign from './view/pages/campaign';
 import Note from './view/pages/note';
-import Market from './view/pages/market';
+import Library from './view/pages/library.js';
 import EncounterManager from './view/pages/encounterManager';
 
 import PlayerHome from './view/pages/playerHome.js';
 import SplashScreen from './view/pages/splashScreen.js';
+import { json as fakeData } from './models/fakeData.js';
+import { mapInterface } from './mapTech/mapComponentInterface.js';
 
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 //New comment
@@ -62,6 +64,7 @@ export default class App extends Component {
       myswitch: "home",
       defaultTheme: "adventure",
       globalTheme: "",
+      viewMap:undefined,
 
       //THIS IS THE NAV MENU
       switchCase:[
@@ -69,7 +72,7 @@ export default class App extends Component {
         ///Added Notes
         {path: "/notes", comp:Note, name: "Notes"},
         ///Added Marketplace
-        {path: "/market", comp:Market, name: "Marketplace"},
+        {path: "/library", comp:Library, name: "Library"},
         ///
        
       ]
@@ -156,11 +159,17 @@ handleChange = (event) => {
           
          await this.state.componentListInterface.getFactory().registerComponents({name:key, component:obj[key]});
         }
-        
+        for(let c of fakeData){
+          
+          await list.getOperationsFactory().cleanJsonPrepareRun({["add"+c.type]:c})
+        }
+        await mapInterface.setAppComponent(this);
+        await mapInterface.setApp(["state", "dispatch"]);
+        await mapInterface.setComponentList(list);
     }
     try{
     let user = await auth.getCurrentUser();
-    debugger
+    
     if(user && user!=="null" && user!=="undefined"){
       await auth.checkIfLoggedIn();
       

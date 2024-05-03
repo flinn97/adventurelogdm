@@ -9,6 +9,7 @@ export default class ComponentListInterface{
     operationsFactory;
     dispatch;
     constructor(dispatch){
+        
         this.getFactory= this.getFactory.bind(this);
         this.createComponentList= this.createComponentList.bind(this);
         this.getOperationsFactory= this.getOperationsFactory.bind(this);
@@ -39,7 +40,7 @@ export default class ComponentListInterface{
         return this.operationsFactory;
     }
     getNewOperationsFactory(){
-
+        
             let opps= new OppsFactory(this);
 
         return opps;

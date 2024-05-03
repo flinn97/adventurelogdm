@@ -7,7 +7,7 @@ import AddEncounter from '../AddEncounter';
 import MapComponent from '../../componentListNPM/mapTech/mapComponent';
 import EncounterMapItem from '../encounterMapItem';
 import backarrow from '../../pics/backArrow.webp';
-
+import auth from '../../services/auth';
 import q from '../../pics/question.png';
 import newWindow from '../../pics/newWindow.png';
 import dup from '../../pics/dup.png'
@@ -21,6 +21,7 @@ import IconChange from '../iconChange';
 import loreIndexService from '../../services/loreIndexService';
 import idService from '../../componentListNPM/idService';
 import toolService from '../../services/toolService';
+import LibraryLoreSearch from '../libraryLoreSearch';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -274,7 +275,7 @@ class MainContent extends Component {
       "</div>;
 
 
-    const filteredList = componentList.getList("encounter", idList[0], "campaignId")
+    const filteredList = componentList.getList("encounter")
       .filter(encounter => {
         const name = encounter?.getJson()?.name || "";
         return name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
@@ -559,7 +560,7 @@ class MainContent extends Component {
                   <div style={{
                     display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
                     justifySelf: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width:"fit-content", alignSelf:"flex-end"
+                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
                   }}>
                     <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
                   </div>
@@ -569,33 +570,33 @@ class MainContent extends Component {
                       theme={"adventureLog"}
                       rows={5} linkLore={true}
                       // prepareRun={true}
-                      type={"quill"} onPaste={this.handlePaste}
-                      /></div>
+                      type={"quill"} onPaste={this.handlePaste} connectLore={true}
+                    /></div>
 
 
 
                   <div style={{
                     display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
                     justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width:"fit-content", alignSelf:"flex-end"
-                  
+                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
+
                   }}>
                     <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
                   </div>
                   <div
                     style={{
                       color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
-                      marginTop: "42px" , marginBottom: "45px",
+                      marginTop: "42px", marginBottom: "45px",
                     }}> Handout:
 
-                    <div style={{flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "99%", justifyContent:"center" }}>
-                    <ParentFormComponent app={app} name="handoutText" obj={lore}
+                    <div style={{ flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "99%", justifyContent: "center" }}>
+                      <ParentFormComponent app={app} name="handoutText" obj={lore}
                         theme={"adventureLog"}
                         rows={5}
                         // prepareRun={true}
-                        type={"quill"} onPaste={this.handlePaste}
-                      
-                       /></div>
+                        type={"quill"} onPaste={this.handlePaste} connectLore={true}
+
+                      /></div>
                   </div>
                 </div>}
 
@@ -704,7 +705,15 @@ class MainContent extends Component {
                 {this.state.showFindEncounter &&
                   <div>
                     <div style={{ display: "flex", justifyContent: "flex-end", }}>
-
+                      <div className='hover-btn' style={{
+                        ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginRight: "20px",
+                        alignSelf: "center", color: styles.colors.color9, padding: "4px 16px"
+                      }} onClick={async () => {
+                        let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+                        if (encounter) {
+                          dispatch({})
+                        }
+                      }}>Import Library</div>
                       <input app={app}
 
                         type="input"
@@ -722,7 +731,7 @@ class MainContent extends Component {
                       />
                     </div>
 
-                    <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3vh", }}>
+                    <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3vh", flexWrap: "wrap" }}>
 
 
                       {
@@ -1129,8 +1138,65 @@ class MainContent extends Component {
                   style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
                   Move or Connect Existing Lore
                 </div>
+
+                {/* DISABLE FOR NOW 
+                <div className='hover-btn'
+                  onClick={async () => {
+                    this.setState({ hasChoice: "fromLibrary" });
+                    state.opps.clearUpdater();
+
+                    let libLore = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "lore");
+                    if (libLore) {
+                      dispatch({})
+                    }
+                    
+                  }}
+                  title={"Find pre-made Lore from Library"}
+                  style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
+                  Add-On From Library
+                </div> */}
               </div>
 
+            </div>
+          }
+
+          {(this.state.hasChoice === "fromLibrary") &&
+            <div>
+              <div className="hover-btn"
+                onClick={() => {
+                  this.setState({ hasChoice: "" })
+                }}
+                style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "44px", padding: "2px 8px"
+                }}
+
+              >
+                <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem" }}
+                  src={backarrow}
+                />
+                Back
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-40px", marginBottom: "25px", }}>
+                <input app={app}
+
+                  type="input"
+                  placeholder={"Search Lore..."}
+                  value={this.state.searchTerm}
+                  onChange={this.handleSearchChange}
+                  style={{
+                    backgroundColor: styles.colors.color1 + "ee",
+                    color: styles.colors.colorWhite,
+                    borderRadius: "11px",
+                    width: "420px",
+                    padding: '8px',
+                    fontSize: '16px',
+                  }}
+                />
+              </div>
+
+              <LibraryLoreSearch app={app} search={this.state.searchTerm.toLowerCase()} />
             </div>
           }
 
@@ -1153,6 +1219,8 @@ class MainContent extends Component {
               </div>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-40px", marginBottom: "25px", }}>
+
+
 
                 <input app={app}
 
@@ -1340,7 +1408,7 @@ class TabContent extends Component {
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
 
-        <div style={{ ...styles.buttons.buttonClose }}
+        <div style={{ ...styles.buttons.buttonClose,  }}
           onClick={this.props.handleClose}
         >
           X
@@ -1384,7 +1452,7 @@ class Popup extends Component {
 
 
 
-          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: "1vw" }}
+          <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: 32 }}
             onClick={this.props.handleClose}>X</div>
 
           <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>

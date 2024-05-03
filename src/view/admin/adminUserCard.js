@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import "../../App.css"
+import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+import auth from '../../services/auth';
 
 /**
  * condensed version of the cards.
@@ -10,7 +13,7 @@ import React, { Component } from 'react';
  * options
  * options can include cardType, cardContent, tabType, 
  */
-export default class LibraryCard extends Component {
+export default class AdminUserCard extends Component {
   constructor(props) {
     super(props);
     
@@ -79,7 +82,15 @@ export default class LibraryCard extends Component {
 class MainContent extends Component{
   constructor(props) {
     super(props);
+    this.state={
+      start: false
+    }
   }
+  async componentDidMount(){
+    await auth.firebaseGetter("user", this.props.app.state.componentList, "type", "user")
+    this.setState({start:true})
+  }
+
   render(){
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -89,11 +100,20 @@ class MainContent extends Component{
     
 
     return(
-      <div class="" style={{color:styles.colors.color8,}}>
-      ~Coming Soon~
-
-      </div>
       
+    <div style={{height:"100%"}} >
+      <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
+        <h1>Username</h1>
+        <h1>Payment Period</h1>
+        <h1>Payment Method</h1>
+        <h1>Payment Type</h1>
+        <h1>Suspend</h1>
+      </div>
+      <div>
+      {this.state.start &&
+      <MapComponent app={app} name="user" cells={["firstName", "lastName"]}/> }
+      </div>
+    </div>
     )
   }
 }
@@ -110,11 +130,17 @@ class TabContent extends Component{
     let styles =state.styles;
 
     return(
-    <div style={{display:"flex", justifyContent:"space-between", fontFamily:"serif", color:styles.colors.colorWhite, flexDirection:"row",
-    userSelect:"none", verticalAlign:"center", fontWeight:"600",
-    fontSize:styles.fonts.fontSubheader1}}>
-            Library
-    </div>
+      <div>
+      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
+      <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
+      </div>
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+    fontSize:styles.fonts.fontSubheader1,  color:styles.colors.color8}}>
+      Game Master Suite
+      </div>
+      <hr></hr> */}
+      </div>
     )
   }
 }
@@ -132,11 +158,11 @@ class CardWithTab extends Component{
 
     return(
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],backgroundColor:"#9cd9cf0e", borderRadius:"1.2vw", paddingBottom:"22px"}}>  
+      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
           {/* //Tab content  */}
           <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
           {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
             <MainContent app={app} />
             </div>
         </div>

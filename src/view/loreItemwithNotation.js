@@ -141,7 +141,7 @@ export default class LoreItemWithNotation extends Component {
             marginLeft: "6px", marginTop: "47px",
             fontSize: styles.fonts.fontSmallest
           }}>
-          {(parentName!=="undefined"?'Part of '+parentName:"")}
+          {((parentName!=="undefined")&&(parentName!=="")&&parentName?parentName:"")}
         </div>}
 
 

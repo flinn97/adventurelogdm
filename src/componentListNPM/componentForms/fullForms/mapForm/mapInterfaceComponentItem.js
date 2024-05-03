@@ -55,7 +55,7 @@ export default class Login extends Component {
                         boxShadow: styles?.shadows?.homeShadow,
                         paddingTop: "2vh",
                         paddingLeft: "1vw",
-                        paddingRight: "1vw",
+                        paddingright: 32,
                         alignContent: "center",
                         alignItems: "center",
                         alignSelf: "center",

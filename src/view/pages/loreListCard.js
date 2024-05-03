@@ -65,7 +65,7 @@ export default class LoreListCard extends Component {
 
 
     return (
-      <div >
+      <div>
         
         {cards[this.props.type? this.props.type: "card"]}
         </div>
@@ -81,6 +81,9 @@ class MainContent extends Component{
   constructor(props) {
     super(props);
     this.getCampId = this.getCampId.bind(this);
+    this.state = {
+      isVisible: this.props.isVisible?this.props.isVisible:true,
+    }
   }
 
 getCampId(){
@@ -96,7 +99,7 @@ getCampId(){
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
-
+    let isVisible = state.isSideBarVisible;
     let expand = state.widthLoreBar?state.widthLoreBar:"";
     let addW = expand.length * 10;
     let w = addW + 290;
@@ -105,12 +108,17 @@ getCampId(){
     return(
       <div 
       style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content", maxHeight:"fit-content",
-       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, overflowX:"hidden"
+       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, overflowX:"hidden",transition: 'all .45s ease-out',
+       background:styles.colors.color1,  marginTop:!isVisible?"-3vh":"",
        }}>
             
             
           
-          <div className='scroller2' style={{minWidth:"480px", width:width, display:"flex", flexDirection:"row", marginTop:"5vh", height:"100%",  overflowX:"hidden",}}>
+          <div className={isVisible?'scroller2':''} style={{
+            overflow: isVisible?"":'hidden',
+            opacity:isVisible?"1":".028",
+            transition: 'all .45s ease-out',
+            minWidth:isVisible?"480px":0, width:isVisible?width:"0", display:"flex", flexDirection:"row", marginTop:"5vh", height:"fit-content",  overflowX:"hidden",}}>
           
             <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} count={0} 
             attribute={"parentId"}/>
@@ -202,7 +210,7 @@ handleClickOutside(event) {
                       styles.buttons.closeicon
                   } onClick={this.props.handleClose}>x</div>
           
-          <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+          <div  style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app} />
         </div>
           
@@ -242,14 +250,14 @@ handleClickOutside(event) {
     let styles =state.styles;
     
     return(
-      <div  className="popup-box" style={{ zIndex: "1010" }}>
+      <div  className="popup-box" style={{ zIndex: "1010", }}>
       <div ref={this.wrapperRef}  className="popupCard" 
-      style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]}}>
+      style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"],}}>
       
       <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
                       styles.buttons.closeicon
                   } onClick={this.props.handleClose}>X</div></div>   
-      <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+      <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app} />
         </div>
         </div>
@@ -276,8 +284,8 @@ class Card extends Component{
     let styles =state.styles;
 
     return(
-      <div className='scroller'  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"] }}>   
-            <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
+      <div className=''  style={{...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"], marginLeft:"-2vh"  }}>   
+            <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"],}}>
               <MainContent app={app} />
             </div>
       </div>

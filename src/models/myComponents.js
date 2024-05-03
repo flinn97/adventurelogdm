@@ -14,6 +14,7 @@ class componentBase extends BaseClass {
         this.addConnectedItemsMPI = this.addConnectedItemsMPI.bind(this)
         this.createFromMPI = this.createFromMPI.bind(this);
         this.addConnectedItemsLore = this.addConnectedItemsLore.bind(this);
+        this.createUUID=this.createUUID.bind(this);
     }
     json;
     startobj = {
@@ -46,6 +47,16 @@ class componentBase extends BaseClass {
     checksandtime = {
         checked: { mon: false, tues: false, wed: false, thur: false, fri: false, sat: false, sun: false, },
         time: { mon: '0', tues: '0', wed: '0', thur: '0', fri: '0', sat: '0', sun: '0' },
+    }
+
+    createUUID(length){
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
+        var charactersLength = characters.length;
+        for(var i =0; i<length; i++){
+            result +=characters.charAt(Math.floor(Math.random()*charactersLength));
+        }
+        return result;
     }
 
     /**
@@ -453,7 +464,7 @@ class Encounter extends componentBase {
                 await this.operationsFactory.jsonPrepare({ "addmonster": monsterJson });
                 let p = await this.operationsFactory.getUpdater("add")[0];
                 encPlayer.push(p);
-                await this.operationsFactory.run();
+                // await this.operationsFactory.run();
             };
         }
         return encPlayer
@@ -500,22 +511,76 @@ class Condition extends componentBase {
 }
 
 
-class MarketplaceItem extends componentBase {
-    constructor(opps) {
-        super(opps);
-        this.getPicSrc = this.getPicSrc.bind(this);
 
+
+class Approval extends componentBase{
+    json={
+        campaignId: "",
+        title: "",
+        description: "",
+        promotional: "",
+        price: "",
+        selector:"",
+        mptype:"mpCampaign",
+        tags:"",
+        type: "approval",
+        gameSystem: "",
+        indexes: {},
+        readyForDistribution:false
     }
-    json = {
-        type: "marketplaceItem",
-        id: "",
-    }
+
     async getPicSrc(path) {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
 
     }
+
+    deleteByIndex(index){
+        let id = this.json.indexes["index"+index];
+        let obj ={};
+        for(let key in this.json.picURLs){
+            if(key!==id){
+                obj[key]=this.json.picURLs[key];
+            }
+
+        }
+        this.json.picURLs = obj;
+        let indexes= {}
+        
+        for(let key in this.json.indexes){
+            let i = key[key.length - 1];
+            if(parseInt(i)>parseInt(index)){
+                let str = "index"+(parseInt(i)-1);
+                indexes[str]=this.json.indexes[key];
+            }
+            else if(parseInt(i)!==parseInt(index)){
+                indexes[key] = this.json.indexes[key];
+            }
+        }
+        this.json.indexes=indexes
+
+    }
+
+    async getPicSrcMedia(path, index){
+        
+        let obj={};
+        let indexes = {}
+        for(const key in path){
+            let pic = await auth.downloadPics(path[key]);
+            let id = "media"+this.createUUID(3)
+            obj[id]= pic;
+            indexes["index"+index] = id;
+
+        }
+        obj = {...obj, ...this.json.picURLs}
+        indexes= {...indexes, ...this.json.indexes};
+        this.json.indexes = indexes
+        
+        this.json.picURLs = obj
+        
+    }
 }
+
 class Monster extends componentBase {
     constructor(opps) {
         super(opps);
@@ -585,16 +650,51 @@ class Icon extends componentBase {
 
     }
 
+class Partner extends componentBase{
+    json={
+        type: "partner",
+        name: "",
+        email:"",
+        userId:"",
+        description:"",
+    }
+}
+
+class PartnerRequest extends componentBase{
+    json={
+        type: "partnerRequest",
+        name: "",
+        email:"",
+        userId:"",
+        description:"",
+    }
+}
+class MarketplaceItem extends componentBase {
+    constructor(opps) {
+        super(opps);
+        this.getPicSrc = this.getPicSrc.bind(this);
+
+    }
+    json = {
+        type: "mpItem",
+        id: "",
+    }
+    async getPicSrc(path) {
+        let pic = await authService.downloadPics(path);
+        this.json.picURL = pic;
+
+    }
+}
+
 function forFactory() {
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
-    return {
-        user: User, pin: Pin, campaign: Campaign,
-        encounter: Encounter, monster: Monster,
-        newNote: NewNote, map: Map, post: Post,
-        marketplaceItem: MarketplaceItem, icon:Icon,
-        condition: Condition,
-        lore: Lore, image: Image
-    }
+    return {user:User,pin:Pin,campaign:Campaign,
+        encounter:Encounter,monster:Monster,
+        newNote:NewNote,map:Map, post:Post,
+        marketplaceItem:MarketplaceItem,
+        condition:Condition, icon:Icon, 
+        lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem}
+
 }
 
 

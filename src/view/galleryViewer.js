@@ -67,10 +67,10 @@ export default class GalleryViewer extends Component {
                      
                
                 />
-  {state.currentLore!==undefined &&
+
                 <div className='hover-btn' onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} style={{...styles.buttons.buttonAdd, marginTop:"25px", backgroundColor:styles.colors.colorBlack+"99",
                       paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
-                      borderRadius:"9px", fontSize:"21px",}}>+ From Library</div>}
+                      borderRadius:"9px", fontSize:"21px",}}>+ From Library</div>
 
         </div>
 

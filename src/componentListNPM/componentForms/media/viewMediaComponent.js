@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import VideoPlayer from './videoJS';
 
 
-
 export default class ViewMedia extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +29,11 @@ export default class ViewMedia extends Component {
         <div style={{ position: "relative", borderRadius: "1vmin", }}>
           {this.props.editable && <div style={ ///EXIT BUTTON
             { color: "#A80303", fontWeight: "600", fontSize: "2.5vmin", textShadow: "0px 0px 2px white", width: "fit-content", height: "fit-content", position: "absolute", cursor: "pointer", right: ".4vmin", top: ".35vmin", background: "", padding: ".3vmin" }
-          } onClick={() => { this.props.removeMedia({ content: media[0], index: 0 }) }}> X </div>}
+          } 
+          // TAYLOR, this.props.removeMedia is not working as needed (i dont think)
+          // try adding photos, then delete them, and then change a little bit of code and save the code, all of the "Deleted" photos come back
+          
+          onClick={() => { this.props.removeMedia({ content: media[0], index: 0 }) }}> X </div>}
           <div style={{ width: "100%", height: "100%" }}>
             {media[0]?.video ? (<VideoPlayer disablePlayButton= {this.props.disablePlayButton} options={{
               autoplay: false,
