@@ -135,7 +135,7 @@ class MainContent extends Component {
               
                 <img src={sort} style={{ width: "41px", cursor: "pointer", }} />
 
-                <div className='hover-btn-highlight'  style={{color:styles.colors.color5, fontSize:".98rem",
+                <div style={{color:styles.colors.color5, fontSize:".98rem",
                   background:styles.colors.color1, transform:"rotate(-10deg)", width:"162px", marginLeft:"-50px", marginTop:"10px"}} className='hover-div'> (Sort Coming Soon) </div>
               </div>
 
