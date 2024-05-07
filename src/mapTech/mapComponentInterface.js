@@ -138,46 +138,46 @@ class MapComponent extends Component {
         //TAYLOR
         // why not let list = this.props.list || componentList?.getList(this.props.name); ??? 
 
-        // if (filterFunc) {
-        //     list = list.filter(filterFunc);
-        // }
-        
-        // if (list) {
-        //     list =list.filter((obj) => {
-        //         if (filterFunc) {
-        //             return filterFunc(obj)
-        //         }
-        //         else {
-        //             return true
-        //         }
-        //     }
-        //     );
-        // }
-
-        // if(filters){
-        //     for(let obj of filters){
-        //         let func = filterFacotry.getFilter(obj.type);
-        //         if(func){
-        //             list = func({list:list, ...obj});
-        //         }
-        //     }
-
-        // }
-
         if (filterFunc) {
             list = list.filter(filterFunc);
         }
-
-        filters.forEach(filterItem => {
-            if (typeof filterItem === 'function') {
-                // Apply direct function filters
-                list = list.filter(filterItem);
-            } else if (filterItem.type && filterFactory.getFilter(filterItem.type)) {
-                // Apply filters defined by type, using the filter factory
-                let func = filterFactory.getFilter(filterItem.type);
-                list = func({ list, ...filterItem });
+        
+        if (list) {
+            list =list.filter((obj) => {
+                if (filterFunc) {
+                    return filterFunc(obj)
+                }
+                else {
+                    return true
+                }
             }
-        });
+            );
+        }
+
+        if(filters){
+            for(let obj of filters){
+                let func = filterFactory.getFilter(obj.type);
+                if(func){
+                    list = func({list:list, ...obj});
+                }
+            }
+
+        }
+
+        // if (filterFunc) {
+        //     list = list.filter(filterFunc);
+        // }
+
+        // filters.forEach(filterItem => {
+        //     if (typeof filterItem === 'function') {
+        //         // Apply direct function filters
+        //         list = list.filter(filterItem);
+        //     } else if (filterItem.type && filterFactory.getFilter(filterItem.type)) {
+        //         // Apply filters defined by type, using the filter factory
+        //         let func = filterFactory.getFilter(filterItem.type);
+        //         list = func({ list, ...filterItem });
+        //     }
+        // });
 
 
         let props = { interface: mapComponentInterface, app: app, cells: cells, list: list, theme:this.props.theme, type:this.props.type, ...this.props }

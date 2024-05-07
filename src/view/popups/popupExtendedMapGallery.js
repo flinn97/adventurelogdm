@@ -66,6 +66,9 @@ export default class PopupExtendedMapSelector extends Component {
 class MainContent extends Component {
   constructor(props) {
     super(props);
+    this.filterItemsBySelectedCampaigns = this.filterItemsBySelectedCampaigns.bind(this);
+    this.filterUniqueByType = this.filterUniqueByType.bind(this);
+    this.createMapFromObj = this.createMapFromObj.bind(this);
     this.state = {
       colors: [],
       imagesToShow: 15,
@@ -73,6 +76,22 @@ class MainContent extends Component {
     };
   }
 
+
+  
+
+
+  async componentDidMount() {
+    let state = this.props.app.state;
+    this.setState({ selectedCampaign: state.selectedCampaign })
+  }
+
+  //FILTER BY SELECTED CAMPAIGNS
+  filterItemsBySelectedCampaigns = (item) => {
+    let state = this.props.app.state
+    let selectedIds = state.selectedCampaign ? state.selectedCampaign.split('_').filter(Boolean) : [];
+    return selectedIds.includes(item.getJson().campaignId);
+    
+  };
 
   async createMapFromObj(obj) {
 
@@ -86,23 +105,20 @@ class MainContent extends Component {
     await state.opps.run();
     await dispatch({ viewMap: map, popupSwitch: "" });
 
-
   }
 
-
-
-  async componentDidMount() {
-    let state = this.props.app.state;
-    this.setState({ selectedCampaign: state.selectedCampaign })
+ filterUniqueByType(list, type) {
+    const seenIds = new Set();
+    return list.filter(item => {
+      const json = item.getJson();
+      if (json.type === type && !seenIds.has(json._id)) {
+        seenIds.add(json._id);
+        return true;
+      }
+      return false;
+    });
   }
-
-  filterItemsBySelectedCampaigns = (item) => {
-    let state = this.props.app.state
-    let selectedIds = state.selectedCampaign ? state.selectedCampaign.split('_').filter(Boolean) : [];
-    console.log(selectedIds)
-    return selectedIds.includes(item.getJson().campaignId);
-    
-  };
+  
 
   render() {
     let app = this.props.app;
@@ -111,19 +127,24 @@ class MainContent extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
-    let iL = componentList.getList("image");
+    let imageList = [...componentList.getList("map"), ...componentList.getList("image")];
     
-    let mL = componentList.getList("map");
-    
-    let imageList = [... mL, ... iL];
     
     let list = [];
     let filteredImgList = []
-    let campaignIdList = new Set();  // Using a Set to avoid duplicates
+    let campaignIdList = new Set();  
+    let picUrls = new Set();
 
     // Assuming `selectedCampaign` is like "_1234_5678_9012_"
     let selectedIds = state.selectedCampaign ? state.selectedCampaign.split('_').filter(Boolean) : [];
     
+    imageList.forEach(image => {
+      let url = image.getJson().picURL;
+      if (!picUrls.has(url) && !image.getJson().isDuplicate) {
+        picUrls.add(url);
+        filteredImgList.push(image);
+      }
+    });
 
     for (let image of imageList) {
       if (!list.includes(image.getJson().picURL) && !list.includes(image.getJson().isDuplicate)) {
@@ -147,6 +168,9 @@ class MainContent extends Component {
     let filteredCampaigns = allCampaigns.filter(campaign =>
       campaignIdList.has(campaign.getJson()._id));
 
+      let finalList = selectedIds.length > 0 ? filteredImgList.filter(this.filterItemsBySelectedCampaigns) : filteredImgList;
+      let finalImageList = this.filterUniqueByType(finalList, "image");
+      let finalMapList = this.filterUniqueByType(finalList, "map");
 
     return (
       <div className='scroller2' style={{
@@ -269,7 +293,8 @@ class MainContent extends Component {
           <hr></hr>
             Add a Map:
             <MapComponent theme="defaultRowWrap" class='image-grid' app={app} 
-            filters={selectedIds.length > 0?[this.filterItemsBySelectedCampaigns]:[]}
+            list={finalMapList}
+            // filters={selectedIds.length > 0?[this.filterItemsBySelectedCampaigns]:[]}
               cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="map" />
 
 
@@ -277,7 +302,9 @@ class MainContent extends Component {
             Add an Image as a Map:
 
 
-            <MapComponent theme="defaultRowWrap" app={app}  filters={selectedIds.length > 0?[this.filterItemsBySelectedCampaigns]:[]}
+            <MapComponent theme="defaultRowWrap" app={app}
+            list={finalImageList}
+            // filters={selectedIds.length > 0?[this.filterItemsBySelectedCampaigns]:[]}
               cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="image" />
           </div>
         </div>
