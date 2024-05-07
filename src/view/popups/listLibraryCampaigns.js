@@ -99,9 +99,7 @@ export default class ListLibraryCampaigns extends Component {
                     top: "15%", fontWeight: "400",
                     paddingLeft: "5px",
                     color: campsAll.includes(camp.getJson()._id) ? styles.colors.colorWhite : styles.colors.color3,
-                    textDecoration: "underline .5px",
-                    textUnderlineOffset: "4px",
-                    textDecorationColor: styles.colors.color8,
+                    
                     textShadow: campsAll.includes(camp.getJson()._id) ? "2px 2px 2px black, -2px -2px 3px black" : "1px 2px 2px black",
                   }}>
                     {camp.getJson().title ? camp.getJson().title.substring(0, 29) : "Untitled"}
