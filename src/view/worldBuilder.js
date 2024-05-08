@@ -15,7 +15,7 @@ import LoreListCard from './pages/loreListCard';
 import MapUploader from './uploadMap.js';
 import toolService from '../services/toolService.js';
 import colorService from '../services/colorService.js';
-
+import backarrow from '../pics/backArrow.webp';
 export default class Worldbuilder extends Component {
 
 
@@ -68,7 +68,7 @@ export default class Worldbuilder extends Component {
     let id = toolService.getIdFromURL(true, 0);
     let component = this.props.app.state.componentList.getComponent("campaign", id);
     if (component) {
-      
+
       let lore = state.currentLore;
       if (lore === undefined) {
         let parentLore = this.props.app.state.componentList.getList("lore", id, "campaignId");
@@ -122,8 +122,7 @@ export default class Worldbuilder extends Component {
 
 
   toggleSidebar = () => {
-    this.setState({ isSidebarVisible: !this.state.isSidebarVisible });
-
+    this.props.app.dispatch({isSideBarVisible:!this.props.app.state.isSideBarVisible})
   };
 
   render() {
@@ -145,48 +144,48 @@ export default class Worldbuilder extends Component {
     let map = state.componentList.getComponent("map", this.props.topLore?.getJson()?._id, "loreId");
 
     const mapUpload = <MapUploader
-    //ADD THIS TO ALL UPLOADS//
-    changePic={async (pic, path) => {
-      let lore = this.state.lore;
+      //ADD THIS TO ALL UPLOADS//
+      changePic={async (pic, path) => {
+        let lore = this.state.lore;
 
-      let map = { picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: this.state.obj.getJson()._id, type: 'map' };
-      await state.opps.cleanJsonPrepare({ addmap: map });
-      map = await state.opps.getUpdater("add")[0];
-      await map.getPicSrc(path);
-
-
-
-      let colors = colorService.updateColors(pic, (palette) => {
-        this.setState({ colors: palette }, async () => {
-          let con = this.state.colors;
-          let list = Object.values(con);
-          await this.setState({ colors: list });
-
-          // Update lore colors
-          let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
-          let newAllColors = allColors.concat(list);
-          await lore.setCompState({ colors: newAllColors });
-          dispatch({
-            operate: "update", operation: "cleanPrepareRun", object: lore
-          })
+        let map = { picURL: pic, loreId: this.state.lore.getJson()._id, campaignId: this.state.obj.getJson()._id, type: 'map' };
+        await state.opps.cleanJsonPrepare({ addmap: map });
+        map = await state.opps.getUpdater("add")[0];
+        await map.getPicSrc(path);
 
 
+
+        let colors = colorService.updateColors(pic, (palette) => {
+          this.setState({ colors: palette }, async () => {
+            let con = this.state.colors;
+            let list = Object.values(con);
+            await this.setState({ colors: list });
+
+            // Update lore colors
+            let allColors = await this.state.lore.getJson().colors || [];  // Initialize to empty array if undefined
+            let newAllColors = allColors.concat(list);
+            await lore.setCompState({ colors: newAllColors });
+            dispatch({
+              operate: "update", operation: "cleanPrepareRun", object: lore
+            })
+
+
+          });
         });
-      });
 
-      state.opps.run();
-      this.setState({ map: map, currentMap: map })
+        state.opps.run();
+        this.setState({ map: map, currentMap: map })
 
 
-    }}
-    text="Add Map" 
-    title = "Large maps will take some time to load."
-    style={{
-      display: "flex", marginBottom: "20px",
-      zIndex: "1", background: "", cursor: "pointer"
-    }}
-    update={true} skipUpdate={true}
-    app={app} />;
+      }}
+      text="Add Map"
+      title="Large maps will take some time to load."
+      style={{
+        display: "flex", marginBottom: "20px",
+        zIndex: "1", background: "", cursor: "pointer"
+      }}
+      update={true} skipUpdate={true}
+      app={app} />;
 
     return (
 
@@ -207,13 +206,13 @@ export default class Worldbuilder extends Component {
               marginRight: "1rem", position: "relative", fontWeight: "600",
               fontSize: styles.fonts.fontSmall
             }} onClick={() => {
-                dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
-              }}>
+              dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
+            }}>
               Add Map
-              </div>
-          
-            
-            </div>}
+            </div>
+
+
+          </div>}
 
         {/* <div style={{...styles.buttons.buttonAdd, marginBottom:"1vh", }} onClick={()=>{dispatch({})}}>Add Map</div> */}
 
@@ -232,7 +231,7 @@ export default class Worldbuilder extends Component {
             {/* backgroundIMAGE */}
           </div>}
 
-        <div
+          {(state.popupSwitch===""||state.popupSwitch===undefined) && (<div
           title={
             "The Lore tree lets you quickly find Lore and their connections"}
           className="hover-btn" onClick={this.toggleSidebar} style={{
@@ -240,20 +239,25 @@ export default class Worldbuilder extends Component {
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
             padding: "5px 9px", border: "none", zIndex: "9000", position: "fixed", right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
           }}>
-          {this.state.isSidebarVisible ? "Hide Lore >" : "Show All Lore <"}
-          {!this.state.isSidebarVisible &&
-            <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
-          }
+          <div style={{ display: "flex", flexDirection: "row" }}> {state.isSideBarVisible ? "Hide Lore" : "Show All Lore"}
+          <img src={backarrow} alt=">" style={{ width: "12px", marginLeft: "11px", marginTop: "6px",height: "11px", transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out" }}></img>
         </div>
+        {!state.isSideBarVisible &&
+          <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
+        }
+      </div>)}
 
-        {this.state.isSidebarVisible && (<div style={{ position: "fixed", zIndex: "8000", right: "9px", top: "3vh", }}>
-          {/* SIDEBAR */}
-          <div style={{ display: "flex", width: "fit-content", }}>
-            <LoreListCard app={app} type="card" options={{ cardType: "tallestCard" }} />
-          </div>
-        </div>)}
+        {
+        // state.isSideBarVisible &&
+      (state.popupSwitch===""||state.popupSwitch===undefined) && (<div style={{ position: "fixed", zIndex: "8000", right: "9px", top: "3vh", }}>
+        {/* SIDEBAR */}
+        <div style={{ display: "flex", width: "fit-content", }}>
+        <LoreListCard app={app} type="card" options={{ cardType:state.isSideBarVisible? "tallestCard":"none" }} isVisible={state.isSideBarVisible}/>
+        </div>
+      </div>)
+    }
 
-      </div>
+      </div >
 
     )
   }

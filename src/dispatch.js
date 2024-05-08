@@ -163,9 +163,31 @@ export default class Dispatch extends Component {
                       />}
                     {(state.popupSwitch === "seeLibrary") &&
                       <LibraryForGalleryPopup
-                        type="popup" options={{ cardType: "popupMedium" }} app={app} containerStyle={{ background: styles.colors.color2 }}
-                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+                        type="popup" options={{ cardType: "popupLarge" }} app={app}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined, selectedCampaign:"" }) }}
 
+                      />}
+
+                      {state.popupSwitch === "chooseMap"
+                      &&
+                      <PopupExtendedMapSelector
+                        uploader={state.mapUpload}
+
+                        type="popup" options={{ cardType: "popupCreate2" }} app={app}
+                        containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
+                        handleClose={() => {
+                          app.dispatch({
+                            popupSwitch: "", currentDelObj: undefined,selectedCampaign: "",
+                            currentComponent: undefined, currentPin: undefined
+                          });
+                          state.opps.clearUpdater();
+                        }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => {
+                          app.dispatch({
+                            popupSwitch: "",
+                            currentDelObj: undefined,
+                          })
+                        }}
                       />}
                     {state.popupSwitch === "viewPic" && state.currentPic !== undefined &&
                       <ViewPic
@@ -247,27 +269,7 @@ export default class Dispatch extends Component {
                         }}
                       />}
 
-                    {state.popupSwitch === "chooseMap"
-                      &&
-                      <PopupExtendedMapSelector
-                        uploader={state.mapUpload}
-
-                        type="popup" options={{ cardType: "popupMedium" }} app={app}
-                        containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
-                        handleClose={() => {
-                          app.dispatch({
-                            popupSwitch: "", currentDelObj: undefined,
-                            currentComponent: undefined, currentPin: undefined
-                          });
-                          state.opps.clearUpdater();
-                        }}
-                        delClick={state.handlePopupClose ? state.handlePopupClose : () => {
-                          app.dispatch({
-                            popupSwitch: "",
-                            currentDelObj: undefined,
-                          })
-                        }}
-                      />}
+                    
 
                     {state.popupSwitch === "downloadLibrary"
                       &&

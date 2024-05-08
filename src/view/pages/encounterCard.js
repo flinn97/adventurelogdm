@@ -6,75 +6,67 @@ import AddEncounter from '../AddEncounter';
 import EncounterMapItem from '../encounterMapItem';
 import trash from '../../pics/trashStill.png';
 import auth from '../../services/auth';
+import sort from '../../pics/abSort.png';
 
-/**
- * condensed version of the cards.
- * Works with themes.
- * props
- * theme
- * type
- * app
- * options
- * options can include cardType, cardContent, tabType, 
- */
+
 export default class EncounterCard extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
 
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let href = window.location.href;
     let splitURL = href.split("/")
-    let id = splitURL[splitURL.length-1]
+    let id = splitURL[splitURL.length - 1]
     let component = this.props.app.state.componentList.getComponent("campaign", id)
-    this.setState({obj: component})
+    this.setState({ obj: component })
   }
 
 
   render() {
-    let app = {...this.props.app};
+    let app = { ...this.props.app };
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    
-    if(this.props.theme){
-      if(Object.prototype.toString.call(this.props.theme) === "[object String]"){
+    let styles = state.styles;
+
+
+    if (this.props.theme) {
+      if (Object.prototype.toString.call(this.props.theme) === "[object String]") {
         styles = state.themeFactory.getThemeFactory()[this.props.theme];
       }
-      else{
-        styles= this.props.theme;
+      else {
+        styles = this.props.theme;
       }
     }
-    app.state.styles=styles
-    
+    app.state.styles = styles
 
 
 
 
-        //********CARD ASSIGN********/
 
-        let cards={
+    //********CARD ASSIGN********/
 
-          card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
-          cardWithTab: <CardWithTab app={{...app, state:{...app.state, styles:styles}}} options={this.props.options} type={this.props.type}/>,
-          popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type}/>,
-          popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}/>
-//popupType={this.props.popupType} popupTab={this.props.popupTab}
-    
+    let cards = {
+
+      card: <Card app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} />,
+      cardWithTab: <CardWithTab app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} />,
+      popup: <Popup app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />,
+      popupWithTab: <PopupWithTab app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />
+      //popupType={this.props.popupType} popupTab={this.props.popupTab}
+
     }
-    
+
     //*********CARD ASSIGN********/
     return (
       <div >
-        
-        {cards[this.props.type? this.props.type: "card"]}
-        </div>
+
+        {cards[this.props.type ? this.props.type : "card"]}
+      </div>
 
     )
   }
@@ -83,145 +75,158 @@ export default class EncounterCard extends Component {
 
 
 //********CONTENTS********/
-class MainContent extends Component{
+class MainContent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      start:false
+      start: false
 
     }
   }
-  async componentDidMount(){
+  async componentDidMount() {
     let href = window.location.href;
     let splitURL = href.split("/")
-    let id = splitURL[splitURL.length-1];
+    let id = splitURL[splitURL.length - 1];
 
     let component = this.props.app.state.componentList.getComponent("campaign", id);
     await auth.firebaseGetter(id, this.props.app.state.componentList, "campaignId", "lore", this.props.app.dispatch);
 
-    this.setState({obj: component, start:true})
+    this.setState({ obj: component, start: true })
   }
 
-  async deleteEncounter () {
+  async deleteEncounter() {
     let dispatch = this.props.app.dispatch;
-    dispatch({popupSwitch:"", currentDelObj:undefined});
-            //OK DONT DO THIS
-              const delay = ms => new Promise(res => setTimeout(res, ms));
-              await delay(1500);
-    window.location.href="/encountermanager/";
+    dispatch({ popupSwitch: "", currentDelObj: undefined });
+    //OK DONT DO THIS
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    await delay(1500);
+    window.location.href = "/encountermanager/";
   }
 
 
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    
-    return(
-      
-      
-        <div>
-          {this.state.start&&<>
+    let styles = state.styles;
+
+
+    return (
+
+
+      <div>
+        {this.state.start && <>
           {/* //TAYLOR */}
-          { state.popUpSwitchcase !="addEncounter" &&
-          <div style={{...styles.buttons.buttonAdd, marginTop:"2vh", marginBottom:"2vh",}}
-          onClick={()=>{
-            //                  add > campaign          clear it > prepare not run           switchcase
-            dispatch({operate: "addencounter", operation: "cleanJsonPrepare", popUpSwitchcase: "addEncounter",})}}>
-          {/* // to={"/addencountermanager/" + this.state.obj?.getJson()._id} */}
-          
-          + Create Encounter
-          </div>
-          ||
-          <AddEncounter app={app}/>
+          {state.popUpSwitchcase != "addEncounter" && (
+            <div style={{ width: "100%", display: "flex", flexDirection: "row", marginTop: "2vh", marginBottom: "2vh", justifyContent: "space-between" }}>
+              <div style={{ ...styles.buttons.buttonAdd, }}
+                onClick={() => {
+                  //                  add > campaign          clear it > prepare not run           switchcase
+                  dispatch({ operate: "addencounter", operation: "cleanJsonPrepare", popUpSwitchcase: "addEncounter", })
+                }}>
+                {/* // to={"/addencountermanager/" + this.state.obj?.getJson()._id} */}
+
+                + Create Encounter
+              </div>
+
+              <div className='hover-container' style={{marginRight: "28px", padding: "3px 11px", }} title='Sort by Name'>
+              
+                <img src={sort} style={{ width: "41px", cursor: "pointer", }} />
+
+                <div style={{color:styles.colors.color5, fontSize:".98rem",
+                  background:styles.colors.color1, transform:"rotate(-10deg)", width:"162px", marginLeft:"-50px", marginTop:"10px"}} className='hover-div'> (Sort Coming Soon) </div>
+              </div>
+
+            </div>)
+            ||
+            <AddEncounter app={app} />
           }
 
+          {state.popUpSwitchcase != "addEncounter" &&
+            <div style={{
+              display: "flex", position: "relative", flexDirection: "column", justifyContent: "flex-end",
+              alignContent: "center", width: "100%", userSelect: "none", marginTop: "-22px",
+            }}>
 
 
-          { state.popUpSwitchcase !="addEncounter" &&
-          <div style={{display:"flex", position:"relative", flexDirection:"column", justifyContent:"flex-end",
-       alignContent:"center", width:"100%", userSelect:"none", marginTop:"-22px",
-       }}>
-                
-          
-             </div>}
+            </div>}
 
-             <div style={{width:"100%", flexDirection:"row", display:"flex", justifyContent:"center", alignContent:"center", paddingLeft:"8%", paddingRight:"8%",
-             background:styles.colors.color2+"22", marginTop:"34px", borderRadius:"22px", paddingBottom:"34px"}}>
-             <MapComponent 
-             
-             delOptions={{
-              picURL: trash, warningMessage: "Delete this encounter (this is permanent)",
-              textStyle: { fontSize: styles.fonts.fontSmallest, },
-              style: {
-                width: "35px", height: "35px", padding: "4px 2px",
-                display: "flex", flexDirection: "row", marginBottom:"13px",
-                alignItems: "center", borderRadius: "8px",
-                justifyContent: "center"
-              },
-            }}
-             app={app} name={"encounter"} cells={[{custom:EncounterMapItem, props:{app:app}},"delete"]} 
-            filter={{search: this.state.obj?.getJson()._id, attribute: "campaignId"}}
-            theme={"selectByImageSmall"}
+          <div style={{
+            width: "100%", flexDirection: "row", display: "flex", justifyContent: "center", alignContent: "center", paddingLeft: "8%", paddingRight: "8%",
+            background: styles.colors.color2 + "22", marginTop: "34px", borderRadius: "22px", paddingBottom: "34px"
+          }}>
+            <MapComponent
+
+              delOptions={{
+                picURL: trash, warningMessage: "Delete this encounter (this is permanent)",
+                textStyle: { fontSize: styles.fonts.fontSmallest, },
+                style: {
+                  width: "35px", height: "35px", padding: "4px 2px",
+                  display: "flex", flexDirection: "row", marginBottom: "13px",
+                  alignItems: "center", borderRadius: "8px",
+                  justifyContent: "center"
+                },
+              }}
+              app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }, "delete"]}
+              filter={{ search: this.state.obj?.getJson()._id, attribute: "campaignId" }}
+              theme={"selectByImageSmall"}
             /></div>
-            </>}
-        </div>
-      
+        </>}
+      </div>
+
     )
 
   }
 }
 
-class TabContent extends Component{
+class TabContent extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
-    <div>
-    
-    </div>
+    return (
+      <div>
+
+      </div>
     )
   }
 }
 
-class CardWithTab extends Component{
+class CardWithTab extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
+    return (
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
-          {/* //Tab content  */}
-          <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
-          {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-            <MainContent app={app} />
-            </div>
+      <div style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCardBorderless"], }}>
+        {/* //Tab content  */}
+        <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /></div>
+        {/* //Main card content  */}
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <MainContent app={app} />
         </div>
+      </div>
     )
   }
 }
 
 /**Popups */
-class Popup extends Component{
+class Popup extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -230,36 +235,36 @@ class Popup extends Component{
   }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-}
-componentWillUnmount() {
+  }
+  componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
-}
-handleClickOutside(event) {
+  }
+  handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-       this.props.handleClose();
+      this.props.handleClose();
     }
-}
-  
-  render(){
+  }
+
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    return(
+    let styles = state.styles;
+
+    return (
       <div className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
-      <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>x</div>
-          
-          <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+        <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+          <div style={ ///EXIT BUTTON
+            styles.buttons.closeicon
+          } onClick={this.props.handleClose}>x</div>
+
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+            <MainContent app={app} />
+          </div>
+
+
         </div>
-          
-      
-      </div>
 
 
 
@@ -268,7 +273,7 @@ handleClickOutside(event) {
   }
 }
 
-class PopupWithTab extends Component{
+class PopupWithTab extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -277,34 +282,34 @@ class PopupWithTab extends Component{
   }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-}
-componentWillUnmount() {
+  }
+  componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
-}
-handleClickOutside(event) {
+  }
+  handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-       this.props.handleClose();
+      this.props.handleClose();
     }
-}
-  render(){
+  }
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    return(
-      <div  className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
-      
-      <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>X</div></div>   
-      <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+    let styles = state.styles;
+
+    return (
+      <div className="popup-box" style={{ zIndex: "1010" }}>
+        <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+
+          <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
+            styles.buttons.closeicon
+          } onClick={this.props.handleClose}>X</div></div>
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+            <MainContent app={app} />
+          </div>
         </div>
-        </div>
-        
+
 
 
 
@@ -312,28 +317,28 @@ handleClickOutside(event) {
     )
   }
 }
-  
+
 
 
 
 
 //********CARDs********/
-class Card extends Component{
+class Card extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
-      <div className='scroller'  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"],}}>   
-            <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-              <MainContent app={app} />
-            </div>
+    return (
+      <div className='scroller' style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"], }}>
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <MainContent app={app} />
+        </div>
       </div>
     )
   }
