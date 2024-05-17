@@ -51,13 +51,13 @@ export default class EncounterMapItem extends Component {
       <div className='hover-container' style={{}}>
 
       <Link className='hover-img'
-      to={"/encounter/" + obj?.getJson()._id} state = {{campaign: state.currentCampaign}} target='_blank'
+      to={"/encounter/" + obj?.getJson()._id} state = {{campaign: state.currentCampaign}}
       style={{ color: styles.colors.colorWhite, 
         height: "fit-content", cursor:"pointer",
         width: "fit-content"}}
         
         onClick={()=>{
-          this.setState({runEncounter: obj?.getJson()._id});
+          this.setState({runEncounter: obj?.getJson()._id, });
           }}
       > 
 
