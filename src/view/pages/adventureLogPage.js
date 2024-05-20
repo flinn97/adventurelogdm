@@ -270,11 +270,13 @@ export default class AdventureLogPage extends Component {
 
           </div>
           {/* THIS IS THE MESSAGE STUFF */}
-          <div
+
+{state.popupSwitch !== "viewPic" &&
+          (<div
             style={{
               width: window.innerWidth > 800?"915px":"100%", height: "44px", display: "flex", flexDirection: "row", marginTop: window.innerWidth >800?"12px":"", 
               position:window.innerWidth >800?"":"absolute",
-               zIndex:9999, alignSelf:"center", justifySelf:"flex-end", alignItems:"flex-end",
+              alignSelf:"center", justifySelf:"flex-end", alignItems:"flex-end",
               background:window.innerWidth >800?"":styles.colors.color1+88,
               bottom:window.innerWidth >800?"":5, zIndex:window.innerWidth >800?"":8000,
               justifyContent: "center"
@@ -290,11 +292,14 @@ export default class AdventureLogPage extends Component {
               (
 
                 <div
-                  style={{ marginRight:window.innerWidth > 800? "11px":"2px",zIndex:9999, flexDirection: "row", display: "flex", height: "35px", marginTop: "4px", color: styles.colors.color9 + "77", fontSize: styles.fonts.fontNormal, fontWeight: "600" }}>
+                  style={{ marginRight:window.innerWidth > 800? "11px":"2px",zIndex:9999, cursor:"pointer",
+                  flexDirection: "row", display: "flex", height: "35px", marginTop: "4px", color: styles.colors.color9 + "77", 
+                  fontSize: styles.fonts.fontNormal, fontWeight: "600" }}>
 
                   <Upload app={app} text={"imageOnly"} img={img}
 
-                    ///TAYLOR, this needs to be sped up, or something, bigger images do not have time to get sent to firebase
+                    ///TAYLOR, 
+                    // this needs to be sped up, or something, bigger images do not have time to get sent to firebase
 
                     changePic={async (pic) => {
                       await this.setState({ pic: pic });
@@ -380,7 +385,7 @@ export default class AdventureLogPage extends Component {
               zIndex:99999,marginLeft: window.innerWidth > 800? "11px":"2px" }}></img>
             </div>
 
-          </div>
+          </div>)}
           {/* </>)} */}
           
           <ScrollHelper scroll={this.scrollToBottom} />  

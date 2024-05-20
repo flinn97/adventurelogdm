@@ -101,12 +101,12 @@ class MainContent extends Component {
     let styles = state.styles;
 
     return (
-      <div className='scroller2' style={{
-        display: "flex", width: "62vw", flexDirection: "column", height: "100%", alignContent: "center",
-        justifyContent: "space-between", color:styles.colors.colorWhite,
-        paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
+      <div style={{
+        display: "flex", width: "fit-content", flexDirection: "column", height: "100%", alignContent: "center",
+        justifyContent: "space-between", color:styles.colors.colorWhite, 
+        paddingTop: "40px", fontFamily: "serif", fontSize: "1.25rem",
       }}>
-        Added to your library!
+        This content is now added to your library and available within your campaigns.
         <div style={{
           display: "flex", flexDirection: "column", position: 'relative',
           height: "100%", maxWidth: "100%", marginTop: "2px", marginBottom: "-140px"
@@ -181,7 +181,7 @@ class Popup extends Component {
     return (
       <div className="popup-box" style={{ zIndex: "1010" }}>
         <div ref={this.wrapperRef} className="popupCard"
-          style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+          style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"], width:"544px", height:"280px"}}>
 
 
 

@@ -285,7 +285,7 @@ export default class CampaignEditor extends Component {
                   }</div>
 
                 {(state.currentLore == undefined && state.popUpSwitchcase !== "updateCampaign") &&
-                  <div style={{ fontSize: styles.fonts.fontHeader2, color: styles.colors.colorWhite, width: "80%", }}>{this.state.obj?.getJson().title}</div>
+                  <div style={{ fontSize: styles.fonts.fontHeader2, color: styles.colors.colorWhite, width: "80%", marginBottom: "25px", }}>{this.state.obj?.getJson().title}</div>
                 }
 
 
@@ -312,7 +312,8 @@ export default class CampaignEditor extends Component {
                   </div>
 
                   <div
-                    style={{ width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3, padding: "5px 6px" }}>
+                    style={{ width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3, 
+                    padding: "5px 6px", marginTop:"-22px" }}>
                     <div
                       style={{ fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "69", }}>
                       {this.state.obj?.getJson().title + ": "}{warning}
@@ -348,7 +349,7 @@ export default class CampaignEditor extends Component {
                     }}
 
                     wrapperStyle={{
-                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "45px",
+                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
                       flexDirection: "column", justifyItems: "space-between",
                     }} />
 

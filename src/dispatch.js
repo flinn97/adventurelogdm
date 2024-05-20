@@ -9,7 +9,7 @@ import CampaignEditor from './view/campaignEditor';
 import Worldbuilder from './view/worldBuilder';
 import EncounterManager from './view/pages/encounterManager';
 import Encounter from './view/encounter';
-import EncounterPage from './view/EncManager/Enc View/encounterPage';
+
 import Nav from './componentListNPM/navTech/nav';
 import Login from './view/login';
 import PopupDelete from './view/popups/popupDelete';
@@ -38,7 +38,6 @@ import ApprovalProposal from './view/admin/approvalProposal';
 import PopupExtendedMapSelector from './view/popups/popupExtendedMapGallery';
 import PopupExtendedLibrary from './view/popups/popupExtendedLibrary';
 import PopupApprovalSubmitted from './view/popups/popupApprovalSubmitted';
-import EncounterNew from './view/encounterNew';
 
 //model
 export default class Dispatch extends Component {

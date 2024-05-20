@@ -22,7 +22,8 @@ export default class AdminPartner extends Component {
 
     return (
       <div style={{height:"100%", marginBottom:"14vmin", display:"flex", flexDirection:"column", justifyContent:"center", width:"100%"}} >
-      <div style={{display:"flex", flexDirection:"row",}}>
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around", color:styles.colors.colorWhite,
+      }}>
           <Link to="../admin/users">Users</Link>
           <Link to="../admin/partners">Partners</Link>
           <Link to="../admin/requests">Requests</Link>
