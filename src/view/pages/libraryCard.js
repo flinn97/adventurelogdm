@@ -169,7 +169,7 @@ class MainContent extends Component {
               { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
               {
                 type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item",
-                // func:(obj)=>{this.openMPItem(obj)} TAYLOR what do we want here
+                func:(obj)=>{this.openMPItem(obj)}
               },
               { type: "richReader", name: "promotional", class: "Ellipsis-Text" },
 
