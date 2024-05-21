@@ -97,8 +97,12 @@ class MainContent extends Component {
 
     let app = this.props.app;
     let state = app.state;
+    let componentList=state.componentList;
     let dispatch = app.dispatch;
     let lore = state.currentLore;
+    if(!lore &&state.currentCampaign){
+      lore = componentList.getList("lore", state.currentCampaign.getJson()._id, "campaignId").find(obj=>obj.getJson().topLevel===true);
+    }
     let map = { picURL: obj.getJson().picURL, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
     await state.opps.cleanJsonPrepare({ addmap: map });
     map = await state.opps.getUpdater("add")[0];
@@ -188,9 +192,14 @@ class MainContent extends Component {
             //TAYLOR //
             //Why is this not working//
             changePic={async (pic, path) => {
+              
 
               let lore = state.currentLore;
-              let map = { picURL: pic, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
+              if(!lore){
+                lore = componentList.getList("lore", state.currentCampaign.getJson()._id, "campaignId").find(obj=>obj.getJson().topLevel===true);
+              }
+              let map = { picURL: pic, loreId:lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
+          
               await state.opps.cleanJsonPrepare({ addmap: map });
               map = await state.opps.getUpdater("add")[0];
               await map.getPicSrc(path);

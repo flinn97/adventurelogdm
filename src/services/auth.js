@@ -177,7 +177,7 @@ class Auth {
     //Attribute = attribute pair always a string "campaignID" or "_id"
     //Type = OPTIONAL this RETURNS the getList, string "monster",
     async firebaseGetter(value, componentList, attribute, type, dispatch, disclude) {
-        debugger
+        
         let list = componentList.getComponents();
         let IDlist = [];
         for (const key in list) {
