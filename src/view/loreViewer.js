@@ -109,6 +109,10 @@ export default class LoreViewer extends Component {
       this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
 
     }
+
+    if(this.props.app.state.reloadMaps){
+      this.props.app.dispatch({reloadMaps:false});
+    }
   }
 
   toggleSidebar = () => {
@@ -392,7 +396,15 @@ export default class LoreViewer extends Component {
             {(this.state.map) &&
               <>
                 <div style={{ height: this.state.bulletinHeight ? this.state.bulletinHeight : "1310px", width: this.state.bulletinWidth ? this.state.bulletinWidth : "100%" }}>
-                  <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize={this.updateSize} />
+                  {state.reloadMaps===false &&
+                  <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize={this.updateSize} delMap={()=>{
+                        let currentLore = this.props.app.state.currentLore;
+
+                    let map = this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
+                    this.setState({
+                      map:map
+
+                  })}}/>}
 
                 </div></>}
 

@@ -86,6 +86,7 @@ export default class MapGallery extends Component {
 
     return (
                       //ALWAYS 100% 100% DONT CHANGE THIS, change the PARENT div
+                    
       <div style={{width:"100%", display:"flex", height:"100%",
       position:"absolute", 
       }}>
@@ -123,7 +124,7 @@ export default class MapGallery extends Component {
 
   {this.state.currentMap && this.state.showMap &&
    
-      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color} updateSize = {this.updateSize} />
+      <InteractiveBulletin app={app} obj={this.state.currentMap} color={this.props.color} updateSize = {this.updateSize}  delMap={this.props.delMap}/>
       }
 
         {/* backgroundIMAGE */}

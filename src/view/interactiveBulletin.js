@@ -277,10 +277,11 @@ export default class InteractiveBulletin extends Component {
 
 
             }}
-            onClick={() => {
+            onClick={async () => {
 
-              state.opps.cleanPrepareRun({ del: this.props.obj });
-              this.setState({ map: undefined, obj:undefined });
+              await state.opps.cleanPrepareRun({ del: this.props.obj });
+              await dispatch({reloadMaps:true})
+              // this.setState({ map: undefined, obj:undefined });
             }}>
             <img src={trash} style={{ width: "34px", cursor: "pointer", zIndex: 991 }} />
           </div>
