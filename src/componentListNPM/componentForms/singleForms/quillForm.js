@@ -224,7 +224,9 @@ updateCampaignLinks(text) {
     return (
 
 
-      <div title='Use [[ ]] around a Lore title to connect it' >
+      <div 
+      // title='Use [[ ]] around a Lore title to connect it'
+       >
 
         <ReactQuill
           ref={this.quillRef}

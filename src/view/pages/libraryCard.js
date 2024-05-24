@@ -149,7 +149,7 @@ class MainContent extends Component {
         {/* <div style={{color:styles.colors.color3, width:"800px", textAlign:"center"}}>~ Coming Soon ~ </div> */}
 
         <div style={{ width: "fit-content", display:"flex", flexDirection:"column",
-        position:"relative", alignSelf:"flex-end", paddingRight:"3vw"
+        position:"relative", alignSelf:"center", paddingRight:"3vw"
         }}>
           <FilterByTypeComponent app={app} />
          
@@ -159,7 +159,7 @@ class MainContent extends Component {
         {this.state.start &&
           <MapComponent app={app} name="mpItem" theme="defaultRow"
             filters={[
-              { type: "text", attribute: "mptype", search: state.filter },
+              { type:"text", attribute: "mptype", search: state.filter },
             ]}
             //FIX RESIZING
             cells={[
