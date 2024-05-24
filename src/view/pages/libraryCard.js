@@ -159,7 +159,7 @@ class MainContent extends Component {
         {this.state.start &&
           <MapComponent app={app} name="mpItem" theme="defaultRow"
             filters={[
-              { type: "text", attribute: "mptype", search: state.filter },
+              { type:"text", attribute: "mptype", search: state.filter },
             ]}
             //FIX RESIZING
             cells={[
