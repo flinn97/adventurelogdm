@@ -3,6 +3,7 @@ import "../App.css"
 import CardPractice from './CardPrac';
 import AddCampaign from './AddCampaign';
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
+
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 // https://www.npmjs.com/package/react-lazyload;
 import placeholder from '../pics/placeholderEncounter.JPG';
@@ -29,6 +30,7 @@ import { convertToMarketplace2 } from '../services/conversionService';
 import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
+
 
 export default class CampaignEditor extends Component {
   constructor(props) {
@@ -81,6 +83,7 @@ export default class CampaignEditor extends Component {
 
     }
 
+    
     await dispatch({ currentLore: undefined })
     if (id.includes("-")) {
       let loreSplit = id.split('-');
@@ -221,6 +224,11 @@ export default class CampaignEditor extends Component {
     let loreList = state.currentLore ? state.componentList.getList("lore", state.currentLore.getJson().name, "name") : "";
     let hasName = ((state.currentLore) && (state?.currentLore?.getJson().name != undefined) && (state?.currentLore?.getJson().name != "")) ? true : false;
     let warning = ((loreList.length > 1) && (state.currentLore) && (hasName)) ? <div style={{ color: styles.colors.color5, background: styles.colors.color2, padding: "3px 8px", borderRadius: "8px", fontSize: styles.fonts.fontSmall, position: "absolute", top: 15 }}>{"You already have another lore named " + state?.currentLore?.getJson().name}</div> : ""
+    
+    let encList = state.componentList.getList("encounter", this.state.obj?.getJson()._id, "campaignId");
+    // Filter out objects where the name contains "Copy of"
+    encList = encList.filter(enc => !enc.getJson().name.includes("Copy of"));
+    
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
         {/* <div style={{color:"white"}} onClick={()=>{
