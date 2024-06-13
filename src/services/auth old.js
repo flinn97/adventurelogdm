@@ -5,7 +5,7 @@ import weapons from "../models/weapons.js";
 import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail, updateEmail, deleteUser } from "firebase/auth";
 import Compressor from "compressorjs";
 
-let imageQuality = .6;
+let imageQuality = .7;
 
 class Auth {
 
