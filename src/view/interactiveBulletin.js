@@ -498,7 +498,7 @@ export default class InteractiveBulletin extends Component {
                                           className='hover-divInt'
                                           app={app} buttonStyle={{ width: "28px", }}
                                           difWidth={"14.33px"}
-                                          update={true} quality={.3}
+                                          update={true} quality={.35}
 
                                           text=" "
                                           obj={pin}

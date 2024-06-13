@@ -11,7 +11,7 @@ import AdminUser from '../view/admin/adminUser';
 import Library from "../view/pages/library.js";
 
 
-let imageQuality = .5;
+let imageQuality = .7;
 class Auth {
     urlEnpoint = "GMS"
     sendForgotPasswordChange(email) {

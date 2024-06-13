@@ -165,7 +165,7 @@ export default class IconChange extends Component {
                   <Upload
                     buttonStyle={{ ...styles.buttons.buttonAdd, padding: "11px 8px" }}
                     className='hover-divInt' text="Upload"
-                    app={app} quality={.3}
+                    app={app} quality={.35}
                     update={true}
                     // changePic={async (pic, path) => {
 
