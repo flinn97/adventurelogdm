@@ -55,7 +55,7 @@ class UploadComponent extends Component {
             oldList=[...this.state.list, URL.createObjectURL(event.target.files[0])];
             let file = event.target.files[0];
             new Compressor(file, {
-                quality: 0.6,
+                quality: 0.7,
             
                 // The compression process is asynchronous,
                 // which means you have to access the `result` in the `success` hook function.

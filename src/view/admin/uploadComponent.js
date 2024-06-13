@@ -56,7 +56,7 @@ class UploadComponent extends Component {
             let file = event.target.files[0];
             let self = this
             new Compressor(file, {
-                quality: 0.6,
+                quality: 0.7,
             
                 // The compression process is asynchronous,
                 // which means you have to access the `result` in the `success` hook function.
