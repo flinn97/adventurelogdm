@@ -645,11 +645,9 @@ export default class CampaignEditor extends Component {
 
                   <div ref={this.encRef} />
                   <div style={{ marginBottom: "18px" }}>
-                    <MapComponent app={app} name={"encounter"} 
-                    
-                    cells={[{ custom: EncounterMapItem, props: { app: app, level:"campaign" } },]}
+                    <MapComponent  app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } },]}
                       filter={{ search: this.state.obj?.getJson()._id, attribute: "campaignId" }}
-                      theme={"selectByImageSmall"}
+                      theme={"selectByImageSmall"} filterFunc={(comp)=>{return !comp.getJson().name.includes("Copy of")}}
                     />
                   </div></div>
 
