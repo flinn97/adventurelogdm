@@ -45,7 +45,7 @@ export default class FilterByTypeComponent extends Component {
       Map: mapPin,
       Lore: loreFeather,
       Encounter: encSwords,
-      Image: imgSquareIco,
+      Artwork: imgSquareIco,
       
     };
 
@@ -54,7 +54,7 @@ export default class FilterByTypeComponent extends Component {
       Map: mapPin2,
       Lore: loreFeather2,
       Encounter: encSwords2,
-      Image: imgSquareIco2,
+      Artwork: imgSquareIco2,
       
     };
 
