@@ -93,7 +93,7 @@ export default class MapGallery extends Component {
 
        
 
-        {this.state.mapList?.indexOf(this.state.currentMap)!==0 && this.state.currentMap &&
+        {/* {this.state.mapList?.indexOf(this.state.currentMap)!==0 && this.state.currentMap &&
         <div className="hover-btn"
         onClick={this.handlePrevMap}
         style={{...styles.buttons.buttonAdd, padding:"0px", paddingRight:"10px", borderColor:styles.colors.color3, cursor:"pointer",
@@ -102,9 +102,9 @@ export default class MapGallery extends Component {
           
           <img src={backarrow} style={{width:"40px", height:"40px", marginRight:"15px", marginLeft:"10px", marginTop:"1px",padding:"5px", }}></img>
           Prev Map
-          </div>}
+          </div>} */}
 
-          {this.state.mapList?.indexOf(this.state.currentMap)!==(this.state?.mapList.length-1) &&
+          {/* {this.state.mapList?.indexOf(this.state.currentMap)!==(this.state?.mapList.length-1) &&
         <div className="hover-btn"
         onClick={this.handleNextMap}
         style={{...styles.buttons.buttonAdd, padding:"0px", paddingLeft:"10px", borderColor:styles.colors.color3, cursor:"pointer",
@@ -112,7 +112,7 @@ export default class MapGallery extends Component {
           Next Map
           <img src={backarrow} style={{width:"40px", height:"40px", marginLeft:"15px", marginRight:"10px", marginTop:"1px",padding:"5px", 
           transform:'rotate(180deg)' }}></img>
-          </div>}
+          </div>} */}
 
           
           

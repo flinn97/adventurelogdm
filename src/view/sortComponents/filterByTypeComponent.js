@@ -33,6 +33,7 @@ export default class FilterByTypeComponent extends Component {
     let list = this.props.list;
 
     let searchTypes = ["Campaign", "Map", "Lore", "Encounter", "Artwork",]
+    let searchValues=["mpCampaign", "mpMap", "mpLore", "mpEncounter", "mpImage",]
 
     const styling = {
       width: "104px", padding: "11px 4px", margin: "2px", fontSize: ".94rem", alignContent: "center", justifyItems: "center",
@@ -69,7 +70,7 @@ export default class FilterByTypeComponent extends Component {
             index={index} key={index} className="hover-img"
             onClick={() => {
               this.setState({ currentSel: type + "s" })
-              dispatch({ searchState: type !== "Lore" ? type + "s" : "Lore", filter: "mp" + type })
+              dispatch({ searchState: type !== "Lore" ? type + "s" : "Lore", filter:searchValues[index] })
             }} style={{
               ...styling, 
               background: (type + "s") === this.state.currentSel ? styles.colors.color4 + "30" : "", 
