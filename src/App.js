@@ -160,6 +160,12 @@ handleChange = (event) => {
           
          await this.state.componentListInterface.getFactory().registerComponents({name:key, component:obj[key]});
         }
+        // let monsterList = await auth.firebaseGetter("monster", list, "type", "monster",);
+        // console.log(monsterList?.length);
+        // for(let ob of monsterList){
+        //   ob.setCompState({type:"participant"})
+        // }
+        // this.state.opps.cleanPrepareRun({update:monsterList})
         for(let c of fakeData){
           
           await list.getOperationsFactory().cleanJsonPrepareRun({["add"+c.type]:c})

@@ -429,6 +429,9 @@ class Encounter extends componentBase {
         picURL: "",
         picURLs: {},
         loreId: "",
+        audioLink: "",
+        currentParticipant: "",
+        ruleset: "5e",
 
     }
 
@@ -452,38 +455,123 @@ class Encounter extends componentBase {
         return enc;
     }
 
-    async addCampaignPlayers(playerList, id) {
+    // async addCampaignPlayers(playerList, id) {
 
-        let comps = await playerList;
-        let encPlayer = []
+    //     let comps = await playerList;
+    //     let encPlayer = []
+
+    //     if (comps) {
+    //         for (let obj of comps) {
+    //             ///TAYLOR help me get this right
+    //             let monsterJson = await obj.copyComponent(["encounterId", "role",], [id, "",],);
+    //             await this.operationsFactory.jsonPrepare({ "addmonster": monsterJson });
+    //             let p = await this.operationsFactory.getUpdater("add")[0];
+    //             encPlayer.push(p);
+    //             // await this.operationsFactory.run();
+    //         };
+    //     }
+    //     return encPlayer
+    // }
+    async addCampaignPlayers(playerList,) {
+
+        let comps = playerList;
+        let encPlayer = [];
 
         if (comps) {
             for (let obj of comps) {
-                ///TAYLOR help me get this right
-                let monsterJson = await obj.copyComponent(["encounterId", "role",], [id, "",],);
-                await this.operationsFactory.jsonPrepare({ "addmonster": monsterJson });
+                let monsterJson = await obj.copyComponent(["encounterId", "role",], [this.json._id, "",],);
+                await this.operationsFactory.jsonPrepare({ "addparticipant": monsterJson });
                 let p = await this.operationsFactory.getUpdater("add")[0];
                 encPlayer.push(p);
-                // await this.operationsFactory.run();
+                await this.operationsFactory.run();
             };
         }
         return encPlayer
     }
 
-
-    /**
-     * Add connected items to the mpi list OVERIDE
-     */
-    addConnectedItemsMPI(mpiLore, campaignId, componentList, obj) {
-        let opList = componentList.getOperationsFactory().getUpdater("add")
-        let encounterMPI = opList[opList.length - 1];
-        let monsters = componentList.getList("monster", this.json._id, "encounterId").filter(monster => monster.getJson().role === "monster");
-
-        for (let monster of monsters) {
-            let obj = { encounterId: encounterMPI.getJson()._id, }
-            monster.createMPI(mpiLore, campaignId, componentList, obj)
+    getNextNextP(sortedParticipants, index) {
+        let participant = undefined;
+        for (let i = index + 2; i < sortedParticipants.length; i++) {
+            if (sortedParticipants[i].getJson().rollState) {
+                participant = sortedParticipants[i];
+                break;
+            }
         }
+        return participant;
     }
+    getNextP(sortedParticipants, firstTime, componentList) {
+        //use the find method to find index of the currentParticipant id in the participant list
+        let p = sortedParticipants.find((obj) => { return obj.getJson()._id === this.json.currentParticipant })
+        let index = sortedParticipants.indexOf(p);
+        let participant = sortedParticipants[index + 1];
+        if (!participant.getJson().rollState) {
+
+            participant = this.getNextNextP(sortedParticipants, index);
+
+            if (!participant) {
+                this.json.currentParticipant = "";
+                if (!firstTime) {
+                    this.getHighestParticipant(componentList);
+                    return
+                }
+
+            }
+
+        }
+        return participant.getJson()._id
+    }
+
+    getHighestParticipant(componentList) {
+
+        let participants = componentList.getList("participant", this.json._id, "encounterId")
+        //use the .sort method to organize the participants by the highest initiative first
+        let sortedParticipants = participants.sort((a, b) => {
+
+            let initiativeA = parseInt(a.getJson().initiative);
+            let initiativeB = parseInt(b.getJson().initiative);
+
+            // Check if either initiative is not a number
+            if (isNaN(initiativeA)) initiativeA = Number.MAX_SAFE_INTEGER; // Treat non-numeric values as maximum
+            if (isNaN(initiativeB)) initiativeB = Number.MAX_SAFE_INTEGER;
+
+            return initiativeB - initiativeA; // Sort descending
+        })
+        //let participant id = the list of participants first element
+        let participantId = sortedParticipants[0].getJson()._id
+
+        //if this.json.currentParticipant != ""
+        if (this.json.currentParticipant !== "" && sortedParticipants[sortedParticipants.length - 1].getJson()._id !== this.json.currentParticipant) {
+
+            participantId = this.getNextP(sortedParticipants, false, componentList)
+
+        }
+        if (!sortedParticipants.find(obj => obj.getJson()._id === participantId)?.getJson().rollState) {
+            this.json.currentParticipant = participantId;
+            participantId = this.getNextP(sortedParticipants, true, componentList);
+
+        }
+
+
+        if (sortedParticipants.find(obj => obj.getJson()._id === participantId)?.getJson().rollState) {
+            //set json currentParticipant with the participant id var
+            this.json.currentParticipant = participantId
+            //this.operationsFactory.cleanPrepareRun(update: this) 
+            this.operationsFactory.cleanPrepareRun({ update: this });
+            let p = componentList.getComponent("participant", participantId, "_id");
+            return p
+
+        }
+
+
+
+    }
+    clearParticipant() {
+        this.json.currentParticipant = ""
+        this.json.inSession=false;
+        this.operationsFactory.cleanPrepareRun({ update: this })
+    }
+
+   
 
 }
 
@@ -629,6 +717,53 @@ class Monster extends componentBase {
     }
 
 }
+class Participant extends componentBase {
+
+
+    json = {
+        type: "participant",
+        name: "",
+        initiative: "",
+        armor: "",
+        hitPoints: "",
+        statBlockLink: "",
+        note: "",
+        encounterId: "",
+        _id: "",
+    }
+
+    updateConditions(ruleset) {
+        //get the list of conditions from the ruleset save in conditionList var
+        let conditionList =ruleset.getJson().conditionList.split(',');
+        //do Object.keys(this.json) save in a variable called jsonList
+        let jsonList = Object.keys(this.json)
+        //for everything in the ruleset conditionList:
+        for (let condition of conditionList) {
+            //if jsonList.includes(something from the ruleset) and its not undefined nor ""
+            if (jsonList.includes(condition)) {
+                if (this.json[condition] !== "" || this.json[condition] !== undefined) {
+                    //increment the value on that condition
+                    this.json[condition]++
+                }
+
+
+
+            }
+        }
+        
+        //after the for loop update the participant.
+        this?.operationsFactory({ update: this })
+    }
+}
+class Ruleset extends componentBase {
+    json = {
+        type: "ruleset",
+        conditionList: "Blinded,Burning,Concentration,Charmed,Deafened,Exhaustion,Frightened,Grappled,Incapacitated,Invisible,Paralyzed,Petrified,Poisoned,Prone,Restrained,Stunned,Unconcious,Dead",
+        name: "5e",
+
+
+    }
+}
 
 class Icon extends componentBase {
     constructor(opps) {
@@ -693,7 +828,7 @@ function forFactory() {
         newNote:NewNote,map:Map, post:Post,
         marketplaceItem:MarketplaceItem,
         condition:Condition, icon:Icon, 
-        lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem}
+        lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset}
 
 }
 

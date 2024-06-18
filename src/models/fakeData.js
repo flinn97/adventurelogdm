@@ -122,6 +122,11 @@ gameSystem: "5e",
 campaignId: "561b2041524",
 mptype: "mpImage"
 },
+{
+  type:"ruleset",
+  
+
+},
 
 ]
 export {json}

@@ -7,7 +7,7 @@ import DelItem from "./del/deleteItem";
 import EditItem from "./edit/editItem";
 import MapComponentItem from "./mapComponent";
 import React from "react";
-import DelIconItem from "./del/delCustomItem";
+import DelIconItem from "./del/delIconItem";
 import DelTextItem from "./del/delTextItem";
 import DelCustomItem from "./del/delCustomItem";
 import EditIconItem from "./edit/editIconItem";

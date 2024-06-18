@@ -38,6 +38,7 @@ import ApprovalProposal from './view/admin/approvalProposal';
 import PopupExtendedMapSelector from './view/popups/popupExtendedMapGallery';
 import PopupExtendedLibrary from './view/popups/popupExtendedLibrary';
 import PopupApprovalSubmitted from './view/popups/popupApprovalSubmitted';
+import NewEncounterPage from './view/newEncounterPage';
 
 //model
 export default class Dispatch extends Component {
@@ -347,8 +348,8 @@ export default class Dispatch extends Component {
                         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
                         <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
                         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
-                        <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers} />} />
-
+                        {/* <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers} />} /> */}
+                        <Route path="/encounter/:id" element={<NewEncounterPage app={app} players={state?.campaignPlayers} />} /> 
                         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
 

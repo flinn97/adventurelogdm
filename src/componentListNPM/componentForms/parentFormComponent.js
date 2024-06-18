@@ -265,6 +265,8 @@ class ParentFormComponent extends Component {
             types = {
                 text: <InputFormComponent
                     doesMath={this.props.doesMath}
+                    labelClass={this.props.labelClass}
+
                     onFocus={this.props.onFocus}
                     rows={this.props.rows}
                     cols={this.props.cols}
@@ -373,7 +375,6 @@ class ParentFormComponent extends Component {
                     tickClass={this.props.tickClass}
                     handleChange={this.props.func ? (value) => { this.props.func(this.state.obj, value) } : this.objDispatch}
                     outsideFunc={this.props.func ? true : false}
-
                     name={this.props.name}
                     value={!this.state.obj ? "" : this.state.obj[0].getJson()[this.props.name]}
 

@@ -1,0 +1,10 @@
+.DRW-Map-Container {
+    display: flex;
+    flex-direction: row; /* Switched to row layout */
+    height: 100%;
+    flex-wrap: wrap; 
+  }
+
+  .changeClass{
+    color:green
+  }

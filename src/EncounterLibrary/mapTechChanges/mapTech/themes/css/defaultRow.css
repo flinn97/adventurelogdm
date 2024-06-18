@@ -1,0 +1,137 @@
+.DR-Map-Container {
+  display: flex;
+  font-family: "inria";
+  flex-direction: row;
+  /* Switched to row layout */
+  width: 100%;
+  max-width: 68vw;
+  height: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+
+.DR-Map-Section {
+  display: flex;
+  font-family: "inria";
+  flex-direction: column;
+  /* Switched to column layout */
+  align-items: center;
+  margin: 1px;
+  justify-content: space-evenly;
+  background: linear-gradient(#e6646500, #b0c9df09);
+  position: relative;
+  margin-top: 42px;
+  width: 340px;
+  max-height: fit-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Box shadow */
+  border-radius: 10px;
+  /* Border radius */
+}
+
+.DR-Map-Section:hover {
+  background: linear-gradient(#b0c9df09, #b0c9df0e);
+
+}
+
+/* General styling for all items */
+.DR-Link,
+.DR-Cell,
+.DR-Custom-Del-Item,
+.DR-Del-Item,
+.DR-Del-imgItem,
+.DR-Custom-Edit-Item,
+.DR-Edit-imgItem,
+.DR-Edit-Item,
+.DR-Attribute-Item,
+.DR-imgItem,
+.DR-Text-Item {
+  width: 100%;
+  border-radius: 11px;
+  margin: 5px;
+  /* background-color: #16161605; */
+  font-family: "inria";
+  user-select: none;
+  font-size: 1.1rem;
+}
+
+.DR-Link, .Button-Gold {
+  background: #e8d259;
+  color: "#111319";
+  font-size: 1.1rem;
+  padding: 6px 18px;
+  margin-bottom: 11px;
+  width: fit-content;
+}
+
+.a {
+  color: #000;
+}
+
+/* Add specific styles for each item type if needed */
+.DR-Link {
+  text-decoration: none;
+  cursor: pointer;
+  color: rgb(190, 221, 226);
+}
+
+.DR-Custom-Del-Item,
+.DR-Del-Item,
+.DR-Del-imgItem {
+  color: #dc3545;
+  cursor: pointer;
+  position: absolute;
+  padding: 0px;
+  right: 3px;
+  top: 3px;
+}
+
+.DR-imgItem {
+  width: 100px;
+  border-radius: 15px;
+}
+
+.DR-Custom-Edit-Item,
+.DR-Edit-imgItem,
+.DR-Edit-Item {
+  color: #ffc107;
+  background-color: none;
+  cursor: pointer;
+  position: absolute;
+  padding: 0px;
+  left: 3px;
+  top: 3px;
+}
+
+.Bold-Title {
+  font-weight: 600;
+  font-size: 1.3rem;
+  text-align: left;
+  width: 100%;
+  color: aliceblue;
+  text-overflow: ellipsis;
+}
+
+.Ellipsis-Text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  hyphens: auto;
+  max-width: 330px;
+  min-height: 5.5rem;
+  max-height: 5.5rem;
+  padding: 8px;
+  font-size: 1.1rem;
+  text-align: justify;
+}
+
+
+.Img-Midsize {
+  width: 100%;
+  max-height: 200px;
+  border-radius: 11px;
+  object-fit: cover;
+}

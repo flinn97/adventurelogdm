@@ -1,0 +1,554 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&display=swap');
+
+:root {
+  --color-dark: #0f141c;
+  /* dark */
+  --color-gold: #ecd23a;
+  /* gold */
+  --color-red: #fd5259;
+  /* red */
+  --color-gray: #31333c;
+  /* gray */
+  --color-blue: #1E90FF;
+  /* blue */
+  --color-purple: #4B0082;
+  /* purple */
+
+  --app-color-dark-lighter: #1B1D24;
+  /* dark lighter */
+  --app-color-gold-dark: #C1A71B;
+  /* gold dark */
+  --app-color-red-dark: #5F0C0C;
+  /* red dark */
+  --app-color-gray-lighter: #919191;
+  /* gray lighter */
+  --app-color-blue-trans: #0000CDaa;
+  /* blue transparent */
+  --app-color-purple-trans: #8B008Baa;
+  /* purple transparent */
+  --app-color-brown-trans: #8B4513aa;
+  /* brown transparent */
+  --color-white: #F4F5F8;
+  --color-black: #0f141c;
+}
+
+.Participant-Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.ER-Map-Section {
+  display: flex;
+  font-family: "inria";
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(#e6646500, #b0c9df09);
+  position: relative;
+  margin-top: 12px;
+  width: 93vw;
+  padding-left: 8px;
+  padding-right: 8px;
+  max-height: 160px;
+  min-height: 160px;
+  border-radius: 21px;
+  border: 1px solid #b0c9df09;
+}
+
+.ER-Cell {
+  display: flex;
+  min-width: fit-content;
+}
+
+.condition-gear {
+  border: 1px solid var(--color-gray);
+  padding: 7px 8px;
+  border-radius: 11px;
+  width: 44px;
+  object-fit: scale-down;
+}
+
+.ER-Map-Section:hover {
+  background: linear-gradient(#649ce60a, #b0c9df0c);
+
+}
+
+.Condition-Container {
+  user-select: none;
+  font-family: 'inria', serif;
+  display: flex;
+  width: 50vw;
+  background: linear-gradient(var(--color-black), var(--color-dark));
+  border-radius: 11px;
+  position: absolute;
+  left: -25vw;
+  top: -56px;
+  flex-direction: column;
+  min-height: 158px;
+  border: 2px solid var(--color-gray);
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.Condition-Section {
+
+  font-family: 'inria', serif;
+  padding: 11px 4px;
+  display: flex;
+  user-select: none;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: fit-content;
+  line-height: 34px;
+}
+
+.condition {
+  font-family: 'inria', serif;
+  user-select: none;
+  border: 1px solid  #292d3b;
+  color: var(--color-white);
+  margin: 6px;
+  background: #1B1D24;
+  padding: 4px 8px;
+  border-radius: 11px;
+  font-size: 1rem;
+  opacity: 90%;
+}
+
+.condition:hover {
+ box-shadow: inset -1px -1px #414957;
+}
+
+.condition-selected {
+  font-family: 'inria', serif;
+  border: 1px solid var(--app-color-gold-dark);
+  color: var(--color-white);
+  margin: 6px;
+  background: #1B1D24;
+  padding: 4px 8px;
+  border-radius: 11px;
+  font-size: 1rem;
+}
+
+.condition-selected:hover {
+  box-shadow: inset -1px -1px #cac994;
+  border: 1px solid var(--app-color-gold-dark);
+ }
+
+.condition-active {
+  font-family: 'inria', serif;
+  color:#b8b8b8;
+  /* background: #1B1D24; */
+  padding: 4px 8px;
+  border-radius: 11px;
+  font-size: 1rem;
+}
+
+.condition-active:hover {
+  color:#b8b8b8be;
+}
+
+.Condition-Column{
+  user-select: none;
+  font-family: 'inria', serif;
+  display: flex;
+  width: 35vw;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: hidden;
+  line-height: 1rem;
+  height: 160px;
+}
+
+.Background-Content {
+  font-family: 'inria', serif;
+  display: flex;
+  margin-top: 1vmin;
+  flex-direction: column;
+  border-radius: 24px;
+  justify-content: space-evenly;
+  position: relative;
+  transition: all 2s ease-in-out;
+  width: 100%;
+  height: fit-content;
+  z-index: 20;
+  padding: 2px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+body {
+  font-family: 'Inria', serif;
+  color: var(--color-white);
+}
+
+.info {
+  font-family: 'Inria', serif;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  padding-left: 11px;
+}
+
+
+.Header-Title {
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+  width: 100%;
+  font-family: 'inria', serif;
+  color: var(--color-white);
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.35rem;
+  margin-bottom: -2px;
+  margin-top: 11px;
+  font-family: 'inria', serif;
+  color: var(--color-gold);
+}
+
+.text-form {
+  color: whitesmoke;
+  background: #1B1D2455;
+  box-shadow: 1px 1px 1px var(--color-dark);
+  border: 1px solid #1E90FF12;
+  border-radius: 8px;
+  font-family: 'inria', serif;
+  font-size: 1.2rem;
+  padding: 4px;
+  margin-top: 8px;
+  margin-left: .8rem;
+}
+
+.text-wide {
+  width: 80%;
+}
+
+.text-number {
+  width: 180px;
+}
+
+.text-small {
+  width: 44px;
+  text-align: center;
+}
+
+.text-form:hover {
+  background: #1B1D2465;
+  color: white;
+}
+
+.Audio-Container {
+  display: flex;
+  align-items: center;
+  margin-top: 41px;
+  margin-left: 8px;
+}
+
+.tiny-ico {
+  width: 1.6rem;
+  margin-right: 1px;
+  margin-top: -33px;
+}
+
+.Audio-Link {
+  border-radius: 12px;
+  cursor: pointer;
+  color: white;
+  font-family: 'Inria', serif;
+  letter-spacing: .045rem;
+  font-size: 1.1rem;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+  text-decoration: none;
+  /* To remove underline on link */
+}
+
+.Audio-Container:hover {
+  opacity: .62;
+  filter: contrast(1.2);
+  transition: all 0.5s ease-in-out;
+}
+
+.Audio-Link:active {
+  opacity: .82;
+  scale: .99;
+  filter: contrast(1);
+  transition: all 0.5s ease-in-out;
+}
+
+.Header-Enc {
+  font-size: 2rem;
+  user-select: none;
+  font-family: 'inria', serif;
+  color: var(--color-white);
+  opacity: 100%;
+  background: #0f141c92;
+  padding: 18px;
+  width: 100%;
+  border-radius: 24px;
+  border-style: solid;
+  border-color: #91919122;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #1E90FF22;
+}
+
+.Encounter-Form-Container {
+  width: 100%;
+}
+
+.Header-Row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.Header-Buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.Header-Edit {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 23px;
+}
+
+.Footer-Row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 11px;
+}
+
+.Footer-Buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+/* className="hover-btn" */
+.button {
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 1px 4px 8px #1B1D24;
+  font-family: 'Inria', serif;
+  letter-spacing: .045rem;
+  padding: 8px 20px;
+  font-size: 1.1rem;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+}
+
+.roll-button {
+  width: 40px;
+  position: absolute;
+  margin-left: 4px;
+  cursor: pointer;
+  padding: 6px;
+  margin-top: -20px;
+}
+
+.roll-button:hover {
+  background: linear-gradient(90deg, #282c340c, #45526e27, #677ca811, #282c340c);
+  border-radius: 11px;
+  
+}
+
+.gradient-animation {
+  background: linear-gradient(90deg, #282c3404, #282c3404, #45526e09, #677ca809, #142f6d04, #282c3404);
+  background-size: 200% 200%;
+  animation: gradient-animation 28s infinite;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+  height: 80%;
+}
+
+.gradient-animation::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 200%;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.103), rgba(255, 255, 255, 0));
+  width: 9%;
+  filter: blur(11px);
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  animation: shimmer 28s infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 200% 0;
+  }
+  50% {
+    background-position: -900% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.button:hover {
+  opacity: .99;
+  filter: contrast(1.2);
+  border-radius: 11px;
+  transition: all 0.5s ease-in-out;
+  box-shadow: inset -1px -1px #414957;
+}
+
+.button:active {
+  opacity: .82;
+  scale: .99;
+  filter: contrast(1);
+  border-radius: 11px;
+  transition: all 0.5s ease-in-out;
+}
+
+
+.Log-Initiative-Button {
+  background-color: var(--app-color-dark-lighter);
+  color: var(--color-white);
+  border: 2px solid var(--color-blue);
+  font-family: 'Inria', serif;
+  padding: 8px 30px;
+  width: fit-content;
+}
+
+.Add-All-Players-Button,
+.Add-New-Creature-Button {
+  background-color: var(--app-color-dark-lighter);
+  color: var(--color-gold);
+  border: 1px solid var(--app-color-gray-lighter);
+  padding: 8px 48px;
+  width: fit-content;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.Edit-Encounter-Button {
+  background-color: var(--app-color-dark-lighter);
+  color: var(--color-gold);
+  border: 1px solid var(--app-color-gray-lighter);
+  padding: 8px 22px;
+  margin-bottom: 12px;
+  width: fit-content;
+  font-weight: bold;
+  font-size: .94rem;
+  margin-right: 10px;
+}
+
+.Close-Button {
+  color: var(--color-red);
+  cursor: pointer;
+  background-color: #1B1D2444;
+  font-weight: bold;
+  width: fit-content;
+  padding: 2px 1rem;
+  font-weight: bold;
+  font-size: 1.94rem;
+  align-self: flex-start;
+}
+
+/* Style for the container */
+.hover-container {
+  position: relative;
+  overflow: visible;
+  display: inline-block;
+  /* Keeps the container size to the content */
+}
+
+/* Initially hide the div */
+.hover-div {
+  display: none !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transition: all 0.5 ease-in-out;
+  /* Add other styling as needed */
+}
+
+/* Show the div on hover */
+.hover-container:hover .hover-div {
+  display: block !important;
+}
+
+/* Style for the container */
+.hover-containerInt {
+  position: relative;
+  display: inline-block;
+  /* Keeps the container size to the content */
+}
+
+/* Initially hide the div */
+.hover-divInt {
+  display: none;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transition: all 0.3s ease;
+  /* Add other styling as needed */
+}
+
+/* Show the div on hover */
+.hover-containerInt:hover .hover-divInt {
+  display: block;
+}
+
+.Run-Bar {
+  display: flex;
+  position: fixed;
+  bottom: 30px;
+  right: 38px;
+  width: 24vw;
+  z-index: 100;
+  padding: 11px;
+  border-radius: 11px;
+  background-color: var(--app-color-dark-lighter);
+  border: 1px solid var(--color-gold);
+  justify-content: space-evenly;
+  box-shadow: 3px 2px 8px black;
+  transition: all 3s;
+}
+
+.Run-Button {
+  color: var(--color-gold);
+  border: 1px solid var(--app-color-gray-lighter);
+}
+
+.Run-Bar:hover {
+  border: 1px solid var(--app-color-gold-dark);
+  box-shadow: 1px 2px 8px black;
+  filter: contrast(1.1);
+}
