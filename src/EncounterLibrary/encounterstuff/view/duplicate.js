@@ -15,7 +15,7 @@ export default class Duplicate extends Component {
       <div 
       className="button Header-Edit"
       onClick={()=>{
-        debugger
+        
         let json = this.props.obj.getJson();
         state.opps.cleanJsonPrepareRun({"addparticipant": {...json, _id: undefined, }})
         

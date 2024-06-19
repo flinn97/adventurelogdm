@@ -22,7 +22,6 @@ export default class Condition extends Component {
     let conditionList = ruleset.getJson().conditionList.split(",");
     let activeConditionList = ruleset.getJson().conditionList.split(",");
 
-    console.log(obj)
 
     conditionList = conditionList.map(str => {
       let o = {
@@ -30,9 +29,8 @@ export default class Condition extends Component {
         name: str,
         component: obj,
         func: (participant) => {
-          debugger
           if (participant.getJson()[str] !== undefined && participant.getJson()[str] !== "") {
-            participant.setCompState({ [str]: undefined });
+            participant.setCompState({ [str]: "" });
           }
           else {
             participant.setCompState({ [str]: 0 });
@@ -40,11 +38,11 @@ export default class Condition extends Component {
           state.opps.cleanPrepareRun({ update: participant });
         }
       }
-
+      
       return {
         name: o.name,
         component: o.component,
-        class: ((obj.getJson()[o.name] !== undefined) && (obj.getJson()[o.name] >= 0)) ? "condition-selected" : "condition",
+        class: ((obj.getJson()[o.name] !== undefined) && (obj.getJson()[o.name] >= 0) && (obj.getJson()[o.name] !== "")) ? "condition-selected" : "condition",
         style: (str === "Dead") ? { color: "#fd5259", opacity: "100%" } : {},
         theme: "encounterRow",
         func: o.func

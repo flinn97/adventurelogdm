@@ -31,7 +31,7 @@ export default class RunEncounter extends Component {
     return (
       <div className="Run-Bar" style={{userSelect:"none"}}>
         {this.state.start === true && <div className="button Run-Button" onClick={async () => {
-          debugger
+          
           let participant = await encounter.getHighestParticipant(componentList);
           //get the ruleset for the current encounter see condition.js render function line 19 and 20 of example
           let currentRulesetName = state.currentEncounter.getJson().ruleset
@@ -70,7 +70,7 @@ export default class RunEncounter extends Component {
             style={{color:"white", border:"1px solid red"}}
             className="button Run-Button"
             onClick={() => {
-              
+
             encounter.clearParticipant()
             this.setState({ start: false })
             

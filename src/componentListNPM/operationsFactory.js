@@ -165,6 +165,7 @@ export default class OppsFactory {
             }
                 
         }
+        await this.componentUpdate.setJson(prep);
         //return the update to the register
         return preparation;
         

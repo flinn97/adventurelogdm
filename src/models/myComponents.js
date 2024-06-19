@@ -721,6 +721,7 @@ class Participant extends componentBase {
     constructor(opps) {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
+        this.updateConditions=this.updateConditions.bind(this);
 
     }
 
@@ -745,18 +746,18 @@ class Participant extends componentBase {
         for (let condition of conditionList) {
             //if jsonList.includes(something from the ruleset) and its not undefined nor ""
             if (jsonList.includes(condition)) {
-                if (this.json[condition] !== "" || this.json[condition] !== undefined) {
+                if (this.json[condition] !== "" && this.json[condition] !== undefined) {
                     //increment the value on that condition
-                    this.json[condition]++
+                    this.json[condition] = (parseInt(this.json[condition])+1).toString()
                 }
 
 
 
             }
         }
-        
         //after the for loop update the participant.
-        this?.operationsFactory({ update: this })
+        debugger
+        this.operationsFactory.cleanPrepareRun({ update: this })
     }
 
     async getPicSrc(path) {

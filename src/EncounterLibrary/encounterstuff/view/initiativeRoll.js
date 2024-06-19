@@ -23,7 +23,7 @@ export default class Initiative extends Component {
     }
 
     async handleKeyDown(e){
-      debugger
+      
       if(e.key==="Enter"&&this.state.val!==undefined ){
         
         await this.setState({reRender:false})

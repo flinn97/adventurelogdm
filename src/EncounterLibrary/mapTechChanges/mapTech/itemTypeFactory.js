@@ -57,7 +57,7 @@ export default class MapFactory {
     getComponent(type, props) {
 
         if(type==="delIcon"){
-            debugger
+            
             console.log(this.factory[type])
         }
         let Comp = undefined

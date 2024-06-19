@@ -23,7 +23,7 @@ class Auth {
         await localStorage.setItem("user", JSON.stringify(student));
     }
     // getJsonDatabase(componentList){
-    //     debugger
+    //     
     //     let arr = [weapons];
     //     let arrnames=["weapon"];
     //     let data = []
@@ -93,7 +93,7 @@ class Auth {
 
     }
     async getuser(email, componentList, dispatch) {
-        debugger
+        
         dispatch({splash:true});
         let list = componentList.getComponents();
         let IDlist = [];
@@ -291,7 +291,7 @@ class Auth {
         return src;
     }
     deletePics(name) {
-        //debugger
+        //
         const delRef = ref(storage, name);
         // Delete the file
         deleteObject(delRef).then(() => {
@@ -309,7 +309,7 @@ class Auth {
          */
     async dispatch(obj, email, dispatch) {
 
-        debugger
+        
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {

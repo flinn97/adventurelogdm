@@ -21,7 +21,7 @@ export default class HitPoints extends Component {
     }
 
     async handleKeyDown(e){
-      debugger
+      
       if(e.key==="Enter"&&this.state.val!==undefined ){
         
         let obj = this.state.obj;

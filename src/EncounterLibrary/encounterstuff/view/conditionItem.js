@@ -10,7 +10,7 @@ export default class ConditionItem extends BaseClass {
   
   
     render(){
-      debugger
+      
       let name = this.state.cell.name;
       if(!name){
         name = this.cell
