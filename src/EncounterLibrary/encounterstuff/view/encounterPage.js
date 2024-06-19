@@ -3,7 +3,10 @@ import GeneralInfo from "./generalInfo";
 import MonsterForm from "./monsterForm";
 import MonsterList from "./monsterList";
 import RunEncounter from "./runEncounter";
+
+
 import './encManager.css';
+
 export default class EncounterPage extends Component {
     constructor(props) {
         super(props);
@@ -16,11 +19,16 @@ export default class EncounterPage extends Component {
         
         let app = this.props.app;
         let state = app.state;
+        let styles = state.styles;
         return (
-            <div className='body scroller2' style={{display:"flex", alignItems:"center", flexDirection:"column", width:"100%", paddingBottom:"108px", 
+            <div
+            style={{display:"flex", alignItems:"center", flexDirection:"column", 
+                paddingBottom:"108px", minHeight:"87vh", maxWidth: "100%",
 // REMOVE THIS 
-background:"#0f141c"
+background:"#0f141c1c"
             }}>
+
+
 
                 <GeneralInfo app={app}/>
                 {state.popUpSwitch === "addMonster" && state.currentComponent?.getJson().type==="participant" && <MonsterForm app={app}/>}

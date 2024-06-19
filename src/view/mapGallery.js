@@ -47,7 +47,6 @@ export default class MapGallery extends Component {
       if (state.mapList.length !== mapList.length)
       {
         
-        //ISAAC I changed this so we wern't updating the currentMap at this point. Could you check to make sure it isn't breaking anything?
         this.setState({mapList:mapList,});
 
         if(mapList.length===0){

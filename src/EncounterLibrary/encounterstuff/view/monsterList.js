@@ -19,10 +19,9 @@ export default class MonsterList extends Component {
   render() {
     let app = this.props.app;
     let state = app.state;
-    let styles = state.styles;
-    // console.log(state);
+   
     return (
-      <div style={{ marginTop: "24px",}}>
+      <div style={{ marginTop: "8px", padding:"18px" }}>
         <MapComponent
         // delOptions={{
         //   picURL: trash, warningMessage: "Delete",
@@ -38,11 +37,11 @@ export default class MonsterList extends Component {
             { custom: AttributeMap, type: "custom" },
             { custom: Condition, type: "custom" },
             {imgSrc:trash, style: {
-              width: "35px", height: "35px", padding: "4px 2px",
+              width: "2rem", height: "2rem", padding: "4px 2px",
               display: "flex", flexDirection: "row",
               alignItems: "center", borderRadius: "8px",
-              justifyContent: "center"
-            }, type:"delIcon"}
+              justifyContent: "center", cursor:"pointer"
+            }, type:"delIcon", class:"hover-btn-highlight"}
             // { custom: Duplicate, type: "custom" },
             //  "del"
             // custom component or?

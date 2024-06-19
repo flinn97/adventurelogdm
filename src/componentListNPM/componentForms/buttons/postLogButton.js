@@ -42,6 +42,7 @@ class PostLogButton extends Component {
 
             <div title={isVisible==="true"?titleMessage:""} style={{
             backgroundColor:styles.colors.color9+"68", 
+            height:"fit-content",
             opacity:isVisible==="true"?"100%":"0%",
              borderRadius:"11px",padding:"2px", 
             pointerEvents:this.state.showSaved?"none":"all",
