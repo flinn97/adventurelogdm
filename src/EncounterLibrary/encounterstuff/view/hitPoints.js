@@ -24,10 +24,10 @@ export default class HitPoints extends Component {
       debugger
       if(e.key==="Enter"&&this.state.val!==undefined ){
         
-        await this.setState({reRender:false})
         let obj = this.state.obj;
         let math = await MathService.doMath(this.state.val).toString();
-        
+        await this.setState({reRender:false})
+
         await obj.setCompState({hitPoints:math});
         await this.props.app.state.opps.cleanPrepareRun({update:obj});
         await this.setState({reRender:true,val:undefined,obj:undefined})
@@ -51,7 +51,7 @@ export default class HitPoints extends Component {
 
         }
         else{
-          obj[0].setCompState({armor:val});
+          obj[0].setCompState({hitPoints:val});
           app.state.opps.cleanPrepareRun({update:obj[0]})
         }
 
