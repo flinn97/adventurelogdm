@@ -67,7 +67,7 @@ export default class TokenImage extends Component {
     let widthSm = (this.state.width * 0.908).toString()+"px"
     let widthMd = (this.state.width * 0.959).toString()+"px"
     let pic = this.state.pic;
-    let styles = state.styles;
+    let styles = state?.styles;
 
     return (
       <div style={{minWidth:width+"px", minHeight:width+"px", maxWidth:width+"px", maxHeight:width+"px", boxShadow:"6px 10px 16px -3px"+styles.colors?.colorBlack+"55",

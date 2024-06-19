@@ -718,7 +718,11 @@ class Monster extends componentBase {
 
 }
 class Participant extends componentBase {
+    constructor(opps) {
+        super(opps);
+        this.getPicSrc = this.getPicSrc.bind(this);
 
+    }
 
     json = {
         type: "participant",
@@ -753,6 +757,12 @@ class Participant extends componentBase {
         
         //after the for loop update the participant.
         this?.operationsFactory({ update: this })
+    }
+
+    async getPicSrc(path) {
+        let pic = await authService.downloadPics(path);
+        this.json.picURL = pic;
+
     }
 }
 class Ruleset extends componentBase {

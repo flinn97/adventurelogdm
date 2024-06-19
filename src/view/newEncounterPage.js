@@ -5,6 +5,8 @@ import auth from '../services/auth';
 import { mapInterface } from '../mapTech/mapComponentInterface';
 import MonsterListWrapper from '../EncounterLibrary/encounterstuff/view/monsterListWrapper';
 import "./encounterStuff.css"
+import { Link } from 'react-router-dom';
+import backarrow from '../pics/backArrow.webp';
 
 
 export default class NewEncounterPage extends Component {
@@ -40,7 +42,7 @@ export default class NewEncounterPage extends Component {
     for (let obj of monsterList) {
       obj.setCompState({ type: "participant" });
     }
-    debugger
+    
     let pList = componentList.getList("participant");
     pList=[...pList, ...monsterList];
             for(let obj of pList){
@@ -70,10 +72,28 @@ export default class NewEncounterPage extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
+    let id = toolService.getIdFromURL(true, 0);
+    let encounter = componentList?.getComponent("encounter", id);
+
+    let campaign = encounter?.getJson()?.campaignId;
+
 
 
     return (
-      <div style={{ width: "100%", height: "100%", }}>
+      <div style={{ height: "100%",maxWidth: "100%", }}>
+        <Link className="hover-btn-highlight"
+                to={"/campaign/"+campaign}
+                style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
+                  color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px", border: ""
+                }}
+              >
+                <img style={{ width: ".9rem", opacity: "98%", marginRight: "8px" }}
+                  src={backarrow}
+                />
+                Back
+              </Link>
 
         {this.state.start &&
           <EncounterPage app={{...app}} />
