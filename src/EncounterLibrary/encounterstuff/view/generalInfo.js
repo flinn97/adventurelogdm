@@ -75,7 +75,7 @@ export default class GeneralInfo extends Component {
           )}
 
           <div className='Footer-Row'>
-            <PostLogButton app={app} obj={state.currentEncounter} altText={"initiative"} text={"Log Initiative"}
+          <PostLogButton app={app} obj={state.currentEncounter} altText={"initiative"} text={"Log Initiative"}
               //ENCOUNTER MUST HAVE CAMPAIGN ID 
               campaignId={state.currentEncounter?.getJson().campaignId}
             />

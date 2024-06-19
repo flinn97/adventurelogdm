@@ -26,11 +26,11 @@ export default class Armor extends Component {
       let app= this.props.app
       return(
       <div>
-        <img src={ac} style={{width:"1rem", marginLeft:"32.25px"}}/>
+        <img src={ac} style={{width:"1rem", marginLeft:"1.5vw"}}/>
         {this.state.reRender&&
         <ParentFormComponent ref = {this.formRef} app={app}  obj={this.props.obj} name="armor" cleanPrepareRun={true} 
         wrapperStyle={{display:"flex", flexDirection:"column"}}
-        class="text-form text-small" inputStyle={{width:"55px"}} />}
+        class="text-form text-small" inputStyle={{width:"2.5vw"}} />}
         </div>
         )
       }

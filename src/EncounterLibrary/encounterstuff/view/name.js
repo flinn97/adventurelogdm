@@ -15,7 +15,7 @@ export default class Name extends Component {
       return(
       <div>
         <ParentFormComponent app={app} obj={this.props.obj} name="name" cleanPrepareRun={true} class="text-form" 
-        inputStyle={{width:"21vw", marginLeft:"-0.1vw", border:"1px solid #ffffff09"}}/>
+        inputStyle={{width:"18.7vw", border:"1px solid #ffffff09", fontSize:"1.2rem"}}/>
         </div>
         )
       }

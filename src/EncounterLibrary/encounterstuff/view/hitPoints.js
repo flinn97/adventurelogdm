@@ -56,8 +56,8 @@ export default class HitPoints extends Component {
         }
 
         }}
-          inputStyle={{ width: "80px" }} wrapperStyle={{ display: "flex", flexDirection: "column" }}
-          class="text-form text-small" labelStyle={{ fontFamily: "inria", marginLeft: "42px" }}
+          inputStyle={{ width: "4vw" }} wrapperStyle={{ display: "flex", flexDirection: "column" }}
+          class="text-form text-small" labelStyle={{ fontFamily: "inria", marginLeft: "2.1vw", fontSize:"1.1rem" }}
         />}
       </div>
     )

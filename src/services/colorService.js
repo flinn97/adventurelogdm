@@ -11,6 +11,21 @@ class ColorService {
     constructor() {
       this.colorThief = new ColorThief()
     }
+
+    randomDarkColors() {
+      const colors = [];
+    
+      for (let i = 0; i < 6; i++) {
+        const hue = Math.floor(Math.random() * 360); // Random hue value between 0 and 360
+        const saturation = Math.floor(Math.random() * 11) + 10; // Random saturation value between 60% and 100%
+        const lightness = Math.floor(Math.random() * 21) + 10; // Random lightness value between 10% and 30%
+    
+        const hslColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        colors.push(hslColor);
+      }
+    
+      return colors;
+    }
         
 
     updateColors = (pic, callBack) => {

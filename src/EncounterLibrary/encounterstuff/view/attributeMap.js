@@ -15,7 +15,7 @@ export default class AttributeMap extends Component {
       let app = this.props.app
       let obj = this.props.obj;
       return( 
-      <div style={{display:"flex", flexDirection:"row", marginLeft:"-12px", marginTop:"-20px"}}>
+      <div style={{display:"flex", flexDirection:"row", marginTop:"-24px"}}>
         <Armor app={app} obj={obj}/>
         <HitPoints app={app} obj={obj}/>
         <ParticipantNotes app={app} obj={obj}/>

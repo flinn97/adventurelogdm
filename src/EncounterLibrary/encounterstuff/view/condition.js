@@ -22,6 +22,8 @@ export default class Condition extends Component {
     let conditionList = ruleset.getJson().conditionList.split(",");
     let activeConditionList = ruleset.getJson().conditionList.split(",");
 
+    console.log(obj)
+
     conditionList = conditionList.map(str => {
       let o = {
         type: "condition",
@@ -73,11 +75,11 @@ export default class Condition extends Component {
     }).sort((a, b) => b.value - a.value); // Sort by value in descending order
 
     return (
-      <div style={{ display: "flex", flexDirection: "row", height: "160px", width: "35vw" }}>
+      <div style={{ display: "flex", flexDirection: "row", height: "160px", width: "31.4vw", marginLeft:".7vw", alignContent: "center",  }}>
 
-        <div className="hover-container" style={{ alignContent: "center", height: "155px", }}>
+        <div className="hover-container" style={{ height: "fit-content", display:"flex" }}>
           <img src={conditionGear} className="hover-container condition-gear" alt="Condition Gear Icon" />
-          <div className="hover-div" style={{ display: "flex", flexDirection: "row", width: "35vw", marginTop: "57px", }}>
+          <div className="hover-div" style={{ display: "flex", flexDirection: "row", width: "34vw", marginTop: "57px", }}>
             <MapComponent
               mapSectionClass="Condition-Section"
               mapContainerClass="Condition-Container"

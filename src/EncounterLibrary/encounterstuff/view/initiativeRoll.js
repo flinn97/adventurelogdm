@@ -40,8 +40,8 @@ export default class Initiative extends Component {
   render() {
     let app = this.props.app
     return (
-      <div style={{width: "90px", marginLeft:"100px"}}>
-      <div style={{ width:"fit-content", height: "160px", justifyContent: "center", display: "flex", alignContent: "center", marginLeft:"11px",
+      <div style={{width: "4vw", marginLeft:"8px", marginRight:"13px"}}>
+      <div style={{ width:"fit-content", height: "160px", justifyContent: "center", display: "flex", alignContent: "center",
       alignItems: "center", flexDirection: "column" }}>
         {!this.props.obj.getJson().rollState ? (
           <div
@@ -80,9 +80,9 @@ export default class Initiative extends Component {
                 }}
                 name="initiative"
                 class="text-form text-small"
-                inputStyle={{marginLeft:"0px", fontSize:"1.5rem"}}
+                inputStyle={{marginLeft:"0px", fontSize:"1.25rem"}}
               />}
-              <div title="Clear Initiative" className="Close-Button btn-hightlight" style={{ width: "fit-content", fontSize: "1.44rem", marginTop: "11px", zIndex:"2", background:"none", }}
+              <div title="Clear Initiative" className="Close-Button btn-hightlight" style={{ width: "fit-content", fontSize: "1.14rem", marginTop: "11px", zIndex:"2", background:"none", }}
                 onClick={() => {
                   this.props.obj.setCompState({ initiative: "", rollState: false });
                   this.props.app.state.opps.cleanPrepareRun({ update: this.props.obj });
