@@ -377,7 +377,8 @@ body {
 }
 
 .gradient-animation {
-  background: linear-gradient(90deg, #282c3404, #282c3404, #45526e09, #677ca809, #142f6d04, #282c3404);
+  background: linear-gradient(90deg, #282c3404, #00153f09, #45526e09, #677ca809, #142f6d04, #282c3404);
+  
   background-size: 200% 200%;
   animation: gradient-animation 28s infinite;
   border-radius: 22px;
