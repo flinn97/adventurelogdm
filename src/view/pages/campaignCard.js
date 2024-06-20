@@ -154,7 +154,7 @@ class TabContent extends Component{
             fontWeight:"200", fontSize:styles.fonts.fontBody, width:"fit-content",}} 
             onClick={()=>{
                   //                  add > campaign          clear it > prepare not run           switchcase
-                  dispatch({operate: "addcampaign", operation: "cleanPrepare", popUpSwitchcase: "addCampaign"})}}>
+                  dispatch({operate: "addcampaign", operation: "cleanJsonPrepare", object:{owner:state.user.getJson()._id}, popUpSwitchcase: "addCampaign"})}}>
                   + New Campaign</div>}
 
       {(state.currentComponent?.getJson().type === "campaign" && addCampaign) && <AddCampaign app = {app}/>}
