@@ -19,7 +19,9 @@ export default class EncounterForm extends Component {
           <Upload app={app}
             //ADD THIS TO ALL UPLOADS//
             changePic={(pic) => { this.setState({ pic: pic });
-             app.state.currentEncounter.setCompState({picURL: pic})}}
+             app.state.currentEncounter.setCompState({picURL: pic});
+             app.dispatch({})
+            }}
             obj={app.state.currentEncounter} text="Set New Backdrop" style={{
               display: "flex",
               zIndex: "1", borderRadius: ".1vmin", background: "",
