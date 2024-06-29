@@ -285,6 +285,9 @@ class LegatoNavItems extends Component {
           </Link>
 
         )}
+        <Link to="#" onClick={() => window.open("https://marketplace.arcanevaultassembly.com", "_blank")} style={{textDecoration: "none"}}>
+          <div style={{...this.props.singleLinkWrapperStyle, marginLeft:"28px", marginTop:"12px", fontSize:"14px", color:"rgb(145,155,168)", paddingLeft:"11px", paddingRight:"10px",  fontFamily:"Inter, sans-serif", fontWeight:'500', letterSpacing:"0em", }}>Marketplace</div>
+        </Link>
       </>
 
     )
