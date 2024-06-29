@@ -28,7 +28,7 @@ updateCampaignLinks(text) {
   let componentList = state.componentList;
   let campaignId = toolService.getIdFromURL(true, 0);
     // Define the regular expression pattern to find links containing "/campaign/"
-    var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_blank")?/g;
+    var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_self")?/g;
 
     // Use String.prototype.replace() to find and replace links
     var updatedText = text.replace(pattern, function(match, p1) {
@@ -236,10 +236,15 @@ updateCampaignLinks(text) {
                 // 'strike', 
                 'blockquote'
               ], [{
-                'color': ["#F4F5F8", "#E6FFFD", "#99AFD1", "#ecd23a", "#fd5259", "#D7ABF7", "#9EFFA0",
-                  "#F4F5F888", "#E6FFFD77", "#99AFD188", "#ecd23a88", "#fd525988", "#D7ABF788", "#9EFFA088",
-                  "#000000", "#E6FFFD44", "#99AFD155", "#ecd23a55", "#fd525955", "#D7ABF755", "#9EFFA055"]
-              }, { 'background': [false, "black", "#00274D", "#C1A71B", "#5F0C0C", "#4B0082", "#002E07"] },],
+                'color': ["#F4F5F8", "#F4F5F888", "#000000", //greyscale
+                   "#99AFD188", "#c3e8e577", "#c3e8e5", "#99AFD1", //bluish
+                  "#ecd23a","#ecd23a98", "#ecd23a66", //gold
+                  "#819636", "#9EFFA0", "#9EFFA088", "#9EFFA055",//green
+                  "#fd5259", "#fd525988", "#fd525955", "#E9481F", "#EE7355", "#996C60", "#F6C6BA", //red orange
+                   "#D7ABF7",  "#8B6099", "#D7ABF788", "#D7ABF755",   //purple
+                  "#AB1FE9", "#49BCCF", "#0081B1",  
+                ]
+              }, { 'background': [false, "black", "#00274DF2", "#C1A71BF2", "#5F0C0CF2", "#4B0082F2", "#002E07F2"] },],
               [, 'code-block'],
               [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],      // superscript/subscript
               [{ 'indent': '-1' }, { 'indent': '+1' }],                        // text direction
