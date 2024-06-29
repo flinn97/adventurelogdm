@@ -28,7 +28,7 @@ updateCampaignLinks(text) {
   let componentList = state.componentList;
   let campaignId = toolService.getIdFromURL(true, 0);
     // Define the regular expression pattern to find links containing "/campaign/"
-    var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_blank")?/g;
+    var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_self")?/g;
 
     // Use String.prototype.replace() to find and replace links
     var updatedText = text.replace(pattern, function(match, p1) {
