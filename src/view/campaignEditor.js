@@ -223,7 +223,8 @@ export default class CampaignEditor extends Component {
     let parentItem = state.componentList.getComponent("lore", pId, "_id");
     let loreList = state.currentLore ? state.componentList.getList("lore", state.currentLore.getJson().name, "name") : "";
     let hasName = ((state.currentLore) && (state?.currentLore?.getJson().name != undefined) && (state?.currentLore?.getJson().name != "")) ? true : false;
-    let warning = ((loreList.length > 1) && (state.currentLore) && (hasName)) ? <div style={{ color: styles.colors.color5, background: styles.colors.color2, padding: "3px 8px", borderRadius: "8px", fontSize: styles.fonts.fontSmall, position: "absolute", top: 15 }}>{"You already have another lore named " + state?.currentLore?.getJson().name}</div> : ""
+    let warning = ((loreList.length > 1) && (state.currentLore) && (hasName)) ? <div style={{ color: styles.colors.color5, background: styles.colors.color2, padding: "3px 8px", borderRadius: "8px", fontSize: styles.fonts.fontSmall, position: "absolute", top: 15 }}>
+      {"You already have another lore named " + state?.currentLore?.getJson().name}</div> : ""
     
     let encList = state.componentList.getList("encounter", this.state.obj?.getJson()._id, "campaignId");
     // Filter out objects where the name contains "Copy of"
@@ -322,11 +323,11 @@ export default class CampaignEditor extends Component {
                   <div
                     style={{ width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3, 
                     padding: "5px 6px", marginTop:"-22px" }}>
-                    <div
+                    {/* <div
                       style={{ fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "69", }}>
                       {this.state.obj?.getJson().title + ": "}{warning}
 
-                    </div>
+                    </div> */}
                   </div>
 
                   <ParentFormComponent app={app} name="name" obj={state.currentLore}
