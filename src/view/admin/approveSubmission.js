@@ -33,7 +33,7 @@ export default class ApproveSubmission extends Component {
 
     return (
      <div style={{display:"flex", flexDirection:'row', width:'200px', justifyContent:"space-between"}}>
-      <div style={{marginLeft:"100px"}} onClick={async()=>{
+      <div style={{marginLeft:"100px", color:"black"}} onClick={async()=>{
         
         let approval = this.props.obj;
         
@@ -63,7 +63,7 @@ export default class ApproveSubmission extends Component {
       }}>
         yes
     </div>
-    <div onClick={()=>{state.opps.cleanPrepareRun({del:this.props.obj})}} >no</div>
+    <div style={{color:"black"}} onClick={()=>{state.opps.cleanPrepareRun({del:this.props.obj})}} >no</div>
     </div>
 
     )
