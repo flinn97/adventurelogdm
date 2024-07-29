@@ -84,13 +84,13 @@ class PdfUploader extends Component {
     return (
       <div>
         <div style={{
-          color: styles.colors.colorWhite + "99", maxHeight: "30px", paddingTop:"3px", minWidth: "138px", 
-          borderRadius: "11px", width: "142px", backgroundColor: "", cursor:"pointer",
+          color: styles.colors.colorWhite + "99", maxHeight: "30px", paddingTop:"3px", minWidth: "38px", 
+          borderRadius: "11px", width: "82px", backgroundColor: "", cursor:"pointer",
         }}>
 
 
           <label for="file-upload" style={{color:styles.colors.color3, fontWeight:"200", cursor:"pointer", fontSize: "21px",}}>
-            + PDF to Lore
+            + PDF
             <input type="file" accept="application/pdf" onChange={this.handleChange} style={{
               ...styles.buttons.buttonAdd,
               top: 0, backgroundColor: "",
