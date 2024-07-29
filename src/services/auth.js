@@ -567,7 +567,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        debugger
+        
         
         for (const key in obj) {
             let operate = obj[key];
@@ -590,6 +590,7 @@ class Auth {
                     if(component.type==="mpItem"){
                         return
                     }
+                    console.log(component);
 
                     switch (key) {
                         case "add":

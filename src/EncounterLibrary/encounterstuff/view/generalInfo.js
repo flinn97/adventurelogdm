@@ -95,7 +95,7 @@ export default class GeneralInfo extends Component {
               <div
                 className='button Add-New-Creature-Button'
                 onClick={async() =>{
-                  debugger
+                  
                   await state.opps.cleanJsonPrepare({addparticipant: { encounterId: currentEncounter.getJson()._id, type: 'participant' }})
                   let obj = await state.opps.getUpdater("add");
                   obj = obj[0]

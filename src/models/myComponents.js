@@ -756,7 +756,7 @@ class Participant extends componentBase {
             }
         }
         //after the for loop update the participant.
-        debugger
+        
         this.operationsFactory.cleanPrepareRun({ update: this })
     }
 

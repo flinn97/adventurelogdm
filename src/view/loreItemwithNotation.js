@@ -184,8 +184,16 @@ export default class LoreItemWithNotation extends Component {
 
     return (
       <>
-        {this.props.link ? (
-          <Link to={sendLink} className='hover-container' onDragEnter={(e) => {
+        {this.props.link ? (<>{obj.getJson().pdfURL?<a target='_blank' style={{
+              textDecoration: "none",
+              display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", color: "#ffdead",
+              backgroundColor: backColor,
+              padding: "3px 4px", cursor: "pointer",
+              border: this.props.isGrabbing === obj ? "1.8px solid " + styles.colors.color5 + "33" : "1px solid " + choiceColor2 + "22",
+              textAlign: "center",
+              minWidth: this.props.isGrabbing === obj ? "250px" : "440px", margin: this.props.isGrabbing === obj ? "8px 99px" : "8px 4px", minHeight: "64px", borderRadius: "18px", height: "64px", transition: "all 1s"
+            }} href = {obj.getJson().pdfURL}>{insert} go to</a>:
+          <Link to={obj.getJson().pdfURL||sendLink} className='hover-container' onDragEnter={(e) => {
             this.handleDragEnter(e, obj)
           }}
             style={{
@@ -198,7 +206,7 @@ export default class LoreItemWithNotation extends Component {
               minWidth: this.props.isGrabbing === obj ? "250px" : "440px", margin: this.props.isGrabbing === obj ? "8px 99px" : "8px 4px", minHeight: "64px", borderRadius: "18px", height: "64px", transition: "all 1s"
             }}>
             {insert}
-          </Link>
+          </Link>}</>
         ) : (
           <div className='hover-container' onDragEnter={(e) => {
             this.handleDragEnter(e, obj)

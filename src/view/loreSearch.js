@@ -15,6 +15,7 @@ import IndexLoreHierarchy from './indexLoreHierarchy';
 import auth from '../services/auth';
 
 import arrow from '../pics/priorityIcon.png';
+import PdfUploader from './uploadLorePdf';
 
 
 
@@ -216,6 +217,9 @@ export default class LoreSearch extends Component {
 
             }}
           >+ Create Lore</div>
+          <div>
+            <PdfUploader app={app} />
+          </div>
 
           <div
             title={"New Lore, opens in a new Tab"}
@@ -258,7 +262,7 @@ export default class LoreSearch extends Component {
               position: "relative", marginTop: "-36px", height: "36px",
               width: "fit-content", alignSelf: "flex-end",
             }}>
-              
+
 
               <input app={app}
 
@@ -299,7 +303,7 @@ export default class LoreSearch extends Component {
               </div> */}
             </div>}
 
-            
+
 
           <div style={{
             alignContent: "flex-start", alignItems: "center", alignSelf: "center",
@@ -369,7 +373,7 @@ export default class LoreSearch extends Component {
 
                             {/* right ARRRo */}
                             <div className='hover-div' title={"Reorder Lore Right"} onClick={async (e) => {
-                              
+
                               e.stopPropagation();
                               let loreList = await componentList.getList("lore", id, listTerm);
                               await loreIndexService.reOrganizeLore(loreList, state.opps);
@@ -399,7 +403,7 @@ export default class LoreSearch extends Component {
                         }}
                       >
 
-                        <Link to={"/campaign/" + toolService.getIdFromURL(true, 0) + "-" + linkId} style={{ textDecoration: "none" }}>
+                        {loreItem.getJson().pdfURL ? <a target='_blank' href={loreItem.getJson().pdfURL}>
                           <LoreItemWithNotation
                             link={true}
                             app={app}
@@ -408,8 +412,19 @@ export default class LoreSearch extends Component {
                             newLoreName={newLoreName}
                             isGrabbing={this.state.grabItem}
 
-                          />
-                        </Link>
+                          /></a> :
+
+                          <Link to={loreItem.getJson().pdfURL || "/campaign/" + toolService.getIdFromURL(true, 0) + "-" + linkId} style={{ textDecoration: "none" }}>
+                            <LoreItemWithNotation
+                              link={true}
+                              app={app}
+                              obj={loreItem}
+                              index={index}
+                              newLoreName={newLoreName}
+                              isGrabbing={this.state.grabItem}
+
+                            />
+                          </Link>}
 
                       </div>
 

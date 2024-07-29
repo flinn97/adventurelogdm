@@ -30,6 +30,7 @@ import { convertToMarketplace2 } from '../services/conversionService';
 import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
+import Upload from "./upload";
 
 
 export default class CampaignEditor extends Component {
@@ -380,7 +381,7 @@ export default class CampaignEditor extends Component {
                         onClick={() => { dispatch({ operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign" }) }}>
                         Edit
                       </div>}
-
+                      
                   </div>
 
                   <Link to={newLink} target='_blank' className='hover-btn' title={advLogText}
