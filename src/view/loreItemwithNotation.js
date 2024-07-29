@@ -34,8 +34,8 @@ export default class LoreItemWithNotation extends Component {
     let dispatch = app.dispatch;
     let currentState = app.state;
     let componentList = currentState.componentList;
-  
-    obj = obj.getJson().reference? componentList.getComponent("lore", obj.getJson().ogId, "_id"): obj;
+
+    obj = obj.getJson().reference ? componentList.getComponent("lore", obj.getJson().ogId, "_id") : obj;
 
 
     let objName = obj.getJson().name.length > 33 ? obj.getJson().name.substring(0, 33) + "..." : obj.getJson().name;
@@ -45,7 +45,7 @@ export default class LoreItemWithNotation extends Component {
 
     let listTerm = state.currentLore ? "parentId" : "campaignId";
 
-    
+
 
     let allColors = obj.getJson().colors ? obj.getJson().colors : ["#000000"];
     let colorList = Object.values(allColors);
@@ -57,8 +57,8 @@ export default class LoreItemWithNotation extends Component {
     let wordCountIs = this.getWordCount(desc) > 4 ? "Word Count: " + wordCount : "";
 
     let objParent = obj.getJson().parentId;
-    
-    let parentName = Object.values(objParent)[0]?Object.values(objParent)[0]:'';
+
+    let parentName = Object.values(objParent)[0] ? Object.values(objParent)[0] : '';
 
     let allList = mapList.length + encounterList.length + imageList.length;
 
@@ -96,6 +96,7 @@ export default class LoreItemWithNotation extends Component {
             opacity: ".5", borderRadius: "18px", alignmentSelf: "center",
             zIndex: "-10",
             width: "448px", border: "2px dashed green", height: "72px", position: "absolute", top: -5, left: -4,
+            textDecoration: "none",
           }} >
           {/* <img src={arrowGif} style={{width:"32px", height:"32px", marginTop:"-11px" }}/> */}
 
@@ -113,7 +114,8 @@ export default class LoreItemWithNotation extends Component {
 
       <div style={{
         color: this.props.isGrabbing === obj ? styles.colors.color9 : styles.colors.colorWhite,
-        fontSize: this.props.isGrabbing === obj ? styles.fonts.fontSmall : styles.fonts.fontNormal, marginTop: "16px", width: "100%", height: "100%"
+        fontSize: this.props.isGrabbing === obj ? styles.fonts.fontSmall : styles.fonts.fontNormal, 
+        marginTop: "16px", width: "100%", height: "100%", textDecoration:"none",
       }}>
         {objName}
       </div>
@@ -141,7 +143,7 @@ export default class LoreItemWithNotation extends Component {
             marginLeft: "6px", marginTop: "47px",
             fontSize: styles.fonts.fontSmallest
           }}>
-          {((parentName!=="undefined")&&(parentName!=="")&&parentName?parentName:"")}
+          {((parentName !== "undefined") && (parentName !== "") && parentName ? parentName : "")}
         </div>}
 
 
@@ -149,7 +151,7 @@ export default class LoreItemWithNotation extends Component {
         flexDirection: "row", display: "flex", width: "fit-content", position: "absolute", top: -5, right: 2,
         alignItems: "center", justifyContent: "flex-end", verticalAlign: "center", textAlign: "center",
         opacity: this.props.isGrabbing !== obj ? "1" : "0", transition: "all 1s ease",
-        justifyItems: "flex-end"
+        justifyItems: "flex-end", textDecoration:"none"
       }}>
         {/* ICONS */}
 
@@ -184,26 +186,50 @@ export default class LoreItemWithNotation extends Component {
 
     return (
       <>
-        {this.props.link ? (<>{obj.getJson().pdfURL?<a target='_blank' style={{
-              textDecoration: "none",
-              display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", color: "#ffdead",
-              backgroundColor: backColor,
-              padding: "3px 4px", cursor: "pointer",
-              border: this.props.isGrabbing === obj ? "1.8px solid " + styles.colors.color5 + "33" : "1px solid " + choiceColor2 + "22",
-              textAlign: "center",
-              minWidth: this.props.isGrabbing === obj ? "250px" : "440px", margin: this.props.isGrabbing === obj ? "8px 99px" : "8px 4px", minHeight: "64px", borderRadius: "18px", height: "64px", transition: "all 1s"
-            }} href = {obj.getJson().pdfURL}>{insert} go to</a>:
-          <Link to={obj.getJson().pdfURL||sendLink} className='hover-container' onDragEnter={(e) => {
+        {this.props.link ? (<>{obj.getJson().pdfURL ? <a target='_blank' 
+        className='none'
+        style={{
+          textDecoration: "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          color: "#ffdead",
+          backgroundColor: backColor,
+          padding: "3px 4px",
+          cursor: "pointer",
+          border: this.props.isGrabbing === obj ? "1.8px solid " + styles.colors.color5 + "33" : "1px solid " + choiceColor2 + "22",
+          textAlign: "center",
+          minWidth: this.props.isGrabbing === obj ? "250px" : "440px",
+          margin: this.props.isGrabbing === obj ? "8px 99px" : "8px 4px",
+          minHeight: "64px",
+          borderRadius: "18px",
+          height: "64px",
+          transition: "all 1s",
+        }} href={obj.getJson().pdfURL}>{insert}
+          {/* go to */}
+        </a> :
+          <Link to={obj.getJson().pdfURL || sendLink} className='hover-container' onDragEnter={(e) => {
             this.handleDragEnter(e, obj)
           }}
             style={{
               textDecoration: "none",
-              display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", color: "#ffdead",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              color: "#ffdead",
               backgroundColor: backColor,
-              padding: "3px 4px", cursor: "pointer",
+              padding: "3px 4px",
+              cursor: "pointer",
               border: this.props.isGrabbing === obj ? "1.8px solid " + styles.colors.color5 + "33" : "1px solid " + choiceColor2 + "22",
               textAlign: "center",
-              minWidth: this.props.isGrabbing === obj ? "250px" : "440px", margin: this.props.isGrabbing === obj ? "8px 99px" : "8px 4px", minHeight: "64px", borderRadius: "18px", height: "64px", transition: "all 1s"
+              minWidth: this.props.isGrabbing === obj ? "250px" : "440px",
+              margin: this.props.isGrabbing === obj ? "8px 99px" : "8px 4px",
+              minHeight: "64px",
+              borderRadius: "18px",
+              height: "64px",
+              transition: "all 1s",
             }}>
             {insert}
           </Link>}</>
