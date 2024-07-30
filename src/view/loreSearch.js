@@ -190,7 +190,7 @@ export default class LoreSearch extends Component {
             className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px",
+              borderRadius: "9px", fontSize: "21px", width: "200px", 
             }}
             onClick={async () => {
 
@@ -217,9 +217,7 @@ export default class LoreSearch extends Component {
 
             }}
           >+ Create Lore</div>
-          <div>
-            <PdfUploader app={app} />
-          </div>
+
 
           <div
             title={"New Lore, opens in a new Tab"}
@@ -227,7 +225,7 @@ export default class LoreSearch extends Component {
             className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px",
+              borderRadius: "9px", fontSize: "21px", cursor:"pointer", minWidth: "138px", 
             }}
             onClick={async () => {
               const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
@@ -255,6 +253,18 @@ export default class LoreSearch extends Component {
 
             }}
           >+ Connect Lore</div>
+
+          <div
+            title={"Add PDF"}
+            className="hover-btn"
+            style={{
+              ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+              paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
+              borderRadius: "9px", fontSize: "21px",
+            }}
+          >
+            <PdfUploader app={app} />
+          </div>
 
           {loreListTotalLength > 8 &&
             <div style={{
