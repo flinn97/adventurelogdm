@@ -85,11 +85,11 @@ class PdfUploader extends Component {
       <div>
         <div style={{
           color: styles.colors.colorWhite + "99", maxHeight: "30px", paddingTop:"3px", minWidth: "38px", 
-          borderRadius: "11px", width: "82px", backgroundColor: "", cursor:"pointer",
+          borderRadius: "11px", width: "82px", backgroundColor: "", 
         }}>
 
 
-          <label for="file-upload" style={{color:styles.colors.color3, fontWeight:"200", cursor:"pointer", fontSize: "21px",}}>
+          <label for="file-upload" style={{color:styles.colors.color3, fontWeight:"200", fontSize: "21px",}}>
             + PDF
             <input type="file" accept="application/pdf" onChange={this.handleChange} style={{
               ...styles.buttons.buttonAdd,
