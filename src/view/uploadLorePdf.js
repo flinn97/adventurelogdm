@@ -101,7 +101,7 @@ class PdfUploader extends Component {
 
             {/* <button onClick={this.handleUpload}>Upload</button> */}
 
-            <br />
+            {/* <br /> */}
             {progress > 0 && <progress value={progress} max="100" />}
             {error && <p>{error}</p>}
             {url && <p>File available at: <a href={url} target="_blank" rel="noopener noreferrer">here</a></p>}
