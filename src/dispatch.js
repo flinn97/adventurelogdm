@@ -39,6 +39,8 @@ import PopupExtendedMapSelector from './view/popups/popupExtendedMapGallery';
 import PopupExtendedLibrary from './view/popups/popupExtendedLibrary';
 import PopupApprovalSubmitted from './view/popups/popupApprovalSubmitted';
 import NewEncounterPage from './view/newEncounterPage';
+import GoPremium from './view/popups/goPremium';
+import auth from './services/auth';
 
 //model
 export default class Dispatch extends Component {
@@ -47,6 +49,20 @@ export default class Dispatch extends Component {
     this.state = {
     }
   }
+  // async componentDidMount(){
+    
+  //   const delay = ms => new Promise(res => setTimeout(res, ms));
+  //   await delay(5000);
+  //   
+  //   let monsters = await auth.firebaseGetter("post", this.props.app.state.componentList,"type", "post");
+
+  //     await this.props.app.state.opps.prepare({del:monsters});
+
+  //   await this.props.app.state.opps.run();
+
+
+
+  // }
 
   componentDidUpdate() {
     let R = this.props.app.state.rerender;
@@ -72,7 +88,7 @@ export default class Dispatch extends Component {
 
       <BrowserRouter>
         {/*      === */}
-        {(state.user !== undefined && state.user?.getJson()?.paidCustomer) && (
+        {(state.user !== undefined && (state.user?.getJson()?.paidCustomer|| state.user?.getJson().role==="player")) && (
 
 
           <div >
@@ -163,14 +179,19 @@ export default class Dispatch extends Component {
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
                         delClick={state.handlePopupClose ? state.handlePopupClose : () => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
                       />}
+                      {(state.popupSwitch === "goPremium" ) &&
+                      <GoPremium
+                        type="popup" options={{ cardType: "popupSmallest" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+                      />}
                     {(state.popupSwitch === "seeLibrary") &&
                       <LibraryForGalleryPopup
                         type="popup" options={{ cardType: "popupLarge" }} app={app}
-                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined, selectedCampaign:"" }) }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined, selectedCampaign: "" }) }}
 
                       />}
 
-                      {state.popupSwitch === "chooseMap"
+                    {state.popupSwitch === "chooseMap"
                       &&
                       <PopupExtendedMapSelector
                         uploader={state.mapUpload}
@@ -179,7 +200,7 @@ export default class Dispatch extends Component {
                         containerStyle={{ backgroundColor: styles.colors.color1 + "55", }}
                         handleClose={() => {
                           app.dispatch({
-                            popupSwitch: "", currentDelObj: undefined,selectedCampaign: "",
+                            popupSwitch: "", currentDelObj: undefined, selectedCampaign: "",
                             currentComponent: undefined, currentPin: undefined
                           });
                           state.opps.clearUpdater();
@@ -199,7 +220,7 @@ export default class Dispatch extends Component {
 
                       />}
 
-                    {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type === "monster" &&
+                    {state.popupSwitch === "connectPlayer" && state.currentComponent?.getJson()?.type === "participant" &&
                       <ConnectToCampaign
 
                         type="popup" options={{ cardType: (window.innerWidth > 800) ? "popupSmallSolid" : "popupLarge" }} app={app} containerStyle={{ background: styles.colors.color2 }}
@@ -208,7 +229,7 @@ export default class Dispatch extends Component {
 
                       />}
 
-                    {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type === "monster" &&
+                    {state.popupSwitch === "addCharacter" && state.currentComponent?.getJson()?.type === "participant" &&
 
                       <AddPlayerCharacter
 
@@ -271,7 +292,7 @@ export default class Dispatch extends Component {
                         }}
                       />}
 
-                    
+
 
                     {state.popupSwitch === "downloadLibrary"
                       &&
@@ -331,8 +352,13 @@ export default class Dispatch extends Component {
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
                         <Route path="/login/" element={<Login app={app} />} />
                         <Route path="/register/" element={<Register app={app} />} />
-
-
+                         {/* adding new stuff to the player. */}
+                        <Route path="/campaign/" element={<Campaign app={app} />} />
+                        <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
+                        <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
+                        <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
+                        
+                        <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
                       </Routes>
                     ) : (
                       <Routes>
@@ -349,9 +375,10 @@ export default class Dispatch extends Component {
                         <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
                         {/* <Route path="/addencountermanager/:id" element={<AddEncounter app={app} />}/>  */}
                         {/* <Route path="/encounter/:id" element={<Encounter app={app} players={state?.campaignPlayers} />} /> */}
-                        <Route path="/encounter/:id" element={<NewEncounterPage app={app} players={state?.campaignPlayers} />} /> 
+                        <Route path="/encounter/:id" element={<NewEncounterPage app={app} players={state?.campaignPlayers} />} />
                         {/* <Route path="/log/:id" element={<AdventureLogPage app={app} />}/>  */}
                         <Route path="/log/:id" element={<AdventureLog app={app} />} />
+                        <Route path="/connecttoadventure/:id" element={<AdventureLog app={app} type="cardWithTab" options={{ tabType: "bigCardBorderless", cardType: undefined }} />} />
 
                         <Route path="/admin/users" element={<AdminUser app={app} />} />
                         <Route path="/admin/partners" element={<AdminPartner app={app} />} />
@@ -360,7 +387,7 @@ export default class Dispatch extends Component {
 
                         <Route path="/partner/:id" element={<PartnerCampaign app={app} />} />
                         <Route path="/sendtomarketplace/:id" element={<ApprovalProposal app={app} />} />
-
+                        <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
                       </Routes>)}
 
                   </div>
@@ -378,7 +405,7 @@ export default class Dispatch extends Component {
               </div>}
 
           </div>)}
-
+                  
         <Routes>
 
           <Route path="/register/" element={<Register app={app} />} />

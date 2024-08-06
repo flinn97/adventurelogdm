@@ -94,7 +94,7 @@ class MainContent extends Component {
 
         paddingTop: "28px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
       }}>
-
+      
         {!isLog &&
           <div style={{ display: "flex", marginTop: "11px", flexDirection: "row", alignContent: "flex-end", justifyContent: "flex-end" }}>
             <PostLogButton app={app} obj={state.currentPic} text={"Log Image"} />
@@ -109,7 +109,7 @@ class MainContent extends Component {
               color: styles.colors.colorWhite + "d9", marginTop: "8px", marginBottom: "18px", fontSize: styles.fonts.fontSmall,
               minWidth: "255px"
             }}></div> */}
-            <ParentFormComponent app={app} name="src" obj={state.currentPic}
+            <ParentFormComponent checkUser={true} app={app} name="src" obj={state.currentPic}
               theme={"adventureLog"}
               rows={5} placeholder={"Source / Add Text Here"}
               prepareRun={true}

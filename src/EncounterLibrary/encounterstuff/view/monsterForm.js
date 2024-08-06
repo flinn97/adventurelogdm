@@ -101,7 +101,7 @@ export default class MonsterForm extends Component {
           // console.log(e)
         }}></input>
         <div className="button Add-New-Creature-Button" title="Add to Encounter" onClick={async () => {
-
+          
           let json = state.currentComponent.getJson()
           for (let i = 1; i < parseInt(this.state.value); i++) {
             await state.opps.jsonPrepare({ "addparticipant": { ...json, _id: undefined } })

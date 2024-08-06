@@ -316,7 +316,7 @@ export default class LoreViewer extends Component {
             theme={"adventureLog"}
             rows={5}
             prepareRun={true}
-            type={"quill"} onPaste={this.handlePaste} connectLore={true}
+            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
             inputStyle={{
               maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
               borderRadius: "4px", background: styles.colors.colorWhite + "00", background: "",
@@ -348,7 +348,7 @@ export default class LoreViewer extends Component {
             theme={"adventureLog"}
             rows={5}
             prepareRun={true}
-            type={"quill"} onPaste={this.handlePaste} connectLore={true}
+            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
             inputStyle={{
               maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
               borderRadius: "4px", background: styles.colors.colorWhite + "00",
@@ -376,6 +376,10 @@ export default class LoreViewer extends Component {
               fontSize: styles.fonts.fontSmall
             }}
               onClick={() => {
+                if(state.user.getJson().role!=="GM"){
+                  dispatch({ popupSwitch: "goPremium"});
+                  return
+                }
                 dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
               }}
             >
@@ -464,6 +468,10 @@ export default class LoreViewer extends Component {
             }}
               title="Create a new encounter, you can edit it by clicking on it."
               onClick={() => {
+                if(state.user.getJson().role!=="GM"){
+                  dispatch({ popupSwitch: "goPremium"});
+                  return
+                }
                 state.opps.cleanJsonPrepareRun({
                   "addencounter": {
                     loreId: lore.getJson()._id,
@@ -486,6 +494,10 @@ export default class LoreViewer extends Component {
               title="Find an existing encounter to add to this lore.
                         This will create a COPY."
               onClick={() => {
+                if(state.user.getJson().role!=="GM"){
+                  dispatch({ popupSwitch: "goPremium"});
+                  return
+                }
                 this.setState({ showFindEncounter: true })
               }}>
               Find Encounter

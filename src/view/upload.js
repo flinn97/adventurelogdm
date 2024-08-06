@@ -33,6 +33,12 @@ export default class Upload extends Component {
 
 
     changeHandler = async (event) => {
+        if(this.props.checkUser){
+            if(this.props.app.state.user.getJson().role!=="GM"){
+                return
+              }
+        }
+        
         const currentDate = new Date();
         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
         const day = currentDate.getDate().toString().padStart(2, '0');
@@ -111,7 +117,16 @@ export default class Upload extends Component {
 
         return (
 
-            <div className='hover-btn' style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
+            <div onClick={()=>{
+                if(this.props.checkUser){
+                    if(state.user.getJson().role!=="GM"){
+                        dispatch({ popupSwitch: "goPremium"});
+                        return
+                      }
+                }
+
+               
+            }} className='hover-btn' style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
             borderRadius:"11px", fontWeight:"550", width:"fit-content"  }}>
 
                 {this.props.text!=="imageOnly" &&

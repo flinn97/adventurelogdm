@@ -19,13 +19,13 @@ export default class InitiativeLogComponent extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-   state.componentList.sortSelectedList("monster","lastInit",true);
+   state.componentList.sortSelectedList("participant","lastInit",true);
    let obj = this.props.obj;
    if (!obj.getJson().currentInit){
     obj.setCompState({
       currentInit: <MapComponent
       filter={{search: obj.getJson().itemId, attribute: "encounterId"}}
-      app={app} name={"monster"}
+      app={app} name={"participant"}
      cells={[
        {custom:MonsterMapItemSimplified, props:{app:app,}},
        ]
@@ -48,10 +48,10 @@ export default class InitiativeLogComponent extends Component {
     let index = this.props.index;
     let phone = window.innerWidth > 800?false:true;
     let w = this.props.w;
-    let sorted = state.componentList.sortSelectedList("monster","lastInit",true);
+    let sorted = state.componentList.sortSelectedList("participant","lastInit",true);
     const currentInit = obj.getJson().currentInit?obj.getJson().currentInit:<MapComponent
     filter={{search: obj.getJson().itemId, attribute: "encounterId"}}
-    app={app} name={"monster"}
+    app={app} name={"participant"}
    cells={[
      {custom:MonsterMapItemSimplified, props:{app:app,}},
      ]

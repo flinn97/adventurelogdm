@@ -459,8 +459,8 @@ class MainContent extends Component {
               {/* OTHER STUFF */}
               {!this.state.showFindEncounter && !this.state.showFindImage &&
                 <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", width: "98%" }}>
-
-                  <ParentFormComponent app={app} name="name"
+                 
+                  <ParentFormComponent checkUser={true}  app={app} name="name"
 
                     placeholder={placeholder}
                     inputStyle={{
@@ -490,7 +490,10 @@ class MainContent extends Component {
                           textDecorationColor: "#ffdead22",
                           alignSelf: "flex-end"
                         }} onClick={async () => {
-
+                          if(state.user.getJson().role!=="GM"){
+                            dispatch({ popupSwitch: "goPremium"});
+                            return
+                          }
                           // this.copyLore(state.currentPin);
                           let pinJson = { ...state.currentPin.getJson(), loreId: "", referencePin: false, _id: undefined, x: 80, y: 110 + this.state.imagesToShow };
                           await state.opps.cleanJsonPrepareRun({ addpin: pinJson });
@@ -513,7 +516,10 @@ class MainContent extends Component {
                           textDecorationColor: "#ffdead22",
                           alignSelf: "flex-end"
                         }} onClick={async () => {
-
+                          if(state.user.getJson().role!=="GM"){
+                            dispatch({ popupSwitch: "goPremium"});
+                            return
+                          }
                           this.copyLore(lore);
                           dispatch({ popupSwitch: "" })
 
@@ -570,7 +576,7 @@ class MainContent extends Component {
                       theme={"adventureLog"}
                       rows={5} linkLore={true}
                       // prepareRun={true}
-                      type={"quill"} onPaste={this.handlePaste} connectLore={true}
+                      type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
                     /></div>
 
 
@@ -594,7 +600,7 @@ class MainContent extends Component {
                         theme={"adventureLog"}
                         rows={5}
                         // prepareRun={true}
-                        type={"quill"} onPaste={this.handlePaste} connectLore={true}
+                        type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
 
                       /></div>
                   </div>
@@ -629,6 +635,10 @@ class MainContent extends Component {
                         title="Find an existing encounter to add to this lore.
             This will create a COPY."
                         onClick={async () => {
+                          if(state.user.getJson().role!=="GM"){
+                            dispatch({ popupSwitch: "goPremium"});
+                            return
+                          }
                           let lore = state.currentComponent;
                           let check;
                           if (state.currentPin) {
@@ -861,7 +871,7 @@ class MainContent extends Component {
                     <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
                       <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft: "22px" }}>
 
-                        <Upload text="+ Upload"
+                        <Upload checkUser={true} text="+ Upload"
                           updateMap={async () => {
                             let lore = state.currentComponent;
                             let check;
@@ -1000,17 +1010,23 @@ class MainContent extends Component {
                     borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
                     marginTop: "8.24vh", marginBottom: "-81px", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
                   }} onClick={async () => {
-
-
-                    let pin1 = state.currentPin;
-                    if (pin1.getJson().referencePin) {
-                      let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
-                      await state.opps.cleanPrepare({ del: l1 });
+                    if(state.user.getJson().role!=="GM"){
+                      await dispatch({ popupSwitch: "goPremium"});
+                      return
+                    }
+                    else{
+                      let pin1 = state.currentPin;
+                      if (pin1.getJson().referencePin) {
+                        let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
+                        await state.opps.cleanPrepare({ del: l1 });
+                      }
+  
+                      await state.opps.prepareRun({ del: pin1 });
+  
+                      await dispatch({ popupSwitch: "", showPinMap: false })
                     }
 
-                    await state.opps.prepareRun({ del: pin1 });
-
-                    await dispatch({ popupSwitch: "", showPinMap: false })
+                   
 
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
                   }}>Delete Pin</div>
@@ -1031,9 +1047,14 @@ class MainContent extends Component {
                   alignSelf: "flex-end", bottom: '8px', alignItems: "flex-end", right: "10px",
                   position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
                 }}>
-                <RunButton app={app} text="Save"
+                <RunButton checkUser={true} app={app} text="Save"
 
                   runFunc={async (arr) => {
+                    if(state.user.getJson().role!=="GM"){
+                      await dispatch({ popupSwitch: "goPremium"});
+                      return
+                    }
+                    else{
                     try {
                       let lore = arr[0];
                       let check;
@@ -1098,7 +1119,7 @@ class MainContent extends Component {
                       console.error("Error in save operation:", error);
                       // Handle error appropriately
                     }
-                  }} />
+                  }}} />
 
                 {this.state.showSaved && (
                   <div className="saved-animation" style={{

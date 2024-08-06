@@ -90,7 +90,7 @@ class MainContent extends Component{
         paddingTop:"35%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
     <div style={{ display:"flex", flexDirection:"column", textAlign:"center", paddingBottom:"42px", alignContent:"center", justifyContent:"center" }}> 
     <ParentFormComponent app={app} name="campaignId"
-              placeholder={"Enter Campaign Code"}  maxLength={11} 
+              placeholder={"Enter Campaign Code"}  
               inputStyle={{maxWidth:(window.innerWidth > 800)?"55.5vw":"100%", width:(window.innerWidth > 800)?"400px":"100%", 
               padding:"4px 9px", color:colorWarn, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"02", borderWidth:"0px", height:"100%", cursor:"text",

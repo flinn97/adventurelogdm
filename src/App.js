@@ -69,11 +69,14 @@ export default class App extends Component {
 
       //THIS IS THE NAV MENU
       switchCase:[
-        {path:"/", comp:Campaign, name: "Campaigns" },
+        {path:"/", comp:Campaign, name: "Campaign" },
+        {path: "/library", comp:Library, name: "Library"},
+        {path:"/characters", comp:PlayerHome, name:"Characters"},
         ///Added Notes
         {path: "/notes", comp:Note, name: "Notes"},
+        
         ///Added Marketplace
-        {path: "/library", comp:Library, name: "Library"},
+        
         ///
        
       ]
@@ -160,7 +163,7 @@ handleChange = (event) => {
           
          await this.state.componentListInterface.getFactory().registerComponents({name:key, component:obj[key]});
         }
-        // let monsterList = await auth.firebaseGetter("monster", list, "type", "monster",);
+        // let monsterList = await auth.firebaseGetter("participant", list, "type", "participant",);
         // console.log(monsterList?.length);
         // for(let ob of monsterList){
         //   ob.setCompState({type:"participant"})

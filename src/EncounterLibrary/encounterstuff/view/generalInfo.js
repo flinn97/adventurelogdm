@@ -83,10 +83,11 @@ export default class GeneralInfo extends Component {
               <div
                 className='button Add-All-Players-Button'
                 onClick={async () => {
+                  
                   let list = await app.state.componentList.getList('participant', 'player', 'role');
-                  let mList = await app.state.componentList.getList('monster', 'player', 'role');
-
-                  currentEncounter.addCampaignPlayers([...list,...mList])
+                  
+                  await currentEncounter.addCampaignPlayers([...list,])
+                  this.props.app.dispatch({});
                 }
                 }
               >
@@ -95,6 +96,7 @@ export default class GeneralInfo extends Component {
               <div
                 className='button Add-New-Creature-Button'
                 onClick={async() =>{
+                  
                   
                   await state.opps.cleanJsonPrepare({addparticipant: { encounterId: currentEncounter.getJson()._id, type: 'participant' }})
                   let obj = await state.opps.getUpdater("add");

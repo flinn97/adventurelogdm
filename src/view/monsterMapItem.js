@@ -81,7 +81,7 @@ export default class MonsterMapItem extends Component {
         await state.opps.run();
 
       let componentList = this.props.app.state.componentList;
-        await componentList.sortSelectedList("monster", "lastInit", true);
+        await componentList.sortSelectedList("participant", "lastInit", true);
     }
 
   }

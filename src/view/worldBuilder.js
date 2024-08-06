@@ -206,6 +206,10 @@ export default class Worldbuilder extends Component {
               marginRight: "1rem", position: "relative", fontWeight: "600",
               fontSize: styles.fonts.fontSmall
             }} onClick={() => {
+              if(state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }
               dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
             }}>
               Add Map

@@ -111,6 +111,7 @@ export default class AddCampaign extends Component {
               <div className='hover-btn' style={{ display:"flex", marginBottom:"20px", flexDirection:"row", width:"100%", justifyContent:"space-between", 
               verticalAlign:"center", alignItems:"center"}}>
                 <Upload 
+                checkUser={true}
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
               obj={app.state.currentComponent} text="Set Backdrop" style={{display:"flex",
@@ -131,7 +132,7 @@ export default class AddCampaign extends Component {
               </div>
 
               {/* ///NAME OF CAMPAIGN */}
-              <ParentFormComponent app={app} name="title" label="*Campaign Name: " 
+              <ParentFormComponent checkUser={true} app={app} name="title" label="*Campaign Name: " 
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                   theme={"adventureLog"} rows={1}
                   maxLength={app.state.maxLengthShort}
@@ -169,7 +170,7 @@ export default class AddCampaign extends Component {
 
                   {isNotUpdate
                     ? <div style={{display:"flex", justifyContent:"center"}} className="hover-btn"> 
-                        <RunButton app ={app} 
+                        <RunButton checkUser={true} app ={app} 
                           wrapperStyle={{...styles.buttons.buttonAdd, 
                             width:"45%",
                             display:"flex", transition:"all 1s easeOutQuart",
@@ -188,7 +189,7 @@ export default class AddCampaign extends Component {
                       </div>
                     : 
                       <div className='hover-btn' style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
-                      <RunButton app ={app} 
+                      <RunButton checkUser={true} app ={app} 
                         wrapperStyle={{...styles.buttons.buttonAdd, 
                           width:"45%",
                           display:"flex", transition:"all 1s easeOutQuart",

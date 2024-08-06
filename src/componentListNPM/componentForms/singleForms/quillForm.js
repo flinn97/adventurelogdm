@@ -176,6 +176,12 @@ updateCampaignLinks(text) {
 
 
   async handleChange(value) {
+    if(this.props.checkUser){
+      if(this.props.app.state.user.getJson().role!=="GM"){
+        return
+      }
+    }
+    
     let names = this.props.app.state.loreNames;
     const linkPattern = /\[\[(.*?)\]\]/g;
     let matches = [...value.matchAll(linkPattern)];
@@ -217,6 +223,7 @@ updateCampaignLinks(text) {
   render() {
     let obj = this.props?.obj;
     let app = this.props?.app;
+    let dispatch=app.dispatch
     let state = app?.state;
     let styles = state?.styles;
 
@@ -224,7 +231,15 @@ updateCampaignLinks(text) {
     return (
 
 
-      <div 
+      <div onClick={()=>{
+        if(this.props.checkUser){
+          if(state.user.getJson().role!=="GM"){
+            dispatch({ popupSwitch: "goPremium"});
+            return
+          }
+        }
+        
+      }} 
       // title='Use [[ ]] around a Lore title to connect it'
        >
 

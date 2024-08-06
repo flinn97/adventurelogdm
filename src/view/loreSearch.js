@@ -193,7 +193,10 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px", width: "200px", 
             }}
             onClick={async () => {
-
+              if(state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }
               const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
               // if(loreListTotalLength > 8){
               // this.setState({searchTerm:newLoreName});}
@@ -228,6 +231,10 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px", cursor:"pointer", minWidth: "138px", 
             }}
             onClick={async () => {
+              if(state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }
               const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
               let href = window.location.href;
               let splitURL = href.split("/");
@@ -254,7 +261,10 @@ export default class LoreSearch extends Component {
             }}
           >+ Connect Lore</div>
 
-          <div
+          <div onClick={()=>{ if(state.user.getJson().role!=="GM"){
+                    dispatch({ popupSwitch: "goPremium"});
+                    return
+                  }}}
             title={"Add PDF"}
             className="hover-btn"
             style={{

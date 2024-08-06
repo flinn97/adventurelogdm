@@ -19,6 +19,9 @@ class PdfUploader extends Component {
   }
 
   async handleChange(e) {
+    if(this.props.app.state.user.getJson().role!=="GM"){
+        return
+      }
     if (e.target.files[0]) {
       await this.setState({ file: e.target.files[0] });
     }
@@ -26,7 +29,7 @@ class PdfUploader extends Component {
   }
 
   async handleUpload() {
-    debugger
+    
     let app = this.props.app;
     let state = app.state;
     let opps = state.opps;

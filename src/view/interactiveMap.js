@@ -97,7 +97,7 @@ export default class InteractiveMap extends Component {
       {this.state.map &&( <>{this.state.map.getJson().picURL===""
       ?(
       <div>
-          <ParentFormComponent app={app} name="mapTitle" label="Map Name" 
+          <ParentFormComponent checkUser = {true} app={app} name="mapTitle" label="Map Name" 
         wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column", marginTop:"2vh"}}
         theme={"adventureLog"} rows={1}
         maxLength={110}
@@ -105,7 +105,7 @@ export default class InteractiveMap extends Component {
         inputStyle={{width:"58.1rem", padding:"4px 9px", color:styles.colors.colorBlack, height:"1.7rem", rows:"1",
         borderRadius:"4px",background:styles.colors.colorWhite+"aa", borderWidth:"0px",
         }}/>
-        <Upload obj={this.state.map} app={app} //ADD THIS TO ALL UPLOADS//
+        <Upload checkUser={true} obj={this.state.map} app={app} //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
               text="Set Background" style={{display:"flex",
               zIndex:"1", borderRadius:".1vmin", background:"", }} 

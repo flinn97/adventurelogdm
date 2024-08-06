@@ -138,7 +138,7 @@ class MainContent extends Component{
 
 
   
-      <MapComponent app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
+      <MapComponent app={app} name={"participant"} filter={{search: "player", attribute: "role"}}
       cells={[{custom:YourPlayersMapItem, props:{app:app}},]}
       theme={"selectByImageSmall"}
       filterFunc={(char)=>char.getJson().campaignId===state.currentCampaign.getJson()._id}

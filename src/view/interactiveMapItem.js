@@ -33,9 +33,9 @@ export default class InteractiveMapItem extends Component {
       <div  id="mapItem" style={{width: "fit-content", height: "fit-content", border: "1px solid black", position:"absolute", zIndex: 500, top:this.props.top, left:this.props.left}}>
         {this.state.update?(
         <div style={{width:"200px", height:"300px", background:"teal",}}>
-        <ParentFormComponent obj={this.props.obj} name="title"/>
+        <ParentFormComponent checkUser={true} obj={this.props.obj} name="title"/>
         <div onClick={()=>{this.setState({update: false})}}>X</div>
-        <ParentFormComponent style={{height:"200px", border:"1px solid black"}} obj={this.props.obj} name="description" type="textArea"  app={app}/>
+        <ParentFormComponent  checkUser={true}  style={{height:"200px", border:"1px solid black"}} obj={this.props.obj} name="description" type="textArea"  app={app}/>
         <div onClick={async()=>{
            await this.props.finishUpdate(this.props.obj.getJson()._id + "update")
           state.opps.cleanPrepareRun({del: this.props.obj})

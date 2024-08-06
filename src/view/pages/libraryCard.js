@@ -75,6 +75,7 @@ class MainContent extends Component {
 
 
   openMPItem(mpItem) {
+    
     let app = this.props.app
     let state = app.state
     let componentList = state.componentList
@@ -165,7 +166,7 @@ class MainContent extends Component {
             cells={[
 
               { name: "Download", class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
-              { type: "img", class: "Img-Midsize" },
+              { type: "img", class: "Img-Midsize",  func:(obj)=>{this.openMPItem(obj)} },
               { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
               {
                 type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item",

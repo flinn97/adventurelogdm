@@ -47,7 +47,7 @@ export default class GalleryViewer extends Component {
 
 <div style={{display:"flex", justifyContent:"flexStart", justifyItems:"center", marginBottom:"18px", flexDirection:"column"}}>
 
-                <Upload text="+ Upload" 
+                <Upload  checkUser={true} text="+ Upload" 
                          className="indent-on-click"
                       
                       buttonStyle={{...styles.buttons.buttonAdd, marginTop:"5px", backgroundColor:styles.colors.colorBlack+"99",
@@ -68,7 +68,12 @@ export default class GalleryViewer extends Component {
                
                 />
 
-                <div className='hover-btn' onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} style={{...styles.buttons.buttonAdd, marginTop:"25px", backgroundColor:styles.colors.colorBlack+"99",
+                <div className='hover-btn' onClick={()=>{
+                   if(state.user.getJson().role!=="GM"){
+                    dispatch({ popupSwitch: "goPremium"});
+                    return
+                  }
+                  dispatch({popupSwitch:"seeLibrary"})}} style={{...styles.buttons.buttonAdd, marginTop:"25px", backgroundColor:styles.colors.colorBlack+"99",
                       paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
                       borderRadius:"9px", fontSize:"21px",}}>+ From Library</div>
 
@@ -101,6 +106,10 @@ export default class GalleryViewer extends Component {
                                     <img className='hover-btn' src={trash} 
                                                     draggable="false"
                                     onClick={()=>{
+                                      if(state.user.getJson().role!=="GM"){
+                                        dispatch({ popupSwitch: "goPremium"});
+                                        return
+                                      }
                                     state.opps.cleanPrepareRun({del:img});
                                     }}
 

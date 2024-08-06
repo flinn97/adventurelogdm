@@ -21,7 +21,7 @@ class UploadComponent extends Component {
             showPics: false,
             loading:false,
             name: "",
-            type: "monster",
+            type: "participant",
             delList:[]
 
 

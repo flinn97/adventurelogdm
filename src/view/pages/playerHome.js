@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PlayerHomeHomeCard from './playerHomeCard';
+import auth from '../../services/auth';
 
 
 export default class PlayerHome extends Component {
@@ -10,14 +11,16 @@ export default class PlayerHome extends Component {
 
     }
   }
-componentDidMount(){
-  let app = this.props.app;
-  app.dispatch({switchCase:[
-    {path:"/", comp:PlayerHome, name: "Home"},
-   
-   
-  ]})
-}
+  async componentDidMount(){
+    let app = this.props.app;
+    let state = app.state;
+    let componentList= state.componentList;
+    let user = state.user;
+    
+    let c = await auth.getAllCharacters(componentList, user.getJson()._id);
+    app.dispatch({characters:c})
+  }
+
 
 
   render() {
