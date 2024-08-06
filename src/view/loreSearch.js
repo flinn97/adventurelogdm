@@ -190,11 +190,11 @@ export default class LoreSearch extends Component {
             className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px", width: "200px", 
+              borderRadius: "9px", fontSize: "21px", width: "200px",
             }}
             onClick={async () => {
-              if(state.user.getJson().role!=="GM"){
-                dispatch({ popupSwitch: "goPremium"});
+              if (state.user.getJson().role !== "GM") {
+                dispatch({ popupSwitch: "goPremium" });
                 return
               }
               const newName = this.props.app.state.currentLore ? this.props.app.state.currentLore.getJson().name : "";
@@ -228,11 +228,11 @@ export default class LoreSearch extends Component {
             className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px", cursor:"pointer", minWidth: "138px", 
+              borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px",
             }}
             onClick={async () => {
-              if(state.user.getJson().role!=="GM"){
-                dispatch({ popupSwitch: "goPremium"});
+              if (state.user.getJson().role !== "GM") {
+                dispatch({ popupSwitch: "goPremium" });
                 return
               }
               const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
@@ -261,16 +261,16 @@ export default class LoreSearch extends Component {
             }}
           >+ Connect Lore</div>
 
-          <div onClick={()=>{ if(state.user.getJson().role!=="GM"){
-                    dispatch({ popupSwitch: "goPremium"});
-                    return
-                  }}}
+          <div onClick={() => {
+            if (state.user.getJson().role !== "GM") {
+              dispatch({ popupSwitch: "goPremium" });
+              return
+            }
+          }}
             title={"Add PDF"}
             className="hover-btn"
             style={{
-              ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
-              paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px",
+              marginTop: "15px",
             }}
           >
             <PdfUploader app={app} />

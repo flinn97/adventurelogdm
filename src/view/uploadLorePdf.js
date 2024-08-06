@@ -87,19 +87,41 @@ class PdfUploader extends Component {
     return (
       <div>
         <div style={{
-          color: styles.colors.colorWhite + "99", maxHeight: "30px", paddingTop:"3px", minWidth: "38px", 
-          borderRadius: "11px", width: "82px", backgroundColor: "", cursor:"pointer",
+         ...styles.buttons.buttonAdd, width:"200px",
+         backgroundColor: styles.colors.colorBlack + "99", 
+         height: "36px",
+         borderRadius: "9px", 
+         fontSize: "21px", 
+         cursor:"pointer",
+         padding: "0", 
+         display: "flex", 
+         alignItems: "center", 
+         justifyContent: "center", 
+         position: "relative"
         }}>
 
 
-          <label for="file-upload" style={{color:styles.colors.color3, fontWeight:"200", cursor:"pointer", fontSize: "21px",}}>
-            + PDF
+          <label style={{ color: styles.colors.color3, 
+    fontWeight: "200", 
+    cursor: "pointer",
+    
+    fontSize: "21px", 
+    userSelect: "none", 
+    display: "flex", 
+    alignItems: "center", 
+    justifyContent: "center",
+    position: "absolute",
+    width: "100%", 
+    height: "100%"}}>
+            
             <input type="file" accept="application/pdf" onChange={this.handleChange} style={{
-              ...styles.buttons.buttonAdd,
-              top: 0, backgroundColor: "",
-              left: 0,
-              cursor: "pointer",
-              opacity: 0,
+              position: "absolute", 
+              top: 0, textIndent: "-999px", 
+              left: 0, 
+              width: "100%", 
+              height: "100%", 
+              opacity: 0, 
+              cursor: "pointer"
             }} />
 
             {/* <button onClick={this.handleUpload}>Upload</button> */}
@@ -108,8 +130,9 @@ class PdfUploader extends Component {
             {progress > 0 && <progress value={progress} max="100" />}
             {error && <p>{error}</p>}
             {url && <p>File available at: <a href={url} target="_blank" rel="noopener noreferrer">here</a></p>}
-
-          </label>
+            <div style={{ position: "relative" }}>+ PDF</div>
+            </label>
+            
         </div>
       </div>
     );
