@@ -87,7 +87,8 @@ export default class AdventureLogPage extends Component {
 
   async sendText() {
 
-    let userRole = this.props.app.state.user.getJson().role;
+    let userRole =  this.props.app.state.user.getJson().role;
+    userRole = userRole==="GM"&&!this.props.app.state.currentCharacter?"GM":"Player";
     let m = this.state.textI;
     let mType = "message";
     let newM;
@@ -186,7 +187,7 @@ export default class AdventureLogPage extends Component {
 
     //USE user role to determine what is passed into message
     let userRole = state.user.getJson().role;
-
+    userRole = userRole==="GM"&&!this.props.app.state.currentCharacter?"GM":"Player";
     let sortedLogItems = compList.getList("post", currentCampId, "campaignId");
 
     let sLL = sortedLogItems.length;

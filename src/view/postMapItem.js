@@ -36,7 +36,7 @@ export default class PostMapItem extends Component {
     let dispatch = app.dispatch
     let state = app.state;
     let user = state.currentCharacter?state.currentCharacter.getJson()._id:null;
-    if ((state.user.getJson().role === obj.getJson()?.sender) && state.user.getJson().role === "GM") {
+    if ((state.user.getJson().role === obj.getJson()?.sender) && (state.user.getJson().role === "GM" && !state.currentCharacter)) {
       return true
     } else {
       let objUser = obj.getJson()?.characterId;

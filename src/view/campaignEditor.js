@@ -393,7 +393,12 @@ export default class CampaignEditor extends Component {
 
                   </div>
 
-                  <Link to={newLink} target='_blank' className='hover-btn' title={advLogText}
+                  <Link 
+                  onClick={()=>{
+                    localStorage.removeItem("player");
+                    toolService.navigateToLink(newLink, true);
+                  }}
+                   className='hover-btn' title={advLogText}
                     style={{
                       ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px",
                       borderColor: "#00000000", boxShadow: "",

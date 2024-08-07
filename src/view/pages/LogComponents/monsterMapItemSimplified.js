@@ -38,7 +38,7 @@ export default class MonsterMapItemSimplified extends Component {
 
     let objName = name.length > maxLengthName ? name.substring(0, maxLengthName) + "..." : name;
 
-    let isHiddenforPlayers = (obj?.getJson().hideFromInitiative && state.user.getJson().role!=="GM");
+    let isHiddenforPlayers = (obj?.getJson().hideFromInitiative && state.user.getJson().role!=="GM" && state.currentCharacter);
     
     
     return (
@@ -77,7 +77,7 @@ export default class MonsterMapItemSimplified extends Component {
       {isHiddenforPlayers?"":objName}
       </div>
 
-      {uRole === "GM" &&
+      {uRole === "GM" && !state.currentCharacter &&
 <div style={{flexDirection:"column", width:phone?"1rem":"130px", marginLeft:phone?"2rem":"-45px", justifyContent:"center", alignItems:"center", 
 textAlign:"center", background:styles.colors.color1+"33",
 verticalAlign:"center", height:"100%",marginTop:"-4px",

@@ -31,10 +31,7 @@ export default class AdventureLogPageWrapper extends Component {
     let idSegment = parts.pop();
     let campaigns = compList.getList("campaign", idSegment, "_id" )
     let currentCampId = campaigns?campaigns[0].getJson()._id:"";
-    
-
-//USE user role to determine what is passed into message
-    let userRole = state.user.getJson().role;
+  
     
     let sortedLogItems = compList.getList("post", currentCampId, "campaignId");
 
