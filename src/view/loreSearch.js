@@ -182,15 +182,16 @@ export default class LoreSearch extends Component {
             </div>
           }
         </div>
-
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", justifyItems: "center", marginBottom: "70px", }}>
-          <div
+        {/* <hr style={{height:"2px", display:"flex", width:"610px", mixBlendMode:"luminosity", opacity:".22"}}></hr> */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", justifyItems: "center", marginBottom: "60px", }}>
+          
+        <div style={{display: "flex", flexDirection: "row", marginTop:"2px"}}><div
             title={"New Lore, opens in a new Tab"}
 
             className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px", width: "200px",
+              borderRadius: "9px", fontSize: "21px", width: "200px", marginRight:"21px"
             }}
             onClick={async () => {
               if (state.user.getJson().role !== "GM") {
@@ -228,7 +229,7 @@ export default class LoreSearch extends Component {
             className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px",
+              borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight:"21px"
             }}
             onClick={async () => {
               if (state.user.getJson().role !== "GM") {
@@ -274,6 +275,7 @@ export default class LoreSearch extends Component {
             }}
           >
             <PdfUploader app={app} />
+          </div>
           </div>
 
           {loreListTotalLength > 8 &&

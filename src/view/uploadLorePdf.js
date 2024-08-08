@@ -87,7 +87,7 @@ class PdfUploader extends Component {
     return (
       <div>
         <div style={{
-         ...styles.buttons.buttonAdd, width:"200px",
+         ...styles.buttons.buttonAdd, width:"155px",
          backgroundColor: styles.colors.colorBlack + "99", 
          height: "36px",
          borderRadius: "9px", 
@@ -130,7 +130,7 @@ class PdfUploader extends Component {
             {progress > 0 && <progress value={progress} max="100" />}
             {error && <p>{error}</p>}
             {url && <p>File available at: <a href={url} target="_blank" rel="noopener noreferrer">here</a></p>}
-            <div style={{ position: "relative" }}>+ PDF</div>
+            <div style={{ position: "relative", fontSize: "21px", }}>+ PDF</div>
             </label>
             
         </div>
