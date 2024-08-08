@@ -306,7 +306,7 @@ export default class CampaignEditor extends Component {
                       ...styles.buttons.buttonClose, borderRadius: "11px", fontSize: styles.fonts.fontSmall,
                       padding: "4px 10px", pointer: "cursor", color: styles.colors.color5,
                       height: "fit-content", zIndex: "200", alignSelf: "flex-end",
-                      background: styles.colors.colorBlack + "5b", marginTop: "-4px",
+                      background: styles.colors.colorBlack + "5b", marginTop: "-4px", marginBottom:"30px"
                       // backgroundColor:"white",
                     }}
 
@@ -360,7 +360,7 @@ export default class CampaignEditor extends Component {
                       // prepareRun={true}
                       inputStyle={{
                         width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                        borderRadius: "4px", background: styles.colors.colorWhite + "00",
+                        borderRadius: "4px", background: styles.colors.colorWhite + "00", marginBottom:"20px",
                         border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
                       }}
 
@@ -429,6 +429,7 @@ export default class CampaignEditor extends Component {
                           color: styles.colors.colorWhite + "b4",
                           borderRadius: "11px",
                           padding: "6px 8px",
+                          
                           alignItems: "flex-end",
                           background: styles.colors.colorBlack + "3b",
                           fontSize: styles.fonts.fontSmallest,
