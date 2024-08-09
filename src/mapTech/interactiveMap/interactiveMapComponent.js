@@ -34,8 +34,7 @@ export default class InteractiveMap extends BaseClass {
         // Calculate relative x and y
         // const x = e.pageX - containerRect.left - 25;
         // const y = e.pageY - containerRect.top - 25;
-        // console.log("x:", x);
-        // console.log("y:", y)
+
       });
 
       saveList.push(listItem);

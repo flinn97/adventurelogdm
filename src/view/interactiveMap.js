@@ -54,12 +54,10 @@ export default class InteractiveMap extends Component {
 }
   pin(event){
     
-    // console.log(event)
     let target = event.target
     let params = target.getBoundingClientRect()
     let x =  (event.x - params.left)
     let y =  (event.y - params.top)
-    // console.log(params)
     if(target.id==="map"){
     let obj= {
       title: "new pin",
@@ -67,8 +65,7 @@ export default class InteractiveMap extends Component {
       top: y,
     };
     
-    //console.log(x)
-    //console.log(y)
+
     this.props.app.dispatch({operation: "jsonPrepareRun", operate: "addpin", object: obj})
     
   }
@@ -76,7 +73,6 @@ export default class InteractiveMap extends Component {
   printref(event){
     //
     if (this.currentMap && this.currentMap.current.contains(event.target)) {
-      //console.log(this.currentMap);
     
 }
   }

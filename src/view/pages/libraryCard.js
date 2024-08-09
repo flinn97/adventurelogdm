@@ -142,7 +142,6 @@ class MainContent extends Component {
     let styles = state.styles;
 
     // let dButton = componentList.getComponents("mpItem");
-    // console.log(dButton)
 
     return (
       <div style={{ width: "100%", display: "flex", flexDirection: "column", minHeight: "71vh", minWidth:"71vw", 

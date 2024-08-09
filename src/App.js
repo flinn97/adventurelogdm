@@ -164,7 +164,6 @@ handleChange = (event) => {
          await this.state.componentListInterface.getFactory().registerComponents({name:key, component:obj[key]});
         }
         // let monsterList = await auth.firebaseGetter("participant", list, "type", "participant",);
-        // console.log(monsterList?.length);
         // for(let ob of monsterList){
         //   ob.setCompState({type:"participant"})
         // }

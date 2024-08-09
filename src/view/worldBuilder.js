@@ -44,8 +44,7 @@ export default class Worldbuilder extends Component {
   // eventLogger method definition
   eventLogger(e, data) {
 
-    // console.log('Event: ', e);
-    // console.log('Data: ', data);
+
   }
 
   addDraggableItem() {

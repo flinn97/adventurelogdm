@@ -30,7 +30,7 @@ export default class MonsterListWrapper extends BaseClass {
               
                 {cells.map((cell, i)=>{
                  let type = cell.type
-                // console.log(type);
+                
                  if(!type){
                     let arr = ["del", "edit", "img"]
     

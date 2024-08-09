@@ -93,7 +93,6 @@ class RangeComponent extends Component {
     }
     mouseDown(event){
         if (this.rangeRef && this.rangeRef.current.contains(event.target)) {
-        //console.log(this.rangeRef.current)
            this.setState({moveSlider:true, x:event.x})
                 
 

@@ -85,7 +85,6 @@ export default class LoreSearch extends Component {
 
     const droppedOntoId = this.state.dragOverTarget;
     const droppedOntoLoreItemId = this.dropTargetRef.current;
-    // console.log(`Dropped ${id} onto ${droppedOntoLoreItemId}`);
 
 
     this.setState(prevState => ({

@@ -22,21 +22,25 @@ export default class QuillForm extends Component {
     this.updateCampaignLinks= this.updateCampaignLinks.bind(this);
   }
 
-updateCampaignLinks(text) {
+async updateCampaignLinks(text) {
   let app = this.props.app;
   let state = app.state;
   let componentList = state.componentList;
-  let campaignId = toolService.getIdFromURL(true, 0);
+  let campaignId = await toolService.getIdFromURL(true, 0);
     // Define the regular expression pattern to find links containing "/campaign/"
     var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_self")?/g;
 
     // Use String.prototype.replace() to find and replace links
-    var updatedText = text.replace(pattern, function(match, p1) {
+    var updatedText = await text.replace(pattern, function(match, p1) { 
       
         // Extract the number from the URL
         var number;
         let id = p1.split("-")[1];
+        console.log(p1);
+        console.log(id);
+        console.log(componentList.getList("lore", campaignId, "campaignId"));
         let obj = componentList.getComponent("lore", id, "ogRef");
+        console.log(obj);
         number = obj.getJson()._id; 
         
         // Perform additional operations with the extracted number if needed
@@ -50,14 +54,21 @@ updateCampaignLinks(text) {
 
 
   async componentDidMount() {
+
     let obj = this.props?.obj[0];
 
     if (this.props.value) {
 
       let val = this.props.value;
-      if(obj?.getJson().ogRef!=="" &&obj?.getJson().ogRef!==undefined&&obj?.getJson().type==="lore"){
-        val = this.updateCampaignLinks(val);
+      if( obj?.getJson().ogRef!=="" &&obj?.getJson().ogRef!==undefined&&obj?.getJson().type==="lore"){
+        if(!obj?.getJson().linksUpdated){
+          val = await this.updateCampaignLinks(val);
+          obj.setCompState({linksUpdated:true});
+  
+        }
+       
       }
+      console.log(val);
 
 
       this.setState({ value: val });

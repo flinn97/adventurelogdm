@@ -1107,7 +1107,6 @@ class MainContent extends Component {
                       }
 
 
-                      console.log("All operations completed. Showing 'Saved' message.");
 
                       this.setState({ showSaved: true, saveClicked: true });
                       setTimeout(

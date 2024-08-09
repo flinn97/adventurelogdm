@@ -13,8 +13,6 @@ export default class Bugcheck extends Component {
 
 
   render() {
-
-    console.log("bug check rerender")
     return (
       <div><h1>bugs</h1>
 

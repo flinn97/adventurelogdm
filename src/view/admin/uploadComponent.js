@@ -81,7 +81,6 @@ class UploadComponent extends Component {
                 },
                 
                 error(err) {
-                  //console.log(err.message);
                 },
               });
               

@@ -304,7 +304,6 @@ export default class Encounter extends Component {
               }}
 
                 onClick={async () => {
-                  // console.log(this.state.obj);
                   await dispatch({
                     operate: "update",
                     operation: "cleanPrepare",
@@ -529,7 +528,6 @@ export default class Encounter extends Component {
                     this.setState({ showMonsterMap: false });
                     let run = obj.getJson().isRunning;
                     this.setState({ isRunning: !run }, async () => {  // Update the component state and wait
-                      // console.log(this.state.isRunning)
 
                       if (this.state.isRunning === true) {
                         await state.componentList.sortSelectedList("participant", "lastInit", true);
