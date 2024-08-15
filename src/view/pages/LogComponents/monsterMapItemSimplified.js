@@ -53,6 +53,7 @@ export default class MonsterMapItemSimplified extends Component {
         maxHeight:"fit-content", background:(obj?.getJson().initiative && !isHiddenforPlayers)?styles.colors.colorWhite+"11":"",
       position: "relative", borderRadius:phone?"11px":"22px", 
       alignSelf:"center", justifyContent:phone?"flex-start":"center", }}>
+        
 
 
   
