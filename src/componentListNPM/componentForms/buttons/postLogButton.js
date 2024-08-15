@@ -65,6 +65,9 @@ class PostLogButton extends Component {
                                         this.setState({showSaved:true});
                                         setTimeout(() => this.setState({ showSaved: false }), 2000);
                                     }
+                                    if(this.props.callBackFunc){
+                                        this.props.callBackFunc();
+                                    }
                                     
                                 }}
             >

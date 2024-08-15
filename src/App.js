@@ -31,7 +31,7 @@ export default class App extends Component {
 
     this.state={
       maxLengthShort: 72,
-
+      currentExpanse:[],
 
       start: false,
       styles: undefined,

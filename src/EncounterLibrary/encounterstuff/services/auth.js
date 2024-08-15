@@ -329,7 +329,7 @@ class Auth {
                         await deleteDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component));
                         break;
                     case "update":
-                        component.date = await serverTimestamp();
+                        component.updatedOn = await serverTimestamp();
                         await updateDoc(doc(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components", component._id), component);
                         break;
                 }
