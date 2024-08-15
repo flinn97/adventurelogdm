@@ -15,29 +15,29 @@ export default class InitiativeLogComponent extends Component {
 
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-   state.componentList.sortSelectedList("participant","lastInit",true);
-   let obj = this.props.obj;
-   if (!obj.getJson().currentInit){
-    obj.setCompState({
-      currentInit: <MapComponent
-      filter={{search: obj.getJson().itemId, attribute: "encounterId"}}
-      app={app} name={"participant"}
-     cells={[
-       {custom:MonsterMapItemSimplified, props:{app:app,}},
-       ]
-     }
-     sectionStyle={{marginBottom:"2px", width:this.props.w, }}
-     cellStyle={{alignContent:"center", verticalAlign:"center", width:"fit-content", }}
-     theme={"logInitiative"}
-     />
-    });
-   }
+    state.componentList.sortSelectedList("participant", "initiative", true);
+    let obj = this.props.obj;
+    if (!obj.getJson().currentInit) {
+      obj.setCompState({
+        currentInit: <MapComponent
+          filter={{ search: obj.getJson().itemId, attribute: "encounterId" }}
+          app={app} name={"participant"}
+          cells={[
+            { custom: MonsterMapItemSimplified, props: { app: app, } },
+          ]
+          }
+          sectionStyle={{ marginBottom: "2px", width: this.props.w, }}
+          cellStyle={{ alignContent: "center", verticalAlign: "center", width: "fit-content", }}
+          theme={"logInitiative"}
+        />
+      });
+    }
   }
- 
+
 
   render() {
     let app = this.props.app;
@@ -46,39 +46,39 @@ export default class InitiativeLogComponent extends Component {
     let styles = state.styles;
     let obj = this.props.obj;
     let index = this.props.index;
-    let phone = window.innerWidth > 800?false:true;
+    let phone = window.innerWidth > 800 ? false : true;
     let w = this.props.w;
-    let sorted = state.componentList.sortSelectedList("participant","lastInit",true);
-    const currentInit = obj.getJson().currentInit?obj.getJson().currentInit:<MapComponent
-    filter={{search: obj.getJson().itemId, attribute: "encounterId"}}
-    app={app} name={"participant"}
-   cells={[
-     {custom:MonsterMapItemSimplified, props:{app:app,}},
-     ]
-   }
-   sectionStyle={{marginBottom:"2px",}}
-   cellStyle={{alignContent:"center", verticalAlign:"center", width:"fit-content"}}
-   theme={"logInitiative"}
-   />;
+    let sorted = state.componentList.sortSelectedList("participant", "initiative", true);
+    const currentInit = obj.getJson().currentInit ? obj.getJson().currentInit : <MapComponent
+      filter={{ search: obj.getJson().itemId, attribute: "encounterId" }}
+      app={app} name={"participant"}
+      cells={[
+        { custom: MonsterMapItemSimplified, props: { app: app, } },
+      ]
+      }
+      sectionStyle={{ marginBottom: "2px", }}
+      cellStyle={{ alignContent: "center", verticalAlign: "center", width: "fit-content" }}
+      theme={"logInitiative"}
+    />;
 
     return (
-      <div style={{ 
-                  display: "flex",
-                  flexDirection: "column",
-                  width: w,
-                  fontSize: styles.fonts.fontNormal,
-                  alignContent:"flex-end",
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        width: w,
+        fontSize: styles.fonts.fontNormal,
+        alignContent: "flex-end",
       }}>
-        <div style={{color:styles.colors.color4, fontSize:phone?styles.fonts.fontSmall:styles.fonts.fontSmallest, marginTop:phone?"8px":"18px", marginBottom:phone?"12px":"8px"}}>
+        <div style={{ color: styles.colors.color4, fontSize: phone ? styles.fonts.fontSmall : styles.fonts.fontSmallest, marginTop: phone ? "8px" : "18px", marginBottom: phone ? "12px" : "8px" }}>
           Initiative Order
         </div>
-       <div style={{ borderRadius:"11px", justifyContent:"flex-start",  marginBottom:"8px"}}>
-        {obj.getJson().itemId &&
-        currentInit
-        }
-       </div>
+        <div style={{ borderRadius: "11px", justifyContent: "flex-start", marginBottom: "8px" }}>
+          {obj.getJson().itemId &&
+            currentInit
+          }
+        </div>
       </div>
-      
+
     )
   }
 }

@@ -46,17 +46,17 @@ export default class MonsterMapItemSimplified extends Component {
       <div style={{
         width:phone?this.props.w:580, margin:phone?"":".5px 2px", 
         minWidth:phone?"89vw":this.props.w, fontSize:styles.fonts.fontSmall,
-        minHeight:(obj?.getJson().lastInit && !isHiddenforPlayers)?"40px":"0px",
+        minHeight:(obj?.getJson().initiative && !isHiddenforPlayers)?"40px":"0px",
         maxWidth:phone?"310px":"",
-        height:(obj?.getJson().lastInit && !isHiddenforPlayers)?"50px":"0px", 
-        padding:(obj?.getJson().lastInit && !isHiddenforPlayers)?"4px 8px":"0px",
-        maxHeight:"fit-content", background:(obj?.getJson().lastInit && !isHiddenforPlayers)?styles.colors.colorWhite+"11":"",
+        height:(obj?.getJson().initiative && !isHiddenforPlayers)?"50px":"0px", 
+        padding:(obj?.getJson().initiative && !isHiddenforPlayers)?"4px 8px":"0px",
+        maxHeight:"fit-content", background:(obj?.getJson().initiative && !isHiddenforPlayers)?styles.colors.colorWhite+"11":"",
       position: "relative", borderRadius:phone?"11px":"22px", 
       alignSelf:"center", justifyContent:phone?"flex-start":"center", }}>
 
 
   
-{(obj?.getJson().lastInit && this.state.show) &&
+{(obj?.getJson().initiative && this.state.show) &&
   <div style={{display:"flex", flexDirection:"row", fontSize:styles.fonts.fontSmall, 
    width:phone?"80vw":this.props.w, height:"48px", justifyContent:phone?"flex-start":"center", marginLeft:phone?"0px":"0px",
   color:styles.colors.colorWhite,}}> 
@@ -65,7 +65,7 @@ export default class MonsterMapItemSimplified extends Component {
 
   <div style={{marginRight:phone?"11px":"20px", width:phone?"2rem":"84px",
  textAlign:phone?"center":"right", marginTop:phone?"16px":"10px", fontSize:phone?"1rem":styles.fonts.fontSmall}}>
-      {isHiddenforPlayers?"":obj?.getJson().lastInit}
+      {isHiddenforPlayers?"":obj?.getJson().initiative}
       </div>
 
       {!isHiddenforPlayers &&
