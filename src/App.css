@@ -166,6 +166,24 @@ input:-webkit-autofill {
   transition: all 0.3s ease-in-out;
 }
 
+.hover-hide{
+  opacity: 1;
+}
+
+.hover-hide:hover {
+  opacity: .59;
+  filter: contrast(0);
+  transition: all 0.3s ease-out;
+}
+
+.hover-img:active {
+  opacity: .59;
+  
+  filter: contrast(1);
+  transition: all 0.3s ease-out;
+}
+
+
 .hover-img:hover {
   opacity: .99;
   transform: scale(1.02);
@@ -174,6 +192,7 @@ input:-webkit-autofill {
   
   transition: all 0.3s ease-out;
 }
+
 .hover-img:active {
   opacity: .92;
   transform: scale(1.02);
@@ -186,6 +205,13 @@ input:-webkit-autofill {
   opacity: 1;
   transition: all 0.3s ease-out;
   filter: contrast(.89);
+}
+
+.hover-img2:hover {
+  opacity: .99;
+  transform: scale(1.01);
+  transition: all 0.15s ease-out;
+  margin-left: -4px;
 }
 
 .hover-btn:hover {
