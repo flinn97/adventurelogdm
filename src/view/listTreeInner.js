@@ -27,7 +27,7 @@ export default class ListTreeInner extends Component {
     }
   }
   componentDidMount(){
-    
+    this.setState({open:this.props.app.state.currentExpanse.includes(this.props.obj.getJson()._id)})
     this.props.props.listTreeObserver.subscribe(this.setOpenClose.bind(this))
   }
 

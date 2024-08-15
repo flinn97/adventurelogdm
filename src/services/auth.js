@@ -257,9 +257,12 @@ class Auth {
 
     }
 
-    async getPosts(value, componentList, dispatch){
+    async getPosts(value, componentList, dispatch, callBackFunc){
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"), where("campaignId", "==", value), orderBy("date"));
         let comps1 = await onSnapshot(components, async (querySnapshot) => {
+            debugger
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(1000);
             let rawData1 = [];
             for (const key in querySnapshot.docs) {
                 let data = querySnapshot.docs[key].data()
@@ -269,6 +272,9 @@ class Auth {
                 if (dispatch) {
                     await dispatch({ rerenderFirebase: true });
                 } 
+                if(callBackFunc){
+                    callBackFunc()
+                }
     })}
 
     async getuser(email, componentList, dispatch) {
@@ -592,6 +598,8 @@ class Auth {
 
                     switch (key) {
                         case "add":
+                            
+
                             if (email === undefined) {
                                 email = component.owner
                             }
