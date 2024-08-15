@@ -442,6 +442,7 @@ class Encounter extends componentBase {
     }
 
     async copyEncounter(componentList, loreId) {
+        
         let id = loreId ? loreId : ""
         let newEnc = this.copyComponent(["name", "loreId"], ["Copy of " + this.getJson().name, id]);
         let comps = componentList.getList("participant", this.json._id, "encounterId");

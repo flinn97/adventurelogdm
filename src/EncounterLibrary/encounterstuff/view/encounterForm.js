@@ -26,7 +26,7 @@ export default class EncounterForm extends Component {
               display: "flex",
               zIndex: "1", borderRadius: ".1vmin", background: "",
             }}
-            update={true} skipUpdate={true}
+            update={true} 
             updateMap={(obj) => { this.setState({ completedPic: obj.getJson().picURL });
 
           }}

@@ -8,13 +8,16 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import ExpandTreeArrow from './expandTreeArrow';
 import ListTreeInner from './listTreeInner';
 import ListTreeLink from './listTreeLink';
-
+import ListTreeObserver from './listTreeObserver';
 
 
 export default class ListTree extends Component {
   constructor(props) {
     
     super(props);
+    
+    this.listTreeObserver = new ListTreeObserver();
+
     this.expanse=0;
     this.state = {
       obj: undefined,
@@ -59,6 +62,7 @@ this.setState({})
 
 
   render() {
+    
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
@@ -80,6 +84,7 @@ this.setState({})
     
     let bord = "solid 1px "+styles.colors.color3+"54";
     let bord1 = (this.props.count===0)?"expandingTree":"expandingTreeColorless";
+    
 
     let cells=  
   
@@ -87,10 +92,10 @@ this.setState({})
       {custom: ListTreeLink, props:{app:app, c:count+1,
         name:"name",
       }},
-      {custom:ExpandTreeArrow, props:{app:app, c:count,
+      {custom:ExpandTreeArrow, props:{app:app, c:count, listTreeObserver: this.listTreeObserver
         
       }},
-    {custom:ListTreeInner, props:{app:app, c:count, setExpanse:this.props.setExpanse?this.props.setExpanse:this.setExpanse.bind(this), expanse:this.props.expanse?this.props.expanse:this.expanse, 
+    {custom:ListTreeInner, props:{app:app, listTreeObserver: this.listTreeObserver, c:count, setExpanse:this.props.setExpanse?this.props.setExpanse:this.setExpanse.bind(this), expanse:this.props.expanse?this.props.expanse:this.expanse,  
         
       }
     }

@@ -16,8 +16,19 @@ export default class ListTreeInner extends Component {
       obj: undefined,
       pic: undefined,
       usage: 0,
+      open:false
     }
     
+  }
+  setOpenClose(id){
+    let objId = this.props.obj.getJson().reference? this.props.obj.getJson().ogId:this.props.obj.getJson()._id;
+    if(id===objId){
+      this.setState({open:!this.state.open})
+    }
+  }
+  componentDidMount(){
+    
+    this.props.props.listTreeObserver.subscribe(this.setOpenClose.bind(this))
   }
 
   render() {
@@ -30,6 +41,7 @@ export default class ListTreeInner extends Component {
       
       this.showList= 1;
     }
+    console.log(this.showList)
 
     
 
@@ -37,8 +49,7 @@ export default class ListTreeInner extends Component {
     let id = this.props.obj.getJson().reference? this.props.obj.getJson().ogId:this.props.obj.getJson()._id;
     return (<div style={{display:"flex",flexDirection:"column",alignItems:"center", paddingLeft:"11%", textDecoration:"none", 
     }} >
-       {state.currentExpanse?.includes(this.props.obj.getJson()._id)
-       && (this.showList===1 ) &&
+       {this.state.open&&
        <div className='hover-stacked' style={{backgroundColor:styles.colors.color2+"7b", textDecoration:"none", }}>
         {/* {!this.props.obj.getJson().reference&& */}
        <ListTree app={app} name={"lore"} attribute={"parentId"} _id={id} count={this.props.props.c + 1} />
