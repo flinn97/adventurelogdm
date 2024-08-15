@@ -78,7 +78,7 @@ export default class MonsterMapItemSimplified extends Component {
       {isHiddenforPlayers?"":objName}
       </div>
 
-      {uRole === "GM" && !state.currentCharacter &&
+      {/* {uRole === "GM" && !state.currentCharacter &&
 <div style={{flexDirection:"column", width:phone?"1rem":"130px", marginLeft:phone?"2rem":"-45px", justifyContent:"center", alignItems:"center", 
 textAlign:"center", background:styles.colors.color1+"33",
 verticalAlign:"center", height:"100%",marginTop:"-4px",
@@ -103,7 +103,7 @@ borderRadius:"11px" }}>
         <div style={{fontSize:".8rem", marginTop:"-2px", maxWidth:"fit-content", marginLeft:"12px",}}>{obj.getJson().hideFromInitiative?"Hidden":"Hide"}</div>
                  }
 </div>
-        }
+        } */}
   </div>
   
    }
