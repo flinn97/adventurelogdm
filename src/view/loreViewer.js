@@ -478,7 +478,6 @@ export default class LoreViewer extends Component {
                   }
                 })
 
-                // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
                 this.setState({ showAddEncounter: true });
               }}>
               + Create New Encounter

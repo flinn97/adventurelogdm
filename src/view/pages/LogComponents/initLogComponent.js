@@ -16,6 +16,7 @@ export default class InitiativeLogComponent extends Component {
 
   }
 
+
   async componentDidMount(){
 
     let app = this.props.app;
@@ -42,7 +43,7 @@ export default class InitiativeLogComponent extends Component {
   //   });
   //  }
   }
- 
+
 
   render() {
     let app = this.props.app;
@@ -51,9 +52,8 @@ export default class InitiativeLogComponent extends Component {
     let styles = state.styles;
     let obj = this.props.obj;
     let index = this.props.index;
-    let phone = window.innerWidth > 800?false:true;
+    let phone = window.innerWidth > 800 ? false : true;
     let w = this.props.w;
-    debugger
     let sorted = state.componentList.sortSelectedList("participant","initiative",true);
     let list = state.componentList.getList("participant", obj.getJson().itemId, "encounterId");
     const currentInit = <MapComponent
@@ -69,13 +69,14 @@ export default class InitiativeLogComponent extends Component {
    />;
 
     return (
-      <div style={{ 
-                  display: "flex",
-                  flexDirection: "column",
-                  width: w,
-                  fontSize: styles.fonts.fontNormal,
-                  alignContent:"flex-end",
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        width: w,
+        fontSize: styles.fonts.fontNormal,
+        alignContent: "flex-end",
       }}>
+
         {this.state.start&&<>
         <div style={{color:styles.colors.color4, fontSize:phone?styles.fonts.fontSmall:styles.fonts.fontSmallest, marginTop:phone?"8px":"18px", marginBottom:phone?"12px":"8px"}}>
           Initiative Order
@@ -87,7 +88,7 @@ export default class InitiativeLogComponent extends Component {
        </div>
        </>}
       </div>
-      
+
     )
   }
 }
