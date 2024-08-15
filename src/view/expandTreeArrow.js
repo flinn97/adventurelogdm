@@ -60,6 +60,7 @@ render() {
       }
       
       dispatch({ currentExpanse: r, widthLoreBar: state.currentExpanse?state.currentExpanse.length:1 });
+      this.props.props.listTreeObserver.run(id)
     }}
     > 
     {/* {this.state.expanded?"hide":"expand"} */}

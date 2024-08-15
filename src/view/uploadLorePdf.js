@@ -26,7 +26,7 @@ class PdfUploader extends Component {
   }
 
   async handleUpload() {
-    debugger
+    
     let app = this.props.app;
     let state = app.state;
     let opps = state.opps;
