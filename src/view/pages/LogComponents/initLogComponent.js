@@ -55,7 +55,6 @@ export default class InitiativeLogComponent extends Component {
     let phone = window.innerWidth > 800 ? false : true;
     let w = this.props.w;
     let sorted = state.componentList.sortSelectedList("participant","initiative",true);
-    let list = state.componentList.getList("participant", obj.getJson().itemId, "encounterId");
     const currentInit = <MapComponent
     filter={{search: obj.getJson().itemId, attribute: "encounterId"}}
     app={app} name={"participant"}
