@@ -39,7 +39,7 @@ export default class DetailsDisplay extends Component {
       {audioPrev &&
         (<div className='Audio-Container' title={audioLink}>
           <img className="tiny-ico" src={sound} alt="Sound Icon"/>
-        <a className='info Audio-Link' href={audioLink} style={{ marginTop: "-18px" }}>
+        <a className='info Audio-Link' target="_blank" href={audioLink} style={{ marginTop: "-18px" }}>
           {audioPrev}
         </a>
         </div>

@@ -87,43 +87,42 @@ export default class ListTreeLink extends Component {
     display: "flex"}}>
       {name !=="" && name !==undefined &&
       <Link to={"../campaign/" + newLink} state = {obj.getJson().reference? {ref: obj.getJson()._id} : undefined}
-      // onClick={() => 
-      //   window.open("../campaign/" + newLink, "_blank")
-      // } 
+      
       style={{display:"flex", flexDirection:"column", textDecoration:"none", width:"480px", 
        alignItems:"center", textDecorationColor:styles.colors.color3, textDecorationThickness:"1px",
         justifyContent:"center", alignContent:"center"}}>
-    <div title={"Open "+objName+" in a new tab."} className='hover-img'
+
+    <div title={"Open "+objName} className='hover-img2'
     style={{color:styles.colors.colorWhite+"df", textDecoration:"none", fontSize:"1rem", textAlign:"left", width:"100%", textOverflow:"ellipsis", overflowWrap:"break-word",
     marginLeft:"11px"}}
     >
       
       {objName}
-
+      
     </div>
-   
-
-<div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105", textDecoration:"none",
-                            alignItems:"center", justifyContent:"flex-end", verticalAlign:"center", textAlign:"center",
-                            justifyItems:"flex-end"}}>
+    <div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105", textDecoration:"none", marginLeft:"8px", height:"fit-content",
+    backgroundColor:styles.colors.color8+'17', marginTop:"-2px", padding:"4px", borderRadius:"11px",
+                            alignItems:'flex-start', justifyContent:"flex-end", verticalAlign:"flex-start", textAlign:"flex-start",}}>
                               {/* ICONS */}
                                                                                    
 
                                {mapList.length >= 1 &&
-                                 <img src={compassImage} title={mapList.length+" Connected Maps"} 
+                                 <img className='hover-hide' src={compassImage} title={mapList.length+" Connected Maps"} 
                                   style={{width:"20px", height:"20px",}}/>
                                    }
 
                                      {encounterList.length >= 1 &&
-                                     <img src={bannerImage} title={encounterList.length+" Connected Encounters"}
+                                     <img className='hover-hide' src={bannerImage} title={encounterList.length+" Connected Encounters"}
                                       style={{width:"18px", height:"20px", marginLeft:"5px"}}/>
                                       }
 
                                        {imageList.length >= 1 &&
-                                        <img src={imageImage} title={imageList.length+" Images in Gallery"}
+                                        <img className='hover-hide' src={imageImage} title={imageList.length+" Images in Gallery"}
                                          style={{width:"20px",  height:"20px", marginLeft:"5px"}}/>
                                         }
                             </div>
+
+
 
     
 

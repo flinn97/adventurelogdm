@@ -328,6 +328,7 @@ export default class Encounter extends Component {
                   display: "flex", marginTop: "5px", fontSize: styles.fonts.fontSmall,
                   flexDirection: "row"
                 }}>
+                  
                   <a href={audioLink} target="_blank" rel="noopener noreferrer"
                     style={{ fontSize: styles.fonts.fontSmall, marginBottom: "2px", cursor: "pointer", color: styles.colors.colorWhite }}
                     title={audioLink} >
