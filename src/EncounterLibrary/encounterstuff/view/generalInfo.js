@@ -99,7 +99,7 @@ export default class GeneralInfo extends Component {
                 onClick={async() =>{
                   
                   
-                  await state.opps.cleanJsonPrepare({addparticipant: { encounterId: currentEncounter.getJson()._id, type: 'participant' }})
+                  await state.opps.cleanJsonPrepare({addparticipant: { encounterId: currentEncounter.getJson()._id, type: 'participant', campaignId:state.currentCampaign.getJson()._id }})
                   let obj = await state.opps.getUpdater("add");
                   obj = obj[0]
                   dispatch({

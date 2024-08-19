@@ -104,7 +104,7 @@ export default class MonsterForm extends Component {
           
           let json = state.currentComponent.getJson()
           for (let i = 1; i < parseInt(this.state.value); i++) {
-            await state.opps.jsonPrepare({ "addparticipant": { ...json, _id: undefined, campaignId:state.currentCampaign.getJson()._id } })
+            await state.opps.jsonPrepare({ "addparticipant": { ...json, _id: undefined} })
           }
           dispatch({ popUpSwitch: "", currentComponent:undefined });
           state.opps.run()
