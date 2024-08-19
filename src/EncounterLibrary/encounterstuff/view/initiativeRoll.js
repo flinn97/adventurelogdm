@@ -49,6 +49,7 @@ export default class Initiative extends Component {
             onClick={() => {
               let i = rollService.rollDice(20, this.props.obj.getJson().initiativeBonus);
               this.props.obj.setCompState({ initiative: i, rollState: true });
+         
               this.props.app.state.opps.cleanPrepareRun({ update: this.props.obj });
             }}
           >

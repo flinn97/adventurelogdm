@@ -7,7 +7,7 @@ class SendtoChatService {
     }
 
         dispatchLog = (obj, app, campaignId, forceValue, callBack) => {
-          debugger
+          
           
           let campId = campaignId?campaignId:toolService.getIdFromURL(true,);
          
@@ -33,7 +33,7 @@ class SendtoChatService {
             };
           
           app.state.opps.cleanJsonPrepareRun({ "addpost": payload });
-          app.dispatch({});
+          app.dispatch({keepPOrder:true});
         };
 
   };

@@ -14,8 +14,9 @@ export default class EncounterPage extends Component {
             
         }
     }
-    componentDidUpdate(){
-        if(this.props.app.state.backend){
+    async componentDidUpdate(){
+        if(this.props.app.state.keepPOrder){
+            await this.props.app.dispatch({keepPOrder:false})
             let app = this.props.app;
         let state = app.state;
         let componentList=state.componentList
