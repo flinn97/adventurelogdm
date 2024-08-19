@@ -268,7 +268,7 @@ transitionDuration:"9000ms"
                 let ogMon = arr[0];
                 let maxHp = ogMon.getJson()?.hp
                 
-                await ogMon.setCompState({maxHp:maxHp});
+                await ogMon.setCompState({maxHp:maxHp, campaignId:state.currentCampaign.getJson()._id});
 
                 for(let i = 0; i < count; i++){
                   let copyJson = {...ogMon.getJson(), _id:undefined};
