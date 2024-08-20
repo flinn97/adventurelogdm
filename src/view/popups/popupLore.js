@@ -751,12 +751,11 @@ class MainContent extends Component {
 
                             onClick={async () => {
                               {
-                                debugger
+                                
                                 await this.setState({ showFindEncounter: false });
-                                let enc = await encounter.copyEncounter(componentList, state.currentComponent.getJson()._id);
-                                if (enc) {
-                                  state.currentComponent.assign(enc);
-                                }
+
+                                let enc = await encounter.copyEncounter(componentList, state.currentComponent.getJson()._id,  state.currentCampaign.getJson()._id);
+                                
                               }
                             }}
 

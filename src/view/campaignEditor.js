@@ -384,8 +384,10 @@ export default class CampaignEditor extends Component {
                         backgroundColor: styles.colors.color1 + "ee", position: "relative", height: "fit-content",
                         justifyContent: "center"
                       }}
-                        onClick={() => {
-                         
+                        onClick={async () => {
+                          await this.props.app.state.opps.clearUpdater();
+                          await dispatch({currentComponent:undefined});
+
                           dispatch({ operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign" })
                         }}>
                         Edit

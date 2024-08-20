@@ -260,7 +260,7 @@ class Auth {
     async getPosts(value, componentList, dispatch, callBackFunc){
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"), where("campaignId", "==", value), orderBy("date"));
         let comps1 = await onSnapshot(components, async (querySnapshot) => {
-            debugger
+            
             const delay = ms => new Promise(res => setTimeout(res, ms));
                 await delay(1000);
             let rawData1 = [];

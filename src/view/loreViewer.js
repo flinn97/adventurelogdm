@@ -105,6 +105,7 @@ export default class LoreViewer extends Component {
     }
 
     if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
+      
       this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
 
     }
@@ -576,11 +577,10 @@ export default class LoreViewer extends Component {
                     key={encounter.getJson()._id}
                     onClick={async () => {
                       {
+                        
                         await this.setState({ showFindEncounter: false });
-                        let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1));
-                        if (enc) {
-                          state.currentComponent.assign(enc);
-                        }
+                        let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1), state.currentCampaign.getJson()._id);
+        
 
                       }
                     }}

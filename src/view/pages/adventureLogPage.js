@@ -48,7 +48,7 @@ export default class AdventureLogPage extends Component {
   // FIREBASE LISTENER add here
 
   async componentDidMount() {
-    debugger
+    
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
