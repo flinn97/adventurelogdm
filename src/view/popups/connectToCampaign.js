@@ -170,7 +170,10 @@ handleClickOutside(event) {
       <div ref={this.wrapperRef}  className="popupCard" 
       style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
       <div style={{...styles.buttons.buttonClose, position:"absolute", right:"1vw"}}
-      onClick={this.props.handleClose}>X</div>
+      onClick={ async ()=>{
+        await state.currentComponent.setCompState({campaignId:""})
+        this.props.handleClose()
+      }}>X</div>
           
           <div className={(window.innerWidth > 800)?'scroller':''} style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app}  delClick={this.props.delClick} />
