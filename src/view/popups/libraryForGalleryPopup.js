@@ -154,9 +154,9 @@ class MainContent extends Component {
                 width: "fit-content", textUnderlineOffset: "3px", cursor: "pointer", padding: "3px 8px", marginBottom: "11px",
                 textDecoration: "underline .5px", textDecorationColor: styles.colors.color7, background: styles.colors.color1
               }}>
-              Sort by Source
+               {this.state.showCamps ? "Hide Sources": "Sort by Source"}
               <img src={arr} alt=">" style={{
-                width: "12px", marginLeft: "11px", transform: this.state.showCamps ? "rotate(270deg)" : "rotate(180deg)",
+                width: "12px", marginLeft: "11px", transform: this.state.showCamps ? "rotate(90deg)" : "rotate(180deg)",
                 transition: "transform 0.3s ease-out"
               }}></img>
             </div>
