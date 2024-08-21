@@ -87,7 +87,7 @@ class MainContent extends Component{
     return(
       <div style={{
         display:"flex", width:"100%", flexDirection:"column", justifyContent:"center", height:"fit-content", 
-        paddingTop:"35%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
+        paddingTop:"12%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
     <div style={{ display:"flex", flexDirection:"column", textAlign:"center", paddingBottom:"42px", alignContent:"center", justifyContent:"center" }}> 
     <ParentFormComponent app={app} name="campaignId"
               placeholder={"Enter Campaign Code"}  
