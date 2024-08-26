@@ -20,7 +20,6 @@ export default class LoreItemWithNotation extends Component {
   handleDragOver = (event, lore) => {
     event.preventDefault(); // Prevent default to allow drop
     let targetId = lore.getJson()._id;
-    console.log("Dragging over: ", targetId);
     this.setState({ dragOverTarget: targetId });
   };
 

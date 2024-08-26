@@ -61,7 +61,6 @@ class ColorService {
                   colorObject[`color_${index}`] = color;
                 });
                 
-                //console.log(colorObject);
                 callBack(colorObject);
               };
             };

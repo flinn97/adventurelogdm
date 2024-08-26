@@ -33,6 +33,7 @@ export default class AfterPayment extends Component {
         user = JSON.parse(user);
         user = await auth.firebaseGetter(user.email, componentList, "email", "user");
         user = user[0]
+        
         if (user) {
             fetch('https://checkcustomer-x5obmgu23q-uc.a.run.app', {
                 method: 'POST',
@@ -42,17 +43,20 @@ export default class AfterPayment extends Component {
                 body: JSON.stringify({ email: user.getJson().email }),
             })
                 .then(response => {
+                    
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
-                .then(customers => {
+                .then(async customers => {
+                    
                     let u = customers[0];
                     if(u){
                     if (!u.delinquent) {
-                        user.setCompState({paidCustomer:true});
-                        state.opps.cleanPrepareRun({update: user});
+                        
+                        user.setCompState({paidCustomer:true, role:"GM"});
+                        await state.opps.cleanPrepareRun({update: user});
                     }
                     else{
                         auth.logout().then(()=>{

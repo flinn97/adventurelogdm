@@ -117,6 +117,7 @@ this.setState({start:true});}
 
 
               <Upload app={app}
+              checkUser={true}
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic)=>{this.setState({pic:pic})}} 
               obj={app.state.currentComponent} text="Set Backdrop" style={{display:"flex",
@@ -171,7 +172,7 @@ this.setState({start:true});}
               placeholder={"ie: a link from YouTube or Spotify"}/> 
 
             
-              <RunButton className="hover-btn" wrapperStyle={{...styles.buttons.buttonAdd,  padding:"8px", marginTop:"2vh"}}
+              <RunButton checkUser={true} className="hover-btn" wrapperStyle={{...styles.buttons.buttonAdd,  padding:"8px", marginTop:"2vh"}}
               text={"Save"} app ={app} 
               // to= {"/encounter/" + app.state.currentComponent.getJson()._id} 
               callBack={()=>{

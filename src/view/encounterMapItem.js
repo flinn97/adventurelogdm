@@ -48,7 +48,7 @@ export default class EncounterMapItem extends Component {
               let fontSizeRem = fontSizePx / 16;
               let fontSize = fontSizeRem + "rem";
 
-    let monList = state.componentList.getList("monster", obj?.getJson()._id, "encounterId");
+    let monList = state.componentList.getList("participant", obj?.getJson()._id, "encounterId");
     let mCount = monList?.length;
 
     return (

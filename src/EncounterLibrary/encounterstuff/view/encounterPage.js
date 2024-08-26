@@ -14,6 +14,25 @@ export default class EncounterPage extends Component {
             
         }
     }
+    async componentDidUpdate(){
+        if(this.props.app.state.keepPOrder){
+            await this.props.app.dispatch({keepPOrder:false})
+            let app = this.props.app;
+        let state = app.state;
+        let componentList=state.componentList
+            let list = componentList.getList("participant");
+            for(let obj of list){
+              if(obj.getJson().initiative==="" || obj.getJson().initiative===undefined){
+                obj.setCompState({initiative:999});
+              }
+            }
+            list = list.sort((a, b) => {
+              return parseInt(a.getJson().initiative) - parseInt(b.getJson().initiative); // Both are valid, compare numerically
+          }).reverse();
+          componentList.setSelectedList("participant", list);
+          app.dispatch({})
+        }
+    }
    
     render() {
         

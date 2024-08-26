@@ -42,7 +42,7 @@ export default class ChatTokenComponent extends Component {
       <div>
 
 
-        {(state.user.getJson().role === "GM") &&
+        {(state.user.getJson().role === "GM" && !state.currentCharacter) &&
           <div className={phone?'':'hover-container'} style={{ display: "flex", flexDirection: "row", position: "absolute", right:phone?-26 : 0, 
           zIndex: phone?100:8100, top:"", cursor: "pointer", width: "32px" }}>
             <img className={phone?'':'hover-div'} src={phone?trashStill:trash} title='Delete this post'
@@ -115,7 +115,7 @@ export default class ChatTokenComponent extends Component {
                   <div style={{}}
                     title={"GM sent this."}
                   >
-                    {state.user.getJson().role !== "GM" &&
+                    {state.user.getJson().role !== "GM" && !state.currentCharacter &&
                       <img src={placeholderGM} style={{ width: phone?"12px":"32px", marginLeft: phone?"6px":"40px", background: styles.colors.color1 + "99", borderRadius: "50%" }} />
                     }
 

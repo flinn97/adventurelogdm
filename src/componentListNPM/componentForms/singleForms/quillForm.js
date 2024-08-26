@@ -19,34 +19,38 @@ export default class QuillForm extends Component {
     this.setLoreLink = this.setLoreLink.bind(this);
     this.ensureProtocol = this.ensureProtocol.bind(this);
     this.newLoreLink = this.newLoreLink.bind(this);
-    this.updateCampaignLinks= this.updateCampaignLinks.bind(this);
+    this.updateCampaignLinks = this.updateCampaignLinks.bind(this);
   }
 
-updateCampaignLinks(text) {
-  let app = this.props.app;
-  let state = app.state;
-  let componentList = state.componentList;
-  let campaignId = toolService.getIdFromURL(true, 0);
+  async updateCampaignLinks(text) {
+    let app = this.props.app;
+    let state = app.state;
+    let componentList = state.componentList;
+    let campaignId = await toolService.getIdFromURL(true, 0);
     // Define the regular expression pattern to find links containing "/campaign/"
     var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_self")?/g;
 
     // Use String.prototype.replace() to find and replace links
-    var updatedText = text.replace(pattern, function(match, p1) {
-      
-        // Extract the number from the URL
-        var number;
-        let id = p1.split("-")[1];
-        let obj = componentList.getComponent("lore", id, "ogRef");
-        number = obj.getJson()._id; 
-        
-        // Perform additional operations with the extracted number if needed
+    var updatedText = await text.replace(pattern, function (match, p1) {
 
-        // Return the updated link
-        return '<a href="/campaign/' + campaignId + '-' + number + '"';
+      // Extract the number from the URL
+      var number;
+      let id = p1.split("-")[1];
+      console.log(p1);
+      console.log(id);
+      console.log(componentList.getList("lore", campaignId, "campaignId"));
+      let obj = componentList.getComponent("lore", id, "ogRef");
+      console.log(obj);
+      number = obj.getJson()._id;
+
+      // Perform additional operations with the extracted number if needed
+
+      // Return the updated link
+      return '<a href="/campaign/' + campaignId + '-' + number + '"';
     });
 
     return updatedText;
-}
+  }
 
 
   async componentDidMount() {
@@ -55,9 +59,15 @@ updateCampaignLinks(text) {
     if (this.props.value) {
 
       let val = this.props.value;
-      if(obj?.getJson().ogRef!=="" &&obj?.getJson().ogRef!==undefined&&obj?.getJson().type==="lore"){
-        val = this.updateCampaignLinks(val);
+      if (obj?.getJson().ogRef !== "" && obj?.getJson().ogRef !== undefined && obj?.getJson().type === "lore") {
+        if (!obj?.getJson().linksUpdated) {
+          val = await this.updateCampaignLinks(val);
+          obj.setCompState({ linksUpdated: true });
+
+        }
+
       }
+      console.log(val);
 
 
       this.setState({ value: val });
@@ -108,14 +118,16 @@ updateCampaignLinks(text) {
     };
   }
 
-  componentDidUpdate(props, state) {
+  componentDidUpdate(prevProps, prevState) {
+    
     if (this.props.value) {
-      if (this.props.value !== props.value) {
+      if (this.props.value !== prevProps.value) {
         this.setState({ value: this.props.value })
 
       }
     }
   }
+
 
   ensureProtocol(url) {
 
@@ -136,9 +148,9 @@ updateCampaignLinks(text) {
     let newid = await lore.getJson()._id;
     if (this.props.connectLore) {
       const loreLink = `/campaign/` + id + '-' + newid;
-      return `<a href="${loreLink}" >${loreName}</a>`;
+      return `<a href="${loreLink}" target="_self">${loreName}</a>`;
     } else {
-      console.log(id)
+      console.log(id);
       return loreName;
     }
   }
@@ -146,7 +158,7 @@ updateCampaignLinks(text) {
 
 
   async newLoreLink(loreName) {
-    
+
     let state = this.props.app?.state;
     let campId = toolService.getIdFromURL(true, 0);
     let componentList = this.props.app.state.componentList;
@@ -176,6 +188,12 @@ updateCampaignLinks(text) {
 
 
   async handleChange(value) {
+    if (this.props.checkUser) {
+      if (this.props.app.state.user.getJson().role !== "GM") {
+        return
+      }
+    }
+
     let names = this.props.app.state.loreNames;
     const linkPattern = /\[\[(.*?)\]\]/g;
     let matches = [...value.matchAll(linkPattern)];
@@ -189,7 +207,7 @@ updateCampaignLinks(text) {
       } else if (toolService.isLikelyUrl(text)) {
         const ensuredUrl = this.ensureProtocol(text);
         if (ensuredUrl) {
-          replacementText = `<a href="${ensuredUrl}">${text}</a>`;
+          replacementText = `<a href="${ensuredUrl}" target="_self">${text}</a>`;
         } else {
           replacementText = await this.newLoreLink(text);
         }
@@ -213,36 +231,47 @@ updateCampaignLinks(text) {
     }
   };
 
+  
+
 
   render() {
     let obj = this.props?.obj;
     let app = this.props?.app;
+    let dispatch = app.dispatch
     let state = app?.state;
     let styles = state?.styles;
-
 
     return (
 
 
-      <div 
+      <div onClick={() => {
+        if (this.props.checkUser) {
+          if (state.user.getJson().role !== "GM") {
+            dispatch({ popupSwitch: "goPremium" });
+            return
+          }
+        }
+
+      }}
       // title='Use [[ ]] around a Lore title to connect it'
-       >
+      >
 
         <ReactQuill
           ref={this.quillRef}
           modules={{
+            
             toolbar: [
               ['bold', 'italic', 'underline',
                 // 'strike', 
                 'blockquote'
               ], [{
                 'color': ["#F4F5F8", "#F4F5F888", "#000000", //greyscale
-                   "#99AFD188", "#c3e8e577", "#c3e8e5", "#99AFD1", //bluish
-                  "#ecd23a","#ecd23a98", "#ecd23a66", //gold
+                  "#99AFD188", "#c3e8e577", "#c3e8e5", "#99AFD1", //bluish
+                  "#ecd23a", "#ecd23a98", "#ecd23a66", //gold
                   "#819636", "#9EFFA0", "#9EFFA088", "#9EFFA055",//green
                   "#fd5259", "#fd525988", "#fd525955", "#E9481F", "#EE7355", "#996C60", "#F6C6BA", //red orange
-                   "#D7ABF7",  "#8B6099", "#D7ABF788", "#D7ABF755",   //purple
-                  "#AB1FE9", "#49BCCF", "#0081B1",  
+                  "#D7ABF7", "#8B6099", "#D7ABF788", "#D7ABF755",   //purple
+                  "#AB1FE9", "#49BCCF", "#0081B1",
                 ]
               }, { 'background': [false, "black", "#00274DF2", "#C1A71BF2", "#5F0C0CF2", "#4B0082F2", "#002E07F2"] },],
               [, 'code-block'],
@@ -251,13 +280,13 @@ updateCampaignLinks(text) {
               // [{ 'header': [false, 1, 2, 3] }],
               [{ 'size': ['small', false, 'large', 'huge'] }],
 
-
               // [],['link'], // Link insertion
+
               [], ['clean'],
               // remove formatting button
-            
+
             ],
-            
+
           }}
 
           style={this.props.wrapperStyle ?

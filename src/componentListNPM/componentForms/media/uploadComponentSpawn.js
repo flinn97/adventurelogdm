@@ -22,7 +22,7 @@ class UploadComponent extends Component {
             showPics: false,
             loading:false,
             name: "",
-            type: "monster",
+            type: "participant",
             delList:[]
 
 
@@ -76,7 +76,6 @@ class UploadComponent extends Component {
                 },
                 
                 error(err) {
-                  //console.log(err.message);
                 },
               });
               this.setState({ newPics: list, paths: paths, list: oldList, showPics: true });

@@ -54,6 +54,12 @@ export default class MapGallery extends Component {
         }
 
       };
+      if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
+        
+        this.setState({ mapList: [this.props.app.state.viewMap], currentMap: this.props.app.state.viewMap, showMap:true })
+  
+      }
+
     }
 
     handleNextMap = () => {

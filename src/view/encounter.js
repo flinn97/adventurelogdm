@@ -52,7 +52,7 @@ export default class Encounter extends Component {
       await auth.firebaseGetter(campaign.getJson()._id, componentList, "campaignId", "lore");
     }
     this.setState({ showMonsterMap: false });
-    await componentList.sortSelectedList("monster", "lastInit", true);
+    await componentList.sortSelectedList("participant", "lastInit", true);
     this.setState({ showMonsterMap: true });
     await this.props.app.state.opps.run();
 
@@ -214,12 +214,12 @@ export default class Encounter extends Component {
     let state = app.state;
     let dispatch = app.dispatch;
     let obj = this.state.obj;
-    const participantList = [...state.componentList.getList("monster", this.state.obj?.getJson()._id, "encounterId")];
+    const participantList = [...state.componentList.getList("participant", this.state.obj?.getJson()._id, "encounterId")];
     if (e.key === 'Enter') {
       e.preventDefault();
       if (obj?.getJson().isRunning) {
 
-        await state.componentList.sortSelectedList("monster", "lastInit", true);
+        await state.componentList.sortSelectedList("participant", "lastInit", true);
 
         this.getNextHighestInitiative(participantList, dispatch);
       }
@@ -238,7 +238,7 @@ export default class Encounter extends Component {
     let audioLink = toolService.convertStringToLink(this.state.obj?.getJson().audio);
 
     const playPause = (obj?.getJson().isRunning) ? pause : back;
-    let participantList = state?.componentList.getList("monster", toolService.getIdFromURL(), "encounterId");
+    let participantList = state?.componentList.getList("participant", toolService.getIdFromURL(), "encounterId");
 
     let totalInitiative = 0;
     participantList.forEach(participant => {
@@ -304,7 +304,6 @@ export default class Encounter extends Component {
               }}
 
                 onClick={async () => {
-                  // console.log(this.state.obj);
                   await dispatch({
                     operate: "update",
                     operation: "cleanPrepare",
@@ -329,6 +328,7 @@ export default class Encounter extends Component {
                   display: "flex", marginTop: "5px", fontSize: styles.fonts.fontSmall,
                   flexDirection: "row"
                 }}>
+                  
                   <a href={audioLink} target="_blank" rel="noopener noreferrer"
                     style={{ fontSize: styles.fonts.fontSmall, marginBottom: "2px", cursor: "pointer", color: styles.colors.colorWhite }}
                     title={audioLink} >
@@ -413,7 +413,7 @@ export default class Encounter extends Component {
                 onClick={() => {
                   if (!obj?.getJson().isRunning) {
                     dispatch({
-                      operate: "addmonster", operation: "cleanJsonPrepare",
+                      operate: "addparticipant", operation: "cleanJsonPrepare",
                       popUpSwitchcase: "addMonster", object: {
                         encounterId: this.state.obj?.getJson()._id, colors: [],
                         campaignId: this.state.obj?.getJson().campaignId
@@ -430,7 +430,7 @@ export default class Encounter extends Component {
 
 
         <div style={{ color: styles.colors.colorWhite, width: "100%", height: "100%", }}>
-          {(state.currentComponent?.getJson().type === "monster" && state.popUpSwitchcase === "addMonster")
+          {(state.currentComponent?.getJson().type === "participant" && state.popUpSwitchcase === "addMonster")
             &&
             <div style={{ padding: "22px" }}>
 
@@ -455,7 +455,7 @@ export default class Encounter extends Component {
                   }}
                   onClick={async () => {
                     await this.setState({ showMonsterMap: false });
-                    await componentList.sortSelectedList("monster", "lastInit", true);
+                    await componentList.sortSelectedList("participant", "lastInit", true);
                     await this.setState({ showMonsterMap: true });
                     dispatch({});
                   }
@@ -489,7 +489,7 @@ export default class Encounter extends Component {
                 }}
                   onClick={async () => {
                     if (obj?.getJson().isRunning) {
-                      await state.componentList.sortSelectedList("monster", "lastInit", true);
+                      await state.componentList.sortSelectedList("participant", "lastInit", true);
                       this.getNextHighestInitiative(participantList, dispatch);
 
                     }
@@ -529,10 +529,9 @@ export default class Encounter extends Component {
                     this.setState({ showMonsterMap: false });
                     let run = obj.getJson().isRunning;
                     this.setState({ isRunning: !run }, async () => {  // Update the component state and wait
-                      // console.log(this.state.isRunning)
 
                       if (this.state.isRunning === true) {
-                        await state.componentList.sortSelectedList("monster", "lastInit", true);
+                        await state.componentList.sortSelectedList("participant", "lastInit", true);
                         this.getNextHighestInitiative(participantList, dispatch);  // Run logic
                         state.opps.run();
                         obj.setCompState({ isRunning: true });
@@ -544,7 +543,7 @@ export default class Encounter extends Component {
                         this.setState({ isRunning: false });
 
                       }
-                      await componentList.sortSelectedList("monster", "lastInit", true);
+                      await componentList.sortSelectedList("participant", "lastInit", true);
                       await this.setState({ showMonsterMap: true });
                       dispatch({
                         operate: "update",
@@ -610,8 +609,9 @@ export default class Encounter extends Component {
               
 
               <MapComponent
+              checkUser={true}
                 filter={{ search: toolService.getIdFromURL(), attribute: "encounterId" }}
-                app={app} name={"monster"}
+                app={app} name={"participant"}
                 delOptions={{
                   picURL: trash, warningMessage: "Delete",
                   textStyle: { fontSize: styles.fonts.fontSmallest, },

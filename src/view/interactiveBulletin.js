@@ -235,6 +235,10 @@ export default class InteractiveBulletin extends Component {
             backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
           }}
             onClick={async (e) => {
+              if(state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }
               let scrollLeft = this.divRef.current.scrollLeft;
               let scrollTop = this.divRef.current.scrollTop;
               let x = (scrollLeft + 80).toString();
@@ -278,7 +282,10 @@ export default class InteractiveBulletin extends Component {
 
             }}
             onClick={async () => {
-
+              if(state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }
               await state.opps.cleanPrepareRun({ del: this.props.obj });
               await dispatch({reloadMaps:true})
               // this.setState({ map: undefined, obj:undefined });
@@ -318,10 +325,17 @@ export default class InteractiveBulletin extends Component {
                   bounds={this.state.bounds}
                   handle=".draghere"
                   onStart={(data) => {
+                    if(state.user.getJson().role!=="GM"){
+                      dispatch({ popupSwitch: "goPremium"});
+                      return
+                    }
                     this.setState({ isGrabbing: true });
                   }}
                   onStop={async (item, data) => {
-
+                    if(state.user.getJson().role!=="GM"){
+                      dispatch({ popupSwitch: "goPremium"});
+                      return
+                    }
                     let comp = pin;
                     // state.componentList.getComponent("pin",pinId);
 
@@ -365,6 +379,7 @@ export default class InteractiveBulletin extends Component {
                     }}
 
                       onClick={async () => {
+                        
                         //
                         let l = componentList.getComponent("lore", pin.getJson().loreId, "_id");
 
@@ -375,7 +390,10 @@ export default class InteractiveBulletin extends Component {
                         }
 
                         else {
-
+                          if(state.user.getJson().role!=="GM"){
+                            dispatch({ popupSwitch: "goPremium"});
+                            return
+                          }
                           const newId = state.currentLore ? state.currentLore.getJson()._id : this.props.obj?.getJson().campaignId;
                           let href = window.location.href;
                           let splitURL = href.split("/");
@@ -469,7 +487,11 @@ export default class InteractiveBulletin extends Component {
                                         key={index}
                                         src={imgSrc}
                                         onClick={async (item, data) => {
-
+                                          
+                                          if(state.user.getJson().role!=="GM"){
+                                            dispatch({ popupSwitch: "goPremium"});
+                                            return
+                                          }
 
                                           if (imgSrc !== image16) {
                                             //
@@ -520,6 +542,10 @@ export default class InteractiveBulletin extends Component {
                                       className='hover-divInt'
                                       key={index}
                                       onClick={(item, data) => {
+                                        if(state.user.getJson().role!=="GM"){
+                                          dispatch({ popupSwitch: "goPremium"});
+                                          return
+                                        }
                                         let comp = pin;
                                         let colorNew = imgSrc;
                                         let filterNew = ""
@@ -552,7 +578,9 @@ export default class InteractiveBulletin extends Component {
 
 
                           </div>
-                          <div style={{
+                          <div onClick={()=>{
+                             
+                          }} style={{
                             display: "flex", direction: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -565,6 +593,7 @@ export default class InteractiveBulletin extends Component {
 
                           }}>
                             <ParentFormComponent
+                            checkUser={true}
                               app={app}
                               name="name"
                               prepareRun={true}

@@ -66,6 +66,13 @@ class RunButton extends Component {
 
         return (
             <div onClick={async () => {
+                if(this.props.checkUser){
+                    if(this.props.app.state.user.getJson().role!=="GM"){
+                        await dispatch({ popupSwitch: "goPremium"});
+                        return
+                      }
+                }
+                
                 if(this.props.runFunc){
                     this.props.runFunc(this.state.obj?this.state.obj: [this.props.app.currentComponent]);
                     return

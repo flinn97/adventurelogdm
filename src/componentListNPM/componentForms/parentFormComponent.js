@@ -161,6 +161,12 @@ class ParentFormComponent extends Component {
      * @param {*} event 
      */
     handleChange = async (event) => {
+        if(this.props.checkUser){
+            if(this.props.app.state.user.getJson().role!=="GM"){
+                return
+              }
+        }
+       
         const { name, value } = event.target;
 
 
@@ -265,7 +271,9 @@ class ParentFormComponent extends Component {
             types = {
                 text: <InputFormComponent
                     doesMath={this.props.doesMath}
+                    checkUser={this.props.checkUser}
                     labelClass={this.props.labelClass}
+                    app={this.props.app}
 
                     onFocus={this.props.onFocus}
                     rows={this.props.rows}
@@ -575,6 +583,7 @@ class ParentFormComponent extends Component {
                     requiredMessage={this.props.requiredMessage}
                 />,
                 quill: <QuillForm
+                    checkUser={this.props.checkUser}
                     app={this.props.app}
                     obj={this.state.obj}
                     theme={this.props.theme}

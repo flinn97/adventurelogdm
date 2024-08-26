@@ -48,12 +48,11 @@ export default class AdventureLogPage extends Component {
   // FIREBASE LISTENER add here
 
   async componentDidMount() {
+    
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
-    if (state.user.getJson().role!=="GM" && (state.currentCharacter===undefined||!state.currentCharacter)){
-      toolService.navigateToLink('/');
-    }
+
 
     let styles = state.styles;
     let compList = state.componentList;
@@ -62,18 +61,18 @@ export default class AdventureLogPage extends Component {
     let campaigns = compList.getList("campaign", idSegment, "_id");
     // let currentCampId = campaigns ? campaigns[0].getJson()._id : "";
    
-    auth.getPosts(idSegment, compList, dispatch);
-    await compList.sortSelectedListbyFirebaseDate("post");
+    await auth.getPosts(idSegment, compList, dispatch, this.scrollToBottom.bind(this));
+    // await compList.sortSelectedListbyFirebaseDate("post");
 
-    await this.setState({ textI: "",showItems: true, showPopup:false  }); 
-    app.dispatch({ rerender: true });
-    let posts = await auth.firebaseGetter(idSegment, state.componentList, "campaignId", "post").then(posts=>{
-      this.setState({posts:posts, showItems:true})
+    // await this.setState({ textI: "",showItems: true, showPopup:false  }); 
+    // app.dispatch({ rerender: true });
+    // let posts = await auth.firebaseGetter(idSegment, state.componentList, "campaignId", "post").then(posts=>{
+    //   this.setState({posts:posts, showItems:true})
 
-    })
-    await state.componentList.sortSelectedListbyFirebaseDate("post");
+    // })
+    // await state.componentList.sortSelectedListbyFirebaseDate("post");
 
-    await this.scrollToBottom();
+    // await this.scrollToBottom();
   }
 
 
@@ -89,7 +88,8 @@ export default class AdventureLogPage extends Component {
 
   async sendText() {
 
-    let userRole = this.props.app.state.user.getJson().role;
+    let userRole =  this.props.app.state.user.getJson().role;
+    userRole = userRole==="GM"&&!this.props.app.state.currentCharacter?"GM":"Player";
     let m = this.state.textI;
     let mType = "message";
     let newM;
@@ -188,7 +188,7 @@ export default class AdventureLogPage extends Component {
 
     //USE user role to determine what is passed into message
     let userRole = state.user.getJson().role;
-
+    userRole = userRole==="GM"&&!this.props.app.state.currentCharacter?"GM":"Player";
     let sortedLogItems = compList.getList("post", currentCampId, "campaignId");
 
     let sLL = sortedLogItems.length;

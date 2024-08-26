@@ -62,8 +62,7 @@ export default class LoreViewer extends Component {
   //eventLogger method definition
   eventLogger(e, data) {
 
-    // console.log('Event: ', e);
-    // console.log('Data: ', data);
+
 
   }
 
@@ -106,6 +105,7 @@ export default class LoreViewer extends Component {
     }
 
     if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
+      
       this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
 
     }
@@ -316,7 +316,7 @@ export default class LoreViewer extends Component {
             theme={"adventureLog"}
             rows={5}
             prepareRun={true}
-            type={"quill"} onPaste={this.handlePaste} connectLore={true}
+            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
             inputStyle={{
               maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
               borderRadius: "4px", background: styles.colors.colorWhite + "00", background: "",
@@ -348,7 +348,7 @@ export default class LoreViewer extends Component {
             theme={"adventureLog"}
             rows={5}
             prepareRun={true}
-            type={"quill"} onPaste={this.handlePaste} connectLore={true}
+            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
             inputStyle={{
               maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
               borderRadius: "4px", background: styles.colors.colorWhite + "00",
@@ -376,6 +376,10 @@ export default class LoreViewer extends Component {
               fontSize: styles.fonts.fontSmall
             }}
               onClick={() => {
+                if(state.user.getJson().role!=="GM"){
+                  dispatch({ popupSwitch: "goPremium"});
+                  return
+                }
                 dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
               }}
             >
@@ -455,15 +459,19 @@ export default class LoreViewer extends Component {
         <div ref={this.encRef} />
         <div style={{ marginTop: "-10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
-          <div>
-
+          <div style={{minHeight:"120px"}}>
+<div style={{flexDirection:"row", display:"flex"}}>
             <div className="hover-btn" style={{
               ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
               paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px",
+              borderRadius: "9px", fontSize: "21px", marginRight:"22px",
             }}
               title="Create a new encounter, you can edit it by clicking on it."
               onClick={() => {
+                if(state.user.getJson().role!=="GM"){
+                  dispatch({ popupSwitch: "goPremium"});
+                  return
+                }
                 state.opps.cleanJsonPrepareRun({
                   "addencounter": {
                     loreId: lore.getJson()._id,
@@ -471,7 +479,6 @@ export default class LoreViewer extends Component {
                   }
                 })
 
-                // window.open("/encounter/" + state.currentComponent.getJson()._id, "_blank")
                 this.setState({ showAddEncounter: true });
               }}>
               + Create New Encounter
@@ -486,10 +493,14 @@ export default class LoreViewer extends Component {
               title="Find an existing encounter to add to this lore.
                         This will create a COPY."
               onClick={() => {
+                if(state.user.getJson().role!=="GM"){
+                  dispatch({ popupSwitch: "goPremium"});
+                  return
+                }
                 this.setState({ showFindEncounter: true })
               }}>
               Find Encounter
-            </div>
+            </div></div>
 
             <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
@@ -566,11 +577,10 @@ export default class LoreViewer extends Component {
                     key={encounter.getJson()._id}
                     onClick={async () => {
                       {
+                        
                         await this.setState({ showFindEncounter: false });
-                        let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1));
-                        if (enc) {
-                          state.currentComponent.assign(enc);
-                        }
+                        let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1), state.currentCampaign.getJson()._id);
+        
 
                       }
                     }}

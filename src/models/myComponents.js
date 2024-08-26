@@ -401,7 +401,7 @@ class Campaign extends componentBase {
 
     async getPlayers(compList, dispatch) {
         
-        let monsters = compList.getList("monster");
+        let monsters = compList.getList("participant");
         let pcs = monsters.filter(
             (monster) => {
                 return monster.getJson().role === "player"
@@ -441,18 +441,22 @@ class Encounter extends componentBase {
         this.json.picURL = pic;
     }
 
-    async copyEncounter(componentList, loreId) {
+    async copyEncounter(componentList, loreId, campaignId) {
         
-        let id = loreId ? loreId : ""
-        let newEnc = this.copyComponent(["name", "loreId"], ["Copy of " + this.getJson().name, id]);
-        let comps = componentList.getList("participant", this.json._id, "encounterId");
+        let id = loreId ? loreId : "";
+        campaignId = campaignId||""
+        let newEnc = await this.copyComponent(["name", "loreId", "campaignId"], ["Copy of " + this.getJson().name, id, campaignId]);
+        let comps = await componentList.getList("participant", this.json._id, "encounterId");
+        if(this.json.campaignId!==campaignId){
+            comps = await auth.firebaseGetter(this.json._id, componentList, "encounterId", "participant");
+        }
         let enc = await this.operationsFactory.cleanJsonPrepare({ "addencounter": newEnc });
         enc = enc.add[0];
         for (let obj of comps) {
-            let monsterJson = obj.copyComponent(["encounterId"], [enc.getJson()._id]);
+            let monsterJson = await obj.copyComponent(["encounterId", "campaignId"], [enc.getJson()._id, campaignId]);
             await this.operationsFactory.jsonPrepare({ "addparticipant": monsterJson });
         };
-        this.operationsFactory.run();
+        await this.operationsFactory.run();
         return enc;
     }
 
@@ -465,7 +469,7 @@ class Encounter extends componentBase {
     //         for (let obj of comps) {
     //             ///TAYLOR help me get this right
     //             let monsterJson = await obj.copyComponent(["encounterId", "role",], [id, "",],);
-    //             await this.operationsFactory.jsonPrepare({ "addmonster": monsterJson });
+    //             await this.operationsFactory.jsonPrepare({ "": monsterJson });
     //             let p = await this.operationsFactory.getUpdater("add")[0];
     //             encPlayer.push(p);
     //             // await this.operationsFactory.run();
@@ -735,6 +739,7 @@ class Participant extends componentBase {
         statBlockLink: "",
         note: "",
         encounterId: "",
+        role:"monster",
         _id: "",
     }
 

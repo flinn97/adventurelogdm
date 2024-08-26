@@ -91,7 +91,14 @@ export default class MapComponent extends Component {
             {...this.props.delOptions?.style ,cursor:"pointer", }:
           this.props.delOptions?.theme?
           {...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle, cursor:"pointer",}: 
-          {...styles.delstyle , cursor:"pointer", }} onClick={this.props.delOptions?.func? this.props.delOptions.func: ()=>{         
+          {...styles.delstyle , cursor:"pointer", }} onClick={this.props.delOptions?.func? this.props.delOptions.func: ()=>{  
+            if(this.props.checkUser){
+              if(this.props.app.state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }  
+            }
+                 
            componentList.getOperationsFactory().cleanPrepareRun({ del: item });
             }}>
               
@@ -344,7 +351,12 @@ export default class MapComponent extends Component {
           this.props.delOptions?.theme?
           {cursor:"pointer", ...f.getMapThemeFactory()[this.props.delOptions?.theme].delstyle }: 
           {cursor:"pointer", ...styles.delstyle }} onClick={this.props.delOptions?.func? this.props.delOptions.func: ()=>{
-            
+            if(this.props.checkUser){
+              if(this.props.app.state.user.getJson().role!=="GM"){
+                dispatch({ popupSwitch: "goPremium"});
+                return
+              }  
+            }
             componentList.getOperationsFactory().cleanPrepareRun({del:item});
            
             }}>

@@ -66,7 +66,6 @@ export default class NoteMapItem extends Component {
     
     
    
-//console.log(this.props.obj.getJson().text.length) 
 
     return (
       <div style={{width:"100%", minHeight:"3.5em", userSelect:"none", cursor:"pointer"}} onClick={async ()=>{

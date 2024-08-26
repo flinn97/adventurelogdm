@@ -19,6 +19,7 @@ export default class MonsterList extends Component {
   render() {
     let app = this.props.app;
     let state = app.state;
+    
    
     return (
       <div style={{ marginTop: "8px", padding:"18px" }}>

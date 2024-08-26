@@ -99,10 +99,9 @@ class MainContent extends Component{
                   style = {{...styles.buttons.buttonAdd, borderRadius:"11px",marginTop:"22px", pointer:"cursor"}} onClick={()=>{
                     //
                    
-                    let obj = {name:"", type:"monster", role:"player", isToken:true};
-
+                    let obj = {name:"", type:"participant", role:"player", isToken:true, owner:state.user.getJson()._id};
                     // state.opps.cleanJsonPrepareRun({addmonster:obj});
-                    dispatch({popupSwitch:"addCharacter", operate:"addmonster", 
+                    dispatch({popupSwitch:"addCharacter", operate:"addparticipant", 
                     operation:"cleanJsonPrepare", object:obj, 
                   })
 
@@ -117,11 +116,11 @@ class MainContent extends Component{
                   <div title=' You can connect them to an adventure later'
                   style = {{...styles.buttons.buttonAdd, borderRadius:"11px",pointer:"cursor", }} onClick={()=>{
                     //
-                   
-                    let obj = {name:"", type:"monster", role:"player", isToken:true};
+                    
+                    let obj = {name:"", type:"participant", role:"player", isToken:true, owner:state.user.getJson()._id};
 
                     // state.opps.cleanJsonPrepareRun({addmonster:obj});
-                    dispatch({popupSwitch:"addCharacter", operate:"addmonster", 
+                    dispatch({popupSwitch:"addCharacter", operate:"addparticipant", 
                     operation:"cleanJsonPrepare", object:obj, 
                   })
 
@@ -139,7 +138,10 @@ class MainContent extends Component{
                     justifyContent: "center"
                   },
                 }}
-      app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
+      app={app} name={"participant"} filter={{search: "player", attribute: "role"}}
+      filterFunc={(c)=>{
+        return c.getJson().owner===state.user.getJson()._id
+      }}
       cells={[{custom:PlayerCharacterMapItem, props:{app:app}}, "delete"]}
       theme={"selectByImageSmall"}
       
@@ -156,7 +158,10 @@ class MainContent extends Component{
                     justifyContent: "center"
                   },
                 }}
-      app={app} name={"monster"} filter={{search: "player", attribute: "role"}}
+      app={app} name={"participant"} filter={{search: "player", attribute: "role"}}
+      filterFunc={(c)=>{
+        return c.getJson().owner===state.user.getJson()._id
+      }}
       cells={[{custom:PlayerCharacterMapItemPhone, props:{app:app}},]}
       // theme={"selectByImageSmall"}
       

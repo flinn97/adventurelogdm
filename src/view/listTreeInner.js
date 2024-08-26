@@ -27,7 +27,7 @@ export default class ListTreeInner extends Component {
     }
   }
   componentDidMount(){
-    
+    this.setState({open:this.props.app.state.currentExpanse.includes(this.props.obj.getJson()._id)})
     this.props.props.listTreeObserver.subscribe(this.setOpenClose.bind(this))
   }
 
@@ -47,7 +47,6 @@ export default class ListTreeInner extends Component {
 
     
     let id = this.props.obj.getJson().reference? this.props.obj.getJson().ogId:this.props.obj.getJson()._id;
-    // console.log(this.props.obj, id)
     return (<div style={{display:"flex",flexDirection:"column",alignItems:"center", paddingLeft:"11%", textDecoration:"none", 
     }} >
        {this.state.open&&

@@ -78,15 +78,17 @@ export default class GeneralInfo extends Component {
           <PostLogButton app={app} obj={state.currentEncounter} altText={"initiative"} text={"Log Initiative"}
               //ENCOUNTER MUST HAVE CAMPAIGN ID 
               campaignId={state.currentEncounter?.getJson().campaignId}
+              
             />
             <div className='Footer-Buttons'>
               <div
                 className='button Add-All-Players-Button'
                 onClick={async () => {
+                  
                   let list = await app.state.componentList.getList('participant', 'player', 'role');
-                  let mList = await app.state.componentList.getList('monster', 'player', 'role');
-
-                  currentEncounter.addCampaignPlayers([...list,...mList])
+                  
+                  await currentEncounter.addCampaignPlayers([...list,])
+                  this.props.app.dispatch({});
                 }
                 }
               >
@@ -96,7 +98,8 @@ export default class GeneralInfo extends Component {
                 className='button Add-New-Creature-Button'
                 onClick={async() =>{
                   
-                  await state.opps.cleanJsonPrepare({addparticipant: { encounterId: currentEncounter.getJson()._id, type: 'participant' }})
+                  
+                  await state.opps.cleanJsonPrepare({addparticipant: { encounterId: currentEncounter.getJson()._id, type: 'participant', campaignId:state.currentCampaign.getJson()._id }})
                   let obj = await state.opps.getUpdater("add");
                   obj = obj[0]
                   dispatch({

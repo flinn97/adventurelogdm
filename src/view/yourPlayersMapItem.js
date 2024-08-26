@@ -111,7 +111,7 @@ export default class YourPlayersMapItem extends Component {
               let fontSizeRemTiny=fontSizePx / 17;
               let fontSize =[fontSizeRem + "rem", fontSizeRemSm+"rem", fontSizeRemTiny+"rem"]
     
-              const lastInitAsNumber = parseFloat(this.props.obj.getJson().lastInit);
+              const lastInitAsNumber = parseFloat(this.props.obj.getJson().initiative);
               // const roundCount = this.state.roundCount;
           
               const currentTurn = this.props.obj.getJson()?.currentTurn;

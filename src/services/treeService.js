@@ -94,7 +94,7 @@ class TreeService {
             await copyOtherItems("encounter", ["loreId"]);
             //get monsters relationshipis: 
             
-            await copyOtherItems("monster", ["encounterId"]);
+            await copyOtherItems("participant", ["encounterId"]);
 
             let count = list.length;
             let increment = 450;

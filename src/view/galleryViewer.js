@@ -45,14 +45,16 @@ export default class GalleryViewer extends Component {
     return (
       <div style={{width:"100%", minHeight:"200px",}}>
 
-<div style={{display:"flex", justifyContent:"flexStart", justifyItems:"center", marginBottom:"18px", flexDirection:"column"}}>
+<div style={{display:"flex", justifyContent:"flexStart", justifyItems:"center", marginBottom:"18px", flexDirection:"row"}}>
 
-                <Upload text="+ Upload" 
+                <Upload  checkUser={true} text="+ Upload" 
                          className="indent-on-click"
                       
-                      buttonStyle={{...styles.buttons.buttonAdd, marginTop:"5px", backgroundColor:styles.colors.colorBlack+"99",
-                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px", position:"relative",
-                      borderRadius:"9px", fontSize:"21px",}}
+                      buttonStyle={{...styles.buttons.buttonAdd, backgroundColor:styles.colors.colorBlack+"99",
+                      paddingLeft:"29px", paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  
+                      height:"36px", position:"relative",  width:"174px", 
+                      borderRadius:"9px", fontSize:"21px",
+                    }}
 
                       prepareOnChange={{
                         name:"image", json:{
@@ -68,8 +70,14 @@ export default class GalleryViewer extends Component {
                
                 />
 
-                <div className='hover-btn' onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} style={{...styles.buttons.buttonAdd, marginTop:"25px", backgroundColor:styles.colors.colorBlack+"99",
-                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",  height:"36px",
+                <div className='hover-btn' onClick={()=>{
+                   if(state.user.getJson().role!=="GM"){
+                    dispatch({ popupSwitch: "goPremium"});
+                    return
+                  }
+                  dispatch({popupSwitch:"seeLibrary"})}} style={{...styles.buttons.buttonAdd, marginLeft:"24px", backgroundColor:styles.colors.colorBlack+"99",
+                      paddingLeft:"29px",  paddingRight:"29px", alignSelf:"flex-start", justifyItems:"center",
+                      zIndex:22,  height:"36px", width:"224px",
                       borderRadius:"9px", fontSize:"21px",}}>+ From Library</div>
 
         </div>
@@ -101,6 +109,10 @@ export default class GalleryViewer extends Component {
                                     <img className='hover-btn' src={trash} 
                                                     draggable="false"
                                     onClick={()=>{
+                                      if(state.user.getJson().role!=="GM"){
+                                        dispatch({ popupSwitch: "goPremium"});
+                                        return
+                                      }
                                     state.opps.cleanPrepareRun({del:img});
                                     }}
 

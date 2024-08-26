@@ -8,6 +8,7 @@ class SendtoChatService {
 
         dispatchLog = (obj, app, campaignId, forceValue, callBack) => {
           
+          
           let campId = campaignId?campaignId:toolService.getIdFromURL(true,);
          
           // Extract the JSON part of the obj
@@ -32,7 +33,7 @@ class SendtoChatService {
             };
           
           app.state.opps.cleanJsonPrepareRun({ "addpost": payload });
-          app.dispatch({});
+          app.dispatch({keepPOrder:true});
         };
 
   };

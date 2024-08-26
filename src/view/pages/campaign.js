@@ -12,7 +12,11 @@ export default class Campaign extends Component {
     }
   }
   async componentDidMount(){
-    this.props.app.dispatch({currentCampaign: undefined})
+    
+
+    // await auth.getAllofTypeByUser(this.props.app.state.componentList,this.props.app.state.user.getJson()._id, "campaign")
+    this.props.app.dispatch({currentCampaign: undefined, popUpSwitchcase:"", currentComponent:undefined})
+    this.props.app.state.opps.clearUpdater()
   //     let app = this.props.app;
   //     let state = app.state;
   //     let list =  await auth.firebaseGetter("jaredmichaeldavidson@gmail.com", state.componentList, "owner","lore");

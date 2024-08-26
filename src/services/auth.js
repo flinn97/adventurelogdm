@@ -100,7 +100,7 @@ class Auth {
     }
 
     async getMonsters(componentList, campaignId){
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "monster"),  where("campaignId"==campaignId));
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "participant"),  where("campaignId"==campaignId));
         let comps = await getDocs(components);
         let rawData1=[]
         for (const key in comps.docs) {
@@ -108,7 +108,7 @@ class Auth {
                 rawData1.push(data);
         }
         await componentList.addComponents(rawData1, false);
-        let monsters = componentList.getList("monster");
+        let monsters = componentList.getList("participant");
         return monsters
     }
     async getMPItems(componentList, userId){
@@ -172,10 +172,23 @@ class Auth {
         return posts
     }
 
+    async getAllCharacters(componentList, owner, ){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "participant"),  where("role","==","player"), where("owner", "==", owner));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+        let posts = componentList.getList("participant");
+        return posts
+    }
+
     //Value = value pair (key value) example: string such as "1231454891"
     //ComponentList = adding to the componentList
     //Attribute = attribute pair always a string "campaignID" or "_id"
-    //Type = OPTIONAL this RETURNS the getList, string "monster",
+    //Type = OPTIONAL this RETURNS the getList, string "participant",
     async firebaseGetter(value, componentList, attribute, type, dispatch, disclude) {
         
         let list = componentList.getComponents();
@@ -184,7 +197,7 @@ class Auth {
             IDlist.push(list[key].getJson()?._id)
         }
         let rawData1 = [];
-        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"));
+        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), orderBy("date"), );
         if(disclude){
             components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where(attribute, '==', value), where(disclude.attribute, "!=", disclude.value), orderBy('type'), orderBy("date") );
         }
@@ -244,9 +257,12 @@ class Auth {
 
     }
 
-    async getPosts(value, componentList, dispatch){
+    async getPosts(value, componentList, dispatch, callBackFunc){
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "post"), where("campaignId", "==", value), orderBy("date"));
         let comps1 = await onSnapshot(components, async (querySnapshot) => {
+            
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(1000);
             let rawData1 = [];
             for (const key in querySnapshot.docs) {
                 let data = querySnapshot.docs[key].data()
@@ -256,6 +272,9 @@ class Auth {
                 if (dispatch) {
                     await dispatch({ rerenderFirebase: true });
                 } 
+                if(callBackFunc){
+                    callBackFunc()
+                }
     })}
 
     async getuser(email, componentList, dispatch) {
@@ -266,7 +285,6 @@ class Auth {
             IDlist.push(list[key].getJson()._id)
         }
         let rawData = [];
-        let player = false
 
         // const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('owner', '==', email), orderBy("date"));
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('_id', '==', email), orderBy("date"));
@@ -275,14 +293,10 @@ class Auth {
             let data = comps.docs[key].data()
             if (!IDlist.includes(data._id)) {
                 rawData.push(data);
-                if(data.role==="player"){
-                    player = true
-                }
             }
         }
 
-        const components1 =player?await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('owner', '==', email), orderBy("date"))
-        : await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "campaign"), where('owner', '==', email), orderBy("date"));
+        const components1 = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "campaign"), where('owner', '==', email), orderBy("date"));
         let comps1 = await getDocs(components1);
         for (const key in comps1.docs) {
             let data = comps1.docs[key].data()
@@ -311,22 +325,14 @@ class Auth {
                         {path:"/", comp:Campaign, name: "Campaigns" },
                         ///Added Notes
                         {path: "/notes", comp:Note, name: "Notes"},
+                        {path:"/characters", comp:PlayerHome, name:"Characters"},
                         ///Added Marketplace
                         {path: "/admin/user", comp:AdminUser, name: "Admin"},
                         {path: "/library", comp:Library, name: "Library"},
                     ]
                 })
             }
-            if (user.getJson().role !== "GM") {
-                dispatch({
-                    switchCase: [
-                        { path: "/", comp: PlayerHome, name: "Home" },
-
-
-                    ]
-                })
-                
-            }
+           
         }
     }
 
@@ -524,7 +530,6 @@ class Auth {
                 });
             },
             error: (err) => {
-                //console.log(err.message);
             },
         });
     }
@@ -567,13 +572,13 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        
+        console.log(obj);
         
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
                 const delay = ms => new Promise(res => setTimeout(res, ms));
-                await delay(1000);
+                // await delay(1000);
                 let component = key !== "del" ? { ...operate[i].getJson() } : operate[i];
 
                 for (const key in component) {
@@ -590,10 +595,11 @@ class Auth {
                     if(component.type==="mpItem"){
                         return
                     }
-                    console.log(component);
 
                     switch (key) {
                         case "add":
+                            
+
                             if (email === undefined) {
                                 email = component.owner
                             }

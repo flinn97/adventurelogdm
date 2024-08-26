@@ -80,11 +80,11 @@ export default class CampaignEditor extends Component {
 
     }
     else {
-      await auth.firebaseGetter(campId, state.componentList, "campaignId", "lore", undefined, {attribute:"type", value:"condition"} )
+      await auth.firebaseGetter(campId, state.componentList, "campaignId", "lore", undefined, { attribute: "type", value: "condition" })
 
     }
 
-    
+
     await dispatch({ currentLore: undefined })
     if (id.includes("-")) {
       let loreSplit = id.split('-');
@@ -92,7 +92,7 @@ export default class CampaignEditor extends Component {
       loreId = loreSplit[1];
       let lore = state.componentList.getComponent("lore", loreId, "_id");
       if (!lore) {
-        lore = await auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined, {attribute:"type", value:"condition"});
+        lore = await auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined, { attribute: "type", value: "condition" });
         lore = lore[0]
       }
       await dispatch({ currentLore: lore });
@@ -226,11 +226,11 @@ export default class CampaignEditor extends Component {
     let hasName = ((state.currentLore) && (state?.currentLore?.getJson().name != undefined) && (state?.currentLore?.getJson().name != "")) ? true : false;
     let warning = ((loreList.length > 1) && (state.currentLore) && (hasName)) ? <div style={{ color: styles.colors.color5, background: styles.colors.color2, padding: "3px 8px", borderRadius: "8px", fontSize: styles.fonts.fontSmall, position: "absolute", top: 15 }}>
       {"You already have another lore named " + state?.currentLore?.getJson().name}</div> : ""
-    
+
     let encList = state.componentList.getList("encounter", this.state.obj?.getJson()._id, "campaignId");
     // Filter out objects where the name contains "Copy of"
     encList = encList.filter(enc => !enc.getJson().name.includes("Copy of"));
-    
+
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
         {/* <div style={{color:"white"}} onClick={()=>{
@@ -306,11 +306,15 @@ export default class CampaignEditor extends Component {
                       ...styles.buttons.buttonClose, borderRadius: "11px", fontSize: styles.fonts.fontSmall,
                       padding: "4px 10px", pointer: "cursor", color: styles.colors.color5,
                       height: "fit-content", zIndex: "200", alignSelf: "flex-end",
-                      background: styles.colors.colorBlack + "5b", marginTop: "-4px",
+                      background: styles.colors.colorBlack + "5b", marginTop: "-4px", marginBottom:"30px"
                       // backgroundColor:"white",
                     }}
 
                     onClick={() => {
+                      if (state.user.getJson().role !== "GM") {
+                        dispatch({ popupSwitch: "goPremium" });
+                        return
+                      }
                       //get parent lore of item to delete
                       let parentItem = Object.keys(state.currentLore.getJson().parentId)[0];
                       parentItem = state.componentList.getComponent("lore", parentItem, "_id");
@@ -322,46 +326,48 @@ export default class CampaignEditor extends Component {
                   </div>
 
                   <div
-                    style={{ width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3, 
-                    padding: "5px 6px", marginTop:"-22px" }}>
+                    style={{
+                      width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3,
+                      padding: "5px 6px", marginTop: "-22px"
+                    }}>
                     {/* <div
                       style={{ fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "69", }}>
                       {this.state.obj?.getJson().title + ": "}{warning}
 
                     </div> */}
                   </div>
+                 
+                    <ParentFormComponent checkUser={true} app={app} name="name" obj={state.currentLore}
+                      theme={"adventureLog"}
+                      callbackFunc={(arr) => {
 
-                  <ParentFormComponent app={app} name="name" obj={state.currentLore}
-                    theme={"adventureLog"}
-                    callbackFunc={(arr) => {
+                        let L1 = arr[0];
+                        let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                        referenceList = referenceList.map(obj => obj.getJson()._id);
+                        let pinList = state.componentList.getList("pin");
+                        pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
+                        let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
+                        if (lPin) {
+                          pinList.push(lPin)
+                        }
+                        for (let p of pinList) {
+                          p.setCompState({ name: L1.getJson().name })
+                        }
+                        state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
 
-                      let L1 = arr[0];
-                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
-                      referenceList = referenceList.map(obj => obj.getJson()._id);
-                      let pinList = state.componentList.getList("pin");
-                      pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
-                      let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
-                      if (lPin) {
-                        pinList.push(lPin)
-                      }
-                      for (let p of pinList) {
-                        p.setCompState({ name: L1.getJson().name })
-                      }
-                      state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
+                      }}
+                      rows={5}
+                      // prepareRun={true}
+                      inputStyle={{
+                        width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                        borderRadius: "4px", background: styles.colors.colorWhite + "00", marginBottom:"20px",
+                        border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
+                      }}
 
-                    }}
-                    rows={5}
-                    // prepareRun={true}
-                    inputStyle={{
-                      width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                      borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
-                    }}
-
-                    wrapperStyle={{
-                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
-                      flexDirection: "column", justifyItems: "space-between",
-                    }} />
+                      wrapperStyle={{
+                        margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
+                        flexDirection: "column", justifyItems: "space-between",
+                      }} />
 
 
                 </div>
@@ -378,13 +384,23 @@ export default class CampaignEditor extends Component {
                         backgroundColor: styles.colors.color1 + "ee", position: "relative", height: "fit-content",
                         justifyContent: "center"
                       }}
-                        onClick={() => { dispatch({ operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign" }) }}>
+                        onClick={async () => {
+                          await this.props.app.state.opps.clearUpdater();
+                          await dispatch({currentComponent:undefined});
+
+                          dispatch({ operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign" })
+                        }}>
                         Edit
                       </div>}
-                      
+
                   </div>
 
-                  <Link to={newLink} target='_blank' className='hover-btn' title={advLogText}
+                  <Link 
+                  onClick={()=>{
+                    localStorage.removeItem("player");
+                    toolService.navigateToLink(newLink, true);
+                  }}
+                   className='hover-btn' title={advLogText}
                     style={{
                       ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px",
                       borderColor: "#00000000", boxShadow: "",
@@ -415,6 +431,7 @@ export default class CampaignEditor extends Component {
                           color: styles.colors.colorWhite + "b4",
                           borderRadius: "11px",
                           padding: "6px 8px",
+                          
                           alignItems: "flex-end",
                           background: styles.colors.colorBlack + "3b",
                           fontSize: styles.fonts.fontSmallest,
@@ -583,7 +600,7 @@ export default class CampaignEditor extends Component {
               <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
                 {/* {this.state.obj.getJson().title}  */}
                 Lore:
-                <ParentFormComponent app={app} name="description" obj={this.state.obj}
+                <ParentFormComponent checkUser={true} app={app} name="description" obj={this.state.obj}
                   theme={"adventureLog"}
                   rows={5}
                   prepareRun={true}
@@ -593,6 +610,7 @@ export default class CampaignEditor extends Component {
                     borderRadius: "4px", background: styles.colors.colorWhite + "00",
                     border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                   }}
+                  
                   type={"quill"} onPaste={this.handlePaste} connectLore={true}
                   wrapperStyle={{
                     margin: "5px", color: styles.colors.colorWhite, display: "flex",
@@ -647,9 +665,9 @@ export default class CampaignEditor extends Component {
 
                   <div ref={this.encRef} />
                   <div style={{ marginBottom: "18px" }}>
-                    <MapComponent  app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } },]}
+                    <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } },]}
                       filter={{ search: this.state.obj?.getJson()._id, attribute: "campaignId" }}
-                      theme={"selectByImageSmall"} filterFunc={(comp)=>{return !comp.getJson().name.includes("Copy of")}}
+                      theme={"selectByImageSmall"} filterFunc={(comp) => { return !comp.getJson().name.includes("Copy of") }}
                     />
                   </div></div>
 

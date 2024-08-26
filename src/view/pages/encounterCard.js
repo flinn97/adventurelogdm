@@ -123,6 +123,10 @@ class MainContent extends Component {
             <div style={{ width: "100%", display: "flex", flexDirection: "row", marginTop: "2vh", marginBottom: "2vh", justifyContent: "space-between" }}>
               <div style={{ ...styles.buttons.buttonAdd, }}
                 onClick={() => {
+                  if(state.user.getJson().role!=="GM"){
+                    dispatch({ popupSwitch: "goPremium"});
+                    return
+                  }
                   //                  add > campaign          clear it > prepare not run           switchcase
                   dispatch({ operate: "addencounter", operation: "cleanJsonPrepare", popUpSwitchcase: "addEncounter", })
                 }}>
@@ -158,6 +162,7 @@ class MainContent extends Component {
             background: styles.colors.color2 + "22", marginTop: "34px", borderRadius: "22px", paddingBottom: "34px"
           }}>
             <MapComponent
+              checkUser={true}
 
               delOptions={{
                 picURL: trash, warningMessage: "Delete this encounter (this is permanent)",

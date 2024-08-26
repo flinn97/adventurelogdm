@@ -20,7 +20,7 @@ class UploadComponent extends Component {
             showPics: false,
             loading:false,
             name: "",
-            type: "monster",
+            type: "participant",
             delList:[],
             uploaded: [],
 
@@ -81,7 +81,6 @@ class UploadComponent extends Component {
                 },
                 
                 error(err) {
-                  //console.log(err.message);
                 },
               });
               

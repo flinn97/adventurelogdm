@@ -38,13 +38,9 @@ export default class NewEncounterPage extends Component {
 
     }
     await auth.firebaseGetter(id, componentList, "encounterId", "participant");
-    let monsterList = await auth.firebaseGetter(id, componentList, "encounterId", "monster");
-    for (let obj of monsterList) {
-      obj.setCompState({ type: "participant" });
-    }
-    
+   
     let pList = componentList.getList("participant");
-    pList=[...pList, ...monsterList];
+    pList=[...pList,];
             for(let obj of pList){
               if(obj.getJson().initiative==="" || obj.getJson().initiative===undefined){
                 obj.setCompState({initiative:999});

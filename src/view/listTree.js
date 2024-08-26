@@ -46,7 +46,6 @@ export default class ListTree extends Component {
 //     }
 //     // URL changed
 //     prevUrl = currUrl;
-//     //console.log(`URL changed to : ${currUrl}`);
     
 //   }
 // }, 60);
@@ -110,7 +109,6 @@ this.setState({})
       
 
     }
-    // console.log(isHidden)
 
 
     return (<div style={{}}>

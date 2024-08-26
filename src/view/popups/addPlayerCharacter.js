@@ -226,19 +226,6 @@ New Character:
           <RunButton className="hover-btn" app={app} text="Create" 
           callBack={ async (arr) => {
             
-            
-            let conditions = conditionService.getConditions();
-            let id = await arr[0].getJson()?._id;
-
-            for(let condition of conditions)
-            {
-              condition.monsterId = id;
-              condition.roundsActive = "0";
-              condition._id = arr[0].getJson()?._id+idService.createId()
-              await state.opps.jsonPrepare({addcondition: condition});
-            }
-            
-            await state.opps.run();
             await dispatch({
               popUpSwitchcase: "",
               currentComponent: undefined,

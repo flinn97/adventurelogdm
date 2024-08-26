@@ -87,10 +87,10 @@ class MainContent extends Component{
     return(
       <div style={{
         display:"flex", width:"100%", flexDirection:"column", justifyContent:"center", height:"fit-content", 
-        paddingTop:"35%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
+        paddingTop:"12%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1,}}>
     <div style={{ display:"flex", flexDirection:"column", textAlign:"center", paddingBottom:"42px", alignContent:"center", justifyContent:"center" }}> 
     <ParentFormComponent app={app} name="campaignId"
-              placeholder={"Enter Campaign Code"}  maxLength={11} 
+              placeholder={"Enter Campaign Code"}  
               inputStyle={{maxWidth:(window.innerWidth > 800)?"55.5vw":"100%", width:(window.innerWidth > 800)?"400px":"100%", 
               padding:"4px 9px", color:colorWarn, height:"fit-content",
               borderRadius:"4px",background:styles.colors.colorWhite+"02", borderWidth:"0px", height:"100%", cursor:"text",
@@ -170,7 +170,10 @@ handleClickOutside(event) {
       <div ref={this.wrapperRef}  className="popupCard" 
       style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
       <div style={{...styles.buttons.buttonClose, position:"absolute", right:"1vw"}}
-      onClick={this.props.handleClose}>X</div>
+      onClick={ async ()=>{
+        await state.currentComponent.setCompState({campaignId:""})
+        this.props.handleClose()
+      }}>X</div>
           
           <div className={(window.innerWidth > 800)?'scroller':''} style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
         <MainContent app={app}  delClick={this.props.delClick} />

@@ -15,7 +15,6 @@ export default class VideoPlayer extends React.Component {
         videojs.log('onPlayerReady', this);
       });
     }
-    //console.log(this.player)
    
   }
 

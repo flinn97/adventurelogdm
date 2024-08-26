@@ -193,7 +193,14 @@ class InputFormComponent extends Component {
 
 
         return (
-            <div ref={this.wrapperRef} style={this.props.wrapperStyle?this.props.wrapperStyle:theme!==undefined? theme.wrapperStyle:undefined} className={this.props.wrapperClass}>
+            <div onClick={()=>{
+                if(this.props.checkUser){
+                    if(this.props.app.state.user.getJson().role!=="GM"){
+                        this.props.app.dispatch({popupSwitch: "goPremium"})
+                        return
+                      }
+                }
+            }} ref={this.wrapperRef} style={this.props.wrapperStyle?this.props.wrapperStyle:theme!==undefined? theme.wrapperStyle:undefined} className={this.props.wrapperClass}>
                 {this.props.label && (<label style={this.props.labelStyle?this.props.labelStyle:theme!==undefined? theme.labelStyle:undefined} className={this.props.labelClass}>{this.props.label}</label>)}
                 
                 {inputType[this.props.input]}
