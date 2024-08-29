@@ -221,24 +221,40 @@
   font-size: 1.3rem;
   text-align: left;
   width: 100%;
+  font-family: 'inria';
   color: aliceblue;
   text-overflow: ellipsis;
 }
 
 .Ellipsis-Text {
+  margin-top: -12px;
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
- color: rgb(190, 221, 226);
-  hyphens:auto;
-  max-width: 335px;
-  min-height: 6rem;
-  max-height: 6rem;
-  padding: 4px;
-  font-size: 1.05rem;
-  text-align:justify;
-  /* -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))); */
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
+ /* color: rgb(190, 221, 226); */
+  hyphens: auto;
+  max-width: 330px;
+  min-height: 5.5rem;
+  /* max-height: 5.5rem; */
+  font-size: .89rem;
+  text-align: justify;
+  
 }
+
+.library-text {
+  font-family: 'inria';
+  margin-top: -12px;
+  display: block;
+  text-overflow: ellipsis;
+  hyphens: auto;
+  color: rgb(228, 228, 228);
+  max-width: 330px;
+  height: 102px;
+  font-size: .9rem;
+  text-align: justify;
+  padding:8px;
+}
+
 
 
 .Img-Midsize {
