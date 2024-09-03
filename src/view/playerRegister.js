@@ -93,21 +93,17 @@ handleChange(event) {
             if (authUser.error) {
                 this.setState({ errorMessage: authUser.error });
             } else {
+                const newUrl = '../';
+window.history.pushState(null, '', newUrl);
                 await state.opps.run();
                 await auth.login(email, password, this.props.app.state.componentList, this.props.app.dispatch);
+                
+                
             }
 
        
     };
 
-    componentDidUpdate() {
-        // if (this.props.app.state.dispatchComplete) {
-
-            
-        //     this.props.app.dispatch({ dispatchComplete: false });
-        //     window.location.href = "./"
-        // }
-    }
 
 
 
