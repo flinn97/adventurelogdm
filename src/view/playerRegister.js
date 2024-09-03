@@ -101,12 +101,12 @@ handleChange(event) {
     };
 
     componentDidUpdate() {
-        if (this.props.app.state.dispatchComplete) {
+        // if (this.props.app.state.dispatchComplete) {
 
             
-            this.props.app.dispatch({ dispatchComplete: false });
-            window.location.href = "./"
-        }
+        //     this.props.app.dispatch({ dispatchComplete: false });
+        //     window.location.href = "./"
+        // }
     }
 
 
@@ -149,7 +149,7 @@ handleChange(event) {
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: window.innerWidth > 800?"22px":"10px", fontSize:window.innerWidth > 800?'1.1rem':"1.4rem"}}>Registering as Player</div>
+                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: window.innerWidth > 800?"22px":"10px", fontSize:window.innerWidth > 800?'1.15rem':"1.45rem"}}>Registering Free Account</div>
                             <div style={{ fontSize:styles.fonts.fontSmallest, color: styles.colors.color5 }}>(All fields are required)</div>
                             <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"
                                 labelStyle={lStyle} theme={"adventureLog"} autoComplete="off"
@@ -227,9 +227,9 @@ handleChange(event) {
                             ...styles?.buttons?.buttonClear, padding: "10px", height: "fit-content", textDecoration: "none", border: "1px solid " + styles.colors.color1,
                             borderRadius: "22px", width: "255px", alignSelf: "flex-start", fontSize: styles.fonts.fontSmall
                         }}
-                            to="../register" >Register as a GM</Link>
+                            to="../register" >Register Premium Account</Link>
 
-                        <div style={{ ...additionalStyle, color: styles.colors.color9 + "f3" }}>As a GM you can: </div>
+                        <div style={{ ...additionalStyle, color: styles.colors.color9 + "f3" }}>With a Premium Account you can: </div>
                         <div style={additionalStyle}>&#x2022; Build Campaigns </div>
                         <div style={additionalStyle}>&#x2022; Create Worlds and Lore </div>
                         <div style={additionalStyle}>&#x2022; Run Encounters </div>

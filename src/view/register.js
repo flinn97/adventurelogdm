@@ -142,7 +142,7 @@ export default class Register extends Component {
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom:  window.innerWidth > 800?"22px":"10px", fontSize: window.innerWidth > 800?'1.1rem':"1.4rem" }}>Registering as GM</div>
+                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom:  window.innerWidth > 800?"22px":"10px", fontSize: window.innerWidth > 800?'1.15rem':"1.45rem" }}>Registering Premium Account</div>
 
                             <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.color5 }}>(All fields are required)</div>
 
@@ -228,7 +228,7 @@ export default class Register extends Component {
                             textDecoration: "none", border: "1px solid " + styles.colors.color1, color: styles.colors.colorWhite + "e9",
                             borderRadius: "22px", width: "255px", alignSelf: "flex-start", fontSize: styles.fonts.fontSmall
                         }}
-                            to="../playerregister" >Register as a Player</Link>
+                            to="../playerregister" >Register Free Account</Link>
 
                     </div>
 

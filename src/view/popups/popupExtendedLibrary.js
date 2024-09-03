@@ -106,7 +106,7 @@ class MainContent extends Component {
         justifyContent: "space-between", color:styles.colors.colorWhite, 
         paddingTop: "40px", fontFamily: "serif", fontSize: "1.25rem",
       }}>
-        This content is now added to your library and available within your campaigns.
+        This content is now added to your library and will be available with Campaigns when you refresh the page.
         <div style={{
           display: "flex", flexDirection: "column", position: 'relative',
           height: "100%", maxWidth: "100%", marginTop: "2px", marginBottom: "-140px"
