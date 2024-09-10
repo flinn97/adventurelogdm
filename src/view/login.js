@@ -3,7 +3,6 @@ import authService from '../services/auth';
 import { Link } from 'react-router-dom';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import logo from '../pics/logoava2.png';
-
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +32,7 @@ export default class Login extends Component {
             [name]: value
         });
     }
+  
 
 
     async handleSubmission() {

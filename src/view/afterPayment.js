@@ -13,12 +13,16 @@ export default class AfterPayment extends Component {
             user: undefined,
             password: "",
             showLoad: true,
+            mounted: false,
         }
     }
 
     async componentDidMount() {
-
-
+        debugger
+        if(!this.state.mounted){
+            await this.setState({mounted:true})
+        
+       
         let app = this.props.app;
         let state = app.state;
         let dispatch = app.dispatch;
@@ -32,7 +36,7 @@ export default class AfterPayment extends Component {
             
         user = JSON.parse(user);
         user = await auth.firebaseGetter(user.email, componentList, "email", "user");
-        user = user[0]
+        user = user[0];
         
         if (user) {
             fetch('https://checkcustomer-x5obmgu23q-uc.a.run.app', {
@@ -55,16 +59,28 @@ export default class AfterPayment extends Component {
                     if(u){
                     if (!u.delinquent) {
                         
-                        user.setCompState({paidCustomer:true, role:"GM"});
+                        
+                        await user.setCompState({paidCustomer:true, role:"GM"});
                         await state.opps.cleanPrepareRun({update: user});
+                        await this.setState({updated:user.getJson()._id})
+
+                        console.log("this all worked 2")
+
                     }
                     else{
+                        console.log("account is deliquent")
+                        dispatch({user:undefined});
+
                         auth.logout().then(()=>{
                             window.location.href = "../"
                         })
                     }
                 }
                 else{
+
+                    console.log("account does not exist")
+                    dispatch({user:undefined});
+
                     auth.logout().then(()=>{
                         window.location.href = "../"
                     })
@@ -73,6 +89,8 @@ export default class AfterPayment extends Component {
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
+                    dispatch({user:undefined});
+
                     auth.logout().then(()=>{
                         window.location.href = "../"
                     })
@@ -82,22 +100,30 @@ export default class AfterPayment extends Component {
 
         }
         else{
-            window.location.href = "../"
+           window.location.href = "../"
 
         }
     }
     else{
-        
-        window.location.href = "../"
+       window.location.href = "../"
 
     }
+}
     }
 
-    componentDidUpdate() {
-        if (this.props.app.state.dispatchComplete) {
+   async componentDidUpdate() {
+        if (this.props.app.state.dispatchComplete && this.state.updated) {
             
-            this.props.app.dispatch({ dispatchComplete: false });
-            window.location.href = "../"
+            if(this.props.app.state.data?.update?.[0]?.getJson()._id===this.state.updated){
+                // await localStorage.setItem("user", JSON.stringify(saveUser));
+                // await auth.getuser(this.state.update, this.props.app.state.componentList, this.props.app.dispatch)
+                // let user = await auth.getCurrentUser();
+
+                this.props.app.dispatch({ dispatchComplete: false, user: this.props.app.state.data.update[0]});
+                window.location.href = "../"
+            }
+            
+            
         }
     }
 

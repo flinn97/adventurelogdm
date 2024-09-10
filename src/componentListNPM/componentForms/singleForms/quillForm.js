@@ -5,6 +5,7 @@ import './snowDark.css';
 import toolService from '../../../services/toolService';
 import idService from '../../idService';
 import loreIndexService from '../../../services/loreIndexService';
+import auth from '../../../services/auth';
 
 
 export default class QuillForm extends Component {
@@ -90,13 +91,14 @@ export default class QuillForm extends Component {
         // Existing paste event listener logic
         const editor = this.quillRef.current.getEditor();
         editor.root.addEventListener('paste', (e) => {
+          
           const clipboardData = e.clipboardData || window.clipboardData;
           const items = clipboardData.items;
 
           for (let i = 0; i < items.length; i++) {
             if (items[i].type.indexOf('image') === 0) {
-              e.preventDefault();
-              return;
+              // e.preventDefault();
+              // return;
             }
           }
         });
@@ -185,7 +187,19 @@ export default class QuillForm extends Component {
     // Now that newLoreLink has completed, you can generate the link
     return this.setLoreLink(loreName);
   }
-
+  // Helper function to convert base64 to Blob
+  base64ToBlob = (base64) => {
+    const byteString = atob(base64.split(',')[1]); // Decode base64
+    const mimeString = base64.split(',')[0].split(':')[1].split(';')[0]; // Extract MIME type
+  
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+  
+    return new Blob([ab], { type: mimeString });
+  };
 
   async handleChange(value) {
     if (this.props.checkUser) {
@@ -193,6 +207,28 @@ export default class QuillForm extends Component {
         return
       }
     }
+    debugger
+    const imgTagRegex = /<img[^>]+src="([^">]+)"/g;
+  let matches1;
+
+  // 2. Process all matches of base64 images
+  while ((matches1 = imgTagRegex.exec(value)) !== null) {
+    const base64Url = matches1[1];
+    
+    if (base64Url.startsWith("data:image/")) {
+      const blob = await this.base64ToBlob(base64Url);
+      // Save base64 URL in a variable
+      const imageFileName = `images/${Date.now()}.png`; // Generate a unique file name
+
+      // 3. Upload the base64 URL to Firebase Storage
+      await auth.uploadPics(blob, imageFileName);
+      let firebaseUrl = await auth.downloadPics(imageFileName);
+        // Replace the base64 URL with Firebase Storage URL
+        value = value.replace(base64Url, firebaseUrl);
+      
+
+    }
+  }
 
     let names = this.props.app.state.loreNames;
     const linkPattern = /\[\[(.*?)\]\]/g;
@@ -279,12 +315,12 @@ export default class QuillForm extends Component {
               [{ 'indent': '-1' }, { 'indent': '+1' }],                        // text direction
               // [{ 'header': [false, 1, 2, 3] }],
               [{ 'size': ['small', false, 'large', 'huge'] }],
-
+              ['imageUpload'],
               // [],['link'], // Link insertion
 
               [], ['clean'],
               // remove formatting button
-
+              
             ],
 
           }}

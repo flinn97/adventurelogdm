@@ -29,6 +29,7 @@ export default class PlayerRegister extends Component {
         user = user.add[0];
         await user.setCompState({ role: "player", paidCustomer: true })
         this.setState({ user: user })
+        
 
 
     }
