@@ -221,7 +221,7 @@ export default class QuillForm extends Component {
       const imageFileName = `images/${Date.now()}.png`; // Generate a unique file name
 
       // 3. Upload the base64 URL to Firebase Storage
-      await auth.uploadPics(blob, imageFileName);
+      await auth.uploadPicsWithoutCompression(blob, imageFileName);
       let firebaseUrl = await auth.downloadPics(imageFileName);
         // Replace the base64 URL with Firebase Storage URL
         value = value.replace(base64Url, firebaseUrl);
@@ -315,7 +315,7 @@ export default class QuillForm extends Component {
               [{ 'indent': '-1' }, { 'indent': '+1' }],                        // text direction
               // [{ 'header': [false, 1, 2, 3] }],
               [{ 'size': ['small', false, 'large', 'huge'] }],
-              ['imageUpload'],
+              ['image'],
               // [],['link'], // Link insertion
 
               [], ['clean'],
