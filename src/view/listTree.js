@@ -83,7 +83,7 @@ export default class ListTree extends Component {
     let count = this.props.count;
 
     let bord = "solid 1px " + styles.colors.color3 + "54";
-    let bord1 = (this.props.count === 0) ? "expandingTree" : "expandingTreeColorless";
+    let bord1 = (count === 0) ? "expandingTree" : "expandingTreeColorless";
 
 
     let cells =
@@ -91,19 +91,25 @@ export default class ListTree extends Component {
       [
         {
           custom: ListTreeLink, props: {
-            app: app, c: count + 1,
+            app: app, 
+            c: count + 1,
             name: "name",
+            listTreeObserver: this.listTreeObserver,
           }
         },
         {
           custom: ExpandTreeArrow, props: {
-            app: app, c: count, listTreeObserver: this.listTreeObserver
+            app: app, c: count, 
+            listTreeObserver: this.listTreeObserver
 
           }
         },
         {
           custom: ListTreeInner, props: {
-            app: app, listTreeObserver: this.listTreeObserver, c: count, setExpanse: this.props.setExpanse ? this.props.setExpanse : this.setExpanse.bind(this), expanse: this.props.expanse ? this.props.expanse : this.expanse,
+            app: app, 
+            listTreeObserver: this.listTreeObserver, 
+            c: count, setExpanse: this.props.setExpanse ? this.props.setExpanse : this.setExpanse.bind(this), 
+            expanse: this.props.expanse ? this.props.expanse : this.expanse,
 
           }
         }
@@ -125,12 +131,12 @@ export default class ListTree extends Component {
 
         <div style={{
           flexDirection: "column", display: "flex", textDecoration: "none",
-          alignItems: "left"
+          alignItems: "flex-start"
         }} >
 
           {!isHidden && this.expanse === 1 &&
             <Link to={/campaign/ + CC.getJson()._id}
-              className="hover-btn-highlight"
+              // className="hover-btn-highlight"
               style={{
                 ...styles.buttons.buttonAdd, marginBottom: "15px", padding: "2px", fontSize: styles.fonts.fontNormal, background: "", boxShadow: "",
                 textDecoration: "underline 1px " + styles.colors.color8 + "48",
@@ -156,15 +162,14 @@ export default class ListTree extends Component {
 
 
           {/* //ADD IMAGE HERE// */}
-          <div style={{
+          <div className="no-scrollbar" style={{
             flexDirection: "column", display: "flex", textDecoration: "none",
-            width: "100%",
+            width: "100%", overflowX:"auto",
             maxHeight: "87.5vh", alignItems: "left", background: styles.colors.color8 + "03", padding: "2px", borderRadius: "4px", overflowY: "auto"
           }}>
             <MapComponent app={app} theme={bord1}
-
+              
               name={name}
-
               cells={cells}
 
               filter={{ search: _id, attribute: attribute }} filterFunc={(obj) => {

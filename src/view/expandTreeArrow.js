@@ -37,13 +37,20 @@ render() {
                : false;
 
 
+ let listTreeObserver = this.props.props.listTreeObserver;
+
+ // Ensure listTreeObserver and list exist before accessing length
+ let listLength = listTreeObserver && listTreeObserver.list ? listTreeObserver.list.length : 0;
+
   return(
-    <div>
+    <div style={{marginLeft:"1%"}}>
       {(name) && 
-    <div  className="hover-btn" title={"Open"} style={{ 
+    <div  
+    className="hover-btn" 
+    title={"Open"} style={{ 
       transition:"all .4s ease-out",
       cursor: l!==0?"pointer":"", fontSize:styles.fonts.fontSmallest, textDecoration:"underline", verticalAlign:"center", textAlign:"auto", 
-    alignContent:"stretch",
+    alignContent:"stretch", 
     marginBottom:l===0?"5px":"11px",}}
     onClick={() => {
       
@@ -64,7 +71,6 @@ render() {
     }}
     > 
     {/* {this.state.expanded?"hide":"expand"} */}
-    
       <img 
       
       src={backarrow} style={{ transition:"all .4s ease-out", marginLeft:"8px", verticalAlign:"center", marginTop:"8px", 
