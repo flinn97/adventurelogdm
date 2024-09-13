@@ -100,7 +100,7 @@ const divStyle = colors?.length
         "This monster is hiding in a barrel.", "The giant slug attacks on round 3.", "His ferocious pet monkey arrives on round 4.",
          "You can put little reminders for the monster here, you can edit them later.",
           "You can put little reminders for the monster here, you can edit them later.",
-           "Don't roll initiative. Doesn't arrive until round 4.",];
+           "Doesn't roll initiative. Doesn't arrive until round 4.",];
 
       return randomTextService.pickFromArray(notes);
     }

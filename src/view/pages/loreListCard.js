@@ -114,7 +114,7 @@ getCampId(){
             
             
           
-          <div className={isVisible?'scroller2':''} style={{
+          <div  style={{
             overflow: isVisible?"":'hidden',
             opacity:isVisible?"1":".028",
             transition: 'all .45s ease-out',

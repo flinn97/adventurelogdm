@@ -72,7 +72,7 @@ export default class ListTreeLink extends Component {
      
       let bord = "solid 1px "+styles.colors.color3+"54";
       let bord1 = (this.props.props.c===0)?bord:"";
-      
+      let lengthsAll = mapList.length + encounterList.length + imageList.length;
       
 
     return ( <div 
@@ -100,7 +100,8 @@ export default class ListTreeLink extends Component {
       {objName}
       
     </div>
-    <div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105", textDecoration:"none", marginLeft:"8px", height:"fit-content",
+    {lengthsAll >= 1 &&
+    (<div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105", textDecoration:"none", marginLeft:"8px", height:"fit-content",
     backgroundColor:styles.colors.color8+'17', marginTop:"-2px", padding:"4px", borderRadius:"11px",
                             alignItems:'flex-start', justifyContent:"flex-end", verticalAlign:"flex-start", textAlign:"flex-start",}}>
                               {/* ICONS */}
@@ -108,21 +109,23 @@ export default class ListTreeLink extends Component {
 
                                {mapList.length >= 1 &&
                                  <img className='hover-hide' src={compassImage} title={mapList.length+" Connected Maps"} 
-                                  style={{width:"20px", height:"20px",}}/>
+                                  style={{width:"20px", height:"20px", marginRight:imageList.length+encounterList.length >= 1?"5px":""}}/>
                                    }
 
                                      {encounterList.length >= 1 &&
                                      <img className='hover-hide' src={bannerImage} title={encounterList.length+" Connected Encounters"}
-                                      style={{width:"18px", height:"20px", marginLeft:"5px"}}/>
+                                      style={{width:"18px", height:"20px", marginRight:imageList.length >= 1?"5px":""}}/>
                                       }
 
                                        {imageList.length >= 1 &&
                                         <img className='hover-hide' src={imageImage} title={imageList.length+" Images in Gallery"}
-                                         style={{width:"20px",  height:"20px", marginLeft:"5px"}}/>
+                                         style={{width:"20px",  height:"20px",}}/>
                                         }
-                            </div>
+                            </div>)}
 
-
+                            {lengthsAll === 0 && <div style={{flexDirection:"row", display:"flex", width:"fit-content", zIndex:"105", textDecoration:"none", marginLeft:"8px",
+    marginTop:"-8px",borderRadius:"11px", color:styles.colors.color8+'27',
+                            alignItems:'flex-start', justifyContent:"flex-end", verticalAlign:"flex-start", textAlign:"flex-start",}}>-</div>}
 
     
 
