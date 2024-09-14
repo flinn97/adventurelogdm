@@ -52,9 +52,26 @@
 }
 
 .ql-snow a {
-    color: #1E90FF;
+    color: #75d5e6;
     text-decoration-color: #1B1D24;
     cursor:pointer;
+}
+
+.ql-active .ql-spellcheck {
+    stroke: #1E90FF; /* Blue stroke when active */
+}
+
+.ql-spellcheck {
+    stroke: #919191; /* Default stroke (black) */
+}
+
+
+.ql-active img {
+    stroke: #1E90FF;
+}
+
+.ql-active {
+    background-color: rgba(30, 144, 255, 0.6); /* Light blue background */
 }
 
 .ql-snow .ql-editor a {
@@ -204,6 +221,7 @@
 
 .ql-formats {
  color:white;
+ 
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="large"]::before,
