@@ -60,7 +60,9 @@ export default class QuillForm extends Component {
     if (this.props.value) {
 
       let val = this.props.value;
-      if (obj?.getJson().ogRef !== "" && obj?.getJson().ogRef !== undefined && obj?.getJson().type === "lore") {
+      
+      if (obj?.getJson().ogRef !== "" && obj?.getJson().ogRef !== undefined && (obj?.getJson().type === "lore" || obj?.getJson().type==="campaign")) {
+        
         if (!obj?.getJson().linksUpdated) {
           val = await this.updateCampaignLinks(val);
           obj.setCompState({ linksUpdated: true });
@@ -207,7 +209,7 @@ export default class QuillForm extends Component {
         return
       }
     }
-    debugger
+    
     const imgTagRegex = /<img[^>]+src="([^">]+)"/g;
   let matches1;
 
