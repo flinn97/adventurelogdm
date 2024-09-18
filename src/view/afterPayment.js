@@ -18,7 +18,7 @@ export default class AfterPayment extends Component {
     }
 
     async componentDidMount() {
-        debugger
+        
         if(!this.state.mounted){
             await this.setState({mounted:true})
         
