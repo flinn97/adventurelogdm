@@ -101,15 +101,15 @@ class MainContent extends Component{
 
     return(
       
-    <div style={{height:"100%"}} >
-      <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
-        <h1>Username</h1>
+    <div style={{height:"100%", background: "linear-gradient(to right, "+styles.colors.color1+"82, "+styles.colors.color2+" )", padding:"1vh"}} >
+      <div style ={{display:"flex", flexDirection: "row", justifyContent: "space-between", color:"white"}}>
+        <h1>Name</h1>
         <h1>Payment Period</h1>
         <h1>Payment Method</h1>
         <h1>Payment Type</h1>
         <h1>Suspend</h1>
       </div>
-      <div>
+      <div style={{}}>
       {this.state.start &&
       <MapComponent app={app} name="user" cells={["firstName", "lastName"]}/> }
       </div>
