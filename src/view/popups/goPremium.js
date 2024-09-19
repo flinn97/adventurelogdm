@@ -80,7 +80,7 @@ class MainContent extends Component{
         display:"flex", width:"100%", flexDirection:"column", justifyContent:"space-between", height:"fit-content", 
         paddingTop:"22%", fontFamily:"serif", fontSize:styles.fonts.fontSubheader1, marginBottom:"2%"}}>
     <div style={{ display:"flex", flexDirection:"row", textAlign:"center", paddingBottom:"12%", }}> 
-      Become a Content Creator! GoPremium!
+      Become a Content Creator! Go Premium!
       </div>
 
       <div style={{ display:"flex", flexDirection:"row", justifyContent:"center",

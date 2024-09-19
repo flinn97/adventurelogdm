@@ -1,5 +1,5 @@
 import { Component } from 'react';
-// import App from '../../App';
+import "../../App.css"
 // import HomeCard from '../pages/homeCard';
 // import CampaignCard from '../pages/campaignCard';
 // import NoteCard from '../pages/noteCard';
@@ -33,7 +33,7 @@ export default class ApproveSubmission extends Component {
 
     return (
      <div style={{display:"flex", flexDirection:'row', width:'200px', justifyContent:"space-between"}}>
-      <div style={{marginLeft:"100px", color:"black"}} onClick={async()=>{
+      <div className="hover-btn-highlight" style={{marginLeft:"100px", color:"black",  fontWeight:"600",  cursor:"pointer", background:"#81818122", padding:"4px 8px", borderRadius:"10px"}} onClick={async()=>{
         
         let approval = this.props.obj;
         
@@ -63,7 +63,7 @@ export default class ApproveSubmission extends Component {
       }}>
         yes
     </div>
-    <div style={{color:"black"}} onClick={()=>{state.opps.cleanPrepareRun({del:this.props.obj})}} >no</div>
+    <div className="hover-btn-highlight" style={{color:"red", fontWeight:"600", cursor:"pointer", background:"#81818122", padding:"4px 8px", borderRadius:"10px"}} onClick={()=>{state.opps.cleanPrepareRun({del:this.props.obj})}} >no</div>
     </div>
 
     )

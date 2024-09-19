@@ -41,7 +41,7 @@ export default class ListTreeInner extends Component {
       
       this.showList= 1;
     }
-    console.log(this.showList)
+
 
     
 
@@ -50,7 +50,9 @@ export default class ListTreeInner extends Component {
     return (<div style={{display:"flex",flexDirection:"column",alignItems:"center", paddingLeft:"11%", textDecoration:"none", 
     }} >
        {this.state.open&&
-       <div className='hover-stacked' style={{backgroundColor:styles.colors.color2+"7b", textDecoration:"none", }}>
+       <div 
+       className='hover-stacked' 
+       style={{backgroundColor:styles.colors.color2+"7b", textDecoration:"none", }}>
         {/* {!this.props.obj.getJson().reference&& */}
        <ListTree app={app} name={"lore"} attribute={"parentId"} _id={id} count={this.props.props.c + 1} />
       {/* } */}

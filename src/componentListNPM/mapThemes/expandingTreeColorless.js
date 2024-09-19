@@ -7,9 +7,18 @@ class ExpandingTreeColorless {
        
         let style={
         containerStyle: { 
-            default: {display:'flex', flexDirection:"column", backgroundColor:"#ffdead01",
-            width:"480px",height:"fit-content", alignItems:"center", flexDirection:"center",
-            flexWrap:"wrap", alignContent:"center", justifyItems:"center", 
+          default: {
+            display: 'flex',
+            flexDirection: "column",
+            backgroundColor: "#ffdead01",
+            width: "100%", // Use 100% width to fill parent container
+            maxWidth: "490px", // Set a max-width if needed
+            height: "fit-content",
+            alignItems: "flex-start", // Align items to the start (left)
+            flexWrap: "wrap",minWidth:"490px",
+            
+            alignContent: "flex-start", // Align content to start
+            justifyItems: "flex-start",
           },
             row: {display:'flex', flexDirection:"row", },
             wrapRow:{ display:'flex', flexDirection:"row", flexWrap:"wrap"},
@@ -25,12 +34,11 @@ class ExpandingTreeColorless {
           },
 
           sectionStyle:{
-            default:  {display:'flex', flexDirection:"column", alignItems:"center", height:"fit-content",  marginBottom:"2px",
-            // border:"solid 1px #C1A71B55", 
+            default:  {display:'flex', flexDirection:"column",  alignItems: "flex-start", height:"fit-content",  marginBottom:"2px",
+            border:"solid 1px #C1A71B15", 
             alignContent:"center", justifyItems:"center", 
               borderRadius:"2px", width:"100%", borderRightStyle:"",  
-              // borderLeftStyle:"solid 1px #C1A71B55",  borderRightStyle:"solid 1px #C1A71B55", 
-              
+              borderTopColor:"#00000000", borderBottomColor:"#00000000", borderRightColor:"#00000000",
             mixBlendMode:"",
             
           },

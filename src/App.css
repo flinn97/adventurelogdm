@@ -261,14 +261,14 @@ input:-webkit-autofill {
         .hover-stacked:hover {
           opacity: .99;
         
-          filter: contrast(1.06);
+          filter: contrast(1.015);
           border-radius: 11px;
           
           transition: all 0.5s ease-in-out;
         }
         .hover-stacked:active {
-          opacity: .82;
-          transform: scale(.99);
+          opacity: .89;
+          /* transform: scale(.99); */
           filter: contrast(1);
           border-radius: 11px;
           transition: all 0.5s ease-in-out;
@@ -279,7 +279,16 @@ input:-webkit-autofill {
           /* filter: contrast(.89); */
         }
 
-        
+    /* Hide horizontal scrollbar but allow scrolling */
+.no-scrollbar {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}    
 
 .hover-bubble:hover {
   opacity: .99;

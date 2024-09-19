@@ -17,7 +17,7 @@ import Approve from './approve';
 export default class AdminRequestCard extends Component {
   constructor(props) {
     super(props);
-    
+
 
   }
 
@@ -28,39 +28,39 @@ export default class AdminRequestCard extends Component {
 
 
   render() {
-    let app = {...this.props.app};
+    let app = { ...this.props.app };
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    
-    if(this.props.theme){
-      if(Object.prototype.toString.call(this.props.theme) === "[object String]"){
+    let styles = state.styles;
+
+
+    if (this.props.theme) {
+      if (Object.prototype.toString.call(this.props.theme) === "[object String]") {
         styles = state.themeFactory.getThemeFactory()[this.props.theme];
       }
-      else{
-        styles= this.props.theme;
+      else {
+        styles = this.props.theme;
       }
     }
-    app.state.styles=styles
-    
+    app.state.styles = styles
 
 
 
 
-        //********CARD ASSIGN********/
 
-        let cards={
+    //********CARD ASSIGN********/
 
-          card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
-          cardWithTab: <CardWithTab app={{...app, state:{...app.state, styles:styles}}} options={this.props.options} type={this.props.type}/>,
-          popup: <Popup app={{...app, state:{...app.state, styles:styles} }} handleClose={this.props.handleClose}  options={this.props.options} type={this.props.type}/>,
-          popupWithTab: <PopupWithTab app={{...app, state:{...app.state, styles:styles}}} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type}/>
-//popupType={this.props.popupType} popupTab={this.props.popupTab}
-    
+    let cards = {
+
+      card: <Card app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} />,
+      cardWithTab: <CardWithTab app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} />,
+      popup: <Popup app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />,
+      popupWithTab: <PopupWithTab app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />
+      //popupType={this.props.popupType} popupTab={this.props.popupTab}
+
     }
-    
+
     //*********CARD ASSIGN********/
 
 
@@ -69,9 +69,9 @@ export default class AdminRequestCard extends Component {
 
     return (
       <div >
-        
-        {cards[this.props.type? this.props.type: "card"]}
-        </div>
+
+        {cards[this.props.type ? this.props.type : "card"]}
+      </div>
 
     )
   }
@@ -80,63 +80,65 @@ export default class AdminRequestCard extends Component {
 
 
 //********CONTENTS********/
-class MainContent extends Component{
+class MainContent extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       start: false
     }
   }
-  async componentDidMount(){
-    
+  async componentDidMount() {
+
 
     await auth.firebaseGetter("partnerRequest", this.props.app.state.componentList, "type", "user")
-    this.setState({start:true})
+    this.setState({ start: true })
   }
 
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
+    let styles = state.styles;
 
-    return(
-    <div >
-      <div style ={{display:"flex", width:"100%", flexDirection: "row", justifyContent: "space-between",}}>
-      <h1>First Name</h1>
-        <h1>Last Name</h1>
-        <h1>Email</h1>
-        <h1>Company Name</h1>
-        <h1>URL</h1>
-        <h1>Application Date</h1>
-        <h1>Content</h1>
-        <h1>Approve?</h1>
+
+    return (
+      <div >
+        <div style={{ display: "flex", width: "100%", flexDirection: "row", justifyContent: "space-between", color: "black" }}>
+          <h1>First Name</h1>
+          <h1>Last Name</h1>
+          <h1>Email</h1>
+          <h1>Company Name</h1>
+          <h1>URL</h1>
+          <h1>Application Date</h1>
+          <h1>Content</h1>
+          <h1>Approve?</h1>
+        </div>
+        <div>
+          {this.state.start &&
+            <MapComponent app={app}
+              name="partnerRequest" cells={["email", { custom: Approve, props: { app: app } }]}
+              linkOptions={{ cells: [0], path: ["/partner/"], attribute: "owner" }} />}
+        </div>
       </div>
-      <div>
-      {this.state.start &&
-      <MapComponent app={app} name="partnerRequest" cells={["email",{custom:Approve, props: {app:app}}]} linkOptions={{cells:[0], path:["/partner/"], attribute:"owner"}}/> }
-      </div>
-    </div>
     )
   }
 }
 
-class TabContent extends Component{
+class TabContent extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
+    return (
       <div>
-      {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
+        {/* <div style={{display:"flex", flexDirection:"row", justifyContent:"center", fontFamily:"serif",
     fontSize:styles.fonts.fontHeader3,  color:styles.colors.color3}}>
       <img src={logo} style={{width:"480px", background:styles.colors.color4+"a5", borderRadius:"10px"}}/>
       </div>
@@ -150,33 +152,33 @@ class TabContent extends Component{
   }
 }
 
-class CardWithTab extends Component{
+class CardWithTab extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
+    return (
       //Whole card content
-      <div  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCardBorderless"],}}>  
-          {/* //Tab content  */}
-          <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /></div>
-          {/* //Main card content  */}   
-          <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}} className='scroller'>
-            <MainContent app={app} />
-            </div>
+      <div style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCardBorderless"], }}>
+        {/* //Tab content  */}
+        <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /></div>
+        {/* //Main card content  */}
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }} className='scroller'>
+          <MainContent app={app} />
         </div>
+      </div>
     )
   }
 }
 
 /**Popups */
-class Popup extends Component{
+class Popup extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -185,36 +187,36 @@ class Popup extends Component{
   }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-}
-componentWillUnmount() {
+  }
+  componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
-}
-handleClickOutside(event) {
+  }
+  handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-       this.props.handleClose();
+      this.props.handleClose();
     }
-}
-  
-  render(){
+  }
+
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    return(
+    let styles = state.styles;
+
+    return (
       <div className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"] }}>
-      <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>x</div>
-          
-          <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+        <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+          <div style={ ///EXIT BUTTON
+            styles.buttons.closeicon
+          } onClick={this.props.handleClose}>x</div>
+
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+            <MainContent app={app} />
+          </div>
+
+
         </div>
-          
-      
-      </div>
 
 
 
@@ -223,7 +225,7 @@ handleClickOutside(event) {
   }
 }
 
-class PopupWithTab extends Component{
+class PopupWithTab extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -232,34 +234,34 @@ class PopupWithTab extends Component{
   }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-}
-componentWillUnmount() {
+  }
+  componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
-}
-handleClickOutside(event) {
+  }
+  handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-       this.props.handleClose();
+      this.props.handleClose();
     }
-}
-  render(){
+  }
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
-    
-    return(
-      <div  className="popup-box" style={{ zIndex: "1010" }}>
-      <div ref={this.wrapperRef}  className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType? this.props.options?.cardType:"biggestCard"]  }}>
-      
-      <div style={{...styles[this.props.options?.tabType?this.props.options?.tabType: "colorTab1"]}}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
-                      styles.buttons.closeicon
-                  } onClick={this.props.handleClose}>X</div></div>   
-      <div className='scroller' style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-        <MainContent app={app} />
+    let styles = state.styles;
+
+    return (
+      <div className="popup-box" style={{ zIndex: "1010" }}>
+        <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+
+          <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /> <div style={ ///EXIT BUTTON
+            styles.buttons.closeicon
+          } onClick={this.props.handleClose}>X</div></div>
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+            <MainContent app={app} />
+          </div>
         </div>
-        </div>
-        
+
 
 
 
@@ -267,28 +269,28 @@ handleClickOutside(event) {
     )
   }
 }
-  
+
 
 
 
 
 //********CARDs********/
-class Card extends Component{
+class Card extends Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
-    let styles =state.styles;
+    let styles = state.styles;
 
-    return(
-      <div className='scroller'  style={{ ...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"] }}>   
-            <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"]}}>
-              <MainContent app={app} />
-            </div>
+    return (
+      <div className='scroller' style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <MainContent app={app} />
+        </div>
       </div>
     )
   }
