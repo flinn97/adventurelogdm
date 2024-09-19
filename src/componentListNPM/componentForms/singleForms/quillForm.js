@@ -30,10 +30,14 @@ export default class QuillForm extends Component {
     let campaignId = await toolService.getIdFromURL(true, 0);
     // Define the regular expression pattern to find links containing "/campaign/"
     var pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="_self")?/g;
+    if(state.popupSwitch==="popupLore"){
+      pattern = /<a\s+(?:[^>]*?\s+)?href="https?:\/\/[^\/]*\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="[^"]*")?/g
+
+    }
 
     // Use String.prototype.replace() to find and replace links
     var updatedText = await text.replace(pattern, function (match, p1) {
-
+      
       // Extract the number from the URL
       var number;
       let id = p1.split("-")[1];
@@ -63,7 +67,7 @@ export default class QuillForm extends Component {
       
       if (obj?.getJson().ogRef !== "" && obj?.getJson().ogRef !== undefined && (obj?.getJson().type === "lore" || obj?.getJson().type==="campaign")) {
         
-        if (!obj?.getJson().linksUpdated) {
+        if (!obj?.getJson().linksUpdated||this.props.app.state.popupSwitch==="popupLore") {
           val = await this.updateCampaignLinks(val);
           obj.setCompState({ linksUpdated: true });
 

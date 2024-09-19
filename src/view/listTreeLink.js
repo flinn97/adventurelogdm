@@ -106,7 +106,9 @@ if (listLength >= 5) {
         display: "flex"
       }}>
       {name !== "" && name !== undefined &&
-        <Link to={"../campaign/" + newLink} state={obj.getJson().reference ? { ref: obj.getJson()._id } : undefined}
+      <>
+      {obj.getJson().pdfURL?
+        <a target='_blank' href={obj.getJson().pdfURL}
 
           style={{
             display: "flex",
@@ -168,7 +170,72 @@ if (listLength >= 5) {
 
 
 
-        </Link>
+</a>
+        :
+        <Link to={"../campaign/" + newLink} state={obj.getJson().reference ? { ref: obj.getJson()._id } : undefined}
+
+style={{
+  display: "flex",
+  flexDirection: "row",
+  textDecoration: "none",
+  marginTop: "4px",
+  width: "100%", // Use 100% to fill the parent container
+  alignItems: "flex-start", // Align items to the start (left)
+  justifyContent: "flex-start", // Align content to the start (left)
+  textDecorationColor: styles.colors.color3,
+  textDecorationThickness: "1px",
+
+}}>
+
+<div title={"Open " + objName}
+  className='hover-img2'
+  style={{
+    color: styles.colors.colorWhite + "df", textDecoration: "none", fontSize: fontListSize, textAlign: "left", width: "100%", textOverflow: "ellipsis", overflowWrap: "break-word",
+    marginLeft: "11px"
+  }}
+>
+
+  {objName}
+
+</div>
+
+{lengthsAll >= 1 &&
+  (<div style={{
+    flexDirection: "row", display: "flex", width: "fit-content", zIndex: "105", textDecoration: "none", marginLeft: "11px", height: "fit-content",
+    backgroundColor: styles.colors.color8 + '17', padding: "4px",
+    borderRadius: "11px", alignSelf: "flex-start",
+    alignItems: 'flex-start', verticalAlign: "flex-start", textAlign: "flex-start", marginTop: "-3px"
+
+  }}>
+    {/* ICONS */}
+
+
+    {mapList.length >= 1 &&
+      <img className='hover-hide' src={compassImage} title={mapList.length + " Connected Maps"}
+        style={{ width: "20px", height: "20px", marginRight: imageList.length + encounterList.length >= 1 ? "5px" : "" }} />
+    }
+
+    {encounterList.length >= 1 &&
+      <img className='hover-hide' src={bannerImage} title={encounterList.length + " Connected Encounters"}
+        style={{ width: "18px", height: "20px", marginRight: imageList.length >= 1 ? "5px" : "" }} />
+    }
+
+    {imageList.length >= 1 &&
+      <img className='hover-hide' src={imageImage} title={imageList.length + " Images in Gallery"}
+        style={{ width: "20px", height: "20px", }} />
+    }
+  </div>)}
+
+{lengthsAll === 0 && <div style={{
+  flexDirection: "row", display: "flex", width: "fit-content", zIndex: "105", textDecoration: "none", marginLeft: "8px",
+  marginTop: "-8px", borderRadius: "11px", color: styles.colors.color8 + '27', alignSelf: "flex-end",
+  alignItems: 'flex-start', justifyContent: "flex-end", verticalAlign: "flex-start", textAlign: "flex-start",
+}}>-</div>}
+
+
+
+</Link>}
+        </>
 
 
       }
