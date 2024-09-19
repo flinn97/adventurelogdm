@@ -120,6 +120,14 @@ export default class QuillForm extends Component {
         }
       });
     };
+    document.addEventListener("keydown", ()=>{
+      if (this.props.checkUser) {
+        if (this.props.app.state.user.getJson().role !== "GM") {
+                this.props.app.dispatch({ popupSwitch: "goPremium" });
+                return
+              }
+            }
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -158,6 +166,7 @@ export default class QuillForm extends Component {
       return loreName;
     }
   }
+  
 
 
 
@@ -206,9 +215,12 @@ export default class QuillForm extends Component {
   async handleChange(value) {
     if (this.props.checkUser) {
       if (this.props.app.state.user.getJson().role !== "GM") {
-        return
-      }
-    }
+        
+              return
+            }
+          }
+  
+       
     
     const imgTagRegex = /<img[^>]+src="([^">]+)"/g;
   let matches1;
@@ -282,15 +294,7 @@ export default class QuillForm extends Component {
     return (
 
 
-      <div onClick={() => {
-        if (this.props.checkUser) {
-          if (state.user.getJson().role !== "GM") {
-            dispatch({ popupSwitch: "goPremium" });
-            return
-          }
-        }
-
-      }}
+      <div 
       // title='Use [[ ]] around a Lore title to connect it'
       >
 

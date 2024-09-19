@@ -73,6 +73,11 @@ export default class Dispatch extends Component {
 
     }
   }
+  componentDidMount(){
+    if(window.location.href.includes("library") && !this.props.app.state.user){
+      window.location.href="../"
+    }
+  }
 
 
   render() {
@@ -357,7 +362,8 @@ export default class Dispatch extends Component {
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
                         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
                         <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
-                        
+                        <Route path="/encounter/:id" element={<NewEncounterPage app={app} players={state?.campaignPlayers} />} />
+
                         <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
                       </Routes>
                     ) : (

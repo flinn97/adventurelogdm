@@ -144,7 +144,7 @@ export default class Login extends Component {
                             <Link className='hover-btn' title="Register as a GM or Player" style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
                                 color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? styles?.fonts?.fontNormal : "1.4rem",
-                            }} to="../register">Register</Link>
+                            }} to="../playerregister">Register</Link>
 
                             {this.state.forgot ? (<div onClick={() => { this.setState({ forgot: false }) }} style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",

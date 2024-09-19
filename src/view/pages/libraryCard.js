@@ -131,6 +131,7 @@ class MainContent extends Component {
     let componentList = state.componentList;
     await auth.getMPItems(componentList, state.user.getJson()._id);
     this.setState({ start: true })
+ 
   }
 
 
