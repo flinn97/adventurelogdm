@@ -231,26 +231,29 @@
   display: block;
   /* overflow: hidden;
   text-overflow: ellipsis; */
- /* color: rgb(190, 221, 226); */
+ color: rgb(190, 221, 226);
   hyphens: auto;
   max-width: 330px;
   min-height: 5.5rem;
-  /* max-height: 5.5rem; */
-  font-size: .89rem;
+  height: 12.5rem;
+  padding: 8px;
+  max-height: 12.5rem;
+  font-size: .8rem;
   text-align: justify;
   
 }
 
 .library-text {
   font-family: 'inria';
+  color: rgb(190, 221, 226);
   margin-top: -12px;
   display: block;
   text-overflow: ellipsis;
   hyphens: auto;
   color: rgb(228, 228, 228);
   max-width: 330px;
-  height: 102px;
-  font-size: .88rem;
+  height: 11rem;
+  font-size: 1.1rem;
   text-align: justify;
   padding:8px;
 }

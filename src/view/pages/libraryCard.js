@@ -172,7 +172,7 @@ class MainContent extends Component {
                 type: "attribute", name: "title", class: "Bold-Title DR-Attribute-Item",
                 func:(obj)=>{this.openMPItem(obj)}
               },
-              { type: "richReader", name: "promotional", class: "library-text" },
+              { type: "richReader", name: "promotional", class:"DR-Attribute-Item library-text" },
 
               { name: "Inspect", class: "DR-Attribute-Item Button-Type1 a ", },
 
