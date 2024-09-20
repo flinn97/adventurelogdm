@@ -102,11 +102,20 @@ class MainContent extends Component {
             
           >
           </iframe> */}
-          <iframe 
+          {window.innerWidth > 800 &&
+          (<iframe 
           width="1008px" 
             height="567px"
           src="https://www.loom.com/embed/1b90682880e446a394c585e1a417764b?sid=b76c817e-7ab0-44b0-9c5a-5723061ec6c0" 
-          frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>)
+          ||
+          (<iframe 
+          width="504px" 
+            height="283.5px"
+          src="https://www.loom.com/embed/1b90682880e446a394c585e1a417764b?sid=b76c817e-7ab0-44b0-9c5a-5723061ec6c0" 
+          frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>)
+          }
+
         </div>
 
 
