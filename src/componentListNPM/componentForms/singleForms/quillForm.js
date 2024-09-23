@@ -34,10 +34,10 @@ export default class QuillForm extends Component {
       pattern = /<a\s+(?:[^>]*?\s+)?href="https?:\/\/[^\/]*\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="[^"]*")?/g
 
     }
-
+    let popupBool = false;
     // Use String.prototype.replace() to find and replace links
     var updatedText = await text.replace(pattern, function (match, p1) {
-      
+      popupBool=true
       // Extract the number from the URL
       var number;
       let id = p1.split("-")[1];
@@ -54,11 +54,34 @@ export default class QuillForm extends Component {
       return '<a href="/campaign/' + campaignId + '-' + number + '"';
     });
 
+    if(!popupBool && state.popupSwitch==="popupLore"){
+      pattern = /<a\s+(?:[^>]*?\s+)?href="\/campaign\/([^"]*)"(?:[^>]*?\s+)?(?:target="[^"]*")?/g;
+      updatedText = await text.replace(pattern, function (match, p1) {
+        popupBool=true
+        // Extract the number from the URL
+        var number;
+        let id = p1.split("-")[1];
+        console.log(p1);
+        console.log(id);
+        console.log(componentList.getList("lore", campaignId, "campaignId"));
+        let obj = componentList.getComponent("lore", id, "ogRef");
+        console.log(obj);
+        number = obj.getJson()._id;
+  
+        // Perform additional operations with the extracted number if needed
+  
+        // Return the updated link
+        return '<a href="/campaign/' + campaignId + '-' + number + '"';
+      });
+
+    }
+
     return updatedText;
   }
 
 
   async componentDidMount() {
+    
     let obj = this.props?.obj[0];
 
     if (this.props.value) {
