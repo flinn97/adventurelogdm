@@ -114,7 +114,7 @@ class MainContent extends Component {
     let allCampaigns = componentList.getList("campaign");
     let filteredCampaigns = allCampaigns.filter(campaign =>
       campaignIdList.has(campaign.getJson()._id));
-      let mpItems = componentList.getList("mpItem").filter(obj=>!obj.getJson().mptype.toLowerCase().includes("campaign"));
+      let mpItems = componentList.getList("mpItem")?.filter(obj=>!obj.getJson()?.mptype?.toLowerCase()?.includes("campaign"));
       filteredCampaigns=[...filteredCampaigns, ...mpItems]
 
 

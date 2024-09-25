@@ -21,6 +21,7 @@ export default class ListLibraryCampaigns extends Component {
 
 
   async addSearch(id) {
+    debugger
 
     this.setState({ search: id });
 
@@ -37,6 +38,7 @@ export default class ListLibraryCampaigns extends Component {
 
     // Remove trailing underscore if it's the only underscore left
     updatedSelectedCampaign = updatedSelectedCampaign.replace(/^_$/, '');
+    
 
     // Update the state to trigger the dispatch
     this.setState({ selectedCampaign: updatedSelectedCampaign, }, () => {
@@ -70,8 +72,9 @@ export default class ListLibraryCampaigns extends Component {
 
                 <div className="hover-img" key={index} draggable="false"
                   onClick={async () => {
+                    debugger
                     let id = camp.getJson()._id;
-                    if(camp.getJson().type="mpItem"){
+                    if(camp.getJson().type==="mpItem"){
                       id = camp.getJson().campaignId
                     }
                     this.addSearch(id)
