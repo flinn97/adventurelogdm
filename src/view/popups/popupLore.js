@@ -719,10 +719,15 @@ class MainContent extends Component {
                         ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginRight: "20px",
                         alignSelf: "center", color: styles.colors.color9, padding: "4px 16px"
                       }} onClick={async () => {
+                        
                         let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+                       
                         if (encounter) {
                           dispatch({})
                         }
+                        await auth.getMPItems(state.componentList, state.user.getJson()._id)
+            await auth.getAllMpTypeData(state.componentList);
+            dispatch({})
                       }}>Import Library</div>
                       <input app={app}
 
@@ -754,7 +759,7 @@ class MainContent extends Component {
                                 
                                 await this.setState({ showFindEncounter: false });
 
-                                let enc = await encounter.copyEncounter(componentList, state.currentComponent.getJson()._id,  state.currentCampaign.getJson()._id);
+                                let enc = await encounter.copyEncounter(componentList, state.currentComponent.getJson()._id,  state.currentCampaign.getJson()._id, state.user.getJson()._id);
                                 
                               }
                             }}

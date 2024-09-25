@@ -70,17 +70,21 @@ export default class ListLibraryCampaigns extends Component {
 
                 <div className="hover-img" key={index} draggable="false"
                   onClick={async () => {
-                    this.addSearch(camp.getJson()._id)
+                    let id = camp.getJson()._id;
+                    if(camp.getJson().type="mpItem"){
+                      id = camp.getJson().campaignId
+                    }
+                    this.addSearch(id)
                   }}
                   style={{
                     background: "linear-gradient(0.25turn, " + styles.colors.colorBlack + ", " + styles.colors.color2 + ", " + styles.colors.color1 + ")",
                     borderRadius: "10px", margin: "6px", 
-                    boxShadow: campsAll.includes(camp.getJson()._id) ?"2px 4px 2px 0px"+styles.colors.color4+"82" :" 2px 4px 2px 1px black", cursor: "pointer", 
-                    border: campsAll.includes(camp.getJson()._id) ? "1px solid " + styles.colors.color3 : "1px solid white", minWidth: "280px", maxHeight: "35px", height:"34px",
+                    boxShadow: campsAll.includes((camp.getJson().type==="mpItem"?camp.getJson().campaignId:camp.getJson()._id)) ?"2px 4px 2px 0px"+styles.colors.color4+"82" :" 2px 4px 2px 1px black", cursor: "pointer", 
+                    border: campsAll.includes((camp.getJson().type==="mpItem"?camp.getJson().campaignId:camp.getJson()._id)) ? "1px solid " + styles.colors.color3 : "1px solid white", minWidth: "280px", maxHeight: "35px", height:"34px",
                   }}>
                   <img src={camp.getJson().picURL ? camp.getJson().picURL : ""}
                     style={{
-                      objectFit: "cover", opacity: campsAll.includes(camp.getJson()._id) ? ".45" : ".15", mixBlendMode: campsAll.includes(camp.getJson()._id) ? "hard-light" : "luminosity",
+                      objectFit: "cover", opacity: campsAll.includes((camp.getJson().type==="mpItem"?camp.getJson().campaignId:camp.getJson()._id)) ? ".45" : ".15", mixBlendMode: campsAll.includes(camp.getJson()._id) ? "hard-light" : "luminosity",
                       height: "35px", borderRadius: "10px", width: "100%",height:"34px",
                     }}
                     alt={`img-${index}`} />
@@ -98,9 +102,9 @@ export default class ListLibraryCampaigns extends Component {
                     position: "absolute",
                     top: "15%", fontWeight: "400",
                     paddingLeft: "5px",
-                    color: campsAll.includes(camp.getJson()._id) ? styles.colors.colorWhite : styles.colors.color3,
+                    color: campsAll.includes((camp.getJson().type==="mpItem"?camp.getJson().campaignId:camp.getJson()._id)) ? styles.colors.colorWhite : styles.colors.color3,
                     
-                    textShadow: campsAll.includes(camp.getJson()._id) ? "2px 2px 2px black, -2px -2px 3px black" : "1px 2px 2px black",
+                    textShadow: campsAll.includes((camp.getJson().type==="mpItem"?camp.getJson().campaignId:camp.getJson()._id)) ? "2px 2px 2px black, -2px -2px 3px black" : "1px 2px 2px black",
                   }}>
                     {camp.getJson().title ? camp.getJson().title.substring(0, 29) : "Untitled"}
                   </div>

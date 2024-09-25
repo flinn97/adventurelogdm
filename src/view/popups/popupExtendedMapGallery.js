@@ -82,6 +82,8 @@ class MainContent extends Component {
 
   async componentDidMount() {
     let state = this.props.app.state;
+    await auth.getMPItems(state.componentList, state.user.getJson()._id);
+
     this.setState({ selectedCampaign: state.selectedCampaign })
   }
 
@@ -103,7 +105,7 @@ class MainContent extends Component {
     if(!lore &&state.currentCampaign){
       lore = componentList.getList("lore", state.currentCampaign.getJson()._id, "campaignId").find(obj=>obj.getJson().topLevel===true);
     }
-    let map = { picURL: obj.getJson().picURL, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
+    let map = { picURL: obj.getJson().picURL, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map', owner:state.user.getJson()._id };
     await state.opps.cleanJsonPrepare({ addmap: map });
     map = await state.opps.getUpdater("add")[0];
     await state.opps.run();
@@ -171,7 +173,8 @@ class MainContent extends Component {
     let allCampaigns = componentList.getList("campaign");
     let filteredCampaigns = allCampaigns.filter(campaign =>
       campaignIdList.has(campaign.getJson()._id));
-
+      let mpItems = componentList.getList("mpItem").filter(obj=>!obj.getJson().mptype.toLowerCase().includes("campaign"));
+      filteredCampaigns=[...filteredCampaigns, ...mpItems]
       let finalList = selectedIds.length > 0 ? filteredImgList.filter(this.filterItemsBySelectedCampaigns) : filteredImgList;
       let finalImageList = this.filterUniqueByType(finalList, "image");
       let finalMapList = this.filterUniqueByType(finalList, "map");
@@ -248,9 +251,14 @@ class MainContent extends Component {
             pointerEvents: this.state.appear ? "all" : "none", mixBlendMode: this.state.appear ? "normal" : "luminosity"
           }} onClick={async () => {
             this.setState({ appear: false })
+            
             let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
             let maps = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "map")
+           
             dispatch({});
+            await auth.getMPItems(state.componentList, state.user.getJson()._id)
+            await auth.getAllMpTypeData(state.componentList);
+            dispatch({})
 
 
           }}>Import Library</div></div>
