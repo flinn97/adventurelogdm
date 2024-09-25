@@ -115,7 +115,17 @@ class MainContent extends Component {
     let filteredCampaigns = allCampaigns.filter(campaign =>
       campaignIdList.has(campaign.getJson()._id));
       let mpItems = componentList.getList("mpItem")?.filter(obj=>!obj.getJson()?.mptype?.toLowerCase()?.includes("campaign"));
-      filteredCampaigns=[...filteredCampaigns, ...mpItems]
+      filteredCampaigns=[...filteredCampaigns, ...mpItems];
+      // Use a Set to track unique titles and filter out duplicates
+let uniqueTitles = new Set();
+  filteredCampaigns = filteredCampaigns.filter(item => {
+  let title = item.getJson()?.title;
+  if (title && !uniqueTitles.has(title)) {
+    uniqueTitles.add(title); // Add the title to the Set
+    return true;             // Keep this item
+  }
+  return false;              // Skip this item (duplicate title)
+});
 
 
     return (
