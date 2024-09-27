@@ -441,11 +441,11 @@ class Encounter extends componentBase {
         this.json.picURL = pic;
     }
 
-    async copyEncounter(componentList, loreId, campaignId) {
+    async copyEncounter(componentList, loreId, campaignId, owner) {
         
         let id = loreId ? loreId : "";
         campaignId = campaignId||""
-        let newEnc = await this.copyComponent(["name", "loreId", "campaignId"], ["Copy of " + this.getJson().name, id, campaignId]);
+        let newEnc = await this.copyComponent(["name", "loreId", "campaignId", "owner"], ["Copy of " + this.getJson().name, id, campaignId, owner]);
         let comps = await componentList.getList("participant", this.json._id, "encounterId");
         if(this.json.campaignId!==campaignId){
             comps = await auth.firebaseGetter(this.json._id, componentList, "encounterId", "participant");

@@ -545,9 +545,12 @@ export default class LoreViewer extends Component {
                 }} onClick={async () => {
                   let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
                   if (encounter) {
-                    dispatch({})
-                    this.setState({ isFullEnc: true })
+                    await dispatch({})
+                    await this.setState({ isFullEnc: true })
                   }
+                  await auth.getMPItems(state.componentList, state.user.getJson()._id)
+            await auth.getAllMpTypeData(state.componentList);
+            dispatch({})
                 }}>Import Library</div>}
 
               <input app={app}
@@ -579,7 +582,7 @@ export default class LoreViewer extends Component {
                       {
                         
                         await this.setState({ showFindEncounter: false });
-                        let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1), state.currentCampaign.getJson()._id);
+                        let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1), state.currentCampaign.getJson()._id, state.user.getJson()._id);
         
 
                       }

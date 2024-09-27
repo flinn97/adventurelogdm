@@ -71,7 +71,10 @@ class MainContent extends Component {
 
   async componentDidMount() {
     let state = this.props.app.state;
+    await auth.getMPItems(state.componentList, state.user.getJson()._id);
+
     this.setState({selectedCampaign:""})
+
   }
 
   render() {
@@ -111,6 +114,18 @@ class MainContent extends Component {
     let allCampaigns = componentList.getList("campaign");
     let filteredCampaigns = allCampaigns.filter(campaign =>
       campaignIdList.has(campaign.getJson()._id));
+      let mpItems = componentList.getList("mpItem")?.filter(obj=>!obj.getJson()?.mptype?.toLowerCase()?.includes("campaign"));
+      filteredCampaigns=[...filteredCampaigns, ...mpItems];
+      // Use a Set to track unique titles and filter out duplicates
+let uniqueTitles = new Set();
+  filteredCampaigns = filteredCampaigns.filter(item => {
+  let title = item.getJson()?.title;
+  if (title && !uniqueTitles.has(title)) {
+    uniqueTitles.add(title); // Add the title to the Set
+    return true;             // Keep this item
+  }
+  return false;              // Skip this item (duplicate title)
+});
 
 
     return (
@@ -130,10 +145,15 @@ class MainContent extends Component {
             marginTop: "1vh", alignSelf: "center", padding: "1%", color: styles.colors.color9
           }} onClick={async () => {
             this.setState({ appear: false })
+            
             let images = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
             if (images) {
-              dispatch({});
+              await dispatch({});
             }
+            await auth.getMPItems(state.componentList, state.user.getJson()._id)
+            await auth.getAllMpTypeData(state.componentList);
+            dispatch({})
+            
 
           }}>Import Library</div>
 
@@ -187,7 +207,7 @@ class MainContent extends Component {
                       if (state.currentLore) {
                         loreId = state.currentLore.getJson()._id
                       }
-                      let newJson = await img.copyComponent(["campaignId", "loreId", "isDuplicate"], [campaignId, loreId, true]);
+                      let newJson = await img.copyComponent(["campaignId", "loreId", "isDuplicate", "owner"], [campaignId, loreId, true, state.user.getJson()._id]);
                       await state.opps.cleanJsonPrepareRun({ addimage: newJson });
                       dispatch({ popupSwitch: "" })
 

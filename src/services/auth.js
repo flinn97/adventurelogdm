@@ -137,6 +137,22 @@ class Auth {
         return images
     }
 
+    async getAllMpTypeData(componentList){
+        let mpItems = componentList.getList("mpItem").filter(obj=>!obj.getJson().mptype.toLowerCase().includes("campaign"));
+        for(let item of mpItems){
+            let id = item.getJson().campaignId;
+            const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("campaignId", '==', id));
+            let comps = await getDocs(components);
+            let rawData1=[]
+            for (const key in comps.docs) {
+                let data = comps.docs[key].data()
+                    rawData1.push(data);
+            }
+            await componentList.addComponents(rawData1, false);
+        }
+        
+    }
+
     async getCountByCampaingId(id, type){
         let countQuery = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type",'==',type), where("campaignId", "==", id))
         let count = await getCountFromServer(countQuery)
