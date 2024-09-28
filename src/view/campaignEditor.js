@@ -645,11 +645,11 @@ export default class CampaignEditor extends Component {
                       display: "flex", justifyContent: "", width: "100%", flexDirection: "column",
                       color: styles.colors.color4
                     }}>
-                    <div style={{ display: "flex", width: "100%", justifyContent: "flex-start", }}> Encounters
+                    <div style={{ display: "flex", width: "100%", justifyContent: "flex-start", }}>All Encounters
 
                     </div>
 
-                    <div style={{
+                    {state.user.getJson().role === "GM" && <div style={{
                       display: "flex", flexDirection: "row", justifyItems: "center", width: "fit-content", marginTop: "11px",
                     }}>
 
@@ -660,7 +660,7 @@ export default class CampaignEditor extends Component {
                           borderRadius: "9px", fontSize: "21px",
                         }}>
                         Manage Encounters
-                      </Link></div>
+                      </Link></div>}
                   </div>
 
                   <div ref={this.encRef} />

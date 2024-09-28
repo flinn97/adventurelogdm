@@ -194,7 +194,7 @@ export default class InteractiveBulletin extends Component {
       image1, image2, image4, image5, image6, image7, image8,
       image9, image10, image11, image12, image13, image14, image15, image16,
       "#F4F5F8",
-      "#C1A71Bbb", "#0f141cf3", "#1E90FFbb", "#5F0C0Cae"];
+      "#C1A71Bee", "#0f141cf3", "#1E90FFbb", "#5F0C0Cae"];
 
     const heightY = this.state.mapHeight;
 
@@ -453,14 +453,14 @@ export default class InteractiveBulletin extends Component {
                             objectFit: "fill", cursor: "pointer", overflow: "visible",
                           }}
                           >
-                            <img draggable="false"
+                            {state.user.getJson().role === "GM" &&<img draggable="false"
                               style={{
                                 width: "22px", marginTop: "-3px",
                                 objectFit: "fill",
                                 cursor: "pointer", overflow: "visible",
 
                               }}
-                              src={editPin} title="Change" />
+                              src={editPin} title="Change" />}
 
                             {/* LIST OF IMAGE OPTION       */}
                             <div className='hover-divInt'

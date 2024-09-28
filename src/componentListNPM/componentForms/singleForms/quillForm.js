@@ -334,15 +334,15 @@ export default class QuillForm extends Component {
                 // 'strike', 
                 'blockquote'
               ], [{
-                'color': ["#F4F5F8", "#F4F5F888", "#000000", //greyscale
-                  "#99AFD188", "#c3e8e577", "#c3e8e5", "#99AFD1", //bluish
-                  "#ecd23a", "#ecd23a98", "#ecd23a66", //gold
-                  "#819636", "#9EFFA0", "#9EFFA088", "#9EFFA055",//green
-                  "#fd5259", "#fd525988", "#fd525955", "#E9481F", "#EE7355", "#996C60", "#F6C6BA", //red orange
-                  "#D7ABF7", "#8B6099", "#D7ABF788", "#D7ABF755",   //purple
-                  "#AB1FE9", "#49BCCF", "#0081B1",
+                'color': ["#fafafb", "#CECED3", "#7E8999", "#050505", //greys
+              "#D7D7F0", "#caeae8", "#a0b4d4", //mute blues
+              "#FFF2A6", "#FFE966", "#ecd443", //yellows
+              "#879d38", "#CDFFC3", "#a8ffa9", "#a8ffa975", //greens
+              "#F9A595", "#fd5c62", "#fd5c6288", "#ff7452", "#ffbd7e", "#9e7064", "#f7cdc3", //red brown
+              "#dbb4f7", "#90649e", "#dbb4f788", "#dbb4f755",
+              "#ae28e9", "#7dd7e7", "#1fb0e6"
                 ]
-              }, { 'background': [false, "black", "#00274DF2", "#C1A71BF2", "#5F0C0CF2", "#4B0082F2", "#002E07F2"] },],
+              }, { 'background': [false, "#05050555", "#00274D55", "#C1A71B55", "#70160975", "#4B008222", "#002E0722", "#ffdead22", "#05050522", "#00274D22", "#C1A71B22", "#70160944", "#4B008244", "#002E0722"] },],
               [, 'code-block'],
               [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],      // superscript/subscript
               [{ 'indent': '-1' }, { 'indent': '+1' }],                        // text direction
@@ -357,6 +357,7 @@ export default class QuillForm extends Component {
             ],
 
           }}
+
 
           style={this.props.wrapperStyle ?
             { ...this.props.wrapperStyle } : { minHeight: "100%", padding: "8px", minWidth: "99%", width: "100%", }

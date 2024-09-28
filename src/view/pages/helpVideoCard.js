@@ -28,7 +28,6 @@ export default class HelpVideoCardCard extends Component {
 
 
 
-
     //********CARD ASSIGN********/
 
     let cards = {
@@ -36,7 +35,7 @@ export default class HelpVideoCardCard extends Component {
       card: <Card app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} helpRef={this.helpRef}
         scrollTo={this.scrollTo} />,
       cardWithTab: <CardWithTab app={{ ...app, state: { ...app.state, styles: styles } }} options={this.props.options} type={this.props.type} helpRef={this.helpRef}
-        scrollTo={this.scrollTo} />,
+        scrollTo={this.scrollTo} video={this.props.videoURL} title={this.props.title} helpText={this.props.helpText}/>,
       popup: <Popup app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />,
       popupWithTab: <PopupWithTab app={{ ...app, state: { ...app.state, styles: styles } }} handleClose={this.props.handleClose} options={this.props.options} type={this.props.type} />
       //popupType={this.props.popupType} popupTab={this.props.popupTab}
@@ -85,7 +84,7 @@ class MainContent extends Component {
         width: "100%", display: "flex", flexDirection: "column", minHeight: "71vh", minWidth: "71vw",
         padding: "22px", color: styles.colors.color8,
       }}>
-        This video demonstrates how content from the AVA Marketplace is kept and used in the GMS Library.
+        {this.props.helpText}
         <div style={{
           marginTop: "14px",
           alignItems: "center",
@@ -106,13 +105,13 @@ class MainContent extends Component {
           (<iframe 
           width="1008px" 
             height="567px"
-          src="https://www.loom.com/embed/1b90682880e446a394c585e1a417764b?sid=b76c817e-7ab0-44b0-9c5a-5723061ec6c0" 
+          src={this.props.video} 
           frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>)
           ||
           (<iframe 
           width="504px" 
             height="283.5px"
-          src="https://www.loom.com/embed/1b90682880e446a394c585e1a417764b?sid=b76c817e-7ab0-44b0-9c5a-5723061ec6c0" 
+          src={this.props.video}  
           frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>)
           }
 
@@ -142,7 +141,7 @@ class TabContent extends Component {
         userSelect: "none", verticalAlign: "center",
         fontSize: "1.4rem"
       }}>
-        Using the Library
+        {this.props.title}
       </div>
     )
   }
@@ -159,16 +158,17 @@ class CardWithTab extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
+    console.log(this.props.video)
     return (
       //Whole card content
       <div style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCardBorderless"], backgroundColor: styles.colors.color2 + "4e", borderRadius: "1.2vw" }}>
         {/* //Tab content  */}
         <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"], marginTop: "48px" }}><hr></hr> <TabContent
-          helpRef={this.props.helpRef}
+          helpRef={this.props.helpRef} title={this.props.title} helpText={this.props.helpText}
           scrollTo={this.props.scrollTo} app={app} /></div>
         {/* //Main card content  */}
         <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
-          <MainContent app={app}
+          <MainContent app={app} video={this.props.video} title={this.props.title} helpText={this.props.helpText}
             helpRef={this.props.helpRef}
             scrollTo={this.props.scrollTo} />
         </div>
@@ -250,6 +250,8 @@ class PopupWithTab extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
+    console.log(this.props.app)
+
     return (
       <div className="popup-box" style={{ zIndex: "1010" }}>
         <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
@@ -286,6 +288,8 @@ class Card extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
+
+    
 
     return (
       <div className='scroller' style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
