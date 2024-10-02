@@ -36,12 +36,21 @@ import locE from '../pics/loc/E.png';
 import locF from '../pics/loc/F.png';
 import locG from '../pics/loc/G.png';
 import locH from '../pics/loc/H.png';
+import locI from '../pics/loc/1.png';
+import locJ from '../pics/loc/J.png'
+import locK from '../pics/loc/K.png'
+import locL from '../pics/loc/L.png'
 import lockey from '../pics/iconKeyhole.png';
 import locSec from '../pics/loc/Secret.png';
 import locTrap from '../pics/loc/trap.png';
 import locaa from '../pics/loc/a lower.png';
 import locbb from '../pics/loc/b_lower.png';
 import loccc from '../pics/loc/c_lower.png';
+import locdd from '../pics/loc/d_lower.png';
+
+import dot from '../pics/loc/dot.png';
+import heart from '../pics/loc/heart.png';
+import square from '../pics/loc/square.png';
 
 import num0 from '../pics/loc/0n.png';
 import num1 from '../pics/loc/1n.png';
@@ -101,14 +110,27 @@ export default class IconChange extends Component {
       image17null,
       image17x, image18x,
       image17y, image18y, lockey,
-      locSec, locTrap,
-      locA, locB, locC, locD, locE, locF, locG, locH,
-      locaa, locbb, loccc, num0,
+      dot, square, heart,
+      locSec, locTrap, 
+      locA, locB, locC, locD, locE, locF, locG, locH, locI, locJ, locK, locL,
+      locaa, locbb, loccc, locdd,
       num1, num2, num3, num4, num5, num6, num7, num8, num9, num10,
 
-      "#C1A71Bbb", "#1E90FFbb", "#5F0C0Cae",
-      '#3F612D', '#5F4E38', '#DB8A74', '#F45D01', '#82379D',
-      "#e4ddee55", "#FF1B1B", "#0D453088", "#ffffff", "#0f141cf3",
+
+
+      "#e4ddee55", "#ffffff", "#0f141cf3", //colorless
+
+      "#5F0C0Cae", "#FF1B1B", //red
+      "#C1A71Bee", "#FFFF8Ff2", //yellow
+      "#0f2466ee", "#1E90FFbb", //blue
+      
+      "#0D453088", '#4a7a3bdd',  //green
+
+      '#5F4E38', '#DB8A74', //skin
+      '#F45D01', //orange
+
+      '#b27bdb', '#7d3676ee', '#a30d5dee', //purple
+
 
       //special
       // v v v
@@ -131,14 +153,14 @@ export default class IconChange extends Component {
             width: "180px", border: "1px solid " + styles.colors.color8, marginRight: "20px", padding: "20px", borderRadius: "22px", height: "fit-content",
             display: "flex", flexDirection: "row", alignContent: "center", justifyContent: "center"
           }}>
-            <div style={{ display:"flex", flexDirection:"column", alignContent:"center", alignItems:"center",
-              borderRadius: "50%", justifyContent:"center", verticalAlign:"center",
+            <div style={{
+              display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center",
+              borderRadius: "50%", justifyContent: "center", verticalAlign: "center", filter: pin.getJson().iconImage !== image16 ? pin.getJson().colorFilter : "",
               height: "74px", width: "74px", backgroundColor: pin.getJson().iconImage !== image16 ? pin.getJson().colorOverlay : "", filter: pin.getJson().iconImage !== image16 ? pin.getJson().colorFilter : "",
             }}>
-              <img alt='ico' src={pin.getJson().iconImage} style={{
+              <img alt='ico' title={"Current Icon"} src={pin.getJson().iconImage} style={{
                 height: "72px", width: "72px", position: "relative",
                 backgroundColor: pin.getJson().iconImage !== image16 ? pin.getJson().colorOverlay : "",
-                filter: pin.getJson().iconImage !== image16 ? pin.getJson().colorFilter : "",
                 marginRight: pin.getJson().iconImage === image16 ? "42px" : "",
                 borderRadius: "50%"
               }} />
@@ -148,11 +170,21 @@ export default class IconChange extends Component {
             marginLeft: "20px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'
           }}>
 
+            {state.user.getJson().role !== "GM" &&
+              <div> To edit lore-point icons,
+                <div style={{
+                  color: styles.colors.color9, fontWeight: "200", marginLeft: "48px",
+                  textDecoration: "underline", cursor: "pointer", fontSize: "1.2rem", marginTop: "11px", marginBottom: "11px",
+                }} onClick={() => {
+                  window.open('https://buy.stripe.com/3csdTd12T5LB2Ck7ss', '_blank');
+                }}>
+                  Go Premium
+                </div>
+              </div>}
 
-
-            {images.map((imgSrc, index) => (typeof imgSrc === 'string' && !imgSrc.startsWith('#')) && (
+            {state.user.getJson().role === "GM" && images.map((imgSrc, index) => (typeof imgSrc === 'string' && !imgSrc.startsWith('#')) && (
               <div
-                index={index} key={imgSrc+index.toString()}
+                index={index} key={imgSrc + index.toString()}
                 style={{
                   display: "flex", flexDirection: "row", borderRadius: "1px",
                   height: "fit-content", margin: "2px",
@@ -163,7 +195,7 @@ export default class IconChange extends Component {
                 {imgSrc === image16 &&
 
                   <Upload checkUser={true}
-                    buttonStyle={{ ...styles.buttons.buttonAdd, padding: "11px 8px" }}
+                    buttonStyle={{ ...styles.buttons.buttonAdd, padding: "11px 8px", marginRight:"11px" }}
                     className='hover-divInt' text="Upload"
                     app={app} quality={.35}
                     update={true}
@@ -194,7 +226,7 @@ export default class IconChange extends Component {
                       }}>
 
                         {imgSrc !== image16 &&
-                          <img title={"Upload your own."} alt='ico'
+                          <img alt='ico'
                             style={{
                               height: w, width: w, position: "relative",
                               backgroundColor: imgSrc !== image16 ? pin.getJson().colorOverlay : "",
@@ -232,13 +264,13 @@ export default class IconChange extends Component {
             <hr></hr>
 
 
-            {/* COLOR */}
+{/* COLOR */}
             {images.map((imgSrc, index) => (typeof imgSrc === 'string' && imgSrc.startsWith('#')) && (
               <div
-              key={imgSrc+index.toString()}
+                key={imgSrc + index.toString()}
                 style={{
                   display: "flex", flexDirection: "row", borderRadius: "1px",
-                  height: "fit-content", margin: "2px",
+                  height: "fit-content", margin: "3px",
                   border: (imgSrc !== image16 && imgSrc.startsWith('#')) ? "1px solid black" : "1px solid " + styles.colors.color1, borderRadius: "50%",
 
                 }}>
@@ -248,12 +280,12 @@ export default class IconChange extends Component {
                   <div style={{
                     width: "50px", height: "50px", borderRadius: "50%",
                     background: this.state.ind === index ? styles.colors.colorWhite : "",
-                    alignItems: "center", justifyContent: "center",
+                    alignItems: "center", justifyContent: "center", 
                     display: "flex", flexDirection: "row"
                   }}>
                     <div style={{
                       background: imgSrc === pin.getJson().colorNew ? styles.colors.colorBlack : "", width: "49px", height: "49px", borderRadius: "50%",
-                      alignItems: "center", justifyContent: "center",
+                      alignItems: "center", justifyContent: "center", marginTop:"1px",
                       display: "flex", flexDirection: "row"
                     }}>
                       <div
@@ -342,7 +374,7 @@ export default class IconChange extends Component {
 
           {iconList.map((ico, index) => (
             <div
-            key={ico.getJson()._id}
+              key={ico.getJson()._id}
               style={{
                 display: "flex", flexDirection: "row", borderRadius: "1px",
                 height: "fit-content", margin: "2px",

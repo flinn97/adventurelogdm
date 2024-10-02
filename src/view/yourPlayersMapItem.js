@@ -271,7 +271,7 @@ export default class YourPlayersMapItem extends Component {
                             }}
                           >
                             <div style={{ alignSelf: "center", fontSize: fontSize[2],color:styles.colors.color8, }}>Initiative</div>
-                            {obj?.getJson().initiative>=0?("+"+obj?.getJson().initiative):("-"+obj?.getJson().initiative)} </div>
+                            {obj?.getJson().initiative>=0?("+"+obj?.getJson().initiative):(obj?.getJson().initiative)} </div>
 
                             <div title="Armor Class" className='hover-btn'
                             style={{

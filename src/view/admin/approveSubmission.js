@@ -1,13 +1,6 @@
 import { Component } from 'react';
 import "../../App.css"
-// import HomeCard from '../pages/homeCard';
-// import CampaignCard from '../pages/campaignCard';
-// import NoteCard from '../pages/noteCard';
-// import MarketCard from '../pages/marketCard';
-// import LibraryCard from '../libraryCard';
-// import MapComponent from '../../componentListNPM/mapTech/mapComponent';
-// import auth from '../../services/auth';
-// import treeService from '../../services/treeService';
+
 import { doc, setDoc, serverTimestamp} from "firebase/firestore";
 import idService from '../../componentListNPM/idService';
 import { db, storage, auth } from '../../firbase.config.js';

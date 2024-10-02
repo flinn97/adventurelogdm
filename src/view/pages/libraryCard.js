@@ -199,7 +199,10 @@ class MainContent extends Component {
         }
 
         
-      <HelpVideoCardCard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}}/>
+      <HelpVideoCardCard app={app} title={"Using the Library"} 
+      helpText={"This video demonstrates how content from the AVA Marketplace is kept and used in the GMS Library."}
+      type="cardWithTab" options={{tabType:"borderlessTab", cardType:""}} 
+      videoURL={"https://www.loom.com/embed/1b90682880e446a394c585e1a417764b?sid=b76c817e-7ab0-44b0-9c5a-5723061ec6c0"}/>
         <div ref={this.props.helpRef} />
          
       </div>

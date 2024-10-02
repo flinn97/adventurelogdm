@@ -408,7 +408,9 @@ class MainContent extends Component {
                   onClick={() => {
                     this.setState({ showFindEncounter: false, showFindImage: false, showIcon: true, })
                   }}
-                  style={{ borderRadius: "50%", marginTop: "6px", background: pin?.getJson().colorOverlay, width: "39px", height: "39px", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                  style={{ borderRadius: "50%", marginTop: "6px", 
+                  width: "39px", height: "39px", display: "flex", flexDirection: "row", justifyContent: "center", 
+                  alignItems: "center",  }}>
                   <div style={{
                     borderRadius: "50%", width: "37px", background: styles.colors.color1, height: "37px", display: "flex",
                     flexDirection: "column", justifyContent: "center", alignItems: "center", alignContent: "center",
@@ -416,7 +418,7 @@ class MainContent extends Component {
                     <img src={pin?.getJson().iconImage}
 
                       style={{
-                        margin: "2px", height: '33px', filter: pin?.getJson().colorFilter ? pin?.getJson().colorFilter : "",
+                        margin: "2px", height: '33px', filter: pin?.getJson().colorFilter, background: pin?.getJson().colorOverlay,
                         width: "33px", position: "relative", cursor: "pointer", marginTop: "1px",
                         borderRadius: "50%"
                       }} /></div> </div>
