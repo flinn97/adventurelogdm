@@ -3,6 +3,7 @@ import auth from '../services/auth';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import { Link } from 'react-router-dom';
 import logo from '../pics/logoava2.png';
+import StripeEl from './stripeComponents/stripeL';
 // import { useForm } from 'react-hook-form';
 
 
@@ -30,7 +31,7 @@ export default class Register extends Component {
         let componentList = state.componentList;
         let user = await state.opps.cleanPrepare({ adduser: 1 });
         user = user.add[0];
-        await user.setCompState({ role: "GM" })
+        // await user.setCompState({ role: "GM" })
         this.setState({ user: user })
 
     }
@@ -97,8 +98,11 @@ export default class Register extends Component {
         if (authUser.error) {
             this.setState({ errorMessage: authUser.error });
         } else {
+            
             await state.opps.run();
-            window.open('https://buy.stripe.com/3csdTd12T5LB2Ck7ss', '_blank');
+            this.setState({stripePopup:true});
+            
+            // window.open('https://buy.stripe.com/3csdTd12T5LB2Ck7ss', '_blank');
         }
 
     }
@@ -139,6 +143,7 @@ export default class Register extends Component {
                         display: 'flex', flexDirection: 'row', justifyContent: "center", alignContent: "center",
                         justifyItems: "center", width: window.innerWidth > 800?"500px":"100%", backgroundColor: window.innerWidth > 800?styles.colors.color8 + "0a":"", borderRadius: "22px", padding:window.innerWidth > 800?"33px":"20px",
                     }}>
+                        {this.state.stripePopup? (<StripeEl app={app} user={this.state.user} />):(<>
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
@@ -215,7 +220,25 @@ export default class Register extends Component {
                         padding: "8px 14px", width: "280px", border: "", boxShadow:"", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
                         color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center",
                     }} to="../login" >Back to Login</Link>
-                        </div> </div>
+                    <div onClick={async()=>{
+                        const newUrl = '../';
+                        debugger
+                        window.history.pushState(null, '', newUrl);
+                        let user = await auth.googleSignInAndPay();
+                        await this.state.user.setCompState({email:user.email, _id:user.email});
+                        await state.opps.run();
+
+                        this.setState({stripePopup:true});
+
+
+                    }} className='hover-img' style={{
+                        ...styles?.buttons?.buttonAdd, marginTop: "24px", background:"",
+                        padding: "8px 14px", width: "280px", border: "", boxShadow:"", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center",
+                    }}>Sign Up With Google</div>
+                        </div> 
+                        </>)}
+                        </div>
 
                 )}
                 <div style={{

@@ -3,6 +3,7 @@ import authService from '../services/auth';
 import { Link } from 'react-router-dom';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import logo from '../pics/logoava2.png';
+import auth from '../services/auth';
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -145,6 +146,18 @@ export default class Login extends Component {
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
                                 color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? styles?.fonts?.fontNormal : "1.4rem",
                             }} to="../playerregister">Register</Link>
+                <div onClick={async()=>{
+                        const newUrl = '../';
+                        debugger
+                         await auth.googleJustSignIn(this.props.app.state.componentList, this.props.app.dispatch);
+
+
+
+                    }} className='hover-img' style={{
+                        ...styles?.buttons?.buttonAdd, marginTop: "24px", background:"",
+                        padding: "8px 14px", width: "280px", border: "", boxShadow:"", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center",
+                    }}>Sign Up With Google</div>
 
                             {this.state.forgot ? (<div onClick={() => { this.setState({ forgot: false }) }} style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
@@ -156,6 +169,7 @@ export default class Login extends Component {
                                     ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
                                     color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? "14px" : "15px", background: "", border: "",
                                 }}>Forgot Password?</div>)}
+                                
 
                         </div>
                     </div></form>

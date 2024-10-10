@@ -6,7 +6,10 @@ import {getAuth} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVG7lppxce_QCnpYX1-gp3h7ym5mZClxI",
-  authDomain: "avagms-c2fee.firebaseapp.com",
+  // Old authdomain
+  //authDomain: "avagms-c2fee.firebaseapp.com",
+  //New authdomain
+  authDomain: "auth.arcanevaultassembly.com",
   projectId: "avagms-c2fee",
   storageBucket: "avagms-c2fee.appspot.com",
   messagingSenderId: "858751843821",
