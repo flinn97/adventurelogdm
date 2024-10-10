@@ -101,7 +101,7 @@ export default class ChatTokenComponent extends Component {
                 <div style={{}}
                   title={obj?.getJson().name ? obj?.getJson().name + " sent this." : "GM sent this."}
                 >
-{!phone &&
+{!phone && state.currentCharacter &&
                   <TokenImage app={app} pic={obj.getJson().userPic} width={32} colors={obj?.getJson().colors} />
 }
 {phone &&

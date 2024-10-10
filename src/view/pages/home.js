@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import App from '../../App';
 import HomeCard from './homeCard';
-import CampaignCard from './campaignCard';
-import NoteCard from './noteCard';
+
 
 
 
