@@ -57,6 +57,7 @@ export default function StripeEl(props) {
       (<div style={{cursor:"pointer", fontSize:"1.1rem", padding:"2px", border:"1px solid red", borderRadius:"8px", 
         background:"#ffdea3333"}}onClick={()=>{props.app.dispatch({payment:"success"})}}>click me</div>):(
           <div> */}
+          <div style={{ fontSize:  window.innerWidth > 800 ? ".9rem" : "1rem", color: "#04d46cd8", marginTop:"0px", }}>Secure, 1-click checkout with Link</div>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm app={props.app} user={props.user} />

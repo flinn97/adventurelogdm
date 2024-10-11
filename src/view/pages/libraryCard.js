@@ -183,8 +183,8 @@ class MainContent extends Component {
             ]}
             //FIX RESIZING
             cells={[
-
-              { name: "Download", class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
+//obj.mpType==="campaign"?"Download":"View",
+              { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
               { type: "img", class: "Img-Midsize", func: (obj) => { this.openMPItem(obj) } },
               { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
               {
