@@ -3,7 +3,10 @@ import authService from '../services/auth';
 import { Link } from 'react-router-dom';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import logo from '../pics/logoava2.png';
+import google from '../pics/Sign Up/6929234_google_logo_icon.png';
 import auth from '../services/auth';
+
+
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -72,13 +75,13 @@ export default class Login extends Component {
         return (
             <div style={{
                 padding: "5%", transition: "all ease-out", justifyContent: "center", flexDirection: "row", display: "flex",
-                width: "100%", paddingTop: "35px",
+                width: "100%", paddingTop: "38px",
             }}>
                 <form onSubmit={this.handleFormSubmit}>
                     <div
                         style={{
                             display: "flex", flexDirection: "column", justifyContent: "center", width: "950px",
-                            background: styles.colors.color2 + "2e", borderRadius: "28px", height: "620px", paddingBottom: "40px",
+                            background: styles.colors.color2 + "2e", borderRadius: "28px", height: "680px", paddingBottom: "40px",
                             alignContent: "center",
                             alignItems: "center",
                             alignSelf: "center",
@@ -153,11 +156,11 @@ export default class Login extends Component {
 
 
 
-                    }} className='hover-img' style={{
+                    }} className='hover-img' title="Login or Sign Up using your Google Account" style={{
                         ...styles?.buttons?.buttonAdd, marginTop: "24px", background:"",
-                        padding: "8px 14px", width: "280px", border: "", boxShadow:"", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
-                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center",
-                    }}>Sign Up With Google</div>
+                        padding: "8px 14px", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center", width: "fit-content",
+                    }}><img src={google} style={{width:"22px"}}/></div>
 
                             {this.state.forgot ? (<div onClick={() => { this.setState({ forgot: false }) }} style={{
                                 ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
@@ -166,7 +169,7 @@ export default class Login extends Component {
                                 <div className='hover-btn' onClick={() => {
                                     this.setState({ forgot: true })
                                 }} style={{
-                                    ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
+                                    ...styles?.buttons?.buttonAdd, marginTop: "22px", padding: "8px 19px", width: "155px",
                                     color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? "14px" : "15px", background: "", border: "",
                                 }}>Forgot Password?</div>)}
                                 
