@@ -292,7 +292,7 @@ class Auth {
         return monsters
     }
     async getMPItems(componentList, userId){
-        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "mpItem"),  where("owner" , "==", userId));
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "mpItem"),  where("owner" , "==", userId), orderBy('date'));
         let comps = await getDocs(components);
         let rawData1=[]
         for (const key in comps.docs) {

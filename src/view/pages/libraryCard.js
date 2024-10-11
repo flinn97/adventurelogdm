@@ -142,6 +142,9 @@ class MainContent extends Component {
     let state = app.state;
     let componentList = state.componentList;
     await auth.getMPItems(componentList, state.user.getJson()._id);
+    let mpItems = componentList.getList("mpItem");
+    mpItems = mpItems.reverse();
+    componentList.setSelectedList("mpItem", mpItems)
     this.setState({ start: true })
 
   }
