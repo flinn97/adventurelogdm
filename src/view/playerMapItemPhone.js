@@ -286,7 +286,7 @@ export default class PlayerCharacterMapItemPhone extends Component {
 
                     <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>AC</div>
 
-                    <ParentFormComponent obj={this.props.obj} name="ac"
+                    <ParentFormComponent obj={this.props.obj} name="armor"
                       prepareRun={true} maxLength={2}
 
                       inputStyle={{
@@ -312,7 +312,7 @@ export default class PlayerCharacterMapItemPhone extends Component {
                   >
                     <div style={{ alignSelf: "center", fontSize: fontSize[1], }}>Max HP</div>
 
-                    <ParentFormComponent obj={this.props.obj} name="hp"
+                    <ParentFormComponent obj={this.props.obj} name="hitPoints"
                       prepareRun={true} maxLength={4} doesMath={true}
                       inputStyle={{
                         width: "3.4rem", padding: "4px 9px", color: styles.colors.colorWhite, marginTop: "2px",

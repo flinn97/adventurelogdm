@@ -190,7 +190,7 @@ New Character:
                           placeholder={"ie: 3"}
                           />
 
-                  <ParentFormComponent app={app} name="ac" label="Armor Class" obj={obj}
+                  <ParentFormComponent app={app} name="armor" label="Armor Class" obj={obj}
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                           theme={"adventureLog"} rows={1}
                           maxLength={2}
@@ -201,7 +201,7 @@ New Character:
                           placeholder={"ie: 13"}
                           />
 
-                  <ParentFormComponent app={app} name="hp" label="Max HP" obj={obj}
+                  <ParentFormComponent app={app} name="hitPoints" label="Max HP" obj={obj}
                         wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex", flexDirection:"column"}}
                                 theme={"adventureLog"} rows={1}
                                 maxLength={5}

@@ -197,7 +197,7 @@ transitionDuration:"9000ms"
               }}
               placeholder={"ie: "+randomInit}/>
 
-      <ParentFormComponent app={app} name="ac" label="Armor Class" 
+      <ParentFormComponent app={app} name="armor" label="Armor Class" 
       wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
               theme={"adventureLog"} rows={1}
               maxLength={2}
@@ -207,7 +207,7 @@ transitionDuration:"9000ms"
               }}
               placeholder={"ie: "+randomAC}/> 
 
-      <ParentFormComponent app={app} name="hp" label="HP" 
+      <ParentFormComponent app={app} name="hitPoints" label="HP" 
             wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex", flexDirection:"column"}}
                     theme={"adventureLog"} rows={1}
                     maxLength={10}

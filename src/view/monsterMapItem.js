@@ -349,7 +349,7 @@ export default class MonsterMapItem extends Component {
 
                   <img style={{ alignSelf: "center", width: fontSize[0], marginBottom: "2px" }} src={ac} draggable="false" />
 
-                  <ParentFormComponent obj={obj} name="ac"
+                  <ParentFormComponent obj={obj} name="armor"
                     prepareRun={true} maxLength={2}
                     //placeholder={obj?.getJson().hp}
                     inputStyle={{
@@ -375,7 +375,7 @@ export default class MonsterMapItem extends Component {
                 >
                   <div style={{ alignSelf: "center", fontSize: fontSize[0], }}>HP</div>
 
-                  <ParentFormComponent obj={obj} name="hp"
+                  <ParentFormComponent obj={obj} name="hitPoints"
                     prepareRun={true} maxLength={6}
                     placeholder={obj?.getJson().maxHp ? obj?.getJson().maxHp : obj?.getJson().hp}
                     doesMath={true}
