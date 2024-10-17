@@ -41,6 +41,7 @@ import PopupApprovalSubmitted from './view/popups/popupApprovalSubmitted';
 import NewEncounterPage from './view/newEncounterPage';
 import GoPremium from './view/popups/goPremium';
 import auth from './services/auth';
+import ViewLibraryContent from './view/popups/viewLibraryContent';
 
 //model
 export default class Dispatch extends Component {
@@ -177,7 +178,12 @@ export default class Dispatch extends Component {
                     justifyContent: "center",
                   }}>
 
-
+                    {(state.popupSwitch === "viewLibraryContent" ) &&
+                      <ViewLibraryContent
+                        type="popup" options={{ cardType: "popupSmallest" }} app={app} containerStyle={{ background: styles.colors.color2 }}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+                        delClick={state.handlePopupClose ? state.handlePopupClose : () => { app.dispatch({ popupSwitch: "", currentDelObj: undefined }) }}
+                      />}
                     {(state.popupSwitch === "popupDelete" && state.currentDelObj !== undefined) &&
                       <PopupDelete
                         type="popup" options={{ cardType: "popupSmallest" }} app={app} containerStyle={{ background: styles.colors.color2 }}

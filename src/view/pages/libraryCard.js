@@ -4,6 +4,7 @@ import auth from '../../services/auth';
 import FilterByTypeComponent from '../sortComponents/filterByTypeComponent';
 import q from '../../pics/question.png';
 import HelpVideoCardCard from './helpVideoCard';
+import CustomDownloadItem from './customDownloadItem';
 
 export default class LibraryCard extends Component {
   constructor(props) {
@@ -187,7 +188,8 @@ class MainContent extends Component {
             //FIX RESIZING
             cells={[
 //obj.mpType==="campaign"?"Download":"View",
-              { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
+              // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
+              { custom:CustomDownloadItem, type:"custom",},
               { type: "img", class: "Img-Midsize", func: (obj) => { this.openMPItem(obj) } },
               { type: "attribute", name: "publisher", class: "DR-Attribute-Item Publisher", },
               {
