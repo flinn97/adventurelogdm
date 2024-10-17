@@ -144,7 +144,7 @@ class MainContent extends Component {
     let componentList = state.componentList;
     await auth.getMPItems(componentList, state.user.getJson()._id);
     let mpItems = componentList.getList("mpItem");
-    mpItems = mpItems.reverse();
+    // mpItems = mpItems.reverse();
     componentList.setSelectedList("mpItem", mpItems)
     this.setState({ start: true })
 
@@ -181,7 +181,7 @@ class MainContent extends Component {
 
 
         {this.state.start &&
-          <MapComponent app={app} name="mpItem" theme="defaultRow"
+          <MapComponent reverse={true} app={app} name="mpItem" theme="defaultRow"
             filters={[
               { type: "text", attribute: "mptype", search: state.filter },
             ]}

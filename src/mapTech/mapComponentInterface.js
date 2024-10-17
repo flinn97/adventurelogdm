@@ -178,7 +178,9 @@ class MapComponent extends Component {
         //         list = func({ list, ...filterItem });
         //     }
         // });
-
+    if(this.props.reverse){
+        list = list.reverse()
+    }
 
         let props = { interface: mapComponentInterface, app: app, cells: cells, list: list, theme:this.props.theme, type:this.props.type, ...this.props }
 
