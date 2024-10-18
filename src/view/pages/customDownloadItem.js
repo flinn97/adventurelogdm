@@ -51,7 +51,8 @@ class CustomDownloadItem extends Component{
                     this.download(obj)
                 }
                 else{
-                    this.props.app.dispatch({popupSwitch:"viewLibraryContent"})
+                    this.props.app.dispatch({popupSwitch:"viewLibraryContent", viewContent:obj })
+                    
                 }}
                 }>
                     {obj.getJson().mptype.toLowerCase().includes("campaign")?
