@@ -106,6 +106,7 @@ class Auth {
             await localStorage.setItem("user", JSON.stringify(user));
 
         }
+        this.createInitContent(user.email)
         return user;
     }
 
@@ -205,6 +206,7 @@ class Auth {
             
             user = e;
         }
+        this.createInitContent(user.email)
         return user;
     }
     checkIfLoggedIn(){
@@ -688,9 +690,49 @@ class Auth {
             localStorage.setItem("user", JSON.stringify(user));
 
         }
+        
+        await this.createInitContent(email);
 
         return user;
     }
+    async createInitContent(email){
+        debugger
+        let campaign = []
+        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("_id", '==', "5234c100324"));
+        let comps = await getDocs(components);
+        for (const key in comps.docs) {
+            let data = await comps.docs[key].data()
+                await campaign.push(data);
+            
+        }
+
+    campaign[0].mptype = "mpCampaign";
+    let requestBody = {
+      email: email,
+      lore: { ...campaign[0] }
+    };
+    requestBody = await JSON.stringify(requestBody);
+     // Replace "YOUR_CLOUD_FUNCTION_URL" with the actual URL of your Cloud Function
+     const cloudFunctionUrl = "https://convertmarketplaceitem-x5obmgu23q-uc.a.run.app";
+
+     // Make a POST request to the Cloud Function
+     fetch(cloudFunctionUrl, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: requestBody,
+     })
+       .then(response => response.json())
+       .then(data => {
+         console.log('Success:', data);
+       })
+       .catch(error => {
+         console.error('Error:', error);
+       });
+
+    }
+
 
     async logout() {
         await localStorage.clear();

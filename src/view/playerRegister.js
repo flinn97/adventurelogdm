@@ -92,7 +92,7 @@ export default class PlayerRegister extends Component {
 
         let authUser = await auth.register(email, password, true);
 
-        await auth.register(email, password, true);
+        // await auth.register(email, password, true);
         if (authUser.error) {
             this.setState({ errorMessage: authUser.error });
         } else {
