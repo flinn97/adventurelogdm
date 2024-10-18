@@ -280,6 +280,18 @@ class Auth {
 
 
     }
+    async getAllCampaigns(componentList, email){
+        const components1 = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('type', '==', "campaign"), where('owner', '==', email), orderBy("date"));
+        let comps1 = await getDocs(components1);
+        let rawData=[]
+        for (const key in comps1.docs) {
+            let data = comps1.docs[key].data()
+                rawData.push(data);
+            
+        }
+        await componentList.addComponents(rawData, false);
+
+    }
 
     async getMonsters(componentList, campaignId){
         const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', "participant"),  where("campaignId"==campaignId));

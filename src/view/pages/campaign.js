@@ -16,7 +16,17 @@ export default class Campaign extends Component {
 
     // await auth.getAllofTypeByUser(this.props.app.state.componentList,this.props.app.state.user.getJson()._id, "campaign")
     this.props.app.dispatch({currentCampaign: undefined, popUpSwitchcase:"", currentComponent:undefined})
-    this.props.app.state.opps.clearUpdater()
+    this.props.app.state.opps.clearUpdater();
+    if(this.props.app.state.user?.getJson().firstTime){
+      await this.props.app.state.user.setCompState({firstTime:false});
+      await this.props.app.state.opps.cleanPrepareRun({update:this.props.app.state.user});
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      await delay(1000);
+      await auth.getAllCampaigns(this.props.app.state.componentList, this.props.app.state.user.getJson()._id);
+      this.props.app.dispatch({})
+      // window.location.reload();
+
+    }
   //     let app = this.props.app;
   //     let state = app.state;
   //     let list =  await auth.firebaseGetter("jaredmichaeldavidson@gmail.com", state.componentList, "owner","lore");

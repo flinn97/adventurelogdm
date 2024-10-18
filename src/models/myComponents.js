@@ -146,6 +146,7 @@ class User extends componentBase {
         handle:"",
         signUpDate: moment().format('L'),
         paidCustomer: false,
+        firstTime:true
 
     }
     getDaysFromNow() {
