@@ -74,6 +74,8 @@ class MainContent extends Component {
     await auth.getMPItems(state.componentList, state.user.getJson()._id);
   
     await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
+    await auth.getAllMpTypeData(state.componentList);
+            this.props.app.dispatch({})
 
   }
 
