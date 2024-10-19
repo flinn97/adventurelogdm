@@ -3,6 +3,7 @@ import "../../App.css";
 import auth from '../../services/auth';
 import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../../services/toolService';
+import backarrow from '../../pics/backArrow.webp';
 
 export default class ViewLibraryContent extends Component {
   constructor(props) {
@@ -66,16 +67,19 @@ export default class ViewLibraryContent extends Component {
 class MainContent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentImg: undefined,
+    }
   }
 
-  async componentDidMount() { 
+  async componentDidMount() {
     let state = this.props.app.state;
     // Fetch mpItems
     await auth.getMPItems(state.componentList, state.user.getJson()._id);
-  
+
     await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "image");
     await auth.getAllMpTypeData(state.componentList);
-            this.props.app.dispatch({})
+    this.props.app.dispatch({})
 
   }
 
@@ -86,25 +90,27 @@ class MainContent extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
-  
+
     // Get all images
     let imageList = componentList.getList("image");
-  
+
     // Prepare variables
     let selectedCampaignId = state.viewContent ? state.viewContent.getJson().campaignId : "";
     console.log("Selected Campaign ID:", selectedCampaignId);
-  
+
     // Filter images based on the selected campaignId
     if (selectedCampaignId) {
       imageList = imageList.filter(image => image.getJson().campaignId === selectedCampaignId);
     } else {
       imageList = [];
     }
-  
+
     return (
-      <div style={{
+      <div  style={{
         display: "flex",
         width: "80vw",
+        maxHeight: "36vw",
+        minHeight: "36vw",
         flexDirection: "column",
         justifyContent: "space-between",
         height: "fit-content",
@@ -114,8 +120,8 @@ class MainContent extends Component {
         marginBottom: "2%"
       }}>
         {/* ... other components or content ... */}
-  
-        <div className="image-grid" style={{
+
+        <div className="image-grid scroller"  style={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "row",
@@ -123,26 +129,56 @@ class MainContent extends Component {
           flexWrap: "wrap",
           marginTop: "55px",
         }}>
-          {
-            imageList.length > 0 ? (
-              imageList.map((img, index) => (
-                <div className="hover-img" key={index}>
-                  <img draggable="false" src={img.getJson().picURL}
-                    style={{
-                      maxWidth: "180px",
-                      minWidth: "100px",
-                      height: "fit-content",
-                      margin: "9px",
-                      cursor: "pointer",
-                      borderRadius: "10px"
-                    }}
-                    alt={`img-${index}`} />
-                </div>
-              ))
-            ) : (
-              <div>No images available for this item.</div>
-            )
+          {this.state.currentImg === undefined && <>
+            {
+              imageList.length > 0 ? (
+                imageList.map((img, index) => (
+                  <div className="hover-img" key={index} onClick={() => { this.setState({ currentImg: img }) }} >
+                    <img title={"Click to see larger version, or right click to open in new tab"} draggable="false" src={img.getJson().picURL}
+                      style={{
+                        maxWidth: "180px",
+                        minWidth: "100px",
+                        height: "fit-content",
+                        margin: "9px",
+                        cursor: "pointer",
+                        borderRadius: "10px"
+                      }}
+                      alt={`img-${index}`} />
+                  </div>
+                ))
+              ) : (
+                <div>No images available for this item.</div>
+              )}
+
+          </>
           }
+          {this.state.currentImg !== undefined && <>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div className="indent-on-click"
+                onClick={() => {
+                  this.setState({ currentImg: undefined, })
+                }}
+                style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px", marginRight:"3vw"
+                }}
+
+              >
+                <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem", }}
+                  src={backarrow}
+                />
+                Back
+              </div>   
+              <img draggable="false" className="scroller" title={"This image is already available in your Campaigns."} src={this.state.currentImg.getJson().picURL}
+                style={{
+                  
+                  maxHeight: "80vh",
+                  margin: "9px",
+                  borderRadius: "10px"
+                }}
+              /></div>
+          </>}
+
         </div>
       </div>
     );
