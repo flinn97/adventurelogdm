@@ -103,7 +103,7 @@ class MainContent extends Component {
           })
         }}></input>
         <div onClick={()=>{
-          debugger
+          
           let email = this.state.val;
           if(email){
             auth.createInitContent(email, state.campToSend.getJson()._id)

@@ -21,7 +21,7 @@ export default class ListLibraryCampaigns extends Component {
 
 
   async addSearch(id) {
-    debugger
+    
 
     this.setState({ search: id });
 
@@ -72,7 +72,7 @@ export default class ListLibraryCampaigns extends Component {
 
                 <div className="hover-img" key={index} draggable="false"
                   onClick={async () => {
-                    debugger
+                    
                     let id = camp.getJson()._id;
                     if(camp.getJson().type==="mpItem"){
                       id = camp.getJson().campaignId

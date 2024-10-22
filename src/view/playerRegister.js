@@ -153,7 +153,7 @@ export default class PlayerRegister extends Component {
                             <div onClick={async () => {
                                 const newUrl = '../';
                                 window.history.pushState(null, '', newUrl);
-                                debugger
+                                
                                 let user = await auth.googleSignIn(state.componentList, app.dispatch)
                                 await state.opps.run();
                                 await auth.getuser(user.email, componentList, dispatch);

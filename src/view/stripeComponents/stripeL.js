@@ -11,7 +11,7 @@ export default function StripeEl(props) {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-      debugger
+      
       const query = new URLSearchParams({
         email:props.user.getJson().email,  // Customer's email
         priceId: "price_1OSp8OHWPcdv1N1nmldQLrVn"  // Subscription price ID

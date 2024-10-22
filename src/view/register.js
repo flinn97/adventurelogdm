@@ -152,7 +152,7 @@ export default class Register extends Component {
                                 <div style={{ ...lStyle, color: "#f1f8fff7", marginBottom: window.innerWidth > 800 ? "22px" : "10px", fontSize: window.innerWidth > 800 ? '1.15rem' : "1.45rem" }}>Registering Premium Account</div>
                                 <div onClick={async () => {
                                     const newUrl = '../';
-                                    debugger
+                                    
                                     window.history.pushState(null, '', newUrl);
                                     let user = await auth.googleSignInAndPay();
                                     await this.state.user.setCompState({ email: user.email, _id: user.email });
