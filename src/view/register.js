@@ -149,7 +149,7 @@ export default class Register extends Component {
 
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                                <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: window.innerWidth > 800 ? "22px" : "10px", fontSize: window.innerWidth > 800 ? '1.15rem' : "1.45rem" }}>Registering Premium Account</div>
+                                <div style={{ ...lStyle, color: "#f1f8fff7", marginBottom: window.innerWidth > 800 ? "22px" : "10px", fontSize: window.innerWidth > 800 ? '1.15rem' : "1.45rem" }}>Registering Premium Account</div>
                                 <div onClick={async () => {
                                     const newUrl = '../';
                                     debugger
@@ -162,15 +162,18 @@ export default class Register extends Component {
 
 
                                 }} title="Login or Sign Up using your Google Account" className='hover-img' style={{
-                                    ...styles?.buttons?.buttonAdd, marginTop: "-14px", background: "", marginBottom: "14px",
-                                    padding: "8px 14px", textDecoration: "underline 1px", textUnderlineOffset: "3px", textDecorationColor: styles.colors.color8,
-                                    color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent: "center", alignSelf: "center", width: "fit-content",
-                                }}><img src={google} style={{ width: "22px" }} />
-
+                                    ...styles?.buttons?.buttonAdd, marginTop: "-4px", background: "", marginBottom: "14px", padding: "0px 0px",
+                                    paddingLeft: "14px", textDecoration: "underline 1px", textUnderlineOffset: "3px", textDecorationColor: styles.colors.color8,
+                                    color: "white", fontSize: styles?.fonts?.fontSmall, alignContent: "center", alignSelf: "center", textDecoration: "",
+                                    border: "solid 2px #4285F4F2", borderRadius: "11px"
+                                }}> <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-between" }}>
+                                        <img src={google} style={{ width: "24px", marginRight: "11.5px", height: "24px", marginTop: "2.5px" }} />
+                                        <div style={{ background: "#4285F4F2", borderRadius: "0px 8px 8px 0px", padding: "4px 11px", fontSize: "18.2px", textDecoration: "" }}>Sign up with Google</div>
+                                    </div>
 
                                 </div> <div style={{ alignSelf: "center" }}>or</div>
 
-                                
+
 
                                 <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"
                                     labelStyle={lStyle} theme={"adventureLog"} autoComplete="off"
@@ -219,7 +222,7 @@ export default class Register extends Component {
                                         }}
                                     />
                                 </div>
-                                <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.color5, marginTop:"11px", alignSelf:"flex-end" }}>(All fields are required)</div>
+                                <div style={{ fontSize: styles.fonts.fontSmallest, color: styles.colors.color5, marginTop: "11px", alignSelf: "flex-end" }}>(All fields are required)</div>
 
 
                                 {this.state.errorMessage && (

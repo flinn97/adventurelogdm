@@ -149,8 +149,8 @@ export default class PlayerRegister extends Component {
 
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignContent: "center", }} >
 
-                            <div style={{ ...lStyle, color: styles.colors.color8, marginBottom: window.innerWidth > 800 ? "22px" : "10px", fontSize: window.innerWidth > 800 ? '1.15rem' : "1.45rem" }}>Registering Free Account</div>
-                            <div title="Login or Sign Up using your Google Account" onClick={async () => {
+                            <div style={{ ...lStyle, color: "#f1f8fff7", marginBottom: window.innerWidth > 800 ? "22px" : "10px", fontSize: window.innerWidth > 800 ? '1.15rem' : "1.45rem" }}>Registering Free Account</div>
+                            <div onClick={async () => {
                                 const newUrl = '../';
                                 window.history.pushState(null, '', newUrl);
                                 debugger
@@ -158,15 +158,17 @@ export default class PlayerRegister extends Component {
                                 await state.opps.run();
                                 await auth.getuser(user.email, componentList, dispatch);
 
-                            }} className='hover-img' style={{
-                                ...styles?.buttons?.buttonAdd, marginTop: "-14px", background: "", marginBottom: "14px",
-                                padding: "8px 14px", textDecoration: "underline 1px", textUnderlineOffset: "3px", textDecorationColor: styles.colors.color8,
-                                color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent: "center", alignSelf: "center", width: "fit-content",
-                            }}>
-                                <img src={google} style={{ width: "22px" }} />
-                                
-                               
-                            </div> <div style={{alignSelf:"center"}}>or</div>
+                            }} className='hover-img' title="Login or Sign Up using your Google Account" style={{
+                                ...styles?.buttons?.buttonAdd, marginTop: "-4px", background: "", marginBottom: "14px", padding: "0px 0px",
+                                paddingLeft: "14px", textDecoration: "underline 1px", textUnderlineOffset: "3px", textDecorationColor: styles.colors.color8,
+                                color: "white", fontSize: styles?.fonts?.fontSmall, alignContent: "center", alignSelf: "center", textDecoration:"",
+                                border:"solid 2px #4285F4F2", borderRadius:"11px"
+                            }}> <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                                <img src={google} style={{ width: "24px", marginRight: "11.5px", height: "24px", marginTop: "2.5px" }} />
+                                <div style={{background:"#4285F4F2", borderRadius:"0px 8px 8px 0px", padding:"4px 11px", fontSize:"18.2px", textDecoration:""}}>Sign up with Google</div>
+                                </div>
+
+                            </div> <div style={{ alignSelf: "center" }}>or</div>
                             
                             <ParentFormComponent obj={this.state.user} name="firstName" label="First Name"
                                 labelStyle={lStyle} theme={"adventureLog"} autoComplete="off"
