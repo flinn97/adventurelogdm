@@ -108,7 +108,7 @@ class MainContent extends Component {
           if(email){
             auth.createInitContent(email, state.campToSend.getJson()._id)
           }
-        }}>send</div>
+        }}>Send</div>
     
 
       </div>
