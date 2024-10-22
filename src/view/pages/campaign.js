@@ -24,7 +24,14 @@ export default class Campaign extends Component {
       await delay(1000);
       await auth.getAllCampaigns(this.props.app.state.componentList, this.props.app.state.user.getJson()._id);
       this.props.app.dispatch({})
-      // window.location.reload();
+
+    }
+    if(this.props.app.state.justDownloaded){
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      await delay(1000);
+      await auth.getAllCampaigns(this.props.app.state.componentList, this.props.app.state.user.getJson()._id);
+      this.props.app.dispatch({justDownloaded:false});
+
 
     }
   //     let app = this.props.app;

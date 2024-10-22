@@ -39,6 +39,7 @@ export default class CampaignMapItem extends Component {
       }}
       >
 
+
       <div style={{display: "flex", flexDirection: 'column', 
       borderRadius:radius,
       justifyContent:"space-evenly", 
@@ -61,7 +62,12 @@ export default class CampaignMapItem extends Component {
                           alignItems:"center", justifyContent:"center", fontSize:window.innerWidth > 800?styles.fonts.fontHeader2:"2rem",}}>
                             {obj?.getJson().title}
                           </div>
+                          {state.user.getJson()._id==="admin@arcanevaultassembly.com" &&<div onClick={(e)=>{
+                            e.preventDefault();
+                            app.dispatch({popupSwitch:"sendCampaign", campToSend:obj})}} style={{color:"white"}}>Send Campaign</div>}
+
                 </div>
+
         </div>
         </Link>
       

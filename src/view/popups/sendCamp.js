@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import "../../App.css"
-
-import MapUploader from '../uploadMap';
-import colorService from '../../services/colorService';
-import { MapComponent } from '../../mapTech/mapComponentInterface';
+import DelButton from '../../componentListNPM/componentForms/buttons/deleteButton';
+import toolService from '../../services/toolService';
+import PostLogButton from '../../componentListNPM/componentForms/buttons/postLogButton';
+import ParentFormComponent from '../../componentListNPM/componentForms/parentFormComponent';
 import auth from '../../services/auth';
 
-export default class PopupExtendedLibrary extends Component {
+
+
+/**
+ * condensed version of the cards.
+ * Works with themes.
+ * props
+ * theme
+ * type
+ * app
+ * options
+ * options can include cardType, cardContent, tabType, 
+ */
+export default class SendCamp extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      refrence: false,
 
-    }
+
   }
-
 
 
   render() {
@@ -35,6 +44,10 @@ export default class PopupExtendedLibrary extends Component {
     }
     app.state.styles = styles
 
+
+
+
+
     //********CARD ASSIGN********/
 
     let cards = {
@@ -47,7 +60,7 @@ export default class PopupExtendedLibrary extends Component {
 
     }
 
-    //*********CARD ASSIGN********/
+
 
     return (
       <div >
@@ -65,66 +78,41 @@ export default class PopupExtendedLibrary extends Component {
 class MainContent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      colors: [],
-      imagesToShow: 15,
-    };
+    this.state={}
   }
-
-  async createMapFromObj(obj) {
-
-    let app = this.props.app;
-    let state = app.state;
-    let dispatch = app.dispatch;
-    let lore = state.currentLore;
-    let map = { picURL: obj.getJson().picURL, loreId: lore.getJson()._id, campaignId: state.currentCampaign.getJson()._id, type: 'map' };
-    await state.opps.cleanJsonPrepare({ addmap: map });
-    map = await state.opps.getUpdater("add")[0];
-    await state.opps.run();
-    await dispatch({ viewMap: map, popupSwitch: "" });
-
-
-  }
-
-
-
-  async componentDidMount() {
-    let state = this.props.app.state;
-    this.props.app.dispatch({justDownloaded:true})
-    //TAYLOR add get from getFromUser library backend stuff here
-  }
-
   render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
+    let mW = "200px";
+
 
     return (
       <div style={{
-        display: "flex", width: "fit-content", flexDirection: "column", height: "100%", alignContent: "center",
-        justifyContent: "space-between", color:styles.colors.colorWhite, 
-        paddingTop: "40px", fontFamily: "serif", fontSize: "1.25rem",
-      }}>
-        This content is now added to your library and will be available with Campaigns when you refresh the page.
-        <div style={{
-          display: "flex", flexDirection: "column", position: 'relative',
-          height: "100%", maxWidth: "100%", marginTop: "2px", marginBottom: "-140px"
-        }}>
-          
-          
-          {/* <MapComponent theme="defaultRowWrap" app={app}
-            cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="map" />
-          <MapComponent theme="defaultRowWrap" app={app}
-            cells={[{ type: "img", class: "Image-Item", func: (obj) => { this.createMapFromObj(obj) } }]} name="image" /> */}
+        display: "flex", width: "100%", height: "100%", flexDirection: "column", justifyContent: "space-between",
 
-        </div>
+        paddingTop: "28px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
+      }}>
+        Send Campaign
+        <input onChange={(e)=>{
+          let value = e.target.value;
+          this.setState({
+            val:value
+          })
+        }}></input>
+        <div onClick={()=>{
+          debugger
+          let email = this.state.val;
+          if(email){
+            auth.createInitContent(email, state.campToSend.getJson()._id)
+          }
+        }}>send</div>
+    
+
       </div>
     )
-
-
-
   }
 }
 
@@ -141,7 +129,6 @@ class TabContent extends Component {
 
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-
         <div style={{ ...styles.buttons.buttonClose }}
           onClick={this.props.handleClose}
         >
@@ -182,14 +169,11 @@ class Popup extends Component {
     return (
       <div className="popup-box" style={{ zIndex: "1010" }}>
         <div ref={this.wrapperRef} className="popupCard"
-          style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"], width:"544px", height:"280px"}}>
-
-
-
+          style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
           <div style={{ ...styles.buttons.buttonClose, position: "absolute", right: 32 }}
             onClick={this.props.handleClose}>X</div>
 
-          <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
             <MainContent app={app} delClick={this.props.delClick} />
           </div>
 
@@ -232,11 +216,10 @@ class PopupWithTab extends Component {
         <div ref={this.wrapperRef} className="popupCard" style={{ zIndex: "1010", ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
 
           <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}>
-
             <TabContent app={app} handleClose={this.props.handleClose} delClick={this.props.delClick} /> <div style={ ///EXIT BUTTON
               styles.buttons.closeicon
             } onClick={this.props.handleClose}>x</div></div>
-          <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
+          <div className='scroller' style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
             <MainContent app={app} handleClose={this.props.handleClose} delClick={this.props.delClick} />
           </div>
         </div>
@@ -266,7 +249,7 @@ class Card extends Component {
     let styles = state.styles;
 
     return (
-      <div style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
+      <div className='scroller' style={{ ...styles[this.props.options?.cardType ? this.props.options?.cardType : "biggestCard"] }}>
         <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }}>
           <MainContent app={app} />
         </div>
@@ -289,7 +272,7 @@ class CardWithTab extends Component {
     return (
       <div style={{ ...styles[this.props.type ? this.props.type : "biggestCard"] }}>
         <div style={{ ...styles[this.props.options?.tabType ? this.props.options?.tabType : "colorTab1"] }}> <TabContent app={app} /></div>
-        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }} >
+        <div style={{ ...styles[this.props.options?.cardContent ? this.props.options.cardContent : "cardContent"] }} className='scroller'>
           <MainContent app={app} />
         </div>
       </div>

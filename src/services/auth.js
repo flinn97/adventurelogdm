@@ -330,6 +330,18 @@ class Auth {
         let images = componentList.getList(type);
         return images
     }
+    async getAllMpDataByID(componentList, id){
+            const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("campaignId", '==', id));
+            let comps = await getDocs(components);
+            let rawData1=[]
+            for (const key in comps.docs) {
+                let data = comps.docs[key].data()
+                    rawData1.push(data);
+            }
+            await componentList.addComponents(rawData1, false);
+        
+        
+    }
 
     async getAllMpTypeData(componentList){
         let mpItems = componentList.getList("mpItem").filter(obj=>!obj.getJson().mptype.toLowerCase().includes("campaign"));
@@ -707,10 +719,10 @@ class Auth {
 
         return user;
     }
-    async createInitContent(email){
+    async createInitContent(email, id){
         debugger
         let campaign = []
-        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("_id", '==', "5234c100324"));
+        let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("_id", '==', id||"5234c100324"));
         let comps = await getDocs(components);
         for (const key in comps.docs) {
             let data = await comps.docs[key].data()
@@ -827,8 +839,8 @@ class Auth {
         for (const key in obj) {
             let operate = obj[key];
             for (let i = 0; i < operate.length; i++) {
-                const delay = ms => new Promise(res => setTimeout(res, ms));
-                // await delay(1000);
+               
+                
                 let component = key !== "del" ? { ...operate[i].getJson() } : operate[i];
 
                 for (const key in component) {

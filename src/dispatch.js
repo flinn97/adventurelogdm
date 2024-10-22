@@ -42,6 +42,7 @@ import NewEncounterPage from './view/newEncounterPage';
 import GoPremium from './view/popups/goPremium';
 import auth from './services/auth';
 import ViewLibraryContent from './view/popups/viewLibraryContent';
+import SendCamp from './view/popups/sendCamp';
 
 //model
 export default class Dispatch extends Component {
@@ -225,6 +226,13 @@ export default class Dispatch extends Component {
                       />}
                     {state.popupSwitch === "viewPic" && state.currentPic !== undefined &&
                       <ViewPic
+
+                        type="popup" options={{ cardType: "popupLarge" }} app={app}
+                        handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
+
+                      />}
+                       {state.popupSwitch === "sendCampaign" &&
+                      <SendCamp
 
                         type="popup" options={{ cardType: "popupLarge" }} app={app}
                         handleClose={() => { app.dispatch({ popupSwitch: "", currentComponent: undefined }) }}
