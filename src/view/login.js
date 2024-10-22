@@ -127,7 +127,7 @@ export default class Login extends Component {
                                 type="submit"
                                 className="hover-btn"
                                 style={{
-                                    ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "155px",
+                                    ...styles?.buttons?.buttonAdd, marginTop: "24px", padding: "8px 34px", width: "200px",
                                     border: "1px solid " + styles.colors.colorWhite,
                                     color: styles?.colors?.color3, fontSize: window.innerWidth > 800 ? styles?.fonts?.fontNormal : "1.8rem",
                                 }}>
@@ -145,11 +145,7 @@ export default class Login extends Component {
                                     alignSelf: "center",
                                 }}></div>
 
-                            <Link className='hover-btn' title="Register as a GM or Player" style={{
-                                ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
-                                color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? styles?.fonts?.fontNormal : "1.4rem",
-                            }} to="../playerregister">Register</Link>
-                <div onClick={async()=>{
+{!this.state.forgot && ( <div onClick={async()=>{
                         const newUrl = '../';
                         debugger
                          await auth.googleJustSignIn(this.props.app.state.componentList, this.props.app.dispatch);
@@ -157,19 +153,32 @@ export default class Login extends Component {
 
 
                     }} className='hover-img' title="Login or Sign Up using your Google Account" style={{
-                        ...styles?.buttons?.buttonAdd, marginTop: "24px", background:"",
-                        padding: "8px 14px", textDecoration:"underline 1px", textUnderlineOffset:"3px", textDecorationColor:styles.colors.color8,
-                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent:"center", alignSelf:"center", width: "fit-content",
-                    }}><img src={google} style={{width:"22px"}}/></div>
+                        ...styles?.buttons?.buttonAdd, marginTop: "12px", background:"",justifyContent: "center",
+                        padding: "0px 0px", paddingLeft: "14px",  textDecorationColor:styles.colors.color8,alignItems: "center",
+                        color: styles?.colors?.colorWhite, fontSize: styles?.fonts?.fontSmall, alignContent: "center", alignSelf: "center", textDecoration:"",
+                        border:"solid 2px #4285F4F0", borderRadius:"11px",  width: "200px",
+                    }}> <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                        <img src={google} style={{ width: "28px", marginRight: "10px", height: "28px", marginTop: "1.5px" }} />
+                        <div style={{background:"#4285F4F0", borderRadius:"0px 8px 8px 0px", padding:"4px 11px", fontSize:"13.87px", textDecoration:"", width:"150px", 
+                            textAlign:"center", paddingTop:"6px"}}>Sign in with Google</div>
+                        </div>
+
+                    </div>)}
+
+                            <Link className='hover-btn' title="Register as a GM or Player" style={{
+                                ...styles?.buttons?.buttonAdd, marginTop: "22px", padding: "8px 19px", width: "200px",
+                                color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? styles?.fonts?.fontNormal : "1.4rem",
+                            }} to="../playerregister">Register</Link>
+                
 
                             {this.state.forgot ? (<div onClick={() => { this.setState({ forgot: false }) }} style={{
-                                ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "155px",
+                                ...styles?.buttons?.buttonAdd, marginTop: "12px", padding: "8px 19px", width: "200px",
                                 color: styles?.colors?.colorWhite + "98", fontSize: styles?.fonts?.fontNormal,
                             }} >Back</div>) : (
                                 <div className='hover-btn' onClick={() => {
                                     this.setState({ forgot: true })
                                 }} style={{
-                                    ...styles?.buttons?.buttonAdd, marginTop: "22px", padding: "8px 19px", width: "155px",
+                                    ...styles?.buttons?.buttonAdd, marginTop: "22px", padding: "8px 19px", width: "200px",
                                     color: styles?.colors?.colorWhite + "98", fontSize: window.innerWidth > 800 ? "14px" : "15px", background: "", border: "",
                                 }}>Forgot Password?</div>)}
                                 
