@@ -167,7 +167,7 @@ export default class Register extends Component {
                                     color: "white", fontSize: styles?.fonts?.fontSmall, alignContent: "center", alignSelf: "center", textDecoration: "",
                                     border: "solid 2px #4285F4F2", borderRadius: "11px"
                                 }}> <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-between" }}>
-                                        <img src={google} style={{ width: "24px", marginRight: "12px", height: "24px", marginTop: "2.5px" }} />
+                                        <img src={google} style={{ width: "24px", marginRight: "11.5px", height: "24px", marginTop: "2.5px" }} />
                                         <div style={{ background: "#4285F4F2", borderRadius: "0px 8px 8px 0px", padding: "4px 11px", fontSize: "18.2px", textDecoration: "" }}>Sign up with Google</div>
                                     </div>
 
