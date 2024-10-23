@@ -838,13 +838,19 @@ class MarketplaceItem extends componentBase {
 
     }
 }
-
+class Viewer extends componentBase{
+    json={
+        type:"viewer",
+        html:"",
+        campaignId:""
+    }
+}
 function forFactory() {
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
     return {user:User,pin:Pin,campaign:Campaign,
         encounter:Encounter,monster:Monster,
         newNote:NewNote,map:Map, post:Post,
-        marketplaceItem:MarketplaceItem,
+        marketplaceItem:MarketplaceItem, viewer:Viewer,
         condition:Condition, icon:Icon, 
         lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset}
 

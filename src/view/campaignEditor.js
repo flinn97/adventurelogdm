@@ -31,6 +31,7 @@ import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
 import Upload from "./upload";
+import CreateViewerService from '../services/createViewer';
 
 
 export default class CampaignEditor extends Component {
@@ -58,6 +59,9 @@ export default class CampaignEditor extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
+    this.createViewerService = new CreateViewerService();
+    this.createViewerService.setComponentList(state.componentList);
+    this.createViewerService.setOpps(state.opps)
 
 
     let href = window.location.href;
@@ -205,6 +209,7 @@ export default class CampaignEditor extends Component {
     let dispatch = app.dispatch;
     let state = app.state;
 
+
     let styles = state.styles;
     let checkPCount = this.state.obj?.getJson().type === "lore" ? this.state.obj?.getJson().campaignId : this.state.obj?.getJson()._id;
 
@@ -230,7 +235,7 @@ export default class CampaignEditor extends Component {
     let encList = state.componentList.getList("encounter", this.state.obj?.getJson()._id, "campaignId");
     // Filter out objects where the name contains "Copy of"
     encList = encList.filter(enc => !enc.getJson().name.includes("Copy of"));
-
+    let viewer = state.componentList.getComponent("viewer", state.currentCampaign?.getJson()._id, "campaignId")
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
         {/* <div style={{color:"white"}} onClick={()=>{
@@ -688,6 +693,11 @@ export default class CampaignEditor extends Component {
 
 
               </>)}
+              <div onClick={()=>{
+                debugger
+                this.createViewerService.createViewer(state.currentCampaign)
+                }}>Create View WebPage</div>
+                        {viewer&&<Link to={"/campaignviewer/" + viewer.getJson()._id}>See Viewer</Link>}
           </div>
 
         ) : (<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh", position: "absolute", left: "0px", top: "0px" }}>
