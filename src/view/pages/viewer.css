@@ -1,15 +1,19 @@
 .lore-section {
-    background: #ffffff;
-    border: 1px solid #ccc;
+    background: #00000000;
+    /* border: 1px solid #ccc; */
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.a {
+    color: #61dafb;
+  }
+
 .lore-section h2 {
-    font-size: 24px;
-    color: #2c3e50;
+    font-size: 34px;
+    color: #bac3cc;
     margin-bottom: 10px;
 }
 
@@ -19,7 +23,8 @@
 }
 
 .map-image {
-    width: 100%;
+    max-width: 98%;
+    object-fit: contain;
     height: auto;
     border-radius: 5px;
     margin: 10px 0;
@@ -34,23 +39,24 @@
 
 .image-gallery .lore-image {
     width: calc(33.33% - 10px);
+    object-fit: contain;
     border-radius: 5px;
     transition: transform 0.2s;
 }
 
 .image-gallery .lore-image:hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
 }
 
 .sub-lore-section {
     margin-left: 20px;
     padding-left: 10px;
-    border-left: 2px solid #3498db;
+    border-left: 2px solid #3498db55;
 }
 
 .sub-lore-section h2 {
     font-size: 20px;
-    color: #2980b9;
+    color: #c0e6ff;
 }
 
 .sub-lore-section p {

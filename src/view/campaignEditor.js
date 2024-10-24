@@ -311,7 +311,7 @@ export default class CampaignEditor extends Component {
                       ...styles.buttons.buttonClose, borderRadius: "11px", fontSize: styles.fonts.fontSmall,
                       padding: "4px 10px", pointer: "cursor", color: styles.colors.color5,
                       height: "fit-content", zIndex: "200", alignSelf: "flex-end",
-                      background: styles.colors.colorBlack + "5b", marginTop: "-4px", marginBottom:"30px"
+                      background: styles.colors.colorBlack + "5b", marginTop: "-4px", marginBottom: "30px"
                       // backgroundColor:"white",
                     }}
 
@@ -341,38 +341,38 @@ export default class CampaignEditor extends Component {
 
                     </div> */}
                   </div>
-                 
-                    <ParentFormComponent checkUser={true} app={app} name="name" obj={state.currentLore}
-                      theme={"adventureLog"}
-                      callbackFunc={(arr) => {
 
-                        let L1 = arr[0];
-                        let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
-                        referenceList = referenceList.map(obj => obj.getJson()._id);
-                        let pinList = state.componentList.getList("pin");
-                        pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
-                        let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
-                        if (lPin) {
-                          pinList.push(lPin)
-                        }
-                        for (let p of pinList) {
-                          p.setCompState({ name: L1.getJson().name })
-                        }
-                        state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
+                  <ParentFormComponent checkUser={true} app={app} name="name" obj={state.currentLore}
+                    theme={"adventureLog"}
+                    callbackFunc={(arr) => {
 
-                      }}
-                      rows={5}
-                      // prepareRun={true}
-                      inputStyle={{
-                        width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                        borderRadius: "4px", background: styles.colors.colorWhite + "00", marginBottom:"20px",
-                        border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
-                      }}
+                      let L1 = arr[0];
+                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                      referenceList = referenceList.map(obj => obj.getJson()._id);
+                      let pinList = state.componentList.getList("pin");
+                      pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
+                      let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
+                      if (lPin) {
+                        pinList.push(lPin)
+                      }
+                      for (let p of pinList) {
+                        p.setCompState({ name: L1.getJson().name })
+                      }
+                      state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
 
-                      wrapperStyle={{
-                        margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
-                        flexDirection: "column", justifyItems: "space-between",
-                      }} />
+                    }}
+                    rows={5}
+                    // prepareRun={true}
+                    inputStyle={{
+                      width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                      borderRadius: "4px", background: styles.colors.colorWhite + "00", marginBottom: "20px",
+                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
+                    }}
+
+                    wrapperStyle={{
+                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
+                      flexDirection: "column", justifyItems: "space-between",
+                    }} />
 
 
                 </div>
@@ -391,7 +391,7 @@ export default class CampaignEditor extends Component {
                       }}
                         onClick={async () => {
                           await this.props.app.state.opps.clearUpdater();
-                          await dispatch({currentComponent:undefined});
+                          await dispatch({ currentComponent: undefined });
 
                           dispatch({ operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCampaign" })
                         }}>
@@ -400,12 +400,12 @@ export default class CampaignEditor extends Component {
 
                   </div>
 
-                  <Link 
-                  onClick={()=>{
-                    localStorage.removeItem("player");
-                    toolService.navigateToLink(newLink, true);
-                  }}
-                   className='hover-btn' title={advLogText}
+                  <Link
+                    onClick={() => {
+                      localStorage.removeItem("player");
+                      toolService.navigateToLink(newLink, true);
+                    }}
+                    className='hover-btn' title={advLogText}
                     style={{
                       ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px",
                       borderColor: "#00000000", boxShadow: "",
@@ -436,7 +436,7 @@ export default class CampaignEditor extends Component {
                           color: styles.colors.colorWhite + "b4",
                           borderRadius: "11px",
                           padding: "6px 8px",
-                          
+
                           alignItems: "flex-end",
                           background: styles.colors.colorBlack + "3b",
                           fontSize: styles.fonts.fontSmallest,
@@ -501,6 +501,8 @@ export default class CampaignEditor extends Component {
                             }
                           </div>)}
 
+
+
                         <div className='hover-btn' title={"View/edit player characters from this campaign"}
                           onClick={async () => {
                             this.openPlayers(dispatch)
@@ -536,7 +538,21 @@ export default class CampaignEditor extends Component {
 
 
             </div>
-
+            {state.currentLore === undefined && (<div style={{marginTop:"12px", alignSelf:"end"}}>
+              {!viewer && <div  className="hover-btn" style={{
+            ...styles.buttons.buttonAdd, padding: "4px 10px", paddingLeft: "10px", borderColor: styles.colors.color3,
+            backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
+          }} onClick={() => {
+                debugger
+                this.createViewerService.createViewer(state.currentCampaign)
+              }}>Convert to Full Web View</div>}
+              {viewer && <Link style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
+                  color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
+                  backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
+                }} to={"/campaignviewer/" + viewer.getJson()._id}  className="hover-btn-highlight">Campaign Viewer</Link>}
+            </div>)}
 
             {(state.currentLore == undefined &&
               <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "20px" }}>
@@ -615,7 +631,7 @@ export default class CampaignEditor extends Component {
                     borderRadius: "4px", background: styles.colors.colorWhite + "00",
                     border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                   }}
-                  
+
                   type={"quill"} onPaste={this.handlePaste} connectLore={true}
                   wrapperStyle={{
                     margin: "5px", color: styles.colors.colorWhite, display: "flex",
@@ -693,11 +709,7 @@ export default class CampaignEditor extends Component {
 
 
               </>)}
-              <div onClick={()=>{
-                debugger
-                this.createViewerService.createViewer(state.currentCampaign)
-                }}>Create View WebPage</div>
-                        {viewer&&<Link to={"/campaignviewer/" + viewer.getJson()._id}>See Viewer</Link>}
+
           </div>
 
         ) : (<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh", position: "absolute", left: "0px", top: "0px" }}>
