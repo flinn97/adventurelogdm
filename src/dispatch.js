@@ -43,6 +43,7 @@ import GoPremium from './view/popups/goPremium';
 import auth from './services/auth';
 import ViewLibraryContent from './view/popups/viewLibraryContent';
 import SendCamp from './view/popups/sendCamp';
+import CampaignViewer from './view/pages/campViewer';
 
 //model
 export default class Dispatch extends Component {
@@ -379,6 +380,8 @@ export default class Dispatch extends Component {
                         <Route path="/encounter/:id" element={<NewEncounterPage app={app} players={state?.campaignPlayers} />} />
 
                         <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
+                        <Route path="/campaignviewer/:id" element={<CampaignViewer app={app} />} />
+
                       </Routes>
                     ) : (
                       <Routes>
@@ -408,6 +411,8 @@ export default class Dispatch extends Component {
                         <Route path="/partner/:id" element={<PartnerCampaign app={app} />} />
                         <Route path="/sendtomarketplace/:id" element={<ApprovalProposal app={app} />} />
                         <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
+                        <Route path="/campaignviewer/:id" element={<CampaignViewer app={app} />} />
+
                       </Routes>)}
 
                   </div>
@@ -435,6 +440,8 @@ export default class Dispatch extends Component {
           <Route path="/" element={<Login app={app} />} />
 
           <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
+          <Route path="/campaignviewer/:id" element={<CampaignViewer app={app} />} />
+
         </Routes>
         {(state.user !== undefined && !state.user?.getJson()?.paidCustomer && state.user?.getJson().role === "GM") && (!window.location.href.includes("paymentprocessing")) && (
           <div style={{ width: "100%", height: "100%", position: "absolute", left: "0", top: "0", zIndex: 2800, background: "black" }}>

@@ -154,6 +154,9 @@ class Auth {
             if (componentList !== undefined && dispatch !== undefined) {
                 await localStorage.setItem("user", JSON.stringify(saveUser));
                 await this.getuser(user.email, componentList, dispatch);
+                if(window.location.href.includes("login")){
+                    window.location.href ="/"
+                }
             
 
             }
@@ -189,7 +192,7 @@ class Auth {
             // ...
           });
           if (user) {
-            debugger
+            
             let saveUser = user;
             await dispatch({start:false});
 
@@ -667,6 +670,9 @@ class Auth {
             if (componentList !== undefined && dispatch !== undefined) {
                 await localStorage.setItem("user", JSON.stringify(saveUser));
                 await this.getuser(email, componentList, dispatch);
+                if(window.location.href.includes("login")){
+                    window.location.href ="/"
+                }
             
 
             }
@@ -720,7 +726,7 @@ class Auth {
         return user;
     }
     async createInitContent(email, id){
-        debugger
+        
         let campaign = []
         let components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("_id", '==', id||"5234c100324"));
         let comps = await getDocs(components);
