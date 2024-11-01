@@ -242,7 +242,7 @@ class Auth {
 
     } catch (error) {
         // Handle errors such as user not existing or other auth errors
-        errorMessage = error.message;
+        let errorMessage = error.message;
     }
 }
 
@@ -305,7 +305,7 @@ class Auth {
         await this.createInitContent(user.email)
         return user;
     }
-    
+
     checkIfLoggedIn(){
         
         onAuthStateChanged(auth, async (user)=>{
