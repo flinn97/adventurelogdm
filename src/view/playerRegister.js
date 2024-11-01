@@ -31,7 +31,16 @@ export default class PlayerRegister extends Component {
         user = user.add[0];
         await user.setCompState({ role: "player", paidCustomer: true })
         this.setState({ user: user })
+        let authUser = await auth.handleRedirect()
+        if(authUser){
+            await auth.redirectGoogleSignIn(authUser, dispatch);
+            await this.state.user.setCompState({ email: authUser.email, _id: authUser.email });
+            await state.opps.run();
+            await auth.getuser(authUser.email, componentList, dispatch);
 
+
+
+        }
 
 
     }
@@ -154,7 +163,8 @@ export default class PlayerRegister extends Component {
                                 const newUrl = '../';
                                 window.history.pushState(null, '', newUrl);
                                 
-                                let user = await auth.googleSignIn(state.componentList, app.dispatch)
+                                let user = await auth.googleSignIn(state.componentList, app.dispatch);
+                                await this.state.user.setCompState({ email: user.email, _id: user.email });
                                 await state.opps.run();
                                 await auth.getuser(user.email, componentList, dispatch);
 

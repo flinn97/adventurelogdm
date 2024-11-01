@@ -34,7 +34,18 @@ export default class Register extends Component {
         let user = await state.opps.cleanPrepare({ adduser: 1 });
         user = user.add[0];
         // await user.setCompState({ role: "GM" })
-        this.setState({ user: user })
+        await this.setState({ user: user });
+        let authUser = await auth.handleRedirect()
+        if(authUser){
+            await auth.redirectGoogleSignInAndPay(authUser);
+            await this.state.user.setCompState({ email: authUser.email, _id: authUser.email });
+            await state.opps.run();
+            this.setState({ stripePopup: true });
+
+
+
+        }
+
 
     }
 
@@ -103,6 +114,8 @@ export default class Register extends Component {
 
             await state.opps.run();
             this.setState({ stripePopup: true });
+                                                this.setState({ stripePopup: true });
+
 
             // window.open('https://buy.stripe.com/3csdTd12T5LB2Ck7ss', '_blank');
         }

@@ -23,6 +23,15 @@ export default class Login extends Component {
             errorMessage: undefined,
         }
     }
+    async componentDidMount(){
+        let app = this.props.app;
+        let state = app.state;
+        let dispatch = app.dispatch;
+        let authUser = await auth.handleRedirect()
+        if(authUser){
+            await auth.redirectGoogleJustSignIn(authUser, state.componentList, dispatch);
+        }
+    }
 
     handleChange(event) {
         let { name, value } = event.target;
