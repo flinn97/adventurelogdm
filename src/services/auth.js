@@ -79,10 +79,10 @@ class Auth {
     async googleSignInAndPay(){
         
         const auth = getAuth();
-        if(isMobile){
-            await signInWithRedirect(auth, this.provider);
-            return
-        }
+        // if(isMobile){
+        //     await signInWithRedirect(auth, this.provider);
+        //     return
+        // }
         let user;
         let e;
         await signInWithPopup(auth, this.provider)
@@ -145,10 +145,10 @@ class Auth {
     async googleJustSignIn(componentList, dispatch){
 
         const auth = getAuth();
-        if(isMobile){
-            await signInWithRedirect(auth, this.provider);
-            return
-        }
+        // if(isMobile){
+        //     await signInWithRedirect(auth, this.provider);
+        //     return
+        // }
         let user = null;
         let errorMessage = null;
         
@@ -248,10 +248,10 @@ class Auth {
 
     async googleSignIn(componentList, dispatch){
         const auth = getAuth();
-        if(isMobile){
-            await signInWithRedirect(auth, this.provider);
-            return
-        }
+        // if(isMobile){
+        //     await signInWithRedirect(auth, this.provider);
+        //     return
+        // }
         let user;
         let e;
         await signInWithPopup(auth, this.provider)
