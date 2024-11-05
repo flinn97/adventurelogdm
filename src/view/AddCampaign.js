@@ -101,6 +101,9 @@ export default class AddCampaign extends Component {
                       Delete This Campaign 
                       <div style={{color:styles.colors.color3, fontSize:".85rem", marginLeft:"10px", alignSelf:"center", }}> (permanent)</div>
                     </div>)}
+                    <div>discord webhook</div>
+                  <ParentFormComponent app={app} obj={state.currentCampaign} name="discordLink"/>
+                  <div onClick={()=>{state.opps.cleanPrepareRun({update:state.currentCampaign})}}>save</div>
 
             </div>
 

@@ -10,6 +10,7 @@ import Note from '../view/pages/note';
 import AdminUser from '../view/admin/adminUser';
 import Library from "../view/pages/library.js";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import BaseObserver from "./observerBase.js";
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 
@@ -17,6 +18,9 @@ let imageQuality = .7;
 class Auth {
     provider=new GoogleAuthProvider();
     urlEnpoint = "GMS";
+    dispatchObserver = new BaseObserver();
+
+    
 
     sendForgotPasswordChange(email) {
         const auth = getAuth();
@@ -1003,6 +1007,7 @@ class Auth {
             dispatch({ dispatchComplete: true, data: obj })
 
         }
+        this.dispatchObserver.notify(obj);
         if(backendReloader){
             window.location.reload();
         }

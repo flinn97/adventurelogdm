@@ -237,6 +237,7 @@ export default class AdventureLogPage extends Component {
             
             borderRadius: "20px", padding: window.innerWidth > 800?"2px":"",paddingBottom:window.innerWidth > 800?"":"64px",
           }}>
+            
 
             {/* PUT THIS IN A seperate .js vvvvvvvvvvvvv
             */}

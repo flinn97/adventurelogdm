@@ -20,6 +20,14 @@ export default class RunEncounter extends Component {
       this.setState({start:true});
     }
   }
+  async createDiscordMessage(m){
+    let app = this.props.app
+    let state = app.state
+    let encounter = state.currentEncounter
+    let factory = state.componentListInterface.getFactory();
+    let post = await factory.getComponent({component:"post", json:{type:'post', message:m, campaignId:encounter.getJson().campaignId}});
+    state.discordService.getCampaign(post);
+  }
 
 
   render() {
@@ -36,16 +44,17 @@ export default class RunEncounter extends Component {
           //get the ruleset for the current encounter see condition.js render function line 19 and 20 of example
           let currentRulesetName = state.currentEncounter.getJson().ruleset
           let ruleset = componentList.getComponent("ruleset", currentRulesetName, "name")
-          participant.updateConditions(ruleset)
+          participant.updateConditions(ruleset);
+          this.createDiscordMessage(`It's now ~${participant.getJson().name}'s~ turn`);
 
         }}>Next
         <img src={play} style={{width:"22px", marginLeft:"12px", marginBottom:"-5px"}}/>
         </div>}
         {this.state.start === false ? (<div
           className="button Run-Button"
-          onClick={() => {
+          onClick={async() => {
             encounter.setCompState({inSession:true});
-            encounter.getHighestParticipant(componentList);
+            await encounter.getHighestParticipant(componentList);
             
             let list = componentList.getList("participant");
             for(let obj of list){
@@ -56,10 +65,14 @@ export default class RunEncounter extends Component {
             list = list.sort((a, b) => {
               return parseInt(a.getJson().initiative) - parseInt(b.getJson().initiative); // Both are valid, compare numerically
           }).reverse();
-          componentList.setSelectedList("participant", list);
-          app.dispatch({})
+          await componentList.setSelectedList("participant", list);
+          await app.dispatch({})
 
-            this.setState({ start: true })
+            await this.setState({ start: true });
+            let currentParticipant = componentList.getComponent("participant", encounter.getJson().currentParticipant, "_id");
+            this.createDiscordMessage(`${encounter.getJson().name} Encounter started: Its ~${currentParticipant.getJson().name}'s~ turn`);
+      
+           
           }}>Run Encounter
           
           </div>)
@@ -73,6 +86,8 @@ export default class RunEncounter extends Component {
 
             encounter.clearParticipant()
             this.setState({ start: false })
+            this.createDiscordMessage(`Encounter Has Ended`);
+
             
           }}>Stop
           <img src={pause} style={{width:"18px", marginLeft:"12px", marginBottom:"-5px"}}/>
