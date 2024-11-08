@@ -1,7 +1,7 @@
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { doc, getDocs, collection, getDoc, updateDoc, addDoc, writeBatch, where, query, setDoc, deleteDoc, onSnapshot, querySnapshot, Timestamp, serverTimestamp, orderBy, limit, getCountFromServer } from "firebase/firestore";
 import { db, storage, auth } from '../firbase.config.js';
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail, updateEmail, deleteUser, TwitterAuthProvider, fetchSignInMethodsForEmail } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail, updateEmail, deleteUser, TwitterAuthProvider, fetchSignInMethodsForEmail, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import Compressor from "compressorjs";
 import weapons from "../models/weapons.js";
 import PlayerHome from "../view/pages/playerHome.js";
@@ -10,12 +10,18 @@ import Note from '../view/pages/note';
 import AdminUser from '../view/admin/adminUser';
 import Library from "../view/pages/library.js";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import BaseObserver from "./observerBase.js";
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 
 let imageQuality = .7;
 class Auth {
     provider=new GoogleAuthProvider();
-    urlEnpoint = "GMS"
+    urlEnpoint = "GMS";
+    dispatchObserver = new BaseObserver();
+
+    
+
     sendForgotPasswordChange(email) {
         const auth = getAuth();
         sendPasswordResetEmail(auth, email)
@@ -75,7 +81,12 @@ class Auth {
         return user;
     }
     async googleSignInAndPay(){
+        
         const auth = getAuth();
+        // if(isMobile){
+        //     await signInWithRedirect(auth, this.provider);
+        //     return
+        // }
         let user;
         let e;
         await signInWithPopup(auth, this.provider)
@@ -109,9 +120,39 @@ class Auth {
         this.createInitContent(user.email)
         return user;
     }
+    /**
+     * 
+     * @returns user if they registered successfully.
+     */
+    async handleRedirect(){
+        const auth = getAuth();
+
+        try {
+            const result = await getRedirectResult(auth);
+            if (result) {
+                // Process the result, similar to what you do in signInWithPopup
+                const user = result.user;
+                // Continue with the rest of your authentication logic
+                return user;
+            }
+        } catch (error) {
+            console.error("Redirect error: ", error.message);
+        }
+    };
+
+    async redirectGoogleSignInAndPay(user){
+        await localStorage.setItem("user", JSON.stringify(user));
+        await this.createInitContent(user.email)
+        return user;
+    }
 
     async googleJustSignIn(componentList, dispatch){
+
         const auth = getAuth();
+        // if(isMobile){
+        //     await signInWithRedirect(auth, this.provider);
+        //     return
+        // }
         let user = null;
         let errorMessage = null;
         
@@ -167,9 +208,54 @@ class Auth {
         // Return the user or error message depending on what happened
             return user||errorMessage;
     }
+    /***
+     * Redirect for logging in
+     */
+    async redirectGoogleJustSignIn(user, componentList, dispatch){
+        try {
+           
+    
+            const email = user.email;
+    
+            // Step 3: Check if the user exists by email
+            let foundUser
+            const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where('_id', '==', email));
+        let comps = await getDocs(components);
+        for (const key in comps.docs) {
+            let data = await comps.docs[key].data()
+            foundUser=data
+        }
+    
+            if (foundUser) {
+                let saveUser = user;
+                dispatch({start:false});
+     
+                if (componentList !== undefined && dispatch !== undefined) {
+                    await localStorage.setItem("user", JSON.stringify(saveUser));
+                    await this.getuser(user.email, componentList, dispatch);
+                    if(window.location.href.includes("login")){
+                        window.location.href ="/"
+                    }
+                
+    
+                }
+            } else {
+                // User does not exist, cancel the sign-in process
+                throw new Error("User does not exist. Please register first.");
+            }
+
+    } catch (error) {
+        // Handle errors such as user not existing or other auth errors
+        let errorMessage = error.message;
+    }
+}
 
     async googleSignIn(componentList, dispatch){
         const auth = getAuth();
+        // if(isMobile){
+        //     await signInWithRedirect(auth, this.provider);
+        //     return
+        // }
         let user;
         let e;
         await signInWithPopup(auth, this.provider)
@@ -212,6 +298,18 @@ class Auth {
         this.createInitContent(user.email)
         return user;
     }
+    async redirectGoogleSignIn(user, dispatch){
+        if (user) {
+            
+            let saveUser = user;
+            await dispatch({start:false});
+            await localStorage.setItem("user", JSON.stringify(saveUser));
+
+        }
+        await this.createInitContent(user.email)
+        return user;
+    }
+
     checkIfLoggedIn(){
         
         onAuthStateChanged(auth, async (user)=>{
@@ -909,6 +1007,7 @@ class Auth {
             dispatch({ dispatchComplete: true, data: obj })
 
         }
+        this.dispatchObserver.notify(obj);
         if(backendReloader){
             window.location.reload();
         }

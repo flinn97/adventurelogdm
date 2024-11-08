@@ -419,6 +419,7 @@ class Encounter extends componentBase {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
         this.copyEncounter = this.copyEncounter.bind(this);
+        this.getParticipantInitHtml= this.getParticipantInitHtml.bind(this);
     }
     json = {
 
@@ -433,6 +434,29 @@ class Encounter extends componentBase {
         audioLink: "",
         currentParticipant: "",
         ruleset: "5e",
+
+    }
+
+    /**
+     * get html to display for the encounter intitiative
+     * @param {*} componentList 
+     */
+    async getParticipantInitHtml(componentList){
+       await componentList.sortSelectedList("participant","initiative",true);
+
+        let pList = componentList.getList("participant", this.json._id, "encounterId");
+        let html ="";
+        //build html from the participant list
+        for(let p of pList){
+            let init = p.getJson().initiative;
+            if(parseInt(init)!==999){
+                html += `<p>${p.getJson().name}: ${init}</p><br>`
+            }
+            
+        }
+        return html
+        
+
 
     }
 

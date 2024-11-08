@@ -17,6 +17,7 @@ import SplashScreen from './view/pages/splashScreen.js';
 import { json as fakeData } from './models/fakeData.js';
 import { mapInterface } from './mapTech/mapComponentInterface.js';
 import Compendium from './view/pages/compendium.js';
+import DiscordService from './services/discordService';
 
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 //New comment
@@ -173,9 +174,11 @@ handleChange = (event) => {
           
           await list.getOperationsFactory().cleanJsonPrepareRun({["add"+c.type]:c})
         }
+        this.discordService = new DiscordService(list);
         await mapInterface.setAppComponent(this);
         await mapInterface.setApp(["state", "dispatch"]);
         await mapInterface.setComponentList(list);
+        this.setState({discordService:this.discordService})
     }
     try{
     let user = await auth.getCurrentUser();
