@@ -44,6 +44,8 @@ import auth from './services/auth';
 import ViewLibraryContent from './view/popups/viewLibraryContent';
 import SendCamp from './view/popups/sendCamp';
 import CampaignViewer from './view/pages/campViewer';
+import Compendium from './view/pages/compendium';
+import CompendiumItem from './view/compendiumItem';
 
 //model
 export default class Dispatch extends Component {
@@ -300,7 +302,8 @@ export default class Dispatch extends Component {
                         handleClose={() => {
                           app.dispatch({
                             popupSwitch: "", currentDelObj: undefined,
-                            currentComponent: undefined, currentPin: undefined
+                            currentComponent: undefined, currentPin: undefined,
+                            loreType: ""
                           });
                           state.opps.clearUpdater();
                         }}
@@ -374,6 +377,9 @@ export default class Dispatch extends Component {
                         <Route path="/register/" element={<Register app={app} />} />
                          {/* adding new stuff to the player. */}
                         <Route path="/campaign/" element={<Campaign app={app} />} />
+                        <Route path="/compendium/" element={<Compendium app={app} />} />
+                        <Route path="/compendium/:id" element={<CompendiumItem app={app} />} />
+
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
                         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
                         <Route path="/encountermanager/:id" element={<EncounterManager app={app} />} />
@@ -391,6 +397,7 @@ export default class Dispatch extends Component {
                           <Route path={obj.path} element={<obj.comp app={app} />} />
                         )}
                         <Route path="/campaign/" element={<Campaign app={app} />} />
+                        <Route path="/compendium/" element={<Compendium app={app} />} />
 
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
                         {/* <Route path="/library/:id" element={<CampaignEditor app={app} />} /> */}
@@ -407,6 +414,7 @@ export default class Dispatch extends Component {
                         <Route path="/admin/partners" element={<AdminPartner app={app} />} />
                         <Route path="/admin/requests" element={<AdminRequests app={app} />} />
                         <Route path="/admin/submissions" element={<AdminSubmission app={app} />} />
+                        <Route path="/compendium/:id" element={<CompendiumItem app={app} />} />
 
                         <Route path="/partner/:id" element={<PartnerCampaign app={app} />} />
                         <Route path="/sendtomarketplace/:id" element={<ApprovalProposal app={app} />} />

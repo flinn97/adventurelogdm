@@ -866,7 +866,7 @@ class Auth {
 
                     switch (key) {
                         case "add":
-                            
+
 
                             if (email === undefined) {
                                 email = component.owner

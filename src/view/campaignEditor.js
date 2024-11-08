@@ -694,7 +694,7 @@ export default class CampaignEditor extends Component {
 
               </>)}
               <div onClick={()=>{
-                debugger
+                
                 this.createViewerService.createViewer(state.currentCampaign)
                 }}>Create View WebPage</div>
                         {viewer&&<Link to={"/campaignviewer/" + viewer.getJson()._id}>See Viewer</Link>}

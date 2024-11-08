@@ -8,6 +8,7 @@ export default class FilterFactory {
         tag: filterByTag,
         plain: textFilter,
         textAndTag: filterByTextThenTitle,
+        textObject: textObjectAttributeFilter
 
 
 
@@ -90,6 +91,27 @@ function textAttributeFilter(json) {
     let { list, attribute, search } = json;
     if (search && search.length > 0) {
         list = list.filter(obj => obj.getJson()[attribute]?.toLowerCase().includes(search?.toLowerCase()));
+    }
+    return list;
+}
+function textObjectAttributeFilter(json) {
+    
+
+    let { list, attribute, search } = json;
+
+    if (search !== undefined) {
+        let key = attribute !== undefined ? attribute : "owner"
+        list = list.filter((data) => {
+            if (typeof data.getJson()[key] === 'object') {
+
+                return Object.keys(data.getJson()[key]).includes(search)
+
+            } else {
+
+                return data.getJson()[key] === search;
+            }
+        }
+        );
     }
     return list;
 }

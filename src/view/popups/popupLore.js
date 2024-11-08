@@ -22,6 +22,7 @@ import loreIndexService from '../../services/loreIndexService';
 import idService from '../../componentListNPM/idService';
 import toolService from '../../services/toolService';
 import LibraryLoreSearch from '../libraryLoreSearch';
+import EditItem from '../editItem';
 
 export default class PopupLore extends Component {
   constructor(props) {
@@ -432,13 +433,20 @@ class MainContent extends Component {
 
         {(this.state.start && !this.state.showIcon) && <>
 
-          {this.state.hasChoice === "New" &&
+          {
+          this.state.hasChoice === "New" 
+          
+          &&
 
             <div style={{
               display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
 
               paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "20px",
             }}>
+              {/* ITEM EDIT FOR COMPENDIUM */}
+              {state.loreType==="compendium" ? (<>
+              <EditItem app={app} handleClose={this.props.handleClose}/>
+              </>):(<>
               {(this.state.showFindEncounter || this.state.showFindImage) &&
                 <div className="indent-on-click"
                   onClick={() => {
@@ -1135,6 +1143,7 @@ class MainContent extends Component {
                   }}> Saved! </div>)}
 
               </div>
+              </>)}
 
             </div>}
 
@@ -1153,7 +1162,7 @@ class MainContent extends Component {
                     this.setState({ hasChoice: "New" })
                   }}
                 >
-                  Create New Lore
+                  Create New {state.loreType ==="compendium"?"Item":"Lore"}
                 </div>
 
                 <div className='hover-btn'
@@ -1163,7 +1172,7 @@ class MainContent extends Component {
                   }}
                   title={"Find pre-made Lore to connect it to this Lore"}
                   style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
-                  Move or Connect Existing Lore
+                  Move or Connect Existing {state.loreType ==="compendium"?"Item":"Lore"}
                 </div>
 
                 {/* DISABLE FOR NOW 
@@ -1226,7 +1235,6 @@ class MainContent extends Component {
               <LibraryLoreSearch app={app} search={this.state.searchTerm.toLowerCase()} />
             </div>
           }
-
           {(this.state.hasChoice === "Connect") &&
             <div>
               <div className="hover-btn"

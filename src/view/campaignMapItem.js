@@ -27,9 +27,12 @@ export default class CampaignMapItem extends Component {
     let isLore = state.componentList.getList("lore", this.props.obj.getJson().title, "name");
     let loreItem = isLore[0];
     const newId = loreItem?loreItem.getJson()._id:obj?.getJson()._id;
+    let type = obj.getJson().type === "campaign"? "Campaign": "Compendium"
+
     const newLink = 
+   
     // loreItem?("/campaign/"+obj?.getJson()._id+"-"+newId):
-    ("/campaign/"+obj?.getJson()._id);
+    (`/${type.toLowerCase()}/`+obj?.getJson()._id);
 
     return (
       <Link to={newLink} style={{ color: styles.colors.colorWhite, 
@@ -64,7 +67,7 @@ export default class CampaignMapItem extends Component {
                           </div>
                           {state.user.getJson()._id==="admin@arcanevaultassembly.com" &&<div onClick={(e)=>{
                             e.preventDefault();
-                            app.dispatch({popupSwitch:"sendCampaign", campToSend:obj})}} style={{color:"white"}}>Send Campaign</div>}
+                            app.dispatch({popupSwitch:"sendCampaign", campToSend:obj})}} style={{color:"white"}}>Send {type}</div>}
 
                 </div>
 

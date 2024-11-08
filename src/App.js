@@ -16,6 +16,7 @@ import PlayerHome from './view/pages/playerHome.js';
 import SplashScreen from './view/pages/splashScreen.js';
 import { json as fakeData } from './models/fakeData.js';
 import { mapInterface } from './mapTech/mapComponentInterface.js';
+import Compendium from './view/pages/compendium.js';
 
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 //New comment
@@ -74,7 +75,7 @@ export default class App extends Component {
         {path:"/characters", comp:PlayerHome, name:"Characters"},
         ///Added Notes
         {path: "/notes", comp:Note, name: "Notes"},
-        
+        {path: "/compendium", comp:Compendium, name: "Compendium"},
         ///Added Marketplace
         
         ///

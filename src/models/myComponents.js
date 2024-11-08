@@ -845,15 +845,20 @@ class Viewer extends componentBase{
         campaignId:""
     }
 }
+class Compendium extends Campaign{
+    json={
+        ...this.json,
+        type:"compendium",
+    }
+}
 function forFactory() {
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
     return {user:User,pin:Pin,campaign:Campaign,
         encounter:Encounter,monster:Monster,
         newNote:NewNote,map:Map, post:Post,
         marketplaceItem:MarketplaceItem, viewer:Viewer,
-        condition:Condition, icon:Icon, 
+        condition:Condition, icon:Icon,         compendium:Compendium,
         lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset}
-
 }
 
 

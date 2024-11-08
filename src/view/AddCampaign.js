@@ -41,23 +41,24 @@ export default class AddCampaign extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
+    let type = state.currentComponent.getJson().type === "campaign"? "Campaign": "Compendium"
     
-    let campaignPlaceholder = "Campaign Name";
+    let campaignPlaceholder = `${type} Name`;
     let textSubmit = ""; let textNotReady ="";
-    let isUpdate = (state.popUpSwitchcase === "updateCampaign");
-    let isNotUpdate = (state.popUpSwitchcase !== "updateCampaign")
+    let isUpdate = (state.popUpSwitchcase === `update${type}`);
+    let isNotUpdate = (state.popUpSwitchcase !== `update${type}`)
 
-    if (state.currentComponent?.getJson().type === "campaign" && isUpdate)
+    if ((state.currentComponent?.getJson().type === "campaign" || state.currentComponent?.getJson().type === "compendium") && isUpdate)
                       { textSubmit ="Save";}
                       else {
-                        textSubmit ="Create My Campaign";
+                        textSubmit =`Create My ${type}`;
                         };
     
 
     if (this.state.pic)
-                      {textNotReady = state.currentComponent?.getJson().type != "campaign" && isNotUpdate ? "Loading..." : "Edit"}
+                      {textNotReady = (state.currentComponent?.getJson().type !== "campaign" && state.currentComponent?.getJson().type !== "compendium") && isNotUpdate ? "Loading..." : "Edit"}
                       else {
-                        textNotReady = isNotUpdate? "Give your campaign an image and title!" : "Edit"
+                        textNotReady = isNotUpdate? `Give your ${type.toLowerCase()} an image and title!` : "Edit"
                         };
    
 
@@ -65,7 +66,7 @@ export default class AddCampaign extends Component {
       <div>
         
       <div  style={{...styles.backgroundContent, 
-      backgroundImage: state.currentComponent?.getJson().type === "campaign" && isUpdate ?
+      backgroundImage: (state.currentComponent?.getJson().type === "campaign" || state.currentComponent?.getJson().type === "compendium") && isUpdate ?
       'url('+(this.state.obj?.getJson().picURL||this.state.completedPic)+')'
       :
       'url('+(this.state.completedPic||placeholder)+')'
@@ -98,7 +99,7 @@ export default class AddCampaign extends Component {
                         this.deleteCampaign();
                       });
                       }}>
-                      Delete This Campaign 
+                      Delete This {type} 
                       <div style={{color:styles.colors.color3, fontSize:".85rem", marginLeft:"10px", alignSelf:"center", }}> (permanent)</div>
                     </div>)}
 
@@ -132,7 +133,7 @@ export default class AddCampaign extends Component {
               </div>
 
               {/* ///NAME OF CAMPAIGN */}
-              <ParentFormComponent checkUser={true} app={app} name="title" label="*Campaign Name: " 
+              <ParentFormComponent checkUser={true} app={app} name="title" label={`${type} Name: `}
                   wrapperStyle={{margin: "5px", color:styles.colors.colorWhite, display:"flex",flexDirection:"column"}}
                   theme={"adventureLog"} rows={1}
                   maxLength={app.state.maxLengthShort}
@@ -215,7 +216,7 @@ export default class AddCampaign extends Component {
                           }
                   </div>
 </div>
-{this.state.navigate&&<URLcheck/>}
+{this.state.navigate&&<URLcheck type = {type.toLowerCase()}/>}
 </div>
 
 
@@ -224,11 +225,11 @@ export default class AddCampaign extends Component {
 }
 
 
-const URLcheck = () => {
+const URLcheck = (props) => {
   const nav = useNavigate ();
 
   useEffect(() => {
-    nav("/campaign/"); // This will navigate up one level in the history stack
+    nav(`/${props.type}/`); // This will navigate up one level in the history stack
     // Send request to your server to increment page view count
 });
 

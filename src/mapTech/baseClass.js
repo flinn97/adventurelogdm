@@ -15,6 +15,10 @@ export default class BaseClass extends Component {
     if(this.cell){
       if(this.obj.getJson){
         this.useId = this.cell.useId===false?"":this.cell.useId===undefined?this.obj.getJson()._id: this.obj.getJson()[this.cell.useId];
+        if(this.cell.exactIdFunc){
+          
+          this.useId = this.cell.exactIdFunc(this.obj);
+        }
       }
     }
     let theme = props.theme? this.themeFactory.getComponent(props.theme):this.themeFactory.getComponent("defaultColumn") 
@@ -58,8 +62,8 @@ export default class BaseClass extends Component {
     let cellStyle = clicks? {...this.props.cellStyle, cursor:"pointer"}: this.props.cellStyle;
     let linkClass = this.props.linkClass?this.props.linkClass:this.state.theme?.MCLink;
     let cellClass = this.props.cellClass?this.props.cellClass:this.state.theme?.MCCell;
-
-    return <>{this.cell.hasLink?(<Link style={this.props.linkStyle} className={linkClass} to={this.cell.to + this.useId}>{option}</Link>
+    let linkId= this.cell.exactIdFunc? this.cell.exactIdFunc(this.obj) : this.useId
+    return <>{this.cell.hasLink?(<Link style={this.props.linkStyle} className={linkClass} to={this.cell.to + linkId}>{option}</Link>
     ):(<span style={cellStyle} className={cellClass} onClick={()=>{
       if(clicks){
         clicks(this.state.obj)
