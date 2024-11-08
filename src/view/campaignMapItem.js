@@ -35,7 +35,7 @@ export default class CampaignMapItem extends Component {
     (`/${type.toLowerCase()}/`+obj?.getJson()._id);
 
     return (
-      <Link to={newLink} style={{ color: styles.colors.colorWhite, 
+      <Link to={newLink} className="hover-img" style={{ color: styles.colors.colorWhite, 
         textDecoration: "none", userSelect:"none",
         height: "fit-content",
         width: "fit-content",
@@ -65,9 +65,9 @@ export default class CampaignMapItem extends Component {
                           alignItems:"center", justifyContent:"center", fontSize:window.innerWidth > 800?styles.fonts.fontHeader2:"2rem",}}>
                             {obj?.getJson().title}
                           </div>
-                          {state.user.getJson()._id==="admin@arcanevaultassembly.com" &&<div onClick={(e)=>{
+                          {state.user.getJson()._id==="admin@arcanevaultassembly.com" &&<div className="hover-btn" onClick={(e)=>{
                             e.preventDefault();
-                            app.dispatch({popupSwitch:"sendCampaign", campToSend:obj})}} style={{color:"white"}}>Send {type}</div>}
+                            app.dispatch({popupSwitch:"sendCampaign", campToSend:obj})}} style={{...styles.buttons.buttonAdd, color:"white"}}>Send {type}</div>}
 
                 </div>
 
