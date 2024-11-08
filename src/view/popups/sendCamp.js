@@ -96,13 +96,13 @@ class MainContent extends Component {
         paddingTop: "28px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
       }}>
         Send Campaign
-        <input onChange={(e)=>{
+        <input style={{background:"#3f3f3f22", color:"white", marginTop:"22px", borderRadius:"8px", padding:"2px 3px"}} placeholder="Enter email" onChange={(e)=>{
           let value = e.target.value;
           this.setState({
             val:value
           })
         }}></input>
-        <div onClick={()=>{
+        <div style={{...styles.buttons.buttonAdd, marginTop:"22px"}} onClick={()=>{
           
           let email = this.state.val;
           if(email){
