@@ -1,5 +1,5 @@
 .lore-section {
-    background: #00000000;
+    background: #add00000;
     /* border: 1px solid #ccc; */
     border-radius: 8px;
     padding: 20px;
@@ -12,8 +12,14 @@
   }
 
 .lore-section h2 {
-    font-size: 34px;
+    font-size: 44px;
     color: #bac3cc;
+    margin-bottom: 10px;
+}
+
+.title-section h2 {
+    font-size: 56px;
+    color: #cde9da;
     margin-bottom: 10px;
 }
 
@@ -22,30 +28,88 @@
     line-height: 1.5;
 }
 
+.map-section {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #c0e6ff0a;
+    border-radius: 5px;
+}
+
 .map-image {
-    max-width: 98%;
+    
+    max-width: 90%;
     object-fit: contain;
     height: auto;
     border-radius: 5px;
     margin: 10px 0;
+    border: 1px solid rgba(112, 103, 102, 0.438);
+    margin-left: 2%;
+}
+
+.map-title {
+    font-size: 18px; 
+    font-weight: bold; 
+    margin-top: 8px; 
+    margin-bottom: 4px; 
+    color: #e8d259;
+    margin-left: 2%;
+}
+
+.encounter-title {
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-top: 18px; 
+    margin-bottom: 4px; 
+    color: #e8d259;
+    margin-left: 2%;
+}
+
+.encounter {
+    font-size: 20px; 
+    margin-bottom: 4px; 
+    margin-left: 2%;
+    color:white;
+}
+
+.enc-section{
+    margin-top: 22px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #dbc0ff0a;
+    border-radius: 5px;
+}
+
+.subheader-row {
+    opacity: .82;
+    mix-blend-mode: luminosity;
+}
+
+.link {
+    color:#3498db;
+    margin-left: 2%;
+    margin-bottom: 12px;
 }
 
 .image-gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 10px;height: 16%;
     margin-top: 10px;
 }
 
 .image-gallery .lore-image {
-    width: calc(33.33% - 10px);
-    object-fit: contain;
+    width: 250px; /* Set a fixed width */
+    height: 250px; /* Set a fixed height */
+    object-fit: cover; /* Ensures the image covers the box while preserving aspect ratio */
     border-radius: 5px;
     transition: transform 0.2s;
+    border: 1px solid rgba(112, 103, 102, 0.438);
 }
+
 
 .image-gallery .lore-image:hover {
     transform: scale(1.01);
+    border: 2px solid rgba(112, 103, 102, 0.938);
 }
 
 .sub-lore-section {
@@ -55,12 +119,12 @@
 }
 
 .sub-lore-section h2 {
-    font-size: 20px;
+    font-size: 34px;
     color: #c0e6ff;
 }
 
 .sub-lore-section p {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 @media (max-width: 768px) {
