@@ -78,7 +78,7 @@ export default class ListTreeLink extends Component {
 
  // Ensure listTreeObserver and list exist before accessing length
  let listLength = listTreeObserver && listTreeObserver.list ? listTreeObserver.list.length : 0;
- console.log(this.props.obj.getJson().name+" "+listLength);
+//  console.log(this.props.obj.getJson().name+" "+listLength);
 
  let fontListSize;
 
