@@ -59,11 +59,15 @@ class CreateViewerService {
         // Add pictures if available
         if (pics.length > 0) {
             this.html += `<div class="image-gallery">`;
-            await pics.forEach(pic => {
-                this.html += `<img src="${pic}" alt="${title} image" class="lore-image"/>`;
+            pics.forEach((pic, index) => {
+                this.html += `
+                    <img src="${pic}" alt="${title} image" class="lore-image" data-pic="${pic}" data-index="${index}"/>
+                `;
             });
             this.html += `</div>`;
         }
+
+
 
         // Fetch and process child lores
         let childList = this.componentList.getList("lore", lore.getJson()._id, "parentId");
@@ -101,6 +105,20 @@ class CreateViewerService {
             await this.opps.cleanJsonPrepareRun({ addviewer: { html: this.html, campaignId: c.getJson()._id } })
         }
 
+        // Assuming this is called after rendering the HTML
+        const images = document.querySelectorAll('.lore-image');
+        images.forEach(img => {
+            img.addEventListener('click', (event) => {
+                const app = this.props.app;
+                const dispatch = app.dispatch;
+                const pic = event.target.getAttribute('data-pic');
+                console.log(dispatch)
+                // Dispatch your action
+                dispatch({ currentPic: pic, popupSwitch: "viewPic" });
+
+                //TAYLOR HELP with POPUP
+            });
+        });
 
     }
 
