@@ -57,7 +57,7 @@ export default class CampaignViewer extends Component {
         </Link>
         <hr></hr>
         {state.currentViewer &&
-          <div 
+          <div className='scroller2'
             dangerouslySetInnerHTML={{ __html: html }} // Inject the HTML here
           />
         }
