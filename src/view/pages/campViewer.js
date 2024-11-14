@@ -47,13 +47,13 @@ export default class CampaignViewer extends Component {
     }
 
     return (
-      <div style={{ width: "100%", height: "100%", background: "" }}>
-        <Link to={"../campaign/" + state?.currentViewer?.getJson().campaignId} style={{ display: "flex", flexDirection: "row", marginBottom: "11px", textDecoration: "none" }}>
+      <div style={{ width: "100%", height: "100%", background: "" }} className={!state.user&&"scroller"}>
+        <Link to={state.user?"../campaign/" : "../login"} style={{ display: "flex", flexDirection: "row", marginBottom: "11px", textDecoration: "none" }}>
           <img src={backarrow} style={{ height: "16px", marginLeft: "18px", marginRight: "11px" }} />
           <div style={{
             width: "", borderRadius: "11px", cursor: "pointer",
             textDecoration: "1px underline " + styles.colors.color3, color: styles.colors.color3, textUnderlineOffset: "2px"
-          }}>Back</div>
+          }}>{state.user?"Back":"To Login"}</div>
         </Link>
         <hr></hr>
         {state.currentViewer &&
