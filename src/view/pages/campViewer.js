@@ -47,7 +47,7 @@ export default class CampaignViewer extends Component {
     }
 
     return (
-      <div style={{ width: "100%", height: "100%", background: "" }}>
+      <div className='scroller2' style={{ width: "100%", height: "100%", background: "" }}>
         <Link to={"../campaign/" + state?.currentViewer?.getJson().campaignId} style={{ display: "flex", flexDirection: "row", marginBottom: "11px", textDecoration: "none" }}>
           <img src={backarrow} style={{ height: "16px", marginLeft: "18px", marginRight: "11px" }} />
           <div style={{
@@ -57,7 +57,7 @@ export default class CampaignViewer extends Component {
         </Link>
         <hr></hr>
         {state.currentViewer &&
-          <div className='scroller2'
+          <div 
             dangerouslySetInnerHTML={{ __html: html }} // Inject the HTML here
           />
         }
