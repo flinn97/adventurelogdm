@@ -16,16 +16,14 @@ class SwitchComponent extends Component {
         };
     }
     async handleChange() {
-
-        
-        
-        await this.setState({ value: !this.state.value });
-        this.props.handleChange(this.state.value);
-        if(this.props.onClick){
-            this.props.onClick(this.state.value)
+        // Toggle internal state
+        const newValue = !this.state.value;
+        await this.setState({ value: newValue });
+    
+        // Notify parent of state change
+        if (this.props.handleChange) {
+            this.props.handleChange(newValue);
         }
-
-        
     }
 
     componentDidMount() {
@@ -53,14 +51,20 @@ class SwitchComponent extends Component {
         }
         let inputType = {
             
-            normal: <Switch 
-            onChange={this.handleChange} 
+            normal: <Switch
+            onChange={() => {
+                this.handleChange(); // Call handleChange to manage internal state
+                if (this.props.handleChange) {
+                    this.props.handleChange(!this.state.value); // Notify parent component of the new state
+                }
+            }}
             id={this.props.id}
-            checked={this.state.value} 
-            onColor={this.props.inputStyle?this.props.inputStyle.backgroundColor:theme!==undefined? theme.switchStyle.backgroundColor:"#57BA8E"} 
-            name={this.props.name} 
-            uncheckedIcon={this.props.uncheckedIcon?this.props.uncheckedIcon:false} 
-            checkedIcon={this.props.checkedIcon?this.props.checkedIcon:false} />
+            checked={this.state.value} // Use internal state for checked attribute
+            onColor={this.props.inputStyle ? this.props.inputStyle.backgroundColor : theme ? theme.switchStyle.backgroundColor : "#57BA8E"}
+            name={this.props.name}
+            uncheckedIcon={this.props.uncheckedIcon || false}
+            checkedIcon={this.props.checkedIcon || false}
+        />
          
         }
 

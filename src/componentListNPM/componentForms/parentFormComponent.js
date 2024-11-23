@@ -408,6 +408,25 @@ class ParentFormComponent extends Component {
                     input={this.props.required ? "required" : this.props.disabled ? "disabled" : "normal"}
                     requiredMessage={this.props.requiredMessage}
                 />,
+                switch2: <SwitchComponent
+                    onFocus={this.props.onFocus}
+                    objDispatch={this.objDispatch}
+                    emitClickedOutside={this.props.emitClickedOutside}
+                    id={this.props.id}
+                    theme={this.props.theme}
+                    inputStyle={this.props.inputStyle}
+                    label={this.props.label}
+                    labelStyle={this.props.labelStyle}
+                    onClick={this.props.onClickFunc}
+                    wrapperStyle={this.props.wrapperStyle}
+                    class={this.props.class}
+                    handleChange={this.props.handleChange}
+                    name={this.props.name}
+                    value={this.props.value}
+                    updateOnClickOutside={this.props.updateOnClickOutside}
+                    input={this.props.required ? "required" : this.props.disabled ? "disabled" : "normal"}
+                    requiredMessage={this.props.requiredMessage}
+                />,
                 range: <RangeComponent
                     onFocus={this.props.onFocus}
                     objDispatch={this.objDispatch}
