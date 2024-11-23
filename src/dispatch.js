@@ -46,6 +46,7 @@ import SendCamp from './view/popups/sendCamp';
 import CampaignViewer from './view/pages/campViewer';
 import Compendium from './view/pages/compendium';
 import CompendiumItem from './view/compendiumItem';
+import PartnerKitPage from './view/partnerKitPage';
 
 //model
 export default class Dispatch extends Component {
@@ -387,7 +388,7 @@ export default class Dispatch extends Component {
 
                         <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
                         <Route path="/campaignviewer/:id" element={<CampaignViewer app={app} />} />
-
+                        <Route path="/partner/" element={<PartnerKitPage app={app} />} />
                       </Routes>
                     ) : (
                       <Routes>
@@ -449,6 +450,7 @@ export default class Dispatch extends Component {
 
           <Route path="/paymentprocessing/" element={<AfterPayment app={app} />} />
           <Route path="/campaignviewer/:id" element={<CampaignViewer app={app} />} />
+          <Route path="/partner/" element={<PartnerKitPage app={app} />} />
 
         </Routes>
         {(state.user !== undefined && !state.user?.getJson()?.paidCustomer && state.user?.getJson().role === "GM") && (!window.location.href.includes("paymentprocessing")) && (
