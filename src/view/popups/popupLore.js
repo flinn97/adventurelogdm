@@ -307,7 +307,6 @@ class MainContent extends Component {
     //     let bD = b.getJson().date||b.getJson().date!==""?b.getJson().date?.seconds: new Date(0);
     //     return bD-aD;});
 
-
     return (
       <div style={{
         display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
@@ -409,9 +408,11 @@ class MainContent extends Component {
                   onClick={() => {
                     this.setState({ showFindEncounter: false, showFindImage: false, showIcon: true, })
                   }}
-                  style={{ borderRadius: "50%", marginTop: "6px", 
-                  width: "39px", height: "39px", display: "flex", flexDirection: "row", justifyContent: "center", 
-                  alignItems: "center",  }}>
+                  style={{
+                    borderRadius: "50%", marginTop: "6px",
+                    width: "39px", height: "39px", display: "flex", flexDirection: "row", justifyContent: "center",
+                    alignItems: "center",
+                  }}>
                   <div style={{
                     borderRadius: "50%", width: "37px", background: styles.colors.color1, height: "37px", display: "flex",
                     flexDirection: "column", justifyContent: "center", alignItems: "center", alignContent: "center",
@@ -434,9 +435,9 @@ class MainContent extends Component {
         {(this.state.start && !this.state.showIcon) && <>
 
           {
-          this.state.hasChoice === "New" 
-          
-          &&
+            this.state.hasChoice === "New"
+
+            &&
 
             <div style={{
               display: "flex", width: "57vw", flexDirection: "column", height: "fit-content", alignContent: "center",
@@ -444,17 +445,14 @@ class MainContent extends Component {
               paddingTop: "40px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1, marginBottom: "20px",
             }}>
               {/* ITEM EDIT FOR COMPENDIUM */}
-              {state.loreType==="compendium" ? (<>
-              <EditItem app={app} handleClose={this.props.handleClose}/>
-              </>):(<>
-              {(this.state.showFindEncounter || this.state.showFindImage) &&
+              {state.loreType === "compendium" ? (<>
                 <div className="indent-on-click"
                   onClick={() => {
-                    this.setState({ showFindEncounter: false, showFindImage: false })
+                    this.setState({ hasChoice: "" })
                   }}
                   style={{
                     ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                    fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
+                    fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px", marginTop:"-42px"
                   }}
 
                 >
@@ -462,432 +460,211 @@ class MainContent extends Component {
                     src={backarrow}
                   />
                   Back
-                </div>}
-              {/* IMAGE TOKEN */}
-              <div style={{ backgroundImage: `url(.${state.currentPin?.getJson().picURL})`, width: "44px", height: "44px", position: "absolute", top: 11, left: 11 }}></div>
-
-              {/* OTHER STUFF */}
-              {!this.state.showFindEncounter && !this.state.showFindImage &&
-                <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", width: "98%" }}>
-                 
-                  <ParentFormComponent checkUser={true}  app={app} name="name"
-
-                    placeholder={placeholder}
-                    inputStyle={{
-                      width: "100%", minWidth: "100%", padding: "4px 9px", color: styles.colors.color3, height: "fit-content",
-                      borderRadius: "4px", background: styles.colors.colorWhite + "00", borderWidth: "0px", height: "100%",
-                      border: "solid 1px " + styles.colors.colorWhite + "22",
-                      textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
-                    }} />
-                  {/* BUTTONS */}
-                  <div style={{
-                    display: 'flex', marginTop: "14px", width: "100%",
-                    flexDirection: "row", justifyContent: "space-between", paddingLeft: "200px",
-                  }}>
-
-                    {state.currentPin && componentList.getComponent("lore", state.currentComponent.getJson()._id, "_id") && (
-
-                      <div className="hover-btn" title='Create an exact copy of the pin refrencing lore.'
-                        style={{
-                          display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: "pointer",
-                          color: styles.colors.colorWhite,
-                          fontSize: styles.fonts.fontSmall,
-                          marginTop: "11px",
-                          textDecoration: "underline 1px",
-                          textDecorationColor: "#ffdead22",
-                          alignSelf: "flex-end"
-                        }} onClick={async () => {
-                          if(state.user.getJson().role!=="GM"){
-                            dispatch({ popupSwitch: "goPremium"});
-                            return
-                          }
-                          // this.copyLore(state.currentPin);
-                          let pinJson = { ...state.currentPin.getJson(), loreId: "", referencePin: false, _id: undefined, x: 80, y: 110 + this.state.imagesToShow };
-                          await state.opps.cleanJsonPrepareRun({ addpin: pinJson });
-
-                          dispatch({ popupSwitch: "" })
-
-                        }}>Clone Pin < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
-                    )}
-                    {state.currentPin && componentList.getComponent("lore", state.currentComponent.getJson()._id, "_id") && (
-                      <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
-                        style={{
-                          display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: "pointer",
-                          color: styles.colors.colorWhite,
-                          fontSize: styles.fonts.fontSmall,
-                          marginTop: "11px",
-                          textDecoration: "underline 1px",
-                          textDecorationColor: "#ffdead22",
-                          alignSelf: "flex-end"
-                        }} onClick={async () => {
-                          if(state.user.getJson().role!=="GM"){
-                            dispatch({ popupSwitch: "goPremium"});
-                            return
-                          }
-                          this.copyLore(lore);
-                          dispatch({ popupSwitch: "" })
-
-                        }}>Clone Pin + Lore
-
-                        <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dupPlus} /></div>
-                    )}
-                    {((lore?.getJson().name !== "" && lore?.getJson().name !== undefined) && this.state.saveClicked) &&
-                      <div className="hover-btn" style={{
-                        display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: "pointer",
-                        color: styles.colors.colorWhite,
-                        fontSize: styles.fonts.fontSmall,
-                        marginTop: "11px",
-                        textDecoration: "underline 1px",
-                        textDecorationColor: "#ffdead22",
-                        alignSelf: "flex-end"
-                      }}
-                        onClick={() =>
-
-                          (window.open(newLink, '_blank'))
-
-                        }
-                      >
-                        Open in new tab
-
-                        <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={newWindow} />
-
-                      </div>}</div>
-
-                  {(lore?.getJson().name === "" || lore?.getJson().name === undefined) &&
-                    <div style={{
-                      cursor: "progress",
-                      color: styles.colors.colorWhite + "88", fontSize: styles.fonts.fontSmallest, marginTop: "11px", textDecorationColor: "#ffdead22", alignSelf: "flex-end"
+                </div>
+                <EditItem app={app} handleClose={this.props.handleClose} />
+              </>) : (<>
+                {(this.state.showFindEncounter || this.state.showFindImage) &&
+                  <div className="indent-on-click"
+                    onClick={() => {
+                      this.setState({ showFindEncounter: false, showFindImage: false })
                     }}
-                    >
-                    </div>}
-
-
-                  <hr></hr>
-
-                  <div style={{
-                    display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
-                    justifySelf: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
-                  }}>
-                    <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
-                  </div>
-                  <div style={{ color: styles.colors.color3 + "f5", marginBottom: "26px", marginTop: "42px", fontSize: styles.fonts.fontSmall, }}> Lore:
-
-                    <ParentFormComponent app={app} name="desc" obj={lore}
-                      theme={"adventureLog"}
-                      rows={5} linkLore={true}
-                      // prepareRun={true}
-                      type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
-                    /></div>
-
-
-
-                  <div style={{
-                    display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
-                    justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
-                    marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
-
-                  }}>
-                    <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
-                  </div>
-                  <div
                     style={{
-                      color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
-                      marginTop: "42px", marginBottom: "45px",
-                    }}> Handout:
+                      ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
+                      fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px"
+                    }}
 
-                    <div style={{ flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "99%", justifyContent: "center" }}>
-                      <ParentFormComponent app={app} name="handoutText" obj={lore}
+                  >
+                    <img style={{ width: ".9rem", opacity: "98%", marginRight: ".75rem" }}
+                      src={backarrow}
+                    />
+                    Back
+                  </div>}
+                {/* IMAGE TOKEN */}
+                <div style={{ backgroundImage: `url(.${state.currentPin?.getJson().picURL})`, width: "44px", height: "44px", position: "absolute", top: 11, left: 11 }}></div>
+
+                {/* OTHER STUFF */}
+                {!this.state.showFindEncounter && !this.state.showFindImage &&
+                  <div style={{ flexDirection: "column", display: "flex", alignSelf: "center", marginTop: "-24px", width: "98%" }}>
+
+                    <ParentFormComponent checkUser={true} app={app} name="name"
+
+                      placeholder={placeholder}
+                      inputStyle={{
+                        width: "100%", minWidth: "100%", padding: "4px 9px", color: styles.colors.color3, height: "fit-content",
+                        borderRadius: "4px", background: styles.colors.colorWhite + "00", borderWidth: "0px", height: "100%",
+                        border: "solid 1px " + styles.colors.colorWhite + "22",
+                        textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
+                      }} />
+                    {/* BUTTONS */}
+                    <div style={{
+                      display: 'flex', marginTop: "14px", width: "100%",
+                      flexDirection: "row", justifyContent: "space-between", paddingLeft: "200px",
+                    }}>
+
+                      {state.currentPin && componentList.getComponent("lore", state.currentComponent.getJson()._id, "_id") && (
+
+                        <div className="hover-btn" title='Create an exact copy of the pin refrencing lore.'
+                          style={{
+                            display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: "pointer",
+                            color: styles.colors.colorWhite,
+                            fontSize: styles.fonts.fontSmall,
+                            marginTop: "11px",
+                            textDecoration: "underline 1px",
+                            textDecorationColor: "#ffdead22",
+                            alignSelf: "flex-end"
+                          }} onClick={async () => {
+                            if (state.user.getJson().role !== "GM") {
+                              dispatch({ popupSwitch: "goPremium" });
+                              return
+                            }
+                            // this.copyLore(state.currentPin);
+                            let pinJson = { ...state.currentPin.getJson(), loreId: "", referencePin: false, _id: undefined, x: 80, y: 110 + this.state.imagesToShow };
+                            await state.opps.cleanJsonPrepareRun({ addpin: pinJson });
+
+                            dispatch({ popupSwitch: "" })
+
+                          }}>Clone Pin < img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dup} /> </div>
+                      )}
+                      {state.currentPin && componentList.getComponent("lore", state.currentComponent.getJson()._id, "_id") && (
+                        <div className="hover-btn" title='Create an exact copy plus an additional lore point.'
+                          style={{
+                            display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: "pointer",
+                            color: styles.colors.colorWhite,
+                            fontSize: styles.fonts.fontSmall,
+                            marginTop: "11px",
+                            textDecoration: "underline 1px",
+                            textDecorationColor: "#ffdead22",
+                            alignSelf: "flex-end"
+                          }} onClick={async () => {
+                            if (state.user.getJson().role !== "GM") {
+                              dispatch({ popupSwitch: "goPremium" });
+                              return
+                            }
+                            this.copyLore(lore);
+                            dispatch({ popupSwitch: "" })
+
+                          }}>Clone Pin + Lore
+
+                          <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={dupPlus} /></div>
+                      )}
+                      {((lore?.getJson().name !== "" && lore?.getJson().name !== undefined) && this.state.saveClicked) &&
+                        <div className="hover-btn" style={{
+                          display: 'flex', borderRadius: "11px", background: styles.colors.color1 + "41", padding: "2px 5px",
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: "pointer",
+                          color: styles.colors.colorWhite,
+                          fontSize: styles.fonts.fontSmall,
+                          marginTop: "11px",
+                          textDecoration: "underline 1px",
+                          textDecorationColor: "#ffdead22",
+                          alignSelf: "flex-end"
+                        }}
+                          onClick={() =>
+
+                            (window.open(newLink, '_blank'))
+
+                          }
+                        >
+                          Open in new tab
+
+                          <img className="indent-on-click" style={{ width: "19px", marginLeft: "8px" }} src={newWindow} />
+
+                        </div>}</div>
+
+                    {(lore?.getJson().name === "" || lore?.getJson().name === undefined) &&
+                      <div style={{
+                        cursor: "progress",
+                        color: styles.colors.colorWhite + "88", fontSize: styles.fonts.fontSmallest, marginTop: "11px", textDecorationColor: "#ffdead22", alignSelf: "flex-end"
+                      }}
+                      >
+                      </div>}
+
+
+                    <hr></hr>
+
+                    <div style={{
+                      display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
+                      justifySelf: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                      marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
+                    }}>
+                      <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
+                    </div>
+                    <div style={{ color: styles.colors.color3 + "f5", marginBottom: "26px", marginTop: "42px", fontSize: styles.fonts.fontSmall, }}> Lore:
+
+                      <ParentFormComponent app={app} name="desc" obj={lore}
                         theme={"adventureLog"}
-                        rows={5}
+                        rows={5} linkLore={true}
                         // prepareRun={true}
                         type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
-
                       /></div>
-                  </div>
-                </div>}
 
-              {(this.state.saveClicked || componentList.getComponent("lore", lore.getJson()._id, "_id") !== undefined) &&
 
-                <div>
-                  {/* ENCOUNTER */}
-                  {!this.state.showFindEncounter && !this.state.showFindImage && <div> <hr></hr>
-                    <div style={{ marginTop: "-18px", color: styles.colors.colorWhite + "77", fontSize: styles.fonts.fontSmall, }}>Encounters</div>
 
-                    <div style={{ marginTop: "2vh", marginBottom: "1vh", }}>
-                      <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }]}
-                        filter={{ search: state.currentComponent.getJson()._id, attribute: "loreId" }}
-                        theme={"selectByImageSmall"}
-                      />
+                    <div style={{
+                      display: "flex", flexDirection: "row", alignContent: "flex-end", marginTop: "42px",
+                      justifyContent: "flex-end", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+                      marginBottom: "-108px", marginRight: "20px", zIndex: "2000", width: "fit-content", alignSelf: "flex-end"
 
+                    }}>
+                      <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
+                    </div>
+                    <div
+                      style={{
+                        color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
+                        marginTop: "42px", marginBottom: "45px",
+                      }}> Handout:
+
+                      <div style={{ flexDirection: "row", minWidth: "100%", width: "100%", maxWidth: "99%", justifyContent: "center" }}>
+                        <ParentFormComponent app={app} name="handoutText" obj={lore}
+                          theme={"adventureLog"}
+                          rows={5}
+                          // prepareRun={true}
+                          type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
+
+                        /></div>
                     </div>
                   </div>}
 
+                {(this.state.saveClicked || componentList.getComponent("lore", lore.getJson()._id, "_id") !== undefined) &&
 
-                  {!this.state.showFindEncounter && !this.state.showFindImage &&
-                    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                  <div>
+                    {/* ENCOUNTER */}
+                    {!this.state.showFindEncounter && !this.state.showFindImage && <div> <hr></hr>
+                      <div style={{ marginTop: "-18px", color: styles.colors.colorWhite + "77", fontSize: styles.fonts.fontSmall, }}>Encounters</div>
 
-                      {/* ///MINI EDITOR */}
+                      <div style={{ marginTop: "2vh", marginBottom: "1vh", }}>
+                        <MapComponent app={app} name={"encounter"} cells={[{ custom: EncounterMapItem, props: { app: app } }]}
+                          filter={{ search: state.currentComponent.getJson()._id, attribute: "loreId" }}
+                          theme={"selectByImageSmall"}
+                        />
 
-                      <div className="indent-on-click" style={{
-                        ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "2vh",
-                        marginTop: "1vh", alignSelf: "center", padding: "1%"
-                      }}
-                        title="Find an existing encounter to add to this lore.
-            This will create a COPY."
-                        onClick={async () => {
-                          if(state.user.getJson().role!=="GM"){
-                            dispatch({ popupSwitch: "goPremium"});
-                            return
-                          }
-                          let lore = state.currentComponent;
-                          let check;
-                          if (state.currentPin) {
-                            //
-                            let pin = state.currentPin;
-
-                            if (lore.getJson().name === "" || lore.getJson().name === undefined) {
-                              lore.setCompState({ name: pin.getJson().name });
-                            }
-
-
-                            pin.setCompState({
-                              loreId: lore.getJson()._id,
-                              name: lore.getJson().name,
-                            });
-
-                            let reg = state.opps.getUpdater("add");
-                            check = componentList.getComponent("lore", lore.getJson()._id, "_id");
-
-                            await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
-
-                            await state.opps.prepareRun({ update: pin });
-                          } else {
-
-                            check = componentList.getComponent("lore", lore.getJson()._id, "_id");
-
-                            await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
-                          }
-
-                          if (lore) {
-                            //
-                            let parentId = Object.keys(lore.getJson().parentId,)[0];
-                            let otherChildren = state.componentList.getList("lore", parentId, "parentId");
-                            if (!check) {
-                              await loreIndexService.insertAtBeginning(lore, otherChildren);
-
-                            }
-                          }
-                          if (check) {
-                            let L1 = lore;
-                            let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
-                            referenceList = referenceList.map(obj => obj.getJson()._id);
-                            let pinList = state.componentList.getList("pin");
-                            pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
-                            for (let p of pinList) {
-                              p.setCompState({ name: L1.getJson().name })
-                            }
-                            state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
-                          }
-
-
-
-                          this.setState({ showSaved: true });
-                          setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
-                          this.setState({ saveClicked: true })
-                          this.setState({ showFindEncounter: true })
-                        }}>
-                        Find Encounter
                       </div>
                     </div>}
 
-                  {/* { this.state.showAddEncounter &&
-            <AddEncounter app={app} />
-          } */}
-                </div>
-              }
-              {(this.state.saveClicked || componentList.getComponent("lore", lore.getJson()._id, "_id") !== undefined) && <>
-                {!this.state.showFindEncounter && !this.state.showFindImage &&
-                  <div>
-                    <hr></hr>
-                    <div style={{ marginTop: "-18px", color: styles.colors.colorWhite + "77", fontSize: styles.fonts.fontSmall, }}>Gallery</div>
-                  </div>}
 
-                {this.state.showFindEncounter &&
-                  <div>
-                    <div style={{ display: "flex", justifyContent: "flex-end", }}>
-                      <div className='hover-btn' style={{
-                        ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginRight: "20px",
-                        alignSelf: "center", color: styles.colors.color9, padding: "4px 16px"
-                      }} onClick={async () => {
-                        
-                        let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
-                       
-                        if (encounter) {
-                          dispatch({})
-                        }
-                        await auth.getMPItems(state.componentList, state.user.getJson()._id)
-            await auth.getAllMpTypeData(state.componentList);
-            dispatch({})
-                      }}>Import Library</div>
-                      <input app={app}
+                    {!this.state.showFindEncounter && !this.state.showFindImage &&
+                      <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
-                        type="input"
-                        placeholder={"Search..."}
-                        value={this.state.searchTerm}
-                        onChange={this.handleSearchChange}
-                        style={{
-                          backgroundColor: styles.colors.color1 + "ee",
-                          color: styles.colors.colorWhite,
-                          borderRadius: "11px",
-                          width: "420px",
-                          padding: '8px',
-                          fontSize: '16px',
+                        {/* ///MINI EDITOR */}
+
+                        <div className="indent-on-click" style={{
+                          ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginBottom: "2vh",
+                          marginTop: "1vh", alignSelf: "center", padding: "1%"
                         }}
-                      />
-                    </div>
-
-                    <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3vh", flexWrap: "wrap" }}>
-
-
-                      {
-
-                        filteredList.map((encounter, index) =>
-                          <div
-
-                            onClick={async () => {
-                              {
-                                
-                                await this.setState({ showFindEncounter: false });
-
-                                let enc = await encounter.copyEncounter(componentList, state.currentComponent.getJson()._id,  state.currentCampaign.getJson()._id, state.user.getJson()._id);
-                                
-                              }
-                            }}
-
-                            style={{
-                              color: styles.colors.colorWhite,
-                              textDecoration: "none", userSelect: "none",
-                              height: "fit-content", cursor: "pointer",
-                              width: "fit-content"
-                            }}>
-                            <div style={{
-                              display: "flex", flexDirection: 'column',
-                              borderRadius: styles.popupSmall.borderRadius,
-                              justifyContent: "space-evenly",
-                              zIndex: "0",
-                              height: 'fit-content',
-                              width: 'fit-content',
-                              backgroundImage: 'url(' + (encounter?.getJson().picURL || placeholder) + ')',
-                              ...styles.backgroundContent
-                            }}>
-
-                              <div style={{
-                                ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent: "space-between", flexDirection: 'column',
-                                height: "fit-content",
-                                width: "fit-content"
-                              }}>
-
-                                <div
-
-                                  style={{
-                                    display: "flex", height: "fit-content", width: "fit-content", fontWeight: "bold", fontFamily: "serif",
-                                    textDecoration: styles.colors.colorWhite + "22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
-                                    textShadow: "1px 1px 0 " + styles.colors.colorBlack, textShadow: "-1px -1px 0 " + styles.colors.colorBlack,
-
-                                    alignItems: "center", justifyContent: "center", fontSize: styles.fonts.fontSmallest,
-                                  }}>
-                                  {encounter?.getJson().name}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                        )}
-
-                    </div>
-                  </div>}
-
-                {/* GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY */}
-
-                {!this.state.showFindImage && !this.state.showFindEncounter &&
-                  <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", justifyItems: "center" }}>
-
-                    <div className="image-grid" style={{
-                      display: "flex", justifyContent: "center",
-                      flexDirection: "row", justifyItems: "space-around", flexWrap: "wrap",
-                    }}>
-                      {
-                        imageList
-                          .slice(0, this.state.imagesToShow)
-                          .map((img, index) => (
-                            <div className="hover-img" key={index}>
-
-                              <img
-                                onClick={() => {
-
-                                  dispatch({ currentPic: img, popupSwitch: "viewPic" })
-                                }}
-                                draggable="false" src={img.getJson().picURL}
-                                style={{
-                                  maxWidth: "180px", minWidth: "100px", height: "fit-content",
-                                  margin: "9px", cursor: "pointer", borderRadius: "10px"
-                                }}
-                                alt={`img-${index}`} />
-                            </div>
-                          ))
-                      }
-                      {
-                        imageList.length > this.state.imagesToShow &&
-                        <div className="hover-img"
-                          onClick={() =>
-                            this.setState(prevState => ({ imagesToShow: prevState.imagesToShow + 5 }))}
-                          style={{
-                            maxHeight: "150px", cursor: "pointer", textAlign: "center", padding: "8px",
-                            maxWidth: "150px", display: "flex", alignItems: "center", justifyContent: "center",
-                            fontSize: "24px", borderRadius: "20px", marginBottom: "2vh",
-                            color: styles.colors.colorWhite, border: "" + styles.colors.colorWhite + "55 solid"
-                          }}>
-                          <div
-                            style={{ display: "flex", position: "relative", }}>
-                            +{imageList.length - this.state.imagesToShow} more
-                          </div>
-                          <div style={{
-                            display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',
-                          }}>
-                            {
-                              imageList
-                                .slice(this.state.imagesToShow, this.state.imagesToShow + 9)
-                                .map((img, index) => (
-                                  <div>
-                                    <img draggable="false" key={index} src={img.getJson().picURL}
-                                      style={{
-                                        maxWidth: "20px", margin: "2px", opacity: "40%"
-                                      }}
-                                      alt={``} />
-                                  </div>
-                                ))
+                          title="Find an existing encounter to add to this lore.
+            This will create a COPY."
+                          onClick={async () => {
+                            if (state.user.getJson().role !== "GM") {
+                              dispatch({ popupSwitch: "goPremium" });
+                              return
                             }
-                          </div>
-                        </div>
-                      }
-                    </div>
-
-
-                    <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
-                      <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft: "22px" }}>
-
-                        <Upload checkUser={true} text="+ Upload"
-                          updateMap={async () => {
                             let lore = state.currentComponent;
                             let check;
                             if (state.currentPin) {
@@ -943,26 +720,265 @@ class MainContent extends Component {
                             this.setState({ showSaved: true });
                             setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
                             this.setState({ saveClicked: true })
+                            this.setState({ showFindEncounter: true })
+                          }}>
+                          Find Encounter
+                        </div>
+                      </div>}
+
+                    {/* { this.state.showAddEncounter &&
+            <AddEncounter app={app} />
+          } */}
+                  </div>
+                }
+                {(this.state.saveClicked || componentList.getComponent("lore", lore.getJson()._id, "_id") !== undefined) && <>
+                  {!this.state.showFindEncounter && !this.state.showFindImage &&
+                    <div>
+                      <hr></hr>
+                      <div style={{ marginTop: "-18px", color: styles.colors.colorWhite + "77", fontSize: styles.fonts.fontSmall, }}>Gallery</div>
+                    </div>}
+
+                  {this.state.showFindEncounter &&
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "flex-end", }}>
+                        <div className='hover-btn' style={{
+                          ...styles.buttons.buttonAdd, fontSize: styles.fonts.fontSmall, marginRight: "20px",
+                          alignSelf: "center", color: styles.colors.color9, padding: "4px 16px"
+                        }} onClick={async () => {
+
+                          let encounter = await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "encounter");
+
+                          if (encounter) {
+                            dispatch({})
+                          }
+                          await auth.getMPItems(state.componentList, state.user.getJson()._id)
+                          await auth.getAllMpTypeData(state.componentList);
+                          dispatch({})
+                        }}>Import Library</div>
+                        <input app={app}
+
+                          type="input"
+                          placeholder={"Search..."}
+                          value={this.state.searchTerm}
+                          onChange={this.handleSearchChange}
+                          style={{
+                            backgroundColor: styles.colors.color1 + "ee",
+                            color: styles.colors.colorWhite,
+                            borderRadius: "11px",
+                            width: "420px",
+                            padding: '8px',
+                            fontSize: '16px',
                           }}
-                          prepareOnChange={{
-                            name: "image", json: {
-                              loreId: state.currentComponent.getJson()._id,
-                              campaignId: id
-                            }
-                          }}
-
-
-                          obj={state.currentComponent}
-                          update={true} skipUpdate={true}
-
-                          app={app}
-                          className="indent-on-click"
-
                         />
-
                       </div>
 
-                      {/* <div className="indent-on-click" 
+                      <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3vh", flexWrap: "wrap" }}>
+
+
+                        {
+
+                          filteredList.map((encounter, index) =>
+                            <div
+
+                              onClick={async () => {
+                                {
+
+                                  await this.setState({ showFindEncounter: false });
+
+                                  let enc = await encounter.copyEncounter(componentList, state.currentComponent.getJson()._id, state.currentCampaign.getJson()._id, state.user.getJson()._id);
+
+                                }
+                              }}
+
+                              style={{
+                                color: styles.colors.colorWhite,
+                                textDecoration: "none", userSelect: "none",
+                                height: "fit-content", cursor: "pointer",
+                                width: "fit-content"
+                              }}>
+                              <div style={{
+                                display: "flex", flexDirection: 'column',
+                                borderRadius: styles.popupSmall.borderRadius,
+                                justifyContent: "space-evenly",
+                                zIndex: "0",
+                                height: 'fit-content',
+                                width: 'fit-content',
+                                backgroundImage: 'url(' + (encounter?.getJson().picURL || placeholder) + ')',
+                                ...styles.backgroundContent
+                              }}>
+
+                                <div style={{
+                                  ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent: "space-between", flexDirection: 'column',
+                                  height: "fit-content",
+                                  width: "fit-content"
+                                }}>
+
+                                  <div
+
+                                    style={{
+                                      display: "flex", height: "fit-content", width: "fit-content", fontWeight: "bold", fontFamily: "serif",
+                                      textDecoration: styles.colors.colorWhite + "22 underline", textDecorationThickness: "1px", textUnderlineOffset: "4px",
+                                      textShadow: "1px 1px 0 " + styles.colors.colorBlack, textShadow: "-1px -1px 0 " + styles.colors.colorBlack,
+
+                                      alignItems: "center", justifyContent: "center", fontSize: styles.fonts.fontSmallest,
+                                    }}>
+                                    {encounter?.getJson().name}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          )}
+
+                      </div>
+                    </div>}
+
+                  {/* GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY  GALLERY GALLERY */}
+
+                  {!this.state.showFindImage && !this.state.showFindEncounter &&
+                    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", justifyItems: "center" }}>
+
+                      <div className="image-grid" style={{
+                        display: "flex", justifyContent: "center",
+                        flexDirection: "row", justifyItems: "space-around", flexWrap: "wrap",
+                      }}>
+                        {
+                          imageList
+                            .slice(0, this.state.imagesToShow)
+                            .map((img, index) => (
+                              <div className="hover-img" key={index}>
+
+                                <img
+                                  onClick={() => {
+
+                                    dispatch({ currentPic: img, popupSwitch: "viewPic" })
+                                  }}
+                                  draggable="false" src={img.getJson().picURL}
+                                  style={{
+                                    maxWidth: "180px", minWidth: "100px", height: "fit-content",
+                                    margin: "9px", cursor: "pointer", borderRadius: "10px"
+                                  }}
+                                  alt={`img-${index}`} />
+                              </div>
+                            ))
+                        }
+                        {
+                          imageList.length > this.state.imagesToShow &&
+                          <div className="hover-img"
+                            onClick={() =>
+                              this.setState(prevState => ({ imagesToShow: prevState.imagesToShow + 5 }))}
+                            style={{
+                              maxHeight: "150px", cursor: "pointer", textAlign: "center", padding: "8px",
+                              maxWidth: "150px", display: "flex", alignItems: "center", justifyContent: "center",
+                              fontSize: "24px", borderRadius: "20px", marginBottom: "2vh",
+                              color: styles.colors.colorWhite, border: "" + styles.colors.colorWhite + "55 solid"
+                            }}>
+                            <div
+                              style={{ display: "flex", position: "relative", }}>
+                              +{imageList.length - this.state.imagesToShow} more
+                            </div>
+                            <div style={{
+                              display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',
+                            }}>
+                              {
+                                imageList
+                                  .slice(this.state.imagesToShow, this.state.imagesToShow + 9)
+                                  .map((img, index) => (
+                                    <div>
+                                      <img draggable="false" key={index} src={img.getJson().picURL}
+                                        style={{
+                                          maxWidth: "20px", margin: "2px", opacity: "40%"
+                                        }}
+                                        alt={``} />
+                                    </div>
+                                  ))
+                              }
+                            </div>
+                          </div>
+                        }
+                      </div>
+
+
+                      <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
+                        <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft: "22px" }}>
+
+                          <Upload checkUser={true} text="+ Upload"
+                            updateMap={async () => {
+                              let lore = state.currentComponent;
+                              let check;
+                              if (state.currentPin) {
+                                //
+                                let pin = state.currentPin;
+
+                                if (lore.getJson().name === "" || lore.getJson().name === undefined) {
+                                  lore.setCompState({ name: pin.getJson().name });
+                                }
+
+
+                                pin.setCompState({
+                                  loreId: lore.getJson()._id,
+                                  name: lore.getJson().name,
+                                });
+
+                                let reg = state.opps.getUpdater("add");
+                                check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                                await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
+
+                                await state.opps.prepareRun({ update: pin });
+                              } else {
+
+                                check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                                await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                              }
+
+                              if (lore) {
+                                //
+                                let parentId = Object.keys(lore.getJson().parentId,)[0];
+                                let otherChildren = state.componentList.getList("lore", parentId, "parentId");
+                                if (!check) {
+                                  await loreIndexService.insertAtBeginning(lore, otherChildren);
+
+                                }
+                              }
+                              if (check) {
+                                let L1 = lore;
+                                let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                                referenceList = referenceList.map(obj => obj.getJson()._id);
+                                let pinList = state.componentList.getList("pin");
+                                pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
+                                for (let p of pinList) {
+                                  p.setCompState({ name: L1.getJson().name })
+                                }
+                                state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
+                              }
+
+
+
+                              this.setState({ showSaved: true });
+                              setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
+                              this.setState({ saveClicked: true })
+                            }}
+                            prepareOnChange={{
+                              name: "image", json: {
+                                loreId: state.currentComponent.getJson()._id,
+                                campaignId: id
+                              }
+                            }}
+
+
+                            obj={state.currentComponent}
+                            update={true} skipUpdate={true}
+
+                            app={app}
+                            className="indent-on-click"
+
+                          />
+
+                        </div>
+
+                        {/* <div className="indent-on-click" 
         title="Find an existing image to add to this lore." 
         style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,marginBottom:"2vh",
         marginTop:"1vh", alignSelf:"center", padding:"1%"}}
@@ -972,20 +988,20 @@ class MainContent extends Component {
           Find Image
         </div> */}
 
-                    </div>
+                      </div>
 
 
-                    {/* <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} 
+                      {/* <div onClick={()=>{dispatch({popupSwitch:"seeLibrary"})}} 
                   style={{...styles.buttons.buttonAdd, fontSize:styles.fonts.fontSmall,}}
                 >
                   + From Library</div> */}
-                  </div>
-                }
-              </>}
+                    </div>
+                  }
+                </>}
 
-              <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
+                <div style={{ display: 'flex', width: "100%", flexDirection: "row", position: "relative", marginTop: "70px", marginBottom: "30px" }}>
 
-                {/* <div className="hover-btn"
+                  {/* <div className="hover-btn"
                   title='Deletes the Lore, all Referenced Lore, and the Pin!'
                   style={{
 
@@ -1017,132 +1033,133 @@ class MainContent extends Component {
                     // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
                   }}>Delete All Connected Lore</div> */}
 
-                <div className="hover-btn"
-                  title='Deletes the Pin'
-                  style={{
-                    display: "flex", width: "210px", borderRadius: '11px', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
-                    alignSelf: "flex-end", alignItems: "center", marginRight: "22px", padding: "8px 8px",
-                    borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
-                    marginTop: "8.24vh", marginBottom: "-81px", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
-                  }} onClick={async () => {
-                    if(state.user.getJson().role!=="GM"){
-                      await dispatch({ popupSwitch: "goPremium"});
-                      return
-                    }
-                    else{
-                      let pin1 = state.currentPin;
-                      if (pin1.getJson().referencePin) {
-                        let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
-                        await state.opps.cleanPrepare({ del: l1 });
+                  <div className="hover-btn"
+                    title='Deletes the Pin'
+                    style={{
+                      display: "flex", width: "210px", borderRadius: '11px', fontSize: styles.fonts.fontNormal, background: styles.colors.color2 + "1e",
+                      alignSelf: "flex-end", alignItems: "center", marginRight: "22px", padding: "8px 8px",
+                      borderRadius: "11px", border: "1px solid " + styles.colors.color5 + "11",
+                      marginTop: "8.24vh", marginBottom: "-81px", color: styles.colors.color5, justifyContent: "center", cursor: "pointer"
+                    }} onClick={async () => {
+                      if (state.user.getJson().role !== "GM") {
+                        await dispatch({ popupSwitch: "goPremium" });
+                        return
                       }
-  
-                      await state.opps.prepareRun({ del: pin1 });
-  
-                      await dispatch({ popupSwitch: "", showPinMap: false })
-                    }
+                      else {
+                        let pin1 = state.currentPin;
+                        if (pin1.getJson().referencePin) {
+                          let l1 = componentList.getComponent("lore", pin1.getJson().loreId, "_id");
+                          await state.opps.cleanPrepare({ del: l1 });
+                        }
 
-                   
+                        await state.opps.prepareRun({ del: pin1 });
 
-                    // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
-                  }}>Delete Pin</div>
-
-
+                        await dispatch({ popupSwitch: "", showPinMap: false })
+                      }
 
 
-              </div>
 
-              {/* this.copyLore(lore);
+                      // }}>Delete {state.currentPin?.getJson().referencePin? "Reference":"Lore"} Pin</div>
+                    }}>Delete Pin</div>
+
+
+
+
+                </div>
+
+                {/* this.copyLore(lore);
 
                   }}>Copy Lore</div></div> */}
 
 
-              <div className="indent-on-click"
-                style={{
-                  display: "flex", width: "92px", background: "red", borderRadius: '12px',
-                  alignSelf: "flex-end", bottom: '8px', alignItems: "flex-end", right: "10px",
-                  position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
-                }}>
-                <RunButton checkUser={true} app={app} text="Save"
+                <div className="indent-on-click"
+                  style={{
+                    display: "flex", width: "92px", background: "red", borderRadius: '12px',
+                    alignSelf: "flex-end", bottom: '8px', alignItems: "flex-end", right: "10px",
+                    position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
+                  }}>
+                  <RunButton checkUser={true} app={app} text="Save"
 
-                  runFunc={async (arr) => {
-                    if(state.user.getJson().role!=="GM"){
-                      await dispatch({ popupSwitch: "goPremium"});
-                      return
-                    }
-                    else{
-                    try {
-                      let lore = arr[0];
-                      let check;
-                      if (state.currentPin) {
-                        //
-                        let pin = state.currentPin;
-
-                        if (lore.getJson().name === "" || lore.getJson().name === undefined) {
-                          lore.setCompState({ name: pin.getJson().name });
-                        }
-
-
-                        pin.setCompState({
-                          loreId: lore.getJson()._id,
-                          name: lore.getJson().name,
-                        });
-
-                        let reg = state.opps.getUpdater("add");
-                        check = componentList.getComponent("lore", lore.getJson()._id, "_id");
-
-                        await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
-
-                        await state.opps.prepareRun({ update: pin });
-                      } else {
-
-                        check = componentList.getComponent("lore", lore.getJson()._id, "_id");
-
-                        await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                    runFunc={async (arr) => {
+                      if (state.user.getJson().role !== "GM") {
+                        await dispatch({ popupSwitch: "goPremium" });
+                        return
                       }
+                      else {
+                        try {
+                          let lore = arr[0];
+                          let check;
+                          if (state.currentPin) {
+                            //
+                            let pin = state.currentPin;
 
-                      if (lore) {
-                        //
-                        let parentId = Object.keys(lore.getJson().parentId,)[0];
-                        let otherChildren = state.componentList.getList("lore", parentId, "parentId");
-                        if (!check) {
-                          await loreIndexService.insertAtBeginning(lore, otherChildren);
+                            if (lore.getJson().name === "" || lore.getJson().name === undefined) {
+                              lore.setCompState({ name: pin.getJson().name });
+                            }
 
+
+                            pin.setCompState({
+                              loreId: lore.getJson()._id,
+                              name: lore.getJson().name,
+                            });
+
+                            let reg = state.opps.getUpdater("add");
+                            check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                            await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
+
+                            await state.opps.prepareRun({ update: pin });
+                          } else {
+
+                            check = componentList.getComponent("lore", lore.getJson()._id, "_id");
+
+                            await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
+                          }
+
+                          if (lore) {
+                            //
+                            let parentId = Object.keys(lore.getJson().parentId,)[0];
+                            let otherChildren = state.componentList.getList("lore", parentId, "parentId");
+                            if (!check) {
+                              await loreIndexService.insertAtBeginning(lore, otherChildren);
+
+                            }
+                          }
+                          if (check) {
+                            let L1 = lore;
+                            let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                            referenceList = referenceList.map(obj => obj.getJson()._id);
+                            let pinList = state.componentList.getList("pin");
+                            pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
+                            for (let p of pinList) {
+                              await p.setCompState({ name: L1.getJson().name })
+                            }
+                            await state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
+                          }
+
+
+
+                          this.setState({ showSaved: true, saveClicked: true });
+                          setTimeout(
+                            () => this.setState({ showSaved: false }),
+                            2000
+                          );
+
+                        } catch (error) {
+                          console.error("Error in save operation:", error);
+                          // Handle error appropriately
                         }
                       }
-                      if (check) {
-                        let L1 = lore;
-                        let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
-                        referenceList = referenceList.map(obj => obj.getJson()._id);
-                        let pinList = state.componentList.getList("pin");
-                        pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
-                        for (let p of pinList) {
-                          await p.setCompState({ name: L1.getJson().name })
-                        }
-                        await state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
-                      }
+                    }} />
 
+                  {this.state.showSaved && (
+                    <div className="saved-animation" style={{
+                      color: styles.colors.color9, border: "",
+                      alignSelf: "flex-end", position: "absolute", marginBottom: "69px", marginLeft: "-72px",
+                      fontSize: styles.fonts.fontSmallest
+                    }}> Saved! </div>)}
 
-
-                      this.setState({ showSaved: true, saveClicked: true });
-                      setTimeout(
-                        () => this.setState({ showSaved: false }),
-                        2000
-                      );
-
-                    } catch (error) {
-                      console.error("Error in save operation:", error);
-                      // Handle error appropriately
-                    }
-                  }}} />
-
-                {this.state.showSaved && (
-                  <div className="saved-animation" style={{
-                    color: styles.colors.color9, border: "",
-                    alignSelf: "flex-end", position: "absolute", marginBottom: "69px", marginLeft: "-72px",
-                    fontSize: styles.fonts.fontSmallest
-                  }}> Saved! </div>)}
-
-              </div>
+                </div>
               </>)}
 
             </div>}
@@ -1162,7 +1179,7 @@ class MainContent extends Component {
                     this.setState({ hasChoice: "New" })
                   }}
                 >
-                  Create New {state.loreType ==="compendium"?"Item":"Lore"}
+                  Create New {state.loreType === "compendium" ? "Item" : "Lore"}
                 </div>
 
                 <div className='hover-btn'
@@ -1172,7 +1189,7 @@ class MainContent extends Component {
                   }}
                   title={"Find pre-made Lore to connect it to this Lore"}
                   style={{ ...styles.buttons.buttonAdd, margin: "8px" }}>
-                  Move or Connect Existing {state.loreType ==="compendium"?"Item":"Lore"}
+                  Move or Connect Existing {state.loreType === "compendium" ? "Item" : "Lore"}
                 </div>
 
                 {/* DISABLE FOR NOW 
@@ -1218,7 +1235,7 @@ class MainContent extends Component {
                 <input app={app}
 
                   type="input"
-                  placeholder={"Search Lore..."}
+                  placeholder={"Search ..."}
                   value={this.state.searchTerm}
                   onChange={this.handleSearchChange}
                   style={{
@@ -1260,7 +1277,7 @@ class MainContent extends Component {
                 <input app={app}
 
                   type="input"
-                  placeholder={"Search Lore..."}
+                  placeholder={"Search..."}
                   value={this.state.searchTerm}
                   onChange={this.handleSearchChange}
                   style={{
@@ -1277,14 +1294,19 @@ class MainContent extends Component {
               <div style={{
                 display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center",
                 alignItems: "center", height: "100%", width: "100%", color: styles.colors.colorWhite, fontSize: "1.5rem"
-              }}> Move or Connect Lore
+              }}> {state.loreType !== "compendium" ? "Move or Connect Lore" : "Move or Connect Compendium Item"}
 
 
                 <div style={{ display: "flex", flexDirection: "row", alignSelf: "center", marginTop: "8px", marginBottom: "8px" }}>
                   <ParentFormComponent
                     obj={lore} name="refrence"
 
-                    title={"Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."}
+                    title={
+                      state.loreType !== "compendium" ?
+                        "Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."
+                        :
+                        "Click the check box to create link to an existing compendium item. If the checkbox is not checked, the item will move to this compendium."
+                    }
                     type={"checkbox"}
                     func={(obj, value) => {
                       this.setState({ refrence: value })
@@ -1298,9 +1320,12 @@ class MainContent extends Component {
                   />
 
                   <div
-                    title={"Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."}
+                    title={state.loreType !== "compendium" ?
+                      "Click the check box to create a link to an existing lore. If the checkbox is not checked, the lore you select will move to this new location."
+                      :
+                      "Click the check box to create link to an existing compendium item. If the checkbox is not checked, the item will move to this compendium."}
                     style={{ color: styles.colors.color8, width: "fit-content", marginRight: "12px", fontSize: "1.1rem", justifyContent: "center", marginTop: "5px", fontSize: styles.fonts.fontNormal }}>
-                    Link to Existing Lore
+                    {state.loreType === "compendium" ? "Link to Existing" : "Link to Existing Lore"}
 
                   </div>
 
@@ -1315,9 +1340,9 @@ class MainContent extends Component {
                         fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "d9"
                       }}>
 
-                      Click the check box to create a link to an existing lore.
+                      {state.loreType !== "compendium" ? "Click the check box to create a link to an existing lore." : "Click the check box to create link to an existing compendium item."}
                       <div style={{ marginTop: "8px" }}></div>
-                      If the checkbox is not checked, the lore you select will move to this new location.
+                      {state.loreType !== "compendium" ? "If the checkbox is not checked, the lore you select will move to this new location." : "If the checkbox is not checked, the item will move to this compendium."}
                     </div>
                   </div>
                 </div>
@@ -1443,7 +1468,7 @@ class TabContent extends Component {
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
 
-        <div style={{ ...styles.buttons.buttonClose,  }}
+        <div style={{ ...styles.buttons.buttonClose, }}
           onClick={this.props.handleClose}
         >
           X

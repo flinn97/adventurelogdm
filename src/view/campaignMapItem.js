@@ -3,6 +3,7 @@ import "../App.css"
 import AddCampaign from './AddCampaign';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import placeholder from '../pics/placeholderEncounter.JPG';
+import placeholder2 from '../pics/placeholderCompendium2.jpg';
 
 export default class CampaignMapItem extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ export default class CampaignMapItem extends Component {
     let isLore = state.componentList.getList("lore", this.props.obj.getJson().title, "name");
     let loreItem = isLore[0];
     const newId = loreItem?loreItem.getJson()._id:obj?.getJson()._id;
-    let type = obj.getJson().type === "campaign"? "Campaign": "Compendium"
+    let type = obj.getJson().type === "campaign"? "Campaign": "Compendium";
+    let imgPlace = (type ==="Campaign")? placeholder : placeholder2;
 
     const newLink = 
    
@@ -48,12 +50,12 @@ export default class CampaignMapItem extends Component {
       justifyContent:"space-evenly", 
       zIndex:"0",
       width: '100%', 
-      backgroundImage: 'url('+(obj?.getJson().picURL||placeholder)+')',
+      backgroundImage: 'url('+(obj?.getJson().picURL||imgPlace)+')',
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", }}>
                         
                         <div style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',borderRadius:radius,
-                        height: "fit-content", border: "1px solid "+styles.colors.color9+"85",
+                        height: "fit-content", border: type==="Compendium"? "1px solid #b07b1e85" : "1px solid "+styles.colors.color9+"85",
                          width: "fit-content"}}>
                           
                           <div 
@@ -63,7 +65,7 @@ export default class CampaignMapItem extends Component {
                           textDecorationThickness: "0px", textUnderlineOffset: "4px", color: styles.colors.colorWhite,
                           textShadow:"1px 1px 0 "+styles.colors.colorBlack, textShadow:"-1.5px -1.5px 0 "+styles.colors.colorBlack, textAlign:"center", justifyItems:"center",
                           alignItems:"center", justifyContent:"center", fontSize:window.innerWidth > 800?styles.fonts.fontHeader2:"2rem",}}>
-                            {obj?.getJson().title}
+                            {obj?.getJson().title||"Unnamed "+type}
                           </div>
                           {state.user.getJson()._id==="admin@arcanevaultassembly.com" &&<div className="hover-btn" onClick={(e)=>{
                             e.preventDefault();
