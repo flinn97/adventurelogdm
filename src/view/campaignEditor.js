@@ -229,8 +229,8 @@ export default class CampaignEditor extends Component {
     let parentItem = state.componentList.getComponent("lore", pId, "_id");
     let loreList = state.currentLore ? state.componentList.getList("lore", state.currentLore.getJson().name, "name") : "";
     let hasName = ((state.currentLore) && (state?.currentLore?.getJson().name != undefined) && (state?.currentLore?.getJson().name != "")) ? true : false;
-    let warning = ((loreList.length > 1) && (state.currentLore) && (hasName)) ? <div style={{ color: styles.colors.color5, background: styles.colors.color2, padding: "3px 8px", borderRadius: "8px", fontSize: styles.fonts.fontSmall, position: "absolute", top: 15 }}>
-      {"You already have another lore named " + state?.currentLore?.getJson().name}</div> : ""
+    // let warning = ((loreList.length > 1) && (state.currentLore) && (hasName)) ? <div style={{ color: styles.colors.color5, background: styles.colors.color2, padding: "3px 8px", borderRadius: "8px", fontSize: styles.fonts.fontSmall, position: "absolute", top: 15 }}>
+    // {"You already have another lore named " + state?.currentLore?.getJson().name}</div> : ""
 
     let encList = state.componentList.getList("encounter", this.state.obj?.getJson()._id, "campaignId");
     // Filter out objects where the name contains "Copy of"
@@ -554,7 +554,7 @@ export default class CampaignEditor extends Component {
                 }} to={"/campaignviewer/" + viewer.getJson()._id}  className="hover-btn-highlight">Campaign Viewer</Link>}
             </div>)}
 
-            {(state.currentLore == undefined &&
+            {(state.currentLore == undefined && window.innerWidth > 800 &&
               <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "20px" }}>
 
                 <div className="hover-btn">

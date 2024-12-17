@@ -65,6 +65,7 @@ export default class Upload extends Component {
                 
             await auth.uploadPics(this.state.selectedFile, this.state.path, this.setState.bind(this), this.props.quality);
         };
+        
 
 
     async handleSubmission() {

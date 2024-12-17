@@ -23,12 +23,13 @@ class IdService {
     }
 
     createId() {
+        let randomLetter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
         const currentDate = new Date();
         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
         const day = currentDate.getDate().toString().padStart(2, '0');
         const year = currentDate.getFullYear().toString().slice(-2);
 
-        let num = this.randomFiveDigitNumber().toString() + month + day + year;
+        let num = randomLetter + this.randomFiveDigitNumber().toString() + month + day + year;
         return num;
     };
 

@@ -5,6 +5,7 @@ import ParentFormComponent from '../componentListNPM/componentForms/parentFormCo
 import CardPractice from './CardPrac';
 import Upload from './upload';
 import placeholder from '../pics/placeholderCampaign.JPG';
+import placeholder2 from '../pics/placeholderCompendium.jpg';
 import RichTextComponent from '../componentListNPM/componentForms/singleForms/RichTextComponent';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
@@ -41,7 +42,8 @@ export default class AddCampaign extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
-    let type = state.currentComponent.getJson().type === "campaign" ? "Campaign" : "Compendium"
+    let type = state.currentComponent.getJson().type === "campaign" ? "Campaign" : "Compendium";
+    let imgPlace = state.currentComponent.getJson().type === "campaign" ? placeholder:placeholder2;
 
     let campaignPlaceholder = `${type} Name`;
     let textSubmit = ""; let textNotReady = "";
@@ -68,9 +70,9 @@ export default class AddCampaign extends Component {
           backgroundImage: (state.currentComponent?.getJson().type === "campaign" || state.currentComponent?.getJson().type === "compendium") && isUpdate ?
             'url(' + (this.state.obj?.getJson().picURL || this.state.completedPic) + ')'
             :
-            'url(' + (this.state.completedPic || placeholder) + ')'
+            'url(' + (this.state.completedPic || imgPlace) + ')'
           ,
-
+          border: type==="Compendium"? "1px solid #b07b1e85" : "",
           zIndex: "20",
           backgroundRepeat: "no-repeat", backgroundPosition: "50% 50%", backgroundSize: "cover",
         }}
@@ -143,7 +145,8 @@ export default class AddCampaign extends Component {
 
             {/* ///NAME OF CAMPAIGN */}
             <ParentFormComponent checkUser={true} app={app} name="title" label={`${type} Name: `}
-              wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column" }}
+              wrapperStyle={{ margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column" , 
+                marginBottom:type === "Campaign"?"2px":"21px"}}
               theme={"adventureLog"} rows={1}
               maxLength={app.state.maxLengthShort}
               labelStyle={{ marginBottom: "8px" }}
@@ -153,7 +156,7 @@ export default class AddCampaign extends Component {
               }}
               placeholder={campaignPlaceholder}
             />
-
+           { type === "Campaign" && <> 
 <div style={{fontSize:".98rem", marginBottom:"2px", marginLeft:"6px", marginTop:"11px", color:"#FFFFFF"}}
                 title='Go to the Server Settings page
 Select the Integrations tab
@@ -169,7 +172,7 @@ Click View Webhooks' app={app} obj={state.currentCampaign} name="discordLink"
               inputStyle={{
                 width: "41rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
                 borderRadius: "4px", background: styles.colors.colorWhite + "aa", borderWidth: "0px", fontSize:"1rem"
-              }}/>
+              }}/></>}
               {/* <div onClick={() => { state.opps.cleanPrepareRun({ update: state.currentCampaign }) }}>save</div> */}
             {/* ///Description */}
             {/* <ParentFormComponent app={app} name="description" label="Campaign Description: " 

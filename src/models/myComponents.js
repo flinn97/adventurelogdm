@@ -14,7 +14,7 @@ class componentBase extends BaseClass {
         this.addConnectedItemsMPI = this.addConnectedItemsMPI.bind(this)
         this.createFromMPI = this.createFromMPI.bind(this);
         this.addConnectedItemsLore = this.addConnectedItemsLore.bind(this);
-        this.createUUID=this.createUUID.bind(this);
+        this.createUUID = this.createUUID.bind(this);
     }
     json;
     startobj = {
@@ -49,12 +49,12 @@ class componentBase extends BaseClass {
         time: { mon: '0', tues: '0', wed: '0', thur: '0', fri: '0', sat: '0', sun: '0' },
     }
 
-    createUUID(length){
+    createUUID(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
         var charactersLength = characters.length;
-        for(var i =0; i<length; i++){
-            result +=characters.charAt(Math.floor(Math.random()*charactersLength));
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
     }
@@ -143,10 +143,10 @@ class User extends componentBase {
         ...this.userInfo,
         role: "GM",
         type: "user",
-        handle:"",
+        handle: "",
         signUpDate: moment().format('L'),
         paidCustomer: false,
-        firstTime:true
+        firstTime: true
 
     }
     getDaysFromNow() {
@@ -198,32 +198,32 @@ class Pin extends componentBase {
         referencePin: false,
         colorOverlay: "#5F0C0Cae",
         colorFilter: "",
-        
+
     }
 
     async getPicSrc(path, state) {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
         this.json.iconImage = pic;
-//
-        await this.pushIcon(state, this.json.picURL, this.json.campaignId )
+        //
+        await this.pushIcon(state, this.json.picURL, this.json.campaignId)
     }
 
     async pushIcon(state, imgSrc, id) {
-        
-        const compList = await state.componentList.getList("icon", id, "campaignId");
-        
-        let pic = imgSrc;
-        let json = {...this.json, picURL:pic, type: "icon", color:"", date:"", referencePin:"", _id:undefined};
 
-    /// I ran through // and everything looked fine
+        const compList = await state.componentList.getList("icon", id, "campaignId");
+
+        let pic = imgSrc;
+        let json = { ...this.json, picURL: pic, type: "icon", color: "", date: "", referencePin: "", _id: undefined };
+
+        /// I ran through // and everything looked fine
         if (compList.length > 29) {
             // Delete the first item in the array
             // keeps recent uploads to a min
             await this.operationsFactory.cleanPrepareRun({ del: state.componentList.getList("icon", id, "campaignId")[0] });
-            
+
         }
-        this.operationsFactory.cleanJsonPrepareRun({"addicon": {...json, }})
+        this.operationsFactory.cleanJsonPrepareRun({ "addicon": { ...json, } })
     }
 
 }
@@ -401,15 +401,15 @@ class Campaign extends componentBase {
     }
 
     async getPlayers(compList, dispatch) {
-        
+
         let monsters = compList.getList("participant");
         let pcs = monsters.filter(
             (monster) => {
                 return monster.getJson().role === "player"
             })
-            dispatch({
-                campaignPlayers: pcs,
-              })
+        dispatch({
+            campaignPlayers: pcs,
+        })
         return pcs
     }
 
@@ -419,7 +419,7 @@ class Encounter extends componentBase {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
         this.copyEncounter = this.copyEncounter.bind(this);
-        this.getParticipantInitHtml= this.getParticipantInitHtml.bind(this);
+        this.getParticipantInitHtml = this.getParticipantInitHtml.bind(this);
     }
     json = {
 
@@ -441,21 +441,21 @@ class Encounter extends componentBase {
      * get html to display for the encounter intitiative
      * @param {*} componentList 
      */
-    async getParticipantInitHtml(componentList){
-       await componentList.sortSelectedList("participant","initiative",true);
+    async getParticipantInitHtml(componentList) {
+        await componentList.sortSelectedList("participant", "initiative", true);
 
         let pList = componentList.getList("participant", this.json._id, "encounterId");
-        let html ="";
+        let html = "";
         //build html from the participant list
-        for(let p of pList){
+        for (let p of pList) {
             let init = p.getJson().initiative;
-            if(parseInt(init)!==999){
+            if (parseInt(init) !== 999) {
                 html += `<p>${p.getJson().name}: ${init}</p><br>`
             }
-            
+
         }
         return html
-        
+
 
 
     }
@@ -467,12 +467,12 @@ class Encounter extends componentBase {
     }
 
     async copyEncounter(componentList, loreId, campaignId, owner) {
-        
+
         let id = loreId ? loreId : "";
-        campaignId = campaignId||""
+        campaignId = campaignId || ""
         let newEnc = await this.copyComponent(["name", "loreId", "campaignId", "owner"], ["Copy of " + this.getJson().name, id, campaignId, owner]);
         let comps = await componentList.getList("participant", this.json._id, "encounterId");
-        if(this.json.campaignId!==campaignId){
+        if (this.json.campaignId !== campaignId) {
             comps = await auth.firebaseGetter(this.json._id, componentList, "encounterId", "participant");
         }
         let enc = await this.operationsFactory.cleanJsonPrepare({ "addencounter": newEnc });
@@ -597,11 +597,11 @@ class Encounter extends componentBase {
     }
     clearParticipant() {
         this.json.currentParticipant = ""
-        this.json.inSession=false;
+        this.json.inSession = false;
         this.operationsFactory.cleanPrepareRun({ update: this })
     }
 
-   
+
 
 }
 
@@ -631,20 +631,20 @@ class Condition extends componentBase {
 
 
 
-class Approval extends componentBase{
-    json={
+class Approval extends componentBase {
+    json = {
         campaignId: "",
         title: "",
         description: "",
         promotional: "",
         price: "",
-        selector:"",
-        mptype:"mpCampaign",
-        tags:"",
+        selector: "",
+        mptype: "mpCampaign",
+        tags: "",
         type: "approval",
         gameSystem: "",
         indexes: {},
-        readyForDistribution:false
+        readyForDistribution: false
     }
 
     async getPicSrc(path) {
@@ -653,49 +653,49 @@ class Approval extends componentBase{
 
     }
 
-    deleteByIndex(index){
-        let id = this.json.indexes["index"+index];
-        let obj ={};
-        for(let key in this.json.picURLs){
-            if(key!==id){
-                obj[key]=this.json.picURLs[key];
+    deleteByIndex(index) {
+        let id = this.json.indexes["index" + index];
+        let obj = {};
+        for (let key in this.json.picURLs) {
+            if (key !== id) {
+                obj[key] = this.json.picURLs[key];
             }
 
         }
         this.json.picURLs = obj;
-        let indexes= {}
-        
-        for(let key in this.json.indexes){
+        let indexes = {}
+
+        for (let key in this.json.indexes) {
             let i = key[key.length - 1];
-            if(parseInt(i)>parseInt(index)){
-                let str = "index"+(parseInt(i)-1);
-                indexes[str]=this.json.indexes[key];
+            if (parseInt(i) > parseInt(index)) {
+                let str = "index" + (parseInt(i) - 1);
+                indexes[str] = this.json.indexes[key];
             }
-            else if(parseInt(i)!==parseInt(index)){
+            else if (parseInt(i) !== parseInt(index)) {
                 indexes[key] = this.json.indexes[key];
             }
         }
-        this.json.indexes=indexes
+        this.json.indexes = indexes
 
     }
 
-    async getPicSrcMedia(path, index){
-        
-        let obj={};
+    async getPicSrcMedia(path, index) {
+
+        let obj = {};
         let indexes = {}
-        for(const key in path){
+        for (const key in path) {
             let pic = await auth.downloadPics(path[key]);
-            let id = "media"+this.createUUID(3)
-            obj[id]= pic;
-            indexes["index"+index] = id;
+            let id = "media" + this.createUUID(3)
+            obj[id] = pic;
+            indexes["index" + index] = id;
 
         }
-        obj = {...obj, ...this.json.picURLs}
-        indexes= {...indexes, ...this.json.indexes};
+        obj = { ...obj, ...this.json.picURLs }
+        indexes = { ...indexes, ...this.json.indexes };
         this.json.indexes = indexes
-        
+
         this.json.picURLs = obj
-        
+
     }
 }
 
@@ -751,7 +751,7 @@ class Participant extends componentBase {
     constructor(opps) {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
-        this.updateConditions=this.updateConditions.bind(this);
+        this.updateConditions = this.updateConditions.bind(this);
 
     }
 
@@ -764,13 +764,13 @@ class Participant extends componentBase {
         statBlockLink: "",
         note: "",
         encounterId: "",
-        role:"monster",
+        role: "monster",
         _id: "",
     }
 
     updateConditions(ruleset) {
         //get the list of conditions from the ruleset save in conditionList var
-        let conditionList =ruleset.getJson().conditionList.split(',');
+        let conditionList = ruleset.getJson().conditionList.split(',');
         //do Object.keys(this.json) save in a variable called jsonList
         let jsonList = Object.keys(this.json)
         //for everything in the ruleset conditionList:
@@ -779,7 +779,7 @@ class Participant extends componentBase {
             if (jsonList.includes(condition)) {
                 if (this.json[condition] !== "" && this.json[condition] !== undefined) {
                     //increment the value on that condition
-                    this.json[condition] = (parseInt(this.json[condition])+1).toString()
+                    this.json[condition] = (parseInt(this.json[condition]) + 1).toString()
                 }
 
 
@@ -787,7 +787,7 @@ class Participant extends componentBase {
             }
         }
         //after the for loop update the participant.
-        
+
         this.operationsFactory.cleanPrepareRun({ update: this })
     }
 
@@ -813,9 +813,9 @@ class Icon extends componentBase {
         this.getPicSrc = this.getPicSrc.bind(this);
 
     }
-    json = {   
+    json = {
         type: "icon",
-        picURL:"",
+        picURL: "",
         campaignId: "",
     }
 
@@ -825,25 +825,25 @@ class Icon extends componentBase {
 
     }
 
-    }
+}
 
-class Partner extends componentBase{
-    json={
+class Partner extends componentBase {
+    json = {
         type: "partner",
         name: "",
-        email:"",
-        userId:"",
-        description:"",
+        email: "",
+        userId: "",
+        description: "",
     }
 }
 
-class PartnerRequest extends componentBase{
-    json={
+class PartnerRequest extends componentBase {
+    json = {
         type: "partnerRequest",
         name: "",
-        email:"",
-        userId:"",
-        description:"",
+        email: "",
+        userId: "",
+        description: "",
     }
 }
 class MarketplaceItem extends componentBase {
@@ -862,27 +862,42 @@ class MarketplaceItem extends componentBase {
 
     }
 }
-class Viewer extends componentBase{
-    json={
-        type:"viewer",
-        html:"",
-        campaignId:""
+class Viewer extends componentBase {
+    json = {
+        type: "viewer",
+        html: "",
+        campaignId: ""
     }
 }
-class Compendium extends Campaign{
-    json={
+class Compendium extends Campaign {
+    constructor(opps) {
+        super(opps);
+        this.getPicSrc = this.getPicSrc.bind(this);
+
+    }
+    json = {
         ...this.json,
-        type:"compendium",
+        type: "compendium",
+    }
+    async getPicSrc(path) {
+        let pic = await authService.downloadPics(path);
+        this.json.picURL = pic;
+
     }
 }
+
+
 function forFactory() {
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
-    return {user:User,pin:Pin,campaign:Campaign,
-        encounter:Encounter,monster:Monster,
-        newNote:NewNote,map:Map, post:Post,
-        marketplaceItem:MarketplaceItem, viewer:Viewer,
-        condition:Condition, icon:Icon,         compendium:Compendium,
-        lore:Lore,image:Image, approval:Approval, partner:Partner, partnerRequest:PartnerRequest, mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset}
+    return {
+        user: User, pin: Pin, campaign: Campaign,
+        encounter: Encounter, monster: Monster,
+        newNote: NewNote, map: Map, post: Post,
+        marketplaceItem: MarketplaceItem, viewer: Viewer,
+        condition: Condition, icon: Icon, compendium: Compendium,
+        lore: Lore, image: Image, approval: Approval, partner: Partner, partnerRequest: PartnerRequest, 
+        mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset
+    }
 }
 
 

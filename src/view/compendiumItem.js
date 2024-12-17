@@ -13,6 +13,8 @@ import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
 import loreIndexService from '../services/loreIndexService';
+import Upload from './upload';
+
 
 
 export default class CompendiumItem extends Component {
@@ -33,7 +35,7 @@ export default class CompendiumItem extends Component {
 
 
   async componentDidMount() {
-    
+
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
@@ -48,18 +50,18 @@ export default class CompendiumItem extends Component {
         campId = id.split('-')[0];
       }
       else {
-        checkCampaign= state.componentList.getComponent("compendium", id, "_id")
+        checkCampaign = state.componentList.getComponent("compendium", id, "_id")
         campId = id;
-        if(!checkCampaign){
+        if (!checkCampaign) {
           await auth.firebaseGetter(id, state.componentList, "_id", "compendium");
-          let c= state.componentList.getComponent("compendium", id, "_id")
-          await dispatch({currentCampaign:c})
+          let c = state.componentList.getComponent("compendium", id, "_id")
+          await dispatch({ currentCampaign: c })
         }
 
       }
     }
-    
-   
+
+
 
     let list = await state.componentList.getList("lore", campId, "campaignId");
     if (list.length > 0) {
@@ -86,15 +88,11 @@ export default class CompendiumItem extends Component {
     }
 
     let component = this.props.app.state.componentList.getComponent("compendium", id);
-   
+
 
     if (component) {
-
-
-      this.setState({ obj: component, start: true, showList: true });
+      this.setState({ obj: component, start: true, showList: true, });
       dispatch({ currentCampaign: component })
-
-
     }
     this.scrollTo(this.startRef, "smooth")
 
@@ -193,10 +191,7 @@ export default class CompendiumItem extends Component {
 
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
-        {/* <div style={{color:"white"}} onClick={()=>{
-        convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
-      }}>Campaign Editor</div> */}
-        {/* HOMEPAGE */}
+
         {this.state.start ? (
           <div style={{
             display: "flex", flexDirection: "column",
@@ -241,7 +236,7 @@ export default class CompendiumItem extends Component {
             <div style={{
               ...styles.backgroundContent, position: "relative", minWidth: "83vw",
               backgroundImage:
-                'url(' + (this.state.obj?.getJson().picURL || placeholder) + ')'
+                'url(' + (state.currentLore?.getJson().picURL || this.state.obj?.getJson().picURL || placeholder) + ')'
             }}>
 
               <div style={{ ...styles.popupSmall, padding: "1rem", minHeight: "fit-content", width: "100%", }}>
@@ -258,12 +253,27 @@ export default class CompendiumItem extends Component {
 
 
                 {state.currentLore !== undefined && <div style={{ display: "flex", flexDirection: "column" }}>
+          {/* Taylor lets get this upload and tags working alan wants a full search and sort function on this. Sort by alphabetical etc, 
+                this uploader is not working, it is impermanent saves, after refresh they vanish, so I think it is just uploading blobs :(
+          */}
+                  <Upload app={app} text={state.currentLore.getJson().picURL?"Replace Image":"Upload Image"}
+                  changePic={(pic) => { this.setState({ pic: pic });
+                  state.currentLore.setCompState({picURL: pic, img: pic});
+                  app.dispatch({})
+                 }}
+                 obj={state.currentLore} style={{
+                   display: "flex",
+                   zIndex: "1", borderRadius: ".1vmin", background: "",
+                 }}
+                 update={true} 
+                 updateMap={(obj) => { this.setState({ completedPic: state.currentLore.getJson().picURL });}}
+                  />
                   <div className='hover-btn'
                     style={{
                       ...styles.buttons.buttonClose, borderRadius: "11px", fontSize: styles.fonts.fontSmall,
                       padding: "4px 10px", pointer: "cursor", color: styles.colors.color5,
                       height: "fit-content", zIndex: "200", alignSelf: "flex-end",
-                      background: styles.colors.colorBlack + "5b", marginTop: "-4px", marginBottom:"30px"
+                      background: styles.colors.colorBlack + "5b", marginTop: "-4px", marginBottom: "30px"
                       // backgroundColor:"white",
                     }}
 
@@ -293,37 +303,40 @@ export default class CompendiumItem extends Component {
 
                     </div> */}
                   </div>
-                    <ParentFormComponent checkUser={true} app={app} name="name" obj={state.currentLore}
-                      theme={"adventureLog"}
-                      callbackFunc={(arr) => {
-                        let L1 = arr[0];
-                        let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
-                        referenceList = referenceList.map(obj => obj.getJson()._id);
-                        let pinList = state.componentList.getList("pin");
-                        pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
-                        let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
-                        if (lPin) {
-                          pinList.push(lPin)
-                        }
-                        for (let p of pinList) {
-                          p.setCompState({ name: L1.getJson().name })
-                        }
-                        state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
+                  <ParentFormComponent checkUser={true} app={app} name="name" obj={state.currentLore}
+                    theme={"adventureLog"}
+                    callbackFunc={(arr) => {
+                      let L1 = arr[0];
+                      let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
+                      referenceList = referenceList.map(obj => obj.getJson()._id);
+                      let pinList = state.componentList.getList("pin");
+                      pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
+                      let lPin = state.componentList.getComponent("pin", L1.getJson()._id, "loreId");
+                      if (lPin) {
+                        pinList.push(lPin)
+                      }
+                      for (let p of pinList) {
+                        p.setCompState({ name: L1.getJson().name })
+                      }
+                      state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
 
-                      }}
-                      rows={5}
-                      // prepareRun={true}
-                      inputStyle={{
-                        width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                        borderRadius: "4px", background: styles.colors.colorWhite + "00", marginBottom:"20px",
-                        border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
-                      }}
-                      wrapperStyle={{
-                        margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
-                        flexDirection: "column", justifyItems: "space-between",
-                      }} />
+                    }}
+                    rows={5}
+                    // prepareRun={true}
+                    inputStyle={{
+                      width: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                      borderRadius: "4px", background: styles.colors.colorBlack + "22", marginBottom: "20px",
+                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSubheader1
+                    }}
+                    wrapperStyle={{
+                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
+                      flexDirection: "column", justifyItems: "space-between",
+                    }} />
+
+
                 </div>
                 }
+
                 {state.popUpSwitchcase !== "updateCompendium" && <>
                   <div style={{ display: "flex", alignContent: "center", position: "absolute", right: "24px", justifyContent: "space-between" }}>
                     {state.currentLore === undefined &&
@@ -335,7 +348,7 @@ export default class CompendiumItem extends Component {
                       }}
                         onClick={async () => {
                           await this.props.app.state.opps.clearUpdater();
-                          await dispatch({currentComponent:undefined});
+                          await dispatch({ currentComponent: undefined });
                           dispatch({ operate: "update", operation: "cleanPrepare", object: this.state.obj, popUpSwitchcase: "updateCompendium" })
                         }}>
                         Edit
@@ -344,63 +357,80 @@ export default class CompendiumItem extends Component {
                 </>}
               </div>
             </div>
+{state.currentLore !== undefined &&
+            <div style={{display:"flex", flexDirection:"row", marginTop:"4px" }}>
+              <ParentFormComponent app={app} name="desc" obj={state.currentLore}
+                theme={"adventureLog"}
+                linkLore={true}
+                wrapperStyle={{ width: "100%", marginRight:"11px", }}
+                type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
+              />
+
+              <img src={state.currentLore?.getJson()?.picURL} 
+              style={{maxWidth:"49%", height:"fit-content", borderRadius:"11px", objectFit:"cover",marginLeft:"1%"}} />
+
+            </div>}
+
             <div
-            title={"New Lore, opens in a new Tab"}
+              title={"New Item, opens in a new Tab"}
 
-            className="hover-btn" style={{
-              ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
-              paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight:"21px"
-            }}
-            onClick={async () => {
-              if (state.user.getJson().role !== "GM") {
-                dispatch({ popupSwitch: "goPremium" });
-                return
-              }
-              const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
-              let href = window.location.href;
-              let splitURL = href.split("/");
-              let id = splitURL[splitURL.length - 1];
-
-              let otherChildren = state.componentList.getList("lore", id.includes("-") ? state.currentLore.getJson()._id : state.currentCampaign?.getJson()._id, "parentId");
-              await state.opps.cleanJsonPrepare({
-                addlore: {
-                  campaignId: state.currentCampaign?.getJson()._id, index: otherChildren.length,
-                  parentId:
-                    { [newId]: "Unnamed" }
+              className="hover-btn" style={{
+                ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+                paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
+                borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight: "21px"
+              }}
+              onClick={async () => {
+                if (state.user.getJson().role !== "GM") {
+                  dispatch({ popupSwitch: "goPremium" });
+                  return
                 }
-              });
-              let lore = await state.opps.getUpdater("add")[0]
-              dispatch({
-                popupSwitch: "popupLoreWithoutPin",
-                currentComponent: lore,
-                loreType: "compendium"
+                const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
+                let href = window.location.href;
+                let splitURL = href.split("/");
+                let id = splitURL[splitURL.length - 1];
 
-              })
+                let otherChildren = state.componentList.getList("lore", id.includes("-") ? state.currentLore.getJson()._id : state.currentCampaign?.getJson()._id, "parentId");
+                await state.opps.cleanJsonPrepare({
+                  addlore: {
+                    campaignId: state.currentCampaign?.getJson()._id, index: otherChildren.length,
+                    parentId:
+                      { [newId]: "Unnamed" }
+                  }
+                });
+                let lore = await state.opps.getUpdater("add")[0]
+                dispatch({
+                  popupSwitch: "popupLoreWithoutPin",
+                  currentComponent: lore,
+                  loreType: "compendium"
 
-              // dispatch({popupSwitch:'popupLore', operate:"addlore", operation:"cleanPrepare"})
+                })
+
+                // dispatch({popupSwitch:'popupLore', operate:"addlore", operation:"cleanPrepare"})
+
+              }}
+            >+ Compendium Item</div>
 
 
-            }}
-          >+ Compendium Item</div>
-            <MapComponent reverse={true} app={app} name="lore" theme="defaultRow"
-            filters={[
-              { type: "textObject", attribute: "parentId", search: id },
-            ]}
-            //FIX RESIZING
-            cells={[
+            <MapComponent reverse={true} app={app} name="lore" theme="compendiumRow"
+              filters={[
+                { type: "textObject", attribute: "parentId", search: id },
+              ]}
+              cells={[
+                // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
+                {
+                  type: "img", class: "Img-Midsize", hasLink: true, to: "/compendium/", linkClass: "CR-Link", exactIdFunc: (obj) => {
+                    let str = obj.getJson().campaignId + "-" + obj.getJson()._id;
+                    return str
+                  }
+                },
+                {
+                  type: "attribute", name: "name", class: "Bold-Title CR-Attribute-Item",
 
-              // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
-              { type: "img", class: "Img-Midsize", hasLink:true,  to:"/compendium/", exactIdFunc:(obj)=>{
-                let str = obj.getJson().campaignId + "-" + obj.getJson()._id;
-                return str
-              }},
-              {
-                type: "attribute", name: "name", class: "Bold-Title DR-Attribute-Item",
-                
-              },
+                },
 
-            ]} />
+              ]} />
+
+
           </div>
         ) : (<div style={{ background: styles.colors.color2, zIndex: 55000, width: "100vw", height: "100vh", position: "absolute", left: "0px", top: "0px" }}>
           <SplashScreen

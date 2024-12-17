@@ -3,9 +3,11 @@ import { rowMapping } from "./defaultRow";
 import { rowWrapMapping } from "./defaultRowWrap";
 import { interactiveMapTheme } from "./interactiveMapTheme";
 import { encMapping } from "./encRow";
+import { compMapping } from "./compendiumRow";
 import "./css/defaultColumn.css";
 import "./css/defaultRow.css";
 import "./css/defaultRowWrap.css";
+import "./css/compendiumRow.css";
 import "./css/interactiveMapTheme.css";
 import "./css/encManager.css";
 import adventureLogStyles from "../../componentListNPM/themes/adventureLogStyles";
@@ -27,7 +29,7 @@ export default class ThemeFactory {
         arrowChangeOrder: "",
         adventure: adventureLogStyles.getStylesByScreenSize(),
         encounterRow: encMapping,
-
+        compendiumRow: compMapping,
 
 
 
