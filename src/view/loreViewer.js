@@ -3,7 +3,7 @@ import "../App.css"
 
 import MapComponent from '../componentListNPM/mapTech/mapComponent';
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
 import backarrow from '../pics/backArrow.webp';
 import placeholder from '../pics/placeholderEncounter.JPG';
@@ -25,7 +25,9 @@ import ImageButton from '../componentListNPM/componentForms/buttons/imageButton.
 import loreB from '../pics/illustrations/loreScript.png';
 import encounterB from '../pics/illustrations/encounterGiant.png';
 import galleryB from '../pics/illustrations/paintingHand.png';
+
 import IndexLoreHierarchy from './indexLoreHierarchy.js';
+import CollapseSection from './pages/collapseSection.js';
 
 
 export default class LoreViewer extends Component {
@@ -61,9 +63,6 @@ export default class LoreViewer extends Component {
 
   //eventLogger method definition
   eventLogger(e, data) {
-
-
-
   }
 
   addDraggableItem() {
@@ -71,10 +70,6 @@ export default class LoreViewer extends Component {
       draggableItems: [...prevState.draggableItems, {}],
     }));
   }
-
-  //onStart and onStop are events provided by react-draggable 
-  //and will be triggered when a user starts dragging the element 
-  //and stops dragging it, respectively.
 
   async componentDidMount() {
     let app = this.props.app;
@@ -96,7 +91,7 @@ export default class LoreViewer extends Component {
     // this.scrollTo(this.startRef,"smooth");
 
     this.setState({ obj: component, lore: currentLore, map: map, isSideBarVisible: false });
-    app.dispatch({isSideBarVisible:app.state.isSideBarVisible?app.state.isSideBarVisible:false})
+    app.dispatch({ isSideBarVisible: app.state.isSideBarVisible ? app.state.isSideBarVisible : false })
   }
 
   componentDidUpdate(props, state) {
@@ -105,19 +100,21 @@ export default class LoreViewer extends Component {
     }
 
     if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
-      
+
       this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
 
     }
 
-    if(this.props.app.state.reloadMaps){
-      this.props.app.dispatch({reloadMaps:false});
+    if (this.props.app.state.reloadMaps) {
+      this.props.app.dispatch({ reloadMaps: false });
     }
   }
 
   toggleSidebar = () => {
-    this.props.app.dispatch({isSideBarVisible:!this.props.app.state.isSideBarVisible})
+    this.props.app.dispatch({ isSideBarVisible: !this.props.app.state.isSideBarVisible })
   };
+
+
 
   getUniqueRandomColor(colorList) {
     // Remove duplicates
@@ -220,14 +217,14 @@ export default class LoreViewer extends Component {
       update={true} skipUpdate={true}
       app={app} />
 
+
+
     return (
       <div style={{ minWidth: "100%", }}><div ref={this.startRef} />
 
-
-
-        {(state.currentLore !== undefined &&
+        {/* {(state.currentLore === undefined &&
           // randomColor===0 &&
-          <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "22px" }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "12px" }}>
 
             <div className="hover-btn">
 
@@ -287,220 +284,234 @@ export default class LoreViewer extends Component {
 
 
           </div>)
-        }
+        } */}
 
-
-        <div style={{
-          display: "flex", flexDirection: "row", alignContent: "flex-end",
-          justifyContent: "flex-end", marginBottom: "-20px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
-          marginTop: "12px"
-        }}>
-
-          <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
-
-
+        <div style={{ overflowY: "hidden", maxWidth: "100%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px" }} className='scroller2'>
+          <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
         </div>
 
+        {/* {*Lore Text Section} */}
+        <div className={!lore?.getJson()?.hideLore ? "none" : "collapse"}>
+          <CollapseSection app={app} sectionTitle="Lore Text Section">
+            <div style={{
+              display: "flex", flexDirection: "row", alignContent: "flex-end",
+              justifyContent: "flex-end", marginBottom: "-20px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
+            }}>
+
+              <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
 
 
-        <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>
-
-          <div style={{ display: "flex", flexDirection: "row", marginBottom: "8px", }}>
-            <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
-            <div style={{ overflowY: "hidden", maxWidth: "100%", justifySelf: "flex-start", marginLeft: "2px" }} className='scroller2'>
-              <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
-            </div></div>
-          {/* < QuillComponent app = {app}/> */}
-
-          <ParentFormComponent app={app} name="desc" obj={lore}
-            theme={"adventureLog"}
-            rows={5}
-            prepareRun={true}
-            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
-            inputStyle={{
-              maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-              borderRadius: "4px", background: styles.colors.colorWhite + "00", background: "",
-              border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
-            }}
-            wrapperStyle={{
-              marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", width: "97%",
-              flexDirection: "column", justifyItems: "space-between", background: ""
-            }} />
-
-        </div>
+            </div>
 
 
 
-        <div style={{
-          display: "flex", flexDirection: "row", alignContent: "flex-end",
-          justifyContent: "flex-end", marginBottom: "-29px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
-          marginTop: "22px"
-        }}>
-          <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
-        </div>
+            <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>
 
-        <div
-          style={{
-            color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
-            marginTop: "12px", marginBottom: "3px"
-          }}> Handout:
-          <ParentFormComponent app={app} name="handoutText" obj={lore}
-            theme={"adventureLog"}
-            rows={5}
-            prepareRun={true}
-            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
-            inputStyle={{
-              maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
-              borderRadius: "4px", background: styles.colors.colorWhite + "00",
-              border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
-            }}
-
-            wrapperStyle={{
-              marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", width: "97%", marginTop: "10px",
-              flexDirection: "column", justifyItems: "space-between"
-            }} /></div>
+              <div style={{ display: "flex", flexDirection: "row", marginBottom: "8px", }}>
+                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
+                {/* Lore Hierarchy was here */}
+              </div>
 
 
+              <ParentFormComponent app={app} name="desc" obj={lore}
+                theme={"adventureLog"}
+                rows={5}
+                prepareRun={true}
+                type={"quill"}
+                checkUser={true} onPaste={this.handlePaste} connectLore={true}
+                inputStyle={{
+                  maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                  borderRadius: "4px", background: styles.colors.colorWhite + "00", background: "",
+                  border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                }}
+                wrapperStyle={{
+                  marginLeft: "10px", color: styles.colors.colorWhite, display: "flex",
+                  flexDirection: "column", justifyItems: "space-between", background: ""
+                }}
+              />
+
+            </div>
+          </CollapseSection></div>
+
+        {/* {*Handout Section} */}
+
+        <div className={!lore?.getJson()?.hideHandout ? "none" : "collapse"}>
+          <CollapseSection app={app} sectionTitle="Handout Section">
+            <div style={{
+              display: "flex", flexDirection: "row", alignContent: "flex-end",
+              justifyContent: "flex-end", marginBottom: "-29px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
+              marginTop: "2px"
+            }}>
+              <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
+            </div>
+
+            <div
+              style={{
+                color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
+                marginTop: "12px", marginBottom: "3px"
+              }}> Handout:
+              <ParentFormComponent app={app} name="handoutText" obj={lore}
+                theme={"adventureLog"}
+                rows={5}
+                prepareRun={true}
+                type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
+                inputStyle={{
+                  maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
+                  borderRadius: "4px", background: styles.colors.colorWhite + "00",
+                  border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                }}
+
+                wrapperStyle={{
+                  marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", width: "97%", marginTop: "10px",
+                  flexDirection: "column", justifyItems: "space-between"
+                }} /></div></CollapseSection></div>
+
+
+        {/* {*Map Section} */}
 
         <div style={{
           display: "flex", flexDirection: "column", position: 'relative',
-          height: "100%", maxWidth: "100%", marginTop: "20px",
+          height: "100%", maxWidth: "100%",
         }}>
 
-          <div>
-            <div className='hover-btn' style={{
-              ...styles.buttons.buttonAdd,
-              display: "inline-block", height: "fit-content",
-              maxWidth: "fit-content", cursor: "pointer", marginTop: "24px",
-              marginRight: "1rem", position: "relative", fontWeight: "600",
-              fontSize: styles.fonts.fontSmall
-            }}
-              onClick={() => {
-                if(state.user.getJson().role!=="GM"){
-                  dispatch({ popupSwitch: "goPremium"});
-                  return
-                }
-                dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
-              }}
-            >
-              Add Map
-            </div>
+
+          <div className={!lore?.getJson()?.hideMap ? "none" : "collapse"}>
+            <CollapseSection app={app} sectionTitle="Map Section" >
+              <div>
+                <div className='hover-btn' style={{
+                  ...styles.buttons.buttonAdd,
+                  display: "inline-block", height: "fit-content",
+                  maxWidth: "fit-content", cursor: "pointer", marginTop: "24px",
+                  marginRight: "1rem", position: "relative", fontWeight: "600",
+                  fontSize: styles.fonts.fontSmall
+                }}
+                  onClick={() => {
+                    if (state.user.getJson().role !== "GM") {
+                      dispatch({ popupSwitch: "goPremium" });
+                      return
+                    }
+                    dispatch({ popupSwitch: "chooseMap", mapUpload: mapUpload })
+                  }}
+                >
+                  Add Map
+                </div>
 
 
 
 
-            {/* </div>
+                {/* </div>
           </div> */}
-            {this.state.lore?.getJson()._id !== this.props.app.state.componentList.getComponent("campaign", this.props._id) &&
+                {this.state.lore?.getJson()._id !== this.props.app.state.componentList.getComponent("campaign", this.props._id) &&
 
-              <div style={{ color: styles.colors.colorWhite }}>
-                {/* {this.state.lore?.getJson().name} */}
-              </div>}
+                  <div style={{ color: styles.colors.colorWhite }}>
+                    {/* {this.state.lore?.getJson().name} */}
+                  </div>}
 
-            {(this.state.map) &&
-              <>
-                <div style={{ height: this.state.bulletinHeight ? this.state.bulletinHeight : "1310px", width: this.state.bulletinWidth ? this.state.bulletinWidth : "100%" }}>
-                  {state.reloadMaps===false &&
-                  <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize={this.updateSize} delMap={()=>{
-                        let currentLore = this.props.app.state.currentLore;
+                {(this.state.map) &&
+                  <>
+                    <div style={{ height: this.state.bulletinHeight ? this.state.bulletinHeight : "1310px", width: this.state.bulletinWidth ? this.state.bulletinWidth : "100%" }}>
+                      {state.reloadMaps === false &&
+                        <MapGallery app={app} obj={this.state.lore} color={randomColor} updateSize={this.updateSize} delMap={() => {
+                          let currentLore = this.props.app.state.currentLore;
 
-                    let map = this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
-                    this.setState({
-                      map:map
+                          let map = this.props.app.state.componentList.getComponent("map", currentLore.getJson()._id, "loreId");
+                          this.setState({
+                            map: map
 
-                  })}}/>}
+                          })
+                        }} />}
 
-                </div></>}
+                    </div></>}
 
+              </div></CollapseSection></div>
 
-
-
-
-
-          </div>
-
-          {(state.popupSwitch===""||state.popupSwitch===undefined) && (<div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
-            ...styles.buttons.buttonAdd, overflow:"hidden", justifyContent:"flex-start",
+          {(state.popupSwitch === "" || state.popupSwitch === undefined) && (<div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
+            ...styles.buttons.buttonAdd, overflow: "hidden", justifyContent: "flex-start",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
-            transition:'all 0.5s ease-in-out',
-            height:state.isSideBarVisible?"28px":"45px",
+            transition: 'all 0.5s ease-in-out',
+            height: state.isSideBarVisible ? "28px" : "45px",
             padding: "5px 9px", border: "none", zIndex: "9000", position: "fixed", right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
           }}>
-            <div style={{display:"flex", flexDirection:"row"}}>{state.isSideBarVisible ? "Hide Lore": "Show All Lore"}
-              <img src={backarrow} alt=">" style={{ width: "12px", marginLeft: "11px", marginTop:"6px", height:"11px", 
-              transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out" }}></img>
+            <div style={{ display: "flex", flexDirection: "row" }}>{state.isSideBarVisible ? "Hide Lore" : "Show All Lore"}
+              <img src={backarrow} alt=">" style={{
+                width: "12px", marginLeft: "11px", marginTop: "6px", height: "11px",
+                transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out"
+              }}></img>
             </div>
-            
-              <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
-            
+
+            <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
+
           </div>)}
           <div ref={this.loreRef} />
           {
-          // state.isSideBarVisible && 
-          (state.popupSwitch===""||state.popupSwitch===undefined) && 
-          (<div style={{ position: "fixed", zIndex: "8000", right: "9px", top: "3vh"}}>
-            {/* SIDEBAR */}
-            <div style={{ display: "flex", width: "fit-content", height: "100%", }}>
-            <LoreListCard app={app} type="card" options={{ cardType:state.isSideBarVisible? "tallestCard":"none" }} isVisible={state.isSideBarVisible}/>
+            // state.isSideBarVisible && 
+            (state.popupSwitch === "" || state.popupSwitch === undefined) &&
+            (<div style={{ position: "fixed", zIndex: "8000", right: "9px", top: "3vh" }}>
+              {/* SIDEBAR */}
+              <div style={{ display: "flex", width: "fit-content", height: "100%", }}>
+                <LoreListCard app={app} type="card" options={{ cardType: state.isSideBarVisible ? "tallestCard" : "none" }} isVisible={state.isSideBarVisible} />
 
-            </div>
-          </div>)}
-
-
+              </div>
+            </div>)}
 
         </div>
 
-        <LoreSearch app={app} type="card" options={{ tabType: "bigCardBorderless", cardType: undefined }}
-        />
 
-        {/* ENCOUNTER ENCOUNTER ENCOUNTER */}
-        <hr></hr>
+        {/* {*Lore All Section} */}
+        <div className={!lore?.getJson()?.hideConnected ? "none" : "collapse"}>
+          <LoreSearch app={app} type="card" options={{ tabType: "bigCardBorderless", cardType: undefined }}
+          /></div>
+
+        {/* {*Encounter Section} */}
+        <div className={(lore?.getJson()?.hideConnected && lore?.getJson()?.hideMap && lore?.getJson()?.hideHandout && lore?.getJson()?.hideLore) ? "collapse" : "none"}
+          style={{ marginTop: (lore?.getJson()?.hideConnected && lore?.getJson()?.hideMap && lore?.getJson()?.hideHandout && lore?.getJson()?.hideLore) ? "-10px" : "" }}>
+          <hr></hr></div>
 
         <div ref={this.encRef} />
-        <div style={{ marginTop: "-10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}>{lore.getJson().name} Encounters</div>
+        <div style={{ marginTop: "10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}>{lore.getJson().name} Encounters</div>
         {!this.state.showFindEncounter && !this.state.showFindImage &&
-          <div style={{minHeight:"120px"}}>
-<div style={{flexDirection:"row", display:"flex"}}>
-            <div className="hover-btn" style={{
-              ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
-              paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px", marginRight:"22px",
-            }}
-              title="Create a new encounter, you can edit it by clicking on it."
-              onClick={() => {
-                if(state.user.getJson().role!=="GM"){
-                  dispatch({ popupSwitch: "goPremium"});
-                  return
-                }
-                state.opps.cleanJsonPrepareRun({
-                  "addencounter": {
-                    loreId: lore.getJson()._id,
-                    name: "New Encounter", campaignId: this.state.obj.getJson()._id
+          <div style={{ minHeight: "120px" }}>
+            <div style={{ flexDirection: "row", display: "flex" }}>
+              <div className="hover-btn" style={{
+                ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+                paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
+                borderRadius: "9px", fontSize: "21px", marginRight: "22px",
+              }}
+                title="Create a new encounter, you can edit it by clicking on it."
+                onClick={() => {
+                  if (state.user.getJson().role !== "GM") {
+                    dispatch({ popupSwitch: "goPremium" });
+                    return
                   }
-                })
+                  state.opps.cleanJsonPrepareRun({
+                    "addencounter": {
+                      loreId: lore.getJson()._id,
+                      name: "New Encounter", campaignId: this.state.obj.getJson()._id
+                    }
+                  })
 
-                this.setState({ showAddEncounter: true });
-              }}>
-              + Create New Encounter
-            </div>
+                  this.setState({ showAddEncounter: true });
+                }}>
+                + Create New Encounter
+              </div>
 
 
-            <div className="hover-btn" style={{
-              ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
-              paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-              borderRadius: "9px", fontSize: "21px",
-            }}
-              title="Find an existing encounter to add to this lore.
+              <div className="hover-btn" style={{
+                ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+                paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
+                borderRadius: "9px", fontSize: "21px",
+              }}
+                title="Find an existing encounter to add to this lore.
                         This will create a COPY."
-              onClick={() => {
-                if(state.user.getJson().role!=="GM"){
-                  dispatch({ popupSwitch: "goPremium"});
-                  return
-                }
-                this.setState({ showFindEncounter: true })
-              }}>
-              Find Encounter
-            </div></div>
+                onClick={() => {
+                  if (state.user.getJson().role !== "GM") {
+                    dispatch({ popupSwitch: "goPremium" });
+                    return
+                  }
+                  this.setState({ showFindEncounter: true })
+                }}>
+                Find Encounter
+              </div></div>
 
             <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
@@ -549,8 +560,8 @@ export default class LoreViewer extends Component {
                     await this.setState({ isFullEnc: true })
                   }
                   await auth.getMPItems(state.componentList, state.user.getJson()._id)
-            await auth.getAllMpTypeData(state.componentList);
-            dispatch({})
+                  await auth.getAllMpTypeData(state.componentList);
+                  dispatch({})
                 }}>Import Library</div>}
 
               <input app={app}
@@ -580,10 +591,10 @@ export default class LoreViewer extends Component {
                     key={encounter.getJson()._id}
                     onClick={async () => {
                       {
-                        
+
                         await this.setState({ showFindEncounter: false });
                         let enc = await encounter.copyEncounter(componentList, toolService.getIdFromURL(true, 1), state.currentCampaign.getJson()._id, state.user.getJson()._id);
-        
+
 
                       }
                     }}
@@ -631,9 +642,9 @@ export default class LoreViewer extends Component {
             </div>
           </div>}
 
-        {/* GALLERY GALLERY GALLERY */}
+        {/* {*Gallery Section} */}
         <hr></hr>
-        <div style={{ marginTop: "-10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall }}>{lore.getJson().name} Gallery</div>
+        <div style={{ marginTop: "10px", color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall, marginBottom: "16px" }}>{lore.getJson().name} Gallery</div>
         <GalleryViewer app={app} type="card" options={{ tabType: "bigCardBorderless", cardType: undefined }}
 
         />  <div ref={this.galRef} />
