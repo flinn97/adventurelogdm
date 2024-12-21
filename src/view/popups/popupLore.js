@@ -340,7 +340,7 @@ class MainContent extends Component {
               <div title="Change icon" className='hover-btn-highlight'
                 style={{
                   display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", borderRadius: "11px", cursor: "pointer",
-                  background: styles.colors.color8 + "04", marginBottom: "14px",
+                  background: styles.colors.color8 + "04", marginBottom: "14px", marginLeft:"-5px",
                   justifyContent: "center", border: "1px solid " + styles.colors.color8, padding: "4px 8px",
                   color: styles.colors.color3, fontSize: styles.fonts.fontSmallest,
                 }} onClick={async () => {
@@ -425,12 +425,28 @@ class MainContent extends Component {
                         borderRadius: "50%"
                       }} /></div> </div>
               </div>
+
+
             </>}
+
+
 
             {(this.state.showIcon) && <>
               <IconChange app={app} pin={pin} />
             </>}
           </div>}
+
+        <div style={{ display: "flex", flexDirection: "row",marginBottom:"-13px", marginLeft:"6px" }}>
+          <ParentFormComponent app={app} name="showName" type="checkbox" obj={pin}
+            theme={"adventureLog"} prepareRun={true}
+            labelClass="good-checkbox"
+            tickClass="redFix1"
+            wrapperStyle={{
+              margin: "1px", color: styles.colors.colorWhite, display: "flex",
+              flexDirection: "column", justifyItems: "space-between",
+            }} /> <div style={{ marginTop: "6px", fontSize: "18px", color: styles.colors.color8, marginRight: "32px", mixBlendMode: "screen" }}>
+            Always Show Pin Name</div></div>
+
 
         {(this.state.start && !this.state.showIcon) && <>
 
@@ -452,7 +468,7 @@ class MainContent extends Component {
                   }}
                   style={{
                     ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa",
-                    fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px", marginTop:"-42px"
+                    fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "2px 8px", marginTop: "-42px"
                   }}
 
                 >

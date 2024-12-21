@@ -38,7 +38,7 @@ export default class InteractiveBulletin extends Component {
     this.startX = 0;
     this.startY = 0;
     this.isPanning = false;
-    
+
     this.state = {
       pins: [],
       isGrabbing: false,
@@ -91,26 +91,26 @@ export default class InteractiveBulletin extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if(prevProps.obj!==this.props.obj){
+    if (prevProps.obj !== this.props.obj) {
       let mapHeight = this.imgRef?.current?.clientHeight;
       let mapWidth = this.imgRef?.current?.clientWidth;
       this.setState({
-          bounds: {
-            left: 0,
-            top: 0,
-            right: mapWidth,
-            bottom: mapHeight,
-          },
-        })
+        bounds: {
+          left: 0,
+          top: 0,
+          right: mapWidth,
+          bottom: mapHeight,
+        },
+      })
     }
-   
+
 
 
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     if (state.showPinMap === false) {
-     
+
       dispatch({ showPinMap: true })
 
     }
@@ -125,18 +125,18 @@ export default class InteractiveBulletin extends Component {
         mapHeight: mapHeight,
         mapWidth: mapWidth,
         imgRef: this.imgRef.current,
-          bounds: {
-            left: 0,
-            top: 0,
-            right: mapWidth,
-            bottom: mapHeight,
-          },
+        bounds: {
+          left: 0,
+          top: 0,
+          right: mapWidth,
+          bottom: mapHeight,
+        },
       }, () => this.forceUpdate());
       if (mapWidth < 1500 && mapWidth > 300) {
         this.props.updateSize(mapWidth, mapHeight);
 
       }
-      
+
 
     }
 
@@ -235,8 +235,8 @@ export default class InteractiveBulletin extends Component {
             backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
           }}
             onClick={async (e) => {
-              if(state.user.getJson().role!=="GM"){
-                dispatch({ popupSwitch: "goPremium"});
+              if (state.user.getJson().role !== "GM") {
+                dispatch({ popupSwitch: "goPremium" });
                 return
               }
               let scrollLeft = this.divRef.current.scrollLeft;
@@ -282,12 +282,12 @@ export default class InteractiveBulletin extends Component {
 
             }}
             onClick={async () => {
-              if(state.user.getJson().role!=="GM"){
-                dispatch({ popupSwitch: "goPremium"});
+              if (state.user.getJson().role !== "GM") {
+                dispatch({ popupSwitch: "goPremium" });
                 return
               }
               await state.opps.cleanPrepareRun({ del: this.props.obj });
-              await dispatch({reloadMaps:true})
+              await dispatch({ reloadMaps: true })
               // this.setState({ map: undefined, obj:undefined });
             }}>
             <img src={trash} style={{ width: "34px", cursor: "pointer", zIndex: 991 }} />
@@ -325,22 +325,22 @@ export default class InteractiveBulletin extends Component {
                   bounds={this.state.bounds}
                   handle=".draghere"
                   onStart={(data) => {
-                    if(state.user.getJson().role!=="GM"){
-                      dispatch({ popupSwitch: "goPremium"});
+                    if (state.user.getJson().role !== "GM") {
+                      dispatch({ popupSwitch: "goPremium" });
                       return
                     }
                     this.setState({ isGrabbing: true });
                   }}
                   onStop={async (item, data) => {
-                    if(state.user.getJson().role!=="GM"){
-                      dispatch({ popupSwitch: "goPremium"});
+                    if (state.user.getJson().role !== "GM") {
+                      dispatch({ popupSwitch: "goPremium" });
                       return
                     }
                     let comp = pin;
                     // state.componentList.getComponent("pin",pinId);
 
                     let parentRect = this.parentRef?.current?.getBoundingClientRect();
-                    
+
                     let x = Math.min(Math.max(data.x, 1), parentRect.width - 1);
                     let y = Math.min(Math.max(data.y, 1), parentRect.height - 1);
 
@@ -379,7 +379,7 @@ export default class InteractiveBulletin extends Component {
                     }}
 
                       onClick={async () => {
-                        
+
                         //
                         let l = componentList.getComponent("lore", pin.getJson().loreId, "_id");
 
@@ -390,8 +390,8 @@ export default class InteractiveBulletin extends Component {
                         }
 
                         else {
-                          if(state.user.getJson().role!=="GM"){
-                            dispatch({ popupSwitch: "goPremium"});
+                          if (state.user.getJson().role !== "GM") {
+                            dispatch({ popupSwitch: "goPremium" });
                             return
                           }
                           const newId = state.currentLore ? state.currentLore.getJson()._id : this.props.obj?.getJson().campaignId;
@@ -453,7 +453,7 @@ export default class InteractiveBulletin extends Component {
                             objectFit: "fill", cursor: "pointer", overflow: "visible",
                           }}
                           >
-                            {state.user.getJson().role === "GM" &&<img draggable="false"
+                            {state.user.getJson().role === "GM" && <img draggable="false"
                               style={{
                                 width: "22px", marginTop: "-3px",
                                 objectFit: "fill",
@@ -487,9 +487,9 @@ export default class InteractiveBulletin extends Component {
                                         key={index}
                                         src={imgSrc}
                                         onClick={async (item, data) => {
-                                          
-                                          if(state.user.getJson().role!=="GM"){
-                                            dispatch({ popupSwitch: "goPremium"});
+
+                                          if (state.user.getJson().role !== "GM") {
+                                            dispatch({ popupSwitch: "goPremium" });
                                             return
                                           }
 
@@ -542,8 +542,8 @@ export default class InteractiveBulletin extends Component {
                                       className='hover-divInt'
                                       key={index}
                                       onClick={(item, data) => {
-                                        if(state.user.getJson().role!=="GM"){
-                                          dispatch({ popupSwitch: "goPremium"});
+                                        if (state.user.getJson().role !== "GM") {
+                                          dispatch({ popupSwitch: "goPremium" });
                                           return
                                         }
                                         let comp = pin;
@@ -578,14 +578,14 @@ export default class InteractiveBulletin extends Component {
 
 
                           </div>
-                          <div onClick={()=>{
-                             
+                          <div onClick={() => {
+
                           }} style={{
                             display: "flex", direction: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
-                            marginTop: "51px",
-                            marginLeft: "-110px",
+                            marginTop: "55px",
+                            marginLeft: "-112px",
                             width: "200px", verticalAlign: "center",
                             zIndex: "20", borderRadius: "4px",
                             background: styles.colors.color1 + "31",
@@ -593,31 +593,49 @@ export default class InteractiveBulletin extends Component {
 
                           }}>
                             <ParentFormComponent
-                            checkUser={true}
+                              checkUser={true}
                               app={app}
                               name="name"
                               prepareRun={true}
                               obj={pin}
                               inputStyle={{
                                 cursor: "text",
-                                padding: "2px",
-                                color: styles.colors.colorWhite,
+                                padding: "3px",
+                                color: "white",
                                 borderRadius: "4px",
-                                background: styles.colors.colorBlack + "88",
+                                background: styles.colors.colorBlack + "79",
                                 borderWidth: "0px",
                                 textAlign: 'center',
                                 width: "200px",
                                 overflowX: "clip",
                                 overflowY: "auto",
-                                fontSize: styles.fonts.fontSmallest
+                                fontSize: ".98rem"
                               }}
                             />
                           </div></>
                       }
 
+
+
                     </div>
 
-
+                    {(pin?.getJson()?.name && pin?.getJson().showName) && (
+                      <div className="hover-hideInt" style={{
+                        padding: "3px", top: "48.2px",
+                        color: "white", 
+                        borderRadius: "4px", position: "absolute",
+                        textShadow: "0px 1px 4px black, 0px 0px 3px black, 0px 0px 1px black",
+                        background: styles.colors.colorBlack + "0f",
+                        borderWidth: "0px",
+                        textAlign: 'center',
+                        overflowX: "clip",
+                        overflowY: "auto", mixBlendMode:"difference",
+                        fontSize: ".98rem"
+                      }}
+                      // className={pin?.getJson().showName === true ? "good-checkbox":"" } 
+                      >
+                        {pin?.getJson()?.name}
+                      </div>)}
                   </div>
 
                 </Draggable>
