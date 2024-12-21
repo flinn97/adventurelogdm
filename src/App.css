@@ -706,3 +706,41 @@ input {
 .vault-door-handle-fast {
   animation: spin360 3s cubic-bezier(.17,.67,.88,.86) forwards;
 }
+
+.collapsible-content {
+  overflow: hidden;
+  max-height: 1px;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-in; 
+}
+
+.collapsible-content.open {
+  max-height: 100%; /* Large enough to contain all content */
+  opacity: 1;
+}
+
+.collapse{
+  max-height: 0;
+  opacity: 0;
+  margin-top: -22px;
+  pointer-events: none;
+  transition: max-height 0.2s ease, opacity 0.2s ease;
+}
+
+
+.hide-checkbox {
+  display: inline-block;
+    margin: 7px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid grey;
+    border-radius: 4px;
+    -o-transition: 400ms 100ms ease-out;
+    transition: 400ms 100ms ease-out;
+}
+
+.hide-checkbox:hover {
+  display: inline-block;
+  border-color: rgb(87, 13, 13);
+    
+}

@@ -12,6 +12,7 @@
     --hover-color: black;
     --tick-color: #ADCDBA;
     --x-color: #942525e8;
+    --x-color2: #bb1818;
 }
 /* :root {
     --checkbox-size: 12;
@@ -214,6 +215,14 @@ input[type="checkbox"]:checked + label .xFix {
     z-index: 0;
 }
 
+input[type="checkbox"]:checked + label .redFix1 {
+    opacity: 1;
+    -webkit-transform: rotate(45deg) scale(1);
+    -ms-transform: rotate(45deg) scale(1);
+    transform: rotate(45deg) scale(1);
+    z-index: 0;
+}
+
 /* 
 to change where the checks are located with the before and after ticks change right and top for x and y access.
 to control the width of the midding of the checkbox change the borders.
@@ -296,5 +305,44 @@ everything else does not need to be touched.
     .xFix:after {
         transform: translate(-50%, -50%) rotate(-45deg); /* Rotate -45 degrees */
     }
-    
 
+
+    .redFix1 {
+        z-index: 0;
+        position: relative;
+        right: calc(var(--checkbox-size2) * -0.0);
+        top: calc(var(--checkbox-size2) * -0.55);
+        width: calc(var(--checkbox-size2) * 0.42);
+        height: calc(var(--checkbox-size2) * 0.82);
+        border-right: calc(var(--checkbox-size2) * 0.2) solid var(--x-color2);
+        border-bottom: calc(var(--checkbox-size2) * 0.2) solid var(--x-color2);
+        /* Start the line collapsed horizontally and rotated at 45deg */
+        transform: rotate(45deg) scaleX(0);
+        transform-origin: left bottom; /* Anchor the start of the "draw" */
+        opacity: 0;
+    
+        transition: 
+          opacity 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.5),
+          transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.5);
+    }
+    
+    .redFix1:before,
+    .redFix1:after {
+        content: '';
+        position: absolute;
+        border: calc(var(--checkbox-size2) * 0.1) solid var(--x-color);
+        border-radius: 50%;
+        z-index: 0;
+    }
+    
+    /* Adjust these so the small circles align properly with the new animation */
+    .redFix1:before {
+        left: calc(var(--checkbox-size2) * -0.08);
+        bottom: calc(var(--checkbox-size2) * -0.2);
+    }
+    
+    .redFix1:after {
+        right: calc(var(--checkbox-size2) * -0.2);
+        top: calc(var(--checkbox-size2) * -0.1);
+    }
+    

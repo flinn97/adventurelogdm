@@ -360,8 +360,9 @@ export default class QuillForm extends Component {
 
 
           style={this.props.wrapperStyle ?
-            { ...this.props.wrapperStyle } : { minHeight: "100%", padding: "8px", minWidth: "99%", width: "100%", }
-          } theme="snow" value={this.state.value}
+            { ...this.props.wrapperStyle } : { minHeight: "100%",  minWidth: "99%", width: "100%", }
+          } 
+          theme="snow" value={this.state.value}
           onChange={this.handleChange.bind(this)} />
       </div>
     )

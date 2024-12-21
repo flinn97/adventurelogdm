@@ -170,13 +170,14 @@ export default class LoreSearch extends Component {
     let placeholderT = '';
 
     return (
-      <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop: "90px", }}>
+      <div style={{ width: "100%", minHeight: "200px", maxHeight: "fit-content", marginTop: (state.currentLore?.getJson()?.hideMap && state.currentLore?.getJson()?.hideLore ) ? "12px" : "90px", }}>
 
         <div style={{ flexDirection: "row", display: "flex" }}>
           <div style={{ color: styles.colors.colorWhite + "55", fontSize: styles.fonts.fontSmall, marginRight: "8px", minWidth: "fit-content" }}> {"Connected Lore:"}
 
           </div> {state.currentLore &&
-            <div style={{ overflowY: "hidden", maxWidth: "100%", }} className='scroller2'>
+            <div style={{ overflowY: "hidden", maxWidth: "100%", }} 
+            className={(state.currentLore?.getJson()?.hideMap && state.currentLore?.getJson()?.hideLore ) ? "collapse" :"scroller2"}>
               <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
             </div>
           }
