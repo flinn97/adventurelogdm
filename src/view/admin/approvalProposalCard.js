@@ -158,7 +158,7 @@ class MainContent extends Component {
             <Upload
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic) => { this.setState({ pic: pic }) }}
-              obj={app.state.currentApproval} text="Upload Card" style={{
+              obj={app.state.currentApproval} text="Upload Image Card" style={{
                 display: "flex",
                 zIndex: "1", borderRadius: ".1vmin", background: "",
               }}
