@@ -148,17 +148,17 @@ class MainContent extends Component {
 
 
         <div style={{ marginTop: "0px", background: " linear-gradient(" + styles.colors.color2 + "44, " + styles.colors.color1 + "00)", padding: "30px", borderRadius: "11px" }}>
-          <div style={{ color: styles.colors.colorWhite, fontSize: "1.4rem", marginLeft: "5px", marginBottom: "8px" }}>Marketplace Banner</div>
+          <div style={{ color: styles.colors.colorWhite, fontSize: "1.4rem", marginLeft: "5px", marginBottom: "8px" }}>Marketplace Display Card</div>
           <img src={this.state.pic} style={{
             marginLeft: "20px", objectFit: "cover", width: "440px", borderRadius: "9px",
-            maxHeight: "200px",
+            maxHeight: "120px",
             minHeight: "200px",
           }} />
-          <div style={{ marginLeft: "20px", marginBottom: "28px", marginTop: "22px" }}>
+          <div style={{ marginLeft: "20px", marginBottom: "28px", marginTop: "22px" }} title="158:95 image">
             <Upload
               //ADD THIS TO ALL UPLOADS//
               changePic={(pic) => { this.setState({ pic: pic }) }}
-              obj={app.state.currentApproval} text="Upload Banner" style={{
+              obj={app.state.currentApproval} text="Upload Card" style={{
                 display: "flex",
                 zIndex: "1", borderRadius: ".1vmin", background: "",
               }}
