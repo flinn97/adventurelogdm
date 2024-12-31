@@ -84,15 +84,15 @@ class MainContent extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
-    let mW = "200px";
+    let mW = window.innerWidth > 800?"200px":"100%";
 
     let isLog = toolService.checkURLforString("/log/");
 
     return (
       <div style={{
-        display: "flex", width: "100%", height: "100%", flexDirection: "column", justifyContent: "space-between",
+        display: "flex", width: "100%", height: "100%", flexDirection: "column", justifyContent: window.innerWidth > 800?"space-between":"flex-start",
 
-        paddingTop: "28px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
+        paddingTop: window.innerWidth > 800?"28px":"14px", fontFamily: "serif", fontSize: styles.fonts.fontSubheader1,
       }}>
       
         {!isLog &&
@@ -102,7 +102,7 @@ class MainContent extends Component {
 
         {!isLog &&
           <div style={{
-            display: "flex", flexDirection: "row", minWidth: "100%", width: "100%", marginTop: "22px",
+            display: "flex", flexDirection: "row", minWidth: "100%", width: "100%", marginTop: window.innerWidth > 800?"22px":"22px",
             height: "fit-content",
           }}>
             {/* <div style={{
@@ -122,12 +122,12 @@ class MainContent extends Component {
 
               wrapperStyle={{
                 margin: "5px", width: "100%", color: styles.colors.colorWhite, display: "flex",
-                flexDirection: "column", justifyItems: "space-between"
+                flexDirection: "column", justifyItems: "space-between", 
               }} /></div>}
 
         <div className='scroller2' style={{
-          maxHeight: "100%", maxWidth: "100%",
-          display: "flex", flexDirection: "row", textAlign: "center", padding: "4px", justifyContent: "center"
+          maxHeight: "100%", maxWidth: "100%", marginTop: window.innerWidth > 800?"0px":"22px",
+          display: "flex", flexDirection: "row", textAlign: "center", padding: window.innerWidth > 800?"4px":"", justifyContent: "center"
         }}>
           <img src={state.currentPic?.getJson().picURL}
             style={{
