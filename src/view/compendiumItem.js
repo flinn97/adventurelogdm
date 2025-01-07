@@ -414,6 +414,7 @@ export default class CompendiumItem extends Component {
             <MapComponent reverse={true} app={app} name="lore" theme="compendiumRow"
               filters={[
                 { type: "textObject", attribute: "parentId", search: id },
+                {type: "bool", attribute:"topLevel", search:false}
               ]}
               cells={[
                 // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },

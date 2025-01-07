@@ -11,6 +11,7 @@ import AdminUser from '../view/admin/adminUser';
 import Library from "../view/pages/library.js";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import BaseObserver from "./observerBase.js";
+import Compendium from "../view/pages/compendium.js";
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 
@@ -652,6 +653,7 @@ class Auth {
                         ///Added Marketplace
                         {path: "/admin/user", comp:AdminUser, name: "Admin"},
                         {path: "/library", comp:Library, name: "Library"},
+                        {path: "/compendium", comp:Compendium, name: "Compendium"},
                     ]
                 })
             }
