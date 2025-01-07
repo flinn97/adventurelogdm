@@ -32,6 +32,7 @@ import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
 import Upload from "./upload";
 import CreateViewerService from '../services/createViewer';
+import CollapseSection from './pages/collapseSection';
 
 
 export default class CampaignEditor extends Component {
@@ -235,7 +236,9 @@ export default class CampaignEditor extends Component {
     let encList = state.componentList.getList("encounter", this.state.obj?.getJson()._id, "campaignId");
     // Filter out objects where the name contains "Copy of"
     encList = encList.filter(enc => !enc.getJson().name.includes("Copy of"));
-    let viewer = state.componentList.getComponent("viewer", state.currentCampaign?.getJson()._id, "campaignId")
+    let viewer = state.componentList.getComponent("viewer", state.currentCampaign?.getJson()._id, "campaignId");
+
+
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
         {/* <div style={{color:"white"}} onClick={()=>{
@@ -287,7 +290,7 @@ export default class CampaignEditor extends Component {
 
 
             <div style={{
-              ...styles.backgroundContent, position: "relative", minWidth: "83vw",
+              ...styles.backgroundContent, position: "relative", minWidth: "84vw", 
               backgroundImage:
                 'url(' + (this.state.obj?.getJson().picURL || placeholder) + ')'
             }}>
@@ -333,7 +336,7 @@ export default class CampaignEditor extends Component {
                   <div
                     style={{
                       width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3,
-                      padding: "5px 6px", marginTop: "-22px"
+                      padding: "5px 6px", marginTop: "-22px", 
                     }}>
                     {/* <div
                       style={{ fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "69", }}>
@@ -370,8 +373,8 @@ export default class CampaignEditor extends Component {
                     }}
 
                     wrapperStyle={{
-                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "0px",
-                      flexDirection: "column", justifyItems: "space-between",
+                      margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "20px",
+                      flexDirection: "column", justifyItems: "space-between", 
                     }} />
 
 
@@ -407,15 +410,58 @@ export default class CampaignEditor extends Component {
                     }}
                     className='hover-btn' title={advLogText}
                     style={{
-                      ...styles.buttons.buttonAdd, padding: "2px 14px", borderRadius: "11px",
-                      borderColor: "#00000000", boxShadow: "",
-                      color: styles.colors.color9, position: "absolute", bottom: 17,
+                      ...styles.buttons.buttonAdd, padding: "8px 18px", borderRadius: "11px",
+                      color: styles.colors.color9, position: "absolute", bottom: 11,
                       backgroundColor: styles.colors.colorBlack + "b8",
                       fontWeight: "600"
                     }}>
 
-                    Adventure Log
+                   Visit Adventure Log
                   </Link>
+
+                  {state.currentLore !== undefined && <div style={{ display: "flex", flexDirection: "row", position: "absolute", bottom: 70, left: 14 }}>
+                    <ParentFormComponent app={app} name="hideLore" type="checkbox" obj={state.currentLore}
+                      theme={"adventureLog"} prepareRun={true}
+                      labelClass="hide-checkbox"
+                      tickClass="redFix1"
+                      wrapperStyle={{
+                        margin: "1px", color: styles.colors.colorWhite, display: "flex",
+                        flexDirection: "column", justifyItems: "space-between",
+                      }} /> <div style={{ marginTop: "6px", fontSize: "18px", color: styles.colors.color8, marginRight: "30px", mixBlendMode: "screen" }}>
+                      Hide Lore</div>
+
+                    <ParentFormComponent app={app} name="hideHandout" type="checkbox" obj={state.currentLore}
+                      theme={"adventureLog"} prepareRun={true}
+                      labelClass="hide-checkbox"
+                      tickClass="redFix1"
+                      wrapperStyle={{
+                        margin: "1px", color: styles.colors.colorWhite, display: "flex",
+                        flexDirection: "column", justifyItems: "space-between",
+                      }} /> <div style={{ marginTop: "6px", fontSize: "18px", color: styles.colors.color8, marginRight: "30px", mixBlendMode: "screen" }}>
+                      Hide Handout</div>
+
+                    <ParentFormComponent app={app} name="hideMap" type="checkbox" obj={state.currentLore}
+                      theme={"adventureLog"} prepareRun={true}
+                      labelClass="hide-checkbox"
+                      tickClass="redFix1"
+                      wrapperStyle={{
+                        margin: "1px", color: styles.colors.colorWhite, display: "flex",
+                        flexDirection: "column", justifyItems: "space-between",
+                      }} /> <div style={{ marginTop: "6px", fontSize: "18px", color: styles.colors.color8, marginRight: "32px", mixBlendMode: "screen" }}>
+                      Hide Maps</div>
+
+                    <ParentFormComponent app={app} name="hideConnected" type="checkbox" obj={state.currentLore}
+                      theme={"adventureLog"} prepareRun={true}
+                      labelClass="hide-checkbox"
+                      tickClass="redFix1"
+                      wrapperStyle={{
+                        margin: "1px", color: styles.colors.colorWhite, display: "flex",
+                        flexDirection: "column", justifyItems: "space-between",
+                      }} /> <div style={{ marginTop: "6px", fontSize: "18px", color: styles.colors.color8, marginRight: "24px", mixBlendMode: "screen" }}>
+                      Hide Connected</div>
+
+                  </div>}
+
 
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", minWidth: "100%", }}>
                     <div id="campaignDesc"
@@ -538,23 +584,23 @@ export default class CampaignEditor extends Component {
 
 
             </div>
-            {state.currentLore === undefined && (<div style={{marginTop:"12px", alignSelf:"end"}}>
-              {!viewer && <div  className="hover-btn" style={{
-            ...styles.buttons.buttonAdd, padding: "4px 10px", paddingLeft: "10px", borderColor: styles.colors.color3,
-            backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
-          }} onClick={() => {
+            {state.currentLore === undefined && (<div style={{ marginTop: "12px", alignSelf: "end" }}>
+              {!viewer && <div className="hover-btn" style={{
+                ...styles.buttons.buttonAdd, padding: "4px 10px", paddingLeft: "10px", borderColor: styles.colors.color3,
+                backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
+              }} onClick={() => {
                 debugger
                 this.createViewerService.createViewer(state.currentCampaign)
               }}>Convert to Full Web View</div>}
               {viewer && <Link style={{
-                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
-                  color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
-                  backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
-                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
-                }} to={"/campaignviewer/" + viewer.getJson()._id}  className="hover-btn-highlight">Campaign Viewer</Link>}
+                ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
+                color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
+                backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
+                fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
+              }} to={"/campaignviewer/" + viewer.getJson()._id} className="hover-btn-highlight">Campaign Viewer</Link>}
             </div>)}
 
-            {(state.currentLore == undefined && window.innerWidth > 800 &&
+            {/* {(state.currentLore == undefined && window.innerWidth > 800 &&
               <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "20px" }}>
 
                 <div className="hover-btn">
@@ -562,8 +608,8 @@ export default class CampaignEditor extends Component {
                     onClick={() => this.scrollTo(this.loreRef, "smooth")}
                     app={app} image={loreB} text={"Lore"} wrapperStyle={{
                       ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      minHeight: "90px", padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "95px", backgroundColor: styles.colors.color2 + 'de',
+                      minHeight: "20px", padding: "4px", borderRadius: "12px",
+                      width: "270px", minHeight: "35px", backgroundColor: styles.colors.color2 + 'de',
                       overflow: 'hidden'
                     }}
                     buttonTextStyle={{
@@ -582,8 +628,8 @@ export default class CampaignEditor extends Component {
                     text={"Encounters"}
                     wrapperStyle={{
                       ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      minHeight: "90px", padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "95px", backgroundColor: styles.colors.color2 + 'de',
+                      minHeight: "20px", padding: "4px", borderRadius: "12px",
+                      width: "270px", minHeight: "35px", backgroundColor: styles.colors.color2 + 'de',
                       overflow: 'hidden'
                     }}
                     buttonTextStyle={{
@@ -600,8 +646,8 @@ export default class CampaignEditor extends Component {
                     text={"Gallery"}
                     wrapperStyle={{
                       ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      minHeight: "90px", padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "95px", backgroundColor: styles.colors.color2 + 'de',
+                      minHeight: "20px", padding: "4px", borderRadius: "12px",
+                      width: "270px", minHeight: "35px", backgroundColor: styles.colors.color2 + 'de',
                       overflow: 'hidden'
                     }}
                     buttonTextStyle={{
@@ -613,38 +659,41 @@ export default class CampaignEditor extends Component {
 
 
               </div>)
-            }
+            } */}
 
 
 
             {state.currentLore === undefined &&
-              <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
-                {/* {this.state.obj.getJson().title}  */}
-                Lore:
-                <ParentFormComponent checkUser={true} app={app} name="description" obj={this.state.obj}
-                  theme={"adventureLog"}
-                  rows={5}
-                  prepareRun={true}
+              <CollapseSection app={app} sectionTitle="Campaign Text">
+                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
+                  {/* {this.state.obj.getJson().title}  */}
+                  Lore:
+                  <ParentFormComponent checkUser={true} app={app} name="description" obj={this.state.obj}
+                    theme={"adventureLog"}
+                    rows={5}
+                    prepareRun={true}
 
-                  inputStyle={{
-                    maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                    borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                    border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
-                  }}
+                    inputStyle={{
+                      maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                      borderRadius: "4px", background: styles.colors.colorWhite + "00",
+                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                    }}
 
-                  type={"quill"} onPaste={this.handlePaste} connectLore={true}
-                  wrapperStyle={{
-                    margin: "5px", color: styles.colors.colorWhite, display: "flex",
-                    flexDirection: "column", justifyItems: "space-between"
-                  }} />
-              </div>}
+                    type={"quill"} onPaste={this.handlePaste} connectLore={true}
+                    wrapperStyle={{
+                      margin: "5px", color: styles.colors.colorWhite, display: "flex",
+                      flexDirection: "column", justifyItems: "space-between"
+                    }} />
+                </div></CollapseSection>}
 
 
-            {state.currentLore !== undefined ? (<div style={{ minWidth: "100%", height: "100%" }}>
+            {state.currentLore !== undefined ? (<div
+              style={{ minWidth: "100%", height: "100%" }}
+            >
               <LoreViewer app={app} type="card" _id={this.state.obj.getJson()._id} />
             </div>) : (
-              <>
-                <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "fit-content", padding: ".75%", justifyContent: "space-between", }}>
+              <><CollapseSection app={app} sectionTitle="Campaign Map">
+                <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "fit-content", padding: ".75%", justifyContent: "space-between", marginTop: "15px" }}>
 
                   {/* {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{...styles.buttons.buttonAdd, color:'red', width:"fit-content",
           marginBottom:"8px", alignSelf:"flex-end"}}  onClick={async ()=>{
@@ -655,7 +704,7 @@ export default class CampaignEditor extends Component {
   this.setState({update:true})
  }}>Delete Map</div>} */}
                   <Worldbuilder app={app} type="card" dispatch={() => { this.setState({ update: false }) }} update={this.state.update} topLore={topLore} />
-                </div>
+                </div></CollapseSection>
                 <div ref={this.loreRef} />
                 <LoreSearch app={app} type="card" options={{ tabType: "bigCardBorderless", cardType: undefined }}
                 />
