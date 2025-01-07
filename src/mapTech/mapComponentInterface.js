@@ -215,10 +215,10 @@ class SearchMapComponent extends Component {
 
         return (<div style={{display:"flex", flexDirection:"row", }}>
         {this.props.imgLeft && <div style={{display:"flex", flexDirection:"column", justifyContent:"center", marginRight:"-41px"}}>
-            <img src={this.props.imgLeft} style={{width:"32px", height:"32px", opacity:"71%"}} />
+            <img src={this.props.imgLeft} style={{width:window.innerWidth>700?"32px":"20px", height:window.innerWidth>700?"32px":"20px", opacity:"71%"}} />
             </div>}
             <input autocomplete="off" name={attribute} placeholder={this.props.placeholder?this.props.placeholder:"Search..."} 
-            style={this.props.style? this.props.style: {width:"120px"}} class={this.props.class? this.props.class: "flinntechInput"} onChange={(e)=>{
+            style={this.props.style? this.props.style: {width:window.innerWidth>700?"120px":"88px"}} class={this.props.class? this.props.class: "flinntechInput"} onChange={(e)=>{
                 
                 const { name, value } = e.target
                 
