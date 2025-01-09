@@ -435,7 +435,7 @@ class MainContent extends Component {
               <IconChange app={app} pin={pin} />
             </>}
           </div>}
-
+{state.loreType !== "compendium" &&
         <div style={{ display: "flex", flexDirection: "row",marginBottom:"-13px", marginLeft:"6px" }}>
           <ParentFormComponent app={app} name="showName" type="checkbox" obj={pin}
             theme={"adventureLog"} prepareRun={true}
@@ -445,7 +445,7 @@ class MainContent extends Component {
               margin: "1px", color: styles.colors.colorWhite, display: "flex",
               flexDirection: "column", justifyItems: "space-between",
             }} /> <div style={{ marginTop: "6px", fontSize: "18px", color: styles.colors.color8, marginRight: "32px", mixBlendMode: "screen" }}>
-            Always Show Pin Name</div></div>
+            Always Show Pin Name</div></div>}
 
 
         {(this.state.start && !this.state.showIcon) && <>

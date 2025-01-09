@@ -39,8 +39,12 @@ export default class EditItem extends Component {
             border: "solid 1px " + styles.colors.colorWhite + "22",
             textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
           }} />
+
+
           {/* Taylor lets get this upload and tags working alan wants a full search and sort function on this. Sort by alphabetical etc, */}
 {/* <Upload app={app} text="Upload image"/> */}
+
+
         <div style={{ color: styles.colors.color3 + "f5", marginBottom: "26px", marginTop: "42px", fontSize: styles.fonts.fontSmall, }}> Data:
 
           <ParentFormComponent app={app} name="desc"

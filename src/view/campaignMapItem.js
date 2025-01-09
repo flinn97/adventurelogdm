@@ -49,14 +49,14 @@ export default class CampaignMapItem extends Component {
       borderRadius:radius,
       justifyContent:"space-evenly", 
       zIndex:"0",
-      width: '100%', 
+      width:'100%', 
       backgroundImage: 'url('+(obj?.getJson().picURL||imgPlace)+')',
       backgroundRepeat: "no-repeat",  backgroundPosition: "50% 50%",  backgroundSize:"cover", }}>
                         
                         <div style={{
                         ...styles.popupSmall, display: "flex", flexDirection: "row", justifyContent:"space-between", flexDirection: 'column',borderRadius:radius,
-                        height: "fit-content", border: type==="Compendium"? "1px solid #b07b1e85" : "1px solid "+styles.colors.color9+"85",
-                         width: "fit-content"}}>
+                        height: "fit-content", border: type==="Compendium"? "1px solid #b07b1e85" : "1px solid "+styles.colors.color9+"85", 
+                         width:"fit-content"}}>
                           
                           <div 
                           
