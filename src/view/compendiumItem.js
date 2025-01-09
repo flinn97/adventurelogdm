@@ -465,6 +465,14 @@ export default class CompendiumItem extends Component {
                   type: "attribute", name: "name", class: "Bold-Title CR-Attribute-Item",
 
                 },
+                { name: state.currentCampaign.getJson()?.attr1 + " ",
+                  class: "CR-Attribute-Box CR-Attribute-Label"},
+                {
+                  type: "attribute", name: "attr1Value", 
+                  class: "CR-Attribute-Box CR-Attribute-Primary",
+                },
+                //TAYLOR, can we hide these last two cells if attr1Value empty?
+                //TAYLOR, can we change these cells to attr# if a different attribute is being sorted?
 
               ]} />
 
