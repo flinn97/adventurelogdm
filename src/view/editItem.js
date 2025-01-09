@@ -53,6 +53,24 @@ export default class EditItem extends Component {
 
             type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
           /></div>
+          <img src={this.state.completedPic}/>
+          <Upload
+                checkUser={true}
+                //ADD THIS TO ALL UPLOADS//
+                changePic={(pic) => { this.setState({ pic: pic }) }}
+                obj={app.state.currentComponent} text="Change Image" style={{
+                  display: "flex",
+                  zIndex: "1", borderRadius: ".1vmin", background: "",
+                }}
+                update={true} skipUpdate={true}
+                updateMap={(obj) => {
+                  this.setState({
+                    completedPic: obj.getJson().picURL,
+                    // usage: obj.getJson().usage +1
+                  })
+                }} app={app} />
+          
+          
 
 
 <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
