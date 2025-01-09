@@ -303,8 +303,14 @@
   border-style: solid;
 }
 .CR-Attribute-Label {
-  margin-right: 31px; /* Tiny space between label and value */
+  margin-right: 32px; /* Tiny space between label and value */
   border-image: linear-gradient(to right, #21263883 0%, #3a4fd500 100%) 1;
   border-width: 4px;
+  z-index: 220;
   border-style: solid;
+}
+
+.CR-Attribute-Primary{
+  z-index: 200;
+  margin-left: 32px;
 }
