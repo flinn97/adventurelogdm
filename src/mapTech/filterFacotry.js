@@ -6,6 +6,7 @@ export default class FilterFactory {
     factory = {
         text: textAttributeFilter,
         tag: filterByTag,
+        bool: filterByBool,
         plain: textFilter,
         textAndTag: filterByTextThenTitle,
         textObject: textObjectAttributeFilter
@@ -96,7 +97,7 @@ function textAttributeFilter(json) {
 }
 function textObjectAttributeFilter(json) {
     
-
+    
     let { list, attribute, search } = json;
 
     if (search !== undefined) {
@@ -121,5 +122,10 @@ function textFilter(json) {
     if (search && search.length > 0) {
         list = list.filter(obj => obj[attribute]?.toLowerCase().includes(search?.toLowerCase()));
     }
+    return list;
+}
+function filterByBool(json) {
+    let { list, attribute, search } = json;
+    list = list.filter(obj=> obj.getJson()[attribute]===search)
     return list;
 }
