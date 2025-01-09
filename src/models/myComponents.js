@@ -291,8 +291,8 @@ class Lore extends componentBase {
         handoutText: "",
     }
 
-    async getPicSrc() {
-        let pic = await authService.downloadPics(this.json.pics);
+    async getPicSrc(path) {
+        let pic = await authService.downloadPics(path||this.json.pics);
         this.json.picURL = pic;
 
     }

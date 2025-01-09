@@ -69,6 +69,7 @@ export default class Upload extends Component {
 
 
     async handleSubmission() {
+        debugger
         
         let component = this.state.obj;
         await component.getPicSrc(this.state.path, this.props.app.state);
