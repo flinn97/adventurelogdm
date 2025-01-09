@@ -362,9 +362,8 @@ export default class CompendiumItem extends Component {
               <div style={{ display: "flex", flexDirection: "row", marginTop: "4px" }}>
                 <ParentFormComponent app={app} name="desc" obj={state.currentLore}
                   theme={"adventureLog"}
-                  linkLore={true}
                   wrapperStyle={{ width: "100%", marginRight: "11px", }}
-                  type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
+                  type={"quill"} checkUser={true} onPaste={this.handlePaste}
                 />
 
                 <img src={state.currentLore?.getJson()?.picURL}

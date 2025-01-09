@@ -2,13 +2,14 @@ import { Component } from 'react';
 import "../App.css"
 import RunButton from '../componentListNPM/componentForms/buttons/runButton';
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
-import CardPractice from './CardPrac';
+
 import Upload from './upload';
 import placeholder from '../pics/placeholderCampaign.JPG';
 import placeholder2 from '../pics/placeholderCompendium.jpg';
-import RichTextComponent from '../componentListNPM/componentForms/singleForms/RichTextComponent';
+
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
+import CompendiumAttributeSwitcher from './compendiumAttributeSwitcher';
 
 export default class AddCampaign extends Component {
   constructor(props) {
@@ -16,9 +17,16 @@ export default class AddCampaign extends Component {
     this.deleteCampaign = this.deleteCampaign.bind(this);
     this.state = {
       usage: 0,
+      format: "Custom", //default is Custom
     }
+    this.handleFormatChange = this.handleFormatChange.bind(this);
+
   }
 
+  handleFormatChange(obj, eventOrValue) {
+    const newVal = eventOrValue?.target?.value || eventOrValue;
+    this.setState({ format: newVal });
+  }
 
 
   async deleteCampaign() {
@@ -42,7 +50,7 @@ export default class AddCampaign extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
-    let type = state.currentComponent.getJson().type === "Compendium" ? "Campaign" : "Compendium";
+    let type = state.currentComponent.getJson().type === "campaign" ? "Campaign" : "Compendium";
     let imgPlace = state.currentComponent.getJson().type === "campaign" ? placeholder : placeholder2;
 
     let campaignPlaceholder = `${type} Name`;
@@ -64,7 +72,7 @@ export default class AddCampaign extends Component {
 
     return (
       <div>
-
+        {type}
         <div style={{
           ...styles.backgroundContent,
           backgroundImage: (state.currentComponent?.getJson().type === "campaign" || state.currentComponent?.getJson().type === "compendium") && isUpdate ?
@@ -143,7 +151,12 @@ export default class AddCampaign extends Component {
 
             </div>
 
-            <div>
+            <div style={{
+              display: "flex", flexDirection: "row", width: "100%", justifyContent: type === "Compendium" ? "space-evenly" : "",
+              marginTop: type === "Compendium" ? "22px" : "",
+              marginBottom: type === "Compendium" ? "12px" : ""
+            }}>
+
               {/* ///  NAME  */}
               <ParentFormComponent checkUser={true} app={app} name="title" label={`${type} Name: `}
                 wrapperStyle={{
@@ -159,22 +172,57 @@ export default class AddCampaign extends Component {
                 }}
                 placeholder={campaignPlaceholder}
               />
-              {type === "Compendium" &&
-                <ParentFormComponent checkUser={true} app={app} name="compendiumType" label={`${type} Format: `}
+
+              {/* FORMAT {this.state.format} */}
+              {type === "Compendium" && isNotUpdate &&
+                <ParentFormComponent
+                  app={app}
+                  name="format"
+                  label={`${type} Format:`}
+                  type="select"
+                  selectOptions={["Custom", "Statblock 5e"]}
+                  func={this.handleFormatChange}
                   wrapperStyle={{
-                    margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column",
-                    marginBottom: "21px"
+                    margin: "5px",
+                    color: styles.colors.colorWhite,
+                    display: "flex",
+                    flexDirection: "column",
+                    marginBottom: "21px",
                   }}
-                  theme={"adventureLog"} rows={1}
-                  maxLength={app.state.maxLengthShort}
+                  theme="adventureLog"
                   labelStyle={{ marginBottom: "8px" }}
                   inputStyle={{
-                    width: "58.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
-                    borderRadius: "4px", background: styles.colors.colorWhite + "aa", borderWidth: "0px",
+                    width: "16.1rem",
+                    padding: "4px 9px",
+                    color: styles.colors.colorBlack,
+                    height: "1.7rem",
+                    borderRadius: "4px",
+                    background: styles.colors.colorWhite + "aa",
+                    borderWidth: "0px",
                   }}
-                  placeholder={campaignPlaceholder}
                 />}
+
+              {type === "Compendium" && isUpdate &&
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div style={{marginBottom:"15px"}}>
+                    Compendium Format:
+                  </div>
+                  {state.currentComponent.getJson()?.format &&
+                    (<div>
+                      {state.currentComponent.getJson().format}
+                    </div>) ||
+                    (<div style={{color:styles.colors.color3, fontWeight:"600"}}>
+                    None
+                  </div>)
+                  }
+                </div>}
+
             </div>
+            {/* {Attributes} */}
+            {type === "Compendium" &&
+              <CompendiumAttributeSwitcher app={app} format={this.state.format} obj={state.currentComponent} />
+            }
+
 
             {type === "Campaign" && <>
               <div style={{ fontSize: ".98rem", marginBottom: "2px", marginLeft: "6px", marginTop: "11px", color: "#FFFFFF" }}
