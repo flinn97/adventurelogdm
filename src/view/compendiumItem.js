@@ -188,6 +188,7 @@ export default class CompendiumItem extends Component {
     let state = app.state;
     let styles = state.styles;
     let id = this.getId();
+    const attrKeys = ["attr1", "attr2", "attr3", "attr4", "attr5"];
 
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
@@ -358,18 +359,53 @@ export default class CompendiumItem extends Component {
                 </>}
               </div>
             </div>
-            {state.currentLore !== undefined &&
+            {state.currentLore !== undefined && <div>
               <div style={{ display: "flex", flexDirection: "row", marginTop: "4px" }}>
-                <ParentFormComponent app={app} name="desc" obj={state.currentLore}
-                  theme={"adventureLog"}
-                  wrapperStyle={{ width: "100%", marginRight: "11px", }}
-                  type={"quill"} checkUser={true} onPaste={this.handlePaste}
-                />
+                <div style={{ display: "flex", flexDirection: "column", width: "39%",}}>
+                  {attrKeys.map((attr) => {
+                    if (state.currentCampaign?.getJson()[attr])
+                      return (
+                        <ParentFormComponent
+                          key={attr}
+                          app={app} obj={state.currentLore}  
+                          name={`${attr}Value`}
+                          label={state.currentCampaign?.getJson()[attr]}
+                          checkUser={true}
+                          wrapperStyle={{
+                            margin: "5px",
+                            color: styles.colors.colorWhite,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                          theme={"adventureLog"}
+                          rows={1}
+                          labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color8 }}
+                          inputStyle={{
+                            width: "89%", marginLeft: "9px",
+                            padding: "4px 9px", fontSize: "1.2rem",
+                            color: styles.colors.colorWhite,
+                            height: "1.7rem",
+                            rows: "1",
+                            borderRadius: "4px",
+                            background: styles.colors.colorWhite + "11",
+                            borderWidth: "0px",
+                          }}
+                        />
+                      ); return null;
+                  })
+                  }
+                </div>
 
                 <img src={state.currentLore?.getJson()?.picURL}
-                  style={{ maxWidth: "49%", height: "fit-content", borderRadius: "11px", objectFit: "cover", marginLeft: "1%" }} />
+                  style={{ maxWidth: "60%", maxHeight:"444px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%" }} />
 
-              </div>}
+              </div>
+              <ParentFormComponent app={app} name="desc" obj={state.currentLore}
+                theme={"adventureLog"}
+                wrapperStyle={{ width: "95%", marginRight: "11px", }}
+                type={"quill"} checkUser={true} onPaste={this.handlePaste}
+              /></div>
+            }
 
             {state.currentLore == undefined &&
               <div

@@ -219,7 +219,7 @@ export default class CompendiumAttributeSwitcher extends Component {
               type="text"
               obj={[
                 {
-                  getJson: () => ({ attr2: "Type" }),
+                  getJson: () => ({ attr2: "Size" }),
                   setJson: () => { },
                   getOperationsFactory: () => ({
                     cleanPrepareRun: () => { },
@@ -253,7 +253,7 @@ export default class CompendiumAttributeSwitcher extends Component {
               type="text"
               obj={[
                 {
-                  getJson: () => ({ attr3: "Size" }),
+                  getJson: () => ({ attr3: "Type" }),
                   setJson: () => { },
                   getOperationsFactory: () => ({
                     cleanPrepareRun: () => { },

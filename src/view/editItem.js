@@ -42,8 +42,8 @@ export default class EditItem extends Component {
             border: "solid 1px " + styles.colors.colorWhite + "22",
             textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
           }} />
-
-        <Upload
+{!this.state.completedPic &&
+        (<Upload
           checkUser={true}
           //ADD THIS TO ALL UPLOADS//
           changePic={(pic) => { this.setState({ pic: pic }) }}
@@ -57,7 +57,7 @@ export default class EditItem extends Component {
               completedPic: obj.getJson().picURL,
               // usage: obj.getJson().usage +1
             })
-          }} app={app} />
+          }} app={app} />) || (<div style={{width:"180px", justifyContent:"center", display:"flex", flexDirection:"column", alignItems:"center"}}><img src={this.state.completedPic} style={{width:"74px", marginLeft:"8px"}}/><div style={{color:styles.colors.color8, fontSize:"13px", marginLeft:"8px"}}>You can change this later</div></div>)}
 
         <div style={{display:"flex", flexDirection:"column", width:"100%", marginTop:"32px"}}>
           {attrKeys.map((attr) => {
@@ -101,8 +101,8 @@ export default class EditItem extends Component {
             theme={"adventureLog"}
             rows={5}
             type={"quill"} checkUser={true} onPaste={this.handlePaste}
-          /></div>
-        <img src={this.state.completedPic} />
+          /></div> <img src={this.state.completedPic}/>
+        
 
 
 
