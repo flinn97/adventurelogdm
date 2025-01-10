@@ -9,7 +9,8 @@ export default class FilterFactory {
         bool: filterByBool,
         plain: textFilter,
         textAndTag: filterByTextThenTitle,
-        textObject: textObjectAttributeFilter
+        textObject: textObjectAttributeFilter,
+        textAttributeList:consistentlyFilterByTextAttributeList
 
 
 
@@ -70,6 +71,18 @@ function filterByTextThenTitle(json) {
     let promoList = textAttributeFilter({ ...json, attribute: attribute2 });
     list = [...nameList, ...newTagList, ...promoList]
     let newList = filterRemoveDupes(list);
+    return newList
+}
+
+//Better function than the one above for a more pluggable multi filter with attributes.
+function consistentlyFilterByTextAttributeList(json) {
+    
+    let {  attributeList } = json;
+    let newList = [];
+    for(let attribute of attributeList){
+        newList = [...newList, ...textAttributeFilter({...json, attribute:attribute})]
+    }
+    newList = filterRemoveDupes(newList);
     return newList
 }
 

@@ -589,7 +589,7 @@ export default class CampaignEditor extends Component {
                 ...styles.buttons.buttonAdd, padding: "4px 10px", paddingLeft: "10px", borderColor: styles.colors.color3,
                 backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
               }} onClick={() => {
-                debugger
+                
                 this.createViewerService.createViewer(state.currentCampaign)
               }}>Convert to Full Web View</div>}
               {viewer && <Link style={{

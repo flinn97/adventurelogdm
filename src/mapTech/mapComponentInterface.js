@@ -156,9 +156,14 @@ class MapComponent extends Component {
 
         if(filters){
             for(let obj of filters){
+                
                 let func = filterFactory.getFilter(obj.type);
                 if(func){
+                    
                     list = func({list:list, ...obj});
+                    if(obj.callBackFilterFunc){
+                        list = obj.callBackFilterFunc(list);
+                    }
                 }
             }
 

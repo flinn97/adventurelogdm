@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "../App.css"
 import AddCampaign from './AddCampaign';
-import { MapComponent } from '../mapTech/mapComponentInterface';
+import { MapComponent, SearchMapComponent } from '../mapTech/mapComponentInterface';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 // https://www.npmjs.com/package/react-lazyload;
 import placeholder from '../pics/placeholderEncounter.JPG';
@@ -14,6 +14,7 @@ import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
 import loreIndexService from '../services/loreIndexService';
 import Upload from './upload';
+import SortCompItem from './sortCompItem';
 
 
 
@@ -35,7 +36,7 @@ export default class CompendiumItem extends Component {
 
 
   async componentDidMount() {
-
+    
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
@@ -88,15 +89,23 @@ export default class CompendiumItem extends Component {
     }
 
     let component = this.props.app.state.componentList.getComponent("compendium", id);
+    
+    if(!component){
+      component =  await auth.firebaseGetter(id, state.componentList, "_id", "compendium", )
+      component = component[0]
+
+    }
 
 
     if (component) {
+      
       this.setState({ obj: component, start: true, showList: true, });
       dispatch({ currentCampaign: component })
+
     }
     this.scrollTo(this.startRef, "smooth")
 
-    await state.componentList.sortSelectedList("lore", "index");
+    // await state.componentList.sortSelectedList("lore", "attr1Value");
     dispatch({});
     this.scrollTo(this.startRef, "smooth");
 
@@ -307,6 +316,7 @@ export default class CompendiumItem extends Component {
                   </div>
                   <ParentFormComponent checkUser={true} app={app} name="name" obj={state.currentLore}
                     theme={"adventureLog"}
+                    prepareRun={true}
                     callbackFunc={(arr) => {
                       let L1 = arr[0];
                       let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
@@ -367,6 +377,7 @@ export default class CompendiumItem extends Component {
                       return (
                         <ParentFormComponent
                           key={attr}
+                          prepareRun={true}
                           app={app} obj={state.currentLore}  
                           name={`${attr}Value`}
                           label={state.currentCampaign?.getJson()[attr]}
@@ -402,6 +413,7 @@ export default class CompendiumItem extends Component {
               </div>
               <ParentFormComponent app={app} name="desc" obj={state.currentLore}
                 theme={"adventureLog"}
+                prepareRun={true}
                 wrapperStyle={{ width: "95%", marginRight: "11px", }}
                 type={"quill"} checkUser={true} onPaste={this.handlePaste}
               /></div>
@@ -446,12 +458,40 @@ export default class CompendiumItem extends Component {
 
                 }}
               >+ Compendium Item</div>}
-
+            {/* {state.componentList.getList("lore", "parentId", id).length>0&& */}
+            <SearchMapComponent app={app} attribute="componentFliter" onTextChange={(e)=>{
+              let {name, value} = e.target
+              dispatch({[name]:value})
+            }}/>
+            {/* } */}
+            <SortCompItem app={app} text={state.currentCampaign.getJson().attr1} text2 = "AtoZ"/>
 
             <MapComponent reverse={true} app={app} name="lore" theme="compendiumRow"
               filters={[
                 { type: "textObject", attribute: "parentId", search: id },
-                { type: "bool", attribute: "topLevel", search: false }
+                { type: "bool", attribute: "topLevel", search: false },
+                {type: "textAttributeList", attributeList:["name", "attr1Value", "attr2Value", "attr3Value", "attr4Value", "attr5Value", "desc"], search:state.componentFliter,
+                callBackFilterFunc:(list)=>{
+                  
+                  list = list.sort(function(a, b) {
+                    // Attempt to convert string values to numbers for comparison
+                    const aValueRaw = a.getJson()[state.sortText==="AtoZ"?"name": "attr1Value"];
+                    const bValueRaw = b.getJson()[state.sortText==="AtoZ"?"name": "attr1Value"];
+                    const aValue = isNaN(Number(aValueRaw)) ? aValueRaw : Number(aValueRaw);
+                    const bValue = isNaN(Number(bValueRaw)) ? bValueRaw : Number(bValueRaw);
+        
+                    if (typeof aValue === 'number' && typeof bValue === 'number') {
+                        // Compare as numbers
+                        return bValue - aValue;
+                    } else {
+                        // Fallback to string comparison
+                       
+                            return ('' + bValue).localeCompare('' + aValue);
+                        
+                    }
+                });
+                return list
+                }}
               ]}
               cells={[
                 // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },

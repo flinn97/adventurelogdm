@@ -28,7 +28,7 @@ export default class DiscordService{
         
         p = p.json? p: p?.add?.[0]
         if(p?.getJson().type==="post"){
-            debugger
+            
             let campId = p.getJson().campaignId;
             let campaign = await this.componentList.getComponent("campaign", campId);
             if(!campaign){
@@ -50,7 +50,7 @@ export default class DiscordService{
     }
 
     async sendPostToDiscord(link, post){
-        debugger
+        
         post = await this.htmlToDiscordEmbed(post);
         let json = await JSON.stringify(post);
 

@@ -83,6 +83,9 @@ class MainContent extends Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount(){
+    
+  }
   render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
