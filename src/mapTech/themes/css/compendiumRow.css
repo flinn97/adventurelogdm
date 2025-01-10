@@ -285,3 +285,32 @@
   object-fit: cover;
 }
 
+.CR-Attribute-Box {
+  position: absolute;
+  z-index: 200;
+  top: 1rem;     /* Adjust as needed */
+  right: 1rem;   /* Adjust as needed */
+  display: inline-flex;  /* So cells appear on one line */
+  align-items: center;   /* Vertically center text */
+  background-color: #17334e; /* Dark blue example */
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #fff;
+  border-color: linea;
+  font-weight: bold;
+  border-width: 4px;
+  border-color: #17334e;
+  border-style: solid;
+}
+.CR-Attribute-Label {
+  margin-right: 32px; /* Tiny space between label and value */
+  border-image: linear-gradient(to right, #21263883 0%, #3a4fd500 100%) 1;
+  border-width: 4px;
+  z-index: 220;
+  border-style: solid;
+}
+
+.CR-Attribute-Primary{
+  z-index: 200;
+  margin-left: 32px;
+}

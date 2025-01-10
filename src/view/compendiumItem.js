@@ -188,6 +188,7 @@ export default class CompendiumItem extends Component {
     let state = app.state;
     let styles = state.styles;
     let id = this.getId();
+    const attrKeys = ["attr1", "attr2", "attr3", "attr4", "attr5"];
 
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
@@ -253,20 +254,21 @@ export default class CompendiumItem extends Component {
 
 
                 {state.currentLore !== undefined && <div style={{ display: "flex", flexDirection: "column" }}>
-          {/* Taylor lets get this upload and tags working alan wants a full search and sort function on this. Sort by alphabetical etc, 
+                  {/* Taylor lets get this upload and tags working alan wants a full search and sort function on this. Sort by alphabetical etc, 
                 this uploader is not working, it is impermanent saves, after refresh they vanish, so I think it is just uploading blobs :(
           */}
-                  <Upload app={app} text={state.currentLore.getJson().picURL?"Replace Image":"Upload Image"}
-                  changePic={(pic) => { this.setState({ pic: pic });
-                  state.currentLore.setCompState({picURL: pic, img: pic});
-                  app.dispatch({})
-                 }}
-                 obj={state.currentLore} style={{
-                   display: "flex",
-                   zIndex: "1", borderRadius: ".1vmin", background: "",
-                 }}
-                 update={true} 
-                 updateMap={(obj) => { this.setState({ completedPic: state.currentLore.getJson().picURL });}}
+                  <Upload app={app} text={state.currentLore.getJson().picURL ? "Replace Image" : "Upload Image"}
+                    changePic={(pic) => {
+                      this.setState({ pic: pic });
+                      state.currentLore.setCompState({ picURL: pic, img: pic });
+                      app.dispatch({})
+                    }}
+                    obj={state.currentLore} style={{
+                      display: "flex",
+                      zIndex: "1", borderRadius: ".1vmin", background: "",
+                    }}
+                    update={true}
+                    updateMap={(obj) => { this.setState({ completedPic: state.currentLore.getJson().picURL }); }}
                   />
                   <div className='hover-btn'
                     style={{
@@ -357,64 +359,99 @@ export default class CompendiumItem extends Component {
                 </>}
               </div>
             </div>
-{state.currentLore !== undefined &&
-            <div style={{display:"flex", flexDirection:"row", marginTop:"4px" }}>
+            {state.currentLore !== undefined && <div>
+              <div style={{ display: "flex", flexDirection: "row", marginTop: "4px" }}>
+                <div style={{ display: "flex", flexDirection: "column", width: "39%",}}>
+                  {attrKeys.map((attr) => {
+                    if (state.currentCampaign?.getJson()[attr])
+                      return (
+                        <ParentFormComponent
+                          key={attr}
+                          app={app} obj={state.currentLore}  
+                          name={`${attr}Value`}
+                          label={state.currentCampaign?.getJson()[attr]}
+                          checkUser={true}
+                          wrapperStyle={{
+                            margin: "5px",
+                            color: styles.colors.colorWhite,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                          theme={"adventureLog"}
+                          rows={1}
+                          labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color8 }}
+                          inputStyle={{
+                            width: "89%", marginLeft: "9px",
+                            padding: "4px 9px", fontSize: "1.2rem",
+                            color: styles.colors.colorWhite,
+                            height: "1.7rem",
+                            rows: "1",
+                            borderRadius: "4px",
+                            background: styles.colors.colorWhite + "11",
+                            borderWidth: "0px",
+                          }}
+                        />
+                      ); return null;
+                  })
+                  }
+                </div>
+
+                <img src={state.currentLore?.getJson()?.picURL}
+                  style={{ maxWidth: "60%", maxHeight:"444px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%" }} />
+
+              </div>
               <ParentFormComponent app={app} name="desc" obj={state.currentLore}
                 theme={"adventureLog"}
-                linkLore={true}
-                wrapperStyle={{ width: "100%", marginRight:"11px", }}
-                type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
-              />
+                wrapperStyle={{ width: "95%", marginRight: "11px", }}
+                type={"quill"} checkUser={true} onPaste={this.handlePaste}
+              /></div>
+            }
 
-              <img src={state.currentLore?.getJson()?.picURL} 
-              style={{maxWidth:"49%", height:"fit-content", borderRadius:"11px", objectFit:"cover",marginLeft:"1%"}} />
+            {state.currentLore == undefined &&
+              <div
+                title={"New Item, opens in a new Tab"}
 
-            </div>}
-
-            <div
-              title={"New Item, opens in a new Tab"}
-
-              className="hover-btn" style={{
-                ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
-                paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-                borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight: "21px"
-              }}
-              onClick={async () => {
-                if (state.user.getJson().role !== "GM") {
-                  dispatch({ popupSwitch: "goPremium" });
-                  return
-                }
-                const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
-                let href = window.location.href;
-                let splitURL = href.split("/");
-                let id = splitURL[splitURL.length - 1];
-
-                let otherChildren = state.componentList.getList("lore", id.includes("-") ? state.currentLore.getJson()._id : state.currentCampaign?.getJson()._id, "parentId");
-                await state.opps.cleanJsonPrepare({
-                  addlore: {
-                    campaignId: state.currentCampaign?.getJson()._id, index: otherChildren.length,
-                    parentId:
-                      { [newId]: "Unnamed" }
+                className="hover-btn" style={{
+                  ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+                  paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
+                  borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight: "21px"
+                }}
+                onClick={async () => {
+                  if (state.user.getJson().role !== "GM") {
+                    dispatch({ popupSwitch: "goPremium" });
+                    return
                   }
-                });
-                let lore = await state.opps.getUpdater("add")[0]
-                dispatch({
-                  popupSwitch: "popupLoreWithoutPin",
-                  currentComponent: lore,
-                  loreType: "compendium"
+                  const newId = state.currentLore ? state.currentLore.getJson()._id : state.currentCampaign.getJson()._id;
+                  let href = window.location.href;
+                  let splitURL = href.split("/");
+                  let id = splitURL[splitURL.length - 1];
 
-                })
+                  let otherChildren = state.componentList.getList("lore", id.includes("-") ? state.currentLore.getJson()._id : state.currentCampaign?.getJson()._id, "parentId");
+                  await state.opps.cleanJsonPrepare({
+                    addlore: {
+                      campaignId: state.currentCampaign?.getJson()._id, index: otherChildren.length,
+                      parentId:
+                        { [newId]: "Unnamed" }
+                    }
+                  });
+                  let lore = await state.opps.getUpdater("add")[0]
+                  dispatch({
+                    popupSwitch: "popupLoreWithoutPin",
+                    currentComponent: lore,
+                    loreType: "compendium"
 
-                // dispatch({popupSwitch:'popupLore', operate:"addlore", operation:"cleanPrepare"})
+                  })
 
-              }}
-            >+ Compendium Item</div>
+                  // dispatch({popupSwitch:'popupLore', operate:"addlore", operation:"cleanPrepare"})
+
+                }}
+              >+ Compendium Item</div>}
 
 
             <MapComponent reverse={true} app={app} name="lore" theme="compendiumRow"
               filters={[
                 { type: "textObject", attribute: "parentId", search: id },
-                {type: "bool", attribute:"topLevel", search:false}
+                { type: "bool", attribute: "topLevel", search: false }
               ]}
               cells={[
                 // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
@@ -428,6 +465,14 @@ export default class CompendiumItem extends Component {
                   type: "attribute", name: "name", class: "Bold-Title CR-Attribute-Item",
 
                 },
+                { name: state.currentCampaign.getJson()?.attr1 + " ",
+                  class: "CR-Attribute-Box CR-Attribute-Label"},
+                {
+                  type: "attribute", name: "attr1Value", 
+                  class: "CR-Attribute-Box CR-Attribute-Primary",
+                },
+                //TAYLOR, can we hide these last two cells if attr1Value empty?
+                //TAYLOR, can we change these cells to attr# if a different attribute is being sorted?
 
               ]} />
 

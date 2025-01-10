@@ -156,7 +156,7 @@ class TabContent extends Component {
 
 
 
-          {(state.currentComponent?.getJson().type === "compendium" && addCampaign) && <AddCampaign app={app} />}
+          {(state.currentComponent?.getJson().type === "compendium" && addCampaign) && <AddCampaign app={app}/>}
         </div>
 
 

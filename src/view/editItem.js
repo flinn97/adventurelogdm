@@ -19,15 +19,18 @@ export default class EditItem extends Component {
     let dispatch = app.dispatch;
     let state = app.state;
     let styles = state.styles;
-    
+    let compendium = state?.currentCampaign;
+    const attrKeys = ["attr1", "attr2", "attr3", "attr4", "attr5"];
 
     return (
       <div>
-        
+
+
+
         <ParentFormComponent checkUser={true} app={app} name="name"
           wrapperStyle={{
             margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column",
-            marginBottom: "31px",  marginTop:"51px"
+            marginBottom: "31px", marginTop: "51px"
           }}
           theme={"adventureLog"} rows={1}
           maxLength={app.state.maxLengthShort}
@@ -39,115 +42,77 @@ export default class EditItem extends Component {
             border: "solid 1px " + styles.colors.colorWhite + "22",
             textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
           }} />
-          {/* Taylor lets get this upload and tags working alan wants a full search and sort function on this. Sort by alphabetical etc, */}
-{/* <Upload app={app} text="Upload image"/> */}
+{!this.state.completedPic &&
+        (<Upload
+          checkUser={true}
+          //ADD THIS TO ALL UPLOADS//
+          changePic={(pic) => { this.setState({ pic: pic }) }}
+          obj={app.state.currentComponent} text="Upload Image" style={{
+            display: "flex",
+            zIndex: "1", borderRadius: ".1vmin", background: "",
+          }}
+          update={true} skipUpdate={true}
+          updateMap={(obj) => {
+            this.setState({
+              completedPic: obj.getJson().picURL,
+              // usage: obj.getJson().usage +1
+            })
+          }} app={app} />) || (<div style={{width:"180px", justifyContent:"center", display:"flex", flexDirection:"column", alignItems:"center"}}><img src={this.state.completedPic} style={{width:"74px", marginLeft:"8px"}}/><div style={{color:styles.colors.color8, fontSize:"13px", marginLeft:"8px"}}>You can change this later</div></div>)}
+
+        <div style={{display:"flex", flexDirection:"column", width:"100%", marginTop:"32px"}}>
+          {attrKeys.map((attr) => {
+            if (compendium?.getJson()[attr]) 
+            return (
+              <ParentFormComponent
+                key={attr}
+                app={app}
+                name={`${attr}Value`}
+                label={compendium?.getJson()[attr]}
+                checkUser={true}
+                wrapperStyle={{
+                  margin: "5px",
+                  color: styles.colors.colorWhite,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                theme={"adventureLog"}
+                rows={1}
+                maxLength={app.state.maxLengthShort}
+                labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color:styles.colors.color8 }}
+                inputStyle={{
+                  width: "83%", marginLeft:"9px",
+                  padding: "4px 9px", fontSize:"1.2rem",
+                  color: styles.colors.colorWhite,
+                  height: "1.7rem",
+                  rows: "1",
+                  borderRadius: "4px",
+                  background: styles.colors.colorWhite + "11",
+                  borderWidth: "0px",
+                }}
+              />
+            ); return null;
+          })
+          }
+        </div>
+
         <div style={{ color: styles.colors.color3 + "f5", marginBottom: "26px", marginTop: "42px", fontSize: styles.fonts.fontSmall, }}> Data:
 
           <ParentFormComponent app={app} name="desc"
             theme={"adventureLog"}
-            rows={5} linkLore={true}
-
-            type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
-          /></div>
-          <img src={this.state.completedPic}/>
-          <Upload
-                checkUser={true}
-                //ADD THIS TO ALL UPLOADS//
-                changePic={(pic) => { this.setState({ pic: pic }) }}
-                obj={app.state.currentComponent} text="Change Image" style={{
-                  display: "flex",
-                  zIndex: "1", borderRadius: ".1vmin", background: "",
-                }}
-                update={true} skipUpdate={true}
-                updateMap={(obj) => {
-                  this.setState({
-                    completedPic: obj.getJson().picURL,
-                    // usage: obj.getJson().usage +1
-                  })
-                }} app={app} />
-          
-          
-
-
-<div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
-                        <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft: "22px" }}>
-
-                          {/* <Upload checkUser={true} text="+ Upload"
-                            updateMap={async () => {
-                              let lore = state.currentComponent;
-                              let check;
-                              if (state.currentPin) {
-                                //
-                                let pin = state.currentPin;
-
-                                if (lore.getJson().name === "" || lore.getJson().name === undefined) {
-                                  lore.setCompState({ name: pin.getJson().name });
-                                }
-
-
-                                pin.setCompState({
-                                  loreId: lore.getJson()._id,
-                                  name: lore.getJson().name,
-                                });
-
-                                let reg = state.opps.getUpdater("add");
-                                check = componentList.getComponent("lore", lore.getJson()._id, "_id");
-
-                                await state.opps.cleanPrepare({ [check ? "update" : "addlore"]: lore });
-
-                                await state.opps.prepareRun({ update: pin });
-                              } else {
-
-                                check = componentList.getComponent("lore", lore.getJson()._id, "_id");
-
-                                await state.opps.cleanPrepareRun({ [check ? "update" : "addlore"]: lore });
-                              }
-
-                              if (lore) {
-                                //
-                                let parentId = Object.keys(lore.getJson().parentId,)[0];
-                                let otherChildren = state.componentList.getList("lore", parentId, "parentId");
-                                if (!check) {
-                                  await loreIndexService.insertAtBeginning(lore, otherChildren);
-
-                                }
-                              }
-                              if (check) {
-                                let L1 = lore;
-                                let referenceList = state.componentList.getList("lore", L1.getJson()._id, "ogId");
-                                referenceList = referenceList.map(obj => obj.getJson()._id);
-                                let pinList = state.componentList.getList("pin");
-                                pinList = pinList.filter(pin => referenceList.includes(pin.getJson().loreId));
-                                for (let p of pinList) {
-                                  p.setCompState({ name: L1.getJson().name })
-                                }
-                                state.opps.cleanPrepareRun({ update: [L1, ...pinList] })
-                              }
+            rows={5}
+            type={"quill"} checkUser={true} onPaste={this.handlePaste}
+          /></div> <img src={this.state.completedPic}/>
+        
 
 
 
-                              this.setState({ showSaved: true });
-                              setTimeout(() => this.setState({ showSaved: false }), 2000);  // hide after 2.6 seconds
-                              this.setState({ saveClicked: true })
-                            }}
-                            prepareOnChange={{
-                              name: "image", json: {
-                                loreId: state.currentComponent.getJson()._id,
-                                campaignId: id
-                              }
-                            }}
 
 
-                            obj={state.currentComponent}
-                            update={true} skipUpdate={true}
+        <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", justifyItems: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center", justifyItems: "center", marginTop: "8px", marginLeft: "22px" }}>
 
-                            app={app}
-                            className="indent-on-click"
-
-                          /> */}
-
-                        </div>
-                      </div>
+          </div>
+        </div>
 
 
         <div className="hover-btn"
@@ -156,7 +121,7 @@ export default class EditItem extends Component {
             alignSelf: "flex-end", bottom: '8px', alignItems: "flex-end", right: "10px",
             position: "absolute", marginTop: "8.24vh", marginBottom: "1vh",
           }}>
-            
+
           <div style={{
             ...styles.buttons.buttonAdd, border: "",
             width: "100%", backgroundColor: styles.colors.color2 + "99",
