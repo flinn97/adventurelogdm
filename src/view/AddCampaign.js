@@ -152,8 +152,9 @@ export default class AddCampaign extends Component {
             </div>
 
             <div style={{
-              display: "flex", flexDirection: "row", width: "100%", justifyContent: type === "Compendium" ? "space-evenly" : "",
+              display: "flex", flexDirection: "row", width: "100%", justifyContent: type === "Compendium" ? "flex-start" : "",
               marginTop: type === "Compendium" ? "22px" : "",
+              marginLeft: type === "Compendium" ? "rem" : "",
               marginBottom: type === "Compendium" ? "12px" : ""
             }}>
 
@@ -167,8 +168,8 @@ export default class AddCampaign extends Component {
                 maxLength={app.state.maxLengthShort}
                 labelStyle={{ marginBottom: "8px" }}
                 inputStyle={{
-                  width: "58.1rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
-                  borderRadius: "4px", background: styles.colors.colorWhite + "aa", borderWidth: "0px",
+                  width: "54.2rem", padding: "4px 9px", color: styles.colors.colorBlack, height: "1.7rem", rows: "1",
+                  borderRadius: "4px", background: styles.colors.colorWhite + "aa", borderWidth: "0px", marginRight:".2rem"
                 }}
                 placeholder={campaignPlaceholder}
               />
@@ -178,7 +179,7 @@ export default class AddCampaign extends Component {
                 <ParentFormComponent
                   app={app}
                   name="format"
-                  label={`${type} Format:`}
+                  label={`Format:`}
                   type="select"
                   selectOptions={["Custom", "Statblock 5e"]}
                   func={this.handleFormatChange}
@@ -192,7 +193,8 @@ export default class AddCampaign extends Component {
                   theme="adventureLog"
                   labelStyle={{ marginBottom: "8px" }}
                   inputStyle={{
-                    width: "16.1rem",
+                    maxWidth: "16.1rem",
+                    width:"100%",
                     padding: "4px 9px",
                     color: styles.colors.colorBlack,
                     height: "1.7rem",
@@ -203,15 +205,15 @@ export default class AddCampaign extends Component {
                 />}
 
               {type === "Compendium" && isUpdate &&
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <div style={{marginBottom:"15px"}}>
-                    Compendium Format:
+                <div style={{ display: "flex", flexDirection: "column", maxWidth:"16.1rem", width:"100%", marginLeft:"2rem" }}>
+                  <div style={{marginBottom:"15px", fontSize:"1rem"}}>
+                    Format:
                   </div>
                   {state.currentComponent.getJson()?.format &&
-                    (<div>
+                    (<div style={{color:styles.colors.color3, fontWeight:"600", fontSize:"1rem"}}>
                       {state.currentComponent.getJson().format}
                     </div>) ||
-                    (<div style={{color:styles.colors.color3, fontWeight:"600"}}>
+                    (<div style={{color:styles.colors.color3, fontWeight:"600", fontSize:"1rem"}}>
                     None
                   </div>)
                   }

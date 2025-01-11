@@ -198,7 +198,6 @@ export default class QuillForm extends Component {
 
 
   async newLoreLink(loreName) {
-
     let state = this.props.app?.state;
     let campId = toolService.getIdFromURL(true, 0);
     let componentList = this.props.app.state.componentList;
@@ -208,6 +207,13 @@ export default class QuillForm extends Component {
 
     let otherChildren = componentList.getList("lore", id, "parentId");
 
+
+    if (!this.props.connectLore) 
+      {return loreName 
+    
+      } else {
+ 
+    
     await state.opps.cleanJsonPrepare({
       addlore: {
         parentId: { [id]: newName + " " }, _id: idS, index: 0,
@@ -222,9 +228,10 @@ export default class QuillForm extends Component {
     // Wait for any needed state updates or asynchronous operations before continuing
     await new Promise(resolve => setTimeout(resolve, 10));
 
-    // Now that newLoreLink has completed, you can generate the link
-    return this.setLoreLink(loreName);
+    return this.setLoreLink(loreName);}
   }
+
+
   // Helper function to convert base64 to Blob
   base64ToBlob = (base64) => {
     const byteString = atob(base64.split(',')[1]); // Decode base64
@@ -279,7 +286,7 @@ export default class QuillForm extends Component {
     for (const match of matches) {
       const text = match[1];
       let replacementText;
-      if (names && names.includes(text)) {
+      if (this.props.connectLore && names && names.includes(text)) {
         replacementText = await this.setLoreLink(text);
       } else if (toolService.isLikelyUrl(text)) {
         const ensuredUrl = this.ensureProtocol(text);

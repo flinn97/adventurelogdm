@@ -99,7 +99,7 @@ export default class EditItem extends Component {
 
           <ParentFormComponent app={app} name="desc"
             theme={"adventureLog"}
-            rows={5}
+            rows={5} connectLore={false}
             type={"quill"} checkUser={true} onPaste={this.handlePaste}
           /></div> <img src={this.state.completedPic}/>
         
