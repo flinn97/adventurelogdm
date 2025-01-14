@@ -15,6 +15,8 @@ import SplashScreen from './pages/splashScreen';
 import loreIndexService from '../services/loreIndexService';
 import Upload from './upload';
 import SortCompItem from './sortCompItem';
+import searchPng from '../pics/search.png';
+import sortLines from '../pics/sortNone.png';
 
 
 
@@ -29,14 +31,15 @@ export default class CompendiumItem extends Component {
       showList: true,
       start: false,
       splash: true,
-      update: false
+      update: false,
+      reverse: true,
     }
 
   }
 
 
   async componentDidMount() {
-    
+
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
@@ -89,16 +92,16 @@ export default class CompendiumItem extends Component {
     }
 
     let component = this.props.app.state.componentList.getComponent("compendium", id);
-    
-    if(!component){
-      component =  await auth.firebaseGetter(id, state.componentList, "_id", "compendium", )
+
+    if (!component) {
+      component = await auth.firebaseGetter(id, state.componentList, "_id", "compendium",)
       component = component[0]
 
     }
 
 
     if (component) {
-      
+
       this.setState({ obj: component, start: true, showList: true, });
       dispatch({ currentCampaign: component })
 
@@ -198,6 +201,27 @@ export default class CompendiumItem extends Component {
     let styles = state.styles;
     let id = this.getId();
     const attrKeys = ["attr1", "attr2", "attr3", "attr4", "attr5"];
+
+    function parseCR(valueRaw) {
+      // If it's directly parseable as a number (e.g., "2", "5.5"), use that
+      let num = Number(valueRaw);
+      if (!Number.isNaN(num)) {
+        return num;
+      }
+
+      // Otherwise, check if it's of form "x/y" for a fraction
+      if (typeof valueRaw === 'string' && valueRaw.includes('/')) {
+        let [numStr, denStr] = valueRaw.split('/');
+        let numerator = Number(numStr);
+        let denominator = Number(denStr);
+
+        if (!Number.isNaN(numerator) && !Number.isNaN(denominator) && denominator !== 0) {
+          return numerator / denominator;
+        }
+      }
+
+      return NaN;
+    }
 
     return (
       <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
@@ -369,16 +393,18 @@ export default class CompendiumItem extends Component {
                 </>}
               </div>
             </div>
+
+
             {state.currentLore !== undefined && <div>
               <div style={{ display: "flex", flexDirection: "row", marginTop: "4px" }}>
-                <div style={{ display: "flex", flexDirection: "column", width: "39%",}}>
+                <div style={{ display: "flex", flexDirection: "column", width: "39%", }}>
                   {attrKeys.map((attr) => {
                     if (state.currentCampaign?.getJson()[attr])
                       return (
                         <ParentFormComponent
                           key={attr}
                           prepareRun={true}
-                          app={app} obj={state.currentLore}  
+                          app={app} obj={state.currentLore}
                           name={`${attr}Value`}
                           label={state.currentCampaign?.getJson()[attr]}
                           checkUser={true}
@@ -408,25 +434,28 @@ export default class CompendiumItem extends Component {
                 </div>
 
                 <img src={state.currentLore?.getJson()?.picURL}
-                  style={{ maxWidth: "60%", maxHeight:"444px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%" }} />
+                  style={{ maxWidth: "60%", maxHeight: "444px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%" }} />
 
               </div>
               <ParentFormComponent app={app} name="desc" obj={state.currentLore}
                 theme={"adventureLog"}
-                prepareRun={true}
+                prepareRun={true} connectLore={false}
                 wrapperStyle={{ width: "95%", marginRight: "11px", }}
                 type={"quill"} checkUser={true} onPaste={this.handlePaste}
               /></div>
             }
 
-            {state.currentLore == undefined &&
+
+
+
+            {state.currentLore == undefined && <>
               <div
                 title={"New Item, opens in a new Tab"}
 
                 className="hover-btn" style={{
-                  ...styles.buttons.buttonAdd, marginTop: "15px", backgroundColor: styles.colors.colorBlack + "99",
+                  ...styles.buttons.buttonAdd, marginTop: "26px", backgroundColor: styles.colors.colorBlack + "99",
                   paddingLeft: "29px", paddingRight: "29px", alignSelf: "flex-start", justifyItems: "center", height: "36px",
-                  borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight: "21px"
+                  borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight: "21px", padding: "22px 29px"
                 }}
                 onClick={async () => {
                   if (state.user.getJson().role !== "GM") {
@@ -457,41 +486,78 @@ export default class CompendiumItem extends Component {
                   // dispatch({popupSwitch:'popupLore', operate:"addlore", operation:"cleanPrepare"})
 
                 }}
-              >+ Compendium Item</div>}
-            {/* {state.componentList.getList("lore", "parentId", id).length>0&& */}
-            <SearchMapComponent app={app} attribute="componentFliter" onTextChange={(e)=>{
-              let {name, value} = e.target
-              dispatch({[name]:value})
-            }}/>
-            {/* } */}
-            <SortCompItem app={app} text={state.currentCampaign.getJson().attr1} text2 = "AtoZ"/>
+              >+ Compendium Item</div>
 
-            <MapComponent reverse={true} app={app} name="lore" theme="compendiumRow"
+
+              <div style={{
+                display: "flex", flexDirection: "row", marginBottom: "22px",
+                marginTop: "29px", justifyContent: "space-evenly", position: "sticky", top: 20, zIndex: state.popupSwitch ? "" : 9999,
+              }}>
+
+                <SearchMapComponent app={app} attribute="componentFliter" imgLeft={searchPng} imgLeftStyle={{ width: "1rem", height: "1rem", marginLeft: "-.5rem", marginTop: window.innerWidth > 700 ? ".5rem" : ".32rem", }}
+                  style={{
+                    borderRadius: "50px", background: "#ffdead05", width: "52vw", color: "white", border: "1px solid gray",
+                    height: window.innerWidth > 700 ? "2rem" : "1.7rem",
+                    fontSize: window.innerWidth > 700 ? "1.2rem" : ".9rem",
+                    paddingLeft: window.innerWidth > 700 ? "50px" : "52px", paddingRight: "1rem", marginRight: window.innerWidth > 700 ? "29px" : "-20px"
+                  }}
+                  onTextChange={(e) => {
+                    let { name, value } = e.target
+                    dispatch({ [name]: value })
+                  }} />
+
+{/* Sort Ascending Descending */}
+                <div style={{display:"flex", flexDirection:"row", maxWidth:"200px", width:"100%", justifyContent:"center", verticalAlign:"center", marginTop:"-8px"}}>
+
+                  <SortCompItem
+                  app={app} text={state.currentCampaign.getJson().attr1} text2="A-Z" reverse={this.state.reverse}
+                    hasImg={false}
+                    textStyle={{ fontSize:"1.15rem", fontWeight:"600", height: "fit-content", width: "fit-content", color:styles.colors.colorWhite }} />
+
+
+                  <div className="hover-img" style={{ marginLeft: "12px", cursor: "pointer", borderRadius:"11px", padding:"6px 9px" }} 
+                  title={"Ascending or descending"}
+                  onClick={() => {
+                    this.setState({ reverse: !this.state.reverse });
+                  }}>
+                    
+                      <img src={sortLines} style={{transform:this.state.reverse? "none": "scaleY(-1)", filter: "saturate(.8) hue-rotate(160deg)",
+                        width:"30px", marginTop:"2px", marginLeft:"22px"}}/>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </>}
+
+            <MapComponent reverse={this.state.reverse} app={app} name="lore" theme="compendiumRow"
               filters={[
                 { type: "textObject", attribute: "parentId", search: id },
                 { type: "bool", attribute: "topLevel", search: false },
-                {type: "textAttributeList", attributeList:["name", "attr1Value", "attr2Value", "attr3Value", "attr4Value", "attr5Value", "desc"], search:state.componentFliter,
-                callBackFilterFunc:(list)=>{
-                  
-                  list = list.sort(function(a, b) {
-                    // Attempt to convert string values to numbers for comparison
-                    const aValueRaw = a.getJson()[state.sortText==="AtoZ"?"name": "attr1Value"];
-                    const bValueRaw = b.getJson()[state.sortText==="AtoZ"?"name": "attr1Value"];
-                    const aValue = isNaN(Number(aValueRaw)) ? aValueRaw : Number(aValueRaw);
-                    const bValue = isNaN(Number(bValueRaw)) ? bValueRaw : Number(bValueRaw);
-        
-                    if (typeof aValue === 'number' && typeof bValue === 'number') {
-                        // Compare as numbers
-                        return bValue - aValue;
-                    } else {
-                        // Fallback to string comparison
-                       
-                            return ('' + bValue).localeCompare('' + aValue);
-                        
-                    }
-                });
-                return list
-                }}
+                {
+                  type: "textAttributeList", attributeList: ["name", "attr1Value", "attr2Value", "attr3Value", "attr4Value", "attr5Value", "desc"], search: state.componentFliter,
+                  callBackFilterFunc: (list) => {
+                    list = list.sort(function (a, b) {
+                      // 1) Parse each value using parseCR
+                      let aVal = parseCR(a.getJson()[state.sortText === "A-Z" ? "name" : "attr1Value"]);
+                      let bVal = parseCR(b.getJson()[state.sortText === "A-Z" ? "name" : "attr1Value"]);
+
+                      // 2) If both are numbers, compare numerically
+                      let bothAreNumbers = !Number.isNaN(aVal) && !Number.isNaN(bVal);
+                      if (bothAreNumbers) {
+                        // For descending order, do bVal - aVal
+                        return bVal - aVal;
+                      }
+
+                      // 3) Otherwise, fallback to string comparison of the raw fields
+                      let aString = '' + a.getJson()[state.sortText === "A-Z" ? "name" : "attr1Value"];
+                      let bString = '' + b.getJson()[state.sortText === "A-Z" ? "name" : "attr1Value"];
+                      return bString.localeCompare(aString);
+                    });
+                    return list;
+                  }
+                }
               ]}
               cells={[
                 // { name:"Download",  class: "DR-hover-shimmer Button-Type2", func: (obj) => { this.download(obj) } },
@@ -505,14 +571,17 @@ export default class CompendiumItem extends Component {
                   type: "attribute", name: "name", class: "Bold-Title CR-Attribute-Item",
 
                 },
-                { name: state.currentCampaign.getJson()?.attr1 + " ",
-                  class: "CR-Attribute-Box CR-Attribute-Label"},
+
                 {
-                  type: "attribute", name: "attr1Value", 
-                  class: "CR-Attribute-Box CR-Attribute-Primary",
+                  type: "attribute",
+
+                  name: "attr1Value",
+
+                  preText: state.currentCampaign?.getJson()?.attr1 + " ",
+
+                  class: "CR-Attribute-Box",
+                  preStyle: { marginRight: ".4rem", color: "#e8e6b7" }
                 },
-                //TAYLOR, can we hide these last two cells if attr1Value empty?
-                //TAYLOR, can we change these cells to attr# if a different attribute is being sorted?
 
               ]} />
 

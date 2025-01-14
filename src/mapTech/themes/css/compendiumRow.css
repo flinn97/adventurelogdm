@@ -5,6 +5,7 @@
   flex-direction: row;
   width: 100%;
   height: 100%;
+  min-width: 100%;
   flex-wrap: wrap; 
   justify-content: flex-start;
   align-content: center;
@@ -31,8 +32,9 @@
 }
 
 .CR-Map-Section:hover {
+  filter: saturate(1.42);
+  border: solid 1px rgba(98, 98, 109, 0.247);
   background: linear-gradient(#b0c9df09, #dfcfb00e);
-  scale: .99;
 }
 
 /* General styling for all items */
@@ -98,7 +100,7 @@
 } */
 
 .CR-Link:hover{
-  transform: scale(0.98);
+  transform: scale(0.99);
   box-shadow: inset 2px 2px #00000055, inset -2px -2px  #ffffff55;
   color: "#111319";
 }
@@ -215,7 +217,7 @@
   top: 3px;
 }
 
-.Bold-Title {
+.Bold-Title   {
   height: 100%;
   font-weight: 600;
   font-size: 1.2rem;
@@ -227,7 +229,7 @@
   z-index: 200;
   font-family: 'inria';
   color: aliceblue;
-  background-color: #18253184;
+  background-color: #1825319f;
   text-overflow: ellipsis;
   margin-top: -1.85rem;
 }
@@ -287,30 +289,21 @@
 
 .CR-Attribute-Box {
   position: absolute;
-  z-index: 200;
-  top: 1rem;     /* Adjust as needed */
-  right: 1rem;   /* Adjust as needed */
-  display: inline-flex;  /* So cells appear on one line */
-  align-items: center;   /* Vertically center text */
-  background-color: #17334e; /* Dark blue example */
+  top: 1rem;
+  z-index: 220;
+  right: 1rem;
+  display: inline-flex;  /* or inline-flex if you prefer */
+  background-color: #17334e;
+  color: #fff;
   padding: 4px 8px;
-  border-radius: 6px;
+  
+  font-weight: bold;
   color: #fff;
   border-color: linea;
   font-weight: bold;
-  border-width: 4px;
-  border-color: #17334e;
-  border-style: solid;
-}
-.CR-Attribute-Label {
-  margin-right: 32px; /* Tiny space between label and value */
-  border-image: linear-gradient(to right, #21263883 0%, #3a4fd500 100%) 1;
-  border-width: 4px;
-  z-index: 220;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #8095e263 0%, #3a4fd500 100%) 1;
+  border-radius: 6px;
   border-style: solid;
 }
 
-.CR-Attribute-Primary{
-  z-index: 200;
-  margin-left: 32px;
-}

@@ -25,7 +25,7 @@ export default class CompendiumAttributeSwitcher extends Component {
 
         {/* {     CUSTOM     } */}
         {format === "Custom" &&
-          <div style={{ marginBottom: "12px", marginTop: "-18px", display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+          <div style={{ marginBottom: "12px", marginTop: "-18px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
             <div style={{ fontSize: "14px", display: "flex", opacity: ".8", width: "100%", position: "absolute", left: "170px", marginTop: "5px" }}>
               (ie. Level, School, Damage, etc)</div>
             <ParentFormComponent
@@ -44,7 +44,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               placeholder={"Primary Attribute"}
               labelStyle={{ marginBottom: "11px", fontSize: "16px" }}
               inputStyle={{
-                width: "14rem",
+                maxWidth: "19.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -68,7 +69,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               maxLength={app.state.maxLengthShort}
               placeholder={"Attribute 2"}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "19.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -92,7 +94,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               maxLength={app.state.maxLengthShort}
               placeholder={"Attribute 3"}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "19.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -116,7 +119,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               maxLength={app.state.maxLengthShort}
               placeholder={"Attribute 4"}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "19.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -140,7 +144,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               maxLength={app.state.maxLengthShort}
               placeholder={"Attribute 5"}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "19.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -174,7 +179,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               rows={1}
               labelStyle={{ marginBottom: "11px", fontSize: "16px" }}
               inputStyle={{
-                width: "14rem",
+                maxWidth: "13.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorRed,
                 height: "1.7rem",
@@ -207,7 +213,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               }}
               theme={"adventureLog"}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "13.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -241,7 +248,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               theme={"adventureLog"}
               maxLength={app.state.maxLengthShort}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "13.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
@@ -276,7 +284,8 @@ export default class CompendiumAttributeSwitcher extends Component {
               maxLength={app.state.maxLengthShort}
               placeholder={"Attribute 4"}
               inputStyle={{
-                width: "13.8rem",
+                maxWidth: "13.8rem",
+                width:"100%",
                 padding: "4px 9px",
                 color: styles.colors.colorBlack,
                 height: "1.7rem",
