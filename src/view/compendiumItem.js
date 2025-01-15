@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "../App.css"
 import AddCampaign from './AddCampaign';
 import { MapComponent, SearchMapComponent } from '../mapTech/mapComponentInterface';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // https://www.npmjs.com/package/react-lazyload;
 import placeholder from '../pics/placeholderEncounter.JPG';
 import backarrow from '../pics/backArrow.webp';
@@ -12,7 +12,6 @@ import toolService from '../services/toolService';
 import { URLcheck } from './campaignEditorURLCheck';
 import { LinkStateChecker } from './linkStateChecker';
 import SplashScreen from './pages/splashScreen';
-import loreIndexService from '../services/loreIndexService';
 import Upload from './upload';
 import SortCompItem from './sortCompItem';
 import searchPng from '../pics/search.png';
@@ -145,9 +144,9 @@ export default class CompendiumItem extends Component {
     delList = delList.filter(comp => comp !== undefined);
     let campaignId = toolService.getIdFromURL(true);
     if (!pId) {
-      window.history.pushState({}, "Campaign", "/campaign/" + campaignId);
+      window.history.pushState({}, "Compendium", "/compendium/" + campaignId);
     } else {
-      window.history.pushState({}, "Campaign", "/campaign/" + campaignId + "-" + pId);
+      window.history.pushState({}, "Compendium", "/compendium/" + campaignId + "-" + pId);
     }
 
     await this.setState({ start: false });
@@ -234,7 +233,7 @@ export default class CompendiumItem extends Component {
             <div ref={this.startRef} />
 
             {/* BACK BUTTON */}
-            {(state.popUpSwitchcase !== "updateCompendium" && state.currentLore == undefined) &&
+            {(state.popUpSwitchcase !== "updateCompendium" && state.currentLore === undefined) &&
               (<Link className="hover-btn-highlight"
                 to={"/compendium"}
                 style={{
@@ -257,7 +256,7 @@ export default class CompendiumItem extends Component {
                   fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px", border: ""
                 }}
               >
-                <img style={{ width: ".9rem", opacity: "98%", marginRight: "8px" }}
+                <img alt="no image" style={{ width: ".9rem", opacity: "98%", marginRight: "8px" }}
                   src={backarrow}
                 />
                 {this.state.obj?.getJson().title}
@@ -280,7 +279,7 @@ export default class CompendiumItem extends Component {
                     <AddCampaign app={app} />
                   }</div>
 
-                {(state.currentLore == undefined && state.popUpSwitchcase !== "updateCompendium") &&
+                {(state.currentLore === undefined && state.popUpSwitchcase !== "updateCompendium") &&
                   <div style={{ fontSize: styles.fonts.fontHeader2, color: styles.colors.colorWhite, width: "80%", marginBottom: "25px", }}>{this.state.obj?.getJson().title}</div>
                 }
 
@@ -433,7 +432,7 @@ export default class CompendiumItem extends Component {
                   }
                 </div>
 
-                <img src={state.currentLore?.getJson()?.picURL}
+                <img alt="no image" src={state.currentLore?.getJson()?.picURL}
                   style={{ maxWidth: "60%", maxHeight: "444px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%" }} />
 
               </div>
@@ -448,7 +447,7 @@ export default class CompendiumItem extends Component {
 
 
 
-            {state.currentLore == undefined && <>
+            {state.currentLore === undefined && <>
               <div
                 title={"New Item, opens in a new Tab"}
 
