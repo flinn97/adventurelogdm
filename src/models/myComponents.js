@@ -878,6 +878,7 @@ class Compendium extends Campaign {
     json = {
         ...this.json,
         type: "compendium",
+        format: "",
     }
     async getPicSrc(path) {
         let pic = await authService.downloadPics(path);

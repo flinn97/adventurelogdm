@@ -135,8 +135,7 @@ class MapComponent extends Component {
 
         
         let list = this.props.list ? this.props.list : filter ? componentList?.getList(name, filter?.search, filter?.attribute) : componentList?.getList(name);
-        //TAYLOR
-        // why not let list = this.props.list || componentList?.getList(this.props.name); ??? 
+        
 
         if (filterFunc) {
             list = list.filter(filterFunc);

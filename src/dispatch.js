@@ -433,7 +433,7 @@ export default class Dispatch extends Component {
                     alignSelf: "left", marginLeft: "222px", background: styles.colors.color1 + "99", padding: "11px", marginTop: "1vh",
                     marginBottom: "1vh"
                   }}>
-                    ©2024 AVA Media & Productions
+                    ©2025 AVA Media & Productions
                   </div>)}
 
               </div>}

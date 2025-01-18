@@ -40,9 +40,9 @@ export default class Nav extends Component {
 
     }
   return (
-    <>
+    <div className='hide-on-print'>
     
       {this.props.type? type[this.props.type]:type.topBarNav}
-      </>
+      </div>
   )}
 }

@@ -177,7 +177,7 @@ export default class AddCampaign extends Component {
               {/* FORMAT {this.state.format} */}
               {type === "Compendium" && isNotUpdate &&
                 <ParentFormComponent
-                  app={app}
+                  app={app} checkUser={true}
                   name="format"
                   label={`Format:`}
                   type="select"
