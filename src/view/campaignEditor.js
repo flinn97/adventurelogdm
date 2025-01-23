@@ -584,13 +584,13 @@ export default class CampaignEditor extends Component {
 
             </div>
             {state.currentLore === undefined && (<div style={{ marginTop: "12px", alignSelf: "end" }}>
-              {!viewer && <div className="hover-btn" style={{
+               <div className="hover-btn" style={{
                 ...styles.buttons.buttonAdd, padding: "4px 10px", paddingLeft: "10px", borderColor: styles.colors.color3,
                 backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
               }} onClick={() => {
                 
                 this.createViewerService.createViewer(state.currentCampaign)
-              }}>Convert to Full Web View</div>}
+              }}>Convert to Full Web View</div>
               {viewer && <Link style={{
                 ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
                 color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
