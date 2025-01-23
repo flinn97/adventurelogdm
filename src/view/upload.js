@@ -119,7 +119,7 @@ export default class Upload extends Component {
 
         return (
 
-            <div onClick={()=>{
+            <div  onClick={()=>{
                 if(this.props.checkUser){
                     if(state.user.getJson().role!=="GM"){
                         dispatch({ popupSwitch: "goPremium"});
@@ -128,7 +128,7 @@ export default class Upload extends Component {
                 }
 
                
-            }} className='hover-btn' style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
+            }} className='hover-btn hide-on-print' style={{ color:styles.colors.colorWhite+"99", maxWidth:"300px", maxHeight:"30px",
             borderRadius:"11px", fontWeight:"550", width:"fit-content"  }}>
 
                 {this.props.text!=="imageOnly" &&

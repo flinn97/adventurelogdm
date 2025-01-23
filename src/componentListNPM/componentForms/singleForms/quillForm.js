@@ -41,11 +41,11 @@ export default class QuillForm extends Component {
       // Extract the number from the URL
       var number;
       let id = p1.split("-")[1];
-      console.log(p1);
-      console.log(id);
-      console.log(componentList.getList("lore", campaignId, "campaignId"));
+      // console.log(p1);
+      // console.log(id);
+      // console.log(componentList.getList("lore", campaignId, "campaignId"));
       let obj = componentList.getComponent("lore", id, "ogRef");
-      console.log(obj);
+      // console.log(obj);
       number = obj.getJson()._id;
 
       // Perform additional operations with the extracted number if needed
@@ -97,7 +97,7 @@ export default class QuillForm extends Component {
         }
 
       }
-      console.log(val);
+      // console.log(val);
 
 
       this.setState({ value: val });
@@ -189,7 +189,7 @@ export default class QuillForm extends Component {
       const loreLink = `/campaign/` + id + '-' + newid;
       return `<a href="${loreLink}" target="_self">${loreName}</a>`;
     } else {
-      console.log(id);
+      // console.log(id);
       return loreName;
     }
   }

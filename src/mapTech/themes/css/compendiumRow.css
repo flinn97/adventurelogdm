@@ -232,6 +232,7 @@
   background-color: #1825319f;
   text-overflow: ellipsis;
   margin-top: -1.85rem;
+  word-wrap: break-word;
 }
 
 .Ellipsis-Text {

@@ -24,7 +24,6 @@ import galleryB from '../pics/illustrations/paintingHand.png';
 import ImageButton from '../componentListNPM/componentForms/buttons/imageButton';
 import auth from '../services/auth';
 import TokenImage from './tokenImage';
-import DelButton from '../componentListNPM/componentForms/buttons/deleteButton';
 import toolService from '../services/toolService';
 import { convertToMarketplace2 } from '../services/conversionService';
 import { URLcheck } from './campaignEditorURLCheck';
@@ -600,16 +599,18 @@ export default class CampaignEditor extends Component {
               }} to={"/campaignviewer/" + viewer.getJson()._id} className="hover-btn-highlight">Campaign Viewer</Link>}
             </div>)}
 
-            {/* {(state.currentLore == undefined && window.innerWidth > 800 &&
-              <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "20px" }}>
+            {(state.currentLore == undefined && window.innerWidth > 800 &&
+            <div>
+              {/* Jump to: */}
+              <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "10px" }}>
 
                 <div className="hover-btn">
                   <ImageButton
                     onClick={() => this.scrollTo(this.loreRef, "smooth")}
-                    app={app} image={loreB} text={"Lore"} wrapperStyle={{
+                    app={app} image={loreB} text={"Connections"} wrapperStyle={{
                       ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      minHeight: "20px", padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "35px", backgroundColor: styles.colors.color2 + 'de',
+                      padding: "4px", borderRadius: "12px",
+                      width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
                       overflow: 'hidden'
                     }}
                     buttonTextStyle={{
@@ -628,14 +629,14 @@ export default class CampaignEditor extends Component {
                     text={"Encounters"}
                     wrapperStyle={{
                       ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      minHeight: "20px", padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "35px", backgroundColor: styles.colors.color2 + 'de',
+                      padding: "4px", borderRadius: "12px",
+                      width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
                       overflow: 'hidden'
                     }}
                     buttonTextStyle={{
                       position: "absolute", top: "50%", left: "50%",
                       transform: 'translate(-50%, -50%)', opacity: ".77",
-                      color: styles.colors.color3,
+                      color: styles.colors.color3,fontSize:"1rem",
                       zIndex: 2
                     }} /></div>
 
@@ -646,25 +647,25 @@ export default class CampaignEditor extends Component {
                     text={"Gallery"}
                     wrapperStyle={{
                       ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      minHeight: "20px", padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "35px", backgroundColor: styles.colors.color2 + 'de',
+                      padding: "4px", borderRadius: "12px",
+                      width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
                       overflow: 'hidden'
                     }}
                     buttonTextStyle={{
                       position: "absolute", top: "50%", left: "50%",
                       transform: 'translate(-50%, -50%)', opacity: ".77",
-                      color: styles.colors.color3,
+                      color: styles.colors.color3, fontSize:"1rem",
                       zIndex: 2
                     }} /></div>
 
 
-              </div>)
-            } */}
+              </div></div>)
+            }
 
 
 
             {state.currentLore === undefined &&
-              <CollapseSection app={app} sectionTitle="Campaign Text">
+              // <CollapseSection app={app} sectionTitle="Campaign Text">
                 <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
                   {/* {this.state.obj.getJson().title}  */}
                   Lore:
@@ -684,7 +685,9 @@ export default class CampaignEditor extends Component {
                       margin: "5px", color: styles.colors.colorWhite, display: "flex",
                       flexDirection: "column", justifyItems: "space-between"
                     }} />
-                </div></CollapseSection>}
+                </div>
+                // </CollapseSection>
+                }
 
 
             {state.currentLore !== undefined ? (<div
@@ -692,7 +695,8 @@ export default class CampaignEditor extends Component {
             >
               <LoreViewer app={app} type="card" _id={this.state.obj.getJson()._id} />
             </div>) : (
-              <><CollapseSection app={app} sectionTitle="Campaign Map">
+              <>
+              {/* <CollapseSection app={app} sectionTitle="Campaign Map"> */}
                 <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "fit-content", padding: ".75%", justifyContent: "space-between", marginTop: "15px" }}>
 
                   {/* {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{...styles.buttons.buttonAdd, color:'red', width:"fit-content",
@@ -704,7 +708,8 @@ export default class CampaignEditor extends Component {
   this.setState({update:true})
  }}>Delete Map</div>} */}
                   <Worldbuilder app={app} type="card" dispatch={() => { this.setState({ update: false }) }} update={this.state.update} topLore={topLore} />
-                </div></CollapseSection>
+                </div>
+                {/* </CollapseSection> */}
                 <div ref={this.loreRef} />
                 <LoreSearch app={app} type="card" options={{ tabType: "bigCardBorderless", cardType: undefined }}
                 />

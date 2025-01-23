@@ -3,6 +3,16 @@
 @import url(https://fonts.google.com/specimen/DM+Serif+Display);
 @import url(https://fonts.google.com/noto/specimen/Noto+Sans+Georgian);
 
+@media print {
+
+  .hide-on-print {
+
+    display: none !important;
+
+  }
+
+} 
+
 .App {
   text-align: center;
 }
@@ -212,15 +222,66 @@ input:-webkit-autofill {
 }
 .hover-img {
   opacity: 1;
+  cursor: pointer;
   transition: all 0.3s ease-out;
   filter: contrast(.89);
 }
 
+
 .hover-img2:hover {
   opacity: .99;
+  cursor: pointer;
   transform: scale(1.01);
   transition: all 0.15s ease-out;
   margin-left: -4px;
+}
+
+.hover-i3:hover {
+  opacity: .97;
+  cursor: pointer;
+  filter: brightness(2.12);
+  transition: all 0.15s ease-out;
+}
+
+.arrow-container {
+  position: relative; /* So .hover-text can be absolutely positioned within */
+  display: inline-block; 
+}
+
+.hover-text {
+  position: absolute;
+  /* Center the text on top of the arrow */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* Hidden by default */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  
+  /* Styling for text */
+  color: #ccc;
+  font-size: 0.8rem;
+  font-weight: bold;
+
+  word-wrap: break-word;
+}
+
+/* Fade the text in on hover */
+.arrow-container:hover .hover-text {
+  opacity: 1;
+}
+
+.arrow-fade:hover {
+  opacity: .13;
+}
+
+.hover-i3:active {
+  opacity: .47;
+  cursor: pointer;
+  filter: brightness(2.12);
+  transition: all 0.15s ease-out;
 }
 
 .hover-btn:hover {

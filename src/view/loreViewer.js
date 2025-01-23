@@ -286,13 +286,13 @@ export default class LoreViewer extends Component {
           </div>)
         } */}
 
-        <div style={{ overflowY: "hidden", maxWidth: "100%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px" }} className='scroller2'>
+        <div style={{ overflowY: "hidden", maxWidth: "100%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px", marginBottom:lore?.getJson()?.hideLore?"52px":"12px" }} className='scroller2'>
           <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
         </div>
 
         {/* {*Lore Text Section} */}
         <div className={!lore?.getJson()?.hideLore ? "none" : "collapse"}>
-          <CollapseSection app={app} sectionTitle="Lore Text Section">
+          {/* <CollapseSection app={app} sectionTitle="Lore Text Section"> */}
             <div style={{
               display: "flex", flexDirection: "row", alignContent: "flex-end",
               justifyContent: "flex-end", marginBottom: "-20px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
@@ -307,7 +307,7 @@ export default class LoreViewer extends Component {
 
             <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>
 
-              <div style={{ display: "flex", flexDirection: "row", marginBottom: "8px", }}>
+              <div style={{ display: "flex", flexDirection: "row", marginBottom: "8px", marginTop:"12px" }}>
                 <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
                 {/* Lore Hierarchy was here */}
               </div>
@@ -331,12 +331,13 @@ export default class LoreViewer extends Component {
               />
 
             </div>
-          </CollapseSection></div>
+          {/* </CollapseSection> */}
+          </div>
 
         {/* {*Handout Section} */}
 
         <div className={!lore?.getJson()?.hideHandout ? "none" : "collapse"}>
-          <CollapseSection app={app} sectionTitle="Handout Section">
+          {/* <CollapseSection app={app} sectionTitle="Handout Section"> */}
             <div style={{
               display: "flex", flexDirection: "row", alignContent: "flex-end",
               justifyContent: "flex-end", marginBottom: "-29px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
@@ -364,7 +365,9 @@ export default class LoreViewer extends Component {
                 wrapperStyle={{
                   marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", width: "97%", marginTop: "10px",
                   flexDirection: "column", justifyItems: "space-between"
-                }} /></div></CollapseSection></div>
+                }} /></div>
+                {/* </CollapseSection> */}
+                </div>
 
 
         {/* {*Map Section} */}
@@ -376,7 +379,7 @@ export default class LoreViewer extends Component {
 
 
           <div className={!lore?.getJson()?.hideMap ? "none" : "collapse"}>
-            <CollapseSection app={app} sectionTitle="Map Section" >
+            {/* <CollapseSection app={app} sectionTitle="Map Section" > */}
               <div>
                 <div className='hover-btn' style={{
                   ...styles.buttons.buttonAdd,
@@ -423,7 +426,9 @@ export default class LoreViewer extends Component {
 
                     </div></>}
 
-              </div></CollapseSection></div>
+              </div>
+              {/* </CollapseSection> */}
+              </div>
 
           {(state.popupSwitch === "" || state.popupSwitch === undefined) && (<div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
             ...styles.buttons.buttonAdd, overflow: "hidden", justifyContent: "flex-start",
