@@ -289,7 +289,7 @@ export default class CampaignEditor extends Component {
 
 
             <div style={{
-              ...styles.backgroundContent, position: "relative", minWidth: "84vw", 
+              ...styles.backgroundContent, position: "relative", minWidth: "84vw",
               backgroundImage:
                 'url(' + (this.state.obj?.getJson().picURL || placeholder) + ')'
             }}>
@@ -335,7 +335,7 @@ export default class CampaignEditor extends Component {
                   <div
                     style={{
                       width: "fit-content", alignSelf: "flex-start", color: styles.colors.color3,
-                      padding: "5px 6px", marginTop: "-22px", 
+                      padding: "5px 6px", marginTop: "-22px",
                     }}>
                     {/* <div
                       style={{ fontSize: styles.fonts.fontSmall, color: styles.colors.colorWhite + "69", }}>
@@ -373,7 +373,7 @@ export default class CampaignEditor extends Component {
 
                     wrapperStyle={{
                       margin: "1px", color: styles.colors.colorWhite, display: "flex", marginBottom: "20px",
-                      flexDirection: "column", justifyItems: "space-between", 
+                      flexDirection: "column", justifyItems: "space-between",
                     }} />
 
 
@@ -415,7 +415,7 @@ export default class CampaignEditor extends Component {
                       fontWeight: "600"
                     }}>
 
-                   Visit Adventure Log
+                    Visit Adventure Log
                   </Link>
 
                   {state.currentLore !== undefined && <div style={{ display: "flex", flexDirection: "row", position: "absolute", bottom: 70, left: 14 }}>
@@ -584,110 +584,118 @@ export default class CampaignEditor extends Component {
 
             </div>
             {state.currentLore === undefined && (<div style={{ marginTop: "12px", alignSelf: "end" }}>
-               <div className="hover-btn" style={{
-                ...styles.buttons.buttonAdd, padding: "4px 10px", paddingLeft: "10px", borderColor: styles.colors.color3,
-                backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd", transition: "all",
-              }} onClick={() => {
-                
+              {!viewer &&
+                <div className="hover-btn" style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
+                  color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color9,
+                  backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
+                }} onClick={() => {
+
+                  this.createViewerService.createViewer(state.currentCampaign)
+                }}>Convert to One-Page View</div>}
+
+              {viewer && <Link onClick={() => { 
+                debugger
                 this.createViewerService.createViewer(state.currentCampaign)
-              }}>Convert to Full Web View</div>
-              {viewer && <Link style={{
+              }} style={{
                 ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
                 color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
                 backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
                 fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
               }} to={"/campaignviewer/" + viewer.getJson()._id} className="hover-btn-highlight">Campaign Viewer</Link>}
+
             </div>)}
 
             {(state.currentLore == undefined && window.innerWidth > 800 &&
-            <div>
-              {/* Jump to: */}
-              <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "10px" }}>
+              <div>
+                {/* Jump to: */}
+                <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "10px" }}>
 
-                <div className="hover-btn">
-                  <ImageButton
-                    onClick={() => this.scrollTo(this.loreRef, "smooth")}
-                    app={app} image={loreB} text={"Connections"} wrapperStyle={{
-                      ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
-                      overflow: 'hidden'
-                    }}
-                    buttonTextStyle={{
-                      position: "absolute", top: "50%", left: "50%",
-                      transform: 'translate(-50%, -50%)', opacity: ".77",
-                      color: styles.colors.color3,
-                      zIndex: 2
-                    }} />
-                </div>
+                  <div className="hover-btn">
+                    <ImageButton
+                      onClick={() => this.scrollTo(this.loreRef, "smooth")}
+                      app={app} image={loreB} text={"Connections"} wrapperStyle={{
+                        ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
+                        padding: "4px", borderRadius: "12px",
+                        width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
+                        overflow: 'hidden'
+                      }}
+                      buttonTextStyle={{
+                        position: "absolute", top: "50%", left: "50%",
+                        transform: 'translate(-50%, -50%)', opacity: ".77",
+                        color: styles.colors.color3,
+                        zIndex: 2
+                      }} />
+                  </div>
 
-                <div className="hover-btn">
-                  <ImageButton
-                    onClick={() => this.scrollTo(this.encRef, "smooth")}
-                    app={app}
-                    image={encounterB}
-                    text={"Encounters"}
-                    wrapperStyle={{
-                      ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
-                      overflow: 'hidden'
-                    }}
-                    buttonTextStyle={{
-                      position: "absolute", top: "50%", left: "50%",
-                      transform: 'translate(-50%, -50%)', opacity: ".77",
-                      color: styles.colors.color3,fontSize:"1rem",
-                      zIndex: 2
-                    }} /></div>
+                  <div className="hover-btn">
+                    <ImageButton
+                      onClick={() => this.scrollTo(this.encRef, "smooth")}
+                      app={app}
+                      image={encounterB}
+                      text={"Encounters"}
+                      wrapperStyle={{
+                        ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
+                        padding: "4px", borderRadius: "12px",
+                        width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
+                        overflow: 'hidden'
+                      }}
+                      buttonTextStyle={{
+                        position: "absolute", top: "50%", left: "50%",
+                        transform: 'translate(-50%, -50%)', opacity: ".77",
+                        color: styles.colors.color3, fontSize: "1rem",
+                        zIndex: 2
+                      }} /></div>
 
-                <div className="hover-btn">
-                  <ImageButton onClick={() => this.scrollTo(this.galRef, "smooth")}
-                    app={app}
-                    image={galleryB}
-                    text={"Gallery"}
-                    wrapperStyle={{
-                      ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
-                      padding: "4px", borderRadius: "12px",
-                      width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
-                      overflow: 'hidden'
-                    }}
-                    buttonTextStyle={{
-                      position: "absolute", top: "50%", left: "50%",
-                      transform: 'translate(-50%, -50%)', opacity: ".77",
-                      color: styles.colors.color3, fontSize:"1rem",
-                      zIndex: 2
-                    }} /></div>
+                  <div className="hover-btn">
+                    <ImageButton onClick={() => this.scrollTo(this.galRef, "smooth")}
+                      app={app}
+                      image={galleryB}
+                      text={"Gallery"}
+                      wrapperStyle={{
+                        ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
+                        padding: "4px", borderRadius: "12px",
+                        width: "270px", minHeight: "45px", backgroundColor: styles.colors.color2 + 'de',
+                        overflow: 'hidden'
+                      }}
+                      buttonTextStyle={{
+                        position: "absolute", top: "50%", left: "50%",
+                        transform: 'translate(-50%, -50%)', opacity: ".77",
+                        color: styles.colors.color3, fontSize: "1rem",
+                        zIndex: 2
+                      }} /></div>
 
 
-              </div></div>)
+                </div></div>)
             }
 
 
 
             {state.currentLore === undefined &&
               // <CollapseSection app={app} sectionTitle="Campaign Text">
-                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
-                  {/* {this.state.obj.getJson().title}  */}
-                  Lore:
-                  <ParentFormComponent checkUser={true} app={app} name="description" obj={this.state.obj}
-                    theme={"adventureLog"}
-                    rows={5}
-                    prepareRun={true}
+              <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
+                {/* {this.state.obj.getJson().title}  */}
+                Lore:
+                <ParentFormComponent checkUser={true} app={app} name="description" obj={this.state.obj}
+                  theme={"adventureLog"}
+                  rows={5}
+                  prepareRun={true}
 
-                    inputStyle={{
-                      maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                      borderRadius: "4px", background: styles.colors.colorWhite + "00",
-                      border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
-                    }}
+                  inputStyle={{
+                    maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
+                    borderRadius: "4px", background: styles.colors.colorWhite + "00",
+                    border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
+                  }}
 
-                    type={"quill"} onPaste={this.handlePaste} connectLore={true}
-                    wrapperStyle={{
-                      margin: "5px", color: styles.colors.colorWhite, display: "flex",
-                      flexDirection: "column", justifyItems: "space-between"
-                    }} />
-                </div>
-                // </CollapseSection>
-                }
+                  type={"quill"} onPaste={this.handlePaste} connectLore={true}
+                  wrapperStyle={{
+                    margin: "5px", color: styles.colors.colorWhite, display: "flex",
+                    flexDirection: "column", justifyItems: "space-between"
+                  }} />
+              </div>
+              // </CollapseSection>
+            }
 
 
             {state.currentLore !== undefined ? (<div
@@ -696,7 +704,7 @@ export default class CampaignEditor extends Component {
               <LoreViewer app={app} type="card" _id={this.state.obj.getJson()._id} />
             </div>) : (
               <>
-              {/* <CollapseSection app={app} sectionTitle="Campaign Map"> */}
+                {/* <CollapseSection app={app} sectionTitle="Campaign Map"> */}
                 <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "fit-content", padding: ".75%", justifyContent: "space-between", marginTop: "15px" }}>
 
                   {/* {state.componentList.getComponent("map",topLore?.getJson()._id, "loreId") &&<div style={{...styles.buttons.buttonAdd, color:'red', width:"fit-content",
