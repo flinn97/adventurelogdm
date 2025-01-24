@@ -19,6 +19,7 @@ export default class Compendium extends Component {
     let state = app.state;
   await auth.getAllofTypeByUser(state.componentList,state.user.getJson()._id,"compendium")
   this.setState({start:true})
+  dispatch({currentCampaign:undefined})
     
   }
  
