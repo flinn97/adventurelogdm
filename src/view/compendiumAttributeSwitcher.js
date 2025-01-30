@@ -163,11 +163,13 @@ export default class CompendiumAttributeSwitcher extends Component {
 
         {/* {     Statblock 5e     } */}
         {format === "Statblock 5e" &&
-          <div style={{ marginBottom: "12px", marginTop: "-18px", display: "flex", flexDirection: "row", justifyContent: "space-evenly", pointerEvents: "none" }}>
+          <div style={{ marginBottom: "12px", marginTop: "-18px", display: "flex", flexDirection: "row", justifyContent: "space-evenly", 
+          pointerEvents: "none" }}>
 
             <ParentFormComponent
               app={app}
               name="attr1"
+              placeholder="CR"
               label={`Preset Attributes:`}
               wrapperStyle={{
                 margin: "5px",
@@ -187,17 +189,18 @@ export default class CompendiumAttributeSwitcher extends Component {
                 rows: "1",
                 borderRadius: "4px",
                 background: styles.colors.colorWhite + "aa",
-                borderWidth: "0px",
+                borderWidth: "2px",
+                borderColor:"#AA4A44"
               }}
               type="text"
               obj={[
                 {
                   getJson: () => ({ attr1: "CR" }),
                   setJson: () => { },
-                  getOperationsFactory: () => ({
-                    cleanPrepareRun: () => { },
-                    prepareRun: () => { }
-                  })
+                  // getOperationsFactory: () => ({
+                  //   cleanPrepareRun: () => { },
+                  //   prepareRun: () => { }
+                  // })
                 }
               ]}
             />
@@ -205,6 +208,7 @@ export default class CompendiumAttributeSwitcher extends Component {
             <ParentFormComponent
               app={app}
               name="attr2"
+              placeholder="Size"
               wrapperStyle={{
                 margin: "5px",
                 color: styles.colors.colorWhite,
@@ -221,17 +225,18 @@ export default class CompendiumAttributeSwitcher extends Component {
                 rows: "1",
                 borderRadius: "4px",
                 background: styles.colors.colorWhite + "aa",
-                borderWidth: "0px",
+                borderWidth: "2px",
+                borderColor:"#AA4A44"
               }}
               type="text"
               obj={[
                 {
                   getJson: () => ({ attr2: "Size" }),
                   setJson: () => { },
-                  getOperationsFactory: () => ({
-                    cleanPrepareRun: () => { },
-                    prepareRun: () => { }
-                  })
+                  // getOperationsFactory: () => ({
+                  //   cleanPrepareRun: () => { },
+                  //   prepareRun: () => { }
+                  // })
                 }
               ]}
             />
@@ -239,6 +244,7 @@ export default class CompendiumAttributeSwitcher extends Component {
             <ParentFormComponent
               app={app}
               name="attr3"
+              placeholder="Type"
               wrapperStyle={{
                 margin: "5px",
                 color: styles.colors.colorWhite,
@@ -256,17 +262,18 @@ export default class CompendiumAttributeSwitcher extends Component {
                 rows: "1",
                 borderRadius: "4px",
                 background: styles.colors.colorWhite + "aa",
-                borderWidth: "0px",
+                borderWidth: "2px",
+                borderColor:"#AA4A44"
               }}
               type="text"
               obj={[
                 {
                   getJson: () => ({ attr3: "Type" }),
                   setJson: () => { },
-                  getOperationsFactory: () => ({
-                    cleanPrepareRun: () => { },
-                    prepareRun: () => { }
-                  })
+                  // getOperationsFactory: () => ({
+                  //   cleanPrepareRun: () => { },
+                  //   prepareRun: () => { }
+                  // })
                 }
               ]}
             />
@@ -274,6 +281,7 @@ export default class CompendiumAttributeSwitcher extends Component {
             <ParentFormComponent
               app={app}
               name="attr4"
+              placeholder="Alignment"
               wrapperStyle={{
                 margin: "5px",
                 color: styles.colors.colorWhite,
@@ -282,7 +290,7 @@ export default class CompendiumAttributeSwitcher extends Component {
               }}
               theme={"adventureLog"}
               maxLength={app.state.maxLengthShort}
-              placeholder={"Attribute 4"}
+              // placeholder={"Attribute 4"}
               inputStyle={{
                 maxWidth: "13.8rem",
                 width:"100%",
@@ -292,17 +300,18 @@ export default class CompendiumAttributeSwitcher extends Component {
                 rows: "1",
                 borderRadius: "4px",
                 background: styles.colors.colorWhite + "aa",
-                borderWidth: "0px",
+                borderWidth: "2px",
+                borderColor:"#AA4A44"
               }}
               type="text"
               obj={[
                 {
                   getJson: () => ({ attr4: "Alignment" }),
                   setJson: () => { },
-                  getOperationsFactory: () => ({
-                    cleanPrepareRun: () => { },
-                    prepareRun: () => { }
-                  })
+                  // getOperationsFactory: () => ({
+                  //   cleanPrepareRun: () => { },
+                  //   prepareRun: () => { }
+                  // })
                 }
               ]}
             />
@@ -310,6 +319,7 @@ export default class CompendiumAttributeSwitcher extends Component {
             <ParentFormComponent
               app={app}
               name="attr5"
+              placeholder="Environment"
               wrapperStyle={{
                 margin: "5px",
                 color: styles.colors.colorWhite,
@@ -318,7 +328,7 @@ export default class CompendiumAttributeSwitcher extends Component {
               }}
               theme={"adventureLog"}
               maxLength={app.state.maxLengthShort}
-              placeholder={"Attribute 5"}
+              // placeholder={"Attribute 5"}
               inputStyle={{
                 width: "13.8rem",
                 padding: "4px 9px",
@@ -327,18 +337,18 @@ export default class CompendiumAttributeSwitcher extends Component {
                 rows: "1",
                 borderRadius: "4px",
                 background: styles.colors.colorWhite + "aa",
-                borderWidth: "0px",
+                borderWidth: "2px",
+                borderColor:"#AA4A44"
               }}
               type="text"
-              // Provide an array with one object, whose .getJson() returns { attr1: 'CR' }
               obj={[
                 {
                   getJson: () => ({ attr5: "Environment" }),
                   setJson: () => { },
-                  getOperationsFactory: () => ({
-                    cleanPrepareRun: () => { },
-                    prepareRun: () => { }
-                  })
+                  // getOperationsFactory: () => ({
+                  //   cleanPrepareRun: () => { },
+                  //   prepareRun: () => { }
+                  // })
                 }
               ]}
             />

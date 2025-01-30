@@ -869,21 +869,46 @@ class Viewer extends componentBase {
         campaignId: ""
     }
 }
+
+
 class Compendium extends Campaign {
     constructor(opps) {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
-
+        this.setFormat = this.setFormat.bind(this);
     }
     json = {
         ...this.json,
         type: "compendium",
         format: "",
     }
+
+    setFormat(newVal){
+        if (newVal === "Statblock 5e"){
+            this.json = { ...this.json,
+                attr1:"CR",
+                attr2:"Size",
+                attr3:"Type",
+                attr4:"Alignment",
+                attr5:"Environment",
+                format:"Statblock 5e"
+            }
+            this.setCompState({...this.json})
+        }else{
+            this.json = { ...this.json,
+                attr1:"",
+                attr2:"",
+                attr3:"",
+                attr4:"",
+                attr5:"",
+            }
+            this.setCompState({...this.json})
+        }
+    }
+
     async getPicSrc(path) {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
-
     }
 }
 

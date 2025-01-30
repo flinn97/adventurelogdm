@@ -25,7 +25,7 @@ export default class EncounterMapItem extends Component {
     let state = app.state;
     let l = app.state.maxLengthShort;
     let styles = state.styles;
-    let level = this.props.props.level;
+    let level = this.props.props?.level;
     let obj = this.props.obj;
 
     // if (obj?.getJson().name.startsWith("Copy of") && level === "campaign") {
@@ -33,7 +33,7 @@ export default class EncounterMapItem extends Component {
     // }
 
           let name = obj?.getJson().name;
-          let x = name.length;
+          let x = name?.length;
           let fontSizePx;
 
               if(x <= 18) {

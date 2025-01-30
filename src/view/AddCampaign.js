@@ -26,6 +26,8 @@ export default class AddCampaign extends Component {
   handleFormatChange(obj, eventOrValue) {
     const newVal = eventOrValue?.target?.value || eventOrValue;
     this.setState({ format: newVal });
+    console.log(obj[0])
+    obj[0].setFormat(newVal)
   }
 
 

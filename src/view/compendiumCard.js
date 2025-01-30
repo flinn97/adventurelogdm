@@ -92,7 +92,7 @@ class MainContent extends Component {
     let state = app.state;
     let componentList = state.componentList;
     let styles = state.styles;
-    console.log(componentList.getList("compendium"))
+    // console.log(componentList.getList("compendium"))
 
 
     return (

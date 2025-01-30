@@ -243,8 +243,8 @@ export default class CompendiumItem extends Component {
       state.componentList,
     );
 
-    let prevStats = prevLore? prevLore?.getJson().name + "   -   " + state?.currentCampaign.getJson()?.attr1 + " " + prevLore?.getJson().attr1Value :"";
-    let nextStats = nextLore? nextLore?.getJson().name + "   -   " + state?.currentCampaign.getJson()?.attr1 + " " + nextLore?.getJson().attr1Value :"";
+    let prevStats = prevLore ? prevLore?.getJson().name + "   -   " + state?.currentCampaign.getJson()?.attr1 + " " + prevLore?.getJson().attr1Value : "";
+    let nextStats = nextLore ? nextLore?.getJson().name + "   -   " + state?.currentCampaign.getJson()?.attr1 + " " + nextLore?.getJson().attr1Value : "";
 
     function truncateName(name) {
       if (!name) return "";
@@ -252,9 +252,9 @@ export default class CompendiumItem extends Component {
       return name.slice(0, 24) + "...";
     }
 
-    let prevName =  truncateName(prevLore?.getJson().name);
-    let nextName =  truncateName(nextLore?.getJson().name);
-  
+    let prevName = truncateName(prevLore?.getJson().name);
+    let nextName = truncateName(nextLore?.getJson().name);
+
 
 
     function arraysAreEqual(a, b) {
@@ -355,7 +355,7 @@ export default class CompendiumItem extends Component {
                               style={{ width: "80px" }}
                             />
                           </Link>
-                          <div className="hover-text" style={{fontSize:".6rem", width:"90px", textAlign:"center"}}>
+                          <div className="hover-text" style={{ fontSize: ".6rem", width: "90px", textAlign: "center" }}>
                             {prevName}
                           </div>
                         </div>
@@ -378,7 +378,7 @@ export default class CompendiumItem extends Component {
                               style={{ width: "80px", transform: "scaleX(-1)" }}
                             />
                           </Link>
-                          <div className="hover-text" style={{fontSize:".6rem", width:"90px", textAlign:"center"}}>
+                          <div className="hover-text" style={{ fontSize: ".6rem", width: "90px", textAlign: "center" }}>
                             {nextName}
                           </div>
                         </div>
@@ -548,7 +548,125 @@ export default class CompendiumItem extends Component {
                       ); return null;
                   })
                   }
+                  {state.currentCampaign?.getJson().format === "Statblock 5e" &&
+                    <div style={{
+                      display: "flex", flexDirection: "row", marginTop: "24px", backgroundColor: styles.colors.color9 + "0a",
+                      padding: "12px", borderRadius: "12px", borderBottomLeftRadius: "0", borderBottomRightRadius: "0"
+                    }}>
+                      <ParentFormComponent
 
+                        app={app}
+                        name='initiativeBonus'
+                        label={"Initiative Bonus"}
+                        checkUser={true}
+                        wrapperStyle={{
+                          margin: "5px",
+                          color: styles.colors.colorWhite,
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                        theme={"adventureLog"}
+                        rows={1}
+                        maxLength={app.state.maxLengthShort}
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
+                        inputStyle={{
+                          width: "52%", marginLeft: "9px",
+                          padding: "4px 9px", fontSize: "1.2rem",
+                          color: styles.colors.colorWhite,
+                          height: "1.7rem",
+                          rows: "1",
+                          borderRadius: "4px",
+                          background: styles.colors.colorWhite + "11",
+                          borderWidth: "0px",
+                        }}
+                      />
+                      <ParentFormComponent
+
+                        app={app}
+                        name='armor'
+                        label={"Armor Class"}
+                        checkUser={true}
+                        wrapperStyle={{
+                          margin: "5px",
+                          color: styles.colors.colorWhite,
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                        theme={"adventureLog"}
+                        rows={1}
+                        maxLength={app.state.maxLengthShort}
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
+                        inputStyle={{
+                          width: "52%", marginLeft: "9px",
+                          padding: "4px 9px", fontSize: "1.2rem",
+                          color: styles.colors.colorWhite,
+                          height: "1.7rem",
+                          rows: "1",
+                          borderRadius: "4px",
+                          background: styles.colors.colorWhite + "11",
+                          borderWidth: "0px",
+                        }}
+                      />
+                      <ParentFormComponent
+
+                        app={app}
+                        name='hitPoints'
+                        label={"HP"}
+                        checkUser={true}
+                        wrapperStyle={{
+                          margin: "5px",
+                          color: styles.colors.colorWhite,
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                        theme={"adventureLog"}
+                        rows={1}
+                        maxLength={app.state.maxLengthShort}
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
+                        inputStyle={{
+                          width: "52%", marginLeft: "9px",
+                          padding: "4px 9px", fontSize: "1.2rem",
+                          color: styles.colors.colorWhite,
+                          height: "1.7rem",
+                          rows: "1",
+                          borderRadius: "4px",
+                          background: styles.colors.colorWhite + "11",
+                          borderWidth: "0px",
+                        }}
+                      />
+                    </div>
+
+                  }
+                  {state.currentCampaign?.getJson().format === "Statblock 5e" &&
+                    <div style={{ backgroundColor: styles.colors.color9 + "0a", padding: "12px", borderRadius: "12px", borderTopLeftRadius: "0", borderTopRightRadius: "0" }}>
+                      <ParentFormComponent
+
+                        app={app}
+                        name={'statBlockLink'}
+                        label={'Link to Statblock'}
+                        checkUser={true}
+                        wrapperStyle={{
+                          margin: "5px",
+                          color: styles.colors.colorWhite,
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                        theme={"adventureLog"}
+                        rows={1}
+                        maxLength={app.state.maxLengthShort}
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color8 }}
+                        inputStyle={{
+                          width: "83%", marginLeft: "9px",
+                          padding: "4px 9px", fontSize: "1.2rem",
+                          color: styles.colors.colorWhite,
+                          height: "1.7rem",
+                          rows: "1",
+                          borderRadius: "4px",
+                          background: styles.colors.colorWhite + "11",
+                          borderWidth: "0px",
+                        }}
+                      />
+                    </div>}
                   {state.currentLore &&
                     <div style={{ margin: "5px", marginTop: "18px", width: "fit-content", height: "fit-content", display: "flex", alignSelf: "flex-end", marginRight: "8%" }}>
                       <Upload app={app} text={state.currentLore.getJson().picURL ? "Replace Image" : "Upload Image"}
@@ -628,9 +746,9 @@ export default class CompendiumItem extends Component {
 
 
               <div style={{
-                display: "flex", flexDirection: "row", marginBottom: "22px", 
+                display: "flex", flexDirection: "row", marginBottom: "22px",
                 // position: "sticky", top: 20, background:"#101114",
-                paddingTop: "29px", justifyContent: "space-evenly",  zIndex: state.popupSwitch ? "" : 9999,
+                paddingTop: "29px", justifyContent: "space-evenly", zIndex: state.popupSwitch ? "" : 9999,
               }}>
 
                 <SearchMapComponent app={app} attribute="componentFliter" imgLeft={searchPng} imgLeftStyle={{ width: "1rem", height: "1rem", marginLeft: "-.5rem", marginTop: window.innerWidth > 700 ? ".5rem" : ".32rem", }}
