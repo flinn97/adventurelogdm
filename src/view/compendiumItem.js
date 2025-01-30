@@ -570,7 +570,7 @@ export default class CompendiumItem extends Component {
                         maxLength={app.state.maxLengthShort}
                         labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
                         inputStyle={{
-                          width: "52%", marginLeft: "9px",
+                          width: "58%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",
@@ -597,7 +597,7 @@ export default class CompendiumItem extends Component {
                         maxLength={app.state.maxLengthShort}
                         labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
                         inputStyle={{
-                          width: "52%", marginLeft: "9px",
+                          width: "58%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",
@@ -624,7 +624,7 @@ export default class CompendiumItem extends Component {
                         maxLength={app.state.maxLengthShort}
                         labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
                         inputStyle={{
-                          width: "52%", marginLeft: "9px",
+                          width: "58%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",
