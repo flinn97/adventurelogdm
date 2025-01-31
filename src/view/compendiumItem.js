@@ -548,15 +548,17 @@ export default class CompendiumItem extends Component {
                       ); return null;
                   })
                   }
+
                   {state.currentCampaign?.getJson().format === "Statblock 5e" &&
                     <div style={{
                       display: "flex", flexDirection: "row", marginTop: "24px", backgroundColor: styles.colors.color9 + "0a",
-                      padding: "12px", borderRadius: "12px", borderBottomLeftRadius: "0", borderBottomRightRadius: "0"
+                      padding: "10px", borderRadius: "12px", borderBottomLeftRadius: "0", borderBottomRightRadius: "0", width: "90%",
                     }}>
                       <ParentFormComponent
-
+                        key={"initiativeBonus"}
+                        prepareRun={true} obj={state.currentLore}
                         app={app}
-                        name='initiativeBonus'
+                        name="initiativeBonus"
                         label={"Initiative Bonus"}
                         checkUser={true}
                         wrapperStyle={{
@@ -567,10 +569,10 @@ export default class CompendiumItem extends Component {
                         }}
                         theme={"adventureLog"}
                         rows={1}
-                        maxLength={app.state.maxLengthShort}
-                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
+
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.2rem", color: styles.colors.color4 }}
                         inputStyle={{
-                          width: "58%", marginLeft: "9px",
+                          width: "60%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",
@@ -581,9 +583,10 @@ export default class CompendiumItem extends Component {
                         }}
                       />
                       <ParentFormComponent
-
+                        prepareRun={true}
+                        key={"armor"} obj={state.currentLore}
                         app={app}
-                        name='armor'
+                        name="armor"
                         label={"Armor Class"}
                         checkUser={true}
                         wrapperStyle={{
@@ -594,10 +597,10 @@ export default class CompendiumItem extends Component {
                         }}
                         theme={"adventureLog"}
                         rows={1}
-                        maxLength={app.state.maxLengthShort}
-                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
+
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.2rem", color: styles.colors.color4 }}
                         inputStyle={{
-                          width: "58%", marginLeft: "9px",
+                          width: "60%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",
@@ -608,9 +611,10 @@ export default class CompendiumItem extends Component {
                         }}
                       />
                       <ParentFormComponent
-
-                        app={app}
-                        name='hitPoints'
+                        key={"hitPoints"}
+                        prepareRun={true}
+                        app={app} obj={state.currentLore}
+                        name="hitPoints"
                         label={"HP"}
                         checkUser={true}
                         wrapperStyle={{
@@ -621,10 +625,10 @@ export default class CompendiumItem extends Component {
                         }}
                         theme={"adventureLog"}
                         rows={1}
-                        maxLength={app.state.maxLengthShort}
-                        labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
+
+                        labelStyle={{ marginBottom: "11px", fontSize: "1.2rem", color: styles.colors.color4 }}
                         inputStyle={{
-                          width: "58%", marginLeft: "9px",
+                          width: "60%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",
@@ -638,11 +642,14 @@ export default class CompendiumItem extends Component {
 
                   }
                   {state.currentCampaign?.getJson().format === "Statblock 5e" &&
-                    <div style={{ backgroundColor: styles.colors.color9 + "0a", padding: "12px", borderRadius: "12px", borderTopLeftRadius: "0", borderTopRightRadius: "0" }}>
+                    <div style={{
+                      backgroundColor: styles.colors.color9 + "0a", width: "90%",
+                      padding: "12px", borderRadius: "12px", borderTopLeftRadius: "0", borderTopRightRadius: "0"
+                    }}>
                       <ParentFormComponent
-
-                        app={app}
-                        name={'statBlockLink'}
+                        prepareRun={true}
+                        app={app} obj={state.currentLore}
+                        name="statBlockLink"
                         label={'Link to Statblock'}
                         checkUser={true}
                         wrapperStyle={{
@@ -653,10 +660,10 @@ export default class CompendiumItem extends Component {
                         }}
                         theme={"adventureLog"}
                         rows={1}
-                        maxLength={app.state.maxLengthShort}
+
                         labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color8 }}
                         inputStyle={{
-                          width: "83%", marginLeft: "9px",
+                          width: "88%", marginLeft: "9px",
                           padding: "4px 9px", fontSize: "1.2rem",
                           color: styles.colors.colorWhite,
                           height: "1.7rem",

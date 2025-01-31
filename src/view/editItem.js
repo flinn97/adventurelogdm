@@ -4,10 +4,6 @@ import "../App.css"
 import ParentFormComponent from '../componentListNPM/componentForms/parentFormComponent';
 import Upload from './upload';
 
-import { MapComponent } from '../mapTech/mapComponentInterface';
-import Initiative from '../EncounterLibrary/encounterstuff/view/initiativeRoll';
-import Name from '../EncounterLibrary/encounterstuff/view/name';
-import trash from "../pics/delSkull.png";
 
 
 export default class EditItem extends Component {
@@ -29,6 +25,8 @@ export default class EditItem extends Component {
     const attrKeys = ["attr1", "attr2", "attr3", "attr4", "attr5"];
 
     return (
+      <div>
+        {state.currentComponent &&
       <div>
 
 
@@ -64,6 +62,7 @@ export default class EditItem extends Component {
                 // usage: obj.getJson().usage +1
               })
             }} app={app} />) || (<div style={{ width: "180px", justifyContent: "center", display: "flex", flexDirection: "column", alignItems: "center" }}><img src={this.state.completedPic} style={{ width: "74px", marginLeft: "8px" }} /><div style={{ color: styles.colors.color8, fontSize: "13px", marginLeft: "8px" }}>You can change this later</div></div>)}
+
 
         <div style={{ display: "flex", flexDirection: "column", width: "100%", marginTop: "32px" }}>
           {attrKeys.map((attr) => {
@@ -102,12 +101,12 @@ export default class EditItem extends Component {
         </div>
 
         {compendium?.getJson().format === "Statblock 5e" &&
-        <div style={{display:"flex", flexDirection:"row", width:"83%", marginTop:"24px", backgroundColor:styles.colors.color9+"0a", 
+        <div style={{display:"flex", flexDirection:"row", width:"83%", marginTop:"24px", backgroundColor:styles.colors.color9+"0a", marginLeft:"12px",
         padding:"12px", borderRadius:"12px", borderBottomLeftRadius:"0", borderBottomRightRadius:"0"}}>
           <ParentFormComponent
-                  
+                  key={'initiativeBonus'}
                   app={app}
-                  name='initiativeBonus'
+                  name="initiativeBonus"
                   label={"Initiative Bonus"}
                   checkUser={true}
                   wrapperStyle={{
@@ -118,7 +117,6 @@ export default class EditItem extends Component {
                   }}
                   theme={"adventureLog"}
                   rows={1}
-                  maxLength={app.state.maxLengthShort}
                   labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
                   inputStyle={{
                     width: "52%", marginLeft: "9px",
@@ -132,9 +130,9 @@ export default class EditItem extends Component {
                   }}
                 />
                 <ParentFormComponent
-                  
+                  key={'armor'}
                   app={app}
-                  name='armor'
+                  name="armor"
                   label={"Armor Class"}
                   checkUser={true}
                   wrapperStyle={{
@@ -145,7 +143,7 @@ export default class EditItem extends Component {
                   }}
                   theme={"adventureLog"}
                   rows={1}
-                  maxLength={app.state.maxLengthShort}
+                  
                   labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
                   inputStyle={{
                     width: "52%", marginLeft: "9px",
@@ -159,9 +157,9 @@ export default class EditItem extends Component {
                   }}
                 />
                 <ParentFormComponent
-                  
+                  key={'hitPoints'}
                   app={app}
-                  name='hitPoints'
+                  name="hitPoints"
                   label={"HP"}
                   checkUser={true}
                   wrapperStyle={{
@@ -172,7 +170,7 @@ export default class EditItem extends Component {
                   }}
                   theme={"adventureLog"}
                   rows={1}
-                  maxLength={app.state.maxLengthShort}
+                  
                   labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color4 }}
                   inputStyle={{
                     width: "52%", marginLeft: "9px",
@@ -189,11 +187,11 @@ export default class EditItem extends Component {
 
         }
 {compendium?.getJson().format === "Statblock 5e" &&
-        <div style={{backgroundColor:styles.colors.color9+"0a", padding:"12px", borderRadius:"12px", width:"83%", borderTopLeftRadius:"0", borderTopRightRadius:"0"}}>
+        <div style={{backgroundColor:styles.colors.color9+"0a", padding:"12px", marginLeft:"12px", borderRadius:"12px", width:"83%", borderTopLeftRadius:"0", borderTopRightRadius:"0"}}>
         <ParentFormComponent
                  
                   app={app}
-                  name={'statBlockLink'}
+                  name="statBlockLink"
                   label={'Link to Statblock'}
                   checkUser={true}
                   wrapperStyle={{
@@ -207,7 +205,7 @@ export default class EditItem extends Component {
                   maxLength={app.state.maxLengthShort}
                   labelStyle={{ marginBottom: "11px", fontSize: "1.4rem", color: styles.colors.color8 }}
                   inputStyle={{
-                    width: "83%", marginLeft: "9px",
+                    width: "85%", marginLeft: "9px",
                     padding: "4px 9px", fontSize: "1.2rem",
                     color: styles.colors.colorWhite,
                     height: "1.7rem",
@@ -262,6 +260,8 @@ export default class EditItem extends Component {
 
             }}>Save</div>
         </div>
+      </div>}
+      
       </div>
     )
 
