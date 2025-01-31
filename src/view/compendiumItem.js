@@ -694,7 +694,7 @@ export default class CompendiumItem extends Component {
                 </div>
 
                 <img alt="no image" src={state.currentLore?.getJson()?.picURL}
-                  style={{ maxWidth: "55%", maxHeight: "504px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%", marginTop: "21px" }} />
+                  style={{ maxWidth: "55%", maxHeight: state.currentCampaign?.getJson().format === "Statblock 5e"?"700px":"504px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%", marginTop: "21px" }} />
 
               </div>
 
