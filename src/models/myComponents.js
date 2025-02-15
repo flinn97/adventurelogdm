@@ -5,6 +5,8 @@ import authService from "../services/auth.js";
 import moment from 'moment';
 import toolService from "../services/toolService.js";
 import idService from "../componentListNPM/idService.js";
+import AIService from "../services/AIService/AIService";
+import AIAssistantBaseClass from "./AIAssistantBaseClass";
 
 
 class componentBase extends BaseClass {
@@ -292,7 +294,7 @@ class Lore extends componentBase {
     }
 
     async getPicSrc(path) {
-        let pic = await authService.downloadPics(path||this.json.pics);
+        let pic = await authService.downloadPics(path || this.json.pics);
         this.json.picURL = pic;
 
     }
@@ -390,6 +392,24 @@ class Campaign extends componentBase {
         encounters: {},
         rules: {},
         _id: "",
+    }
+
+    async upsert(componentList) {
+        
+        let upsertCampaign = AIService.createUpsertObject(this, ["title", "description"]);
+
+        let loreList = componentList.getList("lore", this.json._id, "campaignId");
+        let upsertList = loreList.map((lore, i) => {
+            return AIService.createUpsertObject(lore, ["name", "desc"])
+        })
+        upsertList.push(upsertCampaign);
+        AIService.upsertData(upsertList);
+        this.json.upserted=true;
+        for(let l of loreList){
+            l.setCompState({upserted:true});
+        }
+        this.operationsFactory.cleanPrepareRun({update:[this,...loreList]});
+
     }
 
 
@@ -876,38 +896,40 @@ class Compendium extends Campaign {
         super(opps);
         this.getPicSrc = this.getPicSrc.bind(this);
         this.setFormat = this.setFormat.bind(this);
-        this.get5e=this.get5e.bind(this);
+        this.get5e = this.get5e.bind(this);
     }
     json = {
         ...this.json,
         type: "compendium",
         format: "",
     }
-    get5e(){
-        let json = { ...this.json,
-                attr1:"CR",
-                attr2:"Size",
-                attr3:"Type",
-                attr4:"Alignment",
-                attr5:"Environment",
-                format:"Statblock 5e"
-            
+    get5e() {
+        let json = {
+            ...this.json,
+            attr1: "CR",
+            attr2: "Size",
+            attr3: "Type",
+            attr4: "Alignment",
+            attr5: "Environment",
+            format: "Statblock 5e"
+
         }
         return json
     }
 
-    setFormat(newVal){
-        let json = { ...this.json,
-            attr1:"",
-            attr2:"",
-            attr3:"",
-            attr4:"",
-            attr5:"",
+    setFormat(newVal) {
+        let json = {
+            ...this.json,
+            attr1: "",
+            attr2: "",
+            attr3: "",
+            attr4: "",
+            attr5: "",
         }
-        if (newVal === "Statblock 5e"){
+        if (newVal === "Statblock 5e") {
             json = this.get5e();
         }
-        this.json = json 
+        this.json = json
     }
 
     async getPicSrc(path) {
@@ -916,17 +938,45 @@ class Compendium extends Campaign {
     }
 }
 
+class AIMessage extends componentBase{
+    json={
+        ...this.json,
+        role:"user",
+        type:"message",
+        assistantId:"",
+        position:0,
+        content:"You help build content for table top role playing game publishers."
+    }
+}
+
+class AIRuleset extends componentBase{
+    json={...this.json,
+        rule:"You help build content for table top role playing game publishers",
+        type:"aiRuleset",
+
+    }
+}
+
+class Preference extends componentBase{
+    json={...this.json,
+        role: "user",
+        content:"Hello, how are you?",
+        rulesetId:""
+    }
+}
+
+
 
 function forFactory() {
     //camelCase laws plz. Make sure the TYPE is the same as the key value below
     return {
-        user: User, pin: Pin, campaign: Campaign,
+        user: User, pin: Pin, campaign: Campaign, aiMessage:AIMessage,
         encounter: Encounter, monster: Monster,
         newNote: NewNote, map: Map, post: Post,
         marketplaceItem: MarketplaceItem, viewer: Viewer,
         condition: Condition, icon: Icon, compendium: Compendium,
-        lore: Lore, image: Image, approval: Approval, partner: Partner, partnerRequest: PartnerRequest, 
-        mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset
+        lore: Lore, image: Image, approval: Approval, partner: Partner, partnerRequest: PartnerRequest,
+        mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset, chatAssistant:AIAssistantBaseClass, aiRuleset:AIRuleset, preference:Preference
     }
 }
 

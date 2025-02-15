@@ -53,6 +53,7 @@ export default class BaseClass extends Component {
   getHtml(option){
     let clicks = undefined
     if(this.cell.func){
+      debugger
       clicks = this.cell.func
     }
     let cellStyle = clicks? {...this.props.cellStyle, cursor:"pointer"}: this.props.cellStyle;

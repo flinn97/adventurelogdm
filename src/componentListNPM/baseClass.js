@@ -3,6 +3,7 @@
  */
 export default class BaseClass {
     operationsFactory;
+    componentList;
     json;
     constructor(oppsFactory){
         this.setJson=this.setJson.bind(this);
@@ -10,7 +11,15 @@ export default class BaseClass {
         this.setCompState=this.setCompState.bind(this);
         this.copyComponent=this.copyComponent.bind(this);
         this.getOperationsFactory=this.getOperationsFactory.bind(this)
+        this.createUUID = this.createUUID.bind(this);
+
         this.operationsFactory=oppsFactory;
+    }
+    getComponentList(){
+        return this.componentList
+    }
+    setComponentList(l){
+        this.componentList=l
     }
   /**
      * 
@@ -70,6 +79,15 @@ export default class BaseClass {
         }
 
         this.json[key] = ob;
+    }
+    createUUID(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
     }
 
    

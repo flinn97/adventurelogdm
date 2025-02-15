@@ -254,6 +254,9 @@ export default class CampaignEditor extends Component {
             {state.user.getJson().partner && (
               <Link style={{ textDecoration: "none", width: "250px" }} to={"../sendtomarketplace/" + state.currentCampaign.getJson()._id} target="_blank"><div className='hover-btn-highlight' style={{ color: "red", cursor: "pointer", borderRadius: "11px", width: "fit-content", padding: "2px 8px", marginBottom: "8px" }} >Send to Marketplace</div></Link>
             )}
+            <div onClick={()=>{
+              state.currentCampaign.upsert(state.componentList);
+            }}>Add To My AI</div>
             {/* BACK BUTTON */}
             {(state.popUpSwitchcase != "updateCampaign" && state.currentLore == undefined) &&
               (<Link className="hover-btn-highlight"

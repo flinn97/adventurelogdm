@@ -4,6 +4,7 @@ import { Component } from 'react';
 // import Login from './view/login';
 // import Register from './view/register';
 import './index.css';
+import AIRulesetPage from './view/AIComponents/AIRulesetPage';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import CampaignEditor from './view/campaignEditor';
 import Worldbuilder from './view/worldBuilder';
@@ -47,6 +48,7 @@ import CampaignViewer from './view/pages/campViewer';
 import Compendium from './view/pages/compendium';
 import CompendiumItem from './view/compendiumItem';
 import PartnerKitPage from './view/partnerKitPage';
+import AIPage from './view/AIComponents/AIPage';
 
 //model
 export default class Dispatch extends Component {
@@ -380,6 +382,8 @@ export default class Dispatch extends Component {
                         <Route path="/campaign/" element={<Campaign app={app} />} />
                         <Route path="/compendium/" element={<Compendium app={app} />} />
                         <Route path="/compendium/:id" element={<CompendiumItem app={app} />} />
+                        <Route path="/ai/" element={<AIPage app={app} />} />
+                        <Route path="/ai/ruleset" element={<AIRulesetPage app={app} />} />
 
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
                         <Route path="/worldbuilder/:id" element={<Worldbuilder app={app} />} />
@@ -399,6 +403,8 @@ export default class Dispatch extends Component {
                         )}
                         <Route path="/campaign/" element={<Campaign app={app} />} />
                         <Route path="/compendium/" element={<Compendium app={app} />} />
+                        <Route path="/ai/" element={<AIPage app={app} />} />
+                        <Route path="/ai/ruleset" element={<AIRulesetPage app={app} />} />
 
                         <Route path="/campaign/:id" element={<CampaignEditor app={app} />} />
                         {/* <Route path="/library/:id" element={<CampaignEditor app={app} />} /> */}
@@ -444,6 +450,8 @@ export default class Dispatch extends Component {
 
           <Route path="/register/" element={<Register app={app} />} />
           <Route path="/playerregister/" element={<PlayerRegister app={app} />} />
+          <Route path="/ai/" element={<AIPage app={app} />} />
+          <Route path="/ai/ruleset" element={<AIRulesetPage app={app} />} />
 
           <Route path="/login/" element={<Login app={app} />} />
           <Route path="/" element={<Login app={app} />} />
