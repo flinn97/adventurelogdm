@@ -1,6 +1,5 @@
 import { Component } from 'react';
-import CampaignCard from './campaignCard';
-import MapComponent from '../../componentListNPM/mapTech/mapComponent';
+
 import auth from '../../services/auth';
 import CompendiumCard from '../compendiumCard';
 

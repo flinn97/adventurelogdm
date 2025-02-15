@@ -477,7 +477,9 @@ class MainContent extends Component {
                   />
                   Back
                 </div>
+                
                 <EditItem app={app} handleClose={this.props.handleClose} />
+                
               </>) : (<>
                 {(this.state.showFindEncounter || this.state.showFindImage) &&
                   <div className="indent-on-click"

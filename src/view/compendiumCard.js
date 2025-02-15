@@ -107,7 +107,7 @@ class MainContent extends Component {
             filter={{ search: "compendium", attribute: "type" }}
        
             theme={"selectByImage"}
-          //Sort by last clicked?
+          
           />
         </div>
        
