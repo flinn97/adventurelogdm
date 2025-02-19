@@ -21,6 +21,7 @@ export default class AIPage extends Component {
     let state = app.state;
     let opps = state.opps;
     let componentList= state.componentList
+    
     await auth.firebaseGetter("chatAssistant",componentList, "type", "chatAssistant" );
     let currentAssistant =componentList.getComponent("chatAssistant", false, "firstTime");
     if(currentAssistant){
@@ -55,9 +56,10 @@ export default class AIPage extends Component {
     let styles =state.styles;
     return (
       <div style={{}}>   
-           {this.state.start&&<AICard app={app} type="cardWithTab" options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>}               
+           {this.state.start&&<AICard app={app} type="cardWithTab" 
+           options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>}               
         
-        <hr></hr>
+        {/* <hr></hr> */}
 
       </div>
 

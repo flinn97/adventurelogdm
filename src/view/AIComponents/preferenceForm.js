@@ -18,12 +18,20 @@ export default class PreferenceForm extends Component {
     let state = app.state;
     let styles =state.styles;
     return (
-      <div style={{}}>   
-       
-       <ParentFormComponent app={app}  obj={this.props.obj} name="content" cleanPrepareRun={true} 
-        wrapperStyle={{display:"flex", flexDirection:"column"}}
+      <ul style={{ paddingLeft: "20px", width:"62vw", }}>   
+      <li>
+        <ParentFormComponent  class="text-form text-wide" 
+          app={app} 
+          
+          obj={this.props.obj} 
+          name="content" 
+          cleanPrepareRun={true} 
+          wrapperStyle={{ display: "flex", flexDirection: "column", }}
+          inputStyle={{width:"71vw", border:"1px solid grey"}}
         />
-      </div>
+      </li>
+    </ul>
+    
 
     )
   }

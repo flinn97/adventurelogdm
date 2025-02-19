@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useDebugValue } from 'react';
 import { MapComponent } from '../../mapTech/mapComponentInterface';
 import auth from '../../services/auth';
+import { Link } from 'react-router-dom';
+import gear from '../../pics/conditionGear.png';
+import AIConvo from './AIConvoMapComponent';
 
 
 /**
@@ -82,33 +85,59 @@ export default class AICard extends Component {
 class MainContent extends Component {
   constructor(props) {
     super(props);
-    this.state = {content:""}
+    this.state = {
+      content: "",
+      messageList: []
+    }
+    this.sendMessage = this.sendMessage.bind(this);
   }
   async componentDidMount() {
-    if(this.ranonce){
+    if (this.ranonce) {
       return
-  }
-  this.ranonce = true;
+    }
+    this.ranonce = true;
     let app = this.props.app;
     let dispatch = app.dispatch;
     let state = app.state;
     let componentList = state.componentList;
     let opps = state.opps;
     let a;
-    if(!state.currentAssistant){
-      
-
-      let assistant = await opps.cleanJsonPrepare({addchatAssistant:{ owner: state.user.getJson().owner, type:"chatAssistant"}});
+    if (!state.currentAssistant) {
+      let assistant = await opps.cleanJsonPrepare({ addchatAssistant: { owner: state.user.getJson().owner, type: "chatAssistant" } });
       assistant = assistant.add[0];
       await dispatch({ currentAssistant: assistant })
-      a=assistant
+      
+//Creating a chatAssistant list, but we are never deleting old assistants
+      a = assistant;
+      if (a?.getJson()?._id) {
+        await auth.firebaseGetter(a.getJson()._id, componentList, "assistantId", "aiMessage");
+      } else {
+        console.error("Error: assistant _id is undefined");
+      }
     }
-   await auth.firebaseGetter(a.getJson()._id, componentList, "assistantId", "aiMessage");
-   await componentList.sortSelectedList("aiMessage", "position")
 
+    await componentList.sortSelectedList("aiMessage", "position");
 
+    // let messages = componentList.getList("aiMessage");
+    // this.setState({messageList:messages})
 
   }
+
+  sendMessage = async (state, dispatch) => {
+    if (this.state.content.trim() !== "") {
+      let message = this.state.content.trim(); // Store input value before clearing state
+
+      this.setState({ content: "" }, async () => {
+        state.opps.run();
+        dispatch({ message });
+
+        await state.currentAssistant.chat(message, state.componentList);
+      });
+    }
+  };
+
+
+
   render() {
     let app = this.props.app;
     let dispatch = app.dispatch;
@@ -116,40 +145,92 @@ class MainContent extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
+    let empty = this.state.content === "";
 
     return (
       <div style={{
-        display: "flex", position: "relative", flexDirection: "column", justifyContent: "flex-end",
-        alignContent: "center", width: "100%", userSelect: "none", marginTop: "-22px", overflow: "hidden"
+        display: "flex", position: "relative", flexDirection: "column", justifyContent: "flex-end", background: styles.colors.color2,
+        padding: "12px 18px", borderRadius: "11px",
+        alignContent: "center", width: "85vw", userSelect: "none", marginTop: "-22px", overflow: "hidden"
       }}>
-        AI Card
-        <MapComponent app={app} name="chatAssistant" cells={[{type:"attribute", name:"name",func:async (obj)=>{
-            debugger
-            await dispatch({currentAssistant:obj})
-            await auth.firebaseGetter(obj.getJson()._id, componentList, "assistantId", "aiMessage");
-            dispatch({})
-            }}]}/>
-        {state.currentAssistant && <div>{componentList.getList("aiMessage").length}
-          <MapComponent app={app} name="aiMessage" cells={[{type:"attribute",name:"content", }]} />
+        <Link className='hover-btn' to={"ruleset/"} style={{
+          ...styles.buttons.buttonAdd, right: 11, top: 11, position: "absolute",
+          textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa", display: "flex", flexDirection: "column",
+          fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "3px 8px", fontSize: "1vw"
+        }}>
+          <img src={gear} style={{ width: "2vw" }} /> AI Settings
+        </Link>
+
+
+
+        {/* {New Convo} */}
+        {state.currentAssistant && <div style={{ userSelect: "text" }}>
+          {/* {componentList.getList("aiMessage").length} */}
+          <MapComponent app={app} name="aiMessage" cells={[
+            { custom: AIConvo, type: "custom", class: 'hover-img' },]} />
         </div>}
 
-        <input onChange={(e) => {
-          let { value } = e.target;
-          this.setState({ content: value })
+        {/* SEND COMPONENT */}
+        <div style={{ marginLeft: "22px", marginTop: "22px" }}>
+          <textarea className='textareafixed'
+            value={this.state.content}
+            placeholder='Ask your question...'
+            style={{
+              width: "72vw", borderRadius: "8px", background: styles.colors.color8 + '22',
+              color: "white", padding: "3px 8px", marginTop: "11px", marginBottom: "12px",
 
-        }}></input>
-        <div onClick={() => {
-          if (this.state.content !== "") {
-            state.opps.run();
-            dispatch({message:this.state.content})
-            debugger
-            state.currentAssistant.chat(this.state.content,componentList);
-            this.setState({content:""})
+            }}
+            onChange={(e) => {
+              this.setState({ content: e.target.value });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (e.shiftKey) {
+                  // Shift+Enter → Adds a new line
+                  e.preventDefault();
+                  this.setState({ content: this.state.content + "\n" });
+                } else {
+                  // Enter → Send Message
+                  e.preventDefault();
+                  this.sendMessage(state, dispatch);
+                }
+              }
+            }}
+          ></textarea>
 
+          <div
+            className={empty ? "" : 'hover-btn'}
+            style={{
+              ...styles.buttons.buttonAdd,
+              opacity: empty ? "80%" : "",
+              mixBlendMode: empty ? "luminosity" : "",
+              cursor: empty ? "" : "pointer"
+            }}
+            onClick={() => this.sendMessage(state, dispatch)}
 
-          }
-        }}>Send</div>
+          >Send</div>
+        </div>
 
+        {/* {Old Convos} */}
+        <div style={{ background: styles.colors.color8 + "22", padding: "4px 8px", borderRadius: "11px", marginTop: "42px" }}>
+          <div style={{ color: styles.colors.color3, fontSize: "2vw" }}>Previous Generations</div>
+          <MapComponent app={app} name="chatAssistant"
+            reverse={true}
+            cells={[{
+              type: "attribute",
+              name: "_id",
+              class: "hover-btn-highlight",
+              style: {
+                color: "white", fontSize: "1vw", padding: "2px", paddingLeft: "22px",
+                textDecoration: "1px underline " + styles.colors.color8, textUnderlineOffset: "2px"
+              }, func: async (obj) => {
+
+                await dispatch({ currentAssistant: obj })
+                await auth.firebaseGetter(obj.getJson()._id, componentList, "assistantId", "aiMessage");
+                dispatch({})
+              }
+
+            }]} /></div>
       </div>
     )
   }

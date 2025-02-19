@@ -254,9 +254,9 @@ export default class CampaignEditor extends Component {
             {state.user.getJson().partner && (
               <Link style={{ textDecoration: "none", width: "250px" }} to={"../sendtomarketplace/" + state.currentCampaign.getJson()._id} target="_blank"><div className='hover-btn-highlight' style={{ color: "red", cursor: "pointer", borderRadius: "11px", width: "fit-content", padding: "2px 8px", marginBottom: "8px" }} >Send to Marketplace</div></Link>
             )}
-            <div onClick={()=>{
-              state.currentCampaign.upsert(state.componentList);
-            }}>Add To My AI</div>
+
+
+
             {/* BACK BUTTON */}
             {(state.popUpSwitchcase != "updateCampaign" && state.currentLore == undefined) &&
               (<Link className="hover-btn-highlight"
@@ -386,6 +386,17 @@ export default class CampaignEditor extends Component {
 
                 {state.popUpSwitchcase !== "updateCampaign" && <>
                   <div style={{ display: "flex", alignContent: "center", position: "absolute", right: "24px", justifyContent: "space-between" }}>
+                    
+                    
+                    {/* ///AI BUTTON? */}
+                    {(state.popUpSwitchcase != "updateCampaign" && state.currentLore == undefined) &&
+                      <div className="hover-btn" style={{ ...styles.buttons.buttonAdd, textDecoration: "none", background:styles.colors.color7,
+                         padding: "4px 9px", marginRight:"22px" }}
+                        onClick={() => {
+                          state.currentCampaign.upsert(state.componentList);
+                        }}>Add To My AI</div>
+                    }
+
 
                     {state.currentLore === undefined &&
                       <div className="hover-btn" style={{
@@ -598,7 +609,7 @@ export default class CampaignEditor extends Component {
                   this.createViewerService.createViewer(state.currentCampaign)
                 }}>Convert to One-Page View</div>}
 
-              {viewer && <Link onClick={() => { 
+              {viewer && <Link onClick={() => {
                 debugger
                 this.createViewerService.createViewer(state.currentCampaign)
               }} style={{

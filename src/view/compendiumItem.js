@@ -87,12 +87,25 @@ export default class CompendiumItem extends Component {
       id = loreSplit[0];
       loreId = loreSplit[1];
       let lore = state.componentList.getComponent("lore", loreId, "_id");
+
+
       if (!lore) {
         lore = await auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined, { attribute: "type", value: "condition" });
-        lore = lore[0]
+        lore = lore[0];
+
       }
       await dispatch({ currentLore: lore });
+
+      if (!lore?.getJson().itemFormat) {
+        let itemFormat = state.currentCampaign?.getJson().format;
+        
+        await lore?.setCompState({ itemFormat: itemFormat });
+        await dispatch({itemFormat: itemFormat});
+        
+      }
+
     }
+
 
     let component = this.props.app.state.componentList.getComponent("compendium", id);
 
@@ -101,7 +114,6 @@ export default class CompendiumItem extends Component {
       component = component[0]
 
     }
-
 
     if (component) {
 
@@ -114,6 +126,7 @@ export default class CompendiumItem extends Component {
     // await state.componentList.sortSelectedList("lore", "attr1Value");
     dispatch({});
     this.scrollTo(this.startRef, "smooth");
+
 
   }
 
@@ -694,7 +707,7 @@ export default class CompendiumItem extends Component {
                 </div>
 
                 <img alt="no image" src={state.currentLore?.getJson()?.picURL}
-                  style={{ maxWidth: "55%", maxHeight: state.currentCampaign?.getJson().format === "Statblock 5e"?"700px":"504px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%", marginTop: "21px" }} />
+                  style={{ maxWidth: "55%", maxHeight: state.currentCampaign?.getJson().format === "Statblock 5e" ? "700px" : "504px", borderRadius: "11px", objectFit: "scale-down", marginLeft: "1%", marginTop: "21px" }} />
 
               </div>
 
@@ -733,6 +746,7 @@ export default class CompendiumItem extends Component {
                   let otherChildren = state.componentList.getList("lore", id.includes("-") ? state.currentLore.getJson()._id : state.currentCampaign?.getJson()._id, "parentId");
                   await state.opps.cleanJsonPrepare({
                     addlore: {
+                      itemFormat: state.currentCampaign?.getJson().format,
                       campaignId: state.currentCampaign?.getJson()._id, index: otherChildren.length,
                       parentId:
                         { [newId]: "Unnamed" }
