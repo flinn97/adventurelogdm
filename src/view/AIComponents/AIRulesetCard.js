@@ -3,6 +3,8 @@ import ParentFormComponent from '../../componentListNPM/componentForms/parentFor
 import { MapComponent } from '../../mapTech/mapComponentInterface';
 import auth from '../../services/auth';
 import PreferenceForm from './preferenceForm';
+import bigArrow from '../../pics/backArrow.webp';
+import { Link } from 'react-router-dom';
 
 
 /**
@@ -97,17 +99,32 @@ class MainContent extends Component {
 
     return (
       <div style={{
-        display: "flex", position: "relative", flexDirection: "column", justifyContent: "flex-end",
-        alignContent: "center", width: "100%", userSelect: "none", marginTop: "-22px", overflow: "hidden"
+        display: "flex", position: "relative", flexDirection: "column", justifyContent: "flex-end", fontSize:"1.3vw", color:styles.colors.color3,
+        alignContent: "center", width: "85vw", userSelect: "none", overflow: "hidden"
       }}>
-        AI Ruleset Card
-        <ParentFormComponent app={app}  obj={state.AIRuleset} name="rule" cleanPrepareRun={true} 
-        wrapperStyle={{display:"flex", flexDirection:"column"}}
+         <Link to={"/ai/"} style={{...styles.buttons.buttonAdd, left:21, top:0, position:"absolute",
+        textDecoration:"none", fontStyle:"italic", background:styles.colors.color7+"22", display:"flex", flexDirection:"row",
+        fontWeight:"bold", letterSpacing:".05rem", marginBottom:"2vh", padding:"4px 8px", fontSize:"1vw"}}>
+<img src={bigArrow} style={{width:"1.2vw", marginRight:"22px"}}/> 
+Back to AI
+          </Link>
+          <div style={{marginTop: "82px", marginLeft:"1vw" }}>
+        Rule:
+        <ParentFormComponent app={app}  obj={state.AIRuleset} name="rule" cleanPrepareRun={true} class="text-form text-wide" 
+        wrapperStyle={{display:"flex", flexDirection:"column", paddingLeft: "20px", marginTop:"11px", marginBottom:'21px'}}
+        inputStyle={{width:"71vw", border:"1px solid grey"}}
          />
-        <MapComponent app={app} name="preference" cells={[{type:"custom", custom:PreferenceForm,}]}/>
+         Preferences:
+        <MapComponent app={app} name="preference" theme="encounterRow"
+        cells={[
+          {type:"custom", custom:PreferenceForm,},
+          {type:"delIcon", style:{width:'29.5px', cursor:"pointer"}, title:"Delete this preference"}
+          ]}/>
 
 
-        <div onClick={async () => {
+        <div
+        style={{...styles.buttons.buttonAdd, marginTop:"18px"}}
+        onClick={async () => {
           await state.opps.cleanJsonPrepareRun({addpreference:{owner:state.user.getJson()._id, rulesetId:state.AIRuleset.getJson()._id, type:"preference"}})
           dispatch({})
 
@@ -115,7 +132,7 @@ class MainContent extends Component {
           
         }}>Add Preference</div>
 
-      </div>
+      </div></div>
     )
   }
 }
