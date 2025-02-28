@@ -16,13 +16,11 @@ class AIAssistantBaseClass extends BaseClass {
         topK: 5,
         owner: "",
         name: "Ai Content Gen",
-        index: "avatest",
+        index: "avaindex",
         AIType: "openAI",
         temperature: 0.9,
         firstTime: false,
         //could add top_p, stop, seed, stream, user, response_format, logprobs,presence_penalty, frequency_penalty, Gemini: top_K(for gemini), candidateCount, echo, safetrySettings, SystemInstruction
-
-
 
 
     }
@@ -146,10 +144,11 @@ class AIAssistantBaseClass extends BaseClass {
 
         //Store the AI response in component list
         let aiMessage = { role: "assistant", content: message.content, assistantId: this.json._id, type: "aiMessage", position: messages.length + 1 };
+        await this.operationsFactory.prepare({ update: this })
         await this.operationsFactory.jsonPrepareRun({ addaiMessage: aiMessage });
 
         //originally code was this:
-        // await this.operationsFactory.prepare({ update: this })
+        // 
         // await this.operationsFactory.jsonPrepareRun({ addaiMessage: { role: "assistant", content: message.content, assistantId: this.json._id, type: "aiMessage", position: messages.length } });
 
 
