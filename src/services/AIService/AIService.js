@@ -6,7 +6,42 @@ class AIService {
             return obj.getJson()[key]
         })
 
-        let combined_text = `Name: ${arr[0]}. Description: ${arr[1]}.`
+        //clean desc
+        let desc = arr[1]?.replace(/<\/?[^>]+(>|$)/g, "");
+        let handout = arr[4]?.replace(/<\/?[^>]+(>|$)/g, "")
+
+        //Use Handout if there is no Desc, otherwise do an empty replacement
+        if (desc === "" || !desc) {
+            desc = arr[4] ? handout : "No description"
+        };
+
+        let combined_text =
+            `Name: ${arr[0]} |
+         Description: ${desc} |`;
+
+        if (handout && desc != handout) {
+            combined_text =
+                combined_text + ` Player Handout Description: ${handout} |`
+        }
+
+        //if its a sublore, add a link
+        if (arr[3]) {
+            combined_text =
+                combined_text +
+                ` 
+            Lore Link: https://gms.arcanevaultassembly.com/campaign/${arr[2]}-${arr[3]}`;
+        } else {
+            combined_text =
+                combined_text +
+                ` 
+            Lore Link: https://gms.arcanevaultassembly.com/campaign/${arr[2]}`;
+        }
+
+        ///Log unique lores with handouts
+        if (handout) {
+            console.log("Upserted: [ " + combined_text + " ]");
+        }
+
         let upsertObj = {
             text: combined_text,
             metadata: {
@@ -21,15 +56,16 @@ class AIService {
     async upsertData(list, upsertParams, pineconeParams, chunkParams) {
         let body = {
             upsertData: {
-                upsertList:list, 
+                upsertList: list,
                 type: upsertParams?.type || "prepData",
                 splitType: upsertParams?.splitType || "openAISplit", ...upsertParams
             },
-            pineconeParams: pineconeParams || { indexName: "avatest" },
+            pineconeParams: pineconeParams || { indexName: "avaindex" },
             chunkParams: chunkParams
         }
 
-        return fetch('http://localhost:3002/api/upsert', {
+
+        return fetch('https://upsert-x5obmgu23q-uc.a.run.app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -53,9 +89,9 @@ class AIService {
     }
 
 
-    async chat(body){
-        
-        let responseMessage = await fetch('http://localhost:3002/api/chat', {
+    async chat(body) {
+
+        let responseMessage = await fetch('https://chat-x5obmgu23q-uc.a.run.app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -75,8 +111,8 @@ class AIService {
             .catch(error => {
                 console.error('Error:', error);
             });
-            console.log(responseMessage);
-            return responseMessage
+        console.log(responseMessage);
+        return responseMessage
 
     }
 

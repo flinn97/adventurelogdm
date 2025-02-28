@@ -358,7 +358,11 @@ input:-webkit-autofill {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
-}    
+}
+
+.textareafixed {
+  resize: none;
+}
 
 .hover-bubble:hover {
   opacity: .99;

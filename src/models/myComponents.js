@@ -399,9 +399,22 @@ class Campaign extends componentBase {
         let upsertCampaign = AIService.createUpsertObject(this, ["title", "description"]);
 
         let loreList = componentList.getList("lore", this.json._id, "campaignId");
-        let upsertList = loreList.map((lore, i) => {
-            return AIService.createUpsertObject(lore, ["name", "desc"])
+/**
+ * @todo currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
+ */
+        let upsertList = loreList
+        .filter(lore => {
+            let json = lore.getJson();
+            // Keep if `desc` exists OR `handoutText` is not empty
+            return (json.desc && json.desc.trim() !== "") || (json.handoutText && json.handoutText.trim() !== "");
         })
+        .map((lore, i) => {
+
+            //Send in keys for Lore Name, Description, Handout and _ids for linking
+            return AIService.createUpsertObject(lore, ["name", "desc", "campaignId", "_id", "handoutText"])
+        })
+
+
         upsertList.push(upsertCampaign);
         AIService.upsertData(upsertList);
         this.json.upserted=true;
@@ -945,13 +958,13 @@ class AIMessage extends componentBase{
         type:"message",
         assistantId:"",
         position:0,
-        content:"You help build content for table top role playing game publishers."
+        content:"You help build content for table top role-playing game publishers."
     }
 }
 
 class AIRuleset extends componentBase{
     json={...this.json,
-        rule:"You help build content for table top role playing game publishers",
+        rule:"You help build content for table top role-playing game publishers.",
         type:"aiRuleset",
 
     }
@@ -960,7 +973,7 @@ class AIRuleset extends componentBase{
 class Preference extends componentBase{
     json={...this.json,
         role: "user",
-        content:"Hello, how are you?",
+        content:"New preference",
         rulesetId:""
     }
 }
@@ -976,7 +989,8 @@ function forFactory() {
         marketplaceItem: MarketplaceItem, viewer: Viewer,
         condition: Condition, icon: Icon, compendium: Compendium,
         lore: Lore, image: Image, approval: Approval, partner: Partner, partnerRequest: PartnerRequest,
-        mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset, chatAssistant:AIAssistantBaseClass, aiRuleset:AIRuleset, preference:Preference
+        mpItem: MarketplaceItem, participant: Participant, ruleset: Ruleset, 
+        chatAssistant:AIAssistantBaseClass, aiRuleset:AIRuleset, preference:Preference
     }
 }
 

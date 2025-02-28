@@ -940,7 +940,7 @@ class Auth {
          * @returns change any data I want.
          */
     async dispatch(obj, email, dispatch, backendReloader) {
-        console.log(obj);
+        // console.log(obj);
         
         for (const key in obj) {
             let operate = obj[key];
@@ -996,8 +996,8 @@ class Auth {
                             break;
                     }
                 } catch (error) {
-                    console.log(error);
-                    console.log(component)
+                    // console.log(error);
+                    // console.log(component)
                 }
 
             }
