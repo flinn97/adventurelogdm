@@ -21,11 +21,10 @@ class AIAssistantBaseClass extends BaseClass {
         temperature: 0.9,
         firstTime: false,
         //could add top_p, stop, seed, stream, user, response_format, logprobs,presence_penalty, frequency_penalty, Gemini: top_K(for gemini), candidateCount, echo, safetrySettings, SystemInstruction
-
-
-
-
     }
+
+    systemFormat = "Always reply in the following: First, All responses should be in markdown format that will impress markdown users. Secondly, we will try often to provide Name, Description, and Link, (these make up a Lore item). However, don't provide a link too often, only when asked (and make sure you understand which link was provided to you if you need to send a url). Do not attach links in markdown unless the user directly asks for links. Do not provide links to lore that you have invented or guess at (such as links to responses you write). Thirdly, Do not introduce your response in a friendly way, just reply succinctly. Fourth, do not end your response with a conclusion or conclusive remarks. No summaries, nothing of the sort. Fifth, No passive voice or 'could,would' reasonings. Remain direct and to the point.";
+            
     async createInitialMessages(componentList) {
         let ruleset = componentList.getComponent("aiRuleset");
         let systemMessage = {
@@ -38,7 +37,7 @@ class AIAssistantBaseClass extends BaseClass {
         };
         let systemFormat = {
             role: "system",
-            content: "Always reply in the following[ 1: All responses should be in markdown format that will impress markdown users. 2: set of 'Name, Description, and Link', creates one 'Lore' or item. However, don't link too often and make sure you are linking to the correct Lore before sending a url src. Do not attach links in markdown unless you are clarifying an exact Lore among many or if the user directly asks for links. 3: Do not introduce your response in a friendly way, just reply succinctly. 4: Do not end your response with a conclusion or conclusive remarks. No summaries, nothing of the sort. 5: No passive voice or 'could,would' reasonings. Remain direct and to the point.]",
+            content: this.systemFormat,
             position: 0,
             type: "aiMessage",
             visible: false,

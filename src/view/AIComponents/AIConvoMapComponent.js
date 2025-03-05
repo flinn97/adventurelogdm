@@ -69,7 +69,8 @@ export default class AIConvo extends Component {
 
           <ReactMarkdown>
             {html}
-            </ReactMarkdown>
+          </ReactMarkdown>
+          
         </div>
         {role === "user" &&
           <hr style={{ marginTop: "", marginBottom: "-22px", opacity: "22%", }}></hr>}
