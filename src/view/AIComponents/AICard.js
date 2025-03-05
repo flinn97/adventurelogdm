@@ -19,16 +19,7 @@ import AIConvo from './AIConvoMapComponent';
 export default class AICard extends Component {
   constructor(props) {
     super(props);
-
-
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
-
-
   render() {
     let app = { ...this.props.app };
     let dispatch = app.dispatch;
@@ -87,7 +78,8 @@ class MainContent extends Component {
     super(props);
     this.state = {
       content: "",
-      messageList: []
+      messageList: [],
+      prevGens: [],
     }
     this.sendMessage = this.sendMessage.bind(this);
   }
@@ -103,6 +95,7 @@ class MainContent extends Component {
     let opps = state.opps;
     let a;
     if (!state.currentAssistant) {
+      //create a new Assistant
       let assistant = await opps.cleanJsonPrepare({ addchatAssistant: { owner: state.user.getJson().owner, type: "chatAssistant" } });
       assistant = assistant.add[0];
       await dispatch({ currentAssistant: assistant })
@@ -111,6 +104,8 @@ class MainContent extends Component {
       a = assistant;
       if (a?.getJson()?._id) {
         await auth.firebaseGetter(a.getJson()._id, componentList, "assistantId", "aiMessage");
+        let messages = await componentList.getList("aiMessage", a?.getJson()?._id, "assistantId" );
+        this.setState({messageList:messages});
       } else {
         console.error("Error: assistant _id is undefined");
       }
@@ -118,10 +113,10 @@ class MainContent extends Component {
 
     await componentList.sortSelectedList("aiMessage", "position");
 
-    // let messages = componentList.getList("aiMessage");
-    // this.setState({messageList:messages})
-
+    let assistants = await componentList.getList("chatAssistant", state.user.getJson().owner, "owner" );
+    await this.setState({prevGens:assistants.reverse()});
   }
+
 
   sendMessage = async (state, dispatch) => {
     if (this.state.content.trim() !== "") {
@@ -133,6 +128,9 @@ class MainContent extends Component {
 
         await state.currentAssistant.chat(message, state.componentList);
       });
+
+      let messages = await state.componentList.getList("aiMessage", state.currentAssistant?.getJson()?._id, "assistantId" );
+      this.setState({messageList:messages})
     }
   };
 
@@ -153,20 +151,23 @@ class MainContent extends Component {
         padding: "12px 18px", borderRadius: "11px",
         alignContent: "center", width: "85vw", userSelect: "none", marginTop: "-22px", overflow: "hidden"
       }}>
-        <Link className='hover-btn' to={"ruleset/"} style={{
+
+        <Link 
+        title='AI Settings'
+        className='hover-btn' to={"ruleset/"} style={{
           ...styles.buttons.buttonAdd, right: 11, top: 11, position: "absolute",
           textDecoration: "none", fontStyle: "italic", background: styles.colors.color7 + "aa", display: "flex", flexDirection: "column",
           fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "2vh", padding: "3px 8px", fontSize: "1vw"
         }}>
-          <img src={gear} style={{ width: "2vw" }} /> AI Settings
+          <img src={gear} style={{ width: "1.5vw" }} />
         </Link>
 
 
 
         {/* {New Convo} */}
         {state.currentAssistant && <div style={{ userSelect: "text" }}>
-          {/* {componentList.getList("aiMessage").length} */}
-          <MapComponent app={app} name="aiMessage" cells={[
+          
+          <MapComponent app={app} list={this.state.messageList} cells={[
             { custom: AIConvo, type: "custom", class: 'hover-img' },]} />
         </div>}
 
@@ -212,9 +213,11 @@ class MainContent extends Component {
         </div>
 
         {/* {Old Convos} */}
-        <div style={{ background: styles.colors.color8 + "22", padding: "4px 8px", borderRadius: "11px", marginTop: "42px" }}>
-          <div style={{ color: styles.colors.color3, fontSize: "2vw" }}>Previous Generations</div>
-          <MapComponent app={app} name="chatAssistant"
+        {this.state.prevGens && 
+      <div style={{ background: styles.colors.color8 + "22", padding: "4px 8px", borderRadius: "11px", marginTop: "42px" }}>
+        <div style={{ color: styles.colors.color3, fontSize: "2vw" }}>Previous Generations</div>
+           
+          <MapComponent app={app} list={this.state.prevGens}
             reverse={true}
             cells={[{
               type: "attribute",
@@ -225,12 +228,16 @@ class MainContent extends Component {
                 textDecoration: "1px underline " + styles.colors.color8, textUnderlineOffset: "2px"
               }, func: async (obj) => {
 
-                await dispatch({ currentAssistant: obj })
+                await dispatch({ currentAssistant: obj });
                 await auth.firebaseGetter(obj.getJson()._id, componentList, "assistantId", "aiMessage");
+                let messages = await componentList.getList("aiMessage", obj?.getJson()?._id, "assistantId" );
+                this.setState({messageList:messages});
+                console.log(messages)
                 dispatch({})
               }
 
             }]} /></div>
+            }
       </div>
     )
   }

@@ -400,7 +400,7 @@ class Campaign extends componentBase {
 
         let loreList = componentList.getList("lore", this.json._id, "campaignId");
 /**
- * @todo currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
+ * @TODO: currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
  */
         let upsertList = loreList
         .filter(lore => {
