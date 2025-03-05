@@ -60,12 +60,12 @@ class AIService {
                 type: upsertParams?.type || "prepData",
                 splitType: upsertParams?.splitType || "openAISplit", ...upsertParams
             },
-            pineconeParams: pineconeParams || { indexName: "avatest" },
+            pineconeParams: pineconeParams || { indexName: "avaindex" },
             chunkParams: chunkParams
         }
 
 
-        return fetch('http://localhost:3002/api/upsert', {
+        return fetch('https://upsert-x5obmgu23q-uc.a.run.app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ class AIService {
 
     async chat(body) {
 
-        let responseMessage = await fetch('http://localhost:3002/api/chat', {
+        let responseMessage = await fetch('https://chat-x5obmgu23q-uc.a.run.app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
