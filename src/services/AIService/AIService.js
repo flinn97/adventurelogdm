@@ -91,7 +91,8 @@ class AIService {
 
     async chat(body) {
 
-        let responseMessage = await fetch('https://chat-x5obmgu23q-uc.a.run.app', {
+        let responseMessage = await fetch('https://chat-x5obmgu23q-uc.a.run.app', //'https://chat-x5obmgu23q-uc.a.run.app',
+         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
