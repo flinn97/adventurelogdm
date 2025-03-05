@@ -22,7 +22,10 @@ export default class AIPage extends Component {
     let opps = state.opps;
     let componentList= state.componentList
     
-    await auth.firebaseGetter("chatAssistant",componentList, "type", "chatAssistant" );
+    await auth.getByType("chatAssistant",componentList, state.user.getJson()._id);
+    let list = componentList.getList("chatAssistant");
+    // for clearing for now. 
+    //opps.cleanPrepareRun({del:list});
     let currentAssistant =componentList.getComponent("chatAssistant", false, "firstTime");
     if(currentAssistant){
         
@@ -34,7 +37,7 @@ export default class AIPage extends Component {
     this.setState({
         start:true
     })
-    await auth.firebaseGetter("aiRuleset",componentList, "type", "aiRuleset" );
+    await auth.getByType("aiRuleset",componentList, state.user.getJson()._id);
     let AIRuleset =componentList.getComponent("aiRuleset");
     if(!AIRuleset){
       let ruleset = await opps.cleanJsonPrepare({addaiRuleset:{ owner: state.user.getJson().owner, type:"aiRuleset"}});

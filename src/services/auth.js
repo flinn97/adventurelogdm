@@ -508,6 +508,17 @@ class Auth {
         let posts = componentList.getList("participant");
         return posts
     }
+    async getByType(type, componentList, owner, ){
+        const components = await query(collection(db, this.urlEnpoint + "users", this.urlEnpoint + "APP", "components"), where("type", '==', type), where("owner", "==", owner));
+        let comps = await getDocs(components);
+        let rawData1=[]
+        for (const key in comps.docs) {
+            let data = comps.docs[key].data()
+                rawData1.push(data);
+        }
+        await componentList.addComponents(rawData1, false);
+    }
+    
 
     //Value = value pair (key value) example: string such as "1231454891"
     //ComponentList = adding to the componentList
