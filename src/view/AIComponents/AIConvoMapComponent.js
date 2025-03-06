@@ -29,11 +29,17 @@ export default class AIConvo extends Component {
   render() {
     let app = this.props.app;
     let obj = this.props.obj;
+
+    if (!obj || typeof obj.getJson !== "function") {
+        console.warn("AIConvo received undefined or invalid obj:", obj);
+        return null; // Prevents rendering if obj is undefined
+    }
+    
     let state = app.state;
-    let classStyle = this.props.class ? this.props.class : "";
+    let classStyle = "message-ai-hover";
     let styles = state.styles;
 
-    let vis = obj.getJson().visible;
+    let vis = obj?.getJson().visible;
     let html = (vis !== false) ? obj.getJson().content : "";
 
     let role = obj.getJson().role;
@@ -46,13 +52,14 @@ export default class AIConvo extends Component {
         color: roleColor,
         maxWidth: "60%",
         justifySelf: alignment,
-        marginRight: (role === "user") ? "" : "10vw",
-        marginLeft: (role !== "user") ? "" : "2vw",
+        marginRight: (role === "user") ? "" : "2vw",
+        marginLeft: (role !== "user") ? "" : ".1vw",
         textAlign: "justify",
         marginTop: "2.2vh",
         borderRadius: "11px",
-        background: (role === "user") ? "" : styles.colors.color1,
-        padding: vis !== false ? "1.7vh" : "",
+        background: (role === "user") ? "" : styles.colors.color1+"66",
+        padding: vis !== false ? "2vh 5.7vh" : "",
+        paddingTop:"1.45vh",
         ...this.props.style
       }}>
         <div>
