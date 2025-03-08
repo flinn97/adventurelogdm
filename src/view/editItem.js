@@ -24,6 +24,11 @@ export default class EditItem extends Component {
     let compendium = state?.currentCampaign;
     const attrKeys = ["attr1", "attr2", "attr3", "attr4", "attr5"];
 
+    if (compendium.getJson().format === state.currentComponent.getJson().itemFormat){
+      console.log(true)
+    }
+    
+
     return (
       <div>
         {state.currentComponent &&
@@ -34,7 +39,7 @@ export default class EditItem extends Component {
         <ParentFormComponent checkUser={true} app={app} name="name"
           wrapperStyle={{
             margin: "5px", color: styles.colors.colorWhite, display: "flex", flexDirection: "column",
-            marginBottom: "31px", marginTop: "51px"
+            marginTop: "51px"
           }}
           theme={"adventureLog"} rows={1}
           maxLength={app.state.maxLengthShort}
@@ -45,7 +50,11 @@ export default class EditItem extends Component {
             borderRadius: "4px", background: styles.colors.colorWhite + "00", borderWidth: "0px", height: "100%",
             border: "solid 1px " + styles.colors.colorWhite + "22",
             textWrap: "wrap", fontSize: styles.fonts.fontSubheader1
-          }} />
+          }} /> 
+          
+        <div style={{marginBottom: "31px", opacity:.5, marginLeft:"9px", fontSize:"1vw" }}>  {state.currentComponent.getJson().itemFormat}</div>
+
+
         {!this.state.completedPic &&
           (<Upload
             checkUser={true}

@@ -400,7 +400,7 @@ class Campaign extends componentBase {
 
         let loreList = componentList.getList("lore", this.json._id, "campaignId");
 /**
- * @todo currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
+ * @TODO: currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
  */
         let upsertList = loreList
         .filter(lore => {
@@ -924,8 +924,8 @@ class Compendium extends Campaign {
             attr3: "Type",
             attr4: "Alignment",
             attr5: "Environment",
-            format: "Statblock 5e"
-
+            format: "Statblock 5e",
+            itemFormat: "Statblock 5e",
         }
         return json
     }
@@ -940,7 +940,7 @@ class Compendium extends Campaign {
             attr5: "",
         }
         if (newVal === "Statblock 5e") {
-            json = this.get5e();
+            json = {...this.json, ...this.get5e()};
         }
         this.json = json
     }
