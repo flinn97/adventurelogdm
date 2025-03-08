@@ -924,8 +924,8 @@ class Compendium extends Campaign {
             attr3: "Type",
             attr4: "Alignment",
             attr5: "Environment",
-            format: "Statblock 5e"
-
+            format: "Statblock 5e",
+            itemFormat: "Statblock 5e",
         }
         return json
     }
@@ -940,7 +940,7 @@ class Compendium extends Campaign {
             attr5: "",
         }
         if (newVal === "Statblock 5e") {
-            json = this.get5e();
+            json = {...this.json, ...this.get5e()};
         }
         this.json = json
     }
