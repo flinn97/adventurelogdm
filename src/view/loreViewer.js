@@ -318,6 +318,7 @@ export default class LoreViewer extends Component {
                 rows={5}
                 prepareRun={true}
                 type={"quill"}
+                useAI={true}
                 checkUser={true} onPaste={this.handlePaste} connectLore={true}
                 inputStyle={{
                   maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",

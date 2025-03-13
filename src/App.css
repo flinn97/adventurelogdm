@@ -1,7 +1,7 @@
-@import url(https://fonts.google.com/specimen/Inria+Serif?query=Inria);
-@import url(https://fonts.google.com/specimen/Roboto+Slab);
-@import url(https://fonts.google.com/specimen/DM+Serif+Display);
-@import url(https://fonts.google.com/noto/specimen/Noto+Sans+Georgian);
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&display=swap');
 
 @media print {
 

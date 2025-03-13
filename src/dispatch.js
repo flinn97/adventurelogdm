@@ -398,9 +398,9 @@ export default class Dispatch extends Component {
                       <Routes>
 
                         {state.switchCase?.map((obj, index) =>
-
-                          <Route path={obj.path} element={<obj.comp app={app} />} />
-                        )}
+                          <Route key={obj.path || index} path={obj.path} element={<obj.comp app={app} />} />
+                        //Added key to clean up console.
+                        )} 
                         <Route path="/campaign/" element={<Campaign app={app} />} />
                         <Route path="/compendium/" element={<Compendium app={app} />} />
                         <Route path="/ai/" element={<AIPage app={app} />} />

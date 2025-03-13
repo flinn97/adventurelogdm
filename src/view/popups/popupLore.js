@@ -435,7 +435,9 @@ class MainContent extends Component {
               <IconChange app={app} pin={pin} />
             </>}
           </div>}
-{state.loreType !== "compendium" &&
+          
+          {/* CheckBox only appears in lore is defined */}
+{state.loreType !== "compendium" && state.currentPin.getJson().loreId &&
         <div style={{ display: "flex", flexDirection: "row",marginBottom:"-13px", marginLeft:"6px" }}>
           <ParentFormComponent app={app} name="showName" type="checkbox" obj={pin}
             theme={"adventureLog"} prepareRun={true}
