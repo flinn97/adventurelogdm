@@ -429,10 +429,10 @@ fontNormal {
   letter-spacing: .21rem;
 
   font-family: "serif";
-  src:url("https://fonts.google.com/specimen/DM+Serif+Display");
+  src:url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
 
   font-family: "sans-serif";
-  src:url("https://fonts.google.com/noto/specimen/Noto+Sans+Georgian");
+  src:url("https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&display=swap");
 }
 
   @font-face {

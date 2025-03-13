@@ -166,7 +166,7 @@ export default class QuillForm extends Component {
   }
 
   createToolBarRefs() {
-    if (this.props.useAI) {
+    
       const quill = this.quillRef.current?.getEditor();
       if (!quill) {
         console.error("Quill instance not found");
@@ -178,13 +178,13 @@ export default class QuillForm extends Component {
         console.error('Toolbar module not found.');
         return;
       }
-  
+      
       // Use 'let' for variables you intend to reassign
       let buttonContainer = toolbar.container.querySelector('.ql-formats');
       if (!buttonContainer) {
         buttonContainer = toolbar.container; // fallback to default if .ql-formats not found
       }
-  
+      if (this.props.useAI) {
       const button = document.createElement('button');
       button.type = 'button';
       button.innerHTML = 'Complete with AI';
