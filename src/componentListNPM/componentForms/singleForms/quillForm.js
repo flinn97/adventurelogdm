@@ -351,8 +351,8 @@ export default class QuillForm extends Component {
                 ]
               }, { 'background': [false, "#05050555", "#00274D55", "#C1A71B55", "#70160975", "#4B008222", "#002E0722", "#ffdead22", "#05050522", "#00274D22", "#C1A71B22", "#70160944", "#4B008244", "#002E0722"] },],
               [, 'code-block'],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],      // superscript/subscript
-              [{ 'indent': '-1' }, { 'indent': '+1' }],                        // text direction
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],
+              [{ 'indent': '-1' }, { 'indent': '+1' }], // text direction
               // [{ 'header': [false, 1, 2, 3] }],
               [{ 'size': ['small', false, 'large', 'huge'] }],
               ['image'],

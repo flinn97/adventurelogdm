@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import ListTree from '../listTree';
+import AISideBar from '../AIComponents/AISideBar.js';
 
 /**
  * condensed version of the cards.
@@ -18,11 +19,6 @@ export default class LoreListCard extends Component {
     
 
   }
-
-  /**
-   * 
-   * OPTIONS
-   */
 
 
   render() {
@@ -42,13 +38,6 @@ export default class LoreListCard extends Component {
       }
     }
     app.state.styles=styles
-    
-
-
-
-
-        //********CARD ASSIGN********/
-
         let cards={
 
           card: <Card app={{...app, state:{...app.state, styles:styles} }} options={this.props.options} type={this.props.type}/>,
@@ -58,15 +47,8 @@ export default class LoreListCard extends Component {
 //popupType={this.props.popupType} popupTab={this.props.popupTab}
     
     }
-    
-    //*********CARD ASSIGN********/
-
-
-
-
     return (
       <div>
-        
         {cards[this.props.type? this.props.type: "card"]}
         </div>
 
@@ -99,30 +81,51 @@ getCampId(){
     let state = app.state;
     let componentList = state.componentList;
     let styles =state.styles;
+
+    let type = state.sideBarType;
     let isVisible = state.isSideBarVisible;
     let expand = state.widthLoreBar?state.widthLoreBar:"";
     let addW = expand.length * 10;
     let w = addW + 290;
-    let width = w.toString()+"px";
+    let width = type==="loreTree"?w.toString()+"px":0;
+    let minW = type==="loreTree"?"480px":0;
 
     return(
       <div 
-      style={{display:"flex", position:"relative", flexDirection:"row", height:"fit-content", maxHeight:"fit-content",
-       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, overflowX:"hidden",transition: 'all .45s ease-out',
+      style={{display:"flex", position:"relative",
+        flexDirection:"row", height:"fit-content", maxHeight:"fit-content",
+       alignContent:"left", userSelect:"none", color:styles.colors.colorWhite, 
+       overflowX:"hidden",transition: 'all .45s ease-out',
        background:styles.colors.color1,  marginTop:!isVisible?"-3vh":"",
        }}>
             
-            
-          
+            {type==="ai" && 
+            <div style={{
+              minWidth:isVisible?"45vw":"0", 
+            width:isVisible?"45vw":"0",
+            transition: 'all .45s ease-out',
+            }}>
+            <AISideBar app={app}/>
+            </div>
+            }
+
+           {type==="loreTree" &&
           <div  style={{
             overflow: isVisible?"":'hidden',
             opacity:isVisible?"1":".028",
             transition: 'all .45s ease-out',
-            minWidth:isVisible?"480px":0, width:isVisible?width:"0", display:"flex", flexDirection:"row", marginTop:"5vh", height:"fit-content",  overflowX:"hidden",}}>
+            minWidth:isVisible?minW:0, 
+            width:isVisible?width:"0", 
+            display:"flex", 
+            flexDirection:"row", 
+            marginTop:"5vh", 
+            height:"fit-content",
+            overflowX:"hidden",}}>
           
             <ListTree style={{}} app={app} name={"lore"} _id={state.currentCampaign?.getJson()._id} count={0} 
             attribute={"parentId"}/>
-          </div>
+            
+          </div>}
           
 
       </div>
@@ -284,7 +287,8 @@ class Card extends Component{
     let styles =state.styles;
 
     return(
-      <div className=''  style={{...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"], marginLeft:"-2vh"  }}>   
+      <div className=''
+      style={{...styles[this.props.options?.cardType?this.props.options?.cardType:"biggestCard"], marginLeft:"-2vh"  }}>   
             <div style={{...styles[this.props.options?.cardContent? this.props.options.cardContent: "cardContent"],}}>
               <MainContent app={app} />
             </div>

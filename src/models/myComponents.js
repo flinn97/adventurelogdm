@@ -395,12 +395,10 @@ class Campaign extends componentBase {
     }
 
     async upsert(componentList) {
-        
-        let upsertCampaign = AIService.createUpsertObject(this, ["title", "description"]);
-
+        let upsertCampaign = AIService.createUpsertObject(this, ["type", "title", "description", "_id", ]);
         let loreList = componentList.getList("lore", this.json._id, "campaignId");
 /**
- * @todo currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
+ * @TODO: currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
  */
         let upsertList = loreList
         .filter(lore => {
@@ -411,7 +409,7 @@ class Campaign extends componentBase {
         .map((lore, i) => {
 
             //Send in keys for Lore Name, Description, Handout and _ids for linking
-            return AIService.createUpsertObject(lore, ["name", "desc", "campaignId", "_id", "handoutText"])
+            return AIService.createUpsertObject(lore, ["type", "name", "desc", "campaignId", "_id", "handoutText"])
         })
 
 
@@ -422,15 +420,11 @@ class Campaign extends componentBase {
             l.setCompState({upserted:true});
         }
         this.operationsFactory.cleanPrepareRun({update:[this,...loreList]});
-
     }
-
-
 
     async getPicSrc(path) {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
-
     }
 
     async getPlayers(compList, dispatch) {
@@ -525,7 +519,7 @@ class Encounter extends componentBase {
 
     //     if (comps) {
     //         for (let obj of comps) {
-    //             ///TAYLOR help me get this right
+    //             /// help me get this right
     //             let monsterJson = await obj.copyComponent(["encounterId", "role",], [id, "",],);
     //             await this.operationsFactory.jsonPrepare({ "": monsterJson });
     //             let p = await this.operationsFactory.getUpdater("add")[0];
@@ -924,8 +918,8 @@ class Compendium extends Campaign {
             attr3: "Type",
             attr4: "Alignment",
             attr5: "Environment",
-            format: "Statblock 5e"
-
+            format: "Statblock 5e",
+            itemFormat: "Statblock 5e",
         }
         return json
     }
@@ -940,7 +934,7 @@ class Compendium extends Campaign {
             attr5: "",
         }
         if (newVal === "Statblock 5e") {
-            json = this.get5e();
+            json = {...this.json, ...this.get5e()};
         }
         this.json = json
     }

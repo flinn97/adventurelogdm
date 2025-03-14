@@ -42,11 +42,6 @@ class QuillComponent extends Component {
         };
     }
 
-    
-
-
-
-
 
     async componentDidMount() {
         // var quill = new Quill('#editor-container', {
@@ -96,9 +91,6 @@ class QuillComponent extends Component {
         //     onBlur={()=>{this.setState({active:false})}}></div>
            
         // }
-
-
-
 
         return (
             <div ref={this.wrapperRef} 

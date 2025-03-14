@@ -24,22 +24,24 @@ export default class MonsterForm extends Component {
     let app = this.props.app;
     let dispatch = app.dispatch
     let state = app.state;
+    let uId = state.user.getJson()._id;
 
     // Fetch all compendiums
-    await auth.getAllofTypeByUser(state.componentList, state.user.getJson()._id, "compendium")
-
-
-    let allLore = await state.componentList.getList("lore", "Statblock 5e", "itemFormat");
-
-    //firebaseGetter does not allow an array of values
-    if (allLore.length === 0) {
-
-      //auth.firebaseGetter(loreId, state.componentList, "_id", "lore", undefined, { attribute: "type", value: "condition" })
+    await auth.getAllofTypeByUser(state.componentList, uId, "compendium");
+    await auth.getAllofTypeByUser(state.componentList, uId, "lore");
+    
+    // let allLore = await state.componentList.getList("lore", "Statblock 5e", "itemFormat");
+    
+    // //firebaseGetter does not allow an array of values
+    // if (allLore.length === 0) {
+      
       await auth.firebaseGetter("Statblock 5e", state.componentList, "itemFormat", "lore", dispatch);
-      allLore = await state.componentList.getList("lore", "Statblock 5e", "itemFormat");
-    }
+      let allLore = await state.componentList.getList("lore", "Statblock 5e", "itemFormat");
+      let filteredLore = allLore.filter(item => item.getJson().owner === uId);
+    // }
 
-    dispatch({ statblockList: allLore });
+    await dispatch({ statblockList: filteredLore });
+    console.log(state?.statblockList)
   }
 
 

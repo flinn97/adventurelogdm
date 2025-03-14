@@ -30,7 +30,7 @@ export default class ThemeFactory {
         arrowChangeOrder: "",
         encounterRow: encMapping,
         compendiumRow: compendiumRow,
-        
+        formChoiceRow: encMapping,
 
 
 

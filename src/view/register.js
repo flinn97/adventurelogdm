@@ -49,7 +49,7 @@ export default class Register extends Component {
 
     }
 
-    ///TAYLOR
+    
     async validatePassword(password) {
 
         const hasUpperCase = /[A-Z]/.test(password);

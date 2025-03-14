@@ -102,7 +102,7 @@ export default class CompendiumMonster extends Component {
             theme="compendiumRow"
             reverse={this.state.reverse} 
             app={app} 
-            list={state.statblockList}
+            list={statblockList}
             filters={[
               { type: "bool", attribute: "topLevel", search: false },
               {

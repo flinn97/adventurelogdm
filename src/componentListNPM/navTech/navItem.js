@@ -140,7 +140,7 @@ class DefaultNavItems extends Component {
     return (
       <>
         {switchCase.map((obj, index) =>
-          <div style={
+          <div key={obj._id || index} style={
             //active
             obj.name === this.state.active ? this.props.activeSingleLinkWrapperStyle ? { ...this.props.activeSingleLinkWrapperStyle } :
               obj.activeSingleLinkWrapperStyle ? { ...obj.activeSingleLinkWrapperStyle } :
@@ -232,7 +232,7 @@ class LegatoNavItems extends Component {
     return (
       <>
         {switchCase.map((obj, index) =>
-          <Link to={obj._id? obj.path+"/"+obj._id: obj.path} style={{textDecoration: "none"}}>
+          <Link key={obj._id || obj.path || index} to={obj._id? obj.path+"/"+obj._id: obj.path} style={{textDecoration: "none"}}>
           <div style={
             //active
             obj.name === this.state.active ? this.props.activeSingleLinkWrapperStyle ? { ...this.props.activeSingleLinkWrapperStyle } :
@@ -451,7 +451,7 @@ class MinimalNavItems extends Component {
     return (
       <>
         {switchCase.map((obj, index) =>
-          <Link to={obj.path} style={{textDecoration: "none"}}>
+          <Link key={obj._id || obj.path || index} to={obj.path} style={{textDecoration: "none"}}>
           <div style={
             //active
             obj.name === this.state.active ? this.props.activeSingleLinkWrapperStyle ? { ...this.props.activeSingleLinkWrapperStyle } :

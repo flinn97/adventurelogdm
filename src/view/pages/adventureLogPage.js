@@ -299,7 +299,7 @@ export default class AdventureLogPage extends Component {
 
                   <Upload app={app} text={"imageOnly"} img={img}
 
-                    ///TAYLOR, 
+                    
                     // this needs to be sped up, or something, bigger images do not have time to get sent to firebase
 
                     changePic={async (pic) => {

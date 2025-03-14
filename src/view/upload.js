@@ -132,7 +132,7 @@ export default class Upload extends Component {
             borderRadius:"11px", fontWeight:"550", width:"fit-content"  }}>
 
                 {this.props.text!=="imageOnly" &&
-                <label  for="file-upload" style={style}>
+                <label  htmlFor="file-upload" style={style}>
 {(pText) ? pText : "* Choose a banner image"}
                     <input id="file-upload" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/svg+xml"
                         style={{ ...styles.buttons.buttonAdd,
@@ -154,7 +154,7 @@ export default class Upload extends Component {
                 </label>}
 
                 {this.props.text==="imageOnly" &&
-                <label  for="file-upload" style={{
+                <label  htmlFor="file-upload" style={{
                     display: "inline-block", height:"35px",
                     maxWidth: "fit-content", cursor:"pointer",
                      position: "relative",

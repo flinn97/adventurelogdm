@@ -17,14 +17,10 @@ class CheckBox extends Component {
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
-    componentDidUpdate(props, state){
-        if(props!==this.props){
-            if(!this.props.outsideFunc){
-                this.setState({checked:this.props.value})
-
-            }
+    componentDidUpdate(prevProps){
+        if(prevProps.value !== this.props.value){
+            this.setState({ checked: this.props.value ?? false });
         }
-
     }
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
@@ -55,8 +51,11 @@ class CheckBox extends Component {
         return (
 
             <div className={this.props.class} style={this.props.wrapperStyle?{...this.props.wrapperStyle}:theme!==undefined? {...theme.checkWrapperStyle}:{}}>
-                <input id={this.props.id} type="checkbox"  checked={this.state.checked }/>
-                <label onClick={this.props.onClick?this.props.onClick:this.markcheckbox} className={this.props.labelClass?this.props.labelClass:"change-label2"} 
+                <input id={this.props.id} type="checkbox"
+                checked={this.state.checked }
+                onChange={this.markcheckbox}/>
+                <label onClick={this.props.onClick?this.props.onClick:this.markcheckbox}
+                    className={this.props.labelClass?this.props.labelClass:"change-label2"} 
                 style={this.props.labelStyle?{...this.props.labelStyle, cursor:"pointer"}:theme!==undefined? {...theme.checkLabelStyle, cursor:"pointer"}:{cursor:"pointer"}}>
 
                 <div className={this.props.tickClass?this.props.tickClass:"tickFix1"} style={this.props.tickStyle?this.props.tickStyle:theme!==undefined?theme.tickStyle:undefined}></div>

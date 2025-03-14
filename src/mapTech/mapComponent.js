@@ -26,7 +26,7 @@ export default class MapComponentItem extends BaseClass {
   return (
     <div className= {props.mapContainerClass? props.mapContainerClass: theme.MCMapContainer} style={{...this.props.mapContainerStyle}} >
         {list.map((obj, index)=>
-        <div className={props.mapSectionClass? props.mapSectionClass: theme.MCMapSection} style={{...this.props.mapSectionStyle}} key = {index}>
+        <div key={obj.getJson()._id || index} className={props.mapSectionClass? props.mapSectionClass: theme.MCMapSection} style={{...this.props.mapSectionStyle}}>
             {cells.map((cell, i)=>{
              let type = cell.type
              if(!type){

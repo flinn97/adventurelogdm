@@ -87,7 +87,6 @@ class MainContent extends Component {
 
   async componentDidMount() {
     let state = this.props.app.state;
-    //TAYLOR add get from getFromUser library backend stuff here
   }
 
   render() {
