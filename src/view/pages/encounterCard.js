@@ -118,7 +118,7 @@ class MainContent extends Component {
 
       <div>
         {this.state.start && <>
-          {/* //TAYLOR */}
+          
           {state.popUpSwitchcase != "addEncounter" && (
             <div style={{ width: "100%", display: "flex", flexDirection: "row", marginTop: "2vh", marginBottom: "2vh", justifyContent: "space-between" }}>
               <div style={{ ...styles.buttons.buttonAdd, }}

@@ -44,7 +44,7 @@ export default class PlayerRegister extends Component {
 
 
     }
-    ///TAYLOR
+    
     async validatePassword(password) {
 
         const hasUpperCase = /[A-Z]/.test(password);

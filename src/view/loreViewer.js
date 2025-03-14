@@ -178,7 +178,6 @@ export default class LoreViewer extends Component {
       "</div>;
 
     const mapUpload = <MapUploader
-      //TAYLOR //
       //Why is this not working//
       changePic={async (pic, path) => {
 

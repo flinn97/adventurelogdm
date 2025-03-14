@@ -91,7 +91,6 @@ class MainContent extends Component {
   async componentDidMount() {
     let state = this.props.app.state;
     this.props.app.dispatch({justDownloaded:true})
-    //TAYLOR add get from getFromUser library backend stuff here
   }
 
   render() {

@@ -525,7 +525,7 @@ class Encounter extends componentBase {
 
     //     if (comps) {
     //         for (let obj of comps) {
-    //             ///TAYLOR help me get this right
+    //             /// help me get this right
     //             let monsterJson = await obj.copyComponent(["encounterId", "role",], [id, "",],);
     //             await this.operationsFactory.jsonPrepare({ "": monsterJson });
     //             let p = await this.operationsFactory.getUpdater("add")[0];
