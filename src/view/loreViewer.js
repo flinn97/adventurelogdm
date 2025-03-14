@@ -112,7 +112,9 @@ export default class LoreViewer extends Component {
   }
 
   toggleSidebar = () => {
-    this.props.app.dispatch({ isSideBarVisible: !this.props.app.state.isSideBarVisible })
+    this.props.app.dispatch({ 
+      isSideBarVisible: !this.props.app.state.isSideBarVisible, 
+      sideBarType:"loreTree" })
   };
 
 
@@ -302,7 +304,7 @@ export default class LoreViewer extends Component {
             <div style={{ color: styles.colors.color3 + "f5",fontSize: styles.fonts.fontSmall, }}>
 
               <div style={{ display: "flex", flexDirection: "row", marginBottom: "0px", marginTop:"28px" }}>
-               <div style={{ color: styles.colors.color3 + "f5", marginRight: "38px", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
+               <div style={{ color: styles.colors.color3 + "f5", marginRight: "18px", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
                 {/* Lore Hierarchy was here */}
                 
                 {!lore?.getJson()?.hideLore&&<div style={{
@@ -311,7 +313,8 @@ export default class LoreViewer extends Component {
               fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
             }}>
 
-              <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
+              {lore?.getJson()?.desc && lore?.getJson()?.desc!=="<p><br></p>" && <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />}
+              
               <LoreAIButton app={app} obj={lore}/>
 
             </div>}
@@ -369,9 +372,9 @@ export default class LoreViewer extends Component {
                 justifyContent: "flex-start", fontSize: styles.fonts.fontNormal, color: styles.colors.color3,
                
               }}>Handout: 
-                <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
+                {lore?.getJson()?.handoutText && lore?.getJson()?.handoutText!=="<p><br></p>" &&<PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />}
                 {lore?.getJson()?.hideLore &&
-                <LoreAIButton app={app} obj={lore} context={lore.getJson()?.handoutText+"&&"+lore.getJson()?.desc}/> }          
+                <LoreAIButton app={app} obj={lore}/> }          
               </div>
               }
               </div>
@@ -464,23 +467,23 @@ export default class LoreViewer extends Component {
               </div>
 
           {(state.popupSwitch === "" || state.popupSwitch === undefined || state.popUpSwitch === "" || state.popUpSwitch === undefined) && 
-          (<div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
+          (<div className="hover-btn" onClick={this.toggleSidebar("loreTree")} title={"All Lore"} style={{
             ...styles.buttons.buttonAdd, overflow: "hidden", justifyContent: "flex-start",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
             transition: 'all 0.5s ease-in-out',
             height: state.isSideBarVisible ? "28px" : "45px",
             padding: "5px 9px", zIndex: "9000", position: "fixed", 
             right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
-            border:"1px dashed "+styles.colors.color9+"44"
+            border:"1px dashed "+styles.colors.color9+"44",
           }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>{state.isSideBarVisible ? "Hide Lore" : "Show All Lore"}
+            <div style={{ display: "flex", flexDirection: "row" }}>{state.isSideBarVisible ? "Hide" : "Show All Lore"}
               <img src={backarrow} alt=">" style={{
                 width: "12px", marginLeft: "11px", marginTop: "6px", height: "11px",
                 transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out"
               }}></img>
             </div>
 
-            <div style={{ fontSize: ".64rem", color: styles.colors.color8, marginBottom:"4px", }}>Expand and review all Lore</div>
+            <div style={{ fontSize: ".64rem", color: styles.colors.color8, marginTop:"2px", marginBottom:"4px" }}>Expand and review all Lore</div>
 
           </div>)}
           <div ref={this.loreRef} />

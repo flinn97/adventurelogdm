@@ -4,9 +4,21 @@ class LoreAIButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSaved: false,
+      obj:undefined,
     };
+    this.dispatchAISidebar = this.dispatchAISidebar.bind(this)
   }
+
+  componentDidMount(){
+    this.setState({obj:this.props.obj})
+  }
+
+  dispatchAISidebar(obj){
+    let dispatch = this.props.app.dispatch;
+    dispatch({isSideBarVisible:true, sideBarType:"ai"});
+  }
+
+
 
   render() {
     let app = this.props.app;
@@ -15,7 +27,7 @@ class LoreAIButton extends Component {
     let componentList = state.componentList;
     let styles = state.styles;
 
-    let obj = this.props?.obj;
+    let obj = this.state?.obj;
 
     return (
       <div
@@ -24,10 +36,10 @@ class LoreAIButton extends Component {
           display: "flex",
           flexDirection: "row",
           justifySelf: "flex-end",
-          cursor: this.state.showSaved ? "progress" : "auto",
+          cursor: !this.state.obj ? "progress" : "pointer",
           width: "fit-content",
-          marginRight: this.props.marginRight ? this.props.marginRight : "0px",
         }}
+        onClick={()=>{this.dispatchAISidebar(obj)}}
       >
         <div
           style={{
@@ -35,7 +47,7 @@ class LoreAIButton extends Component {
             height: "fit-content",
             borderRadius: "11px",
             padding: "2px",
-            pointerEvents: this.state.showSaved ? "none" : "all",
+            pointerEvents: this.state.obj ? "none" : "all",
           }}
         >
           <div

@@ -112,10 +112,9 @@ export default class Dispatch extends Component {
                   containerStyle={{ background: styles.colors.color2, zIndex: 55000, }}
 
                 />
-
-
               </div>
             }
+            
             {(state.popupSwitch !== "splashScreen") &&
               <div className={window.innerWidth > 800 ? 'scroller2' : ""} style={{
                 width: "100%", overflow: "scroll",
@@ -124,7 +123,9 @@ export default class Dispatch extends Component {
               }}>
 
 
-                <div style={{ display: 'flex', zIndex: 2000, marginRight: window.innerWidth > 800 ? "210px" : "", }}>
+                <div style={{ display: 'flex', zIndex: 2000, 
+                  marginRight: window.innerWidth > 800 ? "210px" : "", 
+                  }}>
 
                   {window.innerWidth > 800 ? (
                     <Nav app={app} theme="legatoDark" template="legatoDark" type="sideBarNav" options={

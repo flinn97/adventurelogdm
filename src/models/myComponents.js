@@ -395,9 +395,7 @@ class Campaign extends componentBase {
     }
 
     async upsert(componentList) {
-        
-        let upsertCampaign = AIService.createUpsertObject(this, ["title", "description"]);
-
+        let upsertCampaign = AIService.createUpsertObject(this, ["type", "title", "description", "_id", ]);
         let loreList = componentList.getList("lore", this.json._id, "campaignId");
 /**
  * @TODO: currently removing lore without Description or Handout, do we want this? Probably now, but later it might mess with PDF lore etc so TAYLOR and ISAAC should be aware.
@@ -411,7 +409,7 @@ class Campaign extends componentBase {
         .map((lore, i) => {
 
             //Send in keys for Lore Name, Description, Handout and _ids for linking
-            return AIService.createUpsertObject(lore, ["name", "desc", "campaignId", "_id", "handoutText"])
+            return AIService.createUpsertObject(lore, ["type", "name", "desc", "campaignId", "_id", "handoutText"])
         })
 
 
@@ -422,15 +420,11 @@ class Campaign extends componentBase {
             l.setCompState({upserted:true});
         }
         this.operationsFactory.cleanPrepareRun({update:[this,...loreList]});
-
     }
-
-
 
     async getPicSrc(path) {
         let pic = await authService.downloadPics(path);
         this.json.picURL = pic;
-
     }
 
     async getPlayers(compList, dispatch) {
