@@ -624,7 +624,7 @@ export default class CampaignEditor extends Component {
             {(state.currentLore == undefined && window.innerWidth > 800 &&
               <div>
                 {/* Jump to: */}
-                <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "10px" }}>
+                <div style={{ width: "86.5%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "10px" }}>
 
                   <div className="hover-btn">
                     <ImageButton

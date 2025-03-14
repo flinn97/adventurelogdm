@@ -238,9 +238,10 @@ export default class Worldbuilder extends Component {
           title={
             "The Lore tree lets you quickly find Lore and their connections"}
           className="hover-btn" onClick={this.toggleSidebar} style={{
-            ...styles.buttons.buttonAdd,
+            ...styles.buttons.buttonAdd, border:"1px dashed "+styles.colors.color9+"44",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
-            padding: "5px 9px", border: "none", zIndex: "9000", position: "fixed", right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
+            padding: "5px 9px", zIndex: "9000", position: "fixed", 
+            right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
           }}>
           <div style={{ display: "flex", flexDirection: "row" }}> {state.isSideBarVisible ? "Hide Lore" : "Show All Lore"}
           <img src={backarrow} alt=">" style={{ width: "12px", marginLeft: "11px", marginTop: "6px",height: "11px", transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out" }}></img>

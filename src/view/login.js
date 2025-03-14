@@ -108,7 +108,7 @@ export default class Login extends Component {
                                 fontSize: window.innerWidth > 800 ? "1rem" : "1.4rem", border: "1px solid " + styles.colors.colorWhite,
                                 borderRadius: "4px", background: styles.colors.color2 + "5c", borderWidth: "0px",
                                 alignItems: "left", textAlign: "left", justifyContent: "center",
-                            }} id="pwd" onChange={this.handleChange} name="email" />
+                            }} id="eml" onChange={this.handleChange} name="email" />
 
 
 
