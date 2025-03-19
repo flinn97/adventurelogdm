@@ -20,14 +20,6 @@ import PostLogButton from '../componentListNPM/componentForms/buttons/postLogBut
 import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
 import auth from '../services/auth.js';
 import toolService from '../services/toolService.js';
-import ImageButton from '../componentListNPM/componentForms/buttons/imageButton.js';
-
-import loreB from '../pics/illustrations/loreScript.png';
-import encounterB from '../pics/illustrations/encounterGiant.png';
-import galleryB from '../pics/illustrations/paintingHand.png';
-
-import IndexLoreHierarchy from './indexLoreHierarchy.js';
-import CollapseSection from './pages/collapseSection.js';
 import LoreAIButton from './AIComponents/loreAIbutton.js';
 
 
@@ -95,26 +87,48 @@ export default class LoreViewer extends Component {
     app.dispatch({ isSideBarVisible: app.state.isSideBarVisible ? app.state.isSideBarVisible : false })
   }
 
-  componentDidUpdate(props, state) {
-    if (this.props.app.state.currentLore !== props.app.state.currentLore) {
-      this.componentDidMount();
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.props.app.state.currentLore !== prevProps.app.state.currentLore) {
+      await this.loadComponentData();
     }
-
-    if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
-
-      this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
-
+  
+    if (this.props.app.state.viewMap !== prevProps.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
+      this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap });
     }
-
-    if (this.props.app.state.reloadMaps) {
+  
+    if (this.props.app.state.reloadMaps && this.props.app.state.reloadMaps !== prevProps.app.state.reloadMaps) {
+      await this.loadComponentData();
       this.props.app.dispatch({ reloadMaps: false });
     }
   }
+  
+  async loadComponentData() {
+    let app = this.props.app;
+    let state = app.state;
+    let id = this.props._id;
+    let component = state.componentList.getComponent("campaign", id);
+    let currentLore = state.currentLore;
+    let map = currentLore ? await state.componentList.getComponent("map", currentLore.getJson()._id, "loreId") : undefined;
+  
+    if (!map && currentLore) {
+      map = (await auth.firebaseGetter(currentLore.getJson()._id, state.componentList, "loreId", "map"))[0];
+    }
+    await state.componentList.sortSelectedList("lore", "index");
+    this.setState({ obj: component, lore: currentLore, map: map, isSideBarVisible: false });
+  }
 
-  toggleSidebar = () => {
+  toggleSidebar(type){
+    let newType
+    
+    if (this.props.app.state.isSideBarVisible){
+      newType=this.props.app.state.sideBarType;
+    }else{
+      newType=type;
+    }
+
     this.props.app.dispatch({ 
       isSideBarVisible: !this.props.app.state.isSideBarVisible, 
-      sideBarType:"loreTree" })
+      sideBarType:newType })
   };
 
 
@@ -237,7 +251,7 @@ export default class LoreViewer extends Component {
                   ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
                   padding: "4px", borderRadius: "12px",
                   width: "270px", minHeight: "80px", backgroundColor: styles.colors.color2 + 'de',
-                  overflow: 'hidden'
+                 
                 }}
                 buttonTextStyle={{
                   position: "absolute", top: "50%", left: "50%",
@@ -258,7 +272,7 @@ export default class LoreViewer extends Component {
                   padding: "4px", borderRadius: "12px",
                   width: "270px", minHeight: "80px",
                   backgroundColor: styles.colors.color2 + 'de',
-                  overflow: 'hidden'
+                  
                 }}
                 buttonTextStyle={{
                   position: "absolute", top: "50%", left: "50%",
@@ -290,9 +304,9 @@ export default class LoreViewer extends Component {
         } */}
 
 
-        <div style={{ overflowY: "hidden", maxWidth: "97%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px", marginBottom:lore?.getJson()?.hideLore?"22px":"12px" }} className='scroller2'>
+        {/* <div style={{ overflowY: "hidden", maxWidth: "97%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px", marginBottom:lore?.getJson()?.hideLore?"22px":"12px" }} className='scroller2'>
           <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
-        </div>
+        </div> */}
 
         {/* {*Lore Text Section} */}
         <div className={!lore?.getJson()?.hideLore ? "none" : "collapse"}>
@@ -467,8 +481,12 @@ export default class LoreViewer extends Component {
               </div>
 
           {(state.popupSwitch === "" || state.popupSwitch === undefined || state.popUpSwitch === "" || state.popUpSwitch === undefined) && 
-          (<div className="hover-btn" onClick={this.toggleSidebar("loreTree")} title={"All Lore"} style={{
-            ...styles.buttons.buttonAdd, overflow: "hidden", justifyContent: "flex-start",
+          (<div className="hover-btn" 
+            onClick={()=>{this.toggleSidebar("loreTree")}} 
+          title={"All Lore"} style={{
+            ...styles.buttons.buttonAdd, overflowX: "hidden",
+            overflowY:"hidden",
+            justifyContent: "flex-start",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
             transition: 'all 0.5s ease-in-out',
             height: state.isSideBarVisible ? "28px" : "45px",
@@ -476,7 +494,8 @@ export default class LoreViewer extends Component {
             right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
             border:"1px dashed "+styles.colors.color9+"44",
           }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>{state.isSideBarVisible ? "Hide" : "Show All Lore"}
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              {state.isSideBarVisible ? "Hide" : "Show All Lore"}
               <img src={backarrow} alt=">" style={{
                 width: "12px", marginLeft: "11px", marginTop: "6px", height: "11px",
                 transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out"
@@ -486,6 +505,7 @@ export default class LoreViewer extends Component {
             <div style={{ fontSize: ".64rem", color: styles.colors.color8, marginTop:"2px", marginBottom:"4px" }}>Expand and review all Lore</div>
 
           </div>)}
+
           <div ref={this.loreRef} />
           {
             // state.isSideBarVisible && 

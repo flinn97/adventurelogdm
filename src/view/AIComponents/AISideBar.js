@@ -58,9 +58,11 @@ export default class AISideBar extends Component {
     let state = app.state;
     let styles =state.styles;
     return (
-      <div style={{}}>   
-           {this.state.start&&<AICard app={app} type="cardWithTab" 
-           options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}/>}               
+      <div style={{overflow:"hidden"}}>   
+           {/* {this.state.start&&
+           <AICard app={app} type="cardWithTab" 
+           options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}
+           />}                */}
         
         {/* <hr></hr> */}
 

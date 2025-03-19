@@ -191,8 +191,11 @@ export default class Worldbuilder extends Component {
     return (
 
       <div style={{
-        display: "flex", flexDirection: "column", position: 'relative', overflow: 'clip', padding: '0',
-        height: "fit-content", maxWidth: "100%", justifyContent: "space-between", maxHeight: "100%",
+        display: "flex", flexDirection: "column", position: 'relative', 
+        overflow: 'clip',
+         padding: '0',
+        height: "fit-content", maxWidth: "100%", justifyContent: "space-between", 
+        maxHeight: "100%",
       }}>
 
 
