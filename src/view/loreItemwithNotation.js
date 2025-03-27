@@ -56,9 +56,9 @@ export default class LoreItemWithNotation extends Component {
           flexDirection: "row", display: "flex", position: "absolute", top: -5, right: 2,
           alignItems: "center", opacity: isGrabbing !== obj ? "1" : "0", transition: "all 1s ease",
         }}>
-          {mapList.length > 0 && <img src={compassImage} title={`${mapList.length} Connected Maps`} style={{ width: "26px" }} />}
-          {encounterList.length > 0 && <img src={bannerImage} title={`${encounterList.length} Connected Encounters`} style={{ width: "24px", marginLeft: "5px" }} />}
-          {imageList.length > 0 && <img src={imageImage} title={`${imageList.length} Images in Gallery`} style={{ width: "26px", marginLeft: "5px" }} />}
+          {mapList.length > 0 && <img src={compassImage} title={`${mapList.length} Connected Maps`} style={{ width: "26px" }} className='hover-btn-highlight2'/>}
+          {encounterList.length > 0 && <img src={bannerImage} title={`${encounterList.length} Connected Encounters`} style={{ width: "24px", marginLeft: "5px" }} className='hover-btn-highlight2' />}
+          {imageList.length > 0 && <img src={imageImage} title={`${imageList.length} Images in Gallery`} style={{ width: "26px", marginLeft: "5px" }} className='hover-btn-highlight2'/>}
         </div>
       </>
     );
@@ -83,7 +83,7 @@ export default class LoreItemWithNotation extends Component {
     }
 
     return (
-      <div className='hover-container' style={containerStyle}>{insert}</div>
+      <div style={containerStyle} className='hover-container' >{insert}</div>
     );
   }
 }

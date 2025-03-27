@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import auth from '../../services/auth';
 import AICard from './AICard';
+import toolService from '../../services/toolService';
 
 
 export default class AISideBar extends Component {
@@ -60,7 +61,8 @@ export default class AISideBar extends Component {
     return (
       <div style={{overflow:"hidden"}}>   
            {this.state.start&&
-           <AICard app={app} type="cardWithTab" 
+           <AICard app={app}
+           type="cardWithTab" 
            options={{tabType:"borderlessTab", cardType:"biggestCardBorderless"}}
            />}               
         

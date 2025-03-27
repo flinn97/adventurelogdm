@@ -23,10 +23,18 @@ class AIAssistantBaseClass extends BaseClass {
     //could add top_p, stop, seed, stream, user, response_format, logprobs,presence_penalty, frequency_penalty, Gemini: top_K(for gemini), candidateCount, echo, safetrySettings, SystemInstruction
   };
 
-  systemFormat =
-    "Always reply in the following format: First, All responses should be in markdown format that will impress markdown users. Secondly, don't provide a link too often, only when asked for links to the relevant lore, (and make sure you understand which link was provided to you if you need to send a url). Do not attach links in markdown unless the user directly asks for links. Do not provide links to lore that you have invented or guess at (such as links to responses you write). Thirdly, Do not introduce your response in a friendly way, just reply succinctly. Fourth, do not end your response with a conclusion or conclusive remarks. No summaries, nothing of the sort. Fifth, No passive voice or 'could,would' reasonings. Remain direct and to the point.";
+  systemFormat = 
+  "Reply in this format: " +
+  "All responses use html format for markdown enthusiasts. Do not number markdown titles (e.g., ###). Use ### for item names/titles to trigger lore generation (e.g., for 10 poisons, each item would just be ### for each poison name on a new line, skipping its listed number). " +
+  "ie: 'Markdown Heading3:Lore Name or Title' (for lore titles only) followed by a line break then description text NO MORE HEADINGS until the next item on the list. !important...The tool will detect the title from your response Markdown header3 and then parse all data until the next markdown header!!! "+
+  "To recap: Never use markdown Heading2 . Never use markdown Heading1. If you want to list a new item, just start with Heading3 for the title. Only use Markdown Heading3 for a lore title. Then, do not use any further markdown headings unless there is a new lore item on your list. Because we are using regex to search out header3 and bodies from your response= /(###\s+[^\n]+)([\s\S]*?)(?=(###\s+[^\n]+)|$)/g ..."+
+  " Provide links only when explicitly requested for links to provided existing lore. You are only allowed to use links provided to you, not generate new ones." +
+  " Respond succinctly without friendly introductions. " +
+  " Avoid conclusions, summaries, or conclusive remarks at the end. " +
+  " Use direct, active voice. Avoid 'could', 'would', or passive phrasing.";
 
   async createInitialMessages(componentList) {
+    
     let ruleset = componentList.getComponent("aiRuleset");
     let systemMessage = {
       role: "system",
