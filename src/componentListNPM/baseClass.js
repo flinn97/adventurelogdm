@@ -12,6 +12,7 @@ export default class BaseClass {
     this.copyComponent = this.copyComponent.bind(this);
     this.getOperationsFactory = this.getOperationsFactory.bind(this);
     this.createUUID = this.createUUID.bind(this);
+
     this.operationsFactory = oppsFactory;
   }
   getComponentList() {
@@ -79,5 +80,14 @@ export default class BaseClass {
 
     this.json[key] = ob;
   }
-
+  createUUID(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 }

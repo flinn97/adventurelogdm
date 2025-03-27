@@ -24,7 +24,7 @@ class AIAssistantBaseClass extends BaseClass {
   };
 
   systemFormat =
-    "Always reply in the following: First, All responses should be in markdown format that will impress markdown users. Secondly, we will try often to provide Name, Description, and Link, (these make up a Lore item). However, don't provide a link too often, only when asked (and make sure you understand which link was provided to you if you need to send a url). Do not attach links in markdown unless the user directly asks for links. Do not provide links to lore that you have invented or guess at (such as links to responses you write). Thirdly, Do not introduce your response in a friendly way, just reply succinctly. Fourth, do not end your response with a conclusion or conclusive remarks. No summaries, nothing of the sort. Fifth, No passive voice or 'could,would' reasonings. Remain direct and to the point.";
+    "Always reply in the following format: First, All responses should be in markdown format that will impress markdown users. Secondly, don't provide a link too often, only when asked for links to the relevant lore, (and make sure you understand which link was provided to you if you need to send a url). Do not attach links in markdown unless the user directly asks for links. Do not provide links to lore that you have invented or guess at (such as links to responses you write). Thirdly, Do not introduce your response in a friendly way, just reply succinctly. Fourth, do not end your response with a conclusion or conclusive remarks. No summaries, nothing of the sort. Fifth, No passive voice or 'could,would' reasonings. Remain direct and to the point.";
 
   async createInitialMessages(componentList) {
     let ruleset = componentList.getComponent("aiRuleset");
@@ -80,7 +80,7 @@ class AIAssistantBaseClass extends BaseClass {
         assistantId: this.json._id,
       });
     }
-    messages = await [systemMessage, systemFormat, ...messages];
+    messages = [systemMessage, systemFormat, ...messages];
 
     await this.operationsFactory.jsonPrepareRun({ addaiMessage: messages });
     debugger;
@@ -88,7 +88,6 @@ class AIAssistantBaseClass extends BaseClass {
       componentList.getList("aiMessage", this.json._id, "assistantId")
         .length === 0
     ) {
-      //wait just one sec
       await new Promise((resolve) => setTimeout(resolve, 100)); // Wait 100ms before checking again
     }
     await componentList.sortSelectedList("aiMessage", "position");
@@ -109,7 +108,7 @@ class AIAssistantBaseClass extends BaseClass {
    * TODO: the AI Response will eventually cut out messages. It would be good to save the messages it cut out still in a different array.
    * @param {*} text
    */
-  async chat(text, componentList) {
+  async chat(text, componentList, metadataFiltering) {
     if (!this.json.firstTime) {
       await this.createInitialMessages(componentList);
     }
@@ -138,6 +137,7 @@ class AIAssistantBaseClass extends BaseClass {
       model: this.json.model,
       AIType: this.json.AIType,
       metadata: {
+        ...metadataFiltering,
         owner: this.json.owner,
       },
       temperature: this.json.temperature,
@@ -194,7 +194,7 @@ class AIAssistantBaseClass extends BaseClass {
    */
   generateSummary(content) {
     let words = content.split(/\s+/);
-    return words.slice(0, Math.min(words.length, 8)).join(" ")+"..."; // Return first 2-8 words
+    return words.slice(0, Math.min(words.length, 8)).join(" ") + "..."; // Return first 2-8 words
   }
 }
 export default AIAssistantBaseClass;
