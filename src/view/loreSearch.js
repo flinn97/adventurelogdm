@@ -232,6 +232,7 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight:"21px"
             }}
             onClick={async () => {
+              
               if (state.user.getJson().role !== "GM") {
                 dispatch({ popupSwitch: "goPremium" });
                 return
@@ -336,9 +337,9 @@ export default class LoreSearch extends Component {
             {
               loreList
                 .map((loreItem, index) => {
-                  const loreItemId = loreItem.getJson()._id;
+                  const loreItemId = loreItem?.getJson()._id;
                   const position = this.state.positions[loreItemId] || { x: 0, y: 0 };
-                  let linkId = (loreItem.getJson().ogId !== undefined && loreItem.getJson().ogId !== "") ? loreItem.getJson().ogId : loreItem.getJson()._id;
+                  let linkId = (loreItem?.getJson().ogId !== undefined && loreItem?.getJson().ogId !== "") ? loreItem?.getJson().ogId : loreItem?.getJson()._id;
 
                   return (
                     //   <Draggable

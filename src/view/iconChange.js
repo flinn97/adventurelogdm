@@ -155,12 +155,12 @@ export default class IconChange extends Component {
           }}>
             <div style={{
               display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center",
-              borderRadius: "50%", justifyContent: "center", verticalAlign: "center", filter: pin.getJson().iconImage !== image16 ? pin.getJson().colorFilter : "",
+              borderRadius: "50%", justifyContent: "center", verticalAlign: "center", filter: pin.getJson().iconImage !== image16 ? pin?.getJson().colorFilter : "",
               height: "74px", width: "74px", backgroundColor: pin.getJson().iconImage !== image16 ? pin.getJson().colorOverlay : "", filter: pin.getJson().iconImage !== image16 ? pin.getJson().colorFilter : "",
             }}>
-              <img alt='ico' title={"Current Icon"} src={pin.getJson().iconImage} style={{
+              <img alt='ico' title={"Current Icon"} src={pin?.getJson().iconImage} style={{
                 height: "72px", width: "72px", position: "relative",
-                backgroundColor: pin.getJson().iconImage !== image16 ? pin.getJson().colorOverlay : "",
+                backgroundColor: pin.getJson().iconImage !== image16 ? pin?.getJson().colorOverlay : "",
                 marginRight: pin.getJson().iconImage === image16 ? "42px" : "",
                 borderRadius: "50%"
               }} />
@@ -170,7 +170,7 @@ export default class IconChange extends Component {
             marginLeft: "20px", display: 'flex', flexDirection: 'row', flexWrap: 'wrap'
           }}>
 
-            {state.user.getJson().role !== "GM" &&
+            {state.user?.getJson().role !== "GM" &&
               <div> To edit lore-point icons,
                 <div style={{
                   color: styles.colors.color9, fontWeight: "200", marginLeft: "48px",
@@ -182,7 +182,7 @@ export default class IconChange extends Component {
                 </div>
               </div>}
 
-            {state.user.getJson().role === "GM" && images.map((imgSrc, index) => (typeof imgSrc === 'string' && !imgSrc.startsWith('#')) && (
+            {state.user?.getJson().role === "GM" && images.map((imgSrc, index) => (typeof imgSrc === 'string' && !imgSrc.startsWith('#')) && (
               <div
                 index={index} key={imgSrc + index.toString()}
                 style={{
