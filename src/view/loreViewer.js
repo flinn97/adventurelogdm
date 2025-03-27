@@ -236,7 +236,7 @@ export default class LoreViewer extends Component {
 
 
     return (
-      <div style={{ width: "85.5vw",}}><div ref={this.startRef} /> 
+      <div style={{ width: "85.3vw", transition:"width .3s ease"}}><div ref={this.startRef} /> 
       {/* Things were being resized weird, TODO: revisit */}
 
         {/* {(state.currentLore === undefined &&

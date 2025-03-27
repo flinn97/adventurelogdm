@@ -86,6 +86,7 @@ class MainContent extends Component {
   constructor(props) {
     super(props);
     this.startRef = React.createRef();
+    this.startRef2 = React.createRef();
     this.state = {
       content: "",
       messageList: [],
@@ -566,7 +567,6 @@ class MainContent extends Component {
         // SIDEBAR
         (
           <div
-          ref={this.startRef}
           style={{
             display: "flex",
             position: "relative",
@@ -578,14 +578,18 @@ class MainContent extends Component {
             alignContent: "center",
             width: "100%",
             userSelect: "none",
-            marginTop: "-22px",
-            overflow: "hidden",
+            marginTop: "-12px",
+            overflowX: "hidden",
+            maxHeight:"80vh",
+            minHeight:"20vh",
+            paddingBottom:"12px",
+            overflowY: "auto",
           }}
         >
 
           {/* {New Convo} */}
           {state.currentAssistant && (
-            <div style={{ userSelect: "text" }}>
+            <div style={{ userSelect: "text", overflowY: "scroll", maxHeight:"60vh", height:"fit-content", }}>
               <MapComponent
                 app={app}
                 list={this.state.messageList}
@@ -602,10 +606,8 @@ class MainContent extends Component {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                marginTop: "4vh",
+                marginTop: "3.2vh",
                 marginBottom: "12px",
-                justifyContent: "space-between",
-                paddingRight: "2vw",
               }}
             >
               <textarea
@@ -640,24 +642,7 @@ class MainContent extends Component {
                   }
                 }}
               ></textarea>
-              {this.state.messageList.length >= 9 && (
-                <div
-                  className="hover-img"
-                  style={{
-                    ...styles.buttons.buttonAdd,
-                    cursor: "pointer",
-                    paddingLeft: "8px",
-                    paddingRight: "8px",
-                    alignSelf: "end",
-                    justifySelf: "flex-end",
-                    marginTop: "4vh",
-                    fontSize: "1vw",
-                  }}
-                  onClick={() => this.scrollTo(this.startRef, "smooth")}
-                >
-                  Back to Top
-                </div>
-              )}
+              
             </div>
 
             <div

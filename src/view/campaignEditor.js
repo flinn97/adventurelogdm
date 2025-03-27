@@ -240,7 +240,8 @@ export default class CampaignEditor extends Component {
 
 
     return (
-      <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
+      <div style={{ display: "flex", flexDirection: "row", width:"100%", 
+       }}>
         {/* <div style={{color:"white"}} onClick={()=>{
         convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
       }}>Campaign Editor</div> */}

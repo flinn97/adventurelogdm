@@ -108,7 +108,7 @@ class MainContent extends Component {
     let addW = expand.length * 10;
     let w = addW + 290;
     let width = (type === "loreTree") ? w.toString() + "px" : "45vw"; // Default to 45vw for AISideBar
-    let minW = (type === "loreTree") ? "480px" : "45vw";
+    let minW = (type === "loreTree") ? "490px" : "45.2vw";
 
     return (
       <div
