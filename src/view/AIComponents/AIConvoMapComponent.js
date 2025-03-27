@@ -207,7 +207,7 @@ export default class AIConvo extends Component {
                           flexDirection: "row",
                           justifyContent: "flex-end",
                           alignContent: "flex-end",
-                          height: "2.8vw",
+                          height: state.isSideBarVisible?"2.8vw":".2vw",
                           width: "fit-content",
                           padding: "12px",
                           paddingLeft: "",
