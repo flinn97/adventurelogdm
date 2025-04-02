@@ -36,6 +36,7 @@ export default class DiscordService{
                 campaign = await this.componentList.getComponent("campaign", campId);
             }
             let discordLink = campaign.getJson().discordLink;
+            
             let post = p.getJson().postType==="encounter"? await this.getEncounterInitMessage(p) : p.getJson().message||p.getJson().desc||{picURL:p.getJson().picURL}
             this.sendPostToDiscord(discordLink, post);
         }
@@ -50,7 +51,7 @@ export default class DiscordService{
     }
 
     async sendPostToDiscord(link, post){
-        
+        if(!link){return}
         post = await this.htmlToDiscordEmbed(post);
         let json = await JSON.stringify(post);
 

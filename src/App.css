@@ -1,16 +1,14 @@
-@import url(https://fonts.google.com/specimen/Inria+Serif?query=Inria);
-@import url(https://fonts.google.com/specimen/Roboto+Slab);
-@import url(https://fonts.google.com/specimen/DM+Serif+Display);
-@import url(https://fonts.google.com/noto/specimen/Noto+Sans+Georgian);
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&display=swap');
 
 @media print {
 
   .hide-on-print {
 
     display: none !important;
-
   }
-
 } 
 
 .App {
@@ -30,7 +28,6 @@ hr {
     background-size: contain;
     opacity: .88;
 }
-
 
 .handle {
   visibility: hidden;
@@ -305,6 +302,29 @@ input:-webkit-autofill {
   /* filter: contrast(.89); */
 }
 
+.hover-text-highlight-blue{
+  opacity: 1;
+}
+
+.hover-text-highlight-blue:hover{
+  filter: brightness(0) saturate(100%) invert(89%) sepia(13%) saturate(706%) hue-rotate(163deg) brightness(96%) contrast(98%);
+}
+
+.message-ai-hover{
+  transition: all .8s ease;
+  border: 1px solid #00000000
+ }
+
+.message-ai-hover:hover{
+ background: #61dafb05;
+ opacity: .9;
+ border: 1px solid #fdfdfd1a
+}
+
+.hover-btn-highlight2:hover{
+  filter: brightness(1.5);
+}
+
 .hover-btn-highlight:hover {
   opacity: 1;
   scale: 1.04;
@@ -390,6 +410,7 @@ input:-webkit-autofill {
   transition: all 0.3s ease-out;
 }
 
+
 fontNormal {
   font-family: -apple-system, BlinkMacSystemFont, 'Inria Serif';
     -webkit-font-smoothing: antialiased;
@@ -409,10 +430,10 @@ fontNormal {
   letter-spacing: .21rem;
 
   font-family: "serif";
-  src:url("https://fonts.google.com/specimen/DM+Serif+Display");
+  src:url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
 
   font-family: "sans-serif";
-  src:url("https://fonts.google.com/noto/specimen/Noto+Sans+Georgian");
+  src:url("https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&display=swap");
 }
 
   @font-face {
@@ -782,7 +803,7 @@ input {
 }
 
 .collapsible-content {
-  overflow: hidden;
+  /* overflow: hidden; */
   max-height: 1px;
   opacity: 0;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-in; 
@@ -794,13 +815,20 @@ input {
 }
 
 .collapse{
-  max-height: 0;
+  max-height: 0px;
   opacity: 0;
-  margin-top: -22px;
+  height: 0px;
+  margin-top: -18px;
   pointer-events: none;
-  transition: max-height 0.2s ease, opacity 0.2s ease;
+  transition: max-height 0.3s ease, opacity .3s ease, height .3s ease, border-radius .3s ease, margin-left .5s ease-in;
+  border-radius: 50%;
+  padding:-8vh;
+  user-select: none;
+  pointer-events: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: -5%;
 }
-
 
 .hide-checkbox {
   display: inline-block;

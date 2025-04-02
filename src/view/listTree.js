@@ -164,8 +164,9 @@ export default class ListTree extends Component {
           {/* //ADD IMAGE HERE// */}
           <div className="no-scrollbar" style={{
             flexDirection: "column", display: "flex", textDecoration: "none",
-            width: "100%", overflowX:"auto",
-            maxHeight: "87.5vh", alignItems: "left", background: styles.colors.color8 + "03", padding: "2px", borderRadius: "4px", overflowY: "auto"
+            width: "100%", overflow:"auto",
+            maxHeight: "87.5vh", alignItems: "left", background: styles.colors.color8 + "03", 
+            padding: "2px", borderRadius: "4px", 
           }}>
             <MapComponent app={app} theme={bord1}
               

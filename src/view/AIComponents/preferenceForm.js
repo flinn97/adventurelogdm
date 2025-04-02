@@ -19,6 +19,7 @@ export default class PreferenceForm extends Component {
     let styles =state.styles;
     return (
       <ul style={{ paddingLeft: "20px", width:"62vw", }}>   
+      
       <li>
         <ParentFormComponent  class="text-form text-wide" 
           app={app} 
@@ -26,8 +27,8 @@ export default class PreferenceForm extends Component {
           obj={this.props.obj} 
           name="content" 
           cleanPrepareRun={true} 
-          wrapperStyle={{ display: "flex", flexDirection: "column", }}
-          inputStyle={{width:"71vw", border:"1px solid grey"}}
+          wrapperStyle={{ display: "flex", flexDirection: "column",}}
+          inputStyle={{width:"71vw", border:"1px solid grey", marginLeft:"-4px", paddingLeft:"14px"}}
         />
       </li>
     </ul>

@@ -97,7 +97,7 @@ class MainContent extends Component{
               <div style={{color:"red", width:"fit-content", height:"fit-content", opacity:"50%", marginLeft:"78px",  pointerEvents: "none"
               }}>
                 
-                <img draggable="false"  class="vault-door-handle" alt="Arcane Vault Assembly" src={animate} style={{width:"184px", zIndex:22, marginBottom:"64px",  pointerEvents: "none"}}/>
+                <img draggable="false"  className="vault-door-handle" alt="Arcane Vault Assembly" src={animate} style={{width:"184px", zIndex:22, marginBottom:"64px",  pointerEvents: "none"}}/>
                 <img draggable="false" alt="Arcane Vault Assembly" src={hold} style={{width:"340px", marginLeft:"-263px", zIndex:22, rotate:"90deg",  pointerEvents: "none"}}/>
                 
                 

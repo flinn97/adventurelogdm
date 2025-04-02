@@ -232,6 +232,7 @@ export default class LoreSearch extends Component {
               borderRadius: "9px", fontSize: "21px", cursor: "pointer", minWidth: "138px", marginRight:"21px"
             }}
             onClick={async () => {
+              
               if (state.user.getJson().role !== "GM") {
                 dispatch({ popupSwitch: "goPremium" });
                 return
@@ -336,9 +337,9 @@ export default class LoreSearch extends Component {
             {
               loreList
                 .map((loreItem, index) => {
-                  const loreItemId = loreItem.getJson()._id;
+                  const loreItemId = loreItem?.getJson()._id;
                   const position = this.state.positions[loreItemId] || { x: 0, y: 0 };
-                  let linkId = (loreItem.getJson().ogId !== undefined && loreItem.getJson().ogId !== "") ? loreItem.getJson().ogId : loreItem.getJson()._id;
+                  let linkId = (loreItem?.getJson().ogId !== undefined && loreItem?.getJson().ogId !== "") ? loreItem?.getJson().ogId : loreItem?.getJson()._id;
 
                   return (
                     //   <Draggable
@@ -425,19 +426,19 @@ export default class LoreSearch extends Component {
                         }}
                       >
 
-                        {loreItem.getJson().pdfURL ? <a target='_blank' href={loreItem.getJson().pdfURL}>
-                          <LoreItemWithNotation
-                            link={true}
-                            app={app}
-                            obj={loreItem}
-                            index={index}
-                            newLoreName={newLoreName}
-                            isGrabbing={this.state.grabItem}
-
-                          /></a> :
-
+                        {loreItem.getJson().pdfURL ? 
+                        <LoreItemWithNotation
+                              link={true}
+                              externalLink={loreItem.getJson().pdfURL}
+                              app={app}
+                              obj={loreItem}
+                              index={index}
+                              newLoreName={newLoreName}
+                              isGrabbing={this.state.grabItem}
+                            /> :
+                          <div>
                           <Link to={loreItem.getJson().pdfURL || "/campaign/" + toolService.getIdFromURL(true, 0) + "-" + linkId} style={{ textDecoration: "none" }}>
-                            <LoreItemWithNotation
+                            <div><LoreItemWithNotation
                               link={true}
                               app={app}
                               obj={loreItem}
@@ -445,8 +446,8 @@ export default class LoreSearch extends Component {
                               newLoreName={newLoreName}
                               isGrabbing={this.state.grabItem}
 
-                            />
-                          </Link>}
+                            /></div>
+                          </Link></div>}
 
                       </div>
 

@@ -368,7 +368,7 @@ export default class InteractiveBulletin extends Component {
 
                     }}
 
-                    pinId={pin.getJson()._id} >
+                    data-pinid={pin.getJson()._id} >
                     {/* pin.getJson()._id */}
 
 

@@ -32,6 +32,7 @@ import SplashScreen from './pages/splashScreen';
 import Upload from "./upload";
 import CreateViewerService from '../services/createViewer';
 import CollapseSection from './pages/collapseSection';
+import LoreAIButton from './AIComponents/loreAIbutton';
 
 
 export default class CampaignEditor extends Component {
@@ -239,7 +240,8 @@ export default class CampaignEditor extends Component {
 
 
     return (
-      <div style={{ display: "flex", flexDirection: "row", maxWidth: "100%", }}>
+      <div style={{ display: "flex", flexDirection: "row", width:"100%", 
+       }}>
         {/* <div style={{color:"white"}} onClick={()=>{
         convertToMarketplace2(state.currentCampaign.getJson(), "jaredmichaeldavidson@gmail.com");
       }}>Campaign Editor</div> */}
@@ -597,34 +599,11 @@ export default class CampaignEditor extends Component {
 
 
             </div>
-            {state.currentLore === undefined && (<div style={{ marginTop: "12px", alignSelf: "end" }}>
-              {!viewer &&
-                <div className="hover-btn" style={{
-                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
-                  color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color9,
-                  backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
-                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
-                }} onClick={() => {
-
-                  this.createViewerService.createViewer(state.currentCampaign)
-                }}>Convert to One-Page View</div>}
-
-              {viewer && <Link onClick={() => {
-                debugger
-                this.createViewerService.createViewer(state.currentCampaign)
-              }} style={{
-                ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
-                color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
-                backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
-                fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
-              }} to={"/campaignviewer/" + viewer.getJson()._id} className="hover-btn-highlight">Campaign Viewer</Link>}
-
-            </div>)}
-
-            {(state.currentLore == undefined && window.innerWidth > 800 &&
-              <div>
+            {state.currentLore === undefined && (<div style={{ marginTop: "18px", display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"0px 22px" }}>
+              {(state.currentLore == undefined && window.innerWidth > 800 &&
+              <>
                 {/* Jump to: */}
-                <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly", marginTop: "10px" }}>
+                
 
                   <div className="hover-btn">
                     <ImageButton
@@ -681,16 +660,46 @@ export default class CampaignEditor extends Component {
                       }} /></div>
 
 
-                </div></div>)
+                </>)
             }
+              
+              {!viewer &&
+                <div className="hover-btn" style={{
+                  ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
+                  color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color9,
+                  backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
+                  fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
+                }} onClick={() => {
+
+                  this.createViewerService.createViewer(state.currentCampaign)
+                }}>Convert to One-Page View</div>}
+
+              {viewer && <Link onClick={() => {
+                debugger
+                this.createViewerService.createViewer(state.currentCampaign)
+              }} style={{
+                ...styles.buttons.buttonAdd, textDecoration: "none", fontStyle: "italic", background: "", padding: "8px 8px",
+                color: styles.colors.color3 + "e6", boxShadow: "", fontSize: ".95rem", borderColor: styles.colors.color3,
+                backgroundColor: styles.colors.colorBlack + "dd", color: styles.colors.colorWhite + "dd",
+                fontWeight: "bold", letterSpacing: ".05rem", marginBottom: "10px",
+              }} 
+              to={"/campaignviewer/" + viewer.getJson()._id} 
+              className="hover-btn-highlight">Campaign Viewer</Link>}
+
+            </div>)}
+
+            
 
 
 
             {state.currentLore === undefined &&
               // <CollapseSection app={app} sectionTitle="Campaign Text">
-              <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "22px", marginBottom: "22px" }}>
+              <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, marginTop: "40px", marginBottom: "22px" }}>
                 {/* {this.state.obj.getJson().title}  */}
-                Lore:
+               <div style={{display:"flex", flexDirection:"row", gap:"12px"}}>Lore: <div style={{justifyItems:"flex-start", width:"fit-content"}}>
+                <LoreAIButton app={app} obj={this.state.obj}/></div>
+                </div> 
+               <div style={{width:"1px", background:styles.colors.color9+"77", height:"2vh", marginBottom:"-1.4vh",marginLeft:"5px"}}></div>
                 <ParentFormComponent checkUser={true} app={app} name="description" obj={this.state.obj}
                   theme={"adventureLog"}
                   rows={5}

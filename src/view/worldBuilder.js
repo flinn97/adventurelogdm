@@ -121,7 +121,9 @@ export default class Worldbuilder extends Component {
 
 
   toggleSidebar = () => {
-    this.props.app.dispatch({isSideBarVisible:!this.props.app.state.isSideBarVisible})
+    this.props.app.dispatch({ 
+      isSideBarVisible: !this.props.app.state.isSideBarVisible, 
+      sideBarType:"loreTree" })
   };
 
   render() {
@@ -189,8 +191,11 @@ export default class Worldbuilder extends Component {
     return (
 
       <div style={{
-        display: "flex", flexDirection: "column", position: 'relative', overflow: 'clip', padding: '0',
-        height: "fit-content", maxWidth: "100%", justifyContent: "space-between", maxHeight: "100%",
+        display: "flex", flexDirection: "column", position: 'relative', 
+        overflow: 'clip',
+         padding: '0',
+        height: "fit-content", maxWidth: "100%", justifyContent: "space-between", 
+        maxHeight: "100%",
       }}>
 
 
@@ -238,15 +243,16 @@ export default class Worldbuilder extends Component {
           title={
             "The Lore tree lets you quickly find Lore and their connections"}
           className="hover-btn" onClick={this.toggleSidebar} style={{
-            ...styles.buttons.buttonAdd,
+            ...styles.buttons.buttonAdd, border:"1px dashed "+styles.colors.color9+"44",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
-            padding: "5px 9px", border: "none", zIndex: "9000", position: "fixed", right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
+            padding: "5px 9px", zIndex: "9000", position: "fixed", 
+            right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
           }}>
-          <div style={{ display: "flex", flexDirection: "row" }}> {state.isSideBarVisible ? "Hide Lore" : "Show All Lore"}
+          <div style={{ display: "flex", flexDirection: "row" }}> {state.isSideBarVisible ? "Hide" : "Show All Lore"}
           <img src={backarrow} alt=">" style={{ width: "12px", marginLeft: "11px", marginTop: "6px",height: "11px", transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out" }}></img>
         </div>
         {!state.isSideBarVisible &&
-          <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
+          <div style={{ fontSize: ".64rem", color: styles.colors.color8, marginTop:"2px", marginBottom:"4px" }}>Expand and review all Lore</div>
         }
       </div>)}
 

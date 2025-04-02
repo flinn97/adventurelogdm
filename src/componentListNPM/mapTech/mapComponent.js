@@ -291,7 +291,7 @@ export default class MapComponent extends Component {
     let mapThemes=["default", "keep", "mySpawn", "calendar", "defaultBorder", "defaultTable", "defaultAlternate", "selectByImage", "selectByImageSmall", "expandingTree", "expandingTreeColorless"];
     let html = <>
     
-      {this.props.cells.map((c, index)=><div style={this.props.cellStyle? //if
+      {this.props.cells.map((c, index)=><div key={index} style={this.props.cellStyle? //if
              this.props.cellStyle: //then
            this.props.cellTheme? //else if
              mapThemes.includes(this.props.cellTheme)?//if

@@ -106,7 +106,6 @@ class AIService {
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
                 return data;
             })
             .catch(error => {

@@ -753,6 +753,7 @@ export default class CompendiumItem extends Component {
                     }
                   });
                   let lore = await state.opps.getUpdater("add")[0]
+                  
                   dispatch({
                     popupSwitch: "popupLoreWithoutPin",
                     currentComponent: lore,

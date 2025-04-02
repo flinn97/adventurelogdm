@@ -112,10 +112,11 @@ Back to AI
         Rule:
         <ParentFormComponent app={app}  obj={state.AIRuleset} name="rule" cleanPrepareRun={true} class="text-form text-wide" 
         wrapperStyle={{display:"flex", flexDirection:"column", paddingLeft: "20px", marginTop:"11px", marginBottom:'21px'}}
-        inputStyle={{width:"71vw", border:"1px solid grey"}}
+        inputStyle={{width:"71vw", border:"1px solid grey",paddingLeft:"14px"}}
          />
          Preferences:
-        <MapComponent app={app} name="preference" theme="encounterRow"
+        <MapComponent app={app} name="preference" 
+        theme="formChoiceRow"
         cells={[
           {type:"custom", custom:PreferenceForm,},
           {type:"delIcon", style:{width:'29.5px', cursor:"pointer"}, title:"Delete this preference"}

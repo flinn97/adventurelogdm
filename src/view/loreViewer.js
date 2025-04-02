@@ -20,14 +20,7 @@ import PostLogButton from '../componentListNPM/componentForms/buttons/postLogBut
 import QuillComponent from '../componentListNPM/componentForms/singleForms/quillComponent.js';
 import auth from '../services/auth.js';
 import toolService from '../services/toolService.js';
-import ImageButton from '../componentListNPM/componentForms/buttons/imageButton.js';
-
-import loreB from '../pics/illustrations/loreScript.png';
-import encounterB from '../pics/illustrations/encounterGiant.png';
-import galleryB from '../pics/illustrations/paintingHand.png';
-
-import IndexLoreHierarchy from './indexLoreHierarchy.js';
-import CollapseSection from './pages/collapseSection.js';
+import LoreAIButton from './AIComponents/loreAIbutton.js';
 
 
 export default class LoreViewer extends Component {
@@ -94,24 +87,48 @@ export default class LoreViewer extends Component {
     app.dispatch({ isSideBarVisible: app.state.isSideBarVisible ? app.state.isSideBarVisible : false })
   }
 
-  componentDidUpdate(props, state) {
-    if (this.props.app.state.currentLore !== props.app.state.currentLore) {
-      this.componentDidMount();
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.props.app.state.currentLore !== prevProps.app.state.currentLore) {
+      await this.loadComponentData();
     }
-
-    if (this.props.app.state.viewMap !== props.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
-
-      this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap })
-
+  
+    if (this.props.app.state.viewMap !== prevProps.app.state.viewMap && this.props.app.state.viewMap !== undefined) {
+      this.setState({ map: this.props.app.state.viewMap, currentMap: this.props.app.state.viewMap });
     }
-
-    if (this.props.app.state.reloadMaps) {
+  
+    if (this.props.app.state.reloadMaps && this.props.app.state.reloadMaps !== prevProps.app.state.reloadMaps) {
+      await this.loadComponentData();
       this.props.app.dispatch({ reloadMaps: false });
     }
   }
+  
+  async loadComponentData() {
+    let app = this.props.app;
+    let state = app.state;
+    let id = this.props._id;
+    let component = state.componentList.getComponent("campaign", id);
+    let currentLore = state.currentLore;
+    let map = currentLore ? await state.componentList.getComponent("map", currentLore.getJson()._id, "loreId") : undefined;
+  
+    if (!map && currentLore) {
+      map = (await auth.firebaseGetter(currentLore.getJson()._id, state.componentList, "loreId", "map"))[0];
+    }
+    await state.componentList.sortSelectedList("lore", "index");
+    this.setState({ obj: component, lore: currentLore, map: map, isSideBarVisible: false });
+  }
 
-  toggleSidebar = () => {
-    this.props.app.dispatch({ isSideBarVisible: !this.props.app.state.isSideBarVisible })
+  toggleSidebar(type){
+    let newType
+    
+    if (this.props.app.state.isSideBarVisible){
+      newType=this.props.app.state.sideBarType;
+    }else{
+      newType=type;
+    }
+
+    this.props.app.dispatch({ 
+      isSideBarVisible: !this.props.app.state.isSideBarVisible, 
+      sideBarType:newType })
   };
 
 
@@ -177,7 +194,6 @@ export default class LoreViewer extends Component {
       "</div>;
 
     const mapUpload = <MapUploader
-      //TAYLOR //
       //Why is this not working//
       changePic={async (pic, path) => {
 
@@ -220,7 +236,8 @@ export default class LoreViewer extends Component {
 
 
     return (
-      <div style={{ minWidth: "100%", }}><div ref={this.startRef} />
+      <div style={{ width: "85.3vw", transition:"width .3s ease"}}><div ref={this.startRef} /> 
+      {/* Things were being resized weird, TODO: revisit */}
 
         {/* {(state.currentLore === undefined &&
           // randomColor===0 &&
@@ -234,7 +251,7 @@ export default class LoreViewer extends Component {
                   ...styles.buttons.buttonAdd, position: 'relative', cursor: "pointer", borderRadius: "12px",
                   padding: "4px", borderRadius: "12px",
                   width: "270px", minHeight: "80px", backgroundColor: styles.colors.color2 + 'de',
-                  overflow: 'hidden'
+                 
                 }}
                 buttonTextStyle={{
                   position: "absolute", top: "50%", left: "50%",
@@ -255,7 +272,7 @@ export default class LoreViewer extends Component {
                   padding: "4px", borderRadius: "12px",
                   width: "270px", minHeight: "80px",
                   backgroundColor: styles.colors.color2 + 'de',
-                  overflow: 'hidden'
+                  
                 }}
                 buttonTextStyle={{
                   position: "absolute", top: "50%", left: "50%",
@@ -286,31 +303,37 @@ export default class LoreViewer extends Component {
           </div>)
         } */}
 
-        <div style={{ overflowY: "hidden", maxWidth: "100%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px", marginBottom:lore?.getJson()?.hideLore?"52px":"12px" }} className='scroller2'>
+
+        {/* <div style={{ overflowY: "hidden", maxWidth: "97%", justifySelf: "flex-start", marginLeft: "-8px", marginTop: "22px", marginBottom:lore?.getJson()?.hideLore?"22px":"12px" }} className='scroller2'>
           <IndexLoreHierarchy app={app} currentLore={state.currentLore} count={1} color={styles.colors.color4} />
-        </div>
+        </div> */}
 
         {/* {*Lore Text Section} */}
         <div className={!lore?.getJson()?.hideLore ? "none" : "collapse"}>
           {/* <CollapseSection app={app} sectionTitle="Lore Text Section"> */}
-            <div style={{
-              display: "flex", flexDirection: "row", alignContent: "flex-end",
-              justifyContent: "flex-end", marginBottom: "-20px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
+            
+
+
+
+            <div style={{ color: styles.colors.color3 + "f5",fontSize: styles.fonts.fontSmall, }}>
+
+              <div style={{ display: "flex", flexDirection: "row", marginBottom: "0px", marginTop:"28px" }}>
+               <div style={{ color: styles.colors.color3 + "f5", marginRight: "18px", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
+                {/* Lore Hierarchy was here */}
+                
+                {!lore?.getJson()?.hideLore&&<div style={{
+              display: "flex", flexDirection: "row", alignContent: "flex-end", gap:"18px",
+              justifyContent: "flex-start", marginBottom: "-0px", 
+              fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
             }}>
 
-              <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />
+              {lore?.getJson()?.desc && lore?.getJson()?.desc!=="<p><br></p>" && <PostLogButton app={app} obj={lore} altText={"description"} val={lore.getJson().desc} />}
+              
+              <LoreAIButton app={app} obj={lore}/>
 
-
-            </div>
-
-
-
-            <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>
-
-              <div style={{ display: "flex", flexDirection: "row", marginBottom: "8px", marginTop:"12px" }}>
-                <div style={{ color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall, }}>Lore:</div>
-                {/* Lore Hierarchy was here */}
+            </div>}
               </div>
+              <div style={{width:"1px", background:styles.colors.color9+"77", height:"2vh", marginBottom:"-2vh",marginLeft:"10px"}}></div>
 
 
               <ParentFormComponent app={app} name="desc" obj={lore}
@@ -318,19 +341,19 @@ export default class LoreViewer extends Component {
                 rows={5}
                 prepareRun={true}
                 type={"quill"}
+                useAI={true}
                 checkUser={true} onPaste={this.handlePaste} connectLore={true}
                 inputStyle={{
-                  maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite, height: "fit-content",
-                  borderRadius: "4px", background: styles.colors.colorWhite + "00", background: "",
+                  maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
+                  borderRadius: "4px", background: styles.colors.colorWhite + "00",
                   border: "solid 1px " + styles.colors.colorWhite + "22", fontSize: styles.fonts.fontSmall
                 }}
                 wrapperStyle={{
-                  marginLeft: "10px", color: styles.colors.colorWhite, display: "flex",
-                  flexDirection: "column", justifyItems: "space-between", background: ""
+                 marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", minWidth: "97%", marginTop: "10px",
+                  flexDirection: "column", justifyItems: "space-between",
+                  
                 }}
-              />
-
-            </div>
+              /></div>
           {/* </CollapseSection> */}
           </div>
 
@@ -338,24 +361,46 @@ export default class LoreViewer extends Component {
 
         <div className={!lore?.getJson()?.hideHandout ? "none" : "collapse"}>
           {/* <CollapseSection app={app} sectionTitle="Handout Section"> */}
-            <div style={{
-              display: "flex", flexDirection: "row", alignContent: "flex-end",
-              justifyContent: "flex-end", marginBottom: "-29px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88", marginRight: "38px",
-              marginTop: "2px"
+            {/* <div style={{
+              display: "flex", flexDirection: "row", alignContent: "flex-end", gap:"18px",
+              justifyContent: "flex-end", marginBottom: "-20px", fontSize: styles.fonts.fontNormal, color: styles.colors.color8 + "88",
+              marginTop: "21px"
             }}>
               <PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />
-            </div>
+              {lore?.getJson()?.hideLore &&
+              <LoreAIButton app={app} obj={lore} context={lore.getJson()?.handoutText+"&&"+lore.getJson()?.desc}/> }          
+            </div> */}
 
             <div
               style={{
                 color: styles.colors.color3 + "f5", fontSize: styles.fonts.fontSmall,
-                marginTop: "12px", marginBottom: "3px"
-              }}> Handout:
+                marginTop: "28px", marginBottom: "8px",
+                transition:"margin-left .4s ease", 
+                marginLeft:lore?.getJson()?.hideLore?"0%":"2%"
+              }}> 
+              <div style={{color: styles.colors.color3 + "f5", marginRight: "38px", fontSize: styles.fonts.fontSmall, }}>
+                
+                {!lore?.getJson()?.hideHandout&&
+                <div style={{
+                display: "flex", flexDirection: "row", alignContent: "flex-end", gap:"18px",
+                justifyContent: "flex-start", fontSize: styles.fonts.fontNormal, color: styles.colors.color3,
+               
+              }}>Handout: 
+                {lore?.getJson()?.handoutText && lore?.getJson()?.handoutText!=="<p><br></p>" &&<PostLogButton app={app} obj={lore} altText={"read text"} val={lore.getJson().handoutText} forceValue={true} />}
+                {lore?.getJson()?.hideLore &&
+                <LoreAIButton app={app} obj={lore}/> }          
+              </div>
+              }
+              </div>
+
+              <div style={{width:"1px", background:styles.colors.color9+"77", height:"2vh", marginBottom:"-2vh",marginLeft:"10px"}}></div>
               <ParentFormComponent app={app} name="handoutText" obj={lore}
                 theme={"adventureLog"}
                 rows={5}
                 prepareRun={true}
-                type={"quill"} checkUser={true} onPaste={this.handlePaste} connectLore={true}
+                type={"quill"} checkUser={true} 
+                onPaste={this.handlePaste} 
+                connectLore={true}
                 inputStyle={{
                   maxWidth: "100%", padding: "2px 5px", color: styles.colors.colorWhite + "d9", height: "fit-content",
                   borderRadius: "4px", background: styles.colors.colorWhite + "00",
@@ -363,8 +408,9 @@ export default class LoreViewer extends Component {
                 }}
 
                 wrapperStyle={{
-                  marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", width: "97%", marginTop: "10px",
-                  flexDirection: "column", justifyItems: "space-between"
+                  marginLeft: "10px", color: styles.colors.colorWhite, display: "flex", minWidth: "97%", marginTop: "10px",
+                  flexDirection: "column", justifyItems: "space-between",
+                  
                 }} /></div>
                 {/* </CollapseSection> */}
                 </div>
@@ -380,11 +426,14 @@ export default class LoreViewer extends Component {
 
           <div className={!lore?.getJson()?.hideMap ? "none" : "collapse"}>
             {/* <CollapseSection app={app} sectionTitle="Map Section" > */}
-              <div>
+              <div> {lore?.getJson()?.hideLore && lore?.getJson()?.hideHandout && !lore?.getJson()?.hideMap && <div 
+              style={{display:"flex", marginTop: "2px", justifyItems:"flex-start", }}>
+        <LoreAIButton app={app} obj={lore}/>
+        </div>} 
                 <div className='hover-btn' style={{
                   ...styles.buttons.buttonAdd,
                   display: "inline-block", height: "fit-content",
-                  maxWidth: "fit-content", cursor: "pointer", marginTop: "24px",
+                  maxWidth: "fit-content", cursor: "pointer", marginTop: "32px",
                   marginRight: "1rem", position: "relative", fontWeight: "600",
                   fontSize: styles.fonts.fontSmall
                 }}
@@ -397,8 +446,9 @@ export default class LoreViewer extends Component {
                   }}
                 >
                   Add Map
-                </div>
+                  </div>
 
+               
 
 
 
@@ -430,23 +480,32 @@ export default class LoreViewer extends Component {
               {/* </CollapseSection> */}
               </div>
 
-          {(state.popupSwitch === "" || state.popupSwitch === undefined) && (<div className="hover-btn" onClick={this.toggleSidebar} title={"All Lore"} style={{
-            ...styles.buttons.buttonAdd, overflow: "hidden", justifyContent: "flex-start",
+          {(state.popupSwitch === "" || state.popupSwitch === undefined || state.popUpSwitch === "" || state.popUpSwitch === undefined) && 
+          (<div className="hover-btn" 
+            onClick={()=>{this.toggleSidebar("loreTree")}} 
+          title={"All Lore"} style={{
+            ...styles.buttons.buttonAdd, overflowX: "hidden",
+            overflowY:"hidden",
+            justifyContent: "flex-start",
             fontSize: styles.fonts.fontSmall, display: "flex", flexDirection: "column",
             transition: 'all 0.5s ease-in-out',
             height: state.isSideBarVisible ? "28px" : "45px",
-            padding: "5px 9px", border: "none", zIndex: "9000", position: "fixed", right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
+            padding: "5px 9px", zIndex: "9000", position: "fixed", 
+            right: "2%", top: "1vh", backgroundColor: styles.colors.color1 + "dd",
+            border:"1px dashed "+styles.colors.color9+"44",
           }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>{state.isSideBarVisible ? "Hide Lore" : "Show All Lore"}
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              {state.isSideBarVisible ? "Hide" : "Show All Lore"}
               <img src={backarrow} alt=">" style={{
                 width: "12px", marginLeft: "11px", marginTop: "6px", height: "11px",
                 transform: state.isSideBarVisible ? "rotate(270deg)" : "rotate(180deg)", transition: "transform 0.3s ease-in-out"
               }}></img>
             </div>
 
-            <div style={{ fontSize: ".64rem", color: styles.colors.color8 }}>Expand and review all Lore</div>
+            <div style={{ fontSize: ".64rem", color: styles.colors.color8, marginTop:"2px", marginBottom:"4px" }}>Expand and review all Lore</div>
 
           </div>)}
+
           <div ref={this.loreRef} />
           {
             // state.isSideBarVisible && 
@@ -460,16 +519,21 @@ export default class LoreViewer extends Component {
             </div>)}
 
         </div>
-
+        {lore?.getJson()?.hideLore && lore?.getJson()?.hideHandout && lore?.getJson()?.hideMap &&<div 
+              style={{display:"flex", marginTop: "2px", justifyItems:"flex-start", }}>
+        <LoreAIButton app={app} obj={lore}/>
+        </div>} 
 
         {/* {*Lore All Section} */}
         <div className={!lore?.getJson()?.hideConnected ? "none" : "collapse"}>
+        
           <LoreSearch app={app} type="card" options={{ tabType: "bigCardBorderless", cardType: undefined }}
           /></div>
 
         {/* {*Encounter Section} */}
         <div className={(lore?.getJson()?.hideConnected && lore?.getJson()?.hideMap && lore?.getJson()?.hideHandout && lore?.getJson()?.hideLore) ? "collapse" : "none"}
-          style={{ marginTop: (lore?.getJson()?.hideConnected && lore?.getJson()?.hideMap && lore?.getJson()?.hideHandout && lore?.getJson()?.hideLore) ? "-10px" : "" }}>
+          style={{ transition:"margin-top .4s ease",
+            marginTop: (lore?.getJson()?.hideConnected && lore?.getJson()?.hideMap && lore?.getJson()?.hideHandout && lore?.getJson()?.hideLore) ? "-10px" : "" }}>
           <hr></hr></div>
 
         <div ref={this.encRef} />
