@@ -9,6 +9,7 @@ export default class DelIconItem extends DelItem {
 
 
   render(){
+
    
     let cell = this.state.cell;
     let html = <img draggable="false"

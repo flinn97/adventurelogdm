@@ -571,6 +571,24 @@ class MainContent extends Component {
                         marginBottom: "-4px",
                         padding: "1px 4px",
                       },
+                      callBackFunc:(obj)=>{
+                        //rerender current state Next time use the map component correctly it provides all reverse and filter capabilities. 
+                        let assistants =  componentList.getList(
+                          "chatAssistant",
+                          state.user.getJson().owner,
+                          "owner"
+                        );
+                        
+                        assistants = assistants.filter(
+                          (item) =>
+                            item._id !==
+                            (this.state.currentAssistant
+                              ? this.state.currentAssistant.getJson()._id
+                              : null)
+                        );
+                        assistants = assistants.filter((a)=>a!==obj)
+                        this.setState({prevGens:assistants});
+                      },
                       class: "hover-btn-highlight",
                     },
                   ]}

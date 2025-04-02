@@ -11,10 +11,12 @@ export default class DelItem extends BaseClass {
   }
 
 
+
   /**
    * delete or send a popup dispatch according to user preference.
    */
-  del(){
+   async del(){
+    debugger
     let app = this.props.app;
     let opps = this.obj.getOperationsFactory();
     if(this.cell.popop){
@@ -22,7 +24,11 @@ export default class DelItem extends BaseClass {
 
     }
     else{
-      opps.cleanPrepareRun({del:this.obj})
+      await opps.cleanPrepareRun({del:this.obj})
+
+    }
+    if(this.props.cell.callBackFunc){
+      this.props.cell.callBackFunc(this.obj);
     }
   }
 

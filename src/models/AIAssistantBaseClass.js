@@ -151,6 +151,7 @@ class AIAssistantBaseClass extends BaseClass {
       temperature: this.json.temperature,
       user: this.json.owner,
     };
+    
     let AIResponse = await AIService.chat(queryParams);
     let message = AIResponse.messages[AIResponse.messages.length - 1];
 
@@ -163,14 +164,15 @@ class AIAssistantBaseClass extends BaseClass {
       position: messages.length + 1,
     };
     await this.operationsFactory.prepare({ update: this });
-    await this.operationsFactory.jsonPrepareRun({ addaiMessage: aiMessage });
 
     if (!this.json.generatedTitle) {
       let cleanText = this.stripMarkdown(message.content); // Remove markdown
       this.json.generatedTitle = this.generateSummary(cleanText);
       this.json.name = this.json.generatedTitle; // Update the assistant's name
-      await this.operationsFactory.jsonPrepareRun({ update: this });
     }
+    debugger
+    await this.operationsFactory.jsonPrepareRun({ addaiMessage: aiMessage });
+
   }
 
   /**
