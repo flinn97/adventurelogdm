@@ -18,6 +18,7 @@ import { json as fakeData } from './models/fakeData.js';
 import { mapInterface } from './mapTech/mapComponentInterface.js';
 import Compendium from './view/pages/compendium.js';
 import DiscordService from './services/discordService';
+import AIPage from './view/AIComponents/AIPage';
 
 // import NavThemeFactory from './componentListNPM/navThemes/navThemeFactory';
 //New comment
@@ -77,6 +78,8 @@ export default class App extends Component {
         ///Added Notes
         {path: "/notes", comp:Note, name: "Notes"},
         {path: "/compendium", comp:Compendium, name: "Compendium"},
+        {path: "/ai", comp:AIPage, name: "AI Assistant"},
+
         ///Added Marketplace
         
         ///
