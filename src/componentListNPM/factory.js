@@ -38,7 +38,7 @@ class Factory {
       let comp = new this.factory[key](this.operationsFactory);
       comp.setJson({
         ...comp.getJson(),
-        ...(obj.json.json || obj.json),
+        ...(obj.json?.json || obj?.json),
         _id: obj.json?._id || idService.createId(),
       });
       return comp;

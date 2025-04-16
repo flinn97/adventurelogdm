@@ -41,12 +41,9 @@ export default class Register extends Component {
             await this.state.user.setCompState({ email: authUser.email, _id: authUser.email });
             await state.opps.run();
             this.setState({ stripePopup: true });
-
-
-
         }
 
-
+        await console.log(this.state)
     }
 
     
