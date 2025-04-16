@@ -42,8 +42,6 @@ export default class Register extends Component {
             await state.opps.run();
             this.setState({ stripePopup: true });
         }
-
-        await console.log(this.state)
     }
 
     
